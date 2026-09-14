@@ -133,11 +133,10 @@ def check_key(remote: Remote, key: str) -> tuple[list[Mismatch], list[Warning_]]
         trusted_signal = remote.render(trusted)
 
         for form in eligible:
-            if form is trusted:
-                continue
-            # Step 1, the raw half: a capture's carrier is a measurement with
-            # instrument error, and the quantization is coarse enough to
-            # absorb it -- so a word off by one warns rather than fails.
+            # Step 1, the raw half, runs for EVERY form including the trusted
+            # one: skipping the trusted form first meant a *selected* raw
+            # capture -- the one that actually compiles -- could declare any
+            # carrier without a word ever being compared.
             if form.type == "raw" and form.carrier_hz:
                 word = frequency_word(form.carrier_hz)
                 if word != expected_word:
@@ -163,6 +162,8 @@ def check_key(remote: Remote, key: str) -> tuple[list[Mismatch], list[Warning_]]
                             "instrument error, so the comparison is unaffected",
                         )
                     )
+            if form is trusted:
+                continue  # nothing to compare it against
             detail = compare(
                 trusted=trusted,
                 trusted_signal=trusted_signal,

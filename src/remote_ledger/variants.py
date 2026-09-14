@@ -21,7 +21,7 @@ from dataclasses import dataclass
 from typing import Any, Mapping
 
 from .errors import ValidationError
-from .forms import EVIDENCE_FIELDS, Form, PRIMARY, _as_int, select_irp
+from .forms import EVIDENCE_FIELDS, Form, PRIMARY, _as_int, load_forms, select_irp
 
 #: D23: one protocol per remote file in v1, so an override may not name one.
 OVERRIDABLE = ("device", "subdevice", "function")
@@ -165,6 +165,54 @@ def check_cache_premises(
                 f"{origin['form']!r}, but the primary group's selected irp "
                 f"form is now {actual}. The cache is derived from the wrong "
                 "parent. Run `rl fmt --refresh` (D33)"
+            )
+
+
+def _comparable(form: Mapping[str, Any]) -> dict[str, Any]:
+    """Normalise a raw form dict so 0xEA and 234 compare equal."""
+    out = dict(form)
+    for field in OVERRIDABLE:
+        if out.get(field) is not None:
+            out[field] = _as_int(out[field], field)
+    origin = out.get("expandedFrom")
+    if isinstance(origin, dict):
+        out["expandedFrom"] = {
+            k: sorted(v) if isinstance(v, list) else v for k, v in origin.items()
+        }
+    return out
+
+
+def check_cache_content(
+    key: str, raw_forms: list[dict], variants: Mapping[str, Variant]
+) -> None:
+    """D33 premise 4: the cache must match what expansion recomputes.
+
+    This is the check that makes the other three premises worth having, and
+    it was the one missing: loading *replaced* a stale cache before anything
+    compared it, so a hand-edited cached subdevice passed both `rl validate`
+    and `rl check` with the edit silently discarded. A cache that can be
+    edited without complaint is not a cache, it is an unchecked fork of the
+    variant.
+    """
+    fresh = {
+        f["expandedFrom"]["variant"]: f
+        for f in expand(key, load_forms(key, raw_forms), variants)
+    }
+    for raw in raw_forms:
+        origin = raw.get("expandedFrom")
+        if not isinstance(origin, dict):
+            continue
+        expected = fresh.get(origin.get("variant"))
+        if expected is None:
+            continue  # the premise checks report the orphan
+        if _comparable(raw) != _comparable(expected):
+            raise ValidationError(
+                f"{key}: form {raw.get('id', '?')!r} caches variant "
+                f"{origin['variant']!r}, but recomputing that expansion gives "
+                "different content -- the cache has been edited by hand or the "
+                "variant has changed. A form carrying `expandedFrom` is a "
+                "regenerated cache, not an authored override; delete that "
+                "field to take authority, or run `rl fmt --refresh` (D33)"
             )
 
 

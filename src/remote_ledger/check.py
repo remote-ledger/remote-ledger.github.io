@@ -49,7 +49,10 @@ def check_derived(remote: Remote, key: str) -> list[str]:
             )
             continue
         expected = encode(remote.render(parent))
-        if form.hex.split() != expected.split():
+        # D9 diffs the *canonical string, byte-for-byte*. Comparing tokens
+        # let a derived form drift in whitespace from what the compiler
+        # emits, which is precisely the staleness this check exists to catch.
+        if form.hex != expected:
             problems.append(
                 f"{key}: derived form {form.id!r} is stale -- regenerating it "
                 f"from {parent.id!r} gives different bytes. Run "

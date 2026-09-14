@@ -1,6 +1,6 @@
 # Remote Ledger — Design & Build Plan
 
-**Draft v1.1** · Status: Phases 0-2 implemented · Implements [SPEC.md](SPEC.md) v0.3
+**Draft v1.2** · Status: Phases 0-2 implemented · Implements [SPEC.md](SPEC.md) v0.5
 
 SPEC.md says *what* the format has to hold and why. This says *how it gets
 built*: the resolved open decisions, the one intermediate representation
@@ -1848,7 +1848,7 @@ note rather than a live contract.
 
 ## 12. Implementation status
 
-Phases 0-2 are implemented: 308 tests, `jsonschema` the only runtime
+Phases 0-2 are implemented: 320 tests, `jsonschema` the only runtime
 dependency. Phase 2 landed its nine SPEC edits *before* its code, per §9 --
 the spec change is what authorises the implementation. (That count is asserted by the suite itself -- see
 `test_documented_test_count_is_current` -- so it cannot drift the way the

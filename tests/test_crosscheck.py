@@ -87,14 +87,20 @@ def test_a_derived_only_group_fails_validation_not_compilation(write):
 
 def test_pronto_form_with_a_mismatched_frequency_word_fails(write):
     """Acceptance criterion 4a. A Pronto string is a generated artifact, not
-    a measurement: its word is right or the string is from another remote."""
+    a measurement: its word is right or the string is from another remote.
+
+    Caught at *validation* now that R15's "every key resolves to at least one
+    compilable form" is actually enforced -- a form that cannot render is a
+    validation failure, which is the cheaper place to find it.
+    """
     def mutate(d):
         d["keys"]["KEY_POWER"]["forms"].append({
             "type": "pronto", "hex": "0000 0073 0001 0000 0157 00AC",
             "confidence": "plausible", "source": "forum",
         })
-    problems, _ = _check(write(mutate))
-    assert any("frequency word" in p for p in problems)
+    path = write(mutate)
+    problems = [str(p) for p in validate_file(path)]
+    assert any("frequency word" in p for p in problems), problems
 
 
 def test_raw_form_one_word_off_only_warns(write):

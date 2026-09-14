@@ -19,7 +19,7 @@ from typing import Any, Iterator
 from jsonschema import Draft202012Validator
 
 from . import protocols
-from .errors import ValidationError
+from .errors import LedgerError, ValidationError
 from .serialize import load
 
 #: Package data, not a repo-relative path: a non-editable ``pip install .``
@@ -130,7 +130,10 @@ def structural_problems(path: Path, where: str) -> Iterator[Problem]:
     something subtly wrong.
     """
     from .remote import load_remote
-    from .variants import check_cache_cardinality, check_cache_premises, check_declared
+    from .variants import (
+        check_cache_cardinality, check_cache_content, check_cache_premises,
+        check_declared,
+    )
 
     try:
         remote = load_remote(path, expand_variants=False)
@@ -141,6 +144,7 @@ def structural_problems(path: Path, where: str) -> Iterator[Problem]:
         yield Problem(where, f"could not be loaded: {exc}")
         return
 
+    raw_keys = remote.raw.get("keys", {})
     for key, forms in remote.keys.items():
         for check in (check_declared, check_cache_cardinality, check_cache_premises):
             try:
@@ -150,6 +154,62 @@ def structural_problems(path: Path, where: str) -> Iterator[Problem]:
                     check(key, forms, remote.variants)
             except ValidationError as exc:
                 yield Problem(where, str(exc))
+        try:
+            check_cache_content(key, raw_keys[key]["forms"], remote.variants)
+        except ValidationError as exc:
+            yield Problem(where, str(exc))
+        yield from _usability_problems(remote, key, where)
+
+
+def _usability_problems(remote, key: str, where: str) -> Iterator[Problem]:
+    """R15: "every key resolves to at least one compilable form".
+
+    `rl validate` used to accept files `rl check` then rejected -- a
+    derived-only group, a dangling `derivedFrom`, a form that cannot render.
+    Validation is the cheap place to find those, and R15 already asks for it.
+    """
+    from .forms import PRIMARY, group_by_candidate, select
+
+    groups = group_by_candidate(remote.keys[key])
+    if PRIMARY not in groups:
+        yield Problem(
+            where, f"{key}: no `primary` candidate group, so the key has no "
+            "default answer (D16)"
+        )
+
+    by_id = {f.id: f for f in remote.keys[key]}
+    for candidate, group in groups.items():
+        try:
+            select(group)
+        except ValidationError as exc:
+            yield Problem(where, f"{key}: {exc}")
+            continue
+        for form in group:
+            if form.is_derived:
+                parent = by_id.get(form.derived_from)
+                if parent is None:
+                    yield Problem(
+                        where, f"{key}: form {form.id!r} is derived from "
+                        f"{form.derived_from!r}, which does not exist in this "
+                        "key (D21)"
+                    )
+                elif parent.candidate != form.candidate:
+                    yield Problem(
+                        where, f"{key}: form {form.id!r} is derived from "
+                        f"{parent.id!r} in a different candidate group; "
+                        "derivation stays within a group (D21)"
+                    )
+                elif parent.is_derived:
+                    yield Problem(
+                        where, f"{key}: form {form.id!r} is derived from "
+                        f"{parent.id!r}, which is itself derived; derivation "
+                        "is one level deep (D21)"
+                    )
+                continue
+            try:
+                remote.render(form)
+            except LedgerError as exc:
+                yield Problem(where, f"{key}: form {form.id!r} cannot render: {exc}")
 
 
 def validate_file(path: Path) -> list[Problem]:

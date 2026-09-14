@@ -20,6 +20,7 @@ from .check import check_remote
 from .fmt import format_document
 from .pronto import encode as pronto_encode
 from .remote import load_remote
+from .serialize import dumps
 from .validate import corpus_files, validate_file
 
 EXIT_OK, EXIT_ERROR, EXIT_UNAVAILABLE = 0, 1, 2
@@ -126,9 +127,66 @@ def cmd_check(args: argparse.Namespace) -> int:
     return EXIT_ERROR if (warnings and args.strict) else EXIT_OK
 
 
+def compiled_artifact(remote) -> dict:
+    """D20's ``build/pronto/<mfr>/<model>.json`` shape.
+
+    No timestamp, no tool version, no path: D20's rule that a generated file
+    holds no non-reproducible value is what makes ``--check`` viable at all.
+    ``minSends`` sits once at the protocol level, not per key -- it is a fact
+    about the hardware, and a consumer repeating the Pronto repeat sequence
+    needs it exactly once (D3a).
+    """
+    protocol = {
+        "carrierHz": remote.protocol.carrier_hz,
+        "minSends": remote.protocol.min_sends,
+    }
+    if remote.protocol.name:
+        protocol["name"] = remote.protocol.name
+
+    keys: dict[str, dict] = {}
+    for key in sorted(remote.keys):
+        candidates: dict[str, dict] = {}
+        for name, group in remote.groups(key).items():
+            from .forms import select
+            chosen = select(group)
+            entry = {
+                "prontoHex": remote.compile_group(key, name),
+                "confidence": chosen.confidence,
+            }
+            if chosen.source:
+                entry["source"] = chosen.source
+            if name != "primary":
+                entry["label"] = remote.variants[name].label
+            candidates[name] = entry
+        keys[key] = {"candidates": candidates}
+
+    return {
+        "schemaVersion": 1,
+        "manufacturer": remote.manufacturer,
+        "model": remote.model,
+        "protocol": protocol,
+        "keys": keys,
+    }
+
+
+def _artifact_path(root: Path, remote) -> Path:
+    return (
+        root / "build" / "pronto"
+        / remote.manufacturer.lower().replace(" ", "-")
+        / f"{remote.model}.json"
+    )
+
+
 def cmd_compile(args: argparse.Namespace) -> int:
-    """R12: render each candidate group's trusted form to Pronto Hex."""
+    """R12: render each candidate group's trusted form, and write it.
+
+    Per-file artifacts may be written by a path-scoped run -- their scope is
+    exactly the input's -- unlike the corpus-wide artifacts D19 reserves for
+    a corpus-wide run.
+    """
+    root = _repo_root()
     targets = _resolve_targets(args.path)
+    written = drift = 0
     for target in targets:
         errors = validate_file(target)
         if errors:
@@ -136,11 +194,28 @@ def cmd_compile(args: argparse.Namespace) -> int:
                 print(f"ERROR {problem}", file=sys.stderr)
             return EXIT_ERROR
         remote = load_remote(target)
-        print(f"# {remote.manufacturer} {remote.model}")
-        for key in sorted(remote.keys):
-            for candidate in sorted(remote.groups(key), key=lambda c: (c != "primary", c)):
-                label = "" if candidate == "primary" else f"  [{candidate}]"
-                print(f"{key}{label}\n  {remote.compile_group(key, candidate)}")
+        path = _artifact_path(root, remote)
+        text = dumps(compiled_artifact(remote))
+        if args.check:
+            current = path.read_text(encoding="utf-8") if path.exists() else None
+            if current != text:
+                drift += 1
+                print(
+                    f"ERROR {path.relative_to(root).as_posix()} "
+                    f"{'differs from' if current else 'is missing; expected'} "
+                    "freshly compiled output",
+                    file=sys.stderr,
+                )
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(text, encoding="utf-8", newline="\n")
+            written += 1
+            print(path.relative_to(root).as_posix())
+
+    if args.check:
+        print(f"{len(targets)} file(s) checked, {drift} drifted")
+        return EXIT_ERROR if drift else EXIT_OK
+    print(f"{written} artifact(s) written")
     return EXIT_OK
 
 
@@ -294,9 +369,10 @@ def build_parser() -> argparse.ArgumentParser:
     c.set_defaults(func=cmd_check)
 
     co = sub.add_parser(
-        "compile", help="render trusted forms to Pronto Hex (R12)", parents=[common]
+        "compile", help="write build/pronto/... (R12)", parents=[common]
     )
     co.add_argument("path", nargs="?")
+    co.add_argument("--check", action="store_true", help="diff instead of write")
     co.set_defaults(func=cmd_compile)
 
     f = sub.add_parser(
