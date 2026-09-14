@@ -5,6 +5,7 @@ these passed silently before the fix, which is why they live together: the
 148-test suite was green while all of them were broken.
 """
 
+import decimal
 import subprocess
 from decimal import Decimal
 from pathlib import Path
@@ -105,19 +106,46 @@ def test_malformed_number_is_a_ledger_error():
     assert cli._parse_number("17") == 17
 
 
+def _parsed(argv):
+    """Parse the way main() does, including its default fill-in."""
+    args = cli.build_parser().parse_args(argv)
+    for flag in cli.GLOBAL_FLAGS:
+        if not hasattr(args, flag):
+            setattr(args, flag, False)
+    return args
+
+
 @pytest.mark.parametrize(
-    "argv",
+    "argv,flag",
     [
-        ["build", "--check", "--allow-dirty"],
-        ["build", "--check", "--strict"],
-        ["validate", "--strict"],
-        ["--allow-dirty", "build", "--check"],
+        # After the subcommand -- finding 8 of the first review: this used to
+        # be an argparse error, making cmd_build's own printed remedy
+        # ("pass --allow-dirty") impossible to follow.
+        (["build", "--check", "--allow-dirty"], "allow_dirty"),
+        (["build", "--check", "--strict"], "strict"),
+        (["validate", "--strict"], "strict"),
+        # Before the subcommand -- finding 1 of the SECOND review, a
+        # regression introduced by the first fix: a parent parser attached to
+        # both root and subparsers sets its defaults twice, and the
+        # subparser's pass runs second, so the flag was silently discarded.
+        (["--allow-dirty", "build", "--check"], "allow_dirty"),
+        (["--strict", "validate"], "strict"),
+        (["--strict", "build", "--check"], "strict"),
     ],
 )
-def test_global_flags_are_accepted_after_the_subcommand(argv):
-    """Finding 8. cmd_build's own remedy ("pass --allow-dirty") was an
-    argparse error where a user would naturally type it."""
-    cli.build_parser().parse_args(argv)
+def test_global_flags_survive_on_either_side_of_the_subcommand(argv, flag):
+    """Assert the VALUE, not merely that parsing succeeded.
+
+    The first version of this test called parse_args and asserted nothing
+    about the result, so it passed while the flag was being thrown away --
+    the same vacuous-assertion failure as the gate-2 vector check.
+    """
+    assert getattr(_parsed(argv), flag) is True, argv
+
+
+@pytest.mark.parametrize("flag", cli.GLOBAL_FLAGS)
+def test_global_flags_default_to_false_when_absent(flag):
+    assert getattr(_parsed(["validate"]), flag) is False
 
 
 def test_repeat_only_raw_form_is_authorable():
@@ -207,3 +235,113 @@ def test_cli_phase_numbers_come_from_the_generator_registry():
             if a.dest == name
         )
         assert f"[phase {phase}]" in help_text, (name, help_text)
+
+
+# --- second review ---------------------------------------------------------
+
+
+def _form_problems(form: dict) -> list[str]:
+    doc = {
+        "manufacturer": "T", "model": "X",
+        "protocol": {"name": "NEC1", "carrierHz": 38_000, "minSends": 1},
+        "keys": {"KEY_POWER": {"forms": [form]}},
+    }
+    return [str(p) for p in schema_problems(doc, "remote.schema.json", "t")]
+
+
+@pytest.mark.parametrize(
+    "form",
+    [
+        {"type": "irp", "device": 1, "function": 1, "confidence": "verified"},
+        {"type": "raw", "intro": [9024, 4512], "confidence": "confirmed"},
+        {"type": "pronto", "hex": "0000 006D 0001 0000 0157 00AC",
+         "confidence": "plausible"},
+    ],
+    ids=["irp", "raw", "pronto"],
+)
+def test_non_derived_forms_require_a_citation(form):
+    """R5: every form names how it was established. R18: independently
+    checkable. A `verified` form with no citation is the precise failure R18
+    exists to prevent -- and only `derived` forms are exempt (D30)."""
+    assert _form_problems(form), f"{form['type']} accepted with no source"
+
+
+@pytest.mark.parametrize(
+    "form",
+    [
+        {"type": "irp", "device": 1, "function": 1, "confidence": "verified",
+         "source": "hifi-remote Sony BD table"},
+        {"type": "raw", "intro": [9024, 4512], "confidence": "confirmed",
+         "source": "irrecord capture, 2026-09-14"},
+        {"type": "pronto", "hex": "0000 006D 0001 0000 0157 00AC",
+         "confidence": "plausible", "source": "remotecentral forum post"},
+        {"type": "pronto", "hex": "0000 006D 0001 0000 0157 00AC",
+         "confidence": "derived", "derivedFrom": "primary.irp"},
+    ],
+    ids=["irp", "raw", "pronto", "derived-exempt"],
+)
+def test_cited_forms_are_accepted(form):
+    assert _form_problems(form) == []
+
+
+@pytest.mark.parametrize("kind", ["irp", "raw"])
+def test_derived_is_rejected_on_non_pronto_forms(kind):
+    """D30: the compiler's only output is Pronto Hex, so nothing can produce
+    a derived irp or raw form. Such a form would also escape D9 -- the only
+    check a derived form faces -- while being excluded from selection by D7,
+    so it would sit in the file corroborating nothing and checked by nothing."""
+    form = (
+        {"type": "irp", "device": 1, "function": 1}
+        if kind == "irp"
+        else {"type": "raw", "intro": [9024, 4512]}
+    )
+    assert _form_problems({**form, "confidence": "derived"})
+
+
+def test_malformed_frequency_word_does_not_crash_the_error_message():
+    """A word of 0000 made the period zero, and the carrier-mismatch message
+    raised DivisionByZero while formatting itself."""
+    with pytest.raises(LedgerError, match="frequency word is 0"):
+        decode("0000 0000 0001 0000 0157 00AC", carrier_hz=38_000)
+
+
+@pytest.mark.parametrize(
+    "traps",
+    [
+        [decimal.Inexact],
+        [decimal.Rounded],
+        [decimal.Inexact, decimal.Rounded],
+        [decimal.Subnormal, decimal.Underflow, decimal.Clamped],
+    ],
+    ids=["inexact", "rounded", "both", "subnormal-underflow-clamped"],
+)
+def test_encoding_ignores_ambient_decimal_traps(traps):
+    """D28's context-independence was a fiction for traps.
+
+    `localcontext()` *copies* the process context, and resetting only prec
+    and rounding leaves its traps in place -- so an ambient Inexact trap made
+    correct encoding raise. Every division and quantize here is inexact by
+    nature.
+    """
+    saved = decimal.getcontext()
+    decimal.setcontext(decimal.Context(traps=traps))
+    try:
+        signal = IrSignal(carrier_hz=38_000, intro=(9024, 4512, 564, 1692))
+        assert encode(signal).startswith("0000 006D")
+        assert quantize(signal)
+        assert dumps({"x": Decimal("0.15")})
+    finally:
+        decimal.setcontext(saved)
+
+
+def test_ambient_traps_do_not_leak_into_our_context():
+    """The context we run in is constructed, not inherited."""
+    from remote_ledger.numeric import DECIMAL_TRAPS, decimal_context
+
+    saved = decimal.getcontext()
+    decimal.setcontext(decimal.Context(traps=[decimal.Inexact, decimal.Rounded]))
+    try:
+        with decimal_context() as ctx:
+            assert [t for t, on in ctx.traps.items() if on] == list(DECIMAL_TRAPS)
+    finally:
+        decimal.setcontext(saved)

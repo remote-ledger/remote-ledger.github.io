@@ -164,13 +164,20 @@ def build_parser() -> argparse.ArgumentParser:
     # Global flags live on a shared parent so they are accepted *after* the
     # subcommand too. Previously `rl build --check --allow-dirty` was an
     # argparse error, which made the remedy cmd_build prints unusable.
+    # `default=argparse.SUPPRESS` is load-bearing. A parent parser attached
+    # to both the root and the subparsers sets its defaults twice, and the
+    # subparser's pass runs second -- so with an ordinary `default=False`,
+    # `rl --strict validate` parses as strict=False, silently discarding the
+    # flag. SUPPRESS makes the subparser leave the attribute alone unless the
+    # flag actually appeared after the subcommand; main() fills in the
+    # default once, afterwards.
     common = argparse.ArgumentParser(add_help=False)
     common.add_argument(
-        "--strict", action="store_true",
+        "--strict", action="store_true", default=argparse.SUPPRESS,
         help="promote warnings to errors (D32)",
     )
     common.add_argument(
-        "--allow-dirty", action="store_true",
+        "--allow-dirty", action="store_true", default=argparse.SUPPRESS,
         help="let --check run with uncommitted changes under an owned path (D11)",
     )
 
@@ -227,8 +234,15 @@ def build_parser() -> argparse.ArgumentParser:
     return p
 
 
+#: Flags accepted on either side of the subcommand (see build_parser).
+GLOBAL_FLAGS = ("strict", "allow_dirty")
+
+
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
+    for flag in GLOBAL_FLAGS:
+        if not hasattr(args, flag):
+            setattr(args, flag, False)
     try:
         return args.func(args)
     except LedgerError as exc:

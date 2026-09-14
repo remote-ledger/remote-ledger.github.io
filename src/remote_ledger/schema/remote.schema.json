@@ -349,7 +349,8 @@
         "type",
         "device",
         "function",
-        "confidence"
+        "confidence",
+        "source"
       ],
       "properties": {
         "type": {
@@ -371,7 +372,7 @@
           "$ref": "#/$defs/candidateId"
         },
         "confidence": {
-          "$ref": "#/$defs/confidence"
+          "$ref": "#/$defs/confidenceEvidence"
         },
         "source": {
           "$ref": "#/$defs/citation"
@@ -393,7 +394,8 @@
       "additionalProperties": false,
       "required": [
         "type",
-        "confidence"
+        "confidence",
+        "source"
       ],
       "properties": {
         "type": {
@@ -438,7 +440,7 @@
           "$ref": "#/$defs/candidateId"
         },
         "confidence": {
-          "$ref": "#/$defs/confidence"
+          "$ref": "#/$defs/confidenceEvidence"
         },
         "source": {
           "$ref": "#/$defs/citation"
@@ -540,7 +542,7 @@
       },
       "allOf": [
         {
-          "description": "D30: a derived form must be type pronto, must name its parent, and must NOT carry a source -- a second human-written claim about mechanically produced data could only be unverifiable decoration.",
+          "description": "D30: a derived form must name its parent and must NOT carry a source -- a second human-written claim about mechanically produced data could only be unverifiable decoration. Every other form must carry one (R5, R18).",
           "if": {
             "properties": {
               "confidence": {
@@ -562,6 +564,9 @@
             }
           },
           "else": {
+            "required": [
+              "source"
+            ],
             "not": {
               "required": [
                 "derivedFrom"
@@ -622,6 +627,15 @@
           }
         }
       }
+    },
+    "confidenceEvidence": {
+      "description": "The four evidence tiers. `derived` is excluded: D30 restricts it to type: pronto, because the compiler's only output is Pronto Hex, so nothing can produce a derived irp or raw form. A form claiming it here would also escape D9, the only check a derived form faces.",
+      "enum": [
+        "confirmed",
+        "verified",
+        "plausible",
+        "untested"
+      ]
     }
   }
 }

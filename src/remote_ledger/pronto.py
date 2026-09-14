@@ -160,6 +160,10 @@ def decode(text: str, *, carrier_hz: int) -> IrSignal:
         )
 
     fmt, freq, n1, n2 = words[:4]
+    # Before anything reads `freq`: a word of 0000 would make the period zero,
+    # and the carrier-mismatch message below would raise DivisionByZero while
+    # formatting itself.
+    check_bounds("frequency word", freq, FREQ_WORD_MIN, FREQ_WORD_MAX)
     if fmt == FORMAT_RAW_UNMODULATED:
         raise ProntoParseError(
             "word 0 is 0100 (learned unmodulated); unmodulated signals are "

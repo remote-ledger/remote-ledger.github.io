@@ -28,6 +28,15 @@ PRONTO_CLOCK_US = Decimal("0.241246")
 # D28: pinned locally on every use; never read from decimal.getcontext().
 DECIMAL_PRECISION = 34
 DECIMAL_ROUNDING = decimal.ROUND_HALF_UP
+#: Traps we *want*: each signals a genuine bug rather than ordinary arithmetic.
+#: Deliberately excluded are Inexact, Rounded, Subnormal, Underflow, Clamped
+#: and FloatOperation -- every division and quantize this module performs is
+#: inexact by nature, so trapping those turns correct encoding into an
+#: exception. They are not excluded by omission: `localcontext()` *copies* the
+#: process context, traps included, so an ambient Inexact trap would be
+#: inherited and D28's context-independence would be a fiction. The fix is to
+#: hand `localcontext` a freshly constructed Context instead.
+DECIMAL_TRAPS = (decimal.InvalidOperation, decimal.DivisionByZero, decimal.Overflow)
 
 # --- D28 bounds -------------------------------------------------------------
 # Real IR carriers are 30-60 kHz. This is a wide margin that still catches a
@@ -58,16 +67,27 @@ TOLERANCE_RELATIVE_MIN, TOLERANCE_RELATIVE_MAX = Decimal(0), Decimal("0.5")
 TOLERANCE_GAP_US_MIN, TOLERANCE_GAP_US_MAX = 0, 1_000_000
 
 
+def _fresh_context() -> decimal.Context:
+    """A Context built from scratch, inheriting nothing from the process."""
+    return decimal.Context(
+        prec=DECIMAL_PRECISION,
+        rounding=DECIMAL_ROUNDING,
+        traps=list(DECIMAL_TRAPS),
+        flags=[],
+    )
+
+
 @contextmanager
 def decimal_context() -> Iterator[decimal.Context]:
-    """Pin precision and rounding locally for the duration of a calculation.
+    """Pin the whole context locally for the duration of a calculation.
 
     D28. Never use ``decimal.getcontext()`` directly -- its state is global
-    and writable by anything in the process.
+    and writable by anything in the process. Note the explicit argument:
+    bare ``localcontext()`` *copies* the ambient context and resetting only
+    ``prec`` and ``rounding`` leaves its traps in place, so an ambient
+    ``Inexact`` trap would make correct encoding raise.
     """
-    with decimal.localcontext() as ctx:
-        ctx.prec = DECIMAL_PRECISION
-        ctx.rounding = DECIMAL_ROUNDING
+    with decimal.localcontext(_fresh_context()) as ctx:
         yield ctx
 
 
