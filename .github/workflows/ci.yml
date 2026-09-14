@@ -1,0 +1,16 @@
+# D11: exactly two commands. No command that writes into build/ or site/ may
+# run in a job that also runs a --check, or the tree comparison goes vacuous.
+name: ci
+on: [push, pull_request]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e ".[dev]"
+      - run: pytest
+      - run: rl build --check

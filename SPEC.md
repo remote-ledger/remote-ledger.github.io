@@ -1,6 +1,7 @@
 # Remote Ledger — Requirements Spec
 
-**Draft v0.3** · Status: proposal · Depends on nothing upstream (self-contained)
+**Draft v0.4** · Status: §12 resolved; Phases 0-1 implemented · Depends on
+nothing upstream (self-contained)
 
 A self-contained JSON file per remote, where every key can hold several
 independently-sourced representations at once — each with its own confidence
@@ -142,9 +143,9 @@ understand or compile it on its own.
         },
         {
           "type": "pronto",
-          "hex": "0000 006D 0022 0000 0156 00AB ...",
+          "hex": "0000 006D 0022 0002 0157 00AC ...",
           "confidence": "derived",
-          "derivedFrom": "irp"
+          "derivedFrom": "primary.irp"
         }
       ]
     }
@@ -235,6 +236,30 @@ consistency check, if the tooling actually runs it.
   picks the form; the compiler renders it. Same JSON input always produces
   byte-identical Pronto Hex output. This compiled artifact is what playback
   apps actually load — never hand-edited, always regenerated.
+
+  "Deterministically" is only a requirement if the rules are pinned, so the
+  contract is normative and lives in DESIGN.md D6 (emission), D25 (parsing)
+  and D28 (bounds and arithmetic). In outline:
+
+  - Words are uppercase, four hex digits, single-space separated. The
+    frequency word is `round_half_up(1000000 / (carrier_hz × 0.241246))`;
+    each duration becomes `round_half_up(duration_us / period_us)` carrier
+    cycles.
+  - Rounding is `ROUND_HALF_UP` on `Decimal`, never Python's `round()`,
+    which is banker's rounding and would make `x.5` cases depend on parity.
+  - Durations are computed from **IRP units multiplied out exactly**, never
+    from rounded nominal values: `16 × 564 = 9024 µs`, not "9 ms". That one
+    choice is the difference between a lead-in word of `0157` and `0156`.
+  - All arithmetic runs in a locally pinned `Decimal` context, because
+    `decimal`'s is process-wide and writable by any library in the process.
+  - No duration may round to **zero cycles**, and every emitted word must
+    fit four hex digits. A vanished burst is a real failure, and emitting
+    `0000` would hide it.
+  - Parsing accepts only `0000` in word 0. `0100` (unmodulated) is deferred;
+    `5000`/`5001` are references into a Pronto-internal protocol table, not
+    waveforms. Carrier agreement is checked by comparing frequency *words*,
+    never hertz — decoding `006D` yields 38 028.9 Hz, so comparing that to a
+    declared `38000` would reject correctly generated output.
 - **R13 — Cross-check every additional form the key holds.** Render each
   stored form independently and diff them. Bit/pulse pattern must match
   exactly; only the trailing gap-fill may drift (harmless capture rounding,
@@ -287,40 +312,31 @@ is the *only* place trust comes from — so it has to hold up on its own.
 - **R21 — CI runs the validator and the cross-check on every change.** R11
   and R13, enforced automatically on every commit.
 
-## 12. Open decisions
+## 12. Resolved decisions
 
-Everything above holds regardless of how these land — but each one
-reshapes the build materially enough that it's worth answering before
-writing code.
+These six were open in v0.3. All are now closed; the reasoning is kept
+because it is what makes each reversible.
 
-1. **Personal tool, or open to contributions?** Decides whether R18's
-   citations need to survive a stranger's review, and whether there's a
-   PR/issue workflow at all.
-2. **Git-only, or a hosted lookup surface?** R16 (a script) is nearly free.
-   R17 (a searchable site) is a real, ongoing commitment.
-3. **Which form types are first-class in v1?** `irp` and `pronto` cover
-   R12–R13 on their own. Is a `raw` (lircd-style microsecond timing) form
-   also first-class, or normalized into `irp`/`pronto` at authoring time
-   and not stored separately?
-4. **Is the generated index (R14) checked into git, or computed on
-   demand?** A committed index is diffable and works with a plain file
-   browser; computing it on demand means one less generated artifact to
-   keep in sync.
-5. **Does "Untested" belong in the format at all?** The BX510's
-   alternate-subdevice guesses are genuinely useful *as an open question
-   for someone to resolve* — but only if a form can say "unconfirmed" out
-   loud instead of every stored form implying it works.
-6. **Do custom layouts get committed to this repo, or just supported by
-   the schema?** The `original` layout (R8) is an objective, citable fact
-   worth sharing like any other entry. A person's own rearrangement is a
-   preference, not a fact about the remote — it may belong in an app's
-   local storage instead, using the same shape without ever reaching this
-   repo.
+| # | Decision | Resolution | Consequence |
+|---|---|---|---|
+| 1 | Personal tool, or open to contributions? | **Personal tool** for v1 | No PR/review workflow. R18's citations hold to the same standard regardless — they are what makes the data re-checkable later, by you. Reversible without a rewrite. |
+| 2 | Git-only, or a hosted lookup surface? | **Both** — R16 *and* R17 | The site is a generated static page with no framework and no server, so upkeep stays near zero. If it ever grows a framework, revisit this rather than absorb the maintenance quietly. |
+| 3 | Which form types are first-class? | `irp`, `raw`, `pronto` — **all three** | Most public captures are lircd-style microsecond timings; normalizing at authoring time would discard the evidence the citation points at. Costs `raw` its own comparison tolerance and a `truncated` flag. |
+| 4 | Is the generated index committed? | **Committed** | Diffable, browsable without running anything. CI regenerates the whole tree and fails on drift *or* orphans, so it cannot go stale. |
+| 5 | Does "Untested" belong in the format? | **Yes** | The BX510 fallback subdevices are useful precisely *as open questions*; without the tier they would have to masquerade as working codes. The tier alone is not enough to represent them — competing candidates need candidate groups, see R4. |
+| 6 | Do custom layouts get committed? | **Schema-only** | The repo commits `original: true` layouts, an objective citable fact (R8). A personal rearrangement uses the identical shape but lives in an app's local storage. Follows from decision 1. |
+
+**Implementation choices**, recorded here because they are load-bearing for
+R12: Python 3.12+, with `jsonschema` as the only runtime dependency.
+Protocol encoders are hand-written, with no external reference
+implementation at runtime — which makes an **independently cited golden
+vector per protocol** the only test layer that can catch a wrong constant,
+and therefore a hard gate on adding one. See DESIGN.md §5 and D18.
 
 ---
 
-**Smallest useful first slice:** R1, R4–R6, R12–R13 don't need layouts, a
-hosted index, or a resolved Open Decision 1 to be worth building. The
-schema, a compiler that renders and cross-checks one remote's keys, and the
-three devices above re-authored in this format as seed data is enough to
-prove the shape before deciding how far to take it.
+**Build plan:** DESIGN.md §8 has the seven phases. Phases 0 and 1 are
+implemented — the schema, the Pronto codec, the NEC1 encoder, and 148 tests.
+Phase 2 adds candidate groups, cross-checking and the validator; Phase 3
+adds the three devices from §1 as seed data. DESIGN.md §9 lists the further
+edits this document needs, each assigned to the phase that makes it true.

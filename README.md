@@ -5,8 +5,11 @@ A database of IR remote configurations, organized so you can look up a
 remote codes that control it, along with **why each one is trustworthy**
 and not just a guess someone copied from a forum.
 
-**Status:** design phase. The schema below is a proposal (`SPEC.md`); no
-tooling exists yet. See §12 of the spec for what's still an open decision.
+**Status:** the format is settled ([SPEC.md](SPEC.md)) and the core
+compiler works — Phases 0 and 1 of [DESIGN.md](DESIGN.md) §8. One protocol
+(NEC1), no seed data yet, and NEC1's byte-level correctness is **not yet
+independently verified** (DESIGN.md §12 says exactly what is missing and
+why that matters).
 
 ## Why
 
@@ -55,9 +58,24 @@ remote, or a person's own rearrangement) is described separately from the
 code, using CSS's own `grid-template-areas` syntax rather than a bespoke
 coordinate system.
 
+## Try it
+
+```console
+$ pip install -e ".[dev]"
+$ rl encode --protocol NEC1 --device 0x11 --subdevice 0xEE \
+      --function 0x18 --carrier 38000
+0000 006D 0022 0002 0157 00AC 0015 0040 0015 0015 ...
+
+$ pytest          # 148 tests
+$ rl build --check # the CI gate
+```
+
 ## Read next
 
-**[SPEC.md](SPEC.md)** — the full requirements spec: problem statement,
-prior art (IRP notation, Pronto Hex, LIRC, IRDB, SmartIR), the data model,
-layout, compiling and cross-validation, and the open decisions still on the
-table.
+**[SPEC.md](SPEC.md)** — the requirements: problem statement, prior art (IRP
+notation, Pronto Hex, LIRC, IRDB, SmartIR), the data model, layout,
+compiling and cross-validation, and the resolved decisions.
+
+**[DESIGN.md](DESIGN.md)** — how it is built: 33 numbered decisions, the
+Pronto contract to the byte, the seven-phase plan, and what is not yet
+proven.

@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/remote-ledger/schema/unresolved.schema.json",
+  "title": "Negative results",
+  "description": "Devices checked and found to have no known remote (R20, D12). Lives at the repo root, not under remotes/, so remotes/**/*.json stays uniformly one-file-one-remote with no reserved names.",
+  "type": "array",
+  "x-order": "set",
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["device", "checked", "searched"],
+    "properties": {
+      "device": { "type": "string", "minLength": 1 },
+      "checked": { "type": "string", "format": "date", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+      "searched": {
+        "type": "array", "x-order": "set", "minItems": 1,
+        "items": { "type": "string", "minLength": 1 }
+      },
+      "note": { "type": "string", "minLength": 1 }
+    }
+  }
+}

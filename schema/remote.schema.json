@@ -1,0 +1,270 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/remote-ledger/schema/remote.schema.json",
+  "title": "Remote Ledger remote file",
+  "description": "One remote = one self-contained JSON file (R1). Array fields carry x-order (D20): 'semantic' is never reordered, 'set' is canonically sorted in generated artifacts.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["manufacturer", "model", "protocol", "keys"],
+  "properties": {
+    "manufacturer": { "type": "string", "minLength": 1 },
+    "model": { "type": "string", "minLength": 1 },
+    "aliases": {
+      "description": "Other model numbers for the identical physical remote (R2).",
+      "type": "array", "x-order": "set",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "controls": {
+      "description": "The products this remote operates (R2). Distinct from aliases.",
+      "type": "array", "x-order": "set",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "protocol": { "$ref": "#/$defs/protocol" },
+    "variants": {
+      "description": "Declares every non-primary candidate group (D26). An entry with an override auto-expands (D17).",
+      "type": "object",
+      "propertyNames": { "$ref": "#/$defs/candidateId" },
+      "additionalProperties": { "$ref": "#/$defs/variant" }
+    },
+    "keys": {
+      "type": "object", "minProperties": 1,
+      "propertyNames": { "$ref": "#/$defs/keyName" },
+      "additionalProperties": { "$ref": "#/$defs/key" }
+    },
+    "layouts": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/$defs/layout" }
+    }
+  },
+  "$defs": {
+    "keyName": {
+      "description": "A legal CSS identifier (D29). R11 leans on CSS grid for collision-checking, which holds only while every area name is one. Excludes '.' (a gap in grid-template-areas) and whitespace (a cell separator).",
+      "type": "string",
+      "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+    },
+    "candidateId": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$" },
+    "formId": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$" },
+    "hexOrInt": {
+      "oneOf": [
+        { "type": "integer", "minimum": 0, "maximum": 65535 },
+        { "type": "string", "pattern": "^0[xX][0-9A-Fa-f]{1,4}$" }
+      ]
+    },
+    "citation": {
+      "type": "string", "minLength": 1,
+      "description": "Independently checkable (R18): a URL, a manual, an official code table, or a same-repo cross-reference."
+    },
+    "claims": {
+      "description": "Citation sidecar (D27). Every field that overrides a default or widens what passes requires an entry with both keys non-empty.",
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["reason", "source"],
+        "properties": {
+          "reason": { "type": "string", "minLength": 1 },
+          "source": { "$ref": "#/$defs/citation" }
+        }
+      }
+    },
+    "protocol": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["carrierHz", "minSends"],
+      "properties": {
+        "name": {
+          "type": "string", "minLength": 1,
+          "description": "A key in the D18 registry. Omitted for a capture whose protocol is not identified yet -- which forbids irp forms (D24)."
+        },
+        "carrierHz": {
+          "description": "Required and authoritative; the registry's nominal_carrier_hz is informational only (D3). Strictly positive (D1a).",
+          "type": "integer", "minimum": 10000, "maximum": 500000
+        },
+        "minSends": {
+          "description": "Hardware fact, carried to output, never baked into the waveform (D3a).",
+          "type": "integer", "minimum": 1, "maximum": 10
+        },
+        "unitUs": { "type": "integer", "minimum": 1, "maximum": 10000 },
+        "defaultGapUs": { "type": "integer", "minimum": 1, "maximum": 1000000 },
+        "tolerance": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "absUs": { "type": "integer", "minimum": 0, "maximum": 10000 },
+            "relative": { "type": "number", "minimum": 0, "maximum": 0.5 },
+            "gapUs": { "type": "integer", "minimum": 0, "maximum": 1000000 }
+          }
+        },
+        "claims": { "$ref": "#/$defs/claims" }
+      }
+    },
+    "variant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["confidence", "source"],
+      "properties": {
+        "label": { "type": "string", "minLength": 1, "description": "Defaults to the candidate id (D26)." },
+        "confidence": { "$ref": "#/$defs/confidence" },
+        "source": { "$ref": "#/$defs/citation" },
+        "override": {
+          "description": "Only device, subdevice, function. Never protocol -- one protocol per remote file in v1 (D23).",
+          "type": "object",
+          "additionalProperties": false,
+          "minProperties": 1,
+          "properties": {
+            "device": { "$ref": "#/$defs/hexOrInt" },
+            "subdevice": { "$ref": "#/$defs/hexOrInt" },
+            "function": { "$ref": "#/$defs/hexOrInt" }
+          }
+        }
+      }
+    },
+    "confidence": {
+      "description": "R5's tiers. 'derived' is excluded from selection entirely (D7) and validated solely by D9 (D5a).",
+      "enum": ["confirmed", "verified", "plausible", "untested", "derived"]
+    },
+    "key": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["forms"],
+      "properties": {
+        "forms": {
+          "description": "Partitioned into candidate groups by the 'candidate' tag (D16). Order is semantic: D7's final precedence tie-break is array position.",
+          "type": "array", "x-order": "semantic", "minItems": 1,
+          "items": { "$ref": "#/$defs/form" }
+        }
+      }
+    },
+    "form": {
+      "type": "object",
+      "oneOf": [
+        { "$ref": "#/$defs/irpForm" },
+        { "$ref": "#/$defs/rawForm" },
+        { "$ref": "#/$defs/prontoForm" }
+      ]
+    },
+    "formCommon": {
+      "id": { "$ref": "#/$defs/formId" },
+      "candidate": { "$ref": "#/$defs/candidateId" },
+      "confidence": { "$ref": "#/$defs/confidence" },
+      "source": { "$ref": "#/$defs/citation" },
+      "verifiedBy": { "type": "string", "minLength": 1 },
+      "claims": { "$ref": "#/$defs/claims" },
+      "expandedFrom": { "$ref": "#/$defs/expandedFrom" }
+    },
+    "expandedFrom": {
+      "description": "Marks a generated cache, never an authored override (D33). A form without this field is authored, and that is what suppresses expansion.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["variant", "form"],
+      "properties": {
+        "variant": { "$ref": "#/$defs/candidateId" },
+        "form": { "$ref": "#/$defs/formId" },
+        "overridden": { "type": "array", "x-order": "set", "items": { "type": "string" } },
+        "inherited": { "type": "array", "x-order": "set", "items": { "type": "string" } }
+      }
+    },
+    "irpForm": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "device", "function", "confidence"],
+      "properties": {
+        "type": { "const": "irp" },
+        "device": { "$ref": "#/$defs/hexOrInt" },
+        "subdevice": { "$ref": "#/$defs/hexOrInt" },
+        "function": { "$ref": "#/$defs/hexOrInt" },
+        "id": { "$ref": "#/$defs/formId" },
+        "candidate": { "$ref": "#/$defs/candidateId" },
+        "confidence": { "$ref": "#/$defs/confidence" },
+        "source": { "$ref": "#/$defs/citation" },
+        "verifiedBy": { "type": "string", "minLength": 1 },
+        "claims": { "$ref": "#/$defs/claims" },
+        "expandedFrom": { "$ref": "#/$defs/expandedFrom" }
+      }
+    },
+    "rawForm": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "intro", "confidence"],
+      "properties": {
+        "type": { "const": "raw" },
+        "intro": {
+          "description": "Alternating mark/space microseconds. Order is the signal. A present sequence holds at least one duration; omit the key rather than writing [] (D31).",
+          "type": "array", "x-order": "semantic",
+          "minItems": 1, "maxItems": 2048,
+          "items": { "type": "integer", "minimum": 1, "maximum": 1000000 }
+        },
+        "repeat": {
+          "type": "array", "x-order": "semantic",
+          "minItems": 1, "maxItems": 2048,
+          "items": { "type": "integer", "minimum": 1, "maximum": 1000000 }
+        },
+        "truncated": {
+          "description": "Declares that the final space is not evidence (D4a). Requires a claims entry with reason and source (D27).",
+          "type": "boolean"
+        },
+        "carrierHz": { "type": "integer", "minimum": 10000, "maximum": 500000 },
+        "id": { "$ref": "#/$defs/formId" },
+        "candidate": { "$ref": "#/$defs/candidateId" },
+        "confidence": { "$ref": "#/$defs/confidence" },
+        "source": { "$ref": "#/$defs/citation" },
+        "verifiedBy": { "type": "string", "minLength": 1 },
+        "claims": { "$ref": "#/$defs/claims" },
+        "expandedFrom": { "$ref": "#/$defs/expandedFrom" }
+      }
+    },
+    "prontoForm": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "hex", "confidence"],
+      "properties": {
+        "type": { "const": "pronto" },
+        "hex": { "type": "string", "pattern": "^[0-9A-Fa-f]{4}([ \t\n]+[0-9A-Fa-f]{4})+$" },
+        "derivedFrom": {
+          "description": "A form id in the same candidate group, itself non-derived (D21). For a derived form this IS its citation (D30) -- and the only one CI verifies.",
+          "$ref": "#/$defs/formId"
+        },
+        "id": { "$ref": "#/$defs/formId" },
+        "candidate": { "$ref": "#/$defs/candidateId" },
+        "confidence": { "$ref": "#/$defs/confidence" },
+        "source": { "$ref": "#/$defs/citation" },
+        "verifiedBy": { "type": "string", "minLength": 1 },
+        "claims": { "$ref": "#/$defs/claims" },
+        "expandedFrom": { "$ref": "#/$defs/expandedFrom" }
+      },
+      "allOf": [
+        {
+          "description": "D30: a derived form must be type pronto, must name its parent, and must NOT carry a source -- a second human-written claim about mechanically produced data could only be unverifiable decoration.",
+          "if": { "properties": { "confidence": { "const": "derived" } }, "required": ["confidence"] },
+          "then": { "required": ["derivedFrom"], "not": { "required": ["source"] } },
+          "else": { "not": { "required": ["derivedFrom"] } }
+        }
+      ]
+    },
+    "layout": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["areas"],
+      "properties": {
+        "original": { "type": "boolean", "description": "At most one layout may set this (R8, D14)." },
+        "label": { "type": "string", "minLength": 1 },
+        "source": { "$ref": "#/$defs/citation" },
+        "areas": {
+          "description": "A CSS grid-template-areas string per row (R9). Row order is the geometry.",
+          "type": "array", "x-order": "semantic", "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "printedLabels": {
+          "type": "object",
+          "propertyNames": { "$ref": "#/$defs/keyName" },
+          "additionalProperties": { "type": "string" }
+        },
+        "shape": {
+          "type": "object",
+          "propertyNames": { "$ref": "#/$defs/keyName" },
+          "additionalProperties": { "enum": ["rect", "circle", "rocker"] }
+        }
+      }
+    }
+  }
+}
