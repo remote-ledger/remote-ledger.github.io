@@ -20,7 +20,11 @@ from jsonschema import Draft202012Validator
 from . import protocols
 from .serialize import load
 
-SCHEMA_DIR = Path(__file__).resolve().parents[2] / "schema"
+#: Package data, not a repo-relative path: a non-editable ``pip install .``
+#: has no repo checkout, and `rl validate` would die with an uncaught
+#: FileNotFoundError. Tests import this rather than recomputing it, so the
+#: suite exercises the same resolution the installed command uses.
+SCHEMA_DIR = Path(__file__).resolve().parent / "schema"
 
 
 @dataclass(frozen=True)
@@ -60,18 +64,34 @@ def semantic_problems(doc: Any, where: str) -> Iterator[Problem]:
             "needs an IRP string with its source, an independently cited "
             "golden vector, and an invariant test (D18)",
         )
-    if name is None:
-        # D24: nothing can dispatch an encoder without a protocol, so a file
-        # with an unidentified protocol is raw/pronto only.
-        for key, spec in (doc.get("keys") or {}).items():
-            for i, form in enumerate(spec.get("forms") or []):
-                if isinstance(form, dict) and form.get("type") == "irp":
-                    yield Problem(
-                        f"{where}['keys'][{key!r}]['forms'][{i}]",
-                        "an irp form needs protocol.name, which this file "
-                        "omits; an unidentified protocol is raw/pronto only "
-                        "(D24)",
-                    )
+    for key, spec in (doc.get("keys") or {}).items():
+        if not isinstance(spec, dict):
+            continue
+        for i, form in enumerate(spec.get("forms") or []):
+            if not isinstance(form, dict):
+                continue
+            at = f"{where}['keys'][{key!r}]['forms'][{i}]"
+            # D24: nothing can dispatch an encoder without a protocol, so a
+            # file with an unidentified protocol is raw/pronto only.
+            if name is None and form.get("type") == "irp":
+                yield Problem(
+                    at,
+                    "an irp form needs protocol.name, which this file omits; "
+                    "an unidentified protocol is raw/pronto only (D24)",
+                )
+            # D4a: even length unless truncated. JSON Schema cannot express
+            # modulo, so this is the semantic half of the rule the schema
+            # states in prose.
+            if form.get("type") == "raw" and not form.get("truncated"):
+                for seq in ("intro", "repeat"):
+                    values = form.get(seq)
+                    if isinstance(values, list) and len(values) % 2:
+                        yield Problem(
+                            f"{at}[{seq!r}]",
+                            f"has {len(values)} durations; a sequence must "
+                            "have even length so it ends on a space. Only a "
+                            "form declared `truncated` may end on a mark (D4a)",
+                        )
 
 
 def validate_file(path: Path) -> list[Problem]:

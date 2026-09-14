@@ -16,6 +16,7 @@ sorted -- byte-stability has to come from somewhere.
 from __future__ import annotations
 
 import json
+import uuid
 from decimal import Decimal
 from pathlib import Path
 from typing import Any
@@ -23,10 +24,33 @@ from typing import Any
 from .errors import ValidationError
 from .numeric import canon_decimal
 
-#: Placeholder marker. U+0000 cannot appear in any ledger string (the schema's
-#: patterns and minLength constraints exclude it), so a collision is not
-#: reachable from valid input.
+#: Placeholder prefix. A per-call uuid4 makes the token unguessable, and
+#: `dumps` additionally requires each token to occur exactly once in the
+#: serialized text. The earlier fixed "\x00D<n>\x00" marker was corruptible:
+#: U+0000 is *not* excluded by the schema (`model`, `citation`, `reason` and
+#: `printedLabels` values carry no pattern), so a string equal to a token was
+#: silently replaced by a bare number.
 _SENTINEL = "\x00"
+
+
+def _reject_duplicate_keys(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+    """Refuse duplicate object keys rather than silently keeping the last.
+
+    A file with an accidentally duplicated ``carrierHz`` would otherwise
+    validate and compile against a value the author cannot see in their own
+    diff, and ``rl fmt`` would rewrite the file with the losing key erased.
+    The same argument D28 makes for ``parse_constant`` applies: catch it at
+    parse time, before any schema or bounds check runs.
+    """
+    seen: dict[str, Any] = {}
+    for key, value in pairs:
+        if key in seen:
+            raise ValidationError(
+                f"duplicate JSON key {key!r}; one of the two values would be "
+                "silently discarded"
+            )
+        seen[key] = value
+    return seen
 
 
 def _reject_constant(token: str) -> Any:
@@ -50,22 +74,27 @@ def loads(text: str) -> Any:
     Decimal is built from the literal *text*, so it is exactly
     ``Decimal("0.15")``. ``parse_int`` stays default -- Python ints are exact.
     """
-    return json.loads(text, parse_float=Decimal, parse_constant=_reject_constant)
+    return json.loads(
+        text,
+        parse_float=Decimal,
+        parse_constant=_reject_constant,
+        object_pairs_hook=_reject_duplicate_keys,
+    )
 
 
 def load(path: str | Path) -> Any:
     return loads(Path(path).read_text(encoding="utf-8"))
 
 
-def _substitute_decimals(obj: Any, out: dict[str, str]) -> Any:
+def _substitute_decimals(obj: Any, out: dict[str, str], nonce: str) -> Any:
     if isinstance(obj, Decimal):
-        token = f"{_SENTINEL}D{len(out)}{_SENTINEL}"
+        token = f"{_SENTINEL}{nonce}.{len(out)}{_SENTINEL}"
         out[token] = canon_decimal(obj)
         return token
     if isinstance(obj, dict):
-        return {k: _substitute_decimals(v, out) for k, v in obj.items()}
+        return {k: _substitute_decimals(v, out, nonce) for k, v in obj.items()}
     if isinstance(obj, (list, tuple)):
-        return [_substitute_decimals(v, out) for v in obj]
+        return [_substitute_decimals(v, out, nonce) for v in obj]
     return obj
 
 
@@ -78,18 +107,27 @@ def dumps(obj: Any, *, sort_keys: bool = True) -> str:
     back afterwards.
     """
     tokens: dict[str, str] = {}
-    prepared = _substitute_decimals(obj, tokens)
+    prepared = _substitute_decimals(obj, tokens, uuid.uuid4().hex)
     text = json.dumps(
         prepared,
         indent=2,
         sort_keys=sort_keys,
         ensure_ascii=False,
         separators=(",", ": "),
+        # Symmetrical with loads' parse-time rejection: writing a NaN or
+        # Infinity literal would produce an artifact this module's own loads
+        # refuses, and the failure would surface in a different command.
+        allow_nan=False,
     )
     for token, number in tokens.items():
         quoted = json.dumps(token, ensure_ascii=False)
-        if quoted not in text:  # pragma: no cover - defensive
-            raise AssertionError(f"decimal placeholder {token!r} vanished")
+        occurrences = text.count(quoted)
+        if occurrences != 1:
+            raise ValidationError(
+                f"decimal placeholder appeared {occurrences} times instead of "
+                "once; a string value collided with it, and substituting "
+                "would corrupt the document"
+            )
         text = text.replace(quoted, number)
     return text + "\n"
 

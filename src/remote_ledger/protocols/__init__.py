@@ -15,6 +15,7 @@ Backlog, each blocked on that gate and none scheduled: ``NEC2``, ``NEC``
 
 from __future__ import annotations
 
+from ..errors import ValidationError
 from .base import Protocol
 from .nec import NEC1
 
@@ -24,8 +25,6 @@ __all__ = ["Protocol", "REGISTRY", "NEC1"]
 
 
 def get(name: str) -> Protocol:
-    from ..errors import ValidationError
-
     try:
         return REGISTRY[name]
     except KeyError:

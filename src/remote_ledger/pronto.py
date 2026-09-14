@@ -19,6 +19,8 @@ from .errors import ProntoParseError
 from .numeric import (
     BURST_CYCLES_MAX,
     BURST_CYCLES_MIN,
+    CARRIER_HZ_MAX,
+    CARRIER_HZ_MIN,
     FREQ_WORD_MAX,
     FREQ_WORD_MIN,
     PAIR_COUNT_MAX,
@@ -42,6 +44,11 @@ _WORD_RE = re.compile(r"\A[0-9A-Fa-f]{4}\Z")
 
 def frequency_word(carrier_hz: int) -> int:
     """D6 rule 2: the header's frequency word for a carrier in hertz."""
+    # Checked here rather than only in IrSignal: `decode` needs the word
+    # before it can build a signal, so a zero carrier would otherwise escape
+    # as decimal.DivisionByZero -- which is not a LedgerError, so the CLI
+    # would print a traceback instead of an error line.
+    check_bounds("carrierHz", carrier_hz, CARRIER_HZ_MIN, CARRIER_HZ_MAX)
     with decimal_context():
         word = round_half_up(Decimal(1_000_000) / (Decimal(carrier_hz) * PRONTO_CLOCK_US))
     check_bounds("frequency word", word, FREQ_WORD_MIN, FREQ_WORD_MAX)
@@ -72,13 +79,18 @@ def cycles_to_us(cycles: int, period: Decimal) -> int:
         return round_half_up(Decimal(cycles) * period)
 
 
-def quantize(signal: IrSignal) -> tuple[tuple[int, ...], tuple[int, ...]]:
+def quantize(
+    signal: IrSignal, *, freq_word: int | None = None
+) -> tuple[tuple[int, ...], tuple[int, ...]]:
     """Both sequences as carrier-cycle counts, at the signal's own carrier.
 
     D8 step 4 uses this so that an ``irp`` vs ``pronto`` comparison is exact
-    by construction rather than by luck.
+    by construction rather than by luck. ``freq_word`` lets a caller that has
+    already computed it avoid doing so twice.
     """
-    period = period_us(frequency_word(signal.carrier_hz))
+    if freq_word is None:
+        freq_word = frequency_word(signal.carrier_hz)
+    period = period_us(freq_word)
     out = []
     for name, seq in zip(("intro", "repeat"), signal.sequences):
         cycles = []
@@ -107,7 +119,7 @@ def encode(signal: IrSignal) -> str:
     and puts its whole sequence in the repeat slot.
     """
     freq = frequency_word(signal.carrier_hz)
-    intro_cycles, repeat_cycles = quantize(signal)
+    intro_cycles, repeat_cycles = quantize(signal, freq_word=freq)
     n1, n2 = len(intro_cycles) // 2, len(repeat_cycles) // 2
     check_bounds("n1", n1, 0, PAIR_COUNT_MAX)
     check_bounds("n2", n2, 0, PAIR_COUNT_MAX)
@@ -200,4 +212,4 @@ def _word_to_hz(freq_word: int) -> int:
     describes for cycles -> microseconds.
     """
     with decimal_context():
-        return round_half_up(Decimal(1_000_000) / (Decimal(freq_word) * PRONTO_CLOCK_US))
+        return round_half_up(Decimal(1_000_000) / period_us(freq_word))

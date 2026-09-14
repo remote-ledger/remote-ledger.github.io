@@ -1201,9 +1201,9 @@ remote-ledger/
 ├── README.md  SPEC.md  DESIGN.md
 ├── unresolved.json                     negative results — see D12
 ├── .gitattributes                      pins LF on generated JSON (D20)
-├── schema/
-│   ├── remote.schema.json              JSON Schema draft 2020-12
-│   └── unresolved.schema.json
+├── src/remote_ledger/schema/           package data, not repo-relative:
+│   ├── remote.schema.json              a non-editable install has no
+│   └── unresolved.schema.json          checkout to read from
 ├── remotes/                            hand-authored, the actual ledger.
 │   ├── sony/RMT-B118P.json             `remotes/**/*.json` is uniformly
 │   ├── topping/RC-15A.json             one remote — no reserved names

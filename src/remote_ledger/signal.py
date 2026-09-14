@@ -15,8 +15,8 @@ from .numeric import (
     CARRIER_HZ_MAX,
     CARRIER_HZ_MIN,
     MAX_DURATIONS_PER_SEQUENCE,
-    RAW_DURATION_US_MAX,
     RAW_DURATION_US_MIN,
+    SIGNAL_DURATION_US_MAX,
     check_bounds,
 )
 
@@ -38,6 +38,25 @@ class IrSignal:
     ending: tuple[int, ...] = field(default=())
 
     def __post_init__(self) -> None:
+        # Coerce first. A list survives `frozen=True` as a mutable reference,
+        # makes the signal unhashable, and makes two signals that encode to
+        # the identical Pronto string compare unequal -- which would break
+        # D8's cross-check, since a raw form's durations arrive from
+        # json.loads as lists.
+        for name in ("intro", "repeat", "ending"):
+            value = getattr(self, name)
+            if not isinstance(value, tuple):
+                object.__setattr__(self, name, tuple(value))
+
+        # Before the shape checks, so `ending=(564,)` reports the real reason
+        # rather than "must have even length".
+        if self.ending:
+            raise ValidationError(
+                "IrSignal.ending is reserved and must be empty in v1 (D1): "
+                "Pronto carries only two sequences, so an ending would be "
+                "dropped on emission rather than encoded"
+            )
+
         # D1a: strictly positive. v0.1's `carrier_hz = 0` was a representable
         # state with no defined encoding -- D6 divides by the carrier and
         # defines only the modulated `0000` output.
@@ -46,12 +65,6 @@ class IrSignal:
         for name in ("intro", "repeat", "ending"):
             self._check_sequence(name, getattr(self, name))
 
-        if self.ending:
-            raise ValidationError(
-                "IrSignal.ending is reserved and must be empty in v1 (D1): "
-                "Pronto carries only two sequences, so an ending would be "
-                "dropped on emission rather than encoded"
-            )
         if not self.intro and not self.repeat:
             raise ValidationError(
                 "IrSignal has neither an intro nor a repeat sequence; "
@@ -77,7 +90,7 @@ class IrSignal:
                     "microseconds (D1)"
                 )
             check_bounds(
-                f"{name}[{i}]", d, RAW_DURATION_US_MIN, RAW_DURATION_US_MAX
+                f"{name}[{i}]", d, RAW_DURATION_US_MIN, SIGNAL_DURATION_US_MAX
             )
 
     @property

@@ -19,6 +19,8 @@ from contextlib import contextmanager
 from decimal import Decimal
 from typing import Iterator
 
+from .errors import BoundsError
+
 # D6 rule 2: the Pronto base clock, as a string-constructed Decimal so no
 # float ever enters the calculation.
 PRONTO_CLOCK_US = Decimal("0.241246")
@@ -35,7 +37,15 @@ CARRIER_HZ_MIN, CARRIER_HZ_MAX = 10_000, 500_000
 FREQ_WORD_MIN, FREQ_WORD_MAX = 1, 0xFFFF
 BURST_CYCLES_MIN, BURST_CYCLES_MAX = 1, 0xFFFF
 PAIR_COUNT_MIN, PAIR_COUNT_MAX = 0, 0xFFFF
+#: Bound on an *authored* raw duration; the schema enforces the same range.
 RAW_DURATION_US_MIN, RAW_DURATION_US_MAX = 1, 1_000_000
+#: Bound on a duration inside an IrSignal, which includes values that came
+#: back through `cycles_to_us`. D25's cycles -> microseconds step re-rounds,
+#: so a duration authored at exactly RAW_DURATION_US_MAX returns as 1_000_004
+#: and would fail the authoring bound -- breaking the round-trip property for
+#: no reason. The slack is one carrier period at the lowest legal carrier
+#: (~100 us at 10 kHz), which is the most a single requantization can add.
+SIGNAL_DURATION_US_MAX = RAW_DURATION_US_MAX + 100
 # Duration entries -- `n` in D31's notation -- not Pronto burst pairs, of
 # which this is 1024.
 MAX_DURATIONS_PER_SEQUENCE = 2048
@@ -99,8 +109,6 @@ def canon_decimal(d: Decimal) -> str:
 
 def check_bounds(name: str, value: int | Decimal, low, high) -> None:
     """Raise BoundsError unless low <= value <= high (D28)."""
-    from .errors import BoundsError
-
     if not (low <= value <= high):
         raise BoundsError(
             f"{name} is {value}; D28 requires {low} <= {name} <= {high}"

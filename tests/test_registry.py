@@ -43,7 +43,17 @@ def test_gate_2_vector_status_is_declared(name):
     """
     entry = json.loads(VECTOR_INDEX.read_text())[name]
     if entry.get("gate2_golden_vector"):
-        assert Path(entry["gate2_golden_vector"]).name
+        # Not just a non-empty string: a typo'd or deleted filename would
+        # otherwise report gate 2 MET for a protocol with no vector at all,
+        # turning the one test layer that catches a wrong constant into a
+        # rubber stamp.
+        vector = VECTORS / entry["gate2_golden_vector"]
+        assert vector.is_file(), f"{name}: cited vector {vector} is missing"
+        assert vector.read_text().strip(), f"{name}: cited vector is empty"
+        assert any(
+            entry["gate2_golden_vector"] in t.read_text()
+            for t in Path(__file__).parent.glob("test_*.py")
+        ), f"{name}: no test compares against {entry['gate2_golden_vector']}"
     else:
         reason = entry.get("gate2_pending_reason", "")
         assert len(reason) > 60, (
