@@ -1,6 +1,6 @@
 # Remote Ledger — Requirements Spec
 
-**Draft v0.4** · Status: §12 resolved; Phases 0-1 implemented · Depends on
+**Draft v0.5** · Status: §12 resolved; Phases 0-2 implemented · Depends on
 nothing upstream (self-contained)
 
 A self-contained JSON file per remote, where every key can hold several
@@ -107,20 +107,110 @@ understand or compile it on its own.
   level, not repeated on every key. Minimum sends is a fact about the
   hardware (Sony SIRC needs 3) — it has to survive independent of which
   form produced a given key's code.
+
+  **Exactly one protocol per file.** No form and no variant may override it.
+  A remote whose buttons genuinely speak two protocols — some universal
+  remotes switch by mode — is out of scope for v1; it gets an entry for the
+  protocol that is known, with the rest recorded as absent, the same honest
+  fallback R7 and R20 use elsewhere.
+
+  The block's fields: `carrierHz` and `minSends` are required. `name` names
+  a protocol in the registry and may be **omitted** for a capture whose
+  protocol has not been identified, which then forbids `irp` forms in that
+  file. `unitUs` overrides the registry's IRP unit, `defaultGapUs` supplies
+  a terminal gap where the protocol declares no extent, and `tolerance`
+  loosens the cross-check of §7. Each of those three widens what passes, so
+  each requires a citation — see R18.
 - **R4 — Each key holds a `forms` array, not a single code.** A parametric
   form (device/function values against the remote's declared protocol), a
   raw capture, and a compiled Pronto Hex string can all coexist for one
   button. None of them is required to agree until the compiler checks (§7).
+
+  **Forms are partitioned into candidate groups, and the distinction is the
+  whole point.** "Several forms on one key" does two unrelated jobs:
+
+  | Relationship | Means | Must agree? |
+  |---|---|---|
+  | Forms *within* a candidate | Several representations of **one signal** — an `irp` form, its `raw` capture, a `pronto` string | **Yes.** Disagreement is a real error (R13) |
+  | Candidates *within* a key | Several hypotheses about **which signal** the device answers to | **No.** Disagreement is the entire point |
+
+  Every form carries an optional `candidate` tag, defaulting to `"primary"`.
+  §1's own BX510 example — subdevice 218 verified, 234 and 242 offered as
+  untested fallbacks — is unrepresentable without this: different subdevices
+  necessarily produce different waveforms, so cross-checking them against
+  each other would reject exactly the data this format exists to hold. The
+  `primary` group is a key's default answer; every other group compiles
+  alongside it as a labelled fallback.
+
+  **Every form has an `id`, unique within its key and never positional.**
+  The id is `<candidate>.<type>`, assigned automatically only where that is
+  unique within the group; a group holding two forms of one type requires an
+  explicit `id` on each. Positional ids would silently retarget a reference
+  when two same-type forms were reordered.
+
+  **A `raw` form is a list of alternating mark/space microsecond
+  durations.** A present sequence holds at least one duration — the way to
+  say "no repeat sequence" is to omit the key, not to write `[]` — and has
+  even length, so it ends on a space. The exception is `truncated`, which
+  **declares** that the final space is not evidence, because a capture tool
+  stops when the button is released. A truncated sequence may end on a mark;
+  its final space is discarded rather than adjusted, and replaced by what
+  the protocol's extent implies, or by `defaultGapUs` where there is no
+  extent. A capture whose marks already exceed the extent is an error, never
+  clamped — clamping would fabricate a waveform that fails the extent it
+  claims. Nothing is *inferred*: an undeclared short final gap is a
+  mismatch, and fails.
 - **R5 — Confidence and citation attach to the form, not the file.** One
   remote's Power button can be Verified while its Home button is Untested.
   Every form names *how* it was established: a URL, "re-derived from
   `<file>`'s protocol, see commit `<sha>`," "confirmed on hardware,
   2026-09-14."
-- **R6 — A stated precedence rule resolves conflicting forms.** Confidence
-  first — confirmed > verified > plausible > untested. Among equal tiers,
-  form type breaks the tie: `irp` > `raw` > `pronto`, since a parametric
-  form is what you'd want to re-render from anyway. The compiler follows
-  this rule; it's never a coin flip.
+
+  **A `derived` form is the one exception, and it is a stronger citation,
+  not a missing one.** It must be `type: pronto` — the compiler's only
+  output is Pronto Hex, so nothing can produce a derived `irp` or `raw`
+  form — and it must name its parent with `derivedFrom`, a form id in the
+  same candidate group that is not itself derived. It must **not** carry a
+  `source`: a second, human-written claim about mechanically produced data
+  could only be unverifiable decoration, or a contradiction. `derivedFrom`
+  *is* its citation, and R18 already admits that shape. It is also the only
+  citation in the ledger that is checked automatically — §7
+  re-derives it from the named parent and compares, on every build. Every
+  other citation is a pointer a person must go and check.
+- **R6 — A stated precedence rule resolves conflicting forms.** Selection
+  runs independently **within each candidate group** (R4), and is total:
+
+  1. **`derived` forms are excluded from selection entirely.** A derived
+     form is not independent evidence, so it can never *be* the answer; it
+     exists only to be checked (R5, §7).
+  2. Confidence: confirmed > verified > plausible > untested.
+  3. Form type: `irp` > `raw` > `pronto`, since a parametric form is what
+     you'd want to re-render from anyway.
+  4. Array order, lowest index first.
+
+  Without the fourth rule two same-tier, same-type forms would be a coin
+  flip and §7's byte-identical guarantee would not hold. Every candidate
+  group must therefore contain at least one non-derived form: a group that
+  cannot be selected from is one that cannot compile, and that is a
+  validation error rather than a surprise at build time.
+
+  **Variants declare the non-`primary` groups.** A `variants` block at the
+  remote level names each one with a label, a confidence and a citation of
+  its own. An entry carrying an `override` of `device`, `subdevice` or
+  `function` additionally *expands*: for every key whose `primary` group has
+  an `irp` form, the selected one is copied with the override applied and
+  tagged with that candidate. Stating it once is what keeps the BX510 from
+  needing forty near-identical forms hand-written to change one byte.
+
+  Expansion never inherits evidence. The copy takes the variant's own
+  confidence and source; any `verifiedBy` is **stripped**, because a check
+  that held for the original address is simply false at a different one; and
+  an `expandedFrom` record names the parent form and which fields were
+  overridden versus inherited, so both claims — where the address came from,
+  and where the untouched parameters came from — stay separately checkable.
+  An expanded form is a **regenerated cache**, recomputed and compared on
+  every build; deleting its `expandedFrom` is what converts it into
+  hand-authored data the variant no longer governs.
 
 **Example — Topping RC-15A, Power key, two coexisting forms:**
 
@@ -260,10 +350,23 @@ consistency check, if the tooling actually runs it.
     waveforms. Carrier agreement is checked by comparing frequency *words*,
     never hertz — decoding `006D` yields 38 028.9 Hz, so comparing that to a
     declared `38000` would reject correctly generated output.
-- **R13 — Cross-check every additional form the key holds.** Render each
-  stored form independently and diff them. Bit/pulse pattern must match
-  exactly; only the trailing gap-fill may drift (harmless capture rounding,
-  on the order of a few cycles / under 150µs out of a ~13ms pad). A real
+- **R13 — Cross-check every additional form in the same candidate group.**
+  Render each stored form independently and diff it against the form R6
+  selected. Comparison is scoped **within** a group and never across:
+  different candidates are competing hypotheses and are *supposed* to
+  disagree (R4). `derived` forms are excluded from this check entirely —
+  they are the compiler's own prior output, and §7's string comparison is
+  both stronger and the only check they face.
+
+  Everything compares as integer carrier-cycle counts at the file's declared
+  carrier, so an `irp`-versus-`pronto` check is exact by construction.
+  Sequence lengths must match exactly: a differing burst *count* is a
+  structural disagreement, never rounding. Bit and pulse pattern must then
+  match exactly, except that a comparison involving a `raw` capture allows
+  real instrument jitter, and the trailing gap-fill may drift on the order
+  of a few cycles (under 150µs out of a ~13ms pad). A capture declared
+  `truncated` has its terminal gap skipped rather than compared. Any
+  tolerance loosened beyond the defaults requires a citation (R18). A real
   mismatch fails the build.
 
 ## 8. Automatic linking
@@ -299,6 +402,17 @@ is the *only* place trust comes from — so it has to hold up on its own.
   post, a manual, or an official code table; or a same-repo cross-reference
   ("re-derived from `<file>`'s protocol, see commit `<sha>`"). Never just a
   tier with no trail.
+
+  **This extends to any field that loosens a check**, not only to a form's
+  evidence. `unitUs`, `defaultGapUs`, `tolerance` (R3) and a `raw` form's
+  `truncated` (R4) each widen what passes, and each carries an entry in a
+  `claims` sidecar giving both a *reason* — why this deviates, for whoever
+  reads the diff — and a *source* that is independently checkable. A reason
+  justifies; only a source lets someone else re-derive. Any field added
+  later that widens what passes joins that set; the rule matters more than
+  the list. Note what tooling can and cannot do here: that both are present
+  and non-empty is checked mechanically, but whether the source says what
+  the claim says is a human judgement, and stays one.
 - **R19 — Sources inform entries; they don't get bulk-imported.** LIRC
   configs, IRDB rows, forum posts — any of them can source a form's data
   and citation, one key at a time. No wholesale copy of another project's
@@ -336,7 +450,8 @@ and therefore a hard gate on adding one. See DESIGN.md §5 and D18.
 ---
 
 **Build plan:** DESIGN.md §8 has the seven phases. Phases 0 and 1 are
-implemented — the schema, the Pronto codec, and the NEC1 encoder.
+implemented — the schema, the Pronto codec, the NEC1 encoder, candidate
+groups, variant expansion and the cross-check.
 Phase 2 adds candidate groups, cross-checking and the validator; Phase 3
 adds the three devices from §1 as seed data. DESIGN.md §9 lists the further
 edits this document needs, each assigned to the phase that makes it true.

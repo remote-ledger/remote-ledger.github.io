@@ -1,6 +1,6 @@
 # Remote Ledger — Design & Build Plan
 
-**Draft v1.0** · Status: Phases 0-1 implemented · Implements [SPEC.md](SPEC.md) v0.3
+**Draft v1.2** · Status: Phases 0-2 implemented · Implements [SPEC.md](SPEC.md) v0.5
 
 SPEC.md says *what* the format has to hold and why. This says *how it gets
 built*: the resolved open decisions, the one intermediate representation
@@ -1615,7 +1615,7 @@ the parts most likely to be wrong.
 |---|---|---|---|
 | **0** ✅ | Skeleton | Repo layout, `pyproject.toml`, both schemas, `.gitattributes`, CI. **SPEC §12 replaced by §1's resolutions** (§9) | Done. `rl --help` runs; `rl build --check` exits 0 with no generators registered |
 | **1** ⚠️ | **Core signal path** | **SPEC §7 R12 given a real contract** (§9), then `signal.py` (D1a), `pronto.py` encode + decode (D6, D25), numeric bounds + pinned `Decimal` context (D28), `protocols/nec.py` as a metadata record (D3), `protocol` block schema (D24), serialization contract (D20) | Code done, suite green: round-trip holds in cycles, a zero-cycle duration is rejected, carrier is compared as words. **D18 gate 2 UNMET** — no independently cited golden Pronto string obtained, so "compiles to the published golden Pronto, byte for byte" is *unproven*. See §12 |
-| **2** | Forms, candidates & cross-check | **The ten SPEC edits land *first*** (§9), then `forms.py` (D7, D21), candidate groups (D16, D26), `variants` (D17, D22, D23, D33), `claims` (D27), `crosscheck.py` (D8, D5a), `raw` + `truncated` (D4a, D31) + `pronto` + `derived` (D30) forms, `validate.py` | `rl check` catches a corrupted second form *and* passes two deliberately-differing candidates on one key; a derived-only group fails validation, not compilation; a Pronto form with a mismatched frequency word fails, and a raw form one word off only warns; a truncated capture whose marks exceed its extent fails rather than clamping; running `rl fmt --expand` twice changes nothing the second time |
+| **2** ✅ | Forms, candidates & cross-check | The nine SPEC edits landed first (§9), then `forms.py` (D7, D21), candidate groups (D16, D26), `variants.py` (D17, D22, D23, D33), `claims` (D27), `crosscheck.py` (D8, D5a), `remote.py`, `check.py` (D9, D16), `fmt.py`, `warnings.py` (D32); `rl check` / `rl compile` / `rl fmt` wired | Done. All six criteria verified: a corrupted second form is caught at `intro[35]`; two differing candidates pass and genuinely differ; a derived-only group fails validation; a mismatched Pronto frequency word fails while a raw form one word off only warns; an over-extent truncated capture errors rather than clamping; `rl fmt --expand` twice changes nothing |
 | **3** | **Seed data** | `Sony20`, `Samsung32`; RMT-B118P, RC-15A, BN59-01199F authored; `rl build --check` in CI **over `build/pronto/` + `build/warnings.json`** (D19, D32); README string regenerated | Three real files validate, compile, cross-check green — **including the BX510's mode2/mode3 variants, which must compile as fallbacks, not fail** |
 | **4** | Layouts | `layout.py` (D14), schema `layouts` block, CSS-identifier key rule (D29), area→key plus `printedLabels`/`shape` orphan and duplicate-`original` validation (D14) | RMT-B118P's D-pad from SPEC §6 round-trips; a typo'd `printedLabels` key fails instead of rendering nothing |
 | **5** | Index & lookup | `index.py` (D13), `unresolved.json` + its schema (D12), `rl lookup`. **Gate widens to all of `build/`** | `rl lookup "Sony BDP-BX510"` prints all three SPEC §1 candidates with tiers and citations |
@@ -1848,8 +1848,9 @@ note rather than a live contract.
 
 ## 12. Implementation status
 
-Phases 0 and 1 are implemented: 222 tests, `jsonschema` the only runtime
-dependency. (That count is asserted by the suite itself -- see
+Phases 0-2 are implemented: 320 tests, `jsonschema` the only runtime
+dependency. Phase 2 landed its nine SPEC edits *before* its code, per §9 --
+the spec change is what authorises the implementation. (That count is asserted by the suite itself -- see
 `test_documented_test_count_is_current` -- so it cannot drift the way the
 three stale "148" figures did.) `rl encode --protocol NEC1 --device 0x11 --subdevice 0xEE
 --function 0x18 --carrier 38000` emits the Topping RC-15A Power key.

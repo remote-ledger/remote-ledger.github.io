@@ -1,0 +1,19 @@
+{
+  "manufacturer": "Topping",
+  "model": "RC-15A",
+  "controls": ["DX3 Pro", "D50s"],
+  "protocol": { "name": "NEC1", "carrierHz": 38000, "minSends": 1 },
+  "keys": {
+    "KEY_POWER": {
+      "forms": [
+        {
+          "type": "irp",
+          "device": "0x11", "subdevice": "0xEE", "function": "0x18",
+          "confidence": "verified",
+          "verifiedBy": "nec-complement-check",
+          "source": "audiosciencereview.com/.../10708 (user halfSpinDoctor)"
+        }
+      ]
+    }
+  }
+}

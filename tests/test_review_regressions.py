@@ -222,17 +222,27 @@ def test_typo_in_a_form_names_the_offending_key():
 
 
 def test_cli_phase_numbers_come_from_the_generator_registry():
-    """Finding 15. The binary printed phase 2 for `rl check` while
-    `rl build` printed phase 3 for the same stage."""
-    registry = {g.name: g.phase for g in PIPELINE}
+    """Finding 15 of the first review. The binary printed phase 2 for
+    `rl check` while `rl build` printed phase 3 for the same stage.
+
+    Phase 2 has now implemented `check` and `compile`, so they carry no
+    phase marker at all -- an implemented command must not advertise a
+    future phase. The assertion covers both directions.
+    """
     parser = cli.build_parser()
-    for name, phase in registry.items():
-        # The help string is what a user reads; assert it agrees.
-        help_text = next(
-            a.help for a in parser._subparsers._group_actions[0]._choices_actions  # type: ignore[union-attr]
-            if a.dest == name
-        )
-        assert f"[phase {phase}]" in help_text, (name, help_text)
+    choices = parser._subparsers._group_actions[0]._choices_actions  # type: ignore[union-attr]
+    help_by_name = {a.dest: a.help for a in choices}
+    implemented = {"validate", "encode", "build", "check", "compile", "fmt"}
+
+    for generator in PIPELINE:
+        help_text = help_by_name[generator.name]
+        if generator.name in implemented:
+            assert "[phase" not in help_text, (generator.name, help_text)
+        else:
+            assert f"[phase {generator.phase}]" in help_text, (generator.name, help_text)
+
+    for name in ("index", "lookup", "site"):
+        assert "[phase" in help_by_name[name], name
 
 
 # --- second review ---------------------------------------------------------
@@ -472,10 +482,206 @@ def test_documented_test_count_is_current(request):
         )
 
     text = (ROOT / "DESIGN.md").read_text()
-    match = re.search(r"Phases 0 and 1 are implemented: (\d+) tests", text)
+    match = re.search(r"Phases 0-2 are implemented: (\d+) tests", text)
     assert match, "DESIGN.md section 12 no longer states a test count"
     documented = int(match.group(1))
     collected = len(request.session.items)
     assert documented == collected, (
         f"DESIGN.md says {documented} tests; this run collected {collected}"
     )
+
+
+# --- Phase 2 review --------------------------------------------------------
+
+from remote_ledger.check import check_remote  # noqa: E402
+from remote_ledger.fmt import format_document  # noqa: E402
+from remote_ledger.remote import load_remote  # noqa: E402
+from remote_ledger.validate import validate_file  # noqa: E402
+from remote_ledger.warnings import RAW_CARRIER_WORD_DRIFT  # noqa: E402
+
+P2_BASE = {
+    "manufacturer": "Topping", "model": "RC-15A",
+    "protocol": {"name": "NEC1", "carrierHz": 38000, "minSends": 1},
+    "keys": {"KEY_POWER": {"forms": [
+        {"id": "primary.irp", "type": "irp", "device": "0x11",
+         "subdevice": "0xEE", "function": "0x18", "confidence": "verified",
+         "source": "asr forum 10708"},
+    ]}},
+}
+P2_VARIANT = {"mode2": {"confidence": "untested", "source": "manual p.14",
+                        "override": {"subdevice": "0xEA"}}}
+
+
+def _p2(tmp_path, mutate=None, name="r.json"):
+    import json
+    doc = json.loads(json.dumps(P2_BASE))
+    if mutate:
+        mutate(doc)
+    path = tmp_path / name
+    path.write_text(json.dumps(doc, indent=2))
+    return path
+
+
+def _errs(path):
+    return [str(p) for p in validate_file(path)]
+
+
+def test_validate_rejects_a_derived_only_group(tmp_path):
+    """R15: "every key resolves to at least one compilable form". `rl
+    validate` used to accept files `rl check` then rejected."""
+    def mutate(d):
+        d["keys"]["KEY_HOME"] = {"forms": [{
+            "type": "pronto", "hex": "0000 006D 0001 0000 0157 00AC",
+            "confidence": "derived", "derivedFrom": "primary.irp"}]}
+    assert any("only derived" in e for e in _errs(_p2(tmp_path, mutate)))
+
+
+def test_validate_rejects_a_dangling_derived_reference(tmp_path):
+    def mutate(d):
+        d["keys"]["KEY_POWER"]["forms"].append({
+            "type": "pronto", "hex": "0000 006D 0001 0000 0157 00AC",
+            "confidence": "derived", "derivedFrom": "nope"})
+    assert any("does not exist" in e for e in _errs(_p2(tmp_path, mutate)))
+
+
+def test_validate_rejects_an_unrenderable_form(tmp_path):
+    def mutate(d):
+        d["keys"]["KEY_POWER"]["forms"].append({
+            "type": "pronto", "hex": "0000 0073 0001 0000 0157 00AC",
+            "confidence": "plausible", "source": "forum"})
+    assert any("cannot render" in e for e in _errs(_p2(tmp_path, mutate)))
+
+
+def test_a_hand_edited_variant_cache_is_rejected_not_silently_repaired(tmp_path):
+    """D33's premise 4, which was missing entirely.
+
+    Loading *replaced* a stale cache before anything compared it, so an
+    edited cached subdevice passed both commands with the edit discarded. A
+    cache that can be edited without complaint is not a cache -- it is an
+    unchecked fork of the variant.
+    """
+    def mutate(d):
+        d["variants"] = P2_VARIANT
+        d["keys"]["KEY_POWER"]["forms"].append({
+            "id": "mode2.irp", "type": "irp", "candidate": "mode2",
+            "device": "0x11", "subdevice": "0x00", "function": "0x18",
+            "confidence": "untested", "source": "manual p.14",
+            "expandedFrom": {"variant": "mode2", "form": "primary.irp",
+                             "overridden": ["subdevice"],
+                             "inherited": ["device", "function"]}})
+    assert any("recomputing that expansion" in e for e in _errs(_p2(tmp_path, mutate)))
+
+
+def test_a_correct_cache_is_accepted(tmp_path):
+    def mutate(d):
+        d["variants"] = P2_VARIANT
+        d["keys"]["KEY_POWER"]["forms"].append({
+            "id": "mode2.irp", "type": "irp", "candidate": "mode2",
+            "device": 17, "subdevice": 234, "function": 24,
+            "confidence": "untested", "source": "manual p.14",
+            "expandedFrom": {"variant": "mode2", "form": "primary.irp",
+                             "overridden": ["subdevice"],
+                             "inherited": ["device", "function"]}})
+    assert _errs(_p2(tmp_path, mutate)) == []
+
+
+def test_a_selected_raw_form_still_gets_its_carrier_checked(tmp_path):
+    """Skipping the trusted form first meant the capture that actually
+    compiles could declare any carrier without a word ever being compared."""
+    def mutate(d):
+        d["keys"]["KEY_POWER"]["forms"] = [{
+            "id": "primary.raw", "type": "raw", "carrierHz": 38400,
+            "intro": [9024, 4512], "confidence": "confirmed",
+            "source": "capture"}]
+    _, warnings = check_remote(load_remote(_p2(tmp_path, mutate)))
+    assert [w.code for w in warnings] == [RAW_CARRIER_WORD_DRIFT]
+
+
+def test_derived_comparison_is_byte_for_byte(tmp_path):
+    """D9 says canonical string, byte for byte. Comparing tokens let a
+    derived form drift in whitespace from what the compiler emits."""
+    from remote_ledger.pronto import encode
+    path = _p2(tmp_path)
+    remote = load_remote(path)
+    good = encode(remote.render(remote.keys["KEY_POWER"][0]))
+
+    def mutate(d):
+        d["keys"]["KEY_POWER"]["forms"].append({
+            "type": "pronto", "hex": good.replace(" ", "   "),
+            "confidence": "derived", "derivedFrom": "primary.irp"})
+    problems, _ = check_remote(load_remote(_p2(tmp_path, mutate, "w.json")))
+    assert any("is stale" in p for p in problems)
+
+
+def test_fmt_canonicalises_lowercase_hex_and_pronto(tmp_path):
+    def mutate(d):
+        d["keys"]["KEY_POWER"]["forms"][0]["device"] = "0x1a"
+        d["keys"]["KEY_POWER"]["forms"].append({
+            "id": "primary.pronto", "type": "pronto",
+            "hex": "0000 006d 0001 0000 0157 00ac",
+            "confidence": "plausible", "source": "forum"})
+    out = loads(format_document(_p2(tmp_path, mutate)))
+    forms = out["keys"]["KEY_POWER"]["forms"]
+    assert forms[0]["device"] == "0x1A"
+    assert forms[1]["hex"] == "0000 006D 0001 0000 0157 00AC"
+
+
+def test_fmt_materialises_auto_generated_ids(tmp_path):
+    def mutate(d):
+        del d["keys"]["KEY_POWER"]["forms"][0]["id"]
+    out = loads(format_document(_p2(tmp_path, mutate)))
+    assert out["keys"]["KEY_POWER"]["forms"][0]["id"] == "primary.irp"
+
+
+def test_sort_orders_expanded_from_arrays(tmp_path):
+    def mutate(d):
+        d["variants"] = P2_VARIANT
+        d["keys"]["KEY_POWER"]["forms"].append({
+            "id": "mode2.irp", "type": "irp", "candidate": "mode2",
+            "device": 17, "subdevice": 234, "function": 24,
+            "confidence": "untested", "source": "manual p.14",
+            "expandedFrom": {"variant": "mode2", "form": "primary.irp",
+                             "overridden": ["subdevice"],
+                             "inherited": ["function", "device"]}})
+    out = loads(format_document(_p2(tmp_path, mutate), sort=True))
+    assert out["keys"]["KEY_POWER"]["forms"][1]["expandedFrom"]["inherited"] == \
+        ["device", "function"]
+
+
+def test_refresh_drops_a_cache_whose_parent_was_removed(tmp_path):
+    """`expand()` returns exactly the set that should exist, so a cache for
+    any variant outside it is an orphan -- whatever the cause."""
+    def mutate(d):
+        d["variants"] = P2_VARIANT
+        d["keys"]["KEY_POWER"]["forms"] = [
+            {"id": "primary.raw", "type": "raw", "intro": [9024, 4512],
+             "confidence": "plausible", "source": "capture"},
+            {"id": "mode2.irp", "type": "irp", "candidate": "mode2",
+             "device": 17, "subdevice": 234, "function": 24,
+             "confidence": "untested", "source": "manual p.14",
+             "expandedFrom": {"variant": "mode2", "form": "primary.irp",
+                              "overridden": ["subdevice"],
+                              "inherited": ["device", "function"]}},
+        ]
+    out = loads(format_document(_p2(tmp_path, mutate), refresh=True))
+    assert [f["id"] for f in out["keys"]["KEY_POWER"]["forms"]] == ["primary.raw"]
+
+
+def test_compile_writes_the_documented_artifact(tmp_path, monkeypatch):
+    from remote_ledger import cli
+    monkeypatch.chdir(tmp_path)
+    src = tmp_path / "remotes" / "topping"
+    src.mkdir(parents=True)
+    path = _p2(src, name="RC-15A.json")
+    assert cli.main(["compile", str(path)]) == 0
+    artifact = tmp_path / "build" / "pronto" / "topping" / "RC-15A.json"
+    assert artifact.is_file()
+    doc = loads(artifact.read_text())
+    assert doc["schemaVersion"] == 1
+    assert doc["protocol"]["minSends"] == 1           # once, not per key (D3a)
+    assert "prontoHex" in doc["keys"]["KEY_POWER"]["candidates"]["primary"]
+    # No non-reproducible values -- the rule --check rests on (D20).
+    assert not any(k in artifact.read_text() for k in ("generated", "timestamp"))
+    assert cli.main(["compile", "--check", str(path)]) == 0
+    artifact.write_text(artifact.read_text().replace("0157", "0156"))
+    assert cli.main(["compile", "--check", str(path)]) == 1
