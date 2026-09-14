@@ -1,0 +1,19 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+dist/
+
+# `build/` is shared ground, and the two uses must not be confused:
+#   - OD4 chose a COMMITTED generated tree, and D19 diffs it for drift and
+#     orphans. Ignoring it would silently disable that gate and blind D11's
+#     dirty-path guard.
+#   - setuptools also writes its own scratch here (build/lib, build/bdist.*).
+# So ignore everything under build/ except the paths D19's generators own.
+# This list is the ignore-file mirror of the D19 owner table; adding a
+# generator means adding its path here.
+build/*
+!build/pronto/
+!build/warnings.json
+!build/index.json
