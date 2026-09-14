@@ -226,9 +226,7 @@ def test_cli_phase_numbers_come_from_the_generator_registry():
     `rl build` printed phase 3 for the same stage."""
     registry = {g.name: g.phase for g in PIPELINE}
     parser = cli.build_parser()
-    actions = parser._subparsers._group_actions[0].choices  # type: ignore[union-attr]
     for name, phase in registry.items():
-        assert f"[phase {phase}]" in (actions[name].description or "") or True
         # The help string is what a user reads; assert it agrees.
         help_text = next(
             a.help for a in parser._subparsers._group_actions[0]._choices_actions  # type: ignore[union-attr]
@@ -454,9 +452,24 @@ def test_documented_test_count_is_current(request):
     """
     import re
 
-    # Only meaningful when the whole suite was collected.
-    if len(request.config.args) != 1 or "::" in request.config.args[0]:
-        pytest.skip("partial collection; count is only defined for a full run")
+    # Only meaningful when the whole suite was collected. `len(args) == 1`
+    # was not that test: `pytest tests/test_review_regressions.py` satisfies
+    # it while collecting a quarter of the suite. Compare the *resolved*
+    # arguments against the configured testpaths instead, and bail out on any
+    # selection flag, which narrows collection without touching args.
+    config = request.config
+    if config.option.keyword or config.option.markexpr or config.option.deselect:
+        pytest.skip("selection flags narrow collection; count is undefined")
+    rootdir = Path(str(config.rootdir))
+    configured = [
+        (rootdir / p).resolve() for p in config.getini("testpaths")
+    ] or [rootdir.resolve()]
+    requested = [Path(a.split("::")[0]).resolve() for a in config.args]
+    if sorted(requested) != sorted(configured):
+        pytest.skip(
+            f"partial collection ({', '.join(a.name for a in requested)}); "
+            "the documented count is only defined for a full run"
+        )
 
     text = (ROOT / "DESIGN.md").read_text()
     match = re.search(r"Phases 0 and 1 are implemented: (\d+) tests", text)

@@ -1848,7 +1848,7 @@ note rather than a live contract.
 
 ## 12. Implementation status
 
-Phases 0 and 1 are implemented: 201 tests, `jsonschema` the only runtime
+Phases 0 and 1 are implemented: 222 tests, `jsonschema` the only runtime
 dependency. (That count is asserted by the suite itself -- see
 `test_documented_test_count_is_current` -- so it cannot drift the way the
 three stale "148" figures did.) `rl encode --protocol NEC1 --device 0x11 --subdevice 0xEE

@@ -1,6 +1,7 @@
 """D18's gates, enforced mechanically rather than by convention."""
 
 import json
+import warnings
 from pathlib import Path
 
 import pytest
@@ -89,17 +90,46 @@ def test_gate_2_golden_vector(name):
     check_gate_2(name, json.loads(VECTOR_INDEX.read_text())[name], VECTORS)
 
 
-def test_unverified_protocols_are_reported(capsys):
-    """Make the gap visible on every run, not only when someone looks."""
+def unverified_protocols() -> list[str]:
+    """Registry protocols with no cited golden vector (D18 gate 2)."""
     index = json.loads(VECTOR_INDEX.read_text())
-    pending = [n for n, e in index.items() if not e.get("gate2_golden_vector")]
-    if pending:
-        print(
-            f"\nD18 gate 2 UNMET for: {', '.join(sorted(pending))} "
-            "-- structurally tested, byte-level correctness unproven. "
-            "See tests/vectors/CITATIONS.md."
-        )
+    return sorted(
+        n for n in protocols.REGISTRY if not index.get(n, {}).get("gate2_golden_vector")
+    )
+
+
+def gate_2_report() -> str:
+    pending = unverified_protocols()
+    if not pending:
+        return ""
+    return (
+        f"D18 gate 2 UNMET for: {', '.join(pending)} -- structurally tested, "
+        "byte-level correctness unproven. See tests/vectors/CITATIONS.md."
+    )
+
+
+def test_every_registry_protocol_has_a_vector_index_entry():
+    index = json.loads(VECTOR_INDEX.read_text())
     assert set(index) >= set(protocols.REGISTRY)
+
+
+def test_unverified_protocols_are_reported():
+    """Make the gap visible on every run, not only when someone looks.
+
+    The earlier version printed to stdout, which pytest captures and
+    discards unless -s is passed -- so the message appeared zero times in a
+    normal run, and the test took a `capsys` fixture it never read. A
+    warning surfaces in pytest's warnings summary by default, and the text
+    is asserted here rather than merely emitted.
+    """
+    report = gate_2_report()
+    if not report:
+        pytest.skip("every registry protocol has a cited vector")
+    assert "D18 gate 2 UNMET" in report
+    for name in unverified_protocols():
+        assert name in report
+    assert "CITATIONS.md" in report
+    warnings.warn(report, stacklevel=1)
 
 
 def test_unknown_protocol_names_the_gate():
