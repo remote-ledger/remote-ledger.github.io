@@ -336,7 +336,7 @@ and therefore a hard gate on adding one. See DESIGN.md §5 and D18.
 ---
 
 **Build plan:** DESIGN.md §8 has the seven phases. Phases 0 and 1 are
-implemented — the schema, the Pronto codec, the NEC1 encoder, and 148 tests.
+implemented — the schema, the Pronto codec, and the NEC1 encoder.
 Phase 2 adds candidate groups, cross-checking and the validator; Phase 3
 adds the three devices from §1 as seed data. DESIGN.md §9 lists the further
 edits this document needs, each assigned to the phase that makes it true.

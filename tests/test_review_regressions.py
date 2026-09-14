@@ -290,10 +290,17 @@ def test_derived_is_rejected_on_non_pronto_forms(kind):
     a derived irp or raw form. Such a form would also escape D9 -- the only
     check a derived form faces -- while being excluded from selection by D7,
     so it would sit in the file corroborating nothing and checked by nothing."""
+    # `source` is present deliberately: without it the form would fail the
+    # R5/R18 citation rule instead, and the test would still pass if the
+    # derived-confidence restriction regressed. One assertion, one cause.
     form = (
         {"type": "irp", "device": 1, "function": 1}
         if kind == "irp"
         else {"type": "raw", "intro": [9024, 4512]}
+    )
+    form["source"] = "a real citation, so only the confidence tier is at issue"
+    assert _form_problems({**form, "confidence": "verified"}) == [], (
+        "control: this form must be valid apart from its confidence tier"
     )
     assert _form_problems({**form, "confidence": "derived"})
 
@@ -345,3 +352,117 @@ def test_ambient_traps_do_not_leak_into_our_context():
             assert [t for t, on in ctx.traps.items() if on] == list(DECIMAL_TRAPS)
     finally:
         decimal.setcontext(saved)
+
+
+# --- third review ----------------------------------------------------------
+
+from test_registry import check_gate_2  # noqa: E402
+
+PARAMS = {"device": 17, "subdevice": 238, "function": 24, "carrier_hz": 38000}
+PENDING = "x" * 61
+
+
+def _golden(tmp_path, text, **overrides):
+    (tmp_path / "v.pronto").write_text(text)
+    entry = {
+        "gate2_golden_vector": "v.pronto",
+        "gate2_vector_source": "somebody.example/nec-codes",
+        "gate2_vector_params": PARAMS,
+        "regression_snapshot": "snapshot.pronto",
+        "snapshot_is_evidence": False,
+    }
+    entry.update(overrides)
+    return entry
+
+
+def _correct_pronto() -> str:
+    from remote_ledger.protocols import NEC1
+    return encode(NEC1.encode(**PARAMS))
+
+
+def test_gate_2_success_path_runs(tmp_path):
+    """The success branch was dead code containing a NameError: it crashed
+    the moment a vector was actually declared, which is the one moment the
+    gate is supposed to work."""
+    check_gate_2("NEC1", _golden(tmp_path, _correct_pronto()), tmp_path)
+
+
+def test_gate_2_rejects_the_self_derived_snapshot(tmp_path):
+    """Citing the encoder's own output as its own independent vector would
+    make D10's hard gate a rubber stamp."""
+    entry = _golden(tmp_path, _correct_pronto(), regression_snapshot="v.pronto")
+    with pytest.raises(AssertionError, match="own output"):
+        check_gate_2("NEC1", entry, tmp_path)
+
+
+def test_gate_2_fails_when_the_encoder_disagrees(tmp_path):
+    """The point of the gate: a wrong constant must fail here."""
+    wrong = _correct_pronto().replace("0157", "0156", 1)
+    with pytest.raises(AssertionError, match="disagrees with the cited"):
+        check_gate_2("NEC1", _golden(tmp_path, wrong), tmp_path)
+
+
+@pytest.mark.parametrize(
+    "missing,match",
+    [
+        ("gate2_vector_source", "needs a citation"),
+        ("gate2_vector_params", "must record the protocol parameters"),
+    ],
+)
+def test_gate_2_requires_citation_and_parameters(tmp_path, missing, match):
+    entry = _golden(tmp_path, _correct_pronto(), **{missing: None})
+    with pytest.raises(AssertionError, match=match):
+        check_gate_2("NEC1", entry, tmp_path)
+
+
+def test_gate_2_pending_path_requires_a_reason(tmp_path):
+    with pytest.raises(AssertionError):
+        check_gate_2("NEC1", {"gate2_golden_vector": None,
+                              "gate2_pending_reason": "too short"}, tmp_path)
+    check_gate_2("NEC1", {"gate2_golden_vector": None,
+                          "gate2_pending_reason": PENDING,
+                          "snapshot_is_evidence": False}, tmp_path)
+
+
+def test_variant_confidence_cannot_be_derived():
+    """D30 restricts `derived` to type pronto, and a variant expands into an
+    irp form -- so a variant claiming it would produce exactly the form the
+    schema now rejects directly."""
+    doc = {
+        "manufacturer": "Sony", "model": "RMT-B118P",
+        "protocol": {"name": "NEC1", "carrierHz": 38_000, "minSends": 1},
+        "variants": {"mode2": {
+            "confidence": "derived", "source": "service manual p.14",
+            "override": {"subdevice": "0xEA"},
+        }},
+        "keys": {"KEY_POWER": {"forms": [
+            {"type": "irp", "device": 1, "function": 1,
+             "confidence": "verified", "source": "table"},
+        ]}},
+    }
+    assert [str(p) for p in schema_problems(doc, "remote.schema.json", "t")]
+    doc["variants"]["mode2"]["confidence"] = "untested"
+    assert list(schema_problems(doc, "remote.schema.json", "t")) == []
+
+
+def test_documented_test_count_is_current(request):
+    """The count in DESIGN.md section 12 is asserted, not maintained by hand.
+
+    Three documents carried "148 tests" for two rounds after the suite grew.
+    R14's principle -- nothing hand-maintained can go stale -- applies to
+    prose about the build as much as to the index.
+    """
+    import re
+
+    # Only meaningful when the whole suite was collected.
+    if len(request.config.args) != 1 or "::" in request.config.args[0]:
+        pytest.skip("partial collection; count is only defined for a full run")
+
+    text = (ROOT / "DESIGN.md").read_text()
+    match = re.search(r"Phases 0 and 1 are implemented: (\d+) tests", text)
+    assert match, "DESIGN.md section 12 no longer states a test count"
+    documented = int(match.group(1))
+    collected = len(request.session.items)
+    assert documented == collected, (
+        f"DESIGN.md says {documented} tests; this run collected {collected}"
+    )

@@ -66,7 +66,7 @@ $ rl encode --protocol NEC1 --device 0x11 --subdevice 0xEE \
       --function 0x18 --carrier 38000
 0000 006D 0022 0002 0157 00AC 0015 0040 0015 0015 ...
 
-$ pytest          # 148 tests
+$ pytest
 $ rl build --check # the CI gate
 ```
 

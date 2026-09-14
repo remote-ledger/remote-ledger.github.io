@@ -196,7 +196,7 @@
           "description": "Defaults to the candidate id (D26)."
         },
         "confidence": {
-          "$ref": "#/$defs/confidence"
+          "$ref": "#/$defs/confidenceEvidence"
         },
         "source": {
           "$ref": "#/$defs/citation"
@@ -218,7 +218,8 @@
             }
           }
         }
-      }
+      },
+      "description": "Declares one non-primary candidate group (D26). Its confidence is an evidence tier, never `derived`: expansion produces an irp form, and D30 restricts `derived` to type pronto."
     },
     "confidence": {
       "description": "R5's tiers. 'derived' is excluded from selection entirely (D7) and validated solely by D9 (D5a).",
