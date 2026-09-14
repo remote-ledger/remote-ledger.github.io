@@ -222,17 +222,27 @@ def test_typo_in_a_form_names_the_offending_key():
 
 
 def test_cli_phase_numbers_come_from_the_generator_registry():
-    """Finding 15. The binary printed phase 2 for `rl check` while
-    `rl build` printed phase 3 for the same stage."""
-    registry = {g.name: g.phase for g in PIPELINE}
+    """Finding 15 of the first review. The binary printed phase 2 for
+    `rl check` while `rl build` printed phase 3 for the same stage.
+
+    Phase 2 has now implemented `check` and `compile`, so they carry no
+    phase marker at all -- an implemented command must not advertise a
+    future phase. The assertion covers both directions.
+    """
     parser = cli.build_parser()
-    for name, phase in registry.items():
-        # The help string is what a user reads; assert it agrees.
-        help_text = next(
-            a.help for a in parser._subparsers._group_actions[0]._choices_actions  # type: ignore[union-attr]
-            if a.dest == name
-        )
-        assert f"[phase {phase}]" in help_text, (name, help_text)
+    choices = parser._subparsers._group_actions[0]._choices_actions  # type: ignore[union-attr]
+    help_by_name = {a.dest: a.help for a in choices}
+    implemented = {"validate", "encode", "build", "check", "compile", "fmt"}
+
+    for generator in PIPELINE:
+        help_text = help_by_name[generator.name]
+        if generator.name in implemented:
+            assert "[phase" not in help_text, (generator.name, help_text)
+        else:
+            assert f"[phase {generator.phase}]" in help_text, (generator.name, help_text)
+
+    for name in ("index", "lookup", "site"):
+        assert "[phase" in help_by_name[name], name
 
 
 # --- second review ---------------------------------------------------------
@@ -472,7 +482,7 @@ def test_documented_test_count_is_current(request):
         )
 
     text = (ROOT / "DESIGN.md").read_text()
-    match = re.search(r"Phases 0 and 1 are implemented: (\d+) tests", text)
+    match = re.search(r"Phases 0-2 are implemented: (\d+) tests", text)
     assert match, "DESIGN.md section 12 no longer states a test count"
     documented = int(match.group(1))
     collected = len(request.session.items)
