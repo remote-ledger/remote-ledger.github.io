@@ -212,6 +212,21 @@ def _usability_problems(remote, key: str, where: str) -> Iterator[Problem]:
                 yield Problem(where, f"{key}: form {form.id!r} cannot render: {exc}")
 
 
+def layout_problems(doc: Any, where: str) -> Iterator[Problem]:
+    """R8/R9/R10/R11 via D14's parser.
+
+    The parser enforces CSS grid's own constraints -- uniform row width and
+    one rectangle per name -- which is matching CSS rather than inventing
+    rules. What is ledger-specific is only that every name resolves to a real
+    key, and that the sibling maps do not orphan.
+    """
+    from .layout import layouts_problems
+
+    keys = set(doc.get("keys") or {})
+    for message in layouts_problems(doc.get("layouts"), keys, where):
+        yield Problem(f"{where}['layouts']", message)
+
+
 def validate_file(path: Path) -> list[Problem]:
     where = path.as_posix()
     try:
@@ -223,6 +238,7 @@ def validate_file(path: Path) -> list[Problem]:
         return problems
     problems += list(semantic_problems(doc, where))
     problems += list(claims_problems(doc, where))
+    problems += list(layout_problems(doc, where))
     problems += list(structural_problems(path, where))
     return problems
 

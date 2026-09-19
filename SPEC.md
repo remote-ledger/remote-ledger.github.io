@@ -1,6 +1,6 @@
 # Remote Ledger — Requirements Spec
 
-**Draft v0.5** · Status: §12 resolved; Phases 0-2 implemented · Depends on
+**Draft v0.6** · Status: §12 resolved; Phases 0-4 implemented · Depends on
 nothing upstream (self-contained)
 
 A self-contained JSON file per remote, where every key can hold several
@@ -267,6 +267,12 @@ confidence tier, or a citation.
   whoever authors it. The original's own claim ("this button is physically
   top-right") gets a `source` citation, the same discipline R5 already
   applies to a code — it's a transcribable fact, not just an assertion.
+
+  "Exactly one" is enforced, not merely stated: two layouts both claiming
+  `original` is a contradiction about a physical fact, and whichever a
+  renderer picked would be arbitrary. A file with *no* original is fine —
+  R7 already allows a remote whose factory arrangement nobody has
+  transcribed.
 - **R9 — A layout's structure is a CSS `grid-template-areas` string.** One
   row per line, a key name per cell, `.` for a gap — real CSS. A web
   renderer drops the array straight into a `grid-template-areas` rule and
@@ -280,6 +286,19 @@ confidence tier, or a citation.
   `aliases` family. Area names in `areas` stay the stable semantic key,
   always. Cosmetic hints like button `shape` (rect default, circle, rocker)
   live the same way — a sibling map, optional, never reaching the compiler.
+
+  **A key name is a CSS identifier: `^[A-Za-z_][A-Za-z0-9_]*$`.** R11 leans
+  on CSS grid to do the collision-checking, and that only holds while every
+  area name is one — the pattern also excludes `.`, which means "gap" in
+  `grid-template-areas`, and whitespace, which separates cells. Constraining
+  the namespace beats escaping at render time: these names are ours to
+  define, and a name that cannot be mistaken for grid syntax cannot break
+  the grid.
+
+  **Every key in a sibling map must resolve to a real key.** An orphan here
+  is the quiet kind of error: a label for `KEY_OPTIN` renders nothing and
+  reports nothing, and the whole premise of these maps is that they track
+  the grid without being part of it.
 - **R11 — CSS's own grid rules do the collision-checking for free.** A
   `grid-template-areas` string can't express two keys claiming one cell,
   and every named area must form a single rectangle — both are constraints

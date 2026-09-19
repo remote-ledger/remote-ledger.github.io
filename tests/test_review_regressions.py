@@ -482,7 +482,7 @@ def test_documented_test_count_is_current(request):
         )
 
     text = (ROOT / "DESIGN.md").read_text()
-    match = re.search(r"Phases 0-3 are implemented: (\d+) tests", text)
+    match = re.search(r"Phases 0-4 are implemented: (\d+) tests", text)
     assert match, "DESIGN.md section 12 no longer states a test count"
     documented = int(match.group(1))
     collected = len(request.session.items)
