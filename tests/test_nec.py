@@ -111,7 +111,7 @@ def test_oversized_unit_cannot_exceed_the_extent():
 
 def test_carrier_is_the_files_not_the_registrys(signal):
     """D3: nominal_carrier_hz is informational; the file's value is used."""
-    assert NEC1.nominal_carrier_hz == 38_000
+    assert NEC1.nominal_carrier_hz == 38_400
     at_40k = NEC1.encode(**{**TOPPING, "carrier_hz": 40_000})
     assert at_40k.carrier_hz == 40_000
     assert encode(at_40k).split()[1] == "0068"

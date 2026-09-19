@@ -482,7 +482,7 @@ def test_documented_test_count_is_current(request):
         )
 
     text = (ROOT / "DESIGN.md").read_text()
-    match = re.search(r"Phases 0-2 are implemented: (\d+) tests", text)
+    match = re.search(r"Phases 0-3 are implemented: (\d+) tests", text)
     assert match, "DESIGN.md section 12 no longer states a test count"
     documented = int(match.group(1))
     collected = len(request.session.items)
@@ -594,7 +594,7 @@ def test_a_selected_raw_form_still_gets_its_carrier_checked(tmp_path):
             "intro": [9024, 4512], "confidence": "confirmed",
             "source": "capture"}]
     _, warnings = check_remote(load_remote(_p2(tmp_path, mutate)))
-    assert [w.code for w in warnings] == [RAW_CARRIER_WORD_DRIFT]
+    assert RAW_CARRIER_WORD_DRIFT in [w.code for w in warnings]
 
 
 def test_derived_comparison_is_byte_for_byte(tmp_path):

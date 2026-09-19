@@ -1,0 +1,27 @@
+{
+  "manufacturer": "Topping",
+  "model": "RC-15A",
+  "aliases": [],
+  "controls": ["DX3 Pro", "D50s", "D70", "DX7s"],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER": {
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "subdevice": "0xEE",
+          "function": "0x18",
+          "confidence": "verified",
+          "verifiedBy": "nec-complement-check",
+          "source": "audiosciencereview.com/index.php?threads/topping-dx3-pro-review-dac-amp.10708 (user halfSpinDoctor); address complement 0x11^0xEE==0xFF and function complement both hold"
+        }
+      ]
+    }
+  }
+}

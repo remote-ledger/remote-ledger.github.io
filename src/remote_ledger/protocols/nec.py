@@ -1,8 +1,8 @@
 """NEC1.
 
-IRP, from John Fine's DecodeIR documentation on hifi-remote.com::
+IRP, confirmed verbatim by IrpTransmogrifier's protocol database::
 
-    {38.0k,564}<1,-1|1,-3>(16,-8,D:8,S:8,F:8,~F:8,1,^108m,(16,-4,1,^108m)*)
+    {38.4k,564}<1,-1|1,-3>(16,-8,D:8,S:8,F:8,~F:8,1,^108m,(16,-4,1,^108m)*)
 
 Read left to right: unit 564 us at a nominal 38.4 kHz; a zero bit is one unit
 of mark and one of space, a one bit is one unit of mark and three of space;
@@ -19,14 +19,17 @@ from ..numeric import UNIT_US_MAX, UNIT_US_MIN, check_bounds
 from ..signal import IrSignal
 from .base import Protocol
 
-_IRP = "{38.0k,564}<1,-1|1,-3>(16,-8,D:8,S:8,F:8,~F:8,1,^108m,(16,-4,1,^108m)*)"
+_IRP = "{38.4k,564}<1,-1|1,-3>(16,-8,D:8,S:8,F:8,~F:8,1,^108m,(16,-4,1,^108m)*)"
 _IRP_SOURCE = (
-    "hifi-remote.com/johnsfine/DecodeIR.html (John Fine, DecodeIR "
-    "documentation), retrieved 2026-09-14. Confirms unit 564 us, lead-in "
-    "16/-8 units, <1,-1|1,-3> bit encoding, LSB-first D:8,S:8,F:8,~F:8, and "
-    "the ^108m extent. Note: DESIGN.md D18's table records the carrier as "
-    "38.4k where this source says 38.0k; nominal_carrier_hz follows the "
-    "cited source, and is informational only either way (D3)."
+    "IrpTransmogrifier's IrpProtocols.xml (bengtmartensson/IrpTransmogrifier), "
+    "retrieved 2026-09-19, which gives this IRP string verbatim. Corroborated "
+    "for every timing by hifi-remote.com/johnsfine/DecodeIR.html (John Fine), "
+    "retrieved 2026-09-14: unit 564 us, lead-in 16/-8 units, <1,-1|1,-3> bit "
+    "encoding, LSB-first D:8,S:8,F:8,~F:8, ^108m extent. The two disagree on "
+    "the nominal carrier -- 38.4k against DecodeIR's 38.0k -- and "
+    "nominal_carrier_hz follows IrpTransmogrifier, which SPEC section 2 names "
+    "as the actively-developed reference implementation. It is informational "
+    "either way (D3): a file's carrierHz is authoritative."
 )
 _UNIT_US = 564
 _EXTENT_US = 108_000
@@ -104,7 +107,7 @@ NEC1 = Protocol(
     irp=_IRP,
     irp_source=_IRP_SOURCE,
     unit_us=_UNIT_US,
-    nominal_carrier_hz=38_000,
+    nominal_carrier_hz=38_400,
     extent_us=_EXTENT_US,
     bits=_BITS,
     encode=encode,

@@ -10,7 +10,15 @@ that basis is precisely how an unverified encoder ships.
 
 Backlog, each blocked on that gate and none scheduled: ``NEC2``, ``NEC``
 (``S`` defaulted to ``~D``), ``Sony12``, ``Sony15``, ``RC5``, ``RC6``.
-``Sony20`` and ``Samsung32`` land in Phase 3 with the seed data.
+
+``Samsung32`` is **not** backlogged -- it does not exist. D18's table carried
+an IRP string for it that was written from memory during design and never
+checked against a source; two reads of DecodeIR and one of
+IrpTransmogrifier's database find no 32-bit Samsung protocol with the fields
+``D:8,S:8,F:8,~F:8``. What does exist is ``Samsung20``
+(``{38.4k,564}...(8,-8,D:6,S:6,F:8,1,...)``) and ``Samsung36``
+(``{38k,500}...(9,-9,...)``). Identifying which the BN59-01199F actually
+speaks is open work, recorded in ``unresolved.json``.
 """
 
 from __future__ import annotations
@@ -18,10 +26,11 @@ from __future__ import annotations
 from ..errors import ValidationError
 from .base import Protocol
 from .nec import NEC1
+from .sony import SONY20
 
-REGISTRY: dict[str, Protocol] = {p.name: p for p in (NEC1,)}
+REGISTRY: dict[str, Protocol] = {p.name: p for p in (NEC1, SONY20)}
 
-__all__ = ["Protocol", "REGISTRY", "NEC1"]
+__all__ = ["Protocol", "REGISTRY", "NEC1", "SONY20"]
 
 
 def get(name: str) -> Protocol:

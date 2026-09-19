@@ -15,7 +15,7 @@ from pathlib import Path
 
 from . import __version__, protocols
 from .errors import LedgerError, ValidationError
-from .generators import PIPELINE, owned_paths, registered
+from .generators import PIPELINE, diff_tree, owned_paths, registered
 from .check import check_remote
 from .fmt import format_document
 from .pronto import encode as pronto_encode
@@ -261,6 +261,14 @@ def _dirty_owned_paths(root: Path) -> list[str]:
 
 
 def cmd_build(args: argparse.Namespace) -> int:
+    """The whole pipeline, whole-tree (D19).
+
+    Order is fixed; membership follows the registry, so this never invokes a
+    stage that does not exist yet.
+    """
+    import shutil
+    import tempfile
+
     root = _repo_root()
     stages = registered()
 
@@ -276,24 +284,45 @@ def cmd_build(args: argparse.Namespace) -> int:
             )
             return EXIT_ERROR
 
-    problems = [p for t in corpus_files(root) for p in validate_file(t)]
-    for p in problems:
-        print(f"ERROR {p}", file=sys.stderr)
+    problems = [str(p) for t in corpus_files(root) for p in validate_file(t)]
     if problems:
+        for problem in problems:
+            print(f"ERROR {problem}", file=sys.stderr)
         return EXIT_ERROR
 
     if not stages:
         pending = ", ".join(f"{g.name} (phase {g.phase})" for g in PIPELINE)
-        verb = "would check" if args.check else "would run"
         print(
-            f"validate: OK. No generators registered yet, so there is nothing "
+            "validate: OK. No generators registered yet, so there is nothing "
             f"to {'compare' if args.check else 'generate'}.\n"
-            f"  Pipeline order is fixed; membership follows the registry (D19).\n"
+            "  Pipeline order is fixed; membership follows the registry (D19).\n"
             f"  Pending: {pending}."
         )
         return EXIT_OK
 
-    print(f"stages: validate -> {' -> '.join(g.name for g in stages)}")
+    out_root = Path(tempfile.mkdtemp(prefix="rl-build-")) if args.check else root
+    try:
+        for stage in stages:
+            stage_problems = stage.run(root, out_root)
+            if stage_problems:
+                for problem in stage_problems:
+                    print(f"ERROR {problem}", file=sys.stderr)
+                return EXIT_ERROR
+
+        if args.check:
+            drift = diff_tree(root, out_root)
+            for problem in drift:
+                print(f"ERROR {problem}", file=sys.stderr)
+            print(
+                f"validate -> {' -> '.join(g.name for g in stages)}: "
+                f"{len(drift)} difference(s) against the committed tree"
+            )
+            return EXIT_ERROR if drift else EXIT_OK
+    finally:
+        if args.check:
+            shutil.rmtree(out_root, ignore_errors=True)
+
+    print(f"validate -> {' -> '.join(g.name for g in stages)}: written")
     return EXIT_OK
 
 

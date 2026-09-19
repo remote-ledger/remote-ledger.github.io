@@ -10,18 +10,22 @@ from remote_ledger import pronto, protocols
 
 VECTORS = Path(__file__).parent / "vectors"
 VECTOR_INDEX = VECTORS / "index.json"
-V1_REGISTRY = {"NEC1"}
+V1_REGISTRY = {"NEC1", "Sony20"}
 BACKLOG = {"NEC2", "NEC", "Sony12", "Sony15", "RC5", "RC6"}
-PHASE_3 = {"Sony20", "Samsung32"}
+#: Not backlogged -- Phase 3 established that `Samsung32` does not exist in
+#: any consulted source. Samsung20 and Samsung36 do; which one the
+#: BN59-01199F speaks is open work, recorded in unresolved.json.
+NONEXISTENT = {"Samsung32"}
 
 
 def test_registry_holds_exactly_the_shipped_protocols():
-    """D18: narrow by design. Phase 3 adds Sony20 and Samsung32."""
+    """D18: narrow by design. Phase 3 added Sony20 -- and established that
+    Samsung32, which the design listed, does not exist."""
     assert set(protocols.REGISTRY) == V1_REGISTRY
 
 
 def test_backlog_is_not_in_the_registry():
-    assert not (BACKLOG | PHASE_3) & set(protocols.REGISTRY)
+    assert not (BACKLOG | NONEXISTENT) & set(protocols.REGISTRY)
 
 
 @pytest.mark.parametrize("name", sorted(V1_REGISTRY))
@@ -136,4 +140,4 @@ def test_unknown_protocol_names_the_gate():
     from remote_ledger.errors import ValidationError
 
     with pytest.raises(ValidationError, match="D18"):
-        protocols.get("Sony20")
+        protocols.get("Samsung32")

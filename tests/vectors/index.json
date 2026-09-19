@@ -1,11 +1,20 @@
 {
   "NEC1": {
-    "gate1_irp_source": "hifi-remote.com/johnsfine/DecodeIR.html",
+    "gate1_irp_source": "IrpTransmogrifier IrpProtocols.xml (verbatim), corroborated by hifi-remote.com/johnsfine/DecodeIR.html",
     "gate2_golden_vector": null,
     "gate2_vector_source": null,
     "gate2_vector_params": null,
     "gate2_pending_reason": "No published complete NEC1 Pronto Hex string with stated parameters obtained. The frequency-word formula and the 0.241246 constant ARE independently cited (remotecentral.com/features/irdisp2.htm), but the end-to-end byte-level claim is unproven. NEC1 is therefore NOT verified per D18 gate 2.",
     "regression_snapshot": "nec1_topping_power.pronto",
+    "snapshot_is_evidence": false
+  },
+  "Sony20": {
+    "gate1_irp_source": "hifi-remote.com/johnsfine/DecodeIR.html",
+    "gate2_golden_vector": null,
+    "gate2_vector_source": null,
+    "gate2_vector_params": null,
+    "gate2_pending_reason": "No published complete Sony20 Pronto Hex string with stated parameters obtained. The IRP definition IS independently cited (DecodeIR gives Sony12/15/20 as {40k,600}<1,-1|2,-1> with lead-in 4,-1, a 45 ms extent and Sony20's F:7,D:5,S:8 layout), and the emitted lead-in and bit words (0060 0018, 0030 0018, 0018 0018) match the canonical Sony spellings. But the end-to-end byte-level claim is unproven, and a cited vector is additionally what would settle whether Sony's frequency word is 0067 (truncation) or 0068 (round-half-up, which D6 rule 5 mandates). Sony20 is therefore NOT verified per D18 gate 2.",
+    "regression_snapshot": null,
     "snapshot_is_evidence": false
   }
 }
