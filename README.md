@@ -6,7 +6,7 @@ remote codes that control it, along with **why each one is trustworthy**
 and not just a guess someone copied from a forum.
 
 **Status:** the format is settled ([SPEC.md](SPEC.md)) and the core
-compiler works — Phases 0-4 of [DESIGN.md](DESIGN.md) §8. Two protocols
+compiler works — Phases 0-5 of [DESIGN.md](DESIGN.md) §8. Two protocols
 (NEC1, Sony20), one remote authored, and CI gates the generated tree for
 drift and orphans. Neither protocol's byte-level correctness is **yet
 independently verified**, and two of the three intended seed devices are
@@ -69,6 +69,7 @@ $ rl encode --protocol NEC1 --device 0x11 --subdevice 0xEE \
 0000 006D 0022 0002 0157 00AC 0015 0040 0015 0015 ...
 
 $ pytest
+$ rl lookup "DX3 Pro"
 $ rl build --check # the CI gate
 ```
 
