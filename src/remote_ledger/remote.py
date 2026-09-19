@@ -68,7 +68,20 @@ class Remote:
 
     @property
     def where(self) -> str:
-        return self.path.as_posix()
+        """Repo-relative, always.
+
+        D20 forbids a non-reproducible value in any generated file, and an
+        absolute path is one: it differs between a laptop and CI, so
+        ``build/warnings.json`` would drift on every machine and
+        ``rl build --check`` would fail for no reason.
+        """
+        path = self.path
+        if path.is_absolute():
+            try:
+                return path.relative_to(Path.cwd()).as_posix()
+            except ValueError:
+                return path.name
+        return path.as_posix()
 
     def groups(self, key: str) -> dict[str, list[Form]]:
         return group_by_candidate(self.keys[key])

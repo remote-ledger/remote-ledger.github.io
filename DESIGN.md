@@ -1,6 +1,6 @@
 # Remote Ledger — Design & Build Plan
 
-**Draft v1.2** · Status: Phases 0-2 implemented · Implements [SPEC.md](SPEC.md) v0.5
+**Draft v1.3** · Status: Phases 0-3 implemented · Implements [SPEC.md](SPEC.md) v0.5
 
 SPEC.md says *what* the format has to hold and why. This says *how it gets
 built*: the resolved open decisions, the one intermediate representation
@@ -186,8 +186,20 @@ seed data actually exercises:
 | Name | IRP definition | Covers | Phase |
 |---|---|---|---|
 | `NEC1` | `{38.4k,564}<1,-1\|1,-3>(16,-8,D:8,S:8,F:8,~F:8,1,^108m,(16,-4,1,^108m)*)` | Topping RC-15A | 1 |
-| `Sony20` | `{40k,600}<1,-1\|2,-1>(4,-1,F:7,D:5,S:8,^45m)*` | Sony RMT-B118P | 3 |
-| `Samsung32` | `{38.4k,564}<1,-1\|1,-3>(9,-9,D:8,S:8,F:8,~F:8,1,^108m)*` | Samsung BN59-01199F | 3 |
+| `Sony20` | `{40k,600}<1,-1\|2,-1>(4,-1,F:7,D:5,S:8,^45m)+` | Sony RMT-B118P (pending codes) | 3 |
+
+> ⚠️ **`Samsung32` is struck from this table: it does not exist.** v0.1
+> carried `{38.4k,564}<1,-1\|1,-3>(9,-9,D:8,S:8,F:8,~F:8,1,^108m)*` for it,
+> written from memory during design, and it survived nine review rounds
+> because every round read this document rather than a source. Phase 3
+> checked: two reads of DecodeIR and one of IrpTransmogrifier's database
+> find no 32-bit Samsung protocol with the fields `D:8,S:8,F:8,~F:8`. What
+> exists is **Samsung20**, `{38.4k,564}<1,-1\|1,-3>(8,-8,D:6,S:6,F:8,1,…)`,
+> and **Samsung36**, `{38k,500}<1,-1\|1,-3>(9,-9,D:8,S:8,1,-9,E:4,F:8,~F:8,1,-118)`.
+> D18's own gate 1 — an IRP string *with the source it came from* — is
+> precisely what a fabricated entry cannot satisfy, and it is the gate that
+> would have caught this at any point had it been applied to the table
+> rather than only to the code.
 
 That is the whole v1 registry, and the narrowness is the point: it matches
 the project's own premise that coverage is built one lookup at a time
@@ -1616,7 +1628,7 @@ the parts most likely to be wrong.
 | **0** ✅ | Skeleton | Repo layout, `pyproject.toml`, both schemas, `.gitattributes`, CI. **SPEC §12 replaced by §1's resolutions** (§9) | Done. `rl --help` runs; `rl build --check` exits 0 with no generators registered |
 | **1** ⚠️ | **Core signal path** | **SPEC §7 R12 given a real contract** (§9), then `signal.py` (D1a), `pronto.py` encode + decode (D6, D25), numeric bounds + pinned `Decimal` context (D28), `protocols/nec.py` as a metadata record (D3), `protocol` block schema (D24), serialization contract (D20) | Code done, suite green: round-trip holds in cycles, a zero-cycle duration is rejected, carrier is compared as words. **D18 gate 2 UNMET** — no independently cited golden Pronto string obtained, so "compiles to the published golden Pronto, byte for byte" is *unproven*. See §12 |
 | **2** ✅ | Forms, candidates & cross-check | The nine SPEC edits landed first (§9), then `forms.py` (D7, D21), candidate groups (D16, D26), `variants.py` (D17, D22, D23, D33), `claims` (D27), `crosscheck.py` (D8, D5a), `remote.py`, `check.py` (D9, D16), `fmt.py`, `warnings.py` (D32); `rl check` / `rl compile` / `rl fmt` wired | Done. All six criteria verified: a corrupted second form is caught at `intro[35]`; two differing candidates pass and genuinely differ; a derived-only group fails validation; a mismatched Pronto frequency word fails while a raw form one word off only warns; an over-extent truncated capture errors rather than clamping; `rl fmt --expand` twice changes nothing |
-| **3** | **Seed data** | `Sony20`, `Samsung32`; RMT-B118P, RC-15A, BN59-01199F authored; `rl build --check` in CI **over `build/pronto/` + `build/warnings.json`** (D19, D32); README string regenerated | Three real files validate, compile, cross-check green — **including the BX510's mode2/mode3 variants, which must compile as fallbacks, not fail** |
+| **3** ⚠️ | **Seed data** | `Sony20` added (IRP cited); `remotes/topping/RC-15A.json` authored; `compile` and `check` registered as generators, so `rl build --check` is live in CI over `build/pronto/**` and `build/warnings.json` (D19, D32); D18's table corrected | Partial. The corpus validates, compiles and cross-checks green, and the gate catches drift *and* orphans. **Two of three seed files are blocked on sources**, recorded in `unresolved.json`: the Sony needs cited per-button function codes (R19 forbids bulk import) and the Samsung needs its protocol identified at all — see §12 |
 | **4** | Layouts | `layout.py` (D14), schema `layouts` block, CSS-identifier key rule (D29), area→key plus `printedLabels`/`shape` orphan and duplicate-`original` validation (D14) | RMT-B118P's D-pad from SPEC §6 round-trips; a typo'd `printedLabels` key fails instead of rendering nothing |
 | **5** | Index & lookup | `index.py` (D13), `unresolved.json` + its schema (D12), `rl lookup`. **Gate widens to all of `build/`** | `rl lookup "Sony BDP-BX510"` prints all three SPEC §1 candidates with tiers and citations |
 | **6** | Site | `site.py` (D15) incl. two-hop citations for `derived` forms (D30), per-context output encoding (D29), Pages workflow. **Gate widens to `build/` + `site/` — full D19** | Searching "UN50NU6900F" in a browser reaches the remote; R20's three states visibly differ; a `source` that isn't an `http(s)`/`mailto` URL renders as text, not a link |
@@ -1698,7 +1710,7 @@ Phase 2** — a fair signal that Phase 2 is the one to slow down on.
 |---|---|---|
 | A hand-written encoder is subtly wrong, with no oracle to catch it | **High** | D10's cited golden vectors, gated: no protocol ships without one. The honest residual: a protocol whose only published vectors share a common ancestor error stays wrong. If a vector can't be sourced independently, don't ship the protocol. |
 | Rounding drift breaks byte-identical output (R12) | Medium | D6 pins `ROUND_HALF_UP` on `Decimal` and the clock constant; corpus snapshot test in CI |
-| Samsung32's lead-in is disputed — the IRP says `9 × 564 = 5076 µs`, real captures often show ~4500 µs | Medium | Resolve in Phase 3 against a cited capture of BN59-01199F specifically, and record which the file uses. Do not guess |
+| ~~Samsung32's lead-in is disputed~~ — **resolved in Phase 3, and the answer was not a timing dispute** | — | The protocol was misidentified. Samsung36's 9-unit lead-in at a **500 µs** unit is 4500 µs exactly, which is what the "real captures" were showing; the 5076 µs figure came from applying a 564 µs unit to a protocol that does not use one. No guess was recorded: the device is in `unresolved.json` pending a cited capture (D12) |
 | `raw` jitter tolerance passes a genuinely wrong code | Medium | D8's tolerances are tight by LIRC standards, symmetric so order can't change a verdict, and per-file overridable; an override needs a `source` explaining itself |
 | Candidate groups (D16) let untested alternates accumulate and never get resolved | Medium | They're open questions by design, so make them visible rather than silent: `rl lookup` and the site surface every non-`primary` group with its tier, and the index rolls up an "unresolved alternates" count per file |
 | Site upkeep outgrows its value (OD2) | Low | D15 keeps it dependency-free; a framework is the signal to revisit OD2 |
@@ -1848,7 +1860,7 @@ note rather than a live contract.
 
 ## 12. Implementation status
 
-Phases 0-2 are implemented: 320 tests, `jsonschema` the only runtime
+Phases 0-3 are implemented: 350 tests, `jsonschema` the only runtime
 dependency. Phase 2 landed its nine SPEC edits *before* its code, per §9 --
 the spec change is what authorises the implementation. (That count is asserted by the suite itself -- see
 `test_documented_test_count_is_current` -- so it cannot drift the way the

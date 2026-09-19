@@ -1,0 +1,22 @@
+[
+  {
+    "device": "Samsung UN50NU6900F",
+    "checked": "2026-09-19",
+    "searched": [
+      "hifi-remote.com/johnsfine/DecodeIR.html",
+      "hifi-remote.com/wiki DecodeIR protocol list",
+      "IrpTransmogrifier IrpProtocols.xml"
+    ],
+    "note": "Blocked on protocol identification, not on codes. DESIGN.md D18 listed a `Samsung32` protocol as {38.4k,564}<1,-1|1,-3>(9,-9,D:8,S:8,F:8,~F:8,1,^108m); no such protocol exists in any consulted source. What does exist is Samsung20, {38.4k,564}...(8,-8,D:6,S:6,F:8,1,...), and Samsung36, {38k,500}...(9,-9,D:8,S:8,1,-9,E:4,F:8,~F:8,1,-118). Note that Samsung36's 9-unit lead-in at a 500us unit is 4500us exactly, which accounts for the '~4500us real captures' DESIGN section 10 recorded as a disputed lead-in: the dispute was a symptom of the protocol being misidentified, not of a timing disagreement. Identifying which protocol the BN59-01199F speaks needs a cited capture of that remote."
+  },
+  {
+    "device": "Sony BDP-BX510",
+    "checked": "2026-09-19",
+    "searched": [
+      "hifi-remote.com/johnsfine/DecodeIR.html",
+      "hifi-remote.com/wiki Sony_Protocol (404)",
+      "hifi-remote.com/wiki Sony_Executor (404)"
+    ],
+    "note": "Protocol identified and implemented: Sony20, {40k,600}<1,-1|2,-1>(4,-1,F:7,D:5,S:8,^45m)+, cited from DecodeIR. Blocked on per-button function codes: SPEC section 1 cites hifi-remote.com's official Sony BD command table for them, and that table could not be retrieved. R19 forbids bulk-importing another project's codes, so the file waits for a citable source rather than being filled with guesses. The alternate subdevices 234 and 242 that SPEC section 1 records as untested fallbacks are the intended first use of variant expansion (D17)."
+  }
+]

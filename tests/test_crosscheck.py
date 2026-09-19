@@ -7,7 +7,9 @@ import pytest
 from remote_ledger.check import check_remote
 from remote_ledger.remote import load_remote
 from remote_ledger.validate import validate_file
-from remote_ledger.warnings import RAW_CARRIER_WORD_DRIFT, REDUNDANT_CANDIDATE
+from remote_ledger.warnings import (
+    CARRIER_OFF_NOMINAL, RAW_CARRIER_WORD_DRIFT, REDUNDANT_CANDIDATE,
+)
 
 BASE = {
     "manufacturer": "Topping", "model": "RC-15A",
@@ -38,8 +40,13 @@ def _check(path):
 
 
 def test_a_clean_file_passes(write):
+    """One warning is expected and by design: NEC1's nominal carrier is
+    38.4 kHz and this remote declares 38 kHz, which maps to a different
+    frequency word. DESIGN D3 calls that the single most common deviation,
+    and warns rather than demanding a citation for it."""
     problems, warnings = _check(write())
-    assert problems == [] and warnings == []
+    assert problems == []
+    assert [w.code for w in warnings] == [CARRIER_OFF_NOMINAL]
 
 
 def test_corrupted_second_form_in_the_same_group_is_caught(write):
@@ -115,7 +122,9 @@ def test_raw_form_one_word_off_only_warns(write):
         })
     problems, warnings = _check(write(mutate))
     assert problems == []
-    assert [w.code for w in warnings] == [RAW_CARRIER_WORD_DRIFT]
+    assert sorted(w.code for w in warnings) == sorted(
+        [CARRIER_OFF_NOMINAL, RAW_CARRIER_WORD_DRIFT]
+    )
 
 
 def test_raw_form_several_words_off_fails(write):

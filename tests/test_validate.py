@@ -137,7 +137,7 @@ def test_empty_raw_sequence_rejected():
 
 def test_unknown_protocol_is_a_semantic_error():
     doc = json.loads(json.dumps(GOOD))
-    doc["protocol"]["name"] = "Sony20"
+    doc["protocol"]["name"] = "Samsung32"
     assert errors(doc) == []
     assert any("D18" in str(p) for p in semantic_problems(doc, "t"))
 
