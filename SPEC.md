@@ -1,6 +1,6 @@
 # Remote Ledger — Requirements Spec
 
-**Draft v0.6** · Status: §12 resolved; Phases 0-4 implemented · Depends on
+**Draft v0.7** · Status: §12 resolved; Phases 0-5 implemented · Depends on
 nothing upstream (self-contained)
 
 A self-contained JSON file per remote, where every key can hold several
@@ -442,6 +442,23 @@ is the *only* place trust comes from — so it has to hold up on its own.
 - **R20 — Partial coverage reads as partial, not absent.** A device with no
   entry yet must look different from one that was checked and found to
   have no known remote.
+
+  The mechanism is `unresolved.json` at the repo root: a list of devices
+  that were looked for and not found, each recording the date, the sources
+  searched, and what stopped it. It sits outside `remotes/` on purpose, so
+  `remotes/**/*.json` stays uniformly one-file-one-remote with no reserved
+  names. The generated index folds it in, which gives a lookup **three**
+  distinguishable answers rather than two:
+
+  | State | Reads as |
+  |---|---|
+  | In the ledger | the remote, its candidates, their tiers and citations |
+  | In `unresolved.json` | *checked on `<date>`, searched `<sources>`, blocked by `<reason>`* |
+  | Neither | *not in the ledger* — nobody has looked |
+
+  The middle row is the one R20 exists for. Without it a device someone
+  spent an afternoon failing to find is indistinguishable from one nobody
+  has ever typed in, and that afternoon gets repeated.
 - **R21 — CI runs the validator and the cross-check on every change.** R11
   and R13, enforced automatically on every commit.
 

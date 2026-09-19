@@ -326,6 +326,40 @@ def cmd_build(args: argparse.Namespace) -> int:
     return EXIT_OK
 
 
+def cmd_index(args: argparse.Namespace) -> int:
+    """R14/D13. Corpus-wide, so a path-scoped run may not write it (D19)."""
+    from .generators import run_index
+
+    root = _repo_root()
+    if args.check:
+        import shutil, tempfile
+        out = Path(tempfile.mkdtemp(prefix="rl-index-"))
+        try:
+            problems = run_index(root, out)
+            drift = diff_tree(root, out) if not problems else []
+            for message in problems + drift:
+                print(f"ERROR {message}", file=sys.stderr)
+            return EXIT_ERROR if (problems or drift) else EXIT_OK
+        finally:
+            shutil.rmtree(out, ignore_errors=True)
+    problems = run_index(root, root)
+    for message in problems:
+        print(f"ERROR {message}", file=sys.stderr)
+    return EXIT_ERROR if problems else EXIT_OK
+
+
+def cmd_lookup(args: argparse.Namespace) -> int:
+    """R16: find a remote by device, model, alias or manufacturer."""
+    from .index import build_index
+    from .lookup import render, search
+
+    index, _ = build_index(_repo_root())
+    query = " ".join(args.query)
+    matches = search(index, query)
+    print(render(matches, query))
+    return EXIT_OK
+
+
 def _unavailable(name: str, phase: int) -> int:
     print(
         f"`rl {name}` is not implemented until Phase {phase} "
@@ -418,9 +452,19 @@ def build_parser() -> argparse.ArgumentParser:
     f.add_argument("--check", action="store_true", help="diff instead of write")
     f.set_defaults(func=cmd_fmt)
 
+    ix = sub.add_parser(
+        "index", help="regenerate build/index.json (R14)", parents=[common]
+    )
+    ix.add_argument("--check", action="store_true", help="diff instead of write")
+    ix.set_defaults(func=cmd_index)
+
+    lu = sub.add_parser(
+        "lookup", help="find a remote by device or model (R16)", parents=[common]
+    )
+    lu.add_argument("query", nargs="+")
+    lu.set_defaults(func=cmd_lookup)
+
     for name, fallback_phase, help_text in (
-        ("index", 5, "regenerate build/index.json (R14)"),
-        ("lookup", 5, "find a remote by device or model (R16)"),
         ("site", 6, "generate site/ (R17)"),
     ):
         phase = generator_phase.get(name, fallback_phase)

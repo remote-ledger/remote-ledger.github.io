@@ -45,15 +45,19 @@ def test_unresolved_records_what_was_checked_and_not_found():
         assert entry["searched"] and entry["note"]
 
 
-def test_compile_and_check_are_registered_in_phase_three():
+def test_the_gate_covers_every_phase_5_artifact():
+    """D19: the gate widens by itself as phases register generators -- no
+    staging logic, and no CI config edit."""
     names = {g.name for g in registered()}
-    assert names == {"check", "compile"}
-    assert set(owned_paths()) == {"build/warnings.json", "build/pronto"}
+    assert names == {"check", "compile", "index"}
+    assert set(owned_paths()) == {
+        "build/warnings.json", "build/pronto", "build/index.json"
+    }
 
 
-def test_index_and_site_are_still_pending():
+def test_site_is_still_pending():
     pending = {g.name: g.phase for g in PIPELINE if not g.registered}
-    assert pending == {"index": 5, "site": 6}
+    assert pending == {"site": 6}
 
 
 def test_generated_tree_holds_no_absolute_paths():

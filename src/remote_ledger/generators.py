@@ -80,6 +80,17 @@ def run_check(root: Path, out_root: Path) -> list[str]:
     return problems
 
 
+def run_index(root: Path, out_root: Path) -> list[str]:
+    """Compute the index from the files and write it (R14, D13, OD4)."""
+    from .index import build_index
+
+    index, problems = build_index(root)
+    target = out_root / "build" / "index.json"
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(dumps(index), encoding="utf-8", newline="\n")
+    return problems
+
+
 def run_compile(root: Path, out_root: Path) -> list[str]:
     """Render each candidate group's trusted form (R12, D20)."""
     from .cli import compiled_artifact
@@ -98,7 +109,7 @@ def run_compile(root: Path, out_root: Path) -> list[str]:
 PIPELINE: tuple[Generator, ...] = (
     Generator(name="check", owns="build/warnings.json", phase=3, run=run_check),
     Generator(name="compile", owns="build/pronto", phase=3, run=run_compile),
-    Generator(name="index", owns="build/index.json", phase=5),
+    Generator(name="index", owns="build/index.json", phase=5, run=run_index),
     Generator(name="site", owns="site", phase=6),
 )
 
