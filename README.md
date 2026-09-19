@@ -6,7 +6,7 @@ remote codes that control it, along with **why each one is trustworthy**
 and not just a guess someone copied from a forum.
 
 **Status:** the format is settled ([SPEC.md](SPEC.md)) and the core
-compiler works — Phases 0-3 of [DESIGN.md](DESIGN.md) §8. Two protocols
+compiler works — Phases 0-4 of [DESIGN.md](DESIGN.md) §8. Two protocols
 (NEC1, Sony20), one remote authored, and CI gates the generated tree for
 drift and orphans. Neither protocol's byte-level correctness is **yet
 independently verified**, and two of the three intended seed devices are

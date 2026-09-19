@@ -1,6 +1,6 @@
 # Remote Ledger — Design & Build Plan
 
-**Draft v1.3** · Status: Phases 0-3 implemented · Implements [SPEC.md](SPEC.md) v0.5
+**Draft v1.4** · Status: Phases 0-4 implemented · Implements [SPEC.md](SPEC.md) v0.5
 
 SPEC.md says *what* the format has to hold and why. This says *how it gets
 built*: the resolved open decisions, the one intermediate representation
@@ -1629,7 +1629,7 @@ the parts most likely to be wrong.
 | **1** ⚠️ | **Core signal path** | **SPEC §7 R12 given a real contract** (§9), then `signal.py` (D1a), `pronto.py` encode + decode (D6, D25), numeric bounds + pinned `Decimal` context (D28), `protocols/nec.py` as a metadata record (D3), `protocol` block schema (D24), serialization contract (D20) | Code done, suite green: round-trip holds in cycles, a zero-cycle duration is rejected, carrier is compared as words. **D18 gate 2 UNMET** — no independently cited golden Pronto string obtained, so "compiles to the published golden Pronto, byte for byte" is *unproven*. See §12 |
 | **2** ✅ | Forms, candidates & cross-check | The nine SPEC edits landed first (§9), then `forms.py` (D7, D21), candidate groups (D16, D26), `variants.py` (D17, D22, D23, D33), `claims` (D27), `crosscheck.py` (D8, D5a), `remote.py`, `check.py` (D9, D16), `fmt.py`, `warnings.py` (D32); `rl check` / `rl compile` / `rl fmt` wired | Done. All six criteria verified: a corrupted second form is caught at `intro[35]`; two differing candidates pass and genuinely differ; a derived-only group fails validation; a mismatched Pronto frequency word fails while a raw form one word off only warns; an over-extent truncated capture errors rather than clamping; `rl fmt --expand` twice changes nothing |
 | **3** ⚠️ | **Seed data** | `Sony20` added (IRP cited); `remotes/topping/RC-15A.json` authored; `compile` and `check` registered as generators, so `rl build --check` is live in CI over `build/pronto/**` and `build/warnings.json` (D19, D32); D18's table corrected | Partial. The corpus validates, compiles and cross-checks green, and the gate catches drift *and* orphans. **Two of three seed files are blocked on sources**, recorded in `unresolved.json`: the Sony needs cited per-button function codes (R19 forbids bulk import) and the Samsung needs its protocol identified at all — see §12 |
-| **4** | Layouts | `layout.py` (D14), schema `layouts` block, CSS-identifier key rule (D29), area→key plus `printedLabels`/`shape` orphan and duplicate-`original` validation (D14) | RMT-B118P's D-pad from SPEC §6 round-trips; a typo'd `printedLabels` key fails instead of rendering nothing |
+| **4** ✅ | Layouts | `layout.py` (D14) parsing `grid-template-areas` by splitting on whitespace, CSS's own uniform-width and single-rectangle constraints, the CSS-identifier key rule (D29), and R8/R10's ledger-specific checks; wired into `rl validate` | Done. SPEC §6's D-pad parses, round-trips through a real CSS declaration, and validates on a remote; a typo'd `printedLabels` key fails instead of rendering nothing |
 | **5** | Index & lookup | `index.py` (D13), `unresolved.json` + its schema (D12), `rl lookup`. **Gate widens to all of `build/`** | `rl lookup "Sony BDP-BX510"` prints all three SPEC §1 candidates with tiers and citations |
 | **6** | Site | `site.py` (D15) incl. two-hop citations for `derived` forms (D30), per-context output encoding (D29), Pages workflow. **Gate widens to `build/` + `site/` — full D19** | Searching "UN50NU6900F" in a browser reaches the remote; R20's three states visibly differ; a `source` that isn't an `http(s)`/`mailto` URL renders as text, not a link |
 
@@ -1860,7 +1860,7 @@ note rather than a live contract.
 
 ## 12. Implementation status
 
-Phases 0-3 are implemented: 350 tests, `jsonschema` the only runtime
+Phases 0-4 are implemented: 379 tests, `jsonschema` the only runtime
 dependency. Phase 2 landed its nine SPEC edits *before* its code, per §9 --
 the spec change is what authorises the implementation. (That count is asserted by the suite itself -- see
 `test_documented_test_count_is_current` -- so it cannot drift the way the
