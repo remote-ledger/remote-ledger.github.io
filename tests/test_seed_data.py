@@ -45,19 +45,14 @@ def test_unresolved_records_what_was_checked_and_not_found():
         assert entry["searched"] and entry["note"]
 
 
-def test_the_gate_covers_every_phase_5_artifact():
-    """D19: the gate widens by itself as phases register generators -- no
-    staging logic, and no CI config edit."""
-    names = {g.name for g in registered()}
-    assert names == {"check", "compile", "index"}
+def test_every_generator_is_registered():
+    """D19 in full: the gate widened by itself at Phases 3, 5 and 6, each
+    time by registering a generator rather than editing CI."""
+    assert {g.name for g in registered()} == {"check", "compile", "index", "site"}
     assert set(owned_paths()) == {
-        "build/warnings.json", "build/pronto", "build/index.json"
+        "build/warnings.json", "build/pronto", "build/index.json", "site"
     }
-
-
-def test_site_is_still_pending():
-    pending = {g.name: g.phase for g in PIPELINE if not g.registered}
-    assert pending == {"site": 6}
+    assert [g.name for g in PIPELINE if not g.registered] == []
 
 
 def test_generated_tree_holds_no_absolute_paths():
@@ -75,11 +70,28 @@ def test_generated_tree_holds_no_absolute_paths():
             assert "/home/" not in text and "/Users/" not in text
 
 
-def test_generated_tree_holds_no_timestamps():
+def test_the_whole_generated_tree_is_byte_reproducible(tmp_path):
+    """D20's actual invariant, asserted directly rather than by proxy.
+
+    The first version of this grepped every artifact for the word
+    "generated" as a stand-in for "contains a generation timestamp" -- and
+    flagged the site's own footer, which says "Generated from the ledger,
+    never hand-edited". Regenerating and comparing tests the property that
+    matters instead of a spelling that correlates with it.
+    """
+    from remote_ledger.generators import registered
+
+    for generator in registered():
+        assert generator.run(ROOT, tmp_path) == []
+
     for owned in owned_paths():
-        target = ROOT / owned
-        files = [target] if target.is_file() else list(target.rglob("*"))
+        committed = ROOT / owned
+        files = [committed] if committed.is_file() else sorted(committed.rglob("*"))
         for file in files:
-            if file.is_file():
-                text = file.read_text(encoding="utf-8")
-                assert "generated" not in text.lower()
+            if not file.is_file():
+                continue
+            fresh = tmp_path / file.relative_to(ROOT)
+            assert fresh.is_file(), f"{file.relative_to(ROOT)}: not regenerated"
+            assert fresh.read_bytes() == file.read_bytes(), (
+                f"{file.relative_to(ROOT)}: not byte-reproducible"
+            )

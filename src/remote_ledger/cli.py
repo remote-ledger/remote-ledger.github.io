@@ -348,6 +348,26 @@ def cmd_index(args: argparse.Namespace) -> int:
     return EXIT_ERROR if problems else EXIT_OK
 
 
+def cmd_site(args: argparse.Namespace) -> int:
+    """R17. Corpus-wide, so a path-scoped run may not write it (D19)."""
+    from .generators import run_site
+
+    root = _repo_root()
+    if args.check:
+        import shutil, tempfile
+        out = Path(tempfile.mkdtemp(prefix="rl-site-"))
+        try:
+            problems = run_site(root, out) + diff_tree(root, out)
+            for message in problems:
+                print(f"ERROR {message}", file=sys.stderr)
+            return EXIT_ERROR if problems else EXIT_OK
+        finally:
+            shutil.rmtree(out, ignore_errors=True)
+    run_site(root, root)
+    print("site/index.html")
+    return EXIT_OK
+
+
 def cmd_lookup(args: argparse.Namespace) -> int:
     """R16: find a remote by device, model, alias or manufacturer."""
     from .index import build_index
@@ -464,15 +484,9 @@ def build_parser() -> argparse.ArgumentParser:
     lu.add_argument("query", nargs="+")
     lu.set_defaults(func=cmd_lookup)
 
-    for name, fallback_phase, help_text in (
-        ("site", 6, "generate site/ (R17)"),
-    ):
-        phase = generator_phase.get(name, fallback_phase)
-        sp = sub.add_parser(
-            name, help=f"{help_text} [phase {phase}]", parents=[common]
-        )
-        sp.add_argument("rest", nargs="*")
-        sp.set_defaults(func=lambda a, n=name, ph=phase: _unavailable(n, ph))
+    st = sub.add_parser("site", help="generate site/ (R17)", parents=[common])
+    st.add_argument("--check", action="store_true", help="diff instead of write")
+    st.set_defaults(func=cmd_site)
 
     return p
 

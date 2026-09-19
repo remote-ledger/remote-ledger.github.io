@@ -5,13 +5,16 @@ A database of IR remote configurations, organized so you can look up a
 remote codes that control it, along with **why each one is trustworthy**
 and not just a guess someone copied from a forum.
 
-**Status:** the format is settled ([SPEC.md](SPEC.md)) and the core
-compiler works — Phases 0-5 of [DESIGN.md](DESIGN.md) §8. Two protocols
-(NEC1, Sony20), one remote authored, and CI gates the generated tree for
-drift and orphans. Neither protocol's byte-level correctness is **yet
-independently verified**, and two of the three intended seed devices are
-blocked on sources — DESIGN.md §12 says exactly what is missing and why it
-matters.
+**Status:** v1 is built — all seven phases of [DESIGN.md](DESIGN.md) §8.
+Schema, compiler, cross-check, layouts, a generated index, an offline
+lookup and a static site, with CI gating the whole generated tree for drift
+*and* orphans.
+
+Two gaps remain, and both are about evidence rather than code. Neither
+protocol's byte-level output is **independently verified** (no cited golden
+Pronto vector — the one test layer that catches a wrong constant), and two
+of the three intended seed devices are blocked on sources. DESIGN.md §12
+says exactly what is missing and why it matters.
 
 ## Why
 
@@ -69,8 +72,9 @@ $ rl encode --protocol NEC1 --device 0x11 --subdevice 0xEE \
 0000 006D 0022 0002 0157 00AC 0015 0040 0015 0015 ...
 
 $ pytest
-$ rl lookup "DX3 Pro"
-$ rl build --check # the CI gate
+$ rl lookup "DX3 Pro"      # offline lookup, R20's three states
+$ rl build --check         # the CI gate: drift and orphans
+$ rl build && open site/index.html
 ```
 
 ## Read next

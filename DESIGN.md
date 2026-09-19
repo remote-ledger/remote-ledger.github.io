@@ -1,6 +1,6 @@
 # Remote Ledger — Design & Build Plan
 
-**Draft v1.5** · Status: Phases 0-5 implemented · Implements [SPEC.md](SPEC.md) v0.5
+**Draft v1.6** · Status: v1 complete (Phases 0-6) · Implements [SPEC.md](SPEC.md) v0.5
 
 SPEC.md says *what* the format has to hold and why. This says *how it gets
 built*: the resolved open decisions, the one intermediate representation
@@ -1631,7 +1631,7 @@ the parts most likely to be wrong.
 | **3** ⚠️ | **Seed data** | `Sony20` added (IRP cited); `remotes/topping/RC-15A.json` authored; `compile` and `check` registered as generators, so `rl build --check` is live in CI over `build/pronto/**` and `build/warnings.json` (D19, D32); D18's table corrected | Partial. The corpus validates, compiles and cross-checks green, and the gate catches drift *and* orphans. **Two of three seed files are blocked on sources**, recorded in `unresolved.json`: the Sony needs cited per-button function codes (R19 forbids bulk import) and the Samsung needs its protocol identified at all — see §12 |
 | **4** ✅ | Layouts | `layout.py` (D14) parsing `grid-template-areas` by splitting on whitespace, CSS's own uniform-width and single-rectangle constraints, the CSS-identifier key rule (D29), and R8/R10's ledger-specific checks; wired into `rl validate` | Done. SPEC §6's D-pad parses, round-trips through a real CSS declaration, and validates on a remote; a typo'd `printedLabels` key fails instead of rendering nothing |
 | **5** ✅ | Index & lookup | `index.py` (D13, R14) computed from the files and committed (OD4), folding in `unresolved.json` (D12) and surfacing R15's alias conflicts; `index` registered as a generator so the gate widened to all of `build/` by itself; `rl lookup` (R16) | Done. R20's three states render visibly differently — in the ledger, checked and not found, nobody has looked. The acceptance query `rl lookup "Sony BDP-BX510"` returns the *second* state rather than three candidates, because that file is still blocked on cited function codes (§12) — which is the honest answer and exactly what R20 asks for |
-| **6** | Site | `site.py` (D15) incl. two-hop citations for `derived` forms (D30), per-context output encoding (D29), Pages workflow. **Gate widens to `build/` + `site/` — full D19** | Searching "UN50NU6900F" in a browser reaches the remote; R20's three states visibly differ; a `source` that isn't an `http(s)`/`mailto` URL renders as text, not a link |
+| **6** ✅ | Site | `site.py` (D15): one HTML file plus `index.json`, no framework and no server, with the ledger embedded as a JSON island so it works from `file://` too; `encoding.py` (D29) for per-context output; two-hop citations for `derived` forms (D30); layouts rendered through real CSS grid (R9); Pages workflow. **Gate covers `build/` + `site/` — full D19** | Done. R20's three states render visibly differently; a `source` that is not an `http(s)`/`mailto` URL renders as text, not a link. Searching the Samsung reaches its *checked-and-not-found* entry rather than a remote, for the reason §12 records |
 
 Phase 1 is the real risk and deserves the most care — it is where a wrong
 constant would silently poison everything downstream. Phase 2 now carries
@@ -1860,7 +1860,7 @@ note rather than a live contract.
 
 ## 12. Implementation status
 
-Phases 0-5 are implemented: 407 tests, `jsonschema` the only runtime
+Phases 0-6 are implemented: 449 tests, `jsonschema` the only runtime
 dependency. Phase 2 landed its nine SPEC edits *before* its code, per §9 --
 the spec change is what authorises the implementation. (That count is asserted by the suite itself -- see
 `test_documented_test_count_is_current` -- so it cannot drift the way the
