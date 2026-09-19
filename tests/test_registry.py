@@ -10,11 +10,12 @@ from remote_ledger import pronto, protocols
 
 VECTORS = Path(__file__).parent / "vectors"
 VECTOR_INDEX = VECTORS / "index.json"
-V1_REGISTRY = {"NEC1", "Sony20"}
+V1_REGISTRY = {"NEC1", "NECx2", "Sony20"}
 BACKLOG = {"NEC2", "NEC", "Sony12", "Sony15", "RC5", "RC6"}
-#: Not backlogged -- Phase 3 established that `Samsung32` does not exist in
-#: any consulted source. Samsung20 and Samsung36 do; which one the
-#: BN59-01199F speaks is open work, recorded in unresolved.json.
+#: Not backlogged -- `Samsung32` does not exist in any consulted source, and
+#: the question it stood for is now answered: the BN59-01199F speaks NECx2,
+#: per IRDB (device 7, subdevice 7) and corroborated by IRremoteESP8266's
+#: SAMSUNG timings. There was never a Samsung protocol to add.
 NONEXISTENT = {"Samsung32"}
 
 
@@ -45,10 +46,10 @@ def check_gate_2(name: str, entry: dict, vectors_dir: Path) -> None:
     through the live index, so its success branch was dead code -- and it
     contained a NameError nobody could see.
     """
-    vector_name = entry.get("gate2_golden_vector")
+    vector_name = entry.get("gate2b_golden_pronto")
 
     if not vector_name:
-        reason = entry.get("gate2_pending_reason", "")
+        reason = entry.get("gate2b_pending_reason") or ""
         assert len(reason) > 60, (
             f"{name} has no cited golden vector, so it is NOT verified per "
             "D18 gate 2; index.json must record why"
@@ -62,14 +63,14 @@ def check_gate_2(name: str, entry: dict, vectors_dir: Path) -> None:
         f"{name}: the regression snapshot is this encoder's own output and "
         "cannot serve as its own independent vector"
     )
-    assert entry.get("gate2_vector_source"), f"{name}: a vector needs a citation (R18)"
+    assert entry.get("gate2b_vector_source"), f"{name}: a vector needs a citation (R18)"
 
     path = vectors_dir / vector_name
     assert path.is_file(), f"{name}: cited vector {path} is missing"
     expected = path.read_text().strip()
     assert expected, f"{name}: cited vector is empty"
 
-    params = entry.get("gate2_vector_params")
+    params = entry.get("gate2b_vector_params")
     assert params, (
         f"{name}: index.json must record the protocol parameters the vector "
         "corresponds to, or nothing can be compared against it"
@@ -81,7 +82,7 @@ def check_gate_2(name: str, entry: dict, vectors_dir: Path) -> None:
 
 
 @pytest.mark.parametrize("name", sorted(V1_REGISTRY))
-def test_gate_2_golden_vector(name):
+def test_gate_2b_golden_pronto(name):
     """Either a cited vector is compared here, byte for byte, or the gap is
     recorded with a reason.
 
@@ -94,11 +95,25 @@ def test_gate_2_golden_vector(name):
     check_gate_2(name, json.loads(VECTOR_INDEX.read_text())[name], VECTORS)
 
 
+@pytest.mark.parametrize("name", sorted(V1_REGISTRY))
+def test_gate_2a_structural_vector_is_declared(name):
+    """Split from gate 2 once it became clear the two are different claims:
+    2a verifies every structural constant against an independent
+    implementation; 2b verifies the emitted Pronto bytes. 2a catches the
+    16-versus-15 lead-in case D10 names; 2b catches the quantization layer."""
+    entry = json.loads(VECTOR_INDEX.read_text())[name]
+    if entry.get("gate2a_structural_vector"):
+        assert "IRremoteESP8266" in entry["gate2a_structural_vector"]
+    else:
+        assert len(entry.get("gate2a_pending_reason") or "") > 30
+
+
 def unverified_protocols() -> list[str]:
     """Registry protocols with no cited golden vector (D18 gate 2)."""
     index = json.loads(VECTOR_INDEX.read_text())
     return sorted(
-        n for n in protocols.REGISTRY if not index.get(n, {}).get("gate2_golden_vector")
+        n for n in protocols.REGISTRY
+        if not index.get(n, {}).get("gate2b_golden_pronto")
     )
 
 

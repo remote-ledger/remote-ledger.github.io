@@ -374,9 +374,9 @@ PENDING = "x" * 61
 def _golden(tmp_path, text, **overrides):
     (tmp_path / "v.pronto").write_text(text)
     entry = {
-        "gate2_golden_vector": "v.pronto",
-        "gate2_vector_source": "somebody.example/nec-codes",
-        "gate2_vector_params": PARAMS,
+        "gate2b_golden_pronto": "v.pronto",
+        "gate2b_vector_source": "somebody.example/nec-codes",
+        "gate2b_vector_params": PARAMS,
         "regression_snapshot": "snapshot.pronto",
         "snapshot_is_evidence": False,
     }
@@ -414,8 +414,8 @@ def test_gate_2_fails_when_the_encoder_disagrees(tmp_path):
 @pytest.mark.parametrize(
     "missing,match",
     [
-        ("gate2_vector_source", "needs a citation"),
-        ("gate2_vector_params", "must record the protocol parameters"),
+        ("gate2b_vector_source", "needs a citation"),
+        ("gate2b_vector_params", "must record the protocol parameters"),
     ],
 )
 def test_gate_2_requires_citation_and_parameters(tmp_path, missing, match):
@@ -426,10 +426,10 @@ def test_gate_2_requires_citation_and_parameters(tmp_path, missing, match):
 
 def test_gate_2_pending_path_requires_a_reason(tmp_path):
     with pytest.raises(AssertionError):
-        check_gate_2("NEC1", {"gate2_golden_vector": None,
-                              "gate2_pending_reason": "too short"}, tmp_path)
-    check_gate_2("NEC1", {"gate2_golden_vector": None,
-                          "gate2_pending_reason": PENDING,
+        check_gate_2("NEC1", {"gate2b_golden_pronto": None,
+                              "gate2b_pending_reason": "too short"}, tmp_path)
+    check_gate_2("NEC1", {"gate2b_golden_pronto": None,
+                          "gate2b_pending_reason": PENDING,
                           "snapshot_is_evidence": False}, tmp_path)
 
 

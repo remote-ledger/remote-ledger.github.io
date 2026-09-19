@@ -1,0 +1,28 @@
+{
+  "_comment": "Independently published timing constants for the NEC family, used as a STRUCTURAL vector (D18 gate 2a). Not a Pronto string: see CITATIONS.md for what this does and does not establish.",
+  "source": "crankyoldgit/IRremoteESP8266, src/ir_Samsung.cpp and test/ir_NEC_test.cpp, retrieved 2026-09-19",
+  "sourceReference": "http://elektrolab.wz.cz/katalog/samsung_protocol.pdf (cited by that implementation)",
+  "tickUs": 560,
+  "carrierHz": 38000,
+  "protocols": {
+    "NEC1": {
+      "headerMarkTicks": 16,
+      "headerSpaceTicks": 8,
+      "bitMarkTicks": 1,
+      "oneSpaceTicks": 3,
+      "zeroSpaceTicks": 1,
+      "bits": 32,
+      "publishedHeaderUs": [8960, 4480]
+    },
+    "NECx2": {
+      "headerMarkTicks": 8,
+      "headerSpaceTicks": 8,
+      "bitMarkTicks": 1,
+      "oneSpaceTicks": 3,
+      "zeroSpaceTicks": 1,
+      "bits": 32,
+      "publishedHeaderUs": [4480, 4480],
+      "layout": "customer_byte + customer_byte(same) + command + invert(command)"
+    }
+  }
+}

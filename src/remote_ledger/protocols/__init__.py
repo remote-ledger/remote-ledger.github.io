@@ -25,12 +25,12 @@ from __future__ import annotations
 
 from ..errors import ValidationError
 from .base import Protocol
-from .nec import NEC1
+from .nec import NEC1, NECX2
 from .sony import SONY20
 
-REGISTRY: dict[str, Protocol] = {p.name: p for p in (NEC1, SONY20)}
+REGISTRY: dict[str, Protocol] = {p.name: p for p in (NEC1, NECX2, SONY20)}
 
-__all__ = ["Protocol", "REGISTRY", "NEC1", "SONY20"]
+__all__ = ["Protocol", "REGISTRY", "NEC1", "NECX2", "SONY20"]
 
 
 def get(name: str) -> Protocol:

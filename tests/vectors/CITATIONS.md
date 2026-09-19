@@ -67,3 +67,49 @@ recovered from the emitted words, and the NEC complement relation.
 RC-15A Power key, committed so a refactor cannot change the bytes unnoticed.
 It is self-derived: it proves stability, not correctness, and it does not
 satisfy Gate 2. Labelled here so no one later mistakes it for a citation.
+
+---
+
+## Gate 2, split into 2a and 2b
+
+The original gate 2 asked for "an independently cited golden vector" and
+meant a Pronto string. Pursuing one surfaced that it was two claims wearing
+one name:
+
+- **Gate 2a — structural.** Do our protocol constants match what an
+  independent implementation publishes? This is what catches "the NEC1
+  lead-in is 15 units, not 16", which is the failure D10 names.
+- **Gate 2b — byte-level.** Do our *emitted Pronto bytes* match someone
+  else's? This additionally covers the microsecond-to-Pronto quantization.
+
+Splitting them is not a relaxation. 2b is unchanged and still open for every
+protocol; 2a is a check that did not exist before and that no protocol had
+passed.
+
+### Gate 2a: **MET** for NEC1 and NECx2
+
+Source: `crankyoldgit/IRremoteESP8266` — `src/ir_Samsung.cpp` and
+`test/ir_NEC_test.cpp`, retrieved 2026-09-19, which in turn cites
+<http://elektrolab.wz.cz/katalog/samsung_protocol.pdf>.
+
+It publishes a 560 µs tick with a 16-tick NEC header (8960/4480 µs), an
+8-tick NECx header (4480/4480 µs), a 1-tick bit mark, 3-tick one-space and
+1-tick zero-space over 32 bits. Feeding our encoder *their* tick reproduces
+those durations exactly — see `tests/test_vectors_structural.py`.
+
+**Recorded rather than smoothed over:** their tick is 560 µs where
+IrpTransmogrifier and DecodeIR both say 564 µs, and their frame extent is
+193 ticks (108 080 µs) where the IRP says `^108m` (108 000 µs). Both are
+legitimate implementations of the same protocol and real receivers tolerate
+0.7 %. That divergence is exactly why this vector verifies structure and
+not bytes.
+
+Gate 2a is **PENDING** for Sony20: no independent implementation's Sony20
+timing constants have been obtained.
+
+### Gate 2b: **PENDING** for all three
+
+Still no published complete Pronto string with stated parameters. The
+formula is cited (Remote Central, above); the open question is its rounding
+direction, since that page's Sony word `0067` implies truncation where D6
+rule 5 mandates round-half-up (`0068`).

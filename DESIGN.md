@@ -1,6 +1,6 @@
 # Remote Ledger — Design & Build Plan
 
-**Draft v1.6** · Status: v1 complete (Phases 0-6) · Implements [SPEC.md](SPEC.md) v0.5
+**Draft v1.7** · Status: v1 complete (Phases 0-6); gap work in progress · Implements [SPEC.md](SPEC.md) v0.5
 
 SPEC.md says *what* the format has to hold and why. This says *how it gets
 built*: the resolved open decisions, the one intermediate representation
@@ -186,20 +186,26 @@ seed data actually exercises:
 | Name | IRP definition | Covers | Phase |
 |---|---|---|---|
 | `NEC1` | `{38.4k,564}<1,-1\|1,-3>(16,-8,D:8,S:8,F:8,~F:8,1,^108m,(16,-4,1,^108m)*)` | Topping RC-15A | 1 |
+| `NECx2` | `{38.0k,564}<1,-1\|1,-3>(8,-8,D:8,S:8,F:8,~F:8,1,^108m)+` | Samsung BN59-01199F | post-6 |
 | `Sony20` | `{40k,600}<1,-1\|2,-1>(4,-1,F:7,D:5,S:8,^45m)+` | Sony RMT-B118P (pending codes) | 3 |
 
-> ⚠️ **`Samsung32` is struck from this table: it does not exist.** v0.1
-> carried `{38.4k,564}<1,-1\|1,-3>(9,-9,D:8,S:8,F:8,~F:8,1,^108m)*` for it,
-> written from memory during design, and it survived nine review rounds
-> because every round read this document rather than a source. Phase 3
-> checked: two reads of DecodeIR and one of IrpTransmogrifier's database
-> find no 32-bit Samsung protocol with the fields `D:8,S:8,F:8,~F:8`. What
-> exists is **Samsung20**, `{38.4k,564}<1,-1\|1,-3>(8,-8,D:6,S:6,F:8,1,…)`,
-> and **Samsung36**, `{38k,500}<1,-1\|1,-3>(9,-9,D:8,S:8,1,-9,E:4,F:8,~F:8,1,-118)`.
-> D18's own gate 1 — an IRP string *with the source it came from* — is
-> precisely what a fabricated entry cannot satisfy, and it is the gate that
-> would have caught this at any point had it been applied to the table
-> rather than only to the code.
+> ⚠️ **`Samsung32` was struck from this table: it never existed — and the
+> question it stood for is now answered.** v0.1 carried
+> `{38.4k,564}<1,-1\|1,-3>(9,-9,D:8,S:8,F:8,~F:8,1,^108m)*` for it, written
+> from memory during design, and it survived nine review rounds because
+> every round read this document rather than a source.
+>
+> The BN59-01199F speaks **`NECx2`**. IRDB records the shared Samsung TV
+> address as `NECx2`, device 7, subdevice 7; DecodeIR gives NECx2's IRP
+> verbatim as `{38.0k,564}<1,-1|1,-3>(8,-8,D:8,S:8,F:8,~F:8,1,^108m)+` and
+> notes that most NECx2 signals have `S = D`; and IRremoteESP8266's SAMSUNG
+> implementation independently gives an **8**-tick lead-in with the layout
+> *customer byte, the same customer byte again, command, inverted command*.
+> Three sources, one protocol, and it is an NEC variant rather than a
+> Samsung-specific one. The fabricated entry's `9,-9` was the tell.
+>
+> This also retires §10's "disputed lead-in" for good: the ~4500 µs real
+> captures were an **8**-unit lead-in, not a 9-unit one at a different tick.
 
 That is the whole v1 registry, and the narrowness is the point: it matches
 the project's own premise that coverage is built one lookup at a time
@@ -1860,7 +1866,7 @@ note rather than a live contract.
 
 ## 12. Implementation status
 
-Phases 0-6 are implemented: 449 tests, `jsonschema` the only runtime
+Phases 0-6 are implemented: 470 tests, `jsonschema` the only runtime
 dependency. Phase 2 landed its nine SPEC edits *before* its code, per §9 --
 the spec change is what authorises the implementation. (That count is asserted by the suite itself -- see
 `test_documented_test_count_is_current` -- so it cannot drift the way the
