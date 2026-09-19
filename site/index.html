@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Remote Ledger</title>
+<style>
+:root {
+  --bg: #fbfbfa; --fg: #1b1b1a; --muted: #6b6b66; --line: #e2e1dc;
+  --card: #ffffff; --accent: #8a5a2b;
+  --confirmed: #1f6f43; --verified: #2c6e9b; --plausible: #8a6d1f;
+  --untested: #8a3b3b; --derived: #6b6b66;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #17171a; --fg: #e8e8e4; --muted: #9a9a94; --line: #2e2e33;
+    --card: #1f1f23; --accent: #d0a06a;
+    --confirmed: #6cc295; --verified: #7fb6da; --plausible: #d4b462;
+    --untested: #e08a8a; --derived: #9a9a94;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; padding: 0 16px 64px; background: var(--bg); color: var(--fg);
+  font: 15px/1.55 ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif; }
+main { max-width: 860px; margin: 0 auto; }
+header { padding: 32px 0 8px; }
+h1 { font-size: 1.5rem; margin: 0 0 4px; letter-spacing: -0.01em; }
+.lede { color: var(--muted); margin: 0 0 20px; max-width: 60ch; }
+input[type=search] { width: 100%; padding: 11px 13px; font-size: 1rem;
+  border: 1px solid var(--line); border-radius: 8px; background: var(--card);
+  color: var(--fg); }
+.count { color: var(--muted); font-size: 0.85rem; margin: 10px 0 18px; }
+.card { background: var(--card); border: 1px solid var(--line);
+  border-radius: 10px; padding: 16px 18px; margin: 0 0 14px; }
+.card h2 { font-size: 1.05rem; margin: 0 0 2px; }
+.meta { color: var(--muted); font-size: 0.85rem; margin: 0 0 12px; }
+.badge { display: inline-block; padding: 1px 8px; border-radius: 999px;
+  font-size: 0.72rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.04em; border: 1px solid currentColor; }
+.confirmed { color: var(--confirmed); } .verified { color: var(--verified); }
+.plausible { color: var(--plausible); } .untested { color: var(--untested); }
+.derived { color: var(--derived); }
+.state { font-size: 0.8rem; color: var(--muted); }
+.key { border-top: 1px solid var(--line); padding: 10px 0 2px; }
+.key h3 { font-size: 0.9rem; margin: 0 0 6px; font-family: ui-monospace, monospace; }
+.cand { margin: 0 0 8px; padding-left: 12px; border-left: 2px solid var(--line); }
+.cand .src { color: var(--muted); font-size: 0.8rem; word-break: break-word; }
+.cand a { color: var(--accent); }
+.hex { font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.72rem; color: var(--muted); word-break: break-all;
+  margin: 4px 0 0; max-height: 3.2em; overflow: hidden; }
+button.copy { font: inherit; font-size: 0.78rem; padding: 3px 10px;
+  border: 1px solid var(--line); border-radius: 6px; background: transparent;
+  color: var(--fg); cursor: pointer; margin-top: 6px; }
+.grid { display: grid; gap: 6px; margin: 10px 0 4px; max-width: 320px; }
+.grid [data-area] { border: 1px solid var(--line); border-radius: 6px;
+  padding: 8px 4px; text-align: center; font-size: 0.7rem;
+  font-family: ui-monospace, monospace; background: var(--bg); }
+.unresolved { border-left: 3px solid var(--plausible); }
+.absent { color: var(--muted); padding: 24px 0; }
+footer { color: var(--muted); font-size: 0.8rem; margin-top: 40px;
+  border-top: 1px solid var(--line); padding-top: 14px; }
+
+
+</style>
+</head>
+<body>
+<main>
+<header>
+<h1>Remote Ledger</h1>
+<p class="lede">IR remote configurations, looked up by the <em>device</em> you
+own &mdash; with a citation for every code and an honest tier saying how far
+it has been checked.</p>
+<input type="search" id="q" placeholder="Search a device, model or maker &mdash; e.g. DX3 Pro"
+       autocomplete="off" spellcheck="false">
+<p class="count" id="count"></p>
+</header>
+<div id="results"></div>
+<footer>
+Generated from the ledger &mdash; never hand-edited. A device shown as
+<em>checked, nothing found</em> was looked for and not found; one that
+returns nothing at all is one nobody has looked up yet.
+</footer>
+</main>
+<script type="application/json" id="ledger">{"extra": {"remotes/topping/RC-15A.json": {"keys": {"KEY_POWER": {"primary": {"confidence": "verified", "prontoHex": "0000 006D 0022 0002 0157 00AC 0015 0040 0015 0015 0015 0015 0015 0015 0015 0040 0015 0015 0015 0015 0015 0015 0015 0015 0015 0040 0015 0040 0015 0040 0015 0015 0015 0040 0015 0040 0015 0040 0015 0015 0015 0015 0015 0015 0015 0040 0015 0040 0015 0015 0015 0015 0015 0015 0015 0040 0015 0040 0015 0040 0015 0015 0015 0015 0015 0040 0015 0040 0015 0040 0015 05E8 0157 0056 0015 0E49", "source": "audiosciencereview.com/index.php?threads/topping-dx3-pro-review-dac-amp.10708 (user halfSpinDoctor); address complement 0x11^0xEE==0xFF and function complement both hold"}}}, "layouts": {}, "minSends": 1}}, "remotes": [{"aliases": [], "confidence": "verified", "controls": ["D50s", "D70", "DX3 Pro", "DX7s"], "file": "remotes/topping/RC-15A.json", "keyCount": 1, "keys": {"KEY_POWER": {"candidates": {"primary": {"confidence": "verified", "source": "audiosciencereview.com/index.php?threads/topping-dx3-pro-review-dac-amp.10708 (user halfSpinDoctor); address complement 0x11^0xEE==0xFF and function complement both hold"}}}}, "manufacturer": "Topping", "model": "RC-15A", "protocol": "NEC1", "unresolvedAlternates": 0}], "unresolved": [{"checked": "2026-09-19", "device": "Samsung UN50NU6900F", "note": "Blocked on protocol identification, not on codes. DESIGN.md D18 listed a `Samsung32` protocol as {38.4k,564}<1,-1|1,-3>(9,-9,D:8,S:8,F:8,~F:8,1,^108m); no such protocol exists in any consulted source. What does exist is Samsung20, {38.4k,564}...(8,-8,D:6,S:6,F:8,1,...), and Samsung36, {38k,500}...(9,-9,D:8,S:8,1,-9,E:4,F:8,~F:8,1,-118). Note that Samsung36's 9-unit lead-in at a 500us unit is 4500us exactly, which accounts for the '~4500us real captures' DESIGN section 10 recorded as a disputed lead-in: the dispute was a symptom of the protocol being misidentified, not of a timing disagreement. Identifying which protocol the BN59-01199F speaks needs a cited capture of that remote.", "searched": ["hifi-remote.com/johnsfine/DecodeIR.html", "hifi-remote.com/wiki DecodeIR protocol list", "IrpTransmogrifier IrpProtocols.xml"]}, {"checked": "2026-09-19", "device": "Sony BDP-BX510", "note": "Protocol identified and implemented: Sony20, {40k,600}<1,-1|2,-1>(4,-1,F:7,D:5,S:8,^45m)+, cited from DecodeIR. Blocked on per-button function codes: SPEC section 1 cites hifi-remote.com's official Sony BD command table for them, and that table could not be retrieved. R19 forbids bulk-importing another project's codes, so the file waits for a citable source rather than being filled with guesses. The alternate subdevices 234 and 242 that SPEC section 1 records as untested fallbacks are the intended first use of variant expansion (D17).", "searched": ["hifi-remote.com/johnsfine/DecodeIR.html", "hifi-remote.com/wiki Sony_Protocol (404)", "hifi-remote.com/wiki Sony_Executor (404)"]}]}</script>
+<script>
+const data = JSON.parse(document.getElementById('ledger').textContent);
+const results = document.getElementById('results');
+const count = document.getElementById('count');
+const box = document.getElementById('q');
+
+const esc = s => String(s).replace(/[&<>"']/g, c => (
+  {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const SAFE = /^(https?|mailto):/i;
+const cite = s => SAFE.test(s) && !s.startsWith('//')
+  ? `<a href="${esc(s)}" rel="noopener noreferrer">${esc(s)}</a>` : esc(s);
+
+function fields(r) {
+  return [r.manufacturer, r.model, ...(r.aliases||[]), ...(r.controls||[])];
+}
+function hit(r, q) {
+  if (!q) return true;
+  const hay = fields(r).join(' ').toLowerCase();
+  return hay.includes(q) || q.split(/\s+/).every(w => hay.includes(w));
+}
+function hitUnresolved(u, q) {
+  if (!q) return true;
+  const d = u.device.toLowerCase();
+  return d.includes(q) || q.split(/\s+/).every(w => d.includes(w));
+}
+
+function renderRemote(r) {
+  const extra = data.extra[r.file] || {keys:{}, layouts:{}};
+  let html = `<article class="card"><h2>${esc(r.manufacturer)} ${esc(r.model)}`;
+  if (r.confidence) html += ` <span class="badge ${esc(r.confidence)}">${esc(r.confidence)}</span>`;
+  html += `</h2><p class="meta">${esc(r.file)}`;
+  if (r.protocol) html += ` &middot; ${esc(r.protocol)}`;
+  if (extra.minSends) html += ` &middot; min sends ${extra.minSends}`;
+  if (r.controls && r.controls.length) html += `<br>controls ${esc(r.controls.join(', '))}`;
+  if (r.aliases && r.aliases.length) html += `<br>also sold as ${esc(r.aliases.join(', '))}`;
+  html += `</p>`;
+
+  for (const [name, layout] of Object.entries(extra.layouts || {})) {
+    const ident = (r.file + '-' + name).replace(/[^a-zA-Z0-9]/g, '-');
+    const cells = [...new Set((layout.areas||[]).flatMap(row => row.split(/\s+/)))]
+      .filter(c => c && c !== '.');
+    html += `<div class="grid" data-grid="${esc(ident)}">` + cells.map(k =>
+      `<div data-area="${esc(k)}">${esc((layout.printedLabels||{})[k] || k)}</div>`
+    ).join('') + `</div>`;
+    if (layout.source) html += `<p class="src">layout: ${cite(layout.source)}</p>`;
+  }
+
+  for (const key of Object.keys(extra.keys || {}).sort()) {
+    html += `<div class="key"><h3>${esc(key)}</h3>`;
+    const cands = extra.keys[key];
+    const names = Object.keys(cands).sort((a,b) =>
+      (a!=='primary') - (b!=='primary') || a.localeCompare(b));
+    for (const n of names) {
+      const c = cands[n];
+      html += `<div class="cand"><span class="badge ${esc(c.confidence)}">${esc(c.confidence)}</span> `;
+      html += esc(c.label || n);
+      if (c.source) html += `<div class="src">${cite(c.source)}</div>`;
+      else if (c.derivedFrom) {
+        html += `<div class="src">derived from <code>${esc(c.derivedFrom.form)}</code>`;
+        if (c.derivedFrom.source) html += ` &mdash; ${cite(c.derivedFrom.source)}`;
+        html += `</div>`;
+      }
+      html += `<p class="hex">${esc(c.prontoHex)}</p>`;
+      html += `<button class="copy" data-hex="${esc(c.prontoHex)}">Copy Pronto</button>`;
+      html += `</div>`;
+    }
+    html += `</div>`;
+  }
+  return html + `</article>`;
+}
+
+function renderUnresolved(u) {
+  return `<article class="card unresolved"><h2>${esc(u.device)} ` +
+    `<span class="badge plausible">checked, nothing found</span></h2>` +
+    `<p class="meta">checked ${esc(u.checked)} &middot; searched ` +
+    `${esc((u.searched||[]).join(', '))}</p>` +
+    (u.note ? `<p class="state">${esc(u.note)}</p>` : '') + `</article>`;
+}
+
+function run() {
+  const q = box.value.trim().toLowerCase();
+  const remotes = data.remotes.filter(r => hit(r, q));
+  const unresolved = data.unresolved.filter(u => hitUnresolved(u, q));
+  count.textContent = `${remotes.length} remote(s), ${unresolved.length} recorded as checked-and-not-found`;
+  if (!remotes.length && !unresolved.length) {
+    results.innerHTML = q
+      ? `<p class="absent">Nothing for &ldquo;${esc(box.value)}&rdquo;, and nothing recorded as
+         having been searched for it either &mdash; so this is a device nobody has looked up yet,
+         not one checked and found to have no known remote.</p>`
+      : `<p class="absent">The ledger is empty.</p>`;
+    return;
+  }
+  results.innerHTML = remotes.map(renderRemote).join('') +
+                      unresolved.map(renderUnresolved).join('');
+}
+
+results.addEventListener('click', ev => {
+  const btn = ev.target.closest('button.copy');
+  if (!btn) return;
+  navigator.clipboard?.writeText(btn.dataset.hex);
+  const was = btn.textContent; btn.textContent = 'Copied';
+  setTimeout(() => { btn.textContent = was; }, 1200);
+});
+box.addEventListener('input', run);
+run();
+</script>
+</body>
+</html>

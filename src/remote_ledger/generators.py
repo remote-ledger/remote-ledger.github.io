@@ -104,13 +104,20 @@ def run_compile(root: Path, out_root: Path) -> list[str]:
     return []
 
 
+def run_site(root: Path, out_root: Path) -> list[str]:
+    """Generate the static site (R17, D15)."""
+    from .site import build_site
+
+    return build_site(root, out_root)
+
+
 #: Declared in pipeline order. `index` registers in Phase 5, `site` in Phase 6
 #: (DESIGN.md section 8).
 PIPELINE: tuple[Generator, ...] = (
     Generator(name="check", owns="build/warnings.json", phase=3, run=run_check),
     Generator(name="compile", owns="build/pronto", phase=3, run=run_compile),
     Generator(name="index", owns="build/index.json", phase=5, run=run_index),
-    Generator(name="site", owns="site", phase=6),
+    Generator(name="site", owns="site", phase=6, run=run_site),
 )
 
 

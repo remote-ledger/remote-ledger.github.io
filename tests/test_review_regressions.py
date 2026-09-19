@@ -233,7 +233,7 @@ def test_cli_phase_numbers_come_from_the_generator_registry():
     choices = parser._subparsers._group_actions[0]._choices_actions  # type: ignore[union-attr]
     help_by_name = {a.dest: a.help for a in choices}
     implemented = {"validate", "encode", "build", "check", "compile", "fmt",
-                   "index", "lookup"}
+                   "index", "lookup", "site"}
 
     for generator in PIPELINE:
         help_text = help_by_name[generator.name]
@@ -242,8 +242,8 @@ def test_cli_phase_numbers_come_from_the_generator_registry():
         else:
             assert f"[phase {generator.phase}]" in help_text, (generator.name, help_text)
 
-    for name in ("site",):
-        assert "[phase" in help_by_name[name], name
+    # Every stage is implemented now, so none may advertise a future phase.
+    assert not any("[phase" in (h or "") for h in help_by_name.values())
 
 
 # --- second review ---------------------------------------------------------
@@ -483,7 +483,7 @@ def test_documented_test_count_is_current(request):
         )
 
     text = (ROOT / "DESIGN.md").read_text()
-    match = re.search(r"Phases 0-5 are implemented: (\d+) tests", text)
+    match = re.search(r"Phases 0-6 are implemented: (\d+) tests", text)
     assert match, "DESIGN.md section 12 no longer states a test count"
     documented = int(match.group(1))
     collected = len(request.session.items)
