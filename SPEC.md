@@ -1,7 +1,7 @@
 # Remote Ledger — Requirements Spec
 
-**Draft v0.7** · Status: §12 resolved; Phases 0-5 implemented · Depends on
-nothing upstream (self-contained)
+**Draft v0.8** · Status: §12 resolved; v1 implemented (Phases 0-6) ·
+Depends on nothing upstream (self-contained)
 
 A self-contained JSON file per remote, where every key can hold several
 independently-sourced representations at once — each with its own confidence
@@ -16,21 +16,46 @@ retailer's "compatible with" list, or a service manual, and the trust
 question — is this code *right*, or just plausible — usually gets lost once
 the code is copied out.
 
-Three real lookups hit that pattern, each resolving to several candidates,
-each trusted for a different reason:
+Three real lookups hit that pattern. Each one came back with several
+candidates, each trusted for a different reason. The table records them as
+they came back, claims and all:
 
-| Device | Candidate | Confidence | Why |
+| Device | Candidate | Claimed | Why |
 |---|---|---|---|
-| Sony BDP-BX510 | `sony/RMT-B118P.json` | **Verified** | Every derived function value cross-checked against hifi-remote.com's official Sony BD command table — zero mismatches. |
+| Sony BDP-BX510 | RMT-B118P, subdevice 218 | **Verified** | Every derived function value cross-checked against hifi-remote.com's official Sony BD command table — zero mismatches. |
 | Sony BDP-BX510 | alternate subdevice 234 | Untested | Same buttons, offered as a fallback, not yet confirmed on real hardware. |
 | Sony BDP-BX510 | alternate subdevice 242 | Untested | Same buttons, a second fallback address. |
-| Topping RC-15A | `topping/RC-15A.json` | **Verified** | NEC address/command complement check (byte1==~byte0) passed on all 8 captured codes. |
-| Samsung UN50NU6900F | `samsung/BN59-01199F.json` | Plausible | No independent capture of this exact remote; inherited from a sibling remote's shared universal address. |
+| Topping RC-15A | RC-15A | **Verified** | NEC address/command complement check (byte1==~byte0) passed on all 8 captured codes. |
+| Samsung UN50NU6900F | BN59-01199F | Plausible | No independent capture of this exact remote; inherited from a sibling remote's shared universal address. |
 
 One device, several candidates, different reasons to trust each. The format
 has to keep the device, the candidates, *and* why each one is believed to
 work — not collapse them into a single answer the moment someone copies out
 "the" code.
+
+**Checking them proved the point by overturning one.** What the ledger now
+holds for each lookup:
+
+- **`sony/RMT-B118P.json` uses subdevice 226, not 218.** A 2015 hardware
+  capture of the remote and IRDB's Sony Blu-ray entry agree on 226, and
+  IRDB's `26,218` is a PlayStation button set. 27 of the 38 keys agree across
+  the two sources with zero mismatches and are Verified. The other 11 rest on
+  the capture alone and are Plausible, so the file as a whole is Plausible.
+  The hifi-remote table cited for 218 was never retrieved. No source mentions
+  234 or 242. The capture names the BDP-S185, not the BX510, as the player
+  the remote shipped with. The BX510 therefore stays in `unresolved.json`
+  (R20) as a contradiction between sources, not as a settled error.
+  DESIGN.md §13 has the detail.
+- **`topping/RC-15A.json`** holds only Power, Verified by the complement
+  check, out of the eight codes the lookup found. The other seven are not
+  yet authored.
+- **`samsung/BN59-01199F.json`** holds as claimed: Plausible, NECx2 from
+  IRDB's shared `7,7` Samsung TV address.
+
+The lookup's claim of Verified at 218 was wrong about the address. That is
+exactly why the format keeps a claim, its citation and the file as separate
+things (R5, R18). Had the "Verified" row been copied into a file as its
+tier, the error would have looked authoritative.
 
 ## 2. Prior art
 
@@ -247,10 +272,10 @@ understand or compile it on its own.
 
 | Tier | Means | Example |
 |---|---|---|
-| Verified | Cross-checked against an independent authoritative source. | RMT-B118P vs. Sony's official function-code table; Topping's NEC complement check. |
+| Verified | Cross-checked against an independent authoritative source. | RMT-B118P's hardware capture vs. IRDB's Sony Blu-ray table (27 keys); Topping's NEC complement check. |
 | Confirmed | A person tested it against real hardware and it worked. | *(none yet)* |
-| Plausible | Retailer/aftermarket "compatible with" claims only. | BN59-01199F, inherited from a sibling remote's address. |
-| Untested | A reasoned candidate, offered but not yet confirmed either way. | The BX510 mode2/mode3 subdevice guesses. |
+| Plausible | A single source, not cross-checked: a retailer or aftermarket "compatible with" claim, a sibling remote's shared address, or one capture with nothing to check it against. | BN59-01199F, inherited from a sibling remote's address; the 11 RMT-B118P keys that only its capture records. |
+| Untested | A reasoned candidate, offered but not yet confirmed either way. | The BX510 mode2/mode3 subdevice guesses from §1's lookup, which no source has since corroborated. |
 | Derived | Mechanically rendered from another form in the same key — not independent evidence on its own. | The Pronto Hex row in the example above. |
 
 ## 6. Layout
@@ -485,9 +510,6 @@ and therefore a hard gate on adding one. See DESIGN.md §5 and D18.
 
 ---
 
-**Build plan:** DESIGN.md §8 has the seven phases. Phases 0 and 1 are
-implemented — the schema, the Pronto codec, the NEC1 encoder, candidate
-groups, variant expansion and the cross-check.
-Phase 2 adds candidate groups, cross-checking and the validator; Phase 3
-adds the three devices from §1 as seed data. DESIGN.md §9 lists the further
-edits this document needs, each assigned to the phase that makes it true.
+**Build plan:** DESIGN.md §8 has the seven phases, and all seven are
+implemented: v1 is complete. DESIGN.md §9 lists the edits each phase made to
+this document, and DESIGN.md §12 records what is still unproven.
