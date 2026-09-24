@@ -95,13 +95,16 @@ def test_the_island_cannot_close_the_script_tag(html):
 
 
 def test_the_page_is_deterministic():
-    """D20: no timestamp, no version, no absolute path."""
-    index, _ = payload(ROOT)
-    first = render_html(index)
-    second = render_html(payload(ROOT)[0])
+    """D20: no timestamp, no version, no absolute path. The page embeds only
+    the index (D40), so building the index is enough -- the per-remote
+    scripts are covered by the reproducibility test in test_seed_data."""
+    from remote_ledger.index import build_index
+
+    first = render_html(build_index(ROOT)[0])
+    second = render_html(build_index(ROOT)[0])
     assert first == second
-    assert str(ROOT) not in first
-    for forbidden in ("generated at", "timestamp", "/home/", "/Users/"):
+    assert str(ROOT) not in first and str(Path.home()) not in first
+    for forbidden in ("generated at", "timestamp"):
         assert forbidden not in first.lower()
 
 

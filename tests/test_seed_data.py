@@ -11,18 +11,45 @@ from remote_ledger.validate import corpus_files, validate_file
 
 ROOT = Path(__file__).resolve().parents[1]
 CORPUS = corpus_files(ROOT)
+IMPORT_ROOT = ROOT / "remotes" / "lirc"
+#: Authored files, tested one by one. Imported ones are thousands and are
+#: regenerated rather than written (D39): `rl build --check` validates every
+#: one of them in CI, and test_the_imported_tree_keeps_r19 below checks R19's
+#: invariants over all of them at once.
+AUTHORED = [p for p in CORPUS if IMPORT_ROOT not in p.parents]
+IMPORTED = [p for p in CORPUS if IMPORT_ROOT in p.parents]
 
 
 def test_the_corpus_is_not_empty():
-    assert CORPUS, "Phase 3 authors seed data under remotes/"
+    assert AUTHORED, "Phase 3 authors seed data under remotes/"
 
 
-@pytest.mark.parametrize("path", CORPUS, ids=lambda p: p.name)
+@pytest.mark.parametrize("path", AUTHORED, ids=lambda p: p.name)
 def test_every_seed_file_validates(path):
     assert [str(p) for p in validate_file(path)] == []
 
 
-@pytest.mark.parametrize("path", CORPUS, ids=lambda p: p.name)
+def test_the_imported_tree_keeps_r19():
+    """SPEC R19's conditions 2 and 3 over every imported form, and the
+    report condition 5 requires. A cheap scan of the JSON, not a load."""
+    import re
+
+    from remote_ledger.serialize import load
+
+    shape = re.compile(r"^lirc-remotes@[0-9a-f]{7} remotes/\S+:\d+ \[block ")
+    assert (IMPORT_ROOT / "IMPORT.md").is_file()
+    assert (IMPORT_ROOT / "COPYING").is_file()
+    bad = []
+    for path in IMPORTED:
+        for key, spec in load(path)["keys"].items():
+            for form in spec["forms"]:
+                if (form["confidence"] != "plausible" or "verifiedBy" in form
+                        or not shape.match(form.get("source", ""))):
+                    bad.append(f"{path.relative_to(ROOT)}:{key}")
+    assert bad == []
+
+
+@pytest.mark.parametrize("path", AUTHORED, ids=lambda p: p.name)
 def test_every_seed_form_carries_a_citation(path):
     """R5/R18 on real data, not only in the schema."""
     remote = load_remote(path)
@@ -84,11 +111,14 @@ def test_generated_tree_holds_no_absolute_paths():
             if not file.is_file():
                 continue
             text = file.read_text(encoding="utf-8")
+            # This machine's paths, not the substring "/home/": an upstream
+            # LIRC block is literally named "/home/pi/remote-jbl-iiip.conf",
+            # which is data, and reproducible.
             assert str(ROOT) not in text, f"{file}: absolute path"
-            assert "/home/" not in text and "/Users/" not in text
+            assert str(Path.home()) not in text, f"{file}: home directory"
 
 
-def test_the_whole_generated_tree_is_byte_reproducible(tmp_path):
+def test_generation_is_byte_reproducible(tmp_path):
     """D20's actual invariant, asserted directly rather than by proxy.
 
     The first version of this grepped every artifact for the word
@@ -96,23 +126,38 @@ def test_the_whole_generated_tree_is_byte_reproducible(tmp_path):
     flagged the site's own footer, which says "Generated from the ledger,
     never hand-edited". Regenerating and comparing tests the property that
     matters instead of a spelling that correlates with it.
+
+    Over a sample: every authored remote and every 50th imported one,
+    generated twice into separate trees. Comparing the *whole* committed
+    tree against a fresh one is exactly `rl build --check`, which CI runs
+    beside pytest (D11); repeating it here cost two and a half minutes per
+    run once the LIRC import landed.
     """
+    import shutil
+
     from remote_ledger.generators import registered
 
-    for generator in registered():
-        assert generator.run(ROOT, tmp_path) == []
+    sample = tmp_path / "corpus"
+    for path in AUTHORED + IMPORTED[::50]:
+        target = sample / path.relative_to(ROOT)
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(path, target)
+    shutil.copyfile(ROOT / "unresolved.json", sample / "unresolved.json")
 
-    for owned in owned_paths():
-        committed = ROOT / owned
-        files = [committed] if committed.is_file() else sorted(committed.rglob("*"))
-        for file in files:
-            if not file.is_file():
-                continue
-            fresh = tmp_path / file.relative_to(ROOT)
-            assert fresh.is_file(), f"{file.relative_to(ROOT)}: not regenerated"
-            assert fresh.read_bytes() == file.read_bytes(), (
-                f"{file.relative_to(ROOT)}: not byte-reproducible"
-            )
+    trees = []
+    for name in ("one", "two"):
+        out = tmp_path / name
+        for generator in registered():
+            assert generator.run(sample, out) == []
+        trees.append({
+            p.relative_to(out).as_posix(): p.read_bytes()
+            for p in sorted(out.rglob("*")) if p.is_file()
+        })
+    assert trees[0] == trees[1]
+    # And an authored remote's artifact is the one committed.
+    for path in AUTHORED:
+        rel = "build/pronto/" + path.relative_to(ROOT / "remotes").as_posix()
+        assert trees[0][rel] == (ROOT / rel).read_bytes(), rel
 
 
 def test_the_samsung_is_authored_at_an_honest_tier():
