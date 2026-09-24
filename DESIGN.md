@@ -566,6 +566,25 @@ only means something if the rounding is pinned down, so:
     so a library that mutates the process-wide context cannot change the
     output.
 
+**Rule 4 is a choice, and the reference tools make different ones.** This
+was found after v1, while pursuing D18's gate 2b.
+
+- **IrpTransmogrifier** rounds each duration against the *nominal* carrier:
+  `round(t × f / 10⁶)`.
+- **MakeHex** rounds against the word's period, as rule 4 does, but
+  cumulatively over each mark+space pair.
+
+At `006C`, a 9024 µs lead-in becomes 346 cycles under rule 4 and plays as
+9014.9 µs. Under IrpTransmogrifier's rule it becomes 347 cycles and plays as
+9040.9 µs. Rule 4 is the closer of the two, because a player runs at the
+period the word implies, not at the nominal carrier. So rule 4 stands, and
+two consequences follow:
+
+- Our bytes differ from IrpTransmogrifier's in a handful of words per code
+  (four in an NEC1 frame).
+- A golden vector checks our *timings* under the tool's own rule, and pins
+  where our bytes differ (D10).
+
 Rule 7 is not pedantry — it changes the emitted bytes:
 
 | Lead-in source | µs | Cycles @ `006D` | Word |
@@ -1160,7 +1179,23 @@ each with a citation in `tests/vectors/CITATIONS.md` in exactly the format
 R18 demands of the ledger's own entries. The test suite obeys the project's
 own sourcing rules. This is the only layer that catches a wrong constant, so
 **no protocol ships in the registry without at least one cited vector.**
-That's a hard gate, not a preference.
+That's a hard gate, not a preference, and `test_gate_2b_golden_pronto`
+fails for any registry protocol without one.
+
+**What a vector proves, stated precisely.** Other encoders quantize
+microseconds to cycles by other rules (D6, after rule 10). So a vector is
+checked in two steps:
+
+1. Our microsecond signal, run through the *tool's* rule
+   (`tests/reference_quantizers.py`, transcribed from each tool's source),
+   must reproduce the vector word for word. That verifies every duration
+   against code we did not write.
+2. Our own bytes may then differ from the vector only at the words the
+   manifest declares.
+
+A vector says whether it is **published**, meaning found in print and
+pinned to a commit, or **reproducible**, meaning generated here by a pinned
+release, with the command recorded.
 
 The four layers, in descending order of how much they actually prove:
 
@@ -1632,7 +1667,7 @@ the parts most likely to be wrong.
 | # | Phase | Delivers | Done when |
 |---|---|---|---|
 | **0** ✅ | Skeleton | Repo layout, `pyproject.toml`, both schemas, `.gitattributes`, CI. **SPEC §12 replaced by §1's resolutions** (§9) | Done. `rl --help` runs; `rl build --check` exits 0 with no generators registered |
-| **1** ⚠️ | **Core signal path** | **SPEC §7 R12 given a real contract** (§9), then `signal.py` (D1a), `pronto.py` encode + decode (D6, D25), numeric bounds + pinned `Decimal` context (D28), `protocols/nec.py` as a metadata record (D3), `protocol` block schema (D24), serialization contract (D20) | Code done, suite green: round-trip holds in cycles, a zero-cycle duration is rejected, carrier is compared as words. **D18 gate 2 UNMET** — no independently cited golden Pronto string obtained, so "compiles to the published golden Pronto, byte for byte" is *unproven*. See §12 |
+| **1** ✅ | **Core signal path** | **SPEC §7 R12 given a real contract** (§9), then `signal.py` (D1a), `pronto.py` encode + decode (D6, D25), numeric bounds + pinned `Decimal` context (D28), `protocols/nec.py` as a metadata record (D3), `protocol` block schema (D24), serialization contract (D20) | Code done, suite green: round-trip holds in cycles, a zero-cycle duration is rejected, carrier is compared as words. D18 gate 2 was met only after v1, and not in the form first written. "Compiles to the published golden Pronto, byte for byte" turned out to be unmeetable, because the reference tools round differently from each other. Our *timings* reproduce IrpTransmogrifier's published NEC1 vectors exactly, and our bytes differ only at the 4 words D6 rule 4 rounds differently. See §12 |
 | **2** ✅ | Forms, candidates & cross-check | The nine SPEC edits landed first (§9), then `forms.py` (D7, D21), candidate groups (D16, D26), `variants.py` (D17, D22, D23, D33), `claims` (D27), `crosscheck.py` (D8, D5a), `remote.py`, `check.py` (D9, D16), `fmt.py`, `warnings.py` (D32); `rl check` / `rl compile` / `rl fmt` wired | Done. All six criteria verified: a corrupted second form is caught at `intro[35]`; two differing candidates pass and genuinely differ; a derived-only group fails validation; a mismatched Pronto frequency word fails while a raw form one word off only warns; an over-extent truncated capture errors rather than clamping; `rl fmt --expand` twice changes nothing |
 | **3** ✅ | **Seed data** | `Sony20` added (IRP cited); `remotes/topping/RC-15A.json` authored; `compile` and `check` registered as generators, so `rl build --check` is live in CI over `build/pronto/**` and `build/warnings.json` (D19, D32); D18's table corrected | Done, but only after Phase 6. The corpus validates, compiles and cross-checks green, and the gate catches drift *and* orphans. At Phase 3's close, two of the three seed files were blocked on sources. The Samsung followed once its protocol was identified as `NECx2` (D18, PR #7). The Sony followed from a cited hardware capture that also overturned SPEC §1's subdevice (§13, PR #8). What remains open is the BX510's own link to that remote, which `unresolved.json` records |
 | **4** ✅ | Layouts | `layout.py` (D14) parsing `grid-template-areas` by splitting on whitespace, CSS's own uniform-width and single-rectangle constraints, the CSS-identifier key rule (D29), and R8/R10's ledger-specific checks; wired into `rl validate` | Done. SPEC §6's D-pad parses, round-trips through a real CSS declaration, and validates on a remote; a typo'd `printedLabels` key fails instead of rendering nothing |
@@ -1872,7 +1907,7 @@ note rather than a live contract.
 
 ## 12. Implementation status
 
-Phases 0-6 are implemented: 478 tests, `jsonschema` the only runtime
+Phases 0-6 are implemented: 500 tests, `jsonschema` the only runtime
 dependency. Phase 2 landed its nine SPEC edits *before* its code, per §9 --
 the spec change is what authorises the implementation. (That count is asserted by the suite itself -- see
 `test_documented_test_count_is_current` -- so it cannot drift the way the
@@ -1890,39 +1925,49 @@ exactly 108 000 µs. D6 rule 7 is now a test: IRP-exact `16 × 564 = 9024 µs`
 gives `0157 00AC`, while a rounded nominal "9 ms" gives `0156 00AB` — the
 two strings differ, as claimed.
 
-### The one thing not delivered: D18 gate 2
+### D18 gate 2: met after v1, and restated
 
-**NEC1 has no independently cited golden Pronto string, so it is not
-verified.** D10 makes that the only test layer capable of catching a wrong
-constant — the round-trip test confirms the decoder inverts the encoder, and
-the invariant tests confirm the framing, but neither would notice a lead-in
-of 15 units instead of 16. What *is* independently cited:
+At v1 this section was titled "the one thing not delivered". NEC1 had no
+independently cited golden Pronto string, and D10 makes that the only test
+layer that catches a wrong constant. Two things closed it:
 
-| Claim | Source | Status |
+1. **Gate 2a, structural** (PRs #7, #8). The NEC family's constants match
+   IRremoteESP8266's published tick table. Sony20's match a hardware
+   capture, which is weaker because a capture carries instrument bias.
+2. **Gate 2b, a golden vector per protocol** (post-v1). The strongest is
+   IrpTransmogrifier's own test assertion for NEC1 `D=12,F=34`. Our timings
+   reproduce it exactly, but our bytes differ in 4 words. The cause is
+   quantization, not a constant: IrpTransmogrifier rounds against the
+   nominal carrier and D6 rule 4 against the word's period, and MakeHex does
+   a third thing (D6, after rule 10). So gate 2b now checks timings under
+   the tool's own rule and pins the byte differences (D10).
+
+| Protocol | Gate 2b vector | Provenance |
 |---|---|---|
-| NEC1's IRP definition — unit 564 µs, lead-in `16,-8`, `<1,-1\|1,-3>`, LSB-first `D:8,S:8,F:8,~F:8`, `^108m` | hifi-remote.com/johnsfine/DecodeIR.html | **Cited** (D18 gate 1) |
-| The frequency-word formula and the `0.241246` constant | remotecentral.com/features/irdisp2.htm | **Cited** (D6 rule 2) |
-| A complete NEC1 Pronto string with stated parameters | — | **Missing** (D18 gate 2) |
+| NEC1 | IrpTransmogrifier test assertions, two parameter sets | published |
+| Sony20 | IrpTransmogrifier `Decoder.java` string, plus a 128-function MakeHex sweep matching our bytes on 127 | published, and reproducible |
+| NECx2 | IrpTransmogrifier 1.2.14 `render` output | reproducible only. **No published NECx2 vector was found**, and `test_registry` warns about it on every run |
 
-`tests/vectors/index.json` records the gap with a reason and
-`tests/test_registry.py` asserts it is recorded, so the debt is committed
-rather than forgotten. The snapshot in `tests/vectors/` is this encoder's
-own output, labelled as proving stability and not correctness.
+`tests/vectors/CITATIONS.md` and `pronto-vectors.json` carry every source,
+pinned to a commit. The self-derived snapshot is still labelled as proving
+stability, not correctness.
 
 ### Two findings from the citations
 
-1. **A Sony rounding question, for Phase 3.** Remote Central gives Sony's
-   frequency word as `N = 103` (`0x0067`) at 40 kHz. The exact quotient is
-   103.6287, so `0x0067` implies **truncation** where D6 rule 5's
-   `ROUND_HALF_UP` yields `104` (`0x0068`). Both appear in published Sony
-   codes. NEC1 is unaffected — at 38 kHz the quotient is 109.0828, so both
-   rules give `0x006D` — but this must be settled against a cited Sony
-   vector before `Sony20` ships.
-2. **D18's table has NEC1's carrier as 38.4 kHz; DecodeIR says 38.0 kHz.**
-   Both circulate. It changes no output, since `nominal_carrier_hz` is
-   informational and a file's `carrierHz` is authoritative (D3), but the
-   registry now follows the citation rather than the recollection, and D18's
-   table should be corrected to match.
+1. **The Sony rounding question: settled as `0068`.** Remote Central gives
+   Sony's frequency word as `N = 103` (`0x0067`) at 40 kHz. The exact
+   quotient is 103.6287, so `0067` implies truncation, where D6 rule 5 gives
+   `0068`. Both generators consulted agree with D6: IrpTransmogrifier
+   (`Pronto.java` L88) and MakeHex (`IRP.cpp` L447) both round half up.
+   Every 40 kHz vector starts `0000 0068`. `0067` comes from capture-side
+   dumpers that truncate, such as Arduino-IRremote's integer division. It
+   is not a generation rule.
+2. **NEC1's carrier: both values are cited, and the registry follows
+   IrpTransmogrifier.** DecodeIR says 38.0 kHz. IrpTransmogrifier's
+   `IrpProtocols.xml` gives the identical IRP at 38.4 kHz, and D18's table
+   and `nominal_carrier_hz` follow it. This note once said D18 "should be
+   corrected" to 38.0k, which would have been one citation overruling
+   another. It changes no output either way (D3).
 
 ---
 
