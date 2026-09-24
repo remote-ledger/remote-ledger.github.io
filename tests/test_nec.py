@@ -15,9 +15,11 @@ from remote_ledger.pronto import encode, parse_words
 
 VECTORS = Path(__file__).parent / "vectors"
 
-# Topping RC-15A, Power. D and S are complements here (0x11 ^ 0xEE == 0xFF),
-# which is the "nec-complement-check" SPEC section 1 cites for this remote.
-TOPPING = dict(device=0x11, subdevice=0xEE, function=0x18, carrier_hz=38_000)
+# Topping RC-15A, Power. D and S are complements here (0x88 ^ 0x77 == 0xFF).
+# 0x88 is also asymmetric under bit reversal, so an MSB-first bug in the
+# encoder would read back as 0x11 -- which is the exact transcription error
+# the seed file once carried (see test_seed_data.py).
+TOPPING = dict(device=0x88, subdevice=0x77, function=0x18, carrier_hz=38_000)
 
 
 @pytest.fixture
@@ -72,8 +74,8 @@ def _recover_bytes(signal):
 
 def test_field_layout_and_lsb_first_bit_order(signal):
     device, subdevice, function, complement = _recover_bytes(signal)
-    assert device == 0x11
-    assert subdevice == 0xEE
+    assert device == 0x88
+    assert subdevice == 0x77
     assert function == 0x18
     assert complement == 0xE7
 

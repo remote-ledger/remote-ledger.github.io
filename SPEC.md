@@ -33,7 +33,7 @@ has to keep the device, the candidates, *and* why each one is believed to
 work — not collapse them into a single answer the moment someone copies out
 "the" code.
 
-**Checking them proved the point by overturning one.** What the ledger now
+**Checking them proved the point by overturning two.** What the ledger now
 holds for each lookup:
 
 - **`sony/RMT-B118P.json` uses subdevice 226, not 218.** A 2015 hardware
@@ -46,16 +46,24 @@ holds for each lookup:
   the remote shipped with. The BX510 therefore stays in `unresolved.json`
   (R20) as a contradiction between sources, not as a settled error.
   DESIGN.md §13 has the detail.
-- **`topping/RC-15A.json`** holds only Power, Verified by the complement
-  check, out of the eight codes the lookup found. The other seven are not
-  yet authored.
+- **`topping/RC-15A.json` uses device 0x88, subdevice 0x77, not 0x11/0xEE.**
+  The cited capture is IRremoteESP8266 output, and that library prints NEC
+  MSB-first. Read as NEC1's LSB-first fields, `0x11EE18E7` is `88 77 18 E7`.
+  The ledger's first entry had transcribed the digits directly, so its
+  compiled Power code never matched the remote. The complement check the
+  lookup relied on passed anyway: reversing the bits of a byte and of its
+  complement leaves a complement pair, so the check cannot see a bit-order
+  error, the commonest NEC transcription mistake. The capture holds 12
+  codes, not 8. All 13 keys, including OK from a second capture, are now
+  Verified against two Flipper-IRDB files that record the address as `88`
+  in a different encoding.
 - **`samsung/BN59-01199F.json`** holds as claimed: Plausible, NECx2 from
   IRDB's shared `7,7` Samsung TV address.
 
-The lookup's claim of Verified at 218 was wrong about the address. That is
-exactly why the format keeps a claim, its citation and the file as separate
-things (R5, R18). Had the "Verified" row been copied into a file as its
-tier, the error would have looked authoritative.
+Both "Verified" claims were wrong about the address. That is exactly why
+the format keeps a claim, its citation and the file as separate things
+(R5, R18). The Topping's did get copied into a file as its tier, and for a
+while the error looked authoritative.
 
 ## 2. Prior art
 
@@ -251,10 +259,10 @@ understand or compile it on its own.
       "forms": [
         {
           "type": "irp",
-          "device": "0x11", "subdevice": "0xEE", "function": "0x18",
+          "device": "0x88", "subdevice": "0x77", "function": "0x18",
           "confidence": "verified",
-          "verifiedBy": "nec-complement-check",
-          "source": "audiosciencereview.com/.../10708 (user halfSpinDoctor)"
+          "verifiedBy": "nec1-cross-source-check",
+          "source": "audiosciencereview.com/.../10708/post-639756 (capture), cross-checked against Flipper-IRDB"
         },
         {
           "type": "pronto",
@@ -272,7 +280,7 @@ understand or compile it on its own.
 
 | Tier | Means | Example |
 |---|---|---|
-| Verified | Cross-checked against an independent authoritative source. | RMT-B118P's hardware capture vs. IRDB's Sony Blu-ray table (27 keys); Topping's NEC complement check. |
+| Verified | Cross-checked against an independent authoritative source. A self-consistency check such as NEC's complement relation is **not** a cross-check: it holds under per-byte bit reversal, which is the RC-15A's original error. | RMT-B118P's hardware capture vs. IRDB's Sony Blu-ray table (27 keys); the RC-15A's capture vs. two Flipper-IRDB files (13 keys). |
 | Confirmed | A person tested it against real hardware and it worked. | *(none yet)* |
 | Plausible | A single source, not cross-checked: a retailer or aftermarket "compatible with" claim, a sibling remote's shared address, or one capture with nothing to check it against. | BN59-01199F, inherited from a sibling remote's address; the 11 RMT-B118P keys that only its capture records. |
 | Untested | A reasoned candidate, offered but not yet confirmed either way. | The BX510 mode2/mode3 subdevice guesses from §1's lookup, which no source has since corroborated. |
