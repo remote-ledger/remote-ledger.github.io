@@ -151,8 +151,8 @@ def test_unresolved_is_folded_in_and_sorted(corpus):
     root = corpus(
         {"t/a.json": _remote()},
         unresolved=[
-            {"device": "Zeta", "checked": "2026-01-01", "searched": ["x"]},
-            {"device": "Alpha", "checked": "2026-01-01", "searched": ["x"]},
+            {"device": "Zeta", "checked": "2026-01-01"},
+            {"device": "Alpha", "checked": "2026-01-01"},
         ],
     )
     index, _ = build_index(root)

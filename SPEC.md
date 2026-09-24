@@ -517,8 +517,11 @@ is the *only* place trust comes from — so it has to hold up on its own.
   have no known remote.
 
   The mechanism is `unresolved.json` at the repo root: a list of devices
-  that were looked for and not found, each recording the date, the sources
-  searched, and what stopped it. It sits outside `remotes/` on purpose, so
+  that were looked for and not found, each recording the date it was last
+  checked. An entry is a status, not a history: which sources were searched
+  and why they fell short belong in git history and in the docs that make
+  the argument (for the BX510, §1 and DESIGN.md §13), not in the record a
+  lookup shows. It sits outside `remotes/` on purpose, so
   `remotes/**/*.json` stays uniformly one-file-one-remote with no reserved
   names. The generated index folds it in, which gives a lookup **three**
   distinguishable answers rather than two:
@@ -526,7 +529,7 @@ is the *only* place trust comes from — so it has to hold up on its own.
   | State | Reads as |
   |---|---|
   | In the ledger | the remote, its candidates, their tiers and citations |
-  | In `unresolved.json` | *checked on `<date>`, searched `<sources>`, blocked by `<reason>`* |
+  | In `unresolved.json` | *checked, nothing found* — last checked `<date>` |
   | Neither | *not in the ledger* — nobody has looked |
 
   The middle row is the one R20 exists for. Without it a device someone
