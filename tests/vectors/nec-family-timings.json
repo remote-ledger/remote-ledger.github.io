@@ -1,5 +1,5 @@
 {
-  "_comment": "Independently published timing constants for the NEC family, used as a STRUCTURAL vector (D18 gate 2a). Not a Pronto string: see CITATIONS.md for what this does and does not establish.",
+  "_comment": "Independently published timing constants for the NEC family, used as a STRUCTURAL vector (D18 gate 2a). Not a Pronto string: see CITATIONS.md for what this does and does not establish. Sony20's entry is a hardware CAPTURE rather than a constant table, so it carries instrument bias; see sony20Capture.",
   "source": "crankyoldgit/IRremoteESP8266, src/ir_Samsung.cpp and test/ir_NEC_test.cpp, retrieved 2026-09-19",
   "sourceReference": "http://elektrolab.wz.cz/katalog/samsung_protocol.pdf (cited by that implementation)",
   "tickUs": 560,
@@ -12,7 +12,10 @@
       "oneSpaceTicks": 3,
       "zeroSpaceTicks": 1,
       "bits": 32,
-      "publishedHeaderUs": [8960, 4480]
+      "publishedHeaderUs": [
+        8960,
+        4480
+      ]
     },
     "NECx2": {
       "headerMarkTicks": 8,
@@ -21,8 +24,31 @@
       "oneSpaceTicks": 3,
       "zeroSpaceTicks": 1,
       "bits": 32,
-      "publishedHeaderUs": [4480, 4480],
+      "publishedHeaderUs": [
+        4480,
+        4480
+      ],
       "layout": "customer_byte + customer_byte(same) + command + invert(command)"
     }
+  },
+  "sony20Capture": {
+    "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf, lirc-0.9.0-pre1, 2015-07-07 -- a measurement, not a published constant table",
+    "headerUs": [
+      2426,
+      565
+    ],
+    "oneUs": [
+      1221,
+      569
+    ],
+    "zeroUs": [
+      627,
+      569
+    ],
+    "gapUs": 44934,
+    "bits": 12,
+    "postDataBits": 8,
+    "postData": 71,
+    "note": "Marks read long and spaces short by a few percent -- the consistent bias of an IR demodulator holding the mark. Ratios, not absolute values, are what this verifies."
   }
 }

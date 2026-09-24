@@ -1,14 +1,13 @@
 [
   {
     "device": "Sony BDP-BX510",
-    "checked": "2026-09-19",
+    "checked": "2026-09-24",
     "searched": [
-      "hifi-remote.com/johnsfine/DecodeIR.html",
-      "hifi-remote.com/wiki Sony_Protocol (404)",
-      "hifi-remote.com/wiki Sony_Executor (404)",
-      "probonopd/irdb codes/Sony/Bluray player",
-      "probonopd/irdb codes/Sony/DVD Player"
+      "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf (hardware capture, 2015)",
+      "probonopd/irdb codes/Sony/Bluray player/26,226.csv",
+      "probonopd/irdb codes/Sony/DVD Player/26,218.csv",
+      "hifi-remote.com/johnsfine/DecodeIR.html"
     ],
-    "note": "Protocol identified and implemented: Sony20, cited from DecodeIR and independently named as the protocol for Sony Blu-ray players by IRDB. Still blocked on per-button function codes for THIS remote, and the evidence now complicates SPEC section 1's claim rather than supporting it: IRDB's Sony Blu-ray player entry is device 26 subdevice 226, not 218; its 26,218 file is a PlayStation button set (SELECT, L3, TRIANGLE, CROSS); and subdevices 234 and 242 do not appear under Sony at all. SPEC section 1 cites hifi-remote.com's official Sony BD command table for the 218/234/242 addressing, and that table remains unretrieved -- so this needs its originally cited source rather than a substitute. Authoring 26,226's codes would be a different remote whose model IRDB does not record."
+    "note": "The remote itself is now authored: remotes/sony/RMT-B118P.json, Sony20, device 26, subdevice 226, 27 of 38 functions cross-checked across two independent sources with zero mismatches. What remains unresolved is specific to the BX510, and it is a contradiction rather than an absence. SPEC section 1 records this remote's addressing as subdevice 218 with untested alternates 234 and 242, citing hifi-remote.com's official Sony BD command table. Two independent sources disagree: a 2015 hardware capture of the RMT-B118P decodes to subdevice 226, and IRDB's Sony Blu-ray player entry is also 26,226 -- while IRDB's 26,218 is a PlayStation button set (SELECT, L3, TRIANGLE, CROSS) and 234/242 do not appear under Sony at all. The capture also names the BDP-S185, not the BX510, as the player it shipped with, so `controls` lists only what is cited. Resolving this needs either the originally cited hifi-remote table or a capture taken against a BX510 specifically."
   }
 ]

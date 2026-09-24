@@ -94,3 +94,44 @@ def test_the_unit_constants_genuinely_disagree_between_sources():
     assert TICK == 560
     assert REGISTRY["NEC1"].unit_us == 564
     assert REGISTRY["NECx2"].unit_us == 564
+
+
+# --- Sony20: a hardware capture rather than a constant table ---------------
+
+CAPTURE = DATA["sony20Capture"]
+
+
+def test_the_capture_decodes_to_the_addressing_we_authored():
+    """bits 12 + post_data_bits 8 is a Sony20 frame: F:7, D:5 then S:8.
+
+    This is the decode that contradicts SPEC section 1's subdevice 218 --
+    two independent sources give 226, and this is one of them.
+    """
+    def msb(v, n): return [(v >> (n - 1 - i)) & 1 for i in range(n)]
+    def lsb(bits): return sum(b << i for i, b in enumerate(bits))
+    assert CAPTURE["bits"] + CAPTURE["postDataBits"] == REGISTRY["Sony20"].bits
+    assert lsb(msb(CAPTURE["postData"], 8)) == 226
+
+
+@pytest.mark.parametrize(
+    "field,expected_ratio",
+    [("headerUs", 4.0), ("oneUs", 2.0), ("zeroUs", 1.0)],
+)
+def test_capture_ratios_match_sony20s_structure(field, expected_ratio):
+    """A measurement verifies *ratios*, not absolute values: marks read long
+    and spaces short by a few percent, the consistent bias of a demodulator
+    holding the mark."""
+    mark, space = CAPTURE[field]
+    assert abs(mark / space - expected_ratio) / expected_ratio < 0.12
+
+
+def test_our_encoder_agrees_with_the_capture_within_instrument_error():
+    signal = REGISTRY["Sony20"].encode(
+        device=26, subdevice=226, function=21, carrier_hz=40_000
+    )
+    lead_mark, lead_space = signal.repeat[0], signal.repeat[1]
+    assert abs(lead_mark - CAPTURE["headerUs"][0]) / lead_mark < 0.05
+    assert abs(lead_space - CAPTURE["headerUs"][1]) / lead_space < 0.07
+    # And the frame extent against the capture's inter-frame gap.
+    assert abs(sum(signal.repeat) - 45_000) < 1
+    assert abs(CAPTURE["gapUs"] - 45_000) / 45_000 < 0.01

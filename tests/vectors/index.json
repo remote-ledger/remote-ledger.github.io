@@ -9,11 +9,11 @@
     "gate2b_pending_reason": "No published complete Pronto Hex string with stated parameters obtained. Gate 2a is met: a second, independent implementation's timing constants verify every structural choice, including the 16-versus-15 lead-in case D10 names. What remains unverified is the microsecond-to-Pronto quantization layer -- whose formula IS cited (remotecentral.com/features/irdisp2.htm) but whose rounding direction is open: that page's Sony word 0067 implies truncation where D6 rule 5 mandates round-half-up (0068)."
   },
   "Sony20": {
-    "gate1_irp_source": "hifi-remote.com/johnsfine/DecodeIR.html",
+    "gate1_irp_source": "hifi-remote.com/johnsfine/DecodeIR.html (verbatim IRP), independently corroborated by probonopd/irdb, which names Sony20 as the protocol for Sony Blu-ray players",
     "regression_snapshot": null,
     "snapshot_is_evidence": false,
-    "gate2a_structural_vector": null,
-    "gate2a_pending_reason": "No independent implementation's Sony20 timing constants obtained yet.",
+    "gate2a_structural_vector": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a 2015 hardware capture. Weaker than a published constant table: a measurement carries instrument bias, so it verifies ratios and field layout rather than absolute durations. See tests/test_vectors_structural.py",
+    "gate2a_pending_reason": null,
     "gate2b_golden_pronto": null,
     "gate2b_pending_reason": "No published complete Pronto Hex string with stated parameters obtained. Gate 2a is met: a second, independent implementation's timing constants verify every structural choice, including the 16-versus-15 lead-in case D10 names. What remains unverified is the microsecond-to-Pronto quantization layer -- whose formula IS cited (remotecentral.com/features/irdisp2.htm) but whose rounding direction is open: that page's Sony word 0067 implies truncation where D6 rule 5 mandates round-half-up (0068)."
   },
