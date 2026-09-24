@@ -52,12 +52,15 @@
     {
       "checked": "2026-09-24",
       "device": "Sony BDP-BX510",
-      "note": "The remote itself is now authored: remotes/sony/RMT-B118P.json, Sony20, device 26, subdevice 226, 27 of 38 functions cross-checked across two independent sources with zero mismatches. What remains unresolved is specific to the BX510, and it is a contradiction rather than an absence. SPEC section 1 records this remote's addressing as subdevice 218 with untested alternates 234 and 242, citing hifi-remote.com's official Sony BD command table. Two independent sources disagree: a 2015 hardware capture of the RMT-B118P decodes to subdevice 226, and IRDB's Sony Blu-ray player entry is also 26,226 -- while IRDB's 26,218 is a PlayStation button set (SELECT, L3, TRIANGLE, CROSS) and 234/242 do not appear under Sony at all. The capture also names the BDP-S185, not the BX510, as the player it shipped with, so `controls` lists only what is cited. Resolving this needs either the originally cited hifi-remote table or a capture taken against a BX510 specifically.",
+      "note": "The remote itself is now authored: remotes/sony/RMT-B118P.json, Sony20, device 26, subdevice 226, 27 of 38 functions cross-checked across two independent sources with zero mismatches. What remains unresolved is specific to the BX510, and it is a contradiction rather than an absence. SPEC section 1 records this remote's addressing as subdevice 218 with untested alternates 234 and 242, citing hifi-remote.com's official Sony BD command table. Two independent sources disagree: a 2015 hardware capture of the RMT-B118P decodes to subdevice 226, and IRDB's Sony Blu-ray player entry is also 26,226 -- while IRDB's 26,218 is a PlayStation button set (SELECT, L3, TRIANGLE, CROSS) and 234/242 do not appear under Sony at all. The capture also names the BDP-S185, not the BX510, as the player it shipped with, so `controls` lists only what is cited. Resolving this needs either the originally cited hifi-remote table or a capture taken against a BX510 specifically. Checked again on 2026-09-24 against the LIRC remotes database, with the same result: every Sony Blu-ray remote in it decodes to device 26, subdevice 226. RMT-B104P (BDP-S360) and RMT-VB201U carry post_data 0x47, which is 226 read LSB-first, and RMT-B104P's KEY_POWER 0xA8B is function 21, the RMT-B118P's Power. RMT-B101A (BDP-S301) carries a 13-bit post_data 0xB47, which is D=26, S=226. No file names the BX510, so the contradiction with SPEC section 1's 218 grows no weaker, and the BX510 link remains unestablished.",
       "searched": [
         "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf (hardware capture, 2015)",
         "probonopd/irdb codes/Sony/Bluray player/26,226.csv",
         "probonopd/irdb codes/Sony/DVD Player/26,218.csv",
-        "hifi-remote.com/johnsfine/DecodeIR.html"
+        "hifi-remote.com/johnsfine/DecodeIR.html",
+        "lirc-remotes@291b40f remotes/sony/RMT-B101A.lircd.conf (BDP-S301)",
+        "lirc-remotes@291b40f remotes/sony/RMT-B104P.lircd.conf (BDP-S360)",
+        "lirc-remotes@291b40f remotes/sony/RMT-VB201U.lircd.conf"
       ]
     }
   ]
