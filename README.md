@@ -19,6 +19,12 @@ in a few words, by design, because the tools round microseconds to cycles
 differently. DESIGN.md §12 has the detail, and §13 records a contradiction
 the research turned up in the spec's own opening example.
 
+**Imported:** the LIRC remotes database, 3,139 remotes and 112,846 keys
+under `remotes/lirc/`. It is republished under GPL-2.0-or-later, and every
+key is Plausible and cites its upstream file and line (SPEC R19, DESIGN
+§14). Authored remotes stay the three above, each checked against
+independent sources.
+
 ## Why
 
 Existing remote-code databases (LIRC's `lircd.conf` collection, IRDB,

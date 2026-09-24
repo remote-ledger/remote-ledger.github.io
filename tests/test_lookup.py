@@ -30,8 +30,9 @@ def test_search_hits_every_identifying_field(index, query, expect_field):
     """SPEC section 1's premise: people know their *device*, not the remote
     model that shipped with it."""
     matches = search(index, query)
-    assert matches and matches[0].kind == "remote"
-    assert matches[0].matched_on == expect_field
+    topping = [m for m in matches if m.kind == "remote"
+               and m.entry["file"] == "remotes/topping/RC-15A.json"]
+    assert topping and topping[0].matched_on == expect_field
 
 
 def test_a_query_naming_maker_and_model_matches(index):

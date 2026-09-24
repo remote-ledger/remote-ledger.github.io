@@ -1918,7 +1918,7 @@ note rather than a live contract.
 
 ## 12. Implementation status
 
-Phases 0-6 are implemented: 683 tests, `jsonschema` the only runtime
+Phases 0-6 are implemented: 684 tests, `jsonschema` the only runtime
 dependency. Phase 2 landed its nine SPEC edits *before* its code, per §9 --
 the spec change is what authorises the implementation. (That count is asserted by the suite itself -- see
 `test_documented_test_count_is_current` -- so it cannot drift the way the
@@ -2160,4 +2160,26 @@ corpus:
 
 `rl build --check` still regenerates and diffs the whole tree (D19). Only
 the files' shapes change.
+
+**The result, first import** (lirc-remotes @ `291b40f`, recorded in
+`remotes/lirc/IMPORT.md`):
+
+- **Imported:** 3,139 remotes from 2,655 upstream files, 112,846 keys.
+  Of those, 108,565 are `raw`, 3,348 NEC1, 766 Sony20 and 167 NECx2 `irp`.
+- **Reported, not imported:** 20 files with no usable remote, 197
+  scancode-only blocks, 36 blocks whose `min_repeat` exceeds the schema's
+  `minSends` limit of 10, 237 multi-code buttons, 642 duplicate names, 94
+  sends lircd itself refuses, and 40 keys that would not compile.
+- **Why so few `irp` forms:** only ~11% of NEC-shaped blocks pass the
+  cross-check. The rest fail for structural reasons:
+  - full-frame repeats (NEC2, which is not in the registry);
+  - a gap the conf sets itself;
+  - a CONST_LENGTH lead-out whose measured timings drift past D8's
+    6-cycle allowance.
+  For those, `raw` is what lircd sends.
+- **Size:** the generated tree is 222 MB in about 9.4k files, and
+  compresses to ~12 MB. The largest file is 2.3 MB, and `site/index.html`
+  is 1 MB.
+- **Speed:** `rl build` takes 3.5 minutes. Pytest parametrizes only over
+  authored files, and one scan checks R19 across the imported ones.
 
