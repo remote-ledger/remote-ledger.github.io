@@ -106,3 +106,44 @@ def test_an_imported_remote_says_so(tmp_path):
     matches = search(index, "RC-15A")
     out = render(matches, "RC-15A", keys_for(tmp_path, matches))
     assert "imported  from remotes/lirc/" in out
+
+
+@pytest.mark.parametrize("query,file", [
+    # The case that motivated normalisation: an imported header writes the
+    # player as "SONY BLU RAY BDP S360"; people type BDP-S360.
+    ("BDP-S360", "remotes/lirc/sony/RMT-B104P.SONY_B104P.json"),
+    ("bdp.s360", "remotes/lirc/sony/RMT-B104P.SONY_B104P.json"),
+    ("RC 15A", "remotes/topping/RC-15A.json"),
+    ("rc15a", "remotes/topping/RC-15A.json"),
+    ("DX3-Pro", "remotes/topping/RC-15A.json"),
+])
+def test_search_ignores_spaces_and_punctuation(index, query, file):
+    """A miss here is worse than it looks: it reports R20's third state,
+    "nobody has looked", about a device that is in the ledger."""
+    assert file in {m.entry["file"] for m in search(index, query) if m.kind == "remote"}
+
+
+def test_unresolved_devices_match_the_same_way(index):
+    for query in ("Sony BDP-BX510", "bdp bx510", "BDPBX510"):
+        assert any(m.kind == "unresolved" for m in search(index, query)), query
+
+
+def test_a_match_never_straddles_two_fields():
+    """Fields are normalised one by one: maker "Sony" and model "RM-1" must
+    not answer "nyrm", which is only a substring of their concatenation."""
+    index = {"remotes": [{"file": "f", "manufacturer": "Sony", "model": "RM-1",
+                          "aliases": [], "controls": []}], "unresolved": []}
+    assert search(index, "nyrm") == []
+    assert search(index, "sony rm1")  # every word in some field still matches
+
+
+def test_punctuation_alone_is_no_query(index):
+    assert search(index, " - . ") == []
+
+
+def test_normalise():
+    from remote_ledger.lookup import normalise
+
+    assert normalise("SONY BLU RAY BDP S360") == "sonybluraybdps360"
+    assert normalise("BDP-S360") == normalise("bdp.s360") == "bdps360"
+    assert normalise("CT21AM2(A)") == "ct21am2a"

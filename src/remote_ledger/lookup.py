@@ -13,6 +13,7 @@ ever typed in, or that afternoon gets repeated.
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Iterable, Mapping
@@ -37,30 +38,59 @@ def _fields(remote: dict[str, Any]) -> Iterable[tuple[str, str]]:
         yield "controls", device
 
 
-def search(index: dict[str, Any], query: str) -> list[Match]:
-    """Case-insensitive substring search across every identifying field."""
-    needle = query.strip().casefold()
+_NOT_ALNUM = re.compile(r"[\W_]+")
+
+
+def normalise(text: str) -> str:
+    """Lower case with every space and punctuation mark removed.
+
+    Model numbers are written every way at once: a user types
+    ``BDP-S360``, an upstream header says ``SONY BLU RAY BDP S360``, a label
+    reads ``BDP.S360``. Plain substring search missed that, and a miss is
+    worse than it looks: it reports R20's third state, *nobody has looked*,
+    about a device that is in the ledger. Removing separators on both sides
+    makes all three spellings the same string. The site's ``norm()`` applies
+    the same rule.
+    """
+    return _NOT_ALNUM.sub("", text.lower())
+
+
+def _matches(query: str, values: list[str]) -> bool:
+    """The whole query inside one value, or else every word of it inside
+    some value -- each value normalised on its own, so that no match can
+    straddle two fields (``sony`` + ``RM`` must not answer ``nyrm``)."""
+    needle = normalise(query)
     if not needle:
+        return False
+    norm = [normalise(v) for v in values]
+    if any(needle in v for v in norm):
+        return True
+    words = [w for w in (normalise(w) for w in query.split()) if w]
+    return len(words) > 1 and all(any(w in v for v in norm) for w in words)
+
+
+def search(index: dict[str, Any], query: str) -> list[Match]:
+    """Search every identifying field, ignoring case, spaces and punctuation."""
+    if not normalise(query):
         return []
 
     matches: list[Match] = []
     for remote in index.get("remotes", []):
+        fields = list(_fields(remote))
+        needle = normalise(query)
         hit = next(
-            (field for field, value in _fields(remote) if needle in value.casefold()),
+            (field for field, value in fields if needle in normalise(value)),
             None,
         )
-        # A query naming both maker and model ("Sony BDP-BX510") will not be a
-        # substring of either alone, so fall back to matching every word.
-        if hit is None:
-            haystack = " ".join(v for _, v in _fields(remote)).casefold()
-            if all(word in haystack for word in needle.split()):
-                hit = "combined"
+        # A query naming both maker and model ("Sony BDP-BX510") is inside
+        # neither field alone, so fall back to matching every word.
+        if hit is None and _matches(query, [v for _, v in fields]):
+            hit = "combined"
         if hit:
             matches.append(Match("remote", remote, hit))
 
     for entry in index.get("unresolved", []):
-        device = entry["device"].casefold()
-        if needle in device or all(w in device for w in needle.split()):
+        if _matches(query, [entry["device"]]):
             matches.append(Match("unresolved", entry, "device"))
 
     return matches

@@ -211,16 +211,19 @@ const cite = s => SAFE.test(s) && !s.startsWith('//')
 function fields(r) {
   return [r.manufacturer, r.model, ...(r.aliases||[]), ...(r.controls||[])];
 }
-function hit(r, q) {
-  if (!q) return true;
-  const hay = fields(r).join(' ').toLowerCase();
-  return hay.includes(q) || q.split(/\s+/).every(w => hay.includes(w));
+// lookup.normalise, in JavaScript: lower case, every space and punctuation
+// mark removed, so BDP-S360, "BDP S360" and BDP.S360 are one string.
+const norm = s => String(s).toLowerCase().replace(/[^\p{L}\p{N}]+/gu, '');
+function matches(q, values) {
+  const needle = norm(q);
+  if (!needle) return true;
+  const vs = values.map(norm);
+  if (vs.some(v => v.includes(needle))) return true;
+  const words = q.split(/\s+/).map(norm).filter(Boolean);
+  return words.length > 1 && words.every(w => vs.some(v => v.includes(w)));
 }
-function hitUnresolved(u, q) {
-  if (!q) return true;
-  const d = u.device.toLowerCase();
-  return d.includes(q) || q.split(/\s+/).every(w => d.includes(w));
-}
+const hit = (r, q) => matches(q, fields(r));
+const hitUnresolved = (u, q) => matches(q, [u.device]);
 
 function renderRemote(r, i) {
   let html = `<article class="card"><h2>${esc(r.manufacturer)} ${esc(r.model)}`;
