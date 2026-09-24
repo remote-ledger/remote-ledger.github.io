@@ -29,6 +29,22 @@ output for them, not hand-written.
   make -C lib && make -C plugins file.la && make -C tools irsimsend
   ```
 
+  `configure` requires `pkg-config` and `xsltproc`, which a minimal machine
+  may lack. Neither affects the programs built here: pkg-config only
+  probes optional driver libraries, and xsltproc only builds the docs. The
+  vectors were generated with two stand-ins placed first on `PATH`:
+
+  ```sh
+  mkdir -p shim
+  printf '#!/bin/sh\ncase "$1" in --version) echo 0.29.2;; --atleast-pkgconfig-version) exit 0;; *) exit 1;; esac\n' > shim/pkg-config
+  printf '#!/bin/sh\nexit 0\n' > shim/xsltproc
+  chmod +x shim/*
+  PATH=$PWD/shim:$PATH ./configure --prefix=$B/../inst --without-x
+  ```
+
+  The pkg-config stand-in reports every optional library as absent, so
+  those drivers are simply not built.
+
 - **Run**, for each entry of `index.json`, from an empty directory (irsimsend
   writes `simsend.out` into the current directory):
 
