@@ -10,11 +10,13 @@ Schema, compiler, cross-check, layouts, a generated index, an offline
 lookup and a static site, with CI gating the whole generated tree for drift
 *and* orphans.
 
-Two gaps remain, and both are about evidence rather than code. Neither
-protocol's byte-level output is **independently verified** (no cited golden
-Pronto vector — the one test layer that catches a wrong constant), and two
-of the three intended seed devices are blocked on sources. DESIGN.md §12
-says exactly what is missing and why it matters.
+Three protocols (NEC1, NECx2, Sony20) and **all three seed remotes
+authored** — the Sony with 27 of 38 functions cross-checked across two
+independent sources, zero mismatches. Every protocol's structure is now
+verified against an independent source; what remains unverified is the
+microsecond-to-Pronto quantization layer. DESIGN.md §12 says what is
+missing, and §13 records a contradiction the research turned up in the
+spec's own opening example.
 
 ## Why
 

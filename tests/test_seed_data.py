@@ -39,10 +39,28 @@ def test_unresolved_records_what_was_checked_and_not_found():
     nobody has looked at (D12)."""
     entries = json.loads((ROOT / "unresolved.json").read_text())
     assert entries
-    devices = {e["device"] for e in entries}
-    assert "Samsung UN50NU6900F" in devices
     for entry in entries:
         assert entry["searched"] and entry["note"]
+
+
+def test_a_resolved_device_leaves_unresolved_json():
+    """The list is a record of *open* questions, not a log of past ones.
+
+    The Samsung sat here until its protocol was identified as NECx2; now it
+    is a remote, so it must not also read as checked-and-not-found. R20's
+    three states are only meaningful while each device is in exactly one.
+    """
+    unresolved = {
+        e["device"] for e in json.loads((ROOT / "unresolved.json").read_text())
+    }
+    controlled = {
+        device
+        for path in CORPUS
+        for device in (load_remote(path).raw.get("controls") or [])
+    }
+    assert not (unresolved & controlled), "a device is in both states"
+    assert "Samsung UN50NU6900F" not in unresolved
+    assert "UN50NU6900F" in controlled
 
 
 def test_every_generator_is_registered():
@@ -95,3 +113,18 @@ def test_the_whole_generated_tree_is_byte_reproducible(tmp_path):
             assert fresh.read_bytes() == file.read_bytes(), (
                 f"{file.relative_to(ROOT)}: not byte-reproducible"
             )
+
+
+def test_the_samsung_is_authored_at_an_honest_tier():
+    """SPEC section 1 describes this entry as inherited from a sibling
+    remote's shared universal address, not a capture of this remote --
+    `plausible` is the tier that says so, and IRDB's 7,7 is that shared
+    address."""
+    path = ROOT / "remotes" / "samsung" / "BN59-01199F.json"
+    remote = load_remote(path)
+    assert remote.protocol.name == "NECx2"
+    for key, forms in remote.keys.items():
+        for form in forms:
+            assert form.confidence == "plausible", key
+            assert "irdb" in (form.source or "").lower()
+            assert form.device == form.subdevice == 7  # NECx2 has S = D
