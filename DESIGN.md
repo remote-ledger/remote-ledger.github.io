@@ -1,6 +1,6 @@
 # Remote Ledger — Design & Build Plan
 
-**Draft v1.9** · Status: v1 complete; all three seed remotes authored · Implements [SPEC.md](SPEC.md) v0.8
+**Draft v2.0** · Status: v1 complete; all three seed remotes authored; LIRC import designed (§14) · Implements [SPEC.md](SPEC.md) v0.9
 
 SPEC.md says *what* the format has to hold and why. This says *how it gets
 built*: the resolved open decisions, the one intermediate representation
@@ -1691,9 +1691,14 @@ generator rather than by editing the CI config — which is also what keeps
 D11's two-command job correct at every phase.
 
 **v1 is complete at Phase 6.** Not in v1 and not planned: capturing from
-hardware (SPEC §4 out-of-scope), bulk import (R19), unmodulated signals
-(D1a), the six backlogged protocols (D18), and — per OD1 — any contribution
-workflow.
+hardware (SPEC §4 out-of-scope), unmodulated signals (D1a), the six
+backlogged protocols (D18), and — per OD1 — any contribution workflow.
+
+**Phase 7, post-v1: the LIRC import (§14).** SPEC v0.9 reversed v1's ban on
+bulk import under R19's five conditions. It lands in four PRs, in order:
+this design; the lircd transmit port, verified against lircd itself (D36);
+index and site sharding, so the ledger scales past one page (D40); then
+the data.
 
 ---
 
@@ -1732,6 +1737,7 @@ Applying the rule, in the phase that makes each true:
 | **~~4~~ done** | **SPEC §6, R10** — key names must match `^[A-Za-z_][A-Za-z0-9_]*$`. R11 leans on CSS grid for collision-checking, which holds only while every area name is a legal CSS identifier | D29 |
 | **~~4~~ done** | **SPEC §6, R8 / R10 — enforce what they already imply.** Every key in `printedLabels` and `shape` must resolve to a real key, and at most one layout may set `original: true`. R8 says "exactly one, if present" and R10 describes sibling maps; neither states the constraint as checkable | D14 |
 | **~~5~~ done** | **SPEC §11, R20** — reference `unresolved.json`; as written R20 has no mechanism behind it, and Phase 5 is where the mechanism lands | D12 |
+| **7 done** | **SPEC §3, §4, §2 and R19 (v0.9).** R19 now permits importing a database on five checkable conditions: the licence permits republishing, each form cites its origin, nothing lands above Plausible, authored data wins, and the import is regenerable. §4 names the sources that stay excluded, and why | D34–D40 |
 | **post-6 done** | **SPEC §1 and §5's tier table.** §1 stated the lookups' claims as if they were the ledger's contents, and its RMT-B118P row claimed Verified at subdevice 218. It now records the claims as claims, then what the ledger holds. Plausible now also covers a single capture that nothing cross-checks, which is how PR #8 tiered 11 keys: no existing tier fitted, and the data came before the definition | §13 |
 
 Decisions that are *not* spec edits, for contrast: D19's tree ownership,
@@ -1762,6 +1768,9 @@ Recording it as a late edit is more honest than folding it back into Phase 3.
 | Candidate groups (D16) let untested alternates accumulate and never get resolved | Medium | They're open questions by design, so make them visible rather than silent: `rl lookup` and the site surface every non-`primary` group with its tier, and the index rolls up an "unresolved alternates" count per file |
 | Site upkeep outgrows its value (OD2) | Low | D15 keeps it dependency-free; a framework is the signal to revisit OD2 |
 | Committed `build/` creates merge noise | Low | Single-author repo (OD1); D19's tree check makes drift loud |
+| The LIRC import makes the repo and the site large (~2,800 upstream files, ~115k keys with timings) | Medium | D40 shards the index and site per remote, so no committed file grows with the corpus. D20's one-line integer arrays cut raw forms roughly in half. The size is measured before the data PR, not after |
+| Imported data is taken for authored data | Medium | R19's conditions, enforced: the `remotes/lirc/` path is the licence *and* trust boundary, every form's citation names its upstream file and line, nothing is above Plausible, and the site labels imported remotes as imported |
+| The GPL reading of the LIRC database is wrong | Low | It is Debian's reading, cited, and the only one on record (the upstream repository states no licence). The boundary is one directory, so reversing it is one deletion and one re-import |
 | Provenance quietly degrades as variants are expanded and re-expanded | Low | D22's field partition is mechanical and `expandedFrom` is machine-checkable; `rl fmt --expand` shows exactly what a variant produced. D21's non-positional ids remove the silent-retarget path |
 | A `claims` entry gets written to satisfy the validator rather than to inform | Low | **Presence is machine-validated; truthfulness is not.** The validator confirms `reason` and `source` are there and non-empty — it cannot confirm the source says what the claim says, or that it exists. Reviewing that is a human job, and with OD1 the human is you, reading the diff. The gain over v0.3 is narrow but real: nothing had to be written down at all before |
 
@@ -2002,3 +2011,142 @@ SPEC v0.8 carries this into §1 itself (§9's post-6 row). §1's table now
 states the lookups' claims as claims, and a paragraph after it records what
 the ledger actually holds, so the spec no longer describes a file that
 differs from the one on disk.
+
+---
+
+## 14. Importing LIRC
+
+SPEC R19 (v0.9) permits one import: LIRC's remotes database. The owner
+chose it over the alternatives because it is the only large source that fits
+the format: it is keyed by *remote* model (R1), 85% of it is irrecord
+hardware capture, and each file credits a contributor. The other large
+sources are keyed by device or by address, and their licences are
+conditional or absent (SPEC §4). The choices below turn R19's five
+conditions into mechanism.
+
+**D34 — The licence boundary is a directory.** Serves R19.1. Everything
+imported lives under `remotes/lirc/`, beside the licence it is republished
+under:
+
+- `COPYING` holds the GPL-2.0 text, taken from the lirc 0.10.2 tarball.
+- `README.md` states the origin (`git.code.sf.net/p/lirc-remotes/code` @
+  `291b40f`) and why GPL-2.0-or-later. The upstream repository states no
+  licence. Debian's copyright file for `lirc-compat-remotes` 0.9.0-2
+  (sources.debian.org/data/main/l/lirc-compat-remotes/0.9.0-2/debian/copyright)
+  records `Files: * License: GPL-2.0+`. Debian packages only the pre-0.9.0
+  subset. The later files come from the same project, and no statement to
+  the contrary exists. That is a reading, not a grant, and the README says
+  so.
+
+Every imported form credits its file's contributor by name. Email addresses
+are not copied, because the pinned upstream file keeps the full notice. The
+site marks an imported remote as imported, with the licence.
+
+**D35 — A citation says where, and how.** Serves R19.2, R18. Each form's
+`source` has one compact, fixed shape:
+
+```
+lirc-remotes@291b40f remotes/sony/RM-U305.lircd.conf:57 [block RM-U305]
+(contributed by <name>): <how>
+```
+
+`<how>` is one of three phrases, because the three ways a form is produced
+establish different things:
+
+- `raw_codes capture`: the durations are the capture's own.
+- `decoded to <protocol> from a parametric block`: the block's parameters,
+  decoded into an `irp` form (D36).
+- `expanded to raw by lircd 0.10.2's transmit rules`: what lircd would
+  send for this button, and not a capture.
+
+**D36 — lircd is the reference for what a block means.** Serves R19.2,
+R19.5. A parametric block is a *description* of a signal, and lircd's
+transmit code is the only authority on what it describes: header, pre/post
+data, toggle bits, `CONST_LENGTH` arithmetic, repeat frames, gap merging.
+So the importer uses a pure-Python port of lircd 0.10.2's `config_file.c`
+and `transmit.c` (`src/remote_ledger/lirc/`), and the port is gated like a
+protocol encoder (D10):
+
+- **Unit vectors.** Synthetic confs covering every feature, with outputs
+  generated by lircd's own `irsimsend` and committed with their provenance.
+- **A whole-corpus comparison.** `tools/lirc_oracle_compare.py` runs the
+  port and `irsimsend` over every upstream file, and its summary is
+  recorded.
+
+Each block then becomes one of three things:
+
+1. **An `irp` form**, when its shape is NEC1, NECx2 or Sony20. Accepted
+   only if our encoder's rendering of the decoded parameters matches lircd's
+   own expansion of the block under D8's raw tolerance, for both first press
+   and repeat. Otherwise it falls back to 2.
+2. **A `raw` form** holding lircd's expansion. `intro` is the first send
+   and `repeat` is the next one, omitted when the two are the same. The
+   trailing gap comes from the block's own `gap` by lircd's rule, so it is
+   declared, not inferred, and needs no `truncated` claim. A toggle bit
+   takes the state lircd sends on its first press, and the citation says
+   so.
+3. **A line in the import report**, never a silent drop. This covers: no
+   timings (scancode drivers); `GRUNDIG`, `BO` and `SERIAL`, which lircd
+   itself refuses to send; carrier 0 (D1a); buttons with several codes;
+   anything lircd rejects as unsendable; and `min_repeat` above the
+   schema's 10.
+
+**D37 — Names are the upstream's, made legal.** Serves R1, R10, D29.
+
+- **Manufacturer** is the upstream directory, as written (`sony`).
+- **Model** is the file's stem. In a file with several `begin remote`
+  blocks, each block becomes its own remote, `<stem> [<block name>]`. That
+  is lircd's own unit, and it keeps R3's one protocol per file.
+- **Path** is `remotes/lirc/<manufacturer>/<model-slug>.json`.
+- **`controls`** comes from the header's "devices being controlled" line,
+  split on commas and semicolons, with placeholders ("unknown", "?", "-")
+  dropped.
+- **Key names** that are not CSS identifiers (about 13%) are mapped
+  deterministically: `+` becomes `PLUS`, `-` becomes `MINUS`, anything else
+  outside `[A-Za-z0-9_]` becomes `_`, a leading digit gets `KEY_`, and
+  collisions get `_2`, `_3` in file order. The form's citation records the
+  original name.
+- **A duplicated button name** in one block imports its first occurrence,
+  which is the one lircd's `get_code_by_name` returns, and reports the
+  others.
+
+**D38 — The protocol block, and the tier.** Serves R3, R19.3.
+
+- `name` is the decoded protocol, or omitted for a raw-only file (D24).
+- `carrierHz` is the block's `frequency`, or lircd's default 38 kHz when
+  it has none (3,039 of 3,394 upstream blocks). The citation says which.
+- `minSends` is `min_repeat + 1`.
+- Every form is `plausible`, and no `verifiedBy` is written.
+
+**D39 — Authored data wins; the import is a regenerable cache.** Serves
+R19.4, R19.5. `rl import lirc <checkout> --commit <sha>` rewrites
+`remotes/lirc/` wholesale. The same checkout and commit reproduce it byte
+for byte, including `remotes/lirc/IMPORT.md`, the report of everything D36
+could not represent. An upstream remote colliding with any file outside
+`remotes/lirc/` is skipped and reported. The collision test is
+case-insensitive, on manufacturer and model or alias. This is D33's
+lifecycle, applied to a whole tree: generated content is regenerated, and
+curating a remote means moving it out, after which it is authored.
+
+**D40 — The index and site are sharded per remote.** Serves R14, R16,
+R17, OD4. At ~115k keys, the one-page site of D15 would be a single HTML
+file over GitHub's 100 MB limit, and `build/index.json` a 40 MB file
+rewritten by every change. So nothing committed grows with the whole
+corpus:
+
+- **`build/index.json`** keeps one summary per remote (manufacturer,
+  model, aliases, controls, protocol, rolled-up tier, key count, file) and
+  the unresolved list. It loses its per-key map, which already exists in
+  each remote's `build/pronto/…` artifact.
+- **`rl lookup`** matches against the summary, then reads matching
+  remotes' artifacts for their keys.
+- **The site** embeds only the summary in `index.html`, and writes one
+  `site/r/<path>.js` per remote. Search stays client-side, and opening a
+  remote loads its script. A `<script src>` works from `file://` where
+  `fetch` does not, which keeps D15's promise.
+- **D20 amended:** an array of integers (a `raw` sequence) serializes on
+  one line. No authored raw form exists yet, so no committed file changes.
+
+`rl build --check` still regenerates and diffs the whole tree (D19). Only
+the files' shapes change.
+

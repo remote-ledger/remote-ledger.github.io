@@ -1,7 +1,7 @@
 # Remote Ledger — Requirements Spec
 
-**Draft v0.8** · Status: §12 resolved; v1 implemented (Phases 0-6) ·
-Depends on nothing upstream (self-contained)
+**Draft v0.9** · Status: §12 resolved; v1 implemented (Phases 0-6); LIRC
+import specified (R19) · Depends on nothing upstream (self-contained)
 
 A self-contained JSON file per remote, where every key can hold several
 independently-sourced representations at once — each with its own confidence
@@ -74,7 +74,7 @@ formats that each grew to own one layer of the problem.
 |---|---|---|
 | Protocol | **IRP notation** | A small formal grammar for describing a protocol — Sony12, Sony20, NEC1 — as parameters, timing, and checksum in one line. Maintained on the JP1/hifi-remote wiki; `IrpTransmogrifier` is the actively-developed reference implementation. Closest thing to an actual standard in this space. |
 | Waveform | **Pronto Hex** | Philips' proprietary format for a Pronto remote's learned/generated codes, adopted everywhere as the raw interchange format because it needs no protocol decoder — just carrier frequency and burst-pair timings. The compiled output this project produces. |
-| Remote file | **LIRC's `lircd.conf`** | The de facto standard remote-configuration file, and the shape of most public captures in the wild. A common authoring source, not a dependency. |
+| Remote file | **LIRC's `lircd.conf`** | The de facto standard remote-configuration file, and the shape of most public captures in the wild. The one database R19 admits for import, and otherwise a common authoring source, not a dependency. |
 | By address | **IRDB** ([probonopd/irdb](https://github.com/probonopd/irdb)) | A large crowd-sourced code database, organized `<manufacturer>/<devicetype>/<device>,<subdevice>.csv` — by *protocol address*, not model name. |
 | By model | **SmartIR** ([smartHomeHub/SmartIR](https://github.com/smartHomeHub/SmartIR)) | Each JSON file carries an explicit `manufacturer` and a `supportedModels` array. Closest existing prior art to Remote Ledger's shape — but no confidence tier, no citation field, one code per function, not several coexisting ones. |
 | Layout | **CSS Grid's `grid-template-areas`** | A named cell per line, `.` for a gap, spans by repeating a name — an already-standardized grammar, not a bespoke one. See §6. |
@@ -101,7 +101,9 @@ index — but adds the citation and multi-form structure neither one has.
 - Generate the manufacturer+model index as a view over every file's own
   metadata. Nothing hand-maintained can go stale.
 - Make adding one device cheap and require nothing upstream. Coverage is
-  built one lookup at a time.
+  built one lookup at a time, and seeded by importing what an openly
+  licensed source already holds, at a tier that says it is only imported
+  (R19).
 
 ## 4. Scope
 
@@ -119,8 +121,10 @@ index — but adds the citation and multi-form structure neither one has.
   authors, compiles, and cross-checks; it doesn't replace `irrecord`.
 - A multi-contributor review workflow, unless Open Decision 1 resolves
   that way.
-- Bulk-importing any existing database wholesale (see §10) — entries are
-  authored and cited one at a time.
+- Importing any source whose licence does not permit republishing it here.
+  That rules out IRDB's conditional, revocable permission, Flipper-IRDB
+  files from before its CC0 cutoff, Global Caché and Remote Central. The one
+  source R19 admits is LIRC's remotes database.
 
 ## 5. Data model
 
@@ -467,10 +471,40 @@ is the *only* place trust comes from — so it has to hold up on its own.
   the list. Note what tooling can and cannot do here: that both are present
   and non-empty is checked mechanically, but whether the source says what
   the claim says is a human judgement, and stays one.
-- **R19 — Sources inform entries; they don't get bulk-imported.** LIRC
-  configs, IRDB rows, forum posts — any of them can source a form's data
-  and citation, one key at a time. No wholesale copy of another project's
-  files ever lands in this repo wearing someone else's confidence tier.
+- **R19 — Sources inform entries; an import never launders their trust.**
+  LIRC configs, IRDB rows, forum posts — any of them can source a form's
+  data and citation, one key at a time. v1 forbade importing whole
+  databases. As of v0.9 an import is permitted, on five conditions, each
+  checkable:
+
+  1. **The licence permits republishing.** This repository is public. The
+     imported files carry their source's licence and attribution, and live
+     under their own directory so the licence boundary is a path:
+     `remotes/lirc/`, under GPL-2.0-or-later (Debian's reading of the LIRC
+     remotes database, whose repository states none), crediting each file's
+     contributor.
+  2. **Every form cites exactly where it came from:** the upstream
+     repository, pinned commit, file, remote block and line, and *how* the
+     form was produced. It is either a `raw_codes` capture, a parametric
+     block decoded to an `irp` form, or a parametric block expanded to raw
+     timings by lircd's own transmit rules. R18 then holds per form, as for
+     any authored entry.
+  3. **Nothing is imported above Plausible.** The upstream's own claims
+     carry over as text in the citation, never as a tier. A single capture
+     that nothing cross-checks is Plausible by definition (§5). A key
+     earns Verified the way any key does: by a second, independent source.
+  4. **Authored data wins.** An import that collides with an authored
+     remote, by manufacturer and model or by alias, is not written. To
+     curate an imported remote, move it out of `remotes/lirc/`: from then
+     on it is authored, and the import skips it.
+  5. **The import is regenerable.** Re-running it over the same pinned
+     upstream commit reproduces every imported file byte for byte. What it
+     could not represent is listed in a committed report, with reasons, not
+     dropped silently.
+
+  What stays forbidden is the laundering this requirement always existed
+  to stop: an upstream file landing here wearing its own confidence, or
+  anyone's.
 
 ## 11. Non-functional
 
