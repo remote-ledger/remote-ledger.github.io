@@ -16,6 +16,7 @@ import json
 from pathlib import Path
 from typing import Any
 
+from . import paths
 from .errors import LedgerError
 from .forms import CONFIDENCE_RANK, PRIMARY, select
 from .remote import Remote, load_remote
@@ -41,35 +42,35 @@ def rolled_up_confidence(remote: Remote) -> str | None:
     return max(tiers, key=lambda t: CONFIDENCE_RANK[t])
 
 
-def summarise(remote: Remote) -> dict[str, Any]:
-    keys: dict[str, Any] = {}
-    alternates = 0
-    for key in sorted(remote.keys):
-        candidates: dict[str, Any] = {}
-        for name, group in remote.groups(key).items():
-            chosen = select(group)
-            entry: dict[str, Any] = {"confidence": chosen.confidence}
-            if chosen.source:
-                entry["source"] = chosen.source
-            if name != PRIMARY:
-                entry["label"] = remote.variants[name].label
-                # D32's risk note: make open questions countable rather than
-                # letting untested alternates accumulate silently.
-                if chosen.confidence in ("untested", "plausible"):
-                    alternates += 1
-            candidates[name] = entry
-        keys[key] = {"candidates": candidates}
+def summarise(remote: Remote, where: str | None = None) -> dict[str, Any]:
+    """One remote's identity and roll-ups -- and, since D40, nothing per key.
 
+    The per-key detail (each candidate's tier, citation and Pronto) already
+    lives in the remote's own compiled artifact, which the summary names.
+    Repeating it here made the index grow with every key in the corpus: at
+    the LIRC import's ~115k keys, a 40 MB file rewritten by any change.
+    """
+    alternates = 0
+    for key in remote.keys:
+        for name, group in remote.groups(key).items():
+            # D32's risk note: make open questions countable rather than
+            # letting untested alternates accumulate silently.
+            if name != PRIMARY and select(group).confidence in ("untested", "plausible"):
+                alternates += 1
+
+    where = where or remote.where
     summary: dict[str, Any] = {
-        "file": remote.where,
+        "file": where,
+        "artifact": paths.artifact(where),
         "manufacturer": remote.manufacturer,
         "model": remote.model,
         "aliases": sorted(remote.raw.get("aliases") or []),
         "controls": sorted(remote.raw.get("controls") or []),
         "keyCount": len(remote.keys),
         "unresolvedAlternates": alternates,
-        "keys": keys,
     }
+    if root := paths.imported_from(where):
+        summary["importedFrom"] = root
     if remote.protocol.name:
         summary["protocol"] = remote.protocol.name
     confidence = rolled_up_confidence(remote)
@@ -111,7 +112,7 @@ def build_index(root: Path) -> tuple[dict[str, Any], list[str]]:
     problems: list[str] = []
     for path in corpus_files(root):
         try:
-            summaries.append(summarise(load_remote(path)))
+            summaries.append(summarise(load_remote(path), paths.rel(root, path)))
         except LedgerError as exc:
             problems.append(f"{path.as_posix()}: {exc}")
     summaries.sort(key=lambda s: (s["manufacturer"].casefold(), s["model"].casefold()))

@@ -14,7 +14,8 @@ ever typed in, or that afternoon gets repeated.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any, Iterable
+from pathlib import Path
+from typing import Any, Iterable, Mapping
 
 #: R6's order, best first, for display.
 TIER_ORDER = ("confirmed", "verified", "plausible", "untested", "derived")
@@ -65,7 +66,12 @@ def search(index: dict[str, Any], query: str) -> list[Match]:
     return matches
 
 
-def _render_remote(remote: dict[str, Any], matched_on: str) -> list[str]:
+def _render_remote(
+    remote: dict[str, Any], matched_on: str, keys: Mapping[str, Any]
+) -> list[str]:
+    """``keys`` is the remote's compiled artifact's key map: since D40 the
+    index carries identity and roll-ups only, and per-key detail lives in
+    each remote's own artifact."""
     lines = [
         f"{remote['manufacturer']} {remote['model']}"
         + (f"  [{remote['confidence']}]" if remote.get("confidence") else "")
@@ -77,6 +83,11 @@ def _render_remote(remote: dict[str, Any], matched_on: str) -> list[str]:
         lines.append(f"  aliases   {', '.join(remote['aliases'])}")
     if remote.get("controls"):
         lines.append(f"  controls  {', '.join(remote['controls'])}")
+    if remote.get("importedFrom"):
+        lines.append(
+            f"  imported  from {remote['importedFrom']} -- not authored here; "
+            "no key above plausible (SPEC R19)"
+        )
     if remote.get("unresolvedAlternates"):
         lines.append(
             f"  open      {remote['unresolvedAlternates']} untested "
@@ -84,8 +95,8 @@ def _render_remote(remote: dict[str, Any], matched_on: str) -> list[str]:
         )
     lines.append(f"  matched   on {matched_on}")
 
-    for key in sorted(remote.get("keys", {})):
-        candidates = remote["keys"][key]["candidates"]
+    for key in sorted(keys):
+        candidates = keys[key]["candidates"]
         lines.append(f"  {key}")
         for name in sorted(candidates, key=lambda n: (n != "primary", n)):
             entry = candidates[name]
@@ -98,6 +109,21 @@ def _render_remote(remote: dict[str, Any], matched_on: str) -> list[str]:
     return lines
 
 
+def keys_for(root: Path, matches: list[Match]) -> dict[str, Any]:
+    """Each matched remote's per-key detail, compiled from its file (D40).
+
+    Compiled here rather than read from ``build/``, so a lookup never shows a
+    code the committed tree has not caught up with yet.
+    """
+    from .cli import compiled_artifact
+    from .remote import load_remote
+
+    return {
+        m.entry["file"]: compiled_artifact(load_remote(root / m.entry["file"]))["keys"]
+        for m in matches if m.kind == "remote"
+    }
+
+
 def _render_unresolved(entry: dict[str, Any]) -> list[str]:
     """R20's middle state, stated out loud."""
     lines = [f"{entry['device']}  [checked, nothing found]"]
@@ -108,7 +134,12 @@ def _render_unresolved(entry: dict[str, Any]) -> list[str]:
     return lines
 
 
-def render(matches: list[Match], query: str) -> str:
+def render(
+    matches: list[Match], query: str,
+    keys: Mapping[str, Mapping[str, Any]] | None = None,
+) -> str:
+    """``keys`` maps a remote's ``file`` to its artifact's key map."""
+    keys = keys or {}
     if not matches:
         # R20's third state. Deliberately distinct from the second: nobody
         # has looked, as opposed to somebody looked and failed.
@@ -120,7 +151,9 @@ def render(matches: list[Match], query: str) -> str:
     blocks = []
     for match in matches:
         if match.kind == "remote":
-            blocks.append("\n".join(_render_remote(match.entry, match.matched_on)))
+            blocks.append("\n".join(_render_remote(
+                match.entry, match.matched_on, keys.get(match.entry["file"], {}),
+            )))
         else:
             blocks.append("\n".join(_render_unresolved(match.entry)))
     return "\n\n".join(blocks)

@@ -1,13 +1,17 @@
-"""The generated site (R17, D15, D20, D29, D30).
+"""The generated site (R17, D15, D20, D29, D30, D40).
 
-One HTML file plus ``index.json``. No framework, no build step, no server --
-which is what keeps OD2's ongoing cost near zero. If it ever grows a
-framework, that is the signal to revisit OD2 rather than absorb the
-maintenance quietly.
+One HTML file, ``index.json``, and one small script per remote under ``r/``.
+No framework, no build step, no server -- which is what keeps OD2's ongoing
+cost near zero. If it ever grows a framework, that is the signal to revisit
+OD2 rather than absorb the maintenance quietly.
 
-The whole ledger is embedded as a JSON island rather than fetched, so the
-page works from ``file://`` as well as from Pages, and so D29's
-script-payload rule applies in the one place data enters the document.
+The page embeds the *index* -- every remote's identity and roll-ups -- as a
+JSON island, so search works with nothing fetched. A remote's keys, codes
+and layouts arrive when it is opened, from ``r/<path>.js`` (D40). That file
+is a script rather than JSON because a ``<script src>`` loads from
+``file://`` where ``fetch`` does not, which keeps the page working offline.
+Its payload is ``json.dumps`` output with ``ensure_ascii``, never string
+concatenation, so D29's rule -- data enters as data -- still holds.
 
 ``site/index.json`` is written by the same serializer as
 ``build/index.json`` and must be byte-identical to it: the site needs its
@@ -16,9 +20,11 @@ own copy because Pages serves only ``site/``.
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
 from typing import Any
 
+from . import paths
 from .encoding import css_ident, json_payload
 from .forms import PRIMARY, select
 from .index import build_index
@@ -41,6 +47,7 @@ def payload(root: Path) -> tuple[dict[str, Any], dict[str, Any]]:
     extra: dict[str, Any] = {}
     for path in corpus_files(root):
         remote = load_remote(path)
+        where = paths.rel(root, path)
         keys: dict[str, Any] = {}
         for key in sorted(remote.keys):
             candidates: dict[str, Any] = {}
@@ -66,29 +73,42 @@ def payload(root: Path) -> tuple[dict[str, Any], dict[str, Any]]:
                     }
                 candidates[name] = entry
             keys[key] = candidates
-        extra[remote.where] = {
+        layouts = remote.raw.get("layouts") or {}
+        extra[where] = {
             "keys": keys,
-            "layouts": remote.raw.get("layouts") or {},
+            "layouts": layouts,
             "minSends": remote.protocol.min_sends,
+            "css": _grid_rules(where, layouts),
         }
     return index, extra
 
 
-def _grid_rules(extra: dict[str, Any]) -> str:
+def _grid_rules(file: str, layouts: dict[str, Any]) -> str:
     """Emit each layout as a real CSS grid rule -- the whole point of R9."""
     rules = []
-    for file, data in sorted(extra.items()):
-        for name, layout in sorted((data.get("layouts") or {}).items()):
-            rows = layout.get("areas") or []
-            ident = "".join(c if c.isalnum() else "-" for c in f"{file}-{name}")
-            body = " ".join(f'"{r}"' for r in rows)
-            rules.append(f'[data-grid="{ident}"] {{ grid-template-areas: {body}; }}')
-            for key in sorted({c for r in rows for c in r.split() if c != "."}):
-                rules.append(
-                    f'[data-grid="{ident}"] [data-area="{css_ident(key)}"]'
-                    f" {{ grid-area: {css_ident(key)}; }}"
-                )
+    for name, layout in sorted(layouts.items()):
+        rows = layout.get("areas") or []
+        ident = "".join(c if c.isalnum() else "-" for c in f"{file}-{name}")
+        body = " ".join(f'"{r}"' for r in rows)
+        rules.append(f'[data-grid="{ident}"] {{ grid-template-areas: {body}; }}')
+        for key in sorted({c for r in rows for c in r.split() if c != "."}):
+            rules.append(
+                f'[data-grid="{ident}"] [data-area="{css_ident(key)}"]'
+                f" {{ grid-area: {css_ident(key)}; }}"
+            )
     return "\n".join(rules)
+
+
+def remote_script(file: str, data: dict[str, Any]) -> str:
+    """``r/<path>.js``: one call, its arguments JSON-encoded (D29, D40).
+
+    ``ensure_ascii`` keeps U+2028/U+2029 escaped, which older JavaScript
+    engines reject inside a string literal, and sorted keys keep the file
+    byte-reproducible (D20).
+    """
+    args = json.dumps([file, data], sort_keys=True, ensure_ascii=True,
+                      separators=(",", ":"))
+    return f"ledgerRemote(...{args});\n"
 
 
 STYLE = """
@@ -144,6 +164,10 @@ button.copy { font: inherit; font-size: 0.78rem; padding: 3px 10px;
   padding: 8px 4px; text-align: center; font-size: 0.7rem;
   font-family: ui-monospace, monospace; background: var(--bg); }
 .unresolved { border-left: 3px solid var(--plausible); }
+.imported { color: var(--muted); }
+button.more { font: inherit; font-size: 0.8rem; padding: 3px 10px;
+  border: 1px solid var(--line); border-radius: 6px; background: transparent;
+  color: var(--accent); cursor: pointer; }
 .absent { color: var(--muted); padding: 24px 0; }
 footer { color: var(--muted); font-size: 0.8rem; margin-top: 40px;
   border-top: 1px solid var(--line); padding-top: 14px; }
@@ -152,6 +176,30 @@ footer { color: var(--muted); font-size: 0.8rem; margin-top: 40px;
 SCRIPT = r"""
 const data = JSON.parse(document.getElementById('ledger').textContent);
 const results = document.getElementById('results');
+// D40: a remote's keys arrive from r/<path>.js when it is opened. Scripts
+// rather than fetch(), because a <script src> loads from file:// too.
+const AUTO_OPEN = 8, MAX_SHOWN = 200;
+const details = {}, waiting = {};
+window.ledgerRemote = (file, d) => {
+  details[file] = d;
+  if (d.css) {
+    const st = document.createElement('style');
+    st.textContent = d.css;
+    document.head.appendChild(st);
+  }
+  for (const done of waiting[file] || []) done();
+  delete waiting[file];
+};
+const scriptFor = file => 'r/' + file.slice('remotes/'.length, -'.json'.length) + '.js';
+function load(file, done) {
+  if (details[file]) return done();
+  const first = !waiting[file];
+  (waiting[file] = waiting[file] || []).push(done);
+  if (!first) return;
+  const s = document.createElement('script');
+  s.src = scriptFor(file);
+  document.head.appendChild(s);
+}
 const count = document.getElementById('count');
 const box = document.getElementById('q');
 
@@ -175,16 +223,25 @@ function hitUnresolved(u, q) {
   return d.includes(q) || q.split(/\s+/).every(w => d.includes(w));
 }
 
-function renderRemote(r) {
-  const extra = data.extra[r.file] || {keys:{}, layouts:{}};
+function renderRemote(r, i) {
   let html = `<article class="card"><h2>${esc(r.manufacturer)} ${esc(r.model)}`;
   if (r.confidence) html += ` <span class="badge ${esc(r.confidence)}">${esc(r.confidence)}</span>`;
   html += `</h2><p class="meta">${esc(r.file)}`;
   if (r.protocol) html += ` &middot; ${esc(r.protocol)}`;
-  if (extra.minSends) html += ` &middot; min sends ${extra.minSends}`;
+  html += ` &middot; ${r.keyCount} key(s)`;
   if (r.controls && r.controls.length) html += `<br>controls ${esc(r.controls.join(', '))}`;
   if (r.aliases && r.aliases.length) html += `<br>also sold as ${esc(r.aliases.join(', '))}`;
-  html += `</p>`;
+  const imp = r.importedFrom && data.imports[r.importedFrom];
+  if (imp) html += `<br><span class="imported">imported from the ${esc(imp.name)} ` +
+    `(${esc(imp.licence)}) &mdash; not authored here; no key above plausible</span>`;
+  html += `</p><div class="detail" data-i="${i}">` +
+    `<button class="more" data-i="${i}">Show keys</button></div>`;
+  return html + `</article>`;
+}
+
+function renderDetail(r) {
+  const extra = details[r.file];
+  let html = extra.minSends ? `<p class="meta">min sends ${extra.minSends}</p>` : '';
 
   for (const [name, layout] of Object.entries(extra.layouts || {})) {
     const ident = (r.file + '-' + name).replace(/[^a-zA-Z0-9]/g, '-');
@@ -217,7 +274,15 @@ function renderRemote(r) {
     }
     html += `</div>`;
   }
-  return html + `</article>`;
+  return html;
+}
+
+let shown = [];
+function open(i) {
+  const r = shown[i];
+  const slot = results.querySelector(`.detail[data-i="${i}"]`);
+  if (!r || !slot) return;
+  load(r.file, () => { slot.innerHTML = renderDetail(r); });
 }
 
 function renderUnresolved(u) {
@@ -241,11 +306,18 @@ function run() {
       : `<p class="absent">The ledger is empty.</p>`;
     return;
   }
-  results.innerHTML = remotes.map(renderRemote).join('') +
+  shown = remotes.slice(0, MAX_SHOWN);
+  const more = remotes.length > shown.length
+    ? `<p class="absent">Showing ${shown.length} of ${remotes.length}; refine the search to see the rest.</p>`
+    : '';
+  results.innerHTML = shown.map(renderRemote).join('') + more +
                       unresolved.map(renderUnresolved).join('');
+  if (shown.length <= AUTO_OPEN) shown.forEach((_, i) => open(i));
 }
 
 results.addEventListener('click', ev => {
+  const more = ev.target.closest('button.more');
+  if (more) return open(Number(more.dataset.i));
   const btn = ev.target.closest('button.copy');
   if (!btn) return;
   navigator.clipboard?.writeText(btn.dataset.hex);
@@ -257,11 +329,11 @@ run();
 """
 
 
-def render_html(index: dict[str, Any], extra: dict[str, Any]) -> str:
+def render_html(index: dict[str, Any]) -> str:
     embedded = {
         "remotes": index["remotes"],
         "unresolved": index["unresolved"],
-        "extra": extra,
+        "imports": paths.IMPORTS,
     }
     return f"""<!doctype html>
 <html lang="en">
@@ -269,9 +341,7 @@ def render_html(index: dict[str, Any], extra: dict[str, Any]) -> str:
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{TITLE}</title>
-<style>{STYLE}
-{_grid_rules(extra)}
-</style>
+<style>{STYLE}</style>
 </head>
 <body>
 <main>
@@ -303,8 +373,12 @@ def build_site(root: Path, out_root: Path) -> list[str]:
     target = out_root / "site"
     target.mkdir(parents=True, exist_ok=True)
     (target / "index.html").write_text(
-        render_html(index, extra), encoding="utf-8", newline="\n"
+        render_html(index), encoding="utf-8", newline="\n"
     )
     # D20: the same serializer, so this is byte-identical to build/index.json.
     (target / "index.json").write_text(dumps(index), encoding="utf-8", newline="\n")
+    for file, data in sorted(extra.items()):
+        script = target / paths.site_script(file)
+        script.parent.mkdir(parents=True, exist_ok=True)
+        script.write_text(remote_script(file, data), encoding="utf-8", newline="\n")
     return []

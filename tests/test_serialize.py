@@ -83,3 +83,13 @@ def test_declared_orders_cover_the_documented_object_kinds():
     assert set(SOURCE_KEY_ORDER) == {
         "remote", "protocol", "form", "variant", "layout"
     }
+
+
+def test_integer_arrays_serialize_on_one_line():
+    """D40 amends D20: a raw sequence is one line, not one number per line,
+    which roughly halves an imported remote's size. Order is untouched."""
+    text = dumps({"repeat": [9024, 4512, 564, 1692], "flags": [True, 1]})
+    assert '"repeat": [9024, 4512, 564, 1692]' in text
+    # Booleans are not integers here, so a mixed array keeps json's layout.
+    assert '"flags": [\n' in text
+    assert loads(text) == {"repeat": [9024, 4512, 564, 1692], "flags": [True, 1]}

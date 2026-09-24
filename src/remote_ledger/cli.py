@@ -169,12 +169,11 @@ def compiled_artifact(remote) -> dict:
     }
 
 
-def _artifact_path(root: Path, remote) -> Path:
-    return (
-        root / "build" / "pronto"
-        / remote.manufacturer.lower().replace(" ", "-")
-        / f"{remote.model}.json"
-    )
+def _artifact_path(root: Path, target: Path) -> Path:
+    """The same rule the compile generator uses (D40): mirror the source."""
+    from . import paths
+
+    return root / paths.artifact(paths.rel(root, target))
 
 
 def cmd_compile(args: argparse.Namespace) -> int:
@@ -194,7 +193,7 @@ def cmd_compile(args: argparse.Namespace) -> int:
                 print(f"ERROR {problem}", file=sys.stderr)
             return EXIT_ERROR
         remote = load_remote(target)
-        path = _artifact_path(root, remote)
+        path = _artifact_path(root, target)
         text = dumps(compiled_artifact(remote))
         if args.check:
             current = path.read_text(encoding="utf-8") if path.exists() else None
@@ -371,12 +370,13 @@ def cmd_site(args: argparse.Namespace) -> int:
 def cmd_lookup(args: argparse.Namespace) -> int:
     """R16: find a remote by device, model, alias or manufacturer."""
     from .index import build_index
-    from .lookup import render, search
+    from .lookup import keys_for, render, search
 
-    index, _ = build_index(_repo_root())
+    root = _repo_root()
+    index, _ = build_index(root)
     query = " ".join(args.query)
     matches = search(index, query)
-    print(render(matches, query))
+    print(render(matches, query, keys_for(root, matches)))
     return EXIT_OK
 
 

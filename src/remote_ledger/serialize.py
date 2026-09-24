@@ -86,10 +86,29 @@ def load(path: str | Path) -> Any:
     return loads(Path(path).read_text(encoding="utf-8"))
 
 
+def _is_int_array(obj: Any) -> bool:
+    return (
+        isinstance(obj, (list, tuple)) and len(obj) > 0
+        and all(isinstance(v, int) and not isinstance(v, bool) for v in obj)
+    )
+
+
 def _substitute_decimals(obj: Any, out: dict[str, str], nonce: str) -> Any:
+    """Swap what ``json`` cannot format our way for placeholder tokens.
+
+    Two things qualify. A Decimal, which ``json`` would quote (D28). And,
+    since D40, a non-empty array of integers -- a ``raw`` sequence -- which
+    ``indent=2`` would spread one number per line, roughly doubling an
+    imported remote's size for no reader's benefit. It is emitted on one
+    line instead.
+    """
     if isinstance(obj, Decimal):
         token = f"{_SENTINEL}{nonce}.{len(out)}{_SENTINEL}"
         out[token] = canon_decimal(obj)
+        return token
+    if _is_int_array(obj):
+        token = f"{_SENTINEL}{nonce}.{len(out)}{_SENTINEL}"
+        out[token] = "[" + ", ".join(str(v) for v in obj) + "]"
         return token
     if isinstance(obj, dict):
         return {k: _substitute_decimals(v, out, nonce) for k, v in obj.items()}
@@ -124,9 +143,9 @@ def dumps(obj: Any, *, sort_keys: bool = True) -> str:
         occurrences = text.count(quoted)
         if occurrences != 1:
             raise ValidationError(
-                f"decimal placeholder appeared {occurrences} times instead of "
-                "once; a string value collided with it, and substituting "
-                "would corrupt the document"
+                f"placeholder appeared {occurrences} times instead of once; a "
+                "string value collided with it, and substituting would "
+                "corrupt the document"
             )
         text = text.replace(quoted, number)
     return text + "\n"
