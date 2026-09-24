@@ -1636,7 +1636,10 @@ The ledger-specific checks — v0.4 named only the first:
 OD2. *(Since D40, plus one small script per remote under `site/r/`; the page
 itself is unchanged in kind.)* No framework, no build step, no server — `site.py` emits static files
 deployable to GitHub Pages. Client-side substring search over manufacturer,
-model, aliases, and controls; a per-remote view showing each key's forms
+model, aliases, and controls, ignoring case, spaces and punctuation, as
+`rl lookup` does. `BDP-S360` must find a header that says
+`BDP S360`, or the page would report a device that is in the ledger as one
+nobody has looked for; a per-remote view showing each key's forms
 with its confidence badge and a citation, a copy-to-clipboard Pronto string,
 and the layout rendered through actual CSS grid.
 
@@ -1918,7 +1921,7 @@ note rather than a live contract.
 
 ## 12. Implementation status
 
-Phases 0-6 are implemented: 684 tests, `jsonschema` the only runtime
+Phases 0-6 are implemented: 694 tests, `jsonschema` the only runtime
 dependency. Phase 2 landed its nine SPEC edits *before* its code, per §9 --
 the spec change is what authorises the implementation. (That count is asserted by the suite itself -- see
 `test_documented_test_count_is_current` -- so it cannot drift the way the

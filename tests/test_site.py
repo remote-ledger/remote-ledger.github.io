@@ -182,3 +182,9 @@ def test_pronto_codes_reach_the_page(scripts):
         for candidates in data["keys"].values():
             for entry in candidates.values():
                 assert entry["prontoHex"].startswith("0000 ")
+
+
+def test_the_page_normalises_queries_as_lookup_does(html):
+    """The site's norm() is lookup.normalise in JavaScript; both must strip
+    the same characters, or the page and `rl lookup` disagree on a match."""
+    assert "replace(/[^\\p{L}\\p{N}]+/gu, '')" in html
