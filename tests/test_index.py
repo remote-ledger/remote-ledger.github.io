@@ -8,6 +8,7 @@ import pytest
 from remote_ledger.index import (
     alias_conflicts, build_index, load_unresolved, rolled_up_confidence, summarise,
 )
+from remote_ledger.cli import compiled_artifact
 from remote_ledger.remote import load_remote
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -83,7 +84,22 @@ def test_untested_alternates_are_counted(corpus):
     summary = build_index(root)[0]["remotes"][0]
     # One open alternate per key the variant expanded into, not one per file.
     assert summary["unresolvedAlternates"] == len(doc["keys"]) > 1
-    assert summary["keys"]["KEY_POWER"]["candidates"]["mode2"]["label"] == "mode2"
+    # The labelled candidate itself lives in the remote's artifact (D40).
+    artifact = compiled_artifact(load_remote(root / summary["file"]))
+    assert artifact["keys"]["KEY_POWER"]["candidates"]["mode2"]["label"] == "mode2"
+
+
+def test_the_index_is_a_summary_that_names_each_artifact(corpus):
+    """D40: nothing per key, so no committed index grows with the corpus;
+    the per-key detail is in the artifact the summary points at."""
+    root = corpus({"t/a.json": _remote(), "lirc/t/b.json": _remote(model="B")})
+    remotes = build_index(root)[0]["remotes"]
+    for summary in remotes:
+        assert "keys" not in summary
+        assert summary["artifact"] == "build/pronto/" + summary["file"][len("remotes/"):]
+    by_file = {s["file"]: s for s in remotes}
+    assert "importedFrom" not in by_file["remotes/t/a.json"]
+    assert by_file["remotes/lirc/t/b.json"]["importedFrom"] == "remotes/lirc/"
 
 
 def test_alias_conflicts_are_surfaced(corpus):

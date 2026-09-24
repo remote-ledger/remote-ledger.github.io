@@ -1595,6 +1595,7 @@ clickable link:
 | HTML text and attribute values | `html.escape(value, quote=True)` |
 | A URL in `href` | **Scheme allowlist: `http`, `https`, `mailto` only.** Anything else — `javascript:`, `data:`, a scheme-relative `//host` — renders as plain text, never as a link. A `source` is author-supplied free text (R18 permits a non-URL citation), so this path must assume it is not a safe URL |
 | Data embedded for scripts | Emitted as `<script type="application/json">` and read with `JSON.parse`, never string-concatenated into JS. `</` is escaped as `<\/` so no payload can close the tag early |
+| A per-remote script, `site/r/<path>.js` (D40) | One call, `ledgerRemote(...<args>)`, whose arguments are a single `json.dumps` array with `ensure_ascii`. JSON is a subset of JavaScript, so the data stays data. `ensure_ascii` escapes U+2028/U+2029, which older engines reject in a string literal. There is no HTML context, so `</script>` is harmless there |
 | A CSS identifier in `grid-area` / `grid-template-areas` | **Constrained at the source, not escaped**: key names must match `^[A-Za-z_][A-Za-z0-9_]*$`, enforced by the schema |
 
 The last row is the one that earns its place. R9's whole design is that a
@@ -1632,7 +1633,8 @@ The ledger-specific checks — v0.4 named only the first:
   coverage is a legitimate state, not a warning.
 
 **D15 — The site is one generated HTML file plus `index.json`.** Serves R17,
-OD2. No framework, no build step, no server — `site.py` emits static files
+OD2. *(Since D40, plus one small script per remote under `site/r/`; the page
+itself is unchanged in kind.)* No framework, no build step, no server — `site.py` emits static files
 deployable to GitHub Pages. Client-side substring search over manufacturer,
 model, aliases, and controls; a per-remote view showing each key's forms
 with its confidence badge and a citation, a copy-to-clipboard Pronto string,
@@ -1916,7 +1918,7 @@ note rather than a live contract.
 
 ## 12. Implementation status
 
-Phases 0-6 are implemented: 500 tests, `jsonschema` the only runtime
+Phases 0-6 are implemented: 506 tests, `jsonschema` the only runtime
 dependency. Phase 2 landed its nine SPEC edits *before* its code, per §9 --
 the spec change is what authorises the implementation. (That count is asserted by the suite itself -- see
 `test_documented_test_count_is_current` -- so it cannot drift the way the

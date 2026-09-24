@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 
 from remote_ledger.index import build_index
-from remote_ledger.lookup import render, search
+from remote_ledger.lookup import keys_for, render, search
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -47,7 +47,8 @@ def test_an_empty_query_matches_nothing(index):
 # --- R20's three states, which is the point of the whole mechanism ---------
 
 def test_state_one_in_the_ledger(index):
-    out = render(search(index, "DX3 Pro"), "DX3 Pro")
+    matches = search(index, "DX3 Pro")
+    out = render(matches, "DX3 Pro", keys_for(ROOT, matches))
     assert "Topping RC-15A" in out
     assert "[verified]" in out            # tier
     assert "audiosciencereview.com" in out  # citation
@@ -89,6 +90,19 @@ def test_alternates_are_surfaced_with_their_tier(tmp_path):
     (tmp_path / "remotes" / "t").mkdir(parents=True)
     (tmp_path / "remotes" / "t" / "a.json").write_text(json.dumps(doc))
     index, _ = build_index(tmp_path)
-    out = render(search(index, "RC-15A"), "RC-15A")
+    matches = search(index, "RC-15A")
+    out = render(matches, "RC-15A", keys_for(tmp_path, matches))
     assert "Command mode 2" in out and "untested" in out
     assert "untested alternate candidate(s)" in out
+
+
+def test_an_imported_remote_says_so(tmp_path):
+    """SPEC R19 / D34: the path is the trust boundary, and the lookup states
+    it, so an imported remote cannot be mistaken for an authored one."""
+    doc = json.loads((ROOT / "remotes" / "topping" / "RC-15A.json").read_text())
+    (tmp_path / "remotes" / "lirc" / "topping").mkdir(parents=True)
+    (tmp_path / "remotes" / "lirc" / "topping" / "RC-15A.json").write_text(json.dumps(doc))
+    index, _ = build_index(tmp_path)
+    matches = search(index, "RC-15A")
+    out = render(matches, "RC-15A", keys_for(tmp_path, matches))
+    assert "imported  from remotes/lirc/" in out

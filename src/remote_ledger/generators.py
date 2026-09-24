@@ -18,6 +18,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable
 
+from . import paths
 from .check import check_remote
 from .errors import LedgerError
 from .remote import load_remote
@@ -42,12 +43,9 @@ class Generator:
         return self.run is not None
 
 
-def _artifact_path(out_root: Path, remote) -> Path:
-    return (
-        out_root / "build" / "pronto"
-        / remote.manufacturer.lower().replace(" ", "-")
-        / f"{remote.model}.json"
-    )
+def _artifact_path(out_root: Path, where: str) -> Path:
+    """Mirrors the remote's own path (D40), so artifacts cannot collide."""
+    return out_root / paths.artifact(where)
 
 
 def run_check(root: Path, out_root: Path) -> list[str]:
@@ -97,7 +95,7 @@ def run_compile(root: Path, out_root: Path) -> list[str]:
 
     for path in corpus_files(root):
         remote = load_remote(path)
-        target = _artifact_path(out_root, remote)
+        target = _artifact_path(out_root, paths.rel(root, path))
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_text(dumps(compiled_artifact(remote)), encoding="utf-8",
                           newline="\n")
