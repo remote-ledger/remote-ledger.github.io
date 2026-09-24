@@ -102,10 +102,20 @@ def test_gate_2a_structural_vector_is_declared(name):
     implementation; 2b verifies the emitted Pronto bytes. 2a catches the
     16-versus-15 lead-in case D10 names; 2b catches the quantization layer."""
     entry = json.loads(VECTOR_INDEX.read_text())[name]
-    if entry.get("gate2a_structural_vector"):
-        assert "IRremoteESP8266" in entry["gate2a_structural_vector"]
-    else:
+    vector = entry.get("gate2a_structural_vector")
+    if not vector:
         assert len(entry.get("gate2a_pending_reason") or "") > 30
+        return
+    # A citation, not a shrug -- and one that says what KIND of evidence it
+    # is, because a published constant table and a hardware capture do not
+    # establish the same thing. A capture carries instrument bias, so it
+    # verifies ratios and layout rather than absolute durations.
+    assert len(vector) > 40, f"{name}: gate 2a citation is too thin"
+    assert "/" in vector, f"{name}: gate 2a citation names no source"
+    if "capture" in vector.lower():
+        assert "bias" in vector.lower() or "ratio" in vector.lower(), (
+            f"{name}: a capture-based vector must say what it cannot establish"
+        )
 
 
 def unverified_protocols() -> list[str]:
