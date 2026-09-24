@@ -439,8 +439,12 @@ separately.
 - **R15 — Validator: schema-valid, every key usable, no orphaned
   metadata.** Every file parses against the schema; every key resolves to
   at least one compilable form (R12); every `controls` entry is non-empty
-  or explicitly marked unknown. Two files claiming the same alias is a
-  conflict the validator surfaces, not silently allows.
+  or explicitly marked unknown. Two files of the same manufacturer claiming
+  the same model or alias is a conflict the validator surfaces, not
+  silently allows. The check is scoped to a manufacturer (v0.9) because a
+  model name is only unique within one maker's catalogue, as R1's
+  `<manufacturer>/<model>` path already says: Apple's "CD" remote and
+  Pioneer's are two remotes, not one name claimed twice.
 
 ## 9. Lookup experience
 

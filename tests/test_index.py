@@ -121,6 +121,24 @@ def test_a_model_colliding_with_another_files_alias_is_a_conflict(corpus):
     assert problems
 
 
+def test_the_same_name_under_two_manufacturers_is_no_conflict(corpus):
+    """R15 is scoped to a manufacturer (SPEC v0.9): two makers' ``CD``
+    remotes are two remotes, not one name claimed twice."""
+    root = corpus({
+        "a/a.json": _remote(manufacturer="Apple", model="CD", aliases=[]),
+        "b/b.json": _remote(manufacturer="Pioneer", model="CD", aliases=[]),
+    })
+    assert build_index(root)[1] == []
+
+
+def test_a_conflict_is_caught_whatever_the_case(corpus):
+    root = corpus({
+        "a/a.json": _remote(manufacturer="Sony", model="RM-1", aliases=[]),
+        "b/b.json": _remote(manufacturer="sony", model="rm-1", aliases=[]),
+    })
+    assert build_index(root)[1]
+
+
 def test_no_conflict_for_distinct_names(corpus):
     root = corpus({
         "a/a.json": _remote(model="RM-1", aliases=["RM-1a"]),

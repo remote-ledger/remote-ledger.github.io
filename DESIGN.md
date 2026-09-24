@@ -1739,7 +1739,7 @@ Applying the rule, in the phase that makes each true:
 | **~~4~~ done** | **SPEC §6, R10** — key names must match `^[A-Za-z_][A-Za-z0-9_]*$`. R11 leans on CSS grid for collision-checking, which holds only while every area name is a legal CSS identifier | D29 |
 | **~~4~~ done** | **SPEC §6, R8 / R10 — enforce what they already imply.** Every key in `printedLabels` and `shape` must resolve to a real key, and at most one layout may set `original: true`. R8 says "exactly one, if present" and R10 describes sibling maps; neither states the constraint as checkable | D14 |
 | **~~5~~ done** | **SPEC §11, R20** — reference `unresolved.json`; as written R20 has no mechanism behind it, and Phase 5 is where the mechanism lands | D12 |
-| **7 done** | **SPEC §3, §4, §2 and R19 (v0.9).** R19 now permits importing a database on five checkable conditions: the licence permits republishing, each form cites its origin, nothing lands above Plausible, authored data wins, and the import is regenerable. §4 names the sources that stay excluded, and why | D34–D40 |
+| **7 done** | **SPEC §3, §4, §2 and R19 (v0.9).** R19 now permits importing a database on five checkable conditions: the licence permits republishing, each form cites its origin, nothing lands above Plausible, authored data wins, and the import is regenerable. §4 names the sources that stay excluded, and why. **R15** is scoped to a manufacturer: the global model-name check was written against three files, and the import has 55 cross-maker pairs such as Apple's and Pioneer's `CD` | D34–D40, D13 |
 | **post-6 done** | **SPEC §1 and §5's tier table.** §1 stated the lookups' claims as if they were the ledger's contents, and its RMT-B118P row claimed Verified at subdevice 218. It now records the claims as claims, then what the ledger holds. Plausible now also covers a single capture that nothing cross-checks, which is how PR #8 tiered 11 keys: no existing tier fitted, and the data came before the definition | §13 |
 
 Decisions that are *not* spec edits, for contrast: D19's tree ownership,
@@ -1918,7 +1918,7 @@ note rather than a live contract.
 
 ## 12. Implementation status
 
-Phases 0-6 are implemented: 681 tests, `jsonschema` the only runtime
+Phases 0-6 are implemented: 683 tests, `jsonschema` the only runtime
 dependency. Phase 2 landed its nine SPEC edits *before* its code, per §9 --
 the spec change is what authorises the implementation. (That count is asserted by the suite itself -- see
 `test_documented_test_count_is_current` -- so it cannot drift the way the

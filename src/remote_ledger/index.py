@@ -86,14 +86,21 @@ def alias_conflicts(summaries: list[dict[str, Any]]) -> list[str]:
     aliases name the identical physical remote -- so a name claimed twice
     makes a lookup ambiguous in exactly the way this format exists to
     prevent.
+
+    **Within one manufacturer** (SPEC v0.9). A model name is only ever
+    unique inside a maker's own catalogue, as R1's ``<manufacturer>/<model>``
+    path already says: Apple's ``CD`` and Pioneer's ``CD`` are two remotes,
+    not one remote claimed twice. The global check was written against
+    three files and held; the LIRC import has 55 such pairs.
     """
-    claims: dict[str, list[str]] = {}
+    claims: dict[tuple[str, str], list[str]] = {}
     for summary in summaries:
+        maker = summary["manufacturer"].casefold()
         for name in {summary["model"], *summary["aliases"]}:
-            claims.setdefault(name.casefold(), []).append(summary["file"])
+            claims.setdefault((maker, name.casefold()), []).append(summary["file"])
     return [
-        f"{name!r} is claimed by {len(files)} files: {', '.join(sorted(files))}"
-        for name, files in sorted(claims.items())
+        f"{name!r} is claimed by {len(files)} {maker!r} files: {', '.join(sorted(files))}"
+        for (maker, name), files in sorted(claims.items())
         if len(files) > 1
     ]
 
