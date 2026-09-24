@@ -147,7 +147,6 @@ input[type=search] { width: 100%; padding: 11px 13px; font-size: 1rem;
 .confirmed { color: var(--confirmed); } .verified { color: var(--verified); }
 .plausible { color: var(--plausible); } .untested { color: var(--untested); }
 .derived { color: var(--derived); }
-.state { font-size: 0.8rem; color: var(--muted); }
 .key { border-top: 1px solid var(--line); padding: 10px 0 2px; }
 .key h3 { font-size: 0.9rem; margin: 0 0 6px; font-family: ui-monospace, monospace; }
 .cand { margin: 0 0 8px; padding-left: 12px; border-left: 2px solid var(--line); }
@@ -288,9 +287,7 @@ function open(i) {
 function renderUnresolved(u) {
   return `<article class="card unresolved"><h2>${esc(u.device)} ` +
     `<span class="badge plausible">checked, nothing found</span></h2>` +
-    `<p class="meta">checked ${esc(u.checked)} &middot; searched ` +
-    `${esc((u.searched||[]).join(', '))}</p>` +
-    (u.note ? `<p class="state">${esc(u.note)}</p>` : '') + `</article>`;
+    `<p class="meta">checked ${esc(u.checked)}</p></article>`;
 }
 
 function run() {

@@ -126,12 +126,10 @@ def keys_for(root: Path, matches: list[Match]) -> dict[str, Any]:
 
 def _render_unresolved(entry: dict[str, Any]) -> list[str]:
     """R20's middle state, stated out loud."""
-    lines = [f"{entry['device']}  [checked, nothing found]"]
-    lines.append(f"  checked   {entry['checked']}")
-    lines.append(f"  searched  {', '.join(entry['searched'])}")
-    if entry.get("note"):
-        lines.append(f"  blocked   {entry['note']}")
-    return lines
+    return [
+        f"{entry['device']}  [checked, nothing found]",
+        f"  checked   {entry['checked']}",
+    ]
 
 
 def render(

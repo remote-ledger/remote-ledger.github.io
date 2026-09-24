@@ -63,8 +63,7 @@ def test_state_two_checked_and_not_found(index):
     assert matches and matches[0].kind == "unresolved"
     out = render(matches, "Sony BDP-BX510")
     assert "[checked, nothing found]" in out
-    assert "searched" in out
-    assert "blocked" in out
+    assert "checked   2026-" in out
 
 
 def test_state_three_nobody_has_looked(index):

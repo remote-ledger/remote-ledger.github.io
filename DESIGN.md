@@ -1375,15 +1375,21 @@ remote" — but nothing in the per-remote schema can express a device that has
 *no* remote. A separate file holds them:
 
 ```json
-[{ "device": "Vizio D32h-J09", "checked": "2026-09-14",
-   "searched": ["IRDB", "LIRC remotes", "SmartIR"],
-   "note": "No capture found; remote is BLE, not IR." }]
+[{ "device": "Vizio D32h-J09", "checked": "2026-09-14" }]
 ```
 
 The index (D13) folds these in, so `rl lookup` and the site can say
-"checked, nothing found, here's when and where we looked" instead of
-falling through to the same blank as an unsearched device. Small addition,
-and R20 doesn't hold without it.
+"checked, nothing found, last checked on this date" instead of falling
+through to the same blank as an unsearched device. Small addition, and R20
+doesn't hold without it.
+
+An entry is a status, and the schema holds it to that: `device` and
+`checked`, nothing else. Earlier entries also carried the sources searched
+and a narrative of why each fell short. On the page those read as a case
+file where a reader wanted an answer, and each re-check grew the narrative
+instead of replacing it. The argument lives where it can be reviewed, in
+git history and in the prose that cites it (§13 for the BX510). Re-checking
+a device updates `checked` and nothing more.
 
 v0.1 put this file under `remotes/`, where it would have been swept up by
 the corpus glob and failed `remote.schema.json` — it's a top-level array,
@@ -1501,7 +1507,7 @@ distinction belongs in the schema, declared per field:
 | Class | Fields (v1) | Rule |
 |---|---|---|
 | **Semantic** — order carries meaning | `forms` (D7's final tie-break is literally array position), a layout's `areas` (row order *is* the geometry) | Never sorted, deduped, or "stabilized" by any generator or formatter. A blanket canonicalize-everything pass would break selection silently, which is the risk v0.6 was guarding against |
-| **Set-like** — order carries nothing | `aliases`, `controls`, `warnings` (D32), `expandedFrom.inherited` / `overridden`, `unresolved.json`'s `searched` | In a generated artifact, emitted in a declared canonical sort — required, since byte-stability has to come from somewhere. In a hand-authored file, left exactly as written; `rl fmt --sort` normalizes on request, never silently |
+| **Set-like** — order carries nothing | `aliases`, `controls`, `warnings` (D32), `expandedFrom.inherited` / `overridden` | In a generated artifact, emitted in a declared canonical sort — required, since byte-stability has to come from somewhere. In a hand-authored file, left exactly as written; `rl fmt --sort` normalizes on request, never silently |
 
 The classification is a schema annotation, not a convention: **every
 `"type": "array"` node carries `x-order` with the value `"semantic"` or
@@ -1999,8 +2005,8 @@ either.
 
 §1 cites hifi-remote.com's official Sony BD command table for the 218
 figure, and that table could not be retrieved. So this is a contradiction
-between sources rather than a settled error, and `unresolved.json` records
-it as one. What is *not* in doubt is the protocol and the function codes:
+between sources rather than a settled error, and the BX510 stays in
+`unresolved.json` until one source settles it. What is *not* in doubt is the protocol and the function codes:
 27 of 38 functions cross-check between the capture and IRDB with zero
 mismatches, which is the methodology §1 itself describes.
 

@@ -7,7 +7,7 @@ import pytest
 
 from remote_ledger.generators import PIPELINE, owned_paths, registered
 from remote_ledger.remote import load_remote
-from remote_ledger.validate import corpus_files, validate_file
+from remote_ledger.validate import corpus_files, schema_problems, validate_file
 
 ROOT = Path(__file__).resolve().parents[1]
 CORPUS = corpus_files(ROOT)
@@ -63,11 +63,11 @@ def test_every_seed_form_carries_a_citation(path):
 
 def test_unresolved_records_what_was_checked_and_not_found():
     """R20: a device checked and not found must read differently from one
-    nobody has looked at (D12)."""
+    nobody has looked at (D12). Each entry is a status -- the device and when
+    it was checked -- and the schema forbids carrying a history alongside."""
     entries = json.loads((ROOT / "unresolved.json").read_text())
     assert entries
-    for entry in entries:
-        assert entry["searched"] and entry["note"]
+    assert list(schema_problems(entries, "unresolved.schema.json", "unresolved.json")) == []
 
 
 def test_a_resolved_device_leaves_unresolved_json():
