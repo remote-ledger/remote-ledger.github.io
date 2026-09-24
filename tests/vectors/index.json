@@ -1,29 +1,69 @@
 {
   "NEC1": {
-    "gate1_irp_source": "IrpTransmogrifier IrpProtocols.xml (verbatim), corroborated by hifi-remote.com/johnsfine/DecodeIR.html",
+    "gate1_irp_source": "IrpTransmogrifier IrpProtocols.xml @c945e76 L1571 (verbatim, 38.4k), corroborated for every timing by hifi-remote.com/johnsfine/DecodeIR.html, which gives the carrier as 38.0k",
     "regression_snapshot": "nec1_topping_power.pronto",
     "snapshot_is_evidence": false,
     "gate2a_structural_vector": "crankyoldgit/IRremoteESP8266 (src/ir_Samsung.cpp, test/ir_NEC_test.cpp), retrieved 2026-09-19 -- see nec-family-timings.json and tests/test_vectors_structural.py",
     "gate2a_pending_reason": null,
-    "gate2b_golden_pronto": null,
-    "gate2b_pending_reason": "No published complete Pronto Hex string with stated parameters obtained. Gate 2a is met: a second, independent implementation's timing constants verify every structural choice, including the 16-versus-15 lead-in case D10 names. What remains unverified is the microsecond-to-Pronto quantization layer -- whose formula IS cited (remotecentral.com/features/irdisp2.htm) but whose rounding direction is open: that page's Sony word 0067 implies truncation where D6 rule 5 mandates round-half-up (0068)."
+    "gate2b_golden_pronto": "irpt_nec1_D12_F34.pronto",
+    "gate2b_pending_reason": null,
+    "gate2b_vector_source": "https://github.com/bengtmartensson/IrpTransmogrifier/blob/c945e7638355ca5697f458d33338ee1bfd4d1640/src/test/java/org/harctoolbox/irp/IrpTransmogrifierNGTest.java#L479-L481",
+    "gate2b_vector_params": {
+      "device": 12,
+      "subdevice": 243,
+      "function": 34,
+      "carrier_hz": 38400
+    },
+    "gate2b_vector_quantization": "irpt-nominal-carrier",
+    "gate2b_vector_provenance": "published",
+    "gate2b_byte_divergence": [
+      4,
+      71,
+      72,
+      75
+    ]
   },
   "Sony20": {
-    "gate1_irp_source": "hifi-remote.com/johnsfine/DecodeIR.html (verbatim IRP), independently corroborated by probonopd/irdb, which names Sony20 as the protocol for Sony Blu-ray players",
+    "gate1_irp_source": "hifi-remote.com/johnsfine/DecodeIR.html (verbatim IRP), matching IrpTransmogrifier IrpProtocols.xml @c945e76 L2599 in every timing ('*' where DecodeIR has '+'), and independently corroborated by probonopd/irdb, which names Sony20 as the protocol for Sony Blu-ray players",
     "regression_snapshot": null,
     "snapshot_is_evidence": false,
     "gate2a_structural_vector": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a 2015 hardware capture. Weaker than a published constant table: a measurement carries instrument bias, so it verifies ratios and field layout rather than absolute durations. See tests/test_vectors_structural.py",
     "gate2a_pending_reason": null,
-    "gate2b_golden_pronto": null,
-    "gate2b_pending_reason": "No published complete Pronto Hex string with stated parameters obtained. Gate 2a is met: a second, independent implementation's timing constants verify every structural choice, including the 16-versus-15 lead-in case D10 names. What remains unverified is the microsecond-to-Pronto quantization layer -- whose formula IS cited (remotecentral.com/features/irdisp2.htm) but whose rounding direction is open: that page's Sony word 0067 implies truncation where D6 rule 5 mandates round-half-up (0068)."
+    "gate2b_golden_pronto": "irpt_sony20_D12_S34_F56.pronto",
+    "gate2b_pending_reason": null,
+    "gate2b_vector_source": "https://github.com/bengtmartensson/IrpTransmogrifier/blob/705ce35406b1890575e0787fa59c1a758e1f87cb/src/main/java/org/harctoolbox/irp/Decoder.java#L48",
+    "gate2b_vector_params": {
+      "device": 12,
+      "subdevice": 34,
+      "function": 56,
+      "carrier_hz": 40000
+    },
+    "gate2b_vector_quantization": "irpt-nominal-carrier",
+    "gate2b_vector_provenance": "published",
+    "gate2b_byte_divergence": [
+      45
+    ]
   },
   "NECx2": {
-    "gate1_irp_source": "hifi-remote.com/johnsfine/DecodeIR.html (verbatim IRP), corroborated structurally by IRremoteESP8266's SAMSUNG implementation",
+    "gate1_irp_source": "hifi-remote.com/johnsfine/DecodeIR.html (verbatim IRP, 38.0k, '+'), corroborated structurally by IRremoteESP8266's SAMSUNG implementation; IrpTransmogrifier IrpProtocols.xml @c945e76 L1782 gives the same timings at 38.4k with '*'",
     "gate2a_structural_vector": "crankyoldgit/IRremoteESP8266 (src/ir_Samsung.cpp, test/ir_NEC_test.cpp), retrieved 2026-09-19 -- see nec-family-timings.json and tests/test_vectors_structural.py",
     "gate2a_pending_reason": null,
-    "gate2b_golden_pronto": null,
-    "gate2b_pending_reason": "No published complete Pronto Hex string with stated parameters obtained. Gate 2a is met: a second, independent implementation's timing constants verify every structural choice, including the 16-versus-15 lead-in case D10 names. What remains unverified is the microsecond-to-Pronto quantization layer -- whose formula IS cited (remotecentral.com/features/irdisp2.htm) but whose rounding direction is open: that page's Sony word 0067 implies truncation where D6 rule 5 mandates round-half-up (0068).",
+    "gate2b_golden_pronto": "irpt_necx2_D7_S7_F2.pronto",
+    "gate2b_pending_reason": null,
     "regression_snapshot": null,
-    "snapshot_is_evidence": false
+    "snapshot_is_evidence": false,
+    "gate2b_vector_source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "gate2b_vector_params": {
+      "device": 7,
+      "subdevice": 7,
+      "function": 2,
+      "carrier_hz": 38400
+    },
+    "gate2b_vector_quantization": "irpt-nominal-carrier",
+    "gate2b_vector_provenance": "reproducible",
+    "gate2b_vector_reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=7,S=7,F=2 -p necx2",
+    "gate2b_byte_divergence": [
+      71
+    ]
   }
 }

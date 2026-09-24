@@ -12,11 +12,12 @@ lookup and a static site, with CI gating the whole generated tree for drift
 
 Three protocols (NEC1, NECx2, Sony20) and **all three seed remotes
 authored** — the Sony with 27 of 38 functions cross-checked across two
-independent sources, zero mismatches. Every protocol's structure is now
-verified against an independent source; what remains unverified is the
-microsecond-to-Pronto quantization layer. DESIGN.md §12 says what is
-missing, and §13 records a contradiction the research turned up in the
-spec's own opening example.
+independent sources, zero mismatches. Every protocol's timings are
+verified against another encoder's Pronto output (NEC1 and Sony20 against
+published vectors, NECx2 against a pinned tool release). The bytes differ
+in a few words, by design, because the tools round microseconds to cycles
+differently. DESIGN.md §12 has the detail, and §13 records a contradiction
+the research turned up in the spec's own opening example.
 
 ## Why
 
