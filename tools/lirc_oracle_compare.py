@@ -10,8 +10,8 @@ in place, with one local patch to ``plugins/file.c``: after the final
 For every conf file this script
 
 1. runs ``irsimsend -U <build>/plugins/.libs -c <count> <file>`` from an
-   empty scratch directory, with a small ``LD_PRELOAD`` shim (compiled here
-   with ``cc``) that wraps ``puts`` -- which irsimsend uses to print each
+   empty scratch directory, with a small ``LD_PRELOAD`` shim (``SHIM_C``,
+   compiled here with ``cc``) that wraps ``puts`` -- which irsimsend uses to print each
    button name before sending it -- so that a ``#code <name>`` marker lands
    in ``simsend.out`` ahead of that button's output. That changes no output;
    it only makes the file splittable per button, including buttons whose
@@ -40,8 +40,16 @@ Exit status is 0 when there are no mismatches, 1 otherwise.
 The report counts: files, and how each ended (compared; rejected by both
 parsers; ...); buttons compared, split by what lircd emitted (timings,
 ``code N`` scancode lines, nothing because the send failed); exact matches;
-mismatches with the first differing line and both values; and, over the
-remote blocks both sides accepted, how many use each feature.
+mismatches with the first differing line and both values; over the remote
+blocks both sides accepted, how many use each feature; and how often each
+non-obvious send-path rule fired (the port's ``Lircd.trace``).
+
+Last full run, over lirc-remotes @ 291b40f436a4a17cc72b24c8eb411f6213ee88e5
+(2,815 ``*.conf`` files), ``-c 2``: 2,795 files compared, 19 with no remote
+block (lircmd configs) and 1 rejected by both (a JPEG named ``.conf``);
+124,498 buttons compared, 124,498 exact matches, 0 mismatches -- identically
+with ``--keep-min-repeat``; with ``--exit-on-eof`` 119,912 compared and
+matched, the other 4,586 never sent because irsimsend died first.
 """
 
 from __future__ import annotations
@@ -91,8 +99,9 @@ __attribute__((constructor)) static void maybe_ignore_sigusr1(void)
 }
 
 /* irsimsend prints each button name with printf("%s\n"), which gcc emits
- * as puts(). Write a marker to simsend.out first; file.c opens it O_APPEND,
- * so the marker lands exactly before that button's output. */
+ * as puts(). With LIRC_ORACLE_MARK set, write a marker to simsend.out first;
+ * file.c opens it O_APPEND, so the marker lands exactly before that button's
+ * output. */
 int puts(const char *s)
 {
 	static int (*real)(const char *);
@@ -100,6 +109,8 @@ int puts(const char *s)
 
 	if (!real)
 		real = (int (*)(const char *))dlsym(RTLD_NEXT, "puts");
+	if (!getenv("LIRC_ORACLE_MARK"))
+		return real(s);
 	fd = open("simsend.out", O_WRONLY | O_APPEND | O_CREAT, 0666);
 	if (fd >= 0) {
 		(void)!write(fd, "#code ", 6);
@@ -172,6 +183,7 @@ def run_oracle(conf: Path, build: Path, shim: Path, count: int, timeout: int,
         env = dict(os.environ)
         env["LD_LIBRARY_PATH"] = str(build / "lib" / ".libs")
         env["LD_PRELOAD"] = str(shim)
+        env["LIRC_ORACLE_MARK"] = "1"
         env.pop("LIRC_ORACLE_IGNORE_SIGUSR1", None)
         if not exit_on_eof:
             env["LIRC_ORACLE_IGNORE_SIGUSR1"] = "1"
@@ -387,6 +399,9 @@ def main(argv=None) -> int:
                        if p.is_file())
     if args.limit is not None:
         files = files[: args.limit]
+    # irsimsend runs from a scratch directory, so hand it absolute paths
+    # (which also resolves `include` relative to the right file).
+    files = [str(Path(f).resolve()) for f in files]
 
     with tempfile.TemporaryDirectory(prefix="lircshim-") as tmp:
         shim = build_shim(Path(tmp), Path(args.lirc_build))

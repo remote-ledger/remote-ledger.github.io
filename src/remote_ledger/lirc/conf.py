@@ -87,6 +87,7 @@ ALL_FLAGS: tuple[tuple[str, int], ...] = (
 
 LINE_LEN = 4096  # config_file.c:70
 MAX_INCLUDES = 10  # config_file.c:71
+_PATH_BUF = 256  # config_file.c:902: the include path buffer
 _WHITESPACE = re.compile(rb"[ \t]+")  # config_file.c:73: strtok on " \t" only
 
 U64 = (1 << 64) - 1
@@ -850,21 +851,38 @@ class _Parser:
     # -- include, config_file.c:752-915 ---------------------------------
     def _read_all_included(self, name: str | None, depth: int, val: bytes,
                            top: list[Remote] | None) -> list[Remote] | None:
-        inner = val[1:-1] if len(val) >= 1 else b""  # strips 1st and last byte
-        child = os.fsdecode(inner)
+        inner = val[1:-1]  # config_file.c:905-906 drops the 1st and last byte
         if name is None:
-            return top  # lirc_parse_relative leaves the glob buffer empty
-        if not child.startswith("/"):
-            child = os.path.join(os.path.dirname(name) or ".", child)
+            return top  # lirc_parse_relative returns the child, buff stays ""
+        # lirc_parse_relative (config_file.c:779-809) into char buff[256]
+        if inner.startswith(b"/"):
+            pattern = inner[:_PATH_BUF - 1]  # snprintf truncates
+        else:
+            current = os.fsencode(name)
+            if len(current) >= _PATH_BUF:
+                return top  # returns NULL; glob("") matches nothing
+            parent = os.path.dirname(current) or b"."
+            if len(parent) + 1 + len(inner) + 1 > _PATH_BUF:
+                # returns NULL with buff holding the directory: glob matches
+                # it, and reading a directory yields no remotes.
+                return top
+            pattern = parent + b"/" + inner
         # glob() sorts its matches (GLOB_NOSORT is not passed)
-        for match in sorted(_glob.glob(child)):
-            top = self._read_included(name, depth, match, top)
+        for match in sorted(_glob.glob(pattern)):
+            if len(match) + 2 > _PATH_BUF - 1:
+                # snprintf("\"%s\"") cuts the closing quote, and
+                # lirc_parse_include then rejects it: "invalid quoting"
+                self.warn("error parsing child file value: invalid quoting")
+                continue
+            top = self._read_included(name, depth, os.fsdecode(match), top)
         return top
 
     def _read_included(self, name, depth, child, top):
         if depth > MAX_INCLUDES:
             self.warn("too many files included")
             return top
+        if os.path.isdir(child):
+            return top  # fopen() succeeds, fgets() reads nothing: no remotes
         try:
             with open(child, "rb") as fh:
                 data = fh.read()
