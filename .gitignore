@@ -18,5 +18,10 @@ build/*
 !build/warnings.json
 !build/index.json
 
+# Claude Code's per-checkout permission allowlist. Session-local, not project
+# configuration: PR #8 committed one by accident.
+.claude/settings.json
+.claude/settings.local.json
+
 # Claude Code agent worktrees: separate checkouts, never content.
 .claude/worktrees/
