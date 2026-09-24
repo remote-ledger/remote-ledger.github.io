@@ -149,7 +149,18 @@ def load_remote(path: Path, *, expand_variants: bool = True) -> Remote:
     ever see candidate-tagged forms: one mechanism in the engine, one
     shorthand at the authoring layer (D17).
     """
-    doc = load(path)
+    return remote_from_doc(load(path), path, expand_variants=expand_variants)
+
+
+def remote_from_doc(
+    doc: dict[str, Any], path: Path, *, expand_variants: bool = True
+) -> Remote:
+    """:func:`load_remote` for a document already in memory.
+
+    The importer (D36) builds a candidate file and cross-checks it before
+    deciding what to write, so it needs the engine without a file on disk.
+    ``path`` is where the document would live; it only feeds ``where``.
+    """
     proto_raw = doc.get("protocol", {})
     protocol = Protocol(
         carrier_hz=proto_raw["carrierHz"],

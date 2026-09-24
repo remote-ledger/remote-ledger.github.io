@@ -380,6 +380,33 @@ def cmd_lookup(args: argparse.Namespace) -> int:
     return EXIT_OK
 
 
+def cmd_import(args: argparse.Namespace) -> int:
+    """SPEC R19 / DESIGN section 14: rewrite remotes/lirc/ from a checkout.
+
+    The commit is read from the checkout itself, and must match ``--commit``
+    when one is given, so every citation names the tree it was built from.
+    """
+    from .lirc.importer import IMPORT_ROOT, REPORT, write_import
+
+    checkout = Path(args.checkout)
+    try:
+        head = subprocess.run(
+            ["git", "-C", str(checkout), "rev-parse", "HEAD"],
+            check=True, capture_output=True, text=True,
+        ).stdout.strip()
+    except (OSError, subprocess.CalledProcessError) as exc:
+        raise ValidationError(f"{checkout} is not a git checkout: {exc}") from exc
+    if args.commit and not head.startswith(args.commit):
+        raise ValidationError(
+            f"{checkout} is at {head}, not the requested {args.commit}"
+        )
+    report = write_import(_repo_root(), checkout, head)
+    imported = sum(n for k, n in report.keys.items() if k.startswith("imported"))
+    print(f"{IMPORT_ROOT}/: {report.remotes['imported']:,} remotes, "
+          f"{imported:,} keys; see {IMPORT_ROOT}/{REPORT}")
+    return EXIT_OK
+
+
 def _unavailable(name: str, phase: int) -> int:
     print(
         f"`rl {name}` is not implemented until Phase {phase} "
@@ -483,6 +510,14 @@ def build_parser() -> argparse.ArgumentParser:
     )
     lu.add_argument("query", nargs="+")
     lu.set_defaults(func=cmd_lookup)
+
+    im = sub.add_parser(
+        "import", help="import an upstream database under SPEC R19", parents=[common]
+    )
+    im.add_argument("source", choices=["lirc"], help="the only source R19 admits")
+    im.add_argument("checkout", help="a git checkout of lirc-remotes")
+    im.add_argument("--commit", help="refuse unless the checkout is at this commit")
+    im.set_defaults(func=cmd_import)
 
     st = sub.add_parser("site", help="generate site/ (R17)", parents=[common])
     st.add_argument("--check", action="store_true", help="diff instead of write")

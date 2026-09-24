@@ -44,7 +44,7 @@ compares line for line.
 from __future__ import annotations
 
 from collections import Counter
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from typing import Iterable, Iterator
 
 from .conf import (
@@ -63,6 +63,7 @@ from .conf import (
     shl64,
 )
 from .errors import (
+    LircError,
     LircNoTimings,
     LircTerminated,
     LircTransmitError,
@@ -120,6 +121,20 @@ class _SendBuffer:
         self.pendingp = 0
         self.pendings = 0
         self.sum = 0
+
+    def snapshot(self) -> tuple:
+        """Everything a later send can observe, with ``data``'s aliasing of
+        ``_data`` kept as a flag rather than as a shared list."""
+        aliased = self.data is self._data
+        return (list(self._data), aliased, None if aliased else self.data,
+                self.wptr, self.too_long, self.is_biphase, self.pendingp,
+                self.pendings, self.sum)
+
+    def restore(self, snap: tuple) -> None:
+        (data, aliased, other, self.wptr, self.too_long, self.is_biphase,
+         self.pendingp, self.pendings, self.sum) = snap
+        self._data = list(data)
+        self.data = self._data if aliased else other
 
     def read(self, i: int) -> int:
         """``send_buffer.data[i]``, refusing reads C would get wrong."""
@@ -698,6 +713,61 @@ class IrSimSend:
                     return
 
 
+def transmit_each(
+    remote: Remote, sends: int = 2
+) -> Iterator[tuple[IrCode, list[tuple[int, ...]] | LircError]]:
+    """:func:`transmit` for every button of one remote, in order.
+
+    Each button gets exactly what a fresh :func:`transmit` call would give
+    it: every one starts from the state lircd is in straight after loading
+    the file, so no button's waveform depends on which was sent before it.
+    The difference is cost. Loading replays ``calculate_signal_lengths``
+    over *every* button, so a fresh session per button made a remote
+    quadratic in its size. Here that replay runs once, and its state is
+    snapshotted and restored before each button. Where :func:`transmit`
+    would raise, the exception is yielded in place of the durations.
+    """
+    if remote.is_grundig() or remote.is_bo() or remote.is_serial():
+        exc = LircUnsupportedProtocol(
+            f"{remote.name}: lircd cannot send "
+            f"{'GRUNDIG' if remote.is_grundig() else 'BO' if remote.is_bo() else 'SERIAL'}"
+            " (transmit.c:389-393)")
+        for code in remote.codes or ():
+            yield code, exc
+        return
+    session = IrSimSend(LircConfig(path=remote.path, remotes=[remote],
+                                   file_order=[remote]), count=sends)
+    lircd = session.lircd
+    fresh_state = replace(lircd.state(remote))
+    fresh_buf = lircd.buf.snapshot()
+    fresh_repeat = lircd.repeat_remote
+    for code in remote.codes or ():
+        lircd.buf.restore(fresh_buf)
+        lircd._state[remote] = replace(fresh_state)
+        lircd._transmit_state.clear()
+        lircd.repeat_remote = fresh_repeat
+        session.last_code = b""
+        session.terminated = False
+        try:
+            yield code, _durations(session.send_code(remote, code))
+        except LircError as exc:
+            yield code, exc
+
+
+def _durations(results: list[SendResult]) -> list[tuple[int, ...]]:
+    out: list[tuple[int, ...]] = []
+    for i, res in enumerate(results):
+        if res.kind == "code":
+            raise LircNoTimings(res.code)
+        if res.kind == "failed":
+            raise LircTransmitError(res.reason, send_index=i)
+        if res.terminated:
+            raise LircTerminated(
+                f"send {i}: a value with the LIRC_EOF bit set ends irsimsend")
+        out.append(res.durations)
+    return out
+
+
 def transmit(remote: Remote, code: str | IrCode, sends: int = 2) -> list[tuple[int, ...]]:
     """The durations lircd transmits for one press of one button.
 
@@ -723,14 +793,4 @@ def transmit(remote: Remote, code: str | IrCode, sends: int = 2) -> list[tuple[i
             " (transmit.c:389-393)")
     session = IrSimSend(LircConfig(path=remote.path, remotes=[remote],
                                    file_order=[remote]), count=sends)
-    out: list[tuple[int, ...]] = []
-    for i, res in enumerate(session.send_code(remote, code)):
-        if res.kind == "code":
-            raise LircNoTimings(res.code)
-        if res.kind == "failed":
-            raise LircTransmitError(res.reason, send_index=i)
-        if res.terminated:
-            raise LircTerminated(
-                f"send {i}: a value with the LIRC_EOF bit set ends irsimsend")
-        out.append(res.durations)
-    return out
+    return _durations(session.send_code(remote, code))
