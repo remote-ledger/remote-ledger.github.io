@@ -81,7 +81,8 @@ def test_untested_alternates_are_counted(corpus):
                                  "override": {"subdevice": "0xEA"}}}
     root = corpus({"t/a.json": doc})
     summary = build_index(root)[0]["remotes"][0]
-    assert summary["unresolvedAlternates"] == 1
+    # One open alternate per key the variant expanded into, not one per file.
+    assert summary["unresolvedAlternates"] == len(doc["keys"]) > 1
     assert summary["keys"]["KEY_POWER"]["candidates"]["mode2"]["label"] == "mode2"
 
 

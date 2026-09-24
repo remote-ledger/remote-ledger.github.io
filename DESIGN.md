@@ -1872,12 +1872,15 @@ note rather than a live contract.
 
 ## 12. Implementation status
 
-Phases 0-6 are implemented: 477 tests, `jsonschema` the only runtime
+Phases 0-6 are implemented: 478 tests, `jsonschema` the only runtime
 dependency. Phase 2 landed its nine SPEC edits *before* its code, per §9 --
 the spec change is what authorises the implementation. (That count is asserted by the suite itself -- see
 `test_documented_test_count_is_current` -- so it cannot drift the way the
-three stale "148" figures did.) `rl encode --protocol NEC1 --device 0x11 --subdevice 0xEE
---function 0x18 --carrier 38000` emits the Topping RC-15A Power key.
+three stale "148" figures did.) `rl encode --protocol NEC1 --device 0x88 --subdevice 0x77
+--function 0x18 --carrier 38000` emits the Topping RC-15A Power key. Until
+the RC-15A was corrected this read `0x11 / 0xEE`: the capture's MSB-first
+digits, transcribed without reversing, which the NEC complement check cannot
+catch (SPEC §1).
 
 **Everything D6 predicted, confirmed by running it.** The frequency words
 (`38000 → 006D`, `40000 → 0068`, `38400 → 006C`), the period

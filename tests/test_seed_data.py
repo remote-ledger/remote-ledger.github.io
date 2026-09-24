@@ -128,3 +128,32 @@ def test_the_samsung_is_authored_at_an_honest_tier():
             assert form.confidence == "plausible", key
             assert "irdb" in (form.source or "").lower()
             assert form.device == form.subdevice == 7  # NECx2 has S = D
+
+
+def _reverse_bits(byte: int) -> int:
+    return int(f"{byte:08b}"[::-1], 2)
+
+
+def test_the_topping_is_the_capture_read_lsb_first():
+    """The RC-15A's first entry transcribed IRremoteESP8266's MSB-first dump
+    (0x11EE18E7) straight into NEC1's LSB-first fields, giving device 0x11
+    where the remote sends 0x88. The complement check could not see it:
+    reversing the bits of a byte and of its complement leaves a complement
+    pair. So each form is re-derived here from the value its own citation
+    quotes. Forms citing Tasmota's LSB-first `DataLSB` are read as written."""
+    import re
+
+    remote = load_remote(ROOT / "remotes" / "topping" / "RC-15A.json")
+    assert len(remote.keys) == 13
+    for key, forms in remote.keys.items():
+        (form,) = forms
+        src = form.source or ""
+        if m := re.search(r"'[^']+ 0X([0-9A-F]{8})'", src):
+            quoted = [int(m[1][i:i + 2], 16) for i in (0, 2, 4, 6)]
+            d, s, f, nf = (_reverse_bits(b) for b in quoted)
+        else:
+            m = re.search(r'DataLSB\\?":\\?"0x([0-9A-F]{8})', src)
+            assert m, f"{key}: cites no value it can be re-derived from"
+            d, s, f, nf = (int(m[1][i:i + 2], 16) for i in (0, 2, 4, 6))
+        assert (form.device, form.subdevice, form.function) == (d, s, f), key
+        assert d ^ s == f ^ nf == 0xFF, key

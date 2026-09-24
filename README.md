@@ -44,10 +44,10 @@ confidence tier and citation:
       "forms": [
         {
           "type": "irp",
-          "device": "0x11", "subdevice": "0xEE", "function": "0x18",
+          "device": "0x88", "subdevice": "0x77", "function": "0x18",
           "confidence": "verified",
-          "verifiedBy": "nec-complement-check",
-          "source": "audiosciencereview.com/.../10708 (user halfSpinDoctor)"
+          "verifiedBy": "nec1-cross-source-check",
+          "source": "audiosciencereview.com/.../10708/post-639756 (capture), cross-checked against Flipper-IRDB"
         }
       ]
     }
@@ -69,9 +69,9 @@ coordinate system.
 
 ```console
 $ pip install -e ".[dev]"
-$ rl encode --protocol NEC1 --device 0x11 --subdevice 0xEE \
+$ rl encode --protocol NEC1 --device 0x88 --subdevice 0x77 \
       --function 0x18 --carrier 38000
-0000 006D 0022 0002 0157 00AC 0015 0040 0015 0015 ...
+0000 006D 0022 0002 0157 00AC 0015 0015 0015 0015 ...
 
 $ pytest
 $ rl lookup "DX3 Pro"      # offline lookup, R20's three states
