@@ -24,9 +24,14 @@ under `remotes/lirc/`, republished under GPL-2.0-or-later; and SmartIR's
 `media_player`/`fan` codes, 62 remotes and 914 keys under
 `remotes/smartir/`, republished under MIT (DESIGN.md §15 — `climate` and
 `light` are state matrices, not buttons, and stay out of scope for now).
-Every imported key is Plausible and cites its upstream file and line (SPEC
-R19). Authored remotes stay the three above, each checked against
+Every imported key is Plausible and cites its upstream file and location
+(SPEC R19). Authored remotes stay the three above, each checked against
 independent sources.
+
+**More sources are coming.** Coverage grows from any database whose
+licence permits republishing it. Each one gets its own `remotes/<source>/`
+directory and must meet R19's five conditions. LIRC and SmartIR are the
+first two.
 
 ## Why
 
