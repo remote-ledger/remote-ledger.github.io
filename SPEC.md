@@ -74,9 +74,9 @@ formats that each grew to own one layer of the problem.
 |---|---|---|
 | Protocol | **IRP notation** | A small formal grammar for describing a protocol — Sony12, Sony20, NEC1 — as parameters, timing, and checksum in one line. Maintained on the JP1/hifi-remote wiki; `IrpTransmogrifier` is the actively-developed reference implementation. Closest thing to an actual standard in this space. |
 | Waveform | **Pronto Hex** | Philips' proprietary format for a Pronto remote's learned/generated codes, adopted everywhere as the raw interchange format because it needs no protocol decoder — just carrier frequency and burst-pair timings. The compiled output this project produces. |
-| Remote file | **LIRC's `lircd.conf`** | The de facto standard remote-configuration file, and the shape of most public captures in the wild. The one database R19 admits for import, and otherwise a common authoring source, not a dependency. |
-| By address | **IRDB** ([probonopd/irdb](https://github.com/probonopd/irdb)) | A large crowd-sourced code database, organized `<manufacturer>/<devicetype>/<device>,<subdevice>.csv` — by *protocol address*, not model name. |
-| By model | **SmartIR** ([smartHomeHub/SmartIR](https://github.com/smartHomeHub/SmartIR)) | Each JSON file carries an explicit `manufacturer` and a `supportedModels` array. Closest existing prior art to Remote Ledger's shape — but no confidence tier, no citation field, one code per function, not several coexisting ones. |
+| Remote file | **LIRC's `lircd.conf`** | The de facto standard remote-configuration file, and the shape of most public captures in the wild. One of the two databases R19 admits for import (DESIGN §14), and otherwise a common authoring source, not a dependency. |
+| By address | **IRDB** ([probonopd/irdb](https://github.com/probonopd/irdb)) | A large crowd-sourced code database, organized `<manufacturer>/<devicetype>/<device>,<subdevice>.csv` — by *protocol address*, not model name. Its licence is conditional and revocable, so R19 does not admit it (§4). |
+| By model | **SmartIR** ([smartHomeHub/SmartIR](https://github.com/smartHomeHub/SmartIR)) | Each JSON file carries an explicit `manufacturer` and a `supportedModels` array. Closest existing prior art to Remote Ledger's shape — but no confidence tier, no citation field, one code per function, not several coexisting ones. MIT-licensed; the other database R19 admits (DESIGN §15, `media_player`/`fan` only). |
 | Layout | **CSS Grid's `grid-template-areas`** | A named cell per line, `.` for a gap, spans by repeating a name — an already-standardized grammar, not a bespoke one. See §6. |
 
 **What that means here:** IRDB dedupes by address and loses the retail model
@@ -123,8 +123,10 @@ index — but adds the citation and multi-form structure neither one has.
   that way.
 - Importing any source whose licence does not permit republishing it here.
   That rules out IRDB's conditional, revocable permission, Flipper-IRDB
-  files from before its CC0 cutoff, Global Caché and Remote Central. The one
-  source R19 admits is LIRC's remotes database.
+  files from before its CC0 cutoff, Global Caché and Remote Central. As of
+  v0.9, R19 admits any source meeting its five conditions (§5); LIRC's
+  remotes database and SmartIR's `media_player`/`fan` codes are the two
+  that currently do.
 
 ## 5. Data model
 

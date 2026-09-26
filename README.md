@@ -20,9 +20,12 @@ differently. DESIGN.md §12 has the detail, and §13 records a contradiction
 the research turned up in the spec's own opening example.
 
 **Imported:** the LIRC remotes database, 3,139 remotes and 112,846 keys
-under `remotes/lirc/`. It is republished under GPL-2.0-or-later, and every
-key is Plausible and cites its upstream file and line (SPEC R19, DESIGN
-§14). Authored remotes stay the three above, each checked against
+under `remotes/lirc/`, republished under GPL-2.0-or-later; and SmartIR's
+`media_player`/`fan` codes, 62 remotes and 914 keys under
+`remotes/smartir/`, republished under MIT (DESIGN.md §15 — `climate` and
+`light` are state matrices, not buttons, and stay out of scope for now).
+Every imported key is Plausible and cites its upstream file and line (SPEC
+R19). Authored remotes stay the three above, each checked against
 independent sources.
 
 ## Why

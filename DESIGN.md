@@ -1927,7 +1927,7 @@ note rather than a live contract.
 
 ## 12. Implementation status
 
-Phases 0-6 are implemented: 694 tests, `jsonschema` the only runtime
+Phases 0-6 are implemented: 849 tests, `jsonschema` the only runtime
 dependency. Phase 2 landed its nine SPEC edits *before* its code, per §9 --
 the spec change is what authorises the implementation. (That count is asserted by the suite itself -- see
 `test_documented_test_count_is_current` -- so it cannot drift the way the
@@ -2191,4 +2191,157 @@ the files' shapes change.
   is 1 MB.
 - **Speed:** `rl build` takes 3.5 minutes. Pytest parametrizes only over
   authored files, and one scan checks R19 across the imported ones.
+
+---
+
+## 15. Importing SmartIR
+
+R19 (v0.9) admits any source meeting its five conditions, not only LIRC.
+SmartIR (`smartHomeHub/SmartIR`) is the second: its own prior-art entry
+(SPEC §2) already called it "closest existing prior art to Remote Ledger's
+shape", and unlike IRDB, Flipper-IRDB's pre-CC0 files, Global Caché and
+Remote Central, its licence -- MIT, confirmed live against GitHub's
+license API, not assumed -- actually permits republishing (R19.1).
+
+**D41 — Scope is two categories, one controller.** Serves R19.1, R19.5.
+SmartIR's `codes/` has four categories. `climate` (358 files) and `light`
+(5) each describe a *state matrix* -- mode × fan speed × temperature, or
+brightness × colour temperature, sometimes hundreds of states in one file
+-- not a physical remote's buttons; mapping that onto this schema's `keys`
+would be a real semantic stretch, not a mechanical one, so both are out of
+scope for v1 and reported as such, per file, in `IMPORT.md`, the same
+non-silent standard D36.3 set for LIRC. `media_player` (56) and `fan` (17)
+are genuinely button-shaped and are what this import covers.
+
+Within those two, only `supportedController: "Broadlink"` profiles are
+decoded (`Base64` or `Pronto` encoding); every other controller (`Xiaomi`,
+`ESPHome`, `LOOKin`, `MQTT`) is a different, unrelated wire format and is
+skipped and reported, not guessed at.
+
+**D42 — A Broadlink packet is arithmetic, not protocol emulation.** Serves
+R19.2. Unlike an lircd.conf block, a Broadlink capture (`Base64`) carries
+no symbolic bit semantics to decode -- it is already an undifferentiated
+mark/space pulse train, base64-encoded: a one-byte type (`0x26` for IR), a
+repeat count, a little-endian payload length, then the durations
+themselves, each one byte (~32.84 us/tick) unless that byte is `0x00`, in
+which case the next two bytes (big-endian) hold the value. So there is no
+analog of `lirc/transmit.py`'s lircd port here -- decoding is
+`src/remote_ledger/smartir/broadlink.py`, about seventy lines, and the
+oracle is different in kind too: not a compiled reference binary, but the
+community `broadlink` PyPI package's own `data_to_pulses` (MIT-licensed),
+the closest thing this format has to a reference decoder.
+`tools/smartir_oracle_compare.py` runs both over a live checkout; last run
+(SmartIR @ `e4df295`), 966 `Broadlink`/`Base64` commands compared across
+`media_player` and `fan`, 0 mismatches. A `Pronto`-encoded command is
+simply passed through verbatim as a `pronto` form -- SmartIR already
+stores it in this project's own wire format.
+
+No IRP (NEC1/Sony20/...) detection is attempted from the decoded timings.
+D36.1 works because lircd's config already carries `pre_data`/`code`/
+`post_data` bit widths to decode; a Broadlink capture has none of that, so
+recovering protocol parameters from raw timings is a real pattern-
+recognition problem, not a mechanical decode, and stays out of scope.
+Every SmartIR-imported key gets a `raw` form, or `pronto` for the one
+verbatim-Pronto file -- never `irp`.
+
+A Broadlink `Base64` capture is protocol-blind: it records no carrier and
+no repeat count, so both are defaulted -- 38 kHz, 1 send -- and every
+citation says so, the same pattern D38 uses for LIRC's own defaulted
+carrier. A `Pronto` command is different: its own hex already declares a
+carrier (word 1), so that word is read, not defaulted, via
+`pronto.decode`'s own word-based comparison (D8) -- guessing 38 kHz for a
+36 or 40 kHz Pronto profile would reject every one of its buttons outright.
+`minSends` still defaults to 1 either way, since neither encoding records
+a repeat count.
+
+An odd-length Broadlink decode has no recorded trailing gap. Marking it
+`truncated: true` would need a `defaultGapUs` claim to substitute one
+(D4a), and this import has no source for that value -- inventing one would
+be exactly the guess R19 exists to forbid -- so such a command is skipped
+and reported instead, on the same footing as one that fails to decode at
+all. It fired for none of the real import's 914 keys, only exercised by a
+synthetic test vector.
+
+**D43 — Names: SmartIR has no remote, only a device and a catalog id.**
+Serves R1, R2, R10. A LIRC file names an actual remote (D37); a SmartIR
+profile names none at all -- only a manufacturer, the device model(s) it
+controls (`supportedModels`), and its own catalog id
+(`codes/media_player/1000.json`). R2 requires `model` to identify the
+remote, not the device, so inventing a plausible-looking remote model
+would be a guess this project's whole ethos argues against. Instead:
+
+- **`model`** is a synthetic designation built from the category and
+  catalog id: `"SmartIR media_player 1000"`.
+- **`controls`** holds the real `supportedModels` list, where R2 already
+  says controlled products belong.
+- **`manufacturer`** and the directory it's written under keep SmartIR's
+  own casing (`Philips`, not `philips`) -- there is no rule to lowercase
+  it by, so none is invented.
+- **Key names** come from the command's path in the `commands` tree
+  (dotted for a nested group, e.g. `fan`'s `forward`/`reverse` × speed, or
+  `media_player`'s `sources` map): non-identifier characters fold to `_`,
+  the whole name upper-cases, and it's `KEY_`-prefixed. camelCase is left
+  as spelled (`volumeUp` → `KEY_VOLUMEUP`), matching how the rest of the
+  corpus already spells that button, rather than splitting it (which
+  would give `KEY_VOLUME_UP`, a plausible-looking but invented split).
+- **A command upstream lists as several redundant captures of the same
+  button** (a JSON array, not a string) imports only the first; the
+  citation records how many there were, the same "first wins" rule D37
+  uses for a LIRC duplicate name, applied at the command level here since
+  SmartIR's duplication is within one button, not across two.
+
+**D44 — A citation says where, and how.** Serves R19.2, R18. Each form's
+`source` has one compact, fixed shape:
+
+```
+smartir@e4df295 codes/media_player/1000.json#off (SmartIR profile 1000,
+Philips): broadlink IR packet, base64-decoded
+```
+
+`<how>` is one of two phrases: `broadlink IR packet, base64-decoded`, or
+`broadlink pronto capture, upstream-provided verbatim`. Unlike D35's LIRC
+citation, there is no `(contributed by <name>)` clause -- SmartIR's
+`commands` tree carries no per-code attribution the way an lircd.conf
+header does, so nothing is invented there either; attribution for the
+whole database lives at `remotes/smartir/README.md` and `LICENSE`, as MIT
+requires.
+
+**D45 — Authored data wins; the import is a regenerable cache.** Serves
+R19.4, R19.5. `rl import smartir <checkout>` rewrites `remotes/smartir/`
+wholesale, exactly as D39 describes for LIRC: the same checkout and commit
+reproduce it byte for byte, an upstream profile colliding with any file
+outside `remotes/smartir/` (by manufacturer and model or alias,
+case-insensitive) is skipped and reported, and only `*.json` and
+`IMPORT.md` are the importer's -- `README.md` and `LICENSE` are authored
+and left alone. `authored_names()` and the compile-gate pair
+(`probe`/`form_compiles`) are shared with the LIRC importer verbatim,
+factored into `src/remote_ledger/import_common.py` once this import needed
+them too; nothing about either depends on the upstream format.
+`src/remote_ledger/paths.py`'s `IMPORTS` registry (D40) gained a
+`remotes/smartir/` entry alongside LIRC's, so the index and site label a
+SmartIR remote as imported, under MIT, rather than falling through to
+"authored" for want of a registered prefix.
+
+*Open point, not fixed here:* D43's synthetic model names mean R19.4's
+collision check almost never fires for SmartIR -- an authored remote and
+an imported profile would only collide by coincidence, since nothing
+upstream names a real remote to collide on. The devices they agree about
+live in each side's `controls`, which the check does not compare. Deciding
+whether it should -- and how to resolve an authored remote and an imported
+profile that both claim the same controlled device -- is left as a
+follow-up, not guessed at here.
+
+**The result, first import** (SmartIR @ `e4df295`, recorded in
+`remotes/smartir/IMPORT.md`):
+
+- **Imported:** 62 remotes from 73 upstream files (56 `media_player`, 17
+  `fan`), 914 keys. Of those, 904 are `raw`, 10 `pronto`.
+- **Reported, not imported:** 357 `climate` files and 5 `light` files
+  (out of scope, D41); 4 files on a non-`Broadlink` controller; 1 file not
+  valid JSON; 6 files where every button failed to decode or compile; 62
+  individual buttons across the remaining files -- malformed base64,
+  declared lengths longer than what followed, and codes carrying a type
+  byte other than `0x26` (community-contributed data this project
+  declines to guess the format of, D42). Zero authored-data collisions:
+  nothing already curated overlaps SmartIR's synthetic model names.
 

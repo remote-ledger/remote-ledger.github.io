@@ -26,12 +26,11 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Iterable
 
-from ..crosscheck import check_key
 from ..encoding import CSS_IDENT
-from ..errors import LedgerError
 from ..fmt import format_document
-from ..remote import remote_from_doc
-from ..serialize import dumps, load
+from ..import_common import authored_names as _authored_names
+from ..import_common import form_compiles
+from ..serialize import dumps
 from .conf import IrCode, Remote as LircRemote, parse_file
 from .errors import (
     LircConfigError,
@@ -288,32 +287,15 @@ def _raw_form(first, second) -> dict[str, Any]:
 
 def _probe(protocol: dict[str, Any], key: str, forms: list[dict[str, Any]]):
     """Load a one-key remote in memory and cross-check it (R13)."""
-    doc = {"manufacturer": "probe", "model": "probe", "protocol": protocol,
-           "keys": {key: {"forms": forms}}}
-    remote = remote_from_doc(doc, Path(IMPORT_ROOT) / "probe.json")
-    mismatches, _ = check_key(remote, key)
-    return remote, mismatches
+    from ..import_common import probe
 
-
-#: remote.schema.json's bounds on a raw sequence.
-RAW_ITEM_MAX, RAW_LEN_MAX = 1_000_000, 2048
+    return probe(IMPORT_ROOT, protocol, key, forms)
 
 
 def _compiles(protocol: dict[str, Any], key: str, form: dict[str, Any]) -> str | None:
     """None if the form is schema-legal and compiles to Pronto, else why
     not (the schema's raw bounds, then D28's)."""
-    for name in ("intro", "repeat"):
-        seq = form.get(name) or []
-        if len(seq) > RAW_LEN_MAX:
-            return f"{name} has {len(seq)} durations; the schema allows {RAW_LEN_MAX}"
-        if any(not 1 <= d <= RAW_ITEM_MAX for d in seq):
-            return f"{name} holds a duration outside 1-{RAW_ITEM_MAX} us"
-    try:
-        remote, _ = _probe(protocol, key, [form])
-        remote.compile_group(key, "primary")
-    except (LedgerError, ValueError) as exc:
-        return str(exc)
-    return None
+    return form_compiles(IMPORT_ROOT, protocol, key, form)
 
 
 def import_block(
@@ -432,18 +414,7 @@ def import_block(
 def authored_names(root: Path) -> dict[tuple[str, str], str]:
     """(manufacturer, model-or-alias), casefolded, for every file outside
     the import root -- the names an import must never shadow (R19.4)."""
-    from ..validate import corpus_files
-
-    names: dict[tuple[str, str], str] = {}
-    for path in corpus_files(root):
-        rel = path.relative_to(root).as_posix()
-        if rel.startswith(IMPORT_ROOT + "/"):
-            continue
-        doc = load(path)
-        maker = doc["manufacturer"].casefold()
-        for name in [doc["model"], *(doc.get("aliases") or [])]:
-            names[(maker, name.casefold())] = rel
-    return names
+    return _authored_names(root, IMPORT_ROOT)
 
 
 def _naming(stem: str, block: str | None, several: bool) -> tuple[str, str]:

@@ -23,6 +23,11 @@ IMPORTS: dict[str, dict[str, str]] = {
         "licence": "GPL-2.0-or-later",
         "readme": "remotes/lirc/README.md",
     },
+    "remotes/smartir/": {
+        "name": "SmartIR codes database",
+        "licence": "MIT",
+        "readme": "remotes/smartir/README.md",
+    },
 }
 
 
