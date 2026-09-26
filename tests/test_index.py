@@ -92,7 +92,11 @@ def test_untested_alternates_are_counted(corpus):
 def test_the_index_is_a_summary_that_names_each_artifact(corpus):
     """D40: nothing per key, so no committed index grows with the corpus;
     the per-key detail is in the artifact the summary points at."""
-    root = corpus({"t/a.json": _remote(), "lirc/t/b.json": _remote(model="B")})
+    root = corpus({
+        "t/a.json": _remote(),
+        "lirc/t/b.json": _remote(model="B"),
+        "smartir/t/c.json": _remote(model="C"),
+    })
     remotes = build_index(root)[0]["remotes"]
     for summary in remotes:
         assert "keys" not in summary
@@ -100,6 +104,7 @@ def test_the_index_is_a_summary_that_names_each_artifact(corpus):
     by_file = {s["file"]: s for s in remotes}
     assert "importedFrom" not in by_file["remotes/t/a.json"]
     assert by_file["remotes/lirc/t/b.json"]["importedFrom"] == "remotes/lirc/"
+    assert by_file["remotes/smartir/t/c.json"]["importedFrom"] == "remotes/smartir/"
 
 
 def test_alias_conflicts_are_surfaced(corpus):

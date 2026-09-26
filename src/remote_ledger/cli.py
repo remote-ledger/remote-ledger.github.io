@@ -381,12 +381,16 @@ def cmd_lookup(args: argparse.Namespace) -> int:
 
 
 def cmd_import(args: argparse.Namespace) -> int:
-    """SPEC R19 / DESIGN section 14: rewrite remotes/lirc/ from a checkout.
+    """SPEC R19 / DESIGN sections 14-15: rewrite remotes/<source>/ from a
+    checkout.
 
     The commit is read from the checkout itself, and must match ``--commit``
     when one is given, so every citation names the tree it was built from.
     """
-    from .lirc.importer import IMPORT_ROOT, REPORT, write_import
+    from .lirc import importer as lirc_importer
+    from .smartir import importer as smartir_importer
+
+    module = {"lirc": lirc_importer, "smartir": smartir_importer}[args.source]
 
     checkout = Path(args.checkout)
     try:
@@ -400,10 +404,10 @@ def cmd_import(args: argparse.Namespace) -> int:
         raise ValidationError(
             f"{checkout} is at {head}, not the requested {args.commit}"
         )
-    report = write_import(_repo_root(), checkout, head)
+    report = module.write_import(_repo_root(), checkout, head)
     imported = sum(n for k, n in report.keys.items() if k.startswith("imported"))
-    print(f"{IMPORT_ROOT}/: {report.remotes['imported']:,} remotes, "
-          f"{imported:,} keys; see {IMPORT_ROOT}/{REPORT}")
+    print(f"{module.IMPORT_ROOT}/: {report.remotes['imported']:,} remotes, "
+          f"{imported:,} keys; see {module.IMPORT_ROOT}/{module.REPORT}")
     return EXIT_OK
 
 
@@ -514,8 +518,9 @@ def build_parser() -> argparse.ArgumentParser:
     im = sub.add_parser(
         "import", help="import an upstream database under SPEC R19", parents=[common]
     )
-    im.add_argument("source", choices=["lirc"], help="the only source R19 admits")
-    im.add_argument("checkout", help="a git checkout of lirc-remotes")
+    im.add_argument("source", choices=["lirc", "smartir"],
+                     help="a source meeting SPEC R19's five conditions")
+    im.add_argument("checkout", help="a git checkout of the upstream source")
     im.add_argument("--commit", help="refuse unless the checkout is at this commit")
     im.set_defaults(func=cmd_import)
 
