@@ -1711,6 +1711,13 @@ this design; the lircd transmit port, verified against lircd itself (D36);
 index and site sharding, so the ledger scales past one page (D40); then
 the data.
 
+**Phase 8, post-v1: more sources.** SmartIR followed as the second import
+(§15, PR #21). SPEC v0.10 makes that the standing direction rather than an
+exception: every database whose licence permits republishing is a
+candidate. Each lands the way SmartIR did, as its own §-numbered design
+section, an importer, and a registered `remotes/<source>/` directory. The
+SPEC needs no edit to admit it.
+
 ---
 
 ## 9. Edits to the existing docs — scheduled, not deferred
@@ -1749,6 +1756,7 @@ Applying the rule, in the phase that makes each true:
 | **~~4~~ done** | **SPEC §6, R8 / R10 — enforce what they already imply.** Every key in `printedLabels` and `shape` must resolve to a real key, and at most one layout may set `original: true`. R8 says "exactly one, if present" and R10 describes sibling maps; neither states the constraint as checkable | D14 |
 | **~~5~~ done** | **SPEC §11, R20** — reference `unresolved.json`; as written R20 has no mechanism behind it, and Phase 5 is where the mechanism lands | D12 |
 | **7 done** | **SPEC §3, §4, §2 and R19 (v0.9).** R19 now permits importing a database on five checkable conditions: the licence permits republishing, each form cites its origin, nothing lands above Plausible, authored data wins, and the import is regenerable. §4 names the sources that stay excluded, and why. **R15** is scoped to a manufacturer: the global model-name check was written against three files, and the import has 55 cross-maker pairs such as Apple's and Pioneer's `CD` | D34–D40, D13 |
+| **8 done** | **SPEC header, §2, §3, §4 and R19 (v0.10).** Imports are open to every source R19's conditions admit, and there is no fixed list. R19.1's licence boundary generalises to `remotes/<source>/`, registered with its licence. R19.2's citation shape covers a command path as well as a line. A new paragraph under R19 says that a missing parameter, such as a carrier or repeat count, is defaulted and cited rather than used as a reason to drop the key | §15 |
 | **post-6 done** | **SPEC §1 and §5's tier table.** §1 stated the lookups' claims as if they were the ledger's contents, and its RMT-B118P row claimed Verified at subdevice 218. It now records the claims as claims, then what the ledger holds. Plausible now also covers a single capture that nothing cross-checks, which is how PR #8 tiered 11 keys: no existing tier fitted, and the data came before the definition | §13 |
 
 Decisions that are *not* spec edits, for contrast: D19's tree ownership,
@@ -1781,6 +1789,7 @@ Recording it as a late edit is more honest than folding it back into Phase 3.
 | Committed `build/` creates merge noise | Low | Single-author repo (OD1); D19's tree check makes drift loud |
 | The LIRC import makes the repo and the site large (~2,800 upstream files, ~115k keys with timings) | Medium | D40 shards the index and site per remote, so no committed file grows with the corpus. D20's one-line integer arrays cut raw forms roughly in half. The size is measured before the data PR, not after |
 | Imported data is taken for authored data | Medium | R19's conditions, enforced: the `remotes/lirc/` path is the licence *and* trust boundary, every form's citation names its upstream file and line, nothing is above Plausible, and the site labels imported remotes as imported |
+| An imported key's defaulted carrier is wrong for its protocol | Low | Nothing is dropped over it. The default is cited on every form, and every such form is Plausible. §15 measures it: about 14% of SmartIR's raw keys are 36 or 40 kHz families played at 38 kHz, which costs range rather than function. Inferring the carrier from a recognised timing family is the planned fix |
 | The GPL reading of the LIRC database is wrong | Low | It is Debian's reading, cited, and the only one on record (the upstream repository states no licence). The boundary is one directory, so reversing it is one deletion and one re-import |
 | Provenance quietly degrades as variants are expanded and re-expanded | Low | D22's field partition is mechanical and `expandedFrom` is machine-checkable; `rl fmt --expand` shows exactly what a variant produced. D21's non-positional ids remove the silent-retarget path |
 | A `claims` entry gets written to satisfy the validator rather than to inform | Low | **Presence is machine-validated; truthfulness is not.** The validator confirms `reason` and `source` are there and non-empty — it cannot confirm the source says what the claim says, or that it exists. Reviewing that is a human job, and with OD1 the human is you, reading the diff. The gain over v0.3 is narrow but real: nothing had to be written down at all before |
@@ -2253,6 +2262,39 @@ carrier (word 1), so that word is read, not defaulted, via
 36 or 40 kHz Pronto profile would reject every one of its buttons outright.
 `minSends` still defaults to 1 either way, since neither encoding records
 a repeat count.
+
+**What the 38 kHz default costs: no keys dropped, some played
+off-carrier.** Carrier handling dropped nothing in the first import: the
+report lists zero "does not compile" skips, and all 10 Pronto keys declare
+38 kHz (`006D`) anyway. The default affects how some keys play, not
+coverage. Classifying the 904 `raw` keys by lead-in and bit timing gives:
+
+| Timing family | Keys | Usual carrier | Mainly |
+|---|---|---|---|
+| NEC-like, 9 ms lead-in | 445 | 38 kHz | Yamaha, LG, Onkyo |
+| Samsung-like, 4.5 ms lead-in | 142 | 38 kHz | Samsung, Thomson, TCL |
+| RC6 | 82 | 36 kHz | Philips, Sky |
+| RC5 | 29 | 36 kHz | Philips |
+| Sony SIRC | 18 | 40 kHz | Sony |
+| Kaseikyo | 7 | 37 kHz | Mitsubishi |
+| unrecognised | 181 | — | Noblex, Sharp, Pace |
+
+About 129 keys (14%) are therefore compiled at 38 kHz for a protocol
+that usually runs at 36 or 40 kHz. That is a 5% error. It is within the
+passband of a typical demodulating receiver, but it costs range, so a
+user may see such a key work at close range and fail across a room.
+Dropping those keys would lose them outright, which is worse, so they
+stay (SPEC R19: a missing parameter is defaulted, not a reason to drop).
+Any SmartIR user has already been sending them through a Broadlink
+transmitter's own fixed carrier, so 38 kHz is at least the condition in
+which upstream found them to work. This is an unverified, uncited claim
+and is recorded here only as a reason the risk is low.
+
+The improvement, not yet built, is to infer the carrier from a recognised
+timing family. That would record the value as a `claims` entry citing the
+protocol's published carrier, keep the form Plausible, and leave the 181
+unrecognised keys on the default. It is a deliberate step past D41's
+"no protocol detection", so it needs its own decision before any code.
 
 An odd-length Broadlink decode has no recorded trailing gap. Marking it
 `truncated: true` would need a `defaultGapUs` claim to substitute one
