@@ -10,22 +10,26 @@ Schema, compiler, cross-check, layouts, a generated index, an offline
 lookup and a static site, with CI gating the whole generated tree for drift
 *and* orphans.
 
-Three protocols (NEC1, NECx2, Sony20) and **all three seed remotes
+Four protocols (NEC1, NECx2, RC5, Sony20) and **all three seed remotes
 authored** — the Sony with 27 of 38 functions cross-checked across two
 independent sources, zero mismatches. Every protocol's timings are
-verified against another encoder's Pronto output (NEC1 and Sony20 against
-published vectors, NECx2 against a pinned tool release). The bytes differ
-in a few words, by design, because the tools round microseconds to cycles
-differently. DESIGN.md §12 has the detail, and §13 records a contradiction
-the research turned up in the spec's own opening example.
+verified against another encoder's Pronto output (NEC1, RC5 and Sony20
+against published vectors, NECx2 against a pinned tool release). The bytes
+differ in a few words, by design, because the tools round microseconds to
+cycles differently. DESIGN.md §12 has the detail, and §13 records a
+contradiction the research turned up in the spec's own opening example.
 
-**Imported:** the LIRC remotes database, 3,139 remotes and 112,846 keys
+A fourth remote, the Meridian MSR, was curated out of the LIRC import
+because the import's frames lacked RC-5's first start bit; §16 records what
+was wrong with it, what replaced it, and what is still unknown.
+
+**Imported:** the LIRC remotes database, 3,138 remotes and 112,789 keys
 under `remotes/lirc/`, republished under GPL-2.0-or-later; and SmartIR's
 `media_player`/`fan` codes, 62 remotes and 914 keys under
 `remotes/smartir/`, republished under MIT (DESIGN.md §15 — `climate` and
 `light` are state matrices, not buttons, and stay out of scope for now).
 Every imported key is Plausible and cites its upstream file and line (SPEC
-R19). Authored remotes stay the three above, each checked against
+R19). Authored remotes stay the four above, each checked against
 independent sources.
 
 ## Why

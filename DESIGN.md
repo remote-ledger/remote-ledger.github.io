@@ -188,6 +188,7 @@ seed data actually exercises:
 | `NEC1` | `{38.4k,564}<1,-1\|1,-3>(16,-8,D:8,S:8,F:8,~F:8,1,^108m,(16,-4,1,^108m)*)` | Topping RC-15A | 1 |
 | `NECx2` | `{38.0k,564}<1,-1\|1,-3>(8,-8,D:8,S:8,F:8,~F:8,1,^108m)+` | Samsung BN59-01199F | post-6 |
 | `Sony20` | `{40k,600}<1,-1\|2,-1>(4,-1,F:7,D:5,S:8,^45m)+` | Sony RMT-B118P | 3 |
+| `RC5` | `{36k,msb,889}<1,-1\|-1,1>((1,~F:1:6,T:1,D:5,F:6,^114m)*,T=1-T)[D:0..31,F:0..127,T@:0..1=0]` | Meridian MSR | post-v1 (§16) |
 
 > ⚠️ **`Samsung32` was struck from this table: it never existed — and the
 > question it stood for is now answered.** v0.1 carried
@@ -218,7 +219,8 @@ the project's own premise that coverage is built one lookup at a time
 3. An invariant test — framing, bit count, total extent.
 
 Backlog, each blocked on that gate and none scheduled: `NEC2`, `NEC`
-(`S` defaulted to `~D`), `Sony12`, `Sony15`, `RC5`, `RC6`.
+(`S` defaulted to `~D`), `Sony12`, `Sony15`, `RC6`. (`RC5` was the sixth until
+§16: a remote the ledger already served needed it, and it met the gate.)
 
 `NEC2` and `NEC` are the tempting ones — both are a few lines' difference
 from `NEC1`, and waving them through on that basis is precisely how an
@@ -327,14 +329,17 @@ never multiplies the repeat sequence into the Pronto string. Baking it in
 would make the same code compile differently depending on a field that
 describes the hardware, not the waveform.
 
-**D3b — Deferred: the RC5/RC6 toggle bit.** RC5's `T` flips on each press,
-so one Pronto string can carry only one of its two states. With RC5 moved to
-the backlog (D18), nothing in v1 emits a toggle and the compiled artifact
-(D20) has no such field — v0.1 promised one for a protocol it no longer
-ships. When RC5 does land, the open choice is: emit `T=0` plus a
-`toggle: true` marker for the player, or emit both states as two candidate
-groups (D16), which reuses machinery that will already exist. Recorded so
-it isn't rediscovered from scratch.
+**D3b — Open: the RC5/RC6 toggle bit.** RC5's `T` flips on each press,
+so one Pronto string can carry only one of its two states. RC5 landed in §16
+and emits `T=0`, the IRP's own default, with no marker: the compiled artifact
+(D20) still has no toggle field, and a remote file cannot set one (`encode`
+takes `toggle` for the tests only). A player therefore sends the same `T` on
+every press. Whether that matters depends on the receiver, and nothing the
+ledger holds says how a given unit treats a repeated `T`. The open choice is
+unchanged: emit a `toggle: true` marker for the player to alternate, or emit
+both states as two candidate groups (D16), which reuses machinery that
+already exists. Either needs the player to alternate, so it is a contract
+with the apps, not a ledger change alone. RC6 is still unregistered.
 
 ### D4 — `raw` forms: lircd-style microsecond lists
 
@@ -1927,7 +1932,7 @@ note rather than a live contract.
 
 ## 12. Implementation status
 
-Phases 0-6 are implemented: 849 tests, `jsonschema` the only runtime
+Phases 0-6 are implemented: 890 tests, `jsonschema` the only runtime
 dependency. Phase 2 landed its nine SPEC edits *before* its code, per §9 --
 the spec change is what authorises the implementation. (That count is asserted by the suite itself -- see
 `test_documented_test_count_is_current` -- so it cannot drift the way the
@@ -1967,6 +1972,7 @@ layer that catches a wrong constant. Two things closed it:
 | NEC1 | IrpTransmogrifier test assertions, two parameter sets | published |
 | Sony20 | IrpTransmogrifier `Decoder.java` string, plus a 128-function MakeHex sweep matching our bytes on 127 | published, and reproducible |
 | NECx2 | IrpTransmogrifier 1.2.14 `render` output | reproducible only. **No published NECx2 vector was found**, and `test_registry` warns about it on every run |
+| RC5 | IrpTransmogrifier `ShortProntoNGTest` (D=1, F=1, both toggle states) and `IrpTransmogrifierNGTest.testDecodeRc5` (D=7, F=5) | published. Timings exact under the tool's rule; our bytes differ at the lead-out word only |
 
 `tests/vectors/CITATIONS.md` and `pronto-vectors.json` carry every source,
 pinned to a commit. The self-derived snapshot is still labelled as proving
@@ -2175,6 +2181,8 @@ the files' shapes change.
 
 - **Imported:** 3,139 remotes from 2,655 upstream files, 112,846 keys.
   Of those, 108,565 are `raw`, 3,348 NEC1, 766 Sony20 and 167 NECx2 `irp`.
+  (Since §16 curated the Meridian MSR out of the import: 3,138 remotes from
+  2,654 upstream files, 112,789 keys, 108,508 `raw`.)
 - **Reported, not imported:** 20 files with no usable remote, 197
   scancode-only blocks, 36 blocks whose `min_repeat` exceeds the schema's
   `minSends` limit of 10, 237 multi-code buttons, 642 duplicate names, 94
@@ -2344,4 +2352,96 @@ follow-up, not guessed at here.
   byte other than `0x26` (community-contributed data this project
   declines to guess the format of, D42). Zero authored-data collisions:
   nothing already curated overlaps SmartIR's synthetic model names.
+
+---
+
+## 16. RC-5, and curating the Meridian MSR
+
+A user imported `lirc/meridian/MSR` from the store and tried it on a Meridian
+565. At least one button worked; Off did not. This section records what was
+wrong with the imported file, what was changed, and what is still not known.
+
+### What was wrong
+
+The LIRC conf (`remotes/meridian/MSR.lircd.conf`, contributed 2005) declares
+`flags RC5`, `bits 13` and **no `plead`**. In RC-5 the first start bit, S1, is
+a lone mark, and LIRC confs spell it as `plead 889` in front of 13 data bits
+(S2, T, five address bits, six command bits). Of the pinned upstream's 417
+RC5-flag blocks, 379 declare a `plead`. Without one, lircd sends the 13 bits
+and **no S1**, and the import reproduced that faithfully: its oracle suite
+shows the port matching lircd's own output. The import was right about what
+the conf says. The conf does not describe an RC-5 frame.
+
+Why that is a missing start bit and not just a different one:
+
+- A Meridian 562/565 code set in Flipper-IRDB decodes as 14-bit RC-5,
+  address 19. The ledger's `Off` is exactly that set's `OFF` frame less its
+  first two durations. More generally, the conf's 13 bits with S1 put back in
+  front reproduce the set's frame for 36 of the 57 keys; 8 differ only in the
+  toggle bit, which is arbitrary per press; 13 keys are not in the set.
+- A strict receiver rejects all 57 imported frames as invalid biphase. A
+  sampling receiver reads addresses 6, 7, 24 and 25, never 19.
+
+What this does **not** explain is why at least one button worked. Neither
+receiver model above predicts it, so the 565's decoder is more forgiving
+than either, or something else is going on. That is recorded, not resolved.
+
+### What was right
+
+The codes. All 57 are address 19. IRDB lists RC5, device 19 for Meridian's
+Surround Processor and System Remote with the same functions (Off is 12 in
+both). 44 keys are in both IRDB and the Flipper set, 4 are in one of them,
+and 9 are in the conf alone (Slow, Band, Audio, EPG, Angle, A-B, Phase,
+Chapter, Setup). The labels sometimes differ -- the Flipper set calls the
+DVD code `TEXT`, IRDB lists two names each for codes 80 and 85 -- but the
+codes agree.
+
+### What changed
+
+- **`RC5` joins the registry**, through D18's gate. Gate 1: the IRP, verbatim
+  from IrpTransmogrifier's database. Gate 2b: three published vectors, D=1
+  F=1 in both toggle states and D=7 F=5, each reproduced exactly under the
+  tool's rounding, with our bytes differing at the lead-out word only. Gate
+  3: `tests/test_rc5.py`, including an exhaustive round trip of all 8,192
+  address/command/toggle frames. Gate 2a, weaker: the encoder reproduces all
+  48 frames of the Flipper set from the address, command and toggle bit each
+  decodes to -- 24 end on a mark and 24 on a space, 23 use the extended
+  command range, and both toggle states occur.
+- **The MSR left `remotes/lirc/`**, which is R19.4's own route for curating
+  an import: it is now `remotes/meridian/MSR.json`, RC5 forms at address 19.
+  48 keys are Verified (the conf agrees with a second independent source)
+  and 9 are Plausible. The next LIRC import skips the block and reports the
+  collision. The compiled and site copies of the old file were orphans and
+  are deleted.
+- **`controls` names the 565 and the 562.** The Flipper set is the only link
+  between this remote and those units.
+
+`tools/rc5_capture_audit.py` regenerates the per-key evidence, the comparison
+with the Flipper set and the encoder check from checkouts of the three
+sources. The strict-receiver and sampling-receiver readings, and the scan of
+the other imports, were one-off analyses and are not part of it.
+
+### Not changed, and not known
+
+- **The toggle (D3b).** Everything compiled here has `T=0`. The old import
+  fixed `T` per key as well (1 for most keys, 0 for the extended range), so
+  this is not a regression, and not a fix either. If a receiver treats a
+  repeated `T` as a held key, only the first press after it last saw the
+  other state would work, and no frame fixes that: the player has to
+  alternate. Nothing here says whether the 565 behaves that way.
+- **No hardware test.** The frames now have the right shape and the codes are
+  well corroborated. Whether a 565 obeys them is for a person to confirm,
+  which is what the Confirmed tier (SPEC §5) is for.
+- **Licence.** The Flipper-IRDB code set and IRDB's tables are cited by
+  permalink and compared; none of their data is copied. SPEC §4 excludes
+  Flipper-IRDB files from before its CC0 cutoff, and the shallow clone used
+  here could not date this one.
+- **`chiro/C-802` has the same shape** (RC5 flag, 13 bits in total, no
+  `plead`) at 40 kHz with 900 us units, converted from Slink-e device files.
+  It is not standard Philips RC-5 and there is no second source, so it is
+  left alone. Every other 36 kHz RC-5-shaped frame in the import -- 9,252
+  across 27 files -- decodes as a valid 14-bit frame.
+- **"RC-5X" means two things.** The conf calls the 7-bit-command extension
+  RC-5X; that is part of IrpTransmogrifier's plain `RC5`. Its `RC5x` is a
+  different 20-bit protocol and stays unregistered.
 

@@ -125,7 +125,27 @@ durations. `index.json` says so, and `test_registry` requires any
 capture-based citation to say so. Gate 2b, below, now covers the absolute
 durations.
 
-### Gate 2b: **MET** for all three, and restated
+### Gate 2a: **MET** for RC5, on weaker evidence
+
+Source: the Meridian 562+565 code set in Flipper-IRDB
+(`Lucaslhm/Flipper-IRDB@d126fb1b6f1e`,
+`_Converted_/Pronto/M/Meridian/562+565.ir`). It is a collection converted
+from Pronto, its provenance upstream is unstated, and it is **cited, not
+vendored**: SPEC §4 excludes Flipper-IRDB files from before its CC0 cutoff,
+and the shallow clone it was read from cannot date this one.
+
+It does what the published vectors cannot. Both of those have F below 64, so
+neither sets the second start bit to 0. This set has 23 frames that do, and
+the encoder reproduces all 48 of them -- 24 ending on a mark and 24 on a
+space, 37 with T=1 and 11 with T=0 -- from the address, command and toggle
+bit each decodes to. A measurement carries instrument bias, so this verifies
+the frame layout and the extent, not absolute durations; gate 2b covers
+those.
+
+To repeat it, check out the three sources and run
+`python tools/rc5_capture_audit.py --lirc DIR --irdb DIR --flipper DIR`.
+
+### Gate 2b: **MET** for all four, and restated
 
 **Gate 2b as first written cannot be met, because the reference tools
 disagree with each other.** Pronto records durations as carrier cycles. The
@@ -165,6 +185,15 @@ declined, and D6 rule 4 stands.
 | Sony20 | D=12 S=34 F=56 @ 40k: IrpTransmogrifier `Decoder.java` L48 @ `705ce35` (parameters decoded from it, not stated beside it) | **published** | word 45 (lead-out) |
 | Sony20 | 26.226, F=0..127 @ 40k: MakeHex @ `1373d90`, its own `Sony20.IRP` with only `Device` changed | **reproducible** | only F=127, word 45 |
 | NECx2 | D=7 S=7 F=2 @ 38.4k: IrpTransmogrifier 1.2.14 release, `render -n D=7,S=7,F=2 -p necx2` | **reproducible** | word 71 (lead-out) |
+| RC5 | D=1 F=1 @ 36k, T=0 and T=1: IrpTransmogrifier `ShortProntoNGTest.java` L17-18 @ `c945e76` (constants `RC5_1_1_0`, `RC5_1_1_1`; parameters decoded from them and from their shared short code, not stated beside them) | **published** | word 27 (lead-out) |
+| RC5 | D=7 F=5 @ 36k, T=0: IrpTransmogrifier `IrpTransmogrifierNGTest.java` L237-239 @ `c945e76`, `decode --strict -p rc5` asserted to give `RC5: {D=7,F=5}` | **published** | word 25 (lead-out) |
+
+**RC5's second vector earns its place.** D=1 F=1 cannot tell the address
+bits from the command bits, or catch a swapped bit order: both are mostly
+zeros. D=7 F=5 can, and it is a decode assertion by the tool, so it checks the
+field layout from the other direction. Neither vector has the second start
+bit set to anything but 1, so the complement `~F:1:6` is pinned by the
+Flipper set below instead.
 
 "Reproducible" means generated here from a pinned release, not found in
 print. Both tools earn that trust independently:

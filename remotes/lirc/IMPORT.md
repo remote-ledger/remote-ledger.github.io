@@ -10,11 +10,12 @@ listed here with its reason (SPEC R19, condition 5).
 
 | | Count |
 |---|---|
-| Upstream files: imported | 2,655 |
+| Upstream files: imported | 2,654 |
 | Upstream files: skipped: lircd rejects the file | 1 |
-| Upstream files: skipped: no block imported | 140 |
+| Upstream files: skipped: no block imported | 141 |
 | Upstream files: skipped: no remote block | 19 |
-| Remote blocks: imported | 3,139 |
+| Remote blocks: imported | 3,138 |
+| Remote blocks: skipped: an authored remote wins | 1 |
 | Remote blocks: skipped: lircd cannot send this protocol (GRUNDIG/BO/SERIAL) | 5 |
 | Remote blocks: skipped: min_repeat 10 exceeds the schema's minSends of 10 | 4 |
 | Remote blocks: skipped: min_repeat 11 exceeds the schema's minSends of 10 | 4 |
@@ -42,7 +43,7 @@ listed here with its reason (SPEC R19, condition 5).
 | Buttons: imported: irp NEC1 | 3,348 |
 | Buttons: imported: irp NECx2 | 167 |
 | Buttons: imported: irp Sony20 | 766 |
-| Buttons: imported: raw | 108,565 |
+| Buttons: imported: raw | 108,508 |
 | Buttons: skipped: does not compile to Pronto | 40 |
 | Buttons: skipped: duplicate name; lircd sends the first | 642 |
 | Buttons: skipped: lircd refuses to send it: send 0: too short gap: 16968 | 35 |
@@ -336,9 +337,11 @@ listed here with its reason (SPEC R19, condition 5).
 | `remotes/yamaha/RAX16.lircd.conf` | `RAX16` | 57 | `no button survives` |
 | `remotes/zotac/zotac.lircd.conf` | `zotac.conf` | 15 | `no timings: a scancode-only driver's remote` |
 
-## Blocks skipped because an authored remote wins (R19, condition 4) (0)
+## Blocks skipped because an authored remote wins (R19, condition 4) (1)
 
-None.
+| File | Block | Would have been |
+|---|---|---|
+| `remotes/meridian/MSR.lircd.conf` | `MSR` | `remotes/lirc/meridian/MSR.json` |
 
 ## Buttons skipped (1,013)
 
