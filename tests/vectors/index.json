@@ -65,5 +65,27 @@
     "gate2b_byte_divergence": [
       71
     ]
+  },
+  "RC5": {
+    "gate1_irp_source": "IrpTransmogrifier IrpProtocols.xml @c945e76 L2101-L2103 (verbatim), whose documentation names Philips as the protocol's creator. Corroborated by probonopd/irdb, which names RC5 for the Meridian System Remote and Surround Processor (device 19, function 0-127), and by a Flipper-IRDB code set for the Meridian 562/565 whose 48 frames all decode as this layout",
+    "regression_snapshot": null,
+    "snapshot_is_evidence": false,
+    "gate2a_structural_vector": "Flipper-IRDB@d126fb1b6f1e _Converted_/Pronto/M/Meridian/562+565.ir -- a converted Pronto code set for the Meridian 562 and 565, not vendored here (see tests/vectors/CITATIONS.md). All 48 frames are reproduced by this encoder from the address, command and toggle bit they decode to: 24 end on a mark and 24 on a space, 23 use the extended command range, both toggle states occur. Weaker than a published table, because a capture carries instrument bias and its provenance upstream is unstated",
+    "gate2a_pending_reason": null,
+    "gate2b_golden_pronto": "irpt_rc5_D1_F1_T0.pronto",
+    "gate2b_pending_reason": null,
+    "gate2b_vector_source": "https://github.com/bengtmartensson/IrpTransmogrifier/blob/c945e7638355ca5697f458d33338ee1bfd4d1640/src/test/java/org/harctoolbox/irp/ShortProntoNGTest.java#L17",
+    "gate2b_vector_params": {
+      "device": 1,
+      "subdevice": null,
+      "function": 1,
+      "carrier_hz": 36000,
+      "toggle": 0
+    },
+    "gate2b_vector_quantization": "irpt-nominal-carrier",
+    "gate2b_vector_provenance": "published",
+    "gate2b_byte_divergence": [
+      27
+    ]
   }
 }

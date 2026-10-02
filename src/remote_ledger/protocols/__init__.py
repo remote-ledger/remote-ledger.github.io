@@ -9,7 +9,9 @@ that look like trivial variations of one already present -- ``NEC2`` and
 that basis is precisely how an unverified encoder ships.
 
 Backlog, each blocked on that gate and none scheduled: ``NEC2``, ``NEC``
-(``S`` defaulted to ``~D``), ``Sony12``, ``Sony15``, ``RC5``, ``RC6``.
+(``S`` defaulted to ``~D``), ``Sony12``, ``Sony15``, ``RC6``.
+
+``RC5`` left the backlog once the Meridian MSR needed it (DESIGN section 16).
 
 ``Samsung32`` is **not** backlogged -- it does not exist. D18's table carried
 an IRP string for it that was written from memory during design and never
@@ -26,11 +28,12 @@ from __future__ import annotations
 from ..errors import ValidationError
 from .base import Protocol
 from .nec import NEC1, NECX2
+from .rc5 import RC5
 from .sony import SONY20
 
-REGISTRY: dict[str, Protocol] = {p.name: p for p in (NEC1, NECX2, SONY20)}
+REGISTRY: dict[str, Protocol] = {p.name: p for p in (NEC1, NECX2, RC5, SONY20)}
 
-__all__ = ["Protocol", "REGISTRY", "NEC1", "NECX2", "SONY20"]
+__all__ = ["Protocol", "REGISTRY", "NEC1", "NECX2", "RC5", "SONY20"]
 
 
 def get(name: str) -> Protocol:

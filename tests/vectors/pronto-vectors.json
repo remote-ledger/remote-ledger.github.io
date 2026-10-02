@@ -51,5 +51,35 @@
     "reproduce": "make; sed 's/^Device=26.98/Device=26.226/' protocols/Sony20.IRP > s20.irp; ./makehex s20.irp",
     "note": "MakeHex's own shipped Sony20 definition, with only the Device line changed to the RMT-B118P's 26.226. That build reproduces a MakeHex output published on RemoteCentral in 2013 byte for byte. MakeHex rounds against the word's period, as D6 rule 4 does, so our bytes match on 127 of 128 functions. F=127 differs in its lead-out word alone, and only because MakeHex rounds each pair cumulatively.",
     "byteDivergence": {"127": [45]}
+  },
+  {
+    "file": "irpt_rc5_D1_F1_T0.pronto",
+    "protocol": "RC5",
+    "params": {"device": 1, "subdevice": null, "function": 1, "carrier_hz": 36000, "toggle": 0},
+    "quantization": "irpt-nominal-carrier",
+    "provenance": "published",
+    "source": "https://github.com/bengtmartensson/IrpTransmogrifier/blob/c945e7638355ca5697f458d33338ee1bfd4d1640/src/test/java/org/harctoolbox/irp/ShortProntoNGTest.java#L17",
+    "note": "The constant RC5_1_1_0 in ShortProntoNGTest, which long2short collapses to the same short code as RC5_1_1_1 below. The name gives D=1, F=1 and the toggle state; the frame was decoded to check it. The lead-out is the only word our D6 rounding spells differently.",
+    "byteDivergence": [27]
+  },
+  {
+    "file": "irpt_rc5_D1_F1_T1.pronto",
+    "protocol": "RC5",
+    "params": {"device": 1, "subdevice": null, "function": 1, "carrier_hz": 36000, "toggle": 1},
+    "quantization": "irpt-nominal-carrier",
+    "provenance": "published",
+    "source": "https://github.com/bengtmartensson/IrpTransmogrifier/blob/c945e7638355ca5697f458d33338ee1bfd4d1640/src/test/java/org/harctoolbox/irp/ShortProntoNGTest.java#L18",
+    "note": "RC5_1_1_1 in ShortProntoNGTest: the same command with the toggle bit set. Together with the T=0 vector it pins both states of T, which is the one field a remote file cannot set (DESIGN D3b).",
+    "byteDivergence": [27]
+  },
+  {
+    "file": "irpt_rc5_D7_F5.pronto",
+    "protocol": "RC5",
+    "params": {"device": 7, "subdevice": null, "function": 5, "carrier_hz": 36000, "toggle": 0},
+    "quantization": "irpt-nominal-carrier",
+    "provenance": "published",
+    "source": "https://github.com/bengtmartensson/IrpTransmogrifier/blob/c945e7638355ca5697f458d33338ee1bfd4d1640/src/test/java/org/harctoolbox/irp/IrpTransmogrifierNGTest.java#L237-L239",
+    "note": "testDecodeRc5: decode --strict -p rc5 on this string must give RC5: {D=7,F=5}. A decode assertion, not a render one, so the parameters are the tool's own answer; T=0 is what our encoder must use to reproduce it. A different address and command from D=1, F=1, so it pins the field bit order.",
+    "byteDivergence": [25]
   }
 ]
