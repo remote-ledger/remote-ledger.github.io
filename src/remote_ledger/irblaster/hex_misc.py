@@ -19,7 +19,7 @@ of a Samsung Blu-ray remote decodes as ``D=32,S=0,E=7`` -- ``E=7`` is nibble
 ``E`` -- with ``F=24`` for Up and 25 for Down, and the DB has ``0400E98``
 labelled DOWN (``tests/vectors/CITATIONS.md``).
 
-Three things this module decides, each repeated in NOTES/misc.md:
+Three things this module decides, each repeated in DESIGN D65:
 
 **Samsung36's fourth parameter.** The IRP has ``D,S,E,F``; a ledger form has
 three numbers. ``function`` carries ``E:F`` as one 12-bit value,
@@ -38,7 +38,7 @@ same keys: hex ``28`` is rev8(20), and read high-byte-first it *is* the
 capture's frame. So ``FROM_DB_HEX["Proton"]`` gives ``D = rev8(high byte),
 F = rev8(low byte)``, the wire reading, and ``FROM_DB_HEX_APP["Proton"]`` gives
 the reading the app sends today (``D = rev8(low byte), F = rev8(high byte)``),
-which the oracle tool uses to prove the encoder (NOTES/misc.md).
+which the oracle tool uses to prove the encoder (DESIGN D65).
 
 **RECS80's toggle.** ``T`` is not in the hexcode: the app flips it on every
 press. The ledger carries ``T=0`` (D3b). The nine data bits are the top nine of

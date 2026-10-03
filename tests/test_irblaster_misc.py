@@ -4,7 +4,7 @@
 transmits today, taken from the full Dart oracle run (``buildButtonFromDbRow``
 then ``previewIRButton``) by ``tools/irblaster_oracle_misc.py
 --write-fixtures``. The full run, 2,812 codes, is not committed; run the tool
-against it for the counts in NOTES/misc.md.
+against it for the counts in DESIGN D65.
 """
 
 import importlib.util
@@ -187,7 +187,7 @@ def test_proton_read_high_byte_first_is_the_published_capture(hexcode):
 
 @pytest.mark.parametrize("hexcode", sorted(PROTON_TV))
 def test_proton_as_the_app_sends_it_is_the_other_way_round(hexcode):
-    """The finding, pinned (NOTES/misc.md): the app sends the low byte first,
+    """The finding, pinned (DESIGN D65): the app sends the low byte first,
     so ``FROM_DB_HEX_APP['Proton']`` -- which reproduces the app's signal --
     puts the address in F and the key in D, which is not what the real remote
     sends."""
@@ -217,7 +217,7 @@ def test_a_malformed_hexcode_is_refused_with_a_stable_reason(db_protocol, hexcod
 @pytest.mark.parametrize("db_protocol", ["RECS80", "RECS80_L"])
 def test_recs80_bits_below_the_nine_it_carries_are_unrepresentable(db_protocol):
     """The app drops them silently, so two hexcodes would give one signal. None
-    of the DB's 555 RECS80 and RECS80_L codes has any (NOTES/misc.md)."""
+    of the DB's 555 RECS80 and RECS80_L codes has any (DESIGN D65)."""
     for hexcode in ("AA9", "AAA", "AAC", "AAF", "001"):
         with pytest.raises(ValueError, match="top nine"):
             FROM_DB_HEX[db_protocol](hexcode)

@@ -4,7 +4,7 @@
 protocol with what the app's own code transmits for each (the oracle:
 ``buildButtonFromDbRow`` then ``previewIRButton``). The full comparison over
 every distinct code is ``tools/irblaster_oracle_japan.py``; the numbers are in
-NOTES/japan.md.
+DESIGN D64.
 """
 
 import importlib.util

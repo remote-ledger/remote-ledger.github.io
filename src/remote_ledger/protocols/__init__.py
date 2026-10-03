@@ -13,7 +13,7 @@ Backlog, each blocked on that gate and none scheduled: ``NEC``
 
 ``RC5`` left the backlog once the Meridian MSR needed it (DESIGN section 16).
 Every other protocol below the first four joined for the SwiftRemote database
-import (DESIGN section 17), each through the same three gates: ``NEC2``,
+import (DESIGN section 18), each through the same three gates: ``NEC2``,
 ``NECx1``, ``Sony12``, ``Sony15``, ``RC6`` (mode 0 only), ``RCA-38``,
 ``Thomson7``, ``Pioneer-2Part``, ``JVC``, ``Sharp``, ``Denon``, ``Samsung36``,
 ``Proton``, ``F12_relaxed``, ``RECS80``, ``RECS80-0068``, ``Aiwa``,
@@ -24,10 +24,9 @@ and ``SharpDVD``.
 an IRP string for it that was written from memory during design and never
 checked against a source; two reads of DecodeIR and one of
 IrpTransmogrifier's database find no 32-bit Samsung protocol with the fields
-``D:8,S:8,F:8,~F:8``. What does exist is ``Samsung20``
-(``{38.4k,564}...(8,-8,D:6,S:6,F:8,1,...)``) and ``Samsung36``
-(``{38k,500}...(9,-9,...)``). Identifying which the BN59-01199F actually
-speaks is open work, recorded in ``unresolved.json``.
+``D:8,S:8,F:8,~F:8``. The BN59-01199F speaks NECx2 (IRDB, device 7, subdevice
+7). ``Samsung36`` (``{37.9k,560,33%}``, a ``4500u`` header) is a different
+protocol and joined with the database import (DESIGN D65).
 """
 
 from __future__ import annotations

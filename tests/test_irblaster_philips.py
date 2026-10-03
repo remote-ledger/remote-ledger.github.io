@@ -9,7 +9,7 @@ hold for codes no database contains.
 
 Thomson7 is the exception the oracle exists to find: the ledger's reading of
 its hexcodes is the one a hardware capture supports, and the app's is not
-(NOTES/philips.md). The fixtures pin that disagreement and its explanation.
+(DESIGN D63). The fixtures pin that disagreement and its explanation.
 """
 
 import importlib.util

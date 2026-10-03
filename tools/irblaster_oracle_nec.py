@@ -79,7 +79,7 @@ from remote_ledger.protocols import REGISTRY  # noqa: E402
 DB_PROTOCOLS = ("NEC", "NEC2", "NECx1", "NECx2")
 
 #: ``protocol.carrierHz`` the ledger remote should use per DB protocol. The
-#: reasons are in NOTES/nec.md: the app sends NEC at 38000 (legacy path) and
+#: reasons are in DESIGN D61: the app sends NEC at 38000 (legacy path) and
 #: the rest at 38222 (NEC2) or 38400; the registry's nominal 38.4k is within
 #: 5 % of all of them.
 CARRIER_HZ = {"NEC": 38_000, "NEC2": 38_400, "NECx1": 38_400, "NECx2": 38_400}

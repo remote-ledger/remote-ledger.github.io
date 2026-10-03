@@ -24,7 +24,7 @@ MODULES = sorted(
 )
 
 #: Every DB protocol on which SwiftRemote reads a code differently from the
-#: wire (NOTES/japan.md, philips.md, misc.md, sony.md, unknown.md).
+#: wire (DESIGN D57).
 APP_DIFFERS = {
     "SONY12", "SONY15", "SONY20",
     "Pioneer", "JVC", "Sharp", "Denon",

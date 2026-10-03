@@ -37,7 +37,7 @@ them, and are listed rather than hidden:
   ``toggle=1`` to compare like with like. ``tests/test_irblaster_misc.py``
   shows the ``T=0`` signal differs from the app's in that one duration only.
 * ``Samsung36`` is run a second time with ``unitUs`` 500, which the remote
-  file's ``protocol`` block can set (D24). See NOTES/misc.md.
+  file's ``protocol`` block can set (D24). See DESIGN D65.
 
 Usage::
 

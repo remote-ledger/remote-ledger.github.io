@@ -14,7 +14,7 @@ VECTORS = Path(__file__).parent / "vectors"
 VECTOR_INDEX = VECTORS / "index.json"
 V1_REGISTRY = {
     "NEC1", "NECx2", "RC5", "Sony20",
-    # The SwiftRemote database import (DESIGN section 17), each through D18.
+    # The SwiftRemote database import (DESIGN section 18), each through D18.
     "NEC2", "NECx1", "Sony12", "Sony15", "RC6", "RCA-38", "Thomson7",
     "Pioneer-2Part", "JVC", "Sharp", "Denon",
     "Samsung36", "Proton", "F12_relaxed", "RECS80", "RECS80-0068",

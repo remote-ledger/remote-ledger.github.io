@@ -1,7 +1,7 @@
 """``rl import irblaster``: the IR Blaster database, as shipped in SwiftRemote,
 imported under SPEC R19.
 
-NOTES/import-design.md (decisions D46 to D56, with D56a and D56b) is the
+DESIGN section 17 (decisions D46 to D56, with D56a and D56b) is the
 contract; each decision is cited where it is implemented. In outline, the
 database holds ``remotes(id)``, ``models(brand, model, id)`` and
 ``keys(id, label, hexcode, protocol)``. It has no remote model and no key names

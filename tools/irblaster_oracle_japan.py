@@ -22,7 +22,7 @@ Usage::
 code, and **this is the run that proves the ledger's encoders**: they compile
 the signal the app transmits, so it must pass (exit 0). ``--reading wire`` is
 ``FROM_DB_HEX``, the reading the importer uses, which follows the evidence in
-``NOTES/japan.md``; there a disagreement with the app is the point rather than
+DESIGN D64; there a disagreement with the app is the point rather than
 a failure, so the exit status stays 0 and the tool counts the codes on which
 the two readings differ.
 
@@ -66,7 +66,7 @@ from remote_ledger.protocols import REGISTRY  # noqa: E402
 
 DB_PROTOCOLS = ("Pioneer", "JVC", "Sharp", "Denon")
 #: The carrier the ledger remote should declare, per ledger protocol: the one
-#: the app transmits (see NOTES/japan.md). JVC differs from the registry's
+#: the app transmits (see DESIGN D64). JVC differs from the registry's
 #: 37.9k by 0.26 %, and both give the same Pronto frequency word.
 CARRIER_HZ = {"Pioneer-2Part": 40_000, "JVC": 38_000, "Sharp": 38_000, "Denon": 38_000}
 GAP_US = 8_000

@@ -34,7 +34,7 @@ Three things shape the encoder:
   it is the only way every code in the SwiftRemote database can be written
   without a fourth field -- 269 of its 643 distinct Samsung36 codes have
   ``E != 0``.
-  NOTES/misc.md records it as a decision for the owner.
+  DESIGN D65 records it as a decision for the owner.
 * **The 560 us unit is the IRP's, and real hardware measures nearer 500 us.**
   See ``tests/vectors/CITATIONS.md``. ``unit_us`` is the knob for that: it
   rescales the 560 us parts and leaves ``4500u`` alone.

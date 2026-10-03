@@ -25,7 +25,7 @@ the registered encoder for that signal and checks its bits are the capture's
 bits, and (4) reports how far each duration is from the capture's, as a ratio.
 
 A capture carries instrument bias, so (4) is information, not a pass mark: it
-is the evidence for the unit and extent findings in NOTES/misc.md. (1) to (3)
+is the evidence for the unit and extent findings in DESIGN D65. (1) to (3)
 are the structural claim, and the exit status is 1 if any of them fails.
 """
 

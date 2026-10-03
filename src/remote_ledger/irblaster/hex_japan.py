@@ -14,7 +14,7 @@ frame a real remote sends. SwiftRemote's own code
 different ways, all wrong for that data (JVC and Pioneer send each byte least
 significant bit first, Sharp unpacks a register layout the data does not have,
 and Denon takes its thirteenth bit from the wrong place). The evidence is in
-``NOTES/japan.md``.
+DESIGN D64.
 
 ``FROM_DB_HEX_APP`` (same keys, same signature) reads the codes the way the app
 does today. It is not for import: the oracle tools use it to prove the ledger's
@@ -163,7 +163,7 @@ def _denon_wire(hexcode: str) -> Mapped:
     """Thirteen wire bits, D (5) and F (8), then three bits the app ignores.
 
     Hex bits 2 and 1 are ``00`` or ``11`` in the database and make no
-    difference to the frame the real remotes send (see NOTES/japan.md); bit 0
+    difference to the frame the real remotes send (see DESIGN D64); bit 0
     is always 0.
     """
     v = _digits(hexcode, "Denon", 4, truncate=True)

@@ -386,7 +386,7 @@ def cmd_lookup(args: argparse.Namespace) -> int:
 
 
 def cmd_import(args: argparse.Namespace) -> int:
-    """SPEC R19 / DESIGN sections 14-15: rewrite remotes/<source>/ from a
+    """SPEC R19 / DESIGN sections 14, 15 and 17: rewrite remotes/<source>/ from a
     checkout.
 
     The commit is read from the checkout itself, and must match ``--commit``

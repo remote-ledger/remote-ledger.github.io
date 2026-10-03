@@ -423,7 +423,7 @@ which gives the same frames with `+` where IrpTransmogrifier has `*`:
 > `{33k,500}<1,-4|1,-9>(D:4,T:1,F:7,1,^80m)+`
 
 **Which IRPT entry, and why.** The database has four RCA entries and a family
-of RC6 ones, and the app's frames pick exactly one of each (`NOTES/philips.md`
+of RC6 ones, and the app's frames pick exactly one of each (DESIGN D63
 has the evidence): `RC6` is mode bits `000` and a sixteen-bit payload, which
 `RC6-6-20` (mode 6, a four-bit subdevice) and `RC6-M-*` (mode a parameter) are
 not; `RCA-38` is the 38.7 kHz frame with a plain 8,-8 lead-in and a single
@@ -498,10 +498,10 @@ of every duration, and what ratio the capture sits at.
   `tools/philips_capture_audit.py` shows the database's hexcodes
   (`329`, `32A`, `305`, `30B`, `30D`), read as the frame in transmission order,
   are exactly the capture's `D=12`, `F=74, 42, 80, 104, 88`. See
-  `NOTES/philips.md`: SwiftRemote's own encoder does not read them that way.
+  DESIGN D63: SwiftRemote's own encoder does not read them that way.
 ## The japan family: Pioneer-2Part, JVC, Sharp, Denon
 
-Added for the SwiftRemote database import (`NOTES/japan.md` has the
+Added for the SwiftRemote database import (DESIGN D64 has the
 decisions and what is not proven). Each IRP is quoted verbatim in its module
 under `src/remote_ledger/protocols/`.
 
@@ -628,7 +628,7 @@ instrument bias, so the durations are information, not a pass mark:
 
 **The Samsung36 numbers are a recorded disagreement with the IRP, not a
 confirmation of it.** Followed anyway (gate 1 is "the IRP verbatim"), and the
-two ways the ledger can say otherwise are in NOTES/misc.md. A second source
+two ways the ledger can say otherwise are in DESIGN D65. A second source
 agrees with the captures: `crankyoldgit/IRremoteESP8266` @`1e2f0f3`,
 `src/ir_Samsung.cpp` L59-L63 and L175-L190 (`sendSamsung36`, marked "Works on
 real devices") sends a 4515/4438 us header, 512 us bit marks, 490 and 1468 us
@@ -645,7 +645,7 @@ rev4(E=7) and rev8(F=24/25/27/26/28/20/18) for the capture's decodes. Its Proton
 remote 18 has digits 0/1/8/9 at `2800`/`2880`/`2810`/`2890` and P+/P-/VOL-/VOL+/
 NORMAL-OK at `28E8`/`2818`/`2828`/`28C8`/`28E4` -- all nine keys of the Proton
 capture, with `0x28` = rev8(20) leading, **read high byte first**. The app sends
-those bytes the other way round (NOTES/misc.md); `tests/test_irblaster_misc.py`
+those bytes the other way round (DESIGN D65); `tests/test_irblaster_misc.py`
 pins both readings.
 
 **Two notes on the vectors themselves.**

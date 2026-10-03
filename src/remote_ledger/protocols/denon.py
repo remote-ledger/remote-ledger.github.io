@@ -26,7 +26,7 @@ beside the live one::
 with a *fixed* 165-unit (43,560 us) gap after each frame instead of an extent.
 The live form is registered, per the project's rule that the source's own
 active definition is the one cited. The difference is only in the gaps; see
-``NOTES/japan.md`` for what that does to the comparison with SwiftRemote.
+DESIGN D64 for what that does to the comparison with SwiftRemote.
 
 ``extent_us`` is ``None``: the repeat holds two frames, each padded to its own
 67 ms, and D31 pads a truncated sequence to one figure.

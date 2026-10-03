@@ -57,7 +57,7 @@ codes (231 keys, 6 remotes) carry D = S = 7, a Samsung address that IRDB
 files as NECx2 (8-unit lead-in) and the same DB holds as 147 ``E0E0xxxx``
 codes under ``NECx2``. Mapping them to NECx2 would make the ledger compile a
 signal the app does not send, so they are not re-labelled; they are reported
-in NOTES/nec.md.
+in DESIGN D61.
 
 ``NEC`` maps to ``NEC1`` (the app sends one frame and no ditto, which is
 NEC1's intro). ``NEC2``, ``NECx1`` and ``NECx2`` map to themselves.

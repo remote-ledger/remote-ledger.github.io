@@ -29,7 +29,7 @@ Usage::
         --oracle DIR [--corpus remotes/lirc]
 
 Run over the 4 families, models shared with remotes/lirc @ the repo's import
-(lirc-remotes @ 291b40f), the result in NOTES/japan.md.
+(lirc-remotes @ 291b40f), the result in DESIGN D64.
 """
 
 from __future__ import annotations

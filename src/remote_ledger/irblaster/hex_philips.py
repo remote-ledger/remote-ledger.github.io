@@ -100,7 +100,7 @@ def thomson7(hexcode: str) -> tuple[str, int, int | None, int]:
     Every one of the 29 database codes then has ``D = 12``, and five of them
     (VOL+, VOL-, MUTE, J UP, J DOWN) are exactly ``D=12`` with ``F`` = 74, 42,
     80, 104 and 88: the five keys that IrpTransmogrifier's own test data
-    decodes from a capture of a real Thomson remote. NOTES/philips.md has the
+    decodes from a capture of a real Thomson remote. DESIGN D63 has the
     arithmetic. The app's own mask, ``0xF7F``, also clears bit 7, the toggle's
     place in exactly this layout.
 

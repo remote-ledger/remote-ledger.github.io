@@ -83,7 +83,7 @@ def test_the_two_frames_pad_to_their_own_extents():
 
 def test_the_gap_depends_on_the_data_because_the_extent_is_fixed():
     """A constant extent means a data-dependent gap: more ones, shorter gap.
-    (The app sends a fixed 21 ms; see NOTES/japan.md.)"""
+    (The app sends a fixed 21 ms; see DESIGN D64.)"""
     zeros, ones = _encode(0, 0), _encode(255, 255)
     assert zeros.intro[-1] - ones.intro[-1] == 16 * 2 * UNIT
     assert zeros.intro[-1] == 59_080 - (8_432 + 4_216 + 32 * UNIT + UNIT)

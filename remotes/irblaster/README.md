@@ -10,9 +10,10 @@ DESIGN.md D46 to D56 describe how this one meets them.
   every file was built from is named in `IMPORT.md` and in every citation.
   The database has 9,388 remote ids, 413,331 keys and 23 protocol names.
 - **Licence: GPL-3.0-only, by inheritance and nothing more.** See `LICENSE`,
-  copied verbatim from SwiftRemote's `LICENSE`. SwiftRemote is GPL-3.0, and
-  this repository is GPL-3.0, so the data is republished under the licence it
-  arrived under. **That is the whole of R19 condition 1 for this import:
+  copied verbatim from SwiftRemote's `LICENSE`. SwiftRemote and the IR Blaster
+  project it forked are GPL-3.0, so this directory, and only this directory,
+  republishes the data under the licence it arrived under (the repository's
+  other import directories carry their own licences the same way). **That is the whole of R19 condition 1 for this import:
   nobody in the chain states a licence for the data itself, because nobody
   in the chain says where the data came from.** This is not a grant from the
   data's authors, and it is not a reading of one, as LIRC's is. If the data

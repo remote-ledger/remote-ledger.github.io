@@ -67,7 +67,7 @@ TOGGLES = {"RC5": (0, 1), "RC6": (0, 1), "Thomson7": (0, 1), "RCA_38": (None,)}
 LEDGER_TOGGLE = 0
 
 #: The framing differences that are choices rather than disagreements. Each is
-#: argued in NOTES/philips.md and is the *only* licence to differ in shape.
+#: argued in DESIGN D63 and is the *only* licence to differ in shape.
 FRAMING = {
     # The app ends a frame after RC-6's six-unit signal-free time; the IRP's
     # ^107m makes the idle the rest of the 107 ms frame period. Same marks and
@@ -142,7 +142,7 @@ def explain(record: dict) -> str:
 
     Only Thomson7 has one. The app builds its frame from the hexcode as
     ``last4 + toggle + first7`` where the hexcode is the frame in order,
-    ``first4 + toggle + last7`` (NOTES/philips.md). The claim is checkable:
+    ``first4 + toggle + last7`` (DESIGN D63). The claim is checkable:
     the app's pattern must be exactly the ledger encoding of the device and
     function that wrong order produces, for one toggle state, sent twice.
     """

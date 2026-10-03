@@ -6,7 +6,7 @@ synthetic SwiftRemote database (one remote per protocol, one key per code), the
 real importer runs over it, and the tool then compares every key, compiled
 through the written file, with the app's signal. The full run over the real
 database is ``tools/irblaster_oracle_import.py --checkout ... --oracle ...``;
-its numbers are in NOTES/import-design.md.
+its numbers are in DESIGN section 17.
 
 The tool is tested as a tool: each test that breaks the import in one way
 checks it is reported, so a green run means something.

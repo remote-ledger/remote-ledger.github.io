@@ -117,19 +117,19 @@ for _m in MODULES:
 # Nothing else about a signal is forgiven. Each entry cites the note that argues it.
 
 #: The app's three Sharp/Denon frames are the IRP's intro plus one pass of its
-#: repeat (NOTES/japan.md); the file's minSends of 1 plays the intro only.
+#: repeat (DESIGN D64); the file's minSends of 1 plays the intro only.
 FULL_SIGNAL = frozenset({"Sharp", "Denon"})
-#: The app's legacy NEC path stops at the last mark (NOTES/nec.md, disagreement 3).
+#: The app's legacy NEC path stops at the last mark (DESIGN D61, disagreement 3).
 DROP_FINAL = frozenset({"NEC"})
 #: The app uses one constant idle gap per protocol where the IRP pads to an
-#: extent; a gap is compared on its own and counted (NOTES/japan.md).
+#: extent; a gap is compared on its own and counted (DESIGN D64).
 GAPS_FREE = frozenset({"JVC", "Pioneer", "Sharp", "Denon"})
 #: Ledger protocols whose final gap the app sets to its own constant: Samsung36
-#: (NOTES/misc.md 3.2) and the REC80 vendors whose IRP gap is not Panasonic's
-#: 173 units (NOTES/unknown.md, disagreement 2).
+#: (DESIGN D65) and the REC80 vendors whose IRP gap is not Panasonic's
+#: 173 units (DESIGN D66, disagreement 2).
 LEADOUT_FREE = frozenset({"Samsung36", "Fujitsu", "Teac-K", "SharpDVD"})
 #: RC6's idle after a frame is the rest of 107 ms, the app's the standard's six
-#: units: the ledger's final space must be at least the app's (NOTES/philips.md).
+#: units: the ledger's final space must be at least the app's (DESIGN D63).
 FINAL_AT_LEAST = frozenset({"RC6"})
 #: Protocols with a toggle bit the file cannot carry (D3b): the file compiles
 #: T=0, the app's preview shows T=1; either may match.
