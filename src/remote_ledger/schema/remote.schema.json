@@ -238,6 +238,11 @@
         "forms"
       ],
       "properties": {
+        "label": {
+          "description": "The text the source shows for this key; display only, never an identifier. The key's name (the property that holds this object) is what every other part of the ledger refers to; two keys may carry the same label.",
+          "type": "string",
+          "minLength": 1
+        },
         "forms": {
           "description": "Partitioned into candidate groups by the 'candidate' tag (D16). Order is semantic: D7's final precedence tie-break is array position.",
           "type": "array",

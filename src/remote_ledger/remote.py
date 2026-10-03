@@ -65,6 +65,9 @@ class Remote:
     keys: dict[str, list[Form]]
     variants: dict[str, Variant]
     raw: dict[str, Any]
+    #: Key name -> the key's optional display ``label``: the text the source
+    #: shows for it. Only keys that have one are present. Never an identifier.
+    labels: dict[str, str] = field(default_factory=dict)
 
     @property
     def where(self) -> str:
@@ -174,8 +177,11 @@ def remote_from_doc(
     variants = load_variants(doc.get("variants"))
 
     keys: dict[str, list[Form]] = {}
+    labels: dict[str, str] = {}
     for key, spec in doc.get("keys", {}).items():
         raw_forms = spec["forms"]
+        if "label" in spec:
+            labels[key] = spec["label"]
         if expand_variants:
             fresh = expand(key, load_forms(key, raw_forms), variants)
             raw_forms, _ = merge_expansions(raw_forms, fresh)
@@ -189,4 +195,5 @@ def remote_from_doc(
         keys=keys,
         variants=variants,
         raw=doc,
+        labels=labels,
     )

@@ -13,6 +13,7 @@ ever typed in, or that afternoon gets repeated.
 
 from __future__ import annotations
 
+import json
 import re
 from dataclasses import dataclass
 from pathlib import Path
@@ -100,8 +101,8 @@ def _render_remote(
     remote: dict[str, Any], matched_on: str, keys: Mapping[str, Any]
 ) -> list[str]:
     """``keys`` is the remote's compiled artifact's key map: since D40 the
-    index carries identity and roll-ups only, and per-key detail lives in
-    each remote's own artifact."""
+    index carries identity and roll-ups only, and per-key detail (each key's
+    optional display label included) lives in each remote's own artifact."""
     lines = [
         f"{remote['manufacturer']} {remote['model']}"
         + (f"  [{remote['confidence']}]" if remote.get("confidence") else "")
@@ -127,7 +128,11 @@ def _render_remote(
 
     for key in sorted(keys):
         candidates = keys[key]["candidates"]
-        lines.append(f"  {key}")
+        # The source's own label, quoted so that its spaces and any control
+        # character show; present only on a key that has one.
+        key_label = keys[key].get("label")
+        lines.append(f"  {key}" if key_label is None else
+                     f"  {key}  {json.dumps(key_label, ensure_ascii=False)}")
         for name in sorted(candidates, key=lambda n: (n != "primary", n)):
             entry = candidates[name]
             label = entry.get("label", name)

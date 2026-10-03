@@ -80,6 +80,12 @@ def payload(root: Path) -> tuple[dict[str, Any], dict[str, Any]]:
             "minSends": remote.protocol.min_sends,
             "css": _grid_rules(where, layouts),
         }
+        # A key's display label (what the source shows for it), beside `keys`
+        # rather than inside it, where a candidate's name could collide with
+        # it. Only for a remote that has any, so the script of every other
+        # remote is byte for byte what it was before the field existed.
+        if remote.labels:
+            extra[where]["labels"] = dict(sorted(remote.labels.items()))
     return index, extra
 
 
@@ -170,6 +176,11 @@ button.more { font: inherit; font-size: 0.8rem; padding: 3px 10px;
 .absent { color: var(--muted); padding: 24px 0; }
 footer { color: var(--muted); font-size: 0.8rem; margin-top: 40px;
   border-top: 1px solid var(--line); padding-top: 14px; }
+"""
+
+#: Shown only on a page whose ledger has key labels (:func:`page_parts`).
+LABEL_STYLE = """.key h3 .klabel { font-family: ui-sans-serif, system-ui, sans-serif;
+  font-weight: 400; color: var(--muted); }
 """
 
 SCRIPT = r"""
@@ -329,7 +340,36 @@ run();
 """
 
 
-def render_html(index: dict[str, Any]) -> str:
+#: The line of SCRIPT that shows a key's name, and what it becomes on a page
+#: whose ledger has key labels: the label, when the key has one, beside the name.
+_KEY_HEAD = "    html += `<div class=\"key\"><h3>${esc(key)}</h3>`;\n"
+_KEY_HEAD_LABELLED = (
+    "    const label = (extra.labels || {})[key];\n"
+    "    html += `<div class=\"key\"><h3>${esc(key)}` +\n"
+    "      (label === undefined ? '' : ` <span class=\"klabel\">${esc(label)}</span>`) +"
+    " `</h3>`;\n"
+)
+
+
+def page_parts(labelled: bool) -> tuple[str, str]:
+    """``(style, script)`` of the page.
+
+    The code that shows key labels is part of the page only when some remote in
+    the ledger has one (``labelled``), so a ledger without any generates the
+    very page it did before the field existed, and ``rl build --check`` has
+    nothing to say about it. The edit is one line of SCRIPT, asserted to be
+    there exactly once, so a change to that line cannot silently drop it.
+    """
+    if not labelled:
+        return STYLE, SCRIPT
+    if SCRIPT.count(_KEY_HEAD) != 1:
+        raise RuntimeError("the line that renders a key's name is not in SCRIPT once")
+    return STYLE + LABEL_STYLE, SCRIPT.replace(_KEY_HEAD, _KEY_HEAD_LABELLED)
+
+
+def render_html(index: dict[str, Any], *, labelled: bool = False) -> str:
+    """``labelled``: some remote in the ledger has key labels (:func:`page_parts`)."""
+    style, script = page_parts(labelled)
     embedded = {
         "remotes": index["remotes"],
         "unresolved": index["unresolved"],
@@ -341,7 +381,7 @@ def render_html(index: dict[str, Any]) -> str:
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{TITLE}</title>
-<style>{STYLE}</style>
+<style>{style}</style>
 </head>
 <body>
 <main>
@@ -362,7 +402,7 @@ returns nothing at all is one nobody has looked up yet.
 </footer>
 </main>
 <script type="application/json" id="ledger">{json_payload(embedded)}</script>
-<script>{SCRIPT}</script>
+<script>{script}</script>
 </body>
 </html>
 """
@@ -372,8 +412,9 @@ def build_site(root: Path, out_root: Path) -> list[str]:
     index, extra = payload(root)
     target = out_root / "site"
     target.mkdir(parents=True, exist_ok=True)
+    labelled = any("labels" in data for data in extra.values())
     (target / "index.html").write_text(
-        render_html(index), encoding="utf-8", newline="\n"
+        render_html(index, labelled=labelled), encoding="utf-8", newline="\n"
     )
     # D20: the same serializer, so this is byte-identical to build/index.json.
     (target / "index.json").write_text(dumps(index), encoding="utf-8", newline="\n")

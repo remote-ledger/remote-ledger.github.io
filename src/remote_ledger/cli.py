@@ -134,7 +134,8 @@ def compiled_artifact(remote) -> dict:
     holds no non-reproducible value is what makes ``--check`` viable at all.
     ``minSends`` sits once at the protocol level, not per key -- it is a fact
     about the hardware, and a consumer repeating the Pronto repeat sequence
-    needs it exactly once (D3a).
+    needs it exactly once (D3a). A key's optional display ``label`` (what the
+    source shows for it) rides beside its candidates, only when it has one.
     """
     protocol = {
         "carrierHz": remote.protocol.carrier_hz,
@@ -159,6 +160,10 @@ def compiled_artifact(remote) -> dict:
                 entry["label"] = remote.variants[name].label
             candidates[name] = entry
         keys[key] = {"candidates": candidates}
+        # Only a key that has one: a file without labels compiles to the very
+        # bytes it did before the field existed.
+        if key in remote.labels:
+            keys[key]["label"] = remote.labels[key]
 
     return {
         "schemaVersion": 1,
