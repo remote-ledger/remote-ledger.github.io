@@ -14,6 +14,7 @@ VECTORS = Path(__file__).parent / "vectors"
 VECTOR_INDEX = VECTORS / "index.json"
 V1_REGISTRY = {"NEC1", "NECx2", "RC5", "Sony20"}
 V1_REGISTRY |= {"NEC2", "NECx1"}
+V1_REGISTRY |= {"Pioneer-2Part", "JVC", "Sharp", "Denon"}  # the japan family
 BACKLOG = {"NEC2", "NEC", "Sony12", "Sony15", "RC6"}
 BACKLOG -= {"NEC2"}
 # The SwiftRemote database import registered the other two Sony widths

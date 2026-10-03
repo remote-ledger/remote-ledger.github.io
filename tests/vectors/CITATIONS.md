@@ -499,3 +499,86 @@ of every duration, and what ratio the capture sits at.
   (`329`, `32A`, `305`, `30B`, `30D`), read as the frame in transmission order,
   are exactly the capture's `D=12`, `F=74, 42, 80, 104, 88`. See
   `NOTES/philips.md`: SwiftRemote's own encoder does not read them that way.
+## The japan family: Pioneer-2Part, JVC, Sharp, Denon
+
+Added for the SwiftRemote database import (`NOTES/japan.md` has the
+decisions and what is not proven). Each IRP is quoted verbatim in its module
+under `src/remote_ledger/protocols/`.
+
+| Protocol | Gate 1: IRP source | Gate 2a: structure | Gate 2b: timings | Gate 3 |
+|---|---|---|---|---|
+| Pioneer-2Part | IrpTransmogrifier `IrpProtocols.xml` @`c945e76` L2060 | two IrScope captures of a Pioneer receiver, `PioneerMix2.ict` | **reproducible**: 1.2.14 `render`, D0=170 F0=91 D=175 F=36 | `tests/test_pioneer.py` |
+| JVC | same file, L1207 | `JVC.ict`, D=5 F=0 and F=19 | **reproducible**: 1.2.14 `render`, D=5 F=19 | `tests/test_jvc.py` (all 65,536 pairs) |
+| Sharp | same file, L2461 | `Sharp_Pronto.txt`, 'Power' D=1 F=22 and 'Input Cycle' D=1 F=19 | **reproducible**: 1.2.14 `render`, D=1 F=22 | `tests/test_sharp.py` (all 8,192 pairs) |
+| Denon | same file, L494 | `Denon.ict`, D=8 F=175, 129 and 187; plus IrpTransmogrifier's own Denon Pronto string | **reproducible**: 1.2.14 `render`, D=8 F=175 | `tests/test_denon.py` (all 8,192 pairs) |
+
+**Gate 1.** The four IRP strings are identical in the 1.2.14 release's
+`IrpProtocols.xml` (the file the vectors were rendered from) and in the file
+at `c945e76`, where the other ledger citations are pinned; only the line
+numbers differ. `Pioneer-2Part` is registered and plain `Pioneer` is not:
+every SwiftRemote database code sends two frames, and the 2-part IRP covers
+all of them (the degenerate case, equal halves, renders to the same two
+frames). The registry holds only what something uses (D18).
+
+**Gate 2a: IrpTransmogrifier's teaser files.** `src/test/teaserfiles` @`c945e76`
+publishes captures with the decode IrpTransmogrifier expects for each (the
+`.exp` files). `tests/vectors/irpt_teaser_japan.json` keeps the first signal of
+nine of them with their published decodes (the files are cited, not vendored
+whole); `tests/teaser_japan.py` feeds each decode's parameters to our encoder
+and compares layout and durations. Two are measured: the Pioneer receiver
+(a 40.16 kHz IrScope capture with its own bias, a 548 us mark against 564) and
+the Denon receiver (37.4 kHz, marks 254-292 us). `JVC.ict`'s durations are
+exact multiples of 525 us, so it reads as generated, and `Sharp_Pronto.txt`
+is a Pronto-hex export. All of them are therefore weaker than a published
+constant table: they verify the **ratios, the field layout and the bit order**,
+with the oracle tolerance (12 % or 150 us) and never the idle gaps, because a
+gap depends on the extent and not on the protocol. A swapped bit order or a
+wrong complement still fails them by a factor of two to three, and each test
+file has a case that proves it.
+
+**Gate 2b: what was searched, and why none is published.** The 1.2.14 release
+is the source of all four vectors, so `test_registry` warns about them as it
+does about NECx2. IrpTransmogrifier's test sources @`c945e76` were searched for
+`Denon`, `Sharp`, `JVC` and `Pioneer`:
+
+- `ShortProntoNGTest.java` L21 holds a Denon Pronto string and asserts
+  `long2short` leaves it unchanged. Its parameters are not stated, and
+  IrpTransmogrifier decodes it as `{D=1,F=3}`. It is the *superseded* form of
+  the IRP, a fixed 165-unit (43,560 us) gap after each frame, not the `^67m`
+  form the database now carries, so its gap words cannot match this encoder.
+  `tests/test_denon.py` checks every mark and space against it and the gaps
+  against what it should differ in.
+- `DecoderNGTest.testDecodePioneer` asserts a decode of one plain-`Pioneer`
+  frame, with no parameters stated.
+- `ProtocolNGTest` builds `sharp` and `denon` from the superseded IRPs and
+  asserts nothing about their rendering.
+
+Nothing asserts a render of `Pioneer-2Part`, `JVC`, `Sharp`, or the live
+`Denon`. Parameters were chosen from published real-world decodes (the Pioneer
+receiver's Setup key, a JVC `.exp` entry, Sharp's Power code, Denon's `left`
+key), so the *parameter values* are cited even though the waveform is generated.
+
+**Reproduce:** `java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar
+render -n D0=170,F0=91,D=175,F=36 -p Pioneer-2Part` and likewise `-n D=5,F=19
+-p JVC`, `-n D=1,F=22 -p Sharp`, `-n D=8,F=175 -p Denon`.
+
+**Wider than one vector.** `tests/vectors/irpt_render_sweeps_japan.json` holds 34
+parameter sets per protocol (corners, the published decodes, a seeded random
+sample) rendered by the same jar in signed microseconds (`render -r`), and
+`tests/test_irpt_sweeps_japan.py` requires every intro and repeat duration to
+be identical: 136 renders, 0 differences. That checks the encoders against
+IrpTransmogrifier's implementation of the IRP over the whole parameter range,
+including every extent-padded gap, with no Pronto quantization in between.
+
+**Where our bytes differ from the vectors** (D6 rule 4 against the tool's
+nominal-carrier rule; all timings agree exactly under the tool's own rule):
+
+| Vector | Our bytes differ at | Why |
+|---|---|---|
+| Denon, Sharp | words 35, 67, 99 (the three lead-out gaps), by 1 to 2 cycles | rounding of a long gap against the word's period |
+| JVC | words 4, 39, 73 (lead-in mark, two gaps), by 1, 3 and 4 cycles | the frequency word `006D` implies a 38.03 kHz period; the tool rounds against 37.9 kHz |
+| Pioneer-2Part | 201 of 208 words: the lead-in mark and every bit mark and space | at 40 kHz a 564 us unit is 22.56 cycles; D6 rounds against the word's 25.09 us period to 22, the tool against the nominal carrier to 23. The 8-unit lead-in space and both gaps agree |
+
+The Pioneer figure is a property of D6 rule 4 at 40 kHz and 564 us, not of
+this protocol's constants; it does not occur at 38 kHz or 38.4 kHz, where the
+two roundings agree for 564 us.
