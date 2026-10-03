@@ -539,7 +539,8 @@ def build_parser() -> argparse.ArgumentParser:
     f.set_defaults(func=cmd_fmt)
 
     ix = sub.add_parser(
-        "index", help="regenerate build/index.json (R14)", parents=[common]
+        "index", help="regenerate build/index.json and build/index/ (R14, D57)",
+        parents=[common]
     )
     ix.add_argument("--check", action="store_true", help="diff instead of write")
     ix.set_defaults(func=cmd_index)
