@@ -16,6 +16,10 @@ V1_REGISTRY = {"NEC1", "NECx2", "RC5", "Sony20"}
 V1_REGISTRY |= {"NEC2", "NECx1"}
 BACKLOG = {"NEC2", "NEC", "Sony12", "Sony15", "RC6"}
 BACKLOG -= {"NEC2"}
+# The SwiftRemote database import registered the other two Sony widths
+# (tests/vectors/CITATIONS.md); appended rather than edited into the sets above.
+V1_REGISTRY |= {"Sony12", "Sony15"}
+BACKLOG -= {"Sony12", "Sony15"}
 #: Not backlogged -- `Samsung32` does not exist in any consulted source, and
 #: the question it stood for is now answered: the BN59-01199F speaks NECx2,
 #: per IRDB (device 7, subdevice 7) and corroborated by IRremoteESP8266's
