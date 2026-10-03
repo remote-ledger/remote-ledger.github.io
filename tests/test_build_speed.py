@@ -37,6 +37,16 @@ from remote_ledger.validate import (
 
 ROOT = Path(__file__).resolve().parents[1]
 
+# CPython 3.12 counts the threads of the process before fork() and warns when
+# there is more than one. Between two pools run back to back, the previous
+# pool's manager thread has been joined but the kernel can still list it for a
+# moment (most often on a single core), so the warning is raised for a process
+# that has no live thread besides the caller. It is shown only to a test runner;
+# the command line never sees it (DeprecationWarning, raised outside __main__).
+pytestmark = pytest.mark.filterwarnings(
+    "ignore:This process .* is multi-threaded:DeprecationWarning"
+)
+
 
 @pytest.fixture(autouse=True)
 def _clean_parallel_state(monkeypatch):
