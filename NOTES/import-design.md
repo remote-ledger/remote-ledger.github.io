@@ -257,6 +257,7 @@ Times, one core, on this machine (64 cores, 125 GB):
 | `rl build` (validate, check, compile, index, site) | **18 min 2 s** | 736 MB |
 | `rl build --check` | 17 min 44 s, 0 differences against the tree `rl build` wrote | 732 MB |
 | `tools/irblaster_oracle_import.py` (16 worker processes; 6 min 13 s of CPU) | 30 s | |
+| the whole test suite, in the scratch copy with the data and the fixes below | 3 min 7 s (1 min 37 s without the data) | 957 MB |
 
 D40 recorded 3.5 minutes for the LIRC-era tree (113,819 keys; the machine is not
 recorded). Scaled by keys that is 16 minutes for 525,084, so 18 is about linear.
@@ -381,6 +382,13 @@ codes differ (japan.md); Sony 2,838 of 2,858 differ.
 - **How the site page behaves in a browser** with the 11.5 MB island (above).
 
 ## Two tests of the existing suite that the data breaks
+
+With both fixed, the suite in the scratch copy passes but for three tests:
+`test_documented_test_count_is_current` (expected), and
+`test_setuptools_scratch_under_build_is_ignored` and
+`test_gitignore_negations_mirror_the_generator_owner_table`, which need a git
+repository and a `.gitignore` that the scratch copy does not have. Whether the
+repository's `.gitignore` needs a line for `remotes/irblaster/` was not checked.
 
 Found by running the whole suite in the scratch copy (`tests/`, `DESIGN.md`,
 `SPEC.md` copied beside the generated tree); both are fixed on this branch.
