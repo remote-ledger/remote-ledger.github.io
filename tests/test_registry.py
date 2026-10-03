@@ -14,6 +14,10 @@ VECTORS = Path(__file__).parent / "vectors"
 VECTOR_INDEX = VECTORS / "index.json"
 V1_REGISTRY = {"NEC1", "NECx2", "RC5", "Sony20"}
 BACKLOG = {"NEC2", "NEC", "Sony12", "Sony15", "RC6"}
+# --- philips family (SwiftRemote DB import): RC6 left the backlog; RCA-38 and
+# Thomson7 were never on it.
+V1_REGISTRY |= {"RC6", "RCA-38", "Thomson7"}
+BACKLOG -= {"RC6"}
 #: Not backlogged -- `Samsung32` does not exist in any consulted source, and
 #: the question it stood for is now answered: the BN59-01199F speaks NECx2,
 #: per IRDB (device 7, subdevice 7) and corroborated by IRremoteESP8266's

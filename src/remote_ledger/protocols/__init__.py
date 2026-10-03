@@ -9,9 +9,12 @@ that look like trivial variations of one already present -- ``NEC2`` and
 that basis is precisely how an unverified encoder ships.
 
 Backlog, each blocked on that gate and none scheduled: ``NEC2``, ``NEC``
-(``S`` defaulted to ``~D``), ``Sony12``, ``Sony15``, ``RC6``.
+(``S`` defaulted to ``~D``), ``Sony12``, ``Sony15``.
 
 ``RC5`` left the backlog once the Meridian MSR needed it (DESIGN section 16).
+
+``RC6`` (mode 0 only), ``RCA-38`` and ``Thomson7`` joined for the SwiftRemote
+database import, each through the same three gates (NOTES/philips.md).
 
 ``Samsung32`` is **not** backlogged -- it does not exist. D18's table carried
 an IRP string for it that was written from memory during design and never
@@ -34,6 +37,14 @@ from .sony import SONY20
 REGISTRY: dict[str, Protocol] = {p.name: p for p in (NEC1, NECX2, RC5, SONY20)}
 
 __all__ = ["Protocol", "REGISTRY", "NEC1", "NECX2", "RC5", "SONY20"]
+
+# --- philips family (SwiftRemote DB import) ---
+from .rc6 import RC6  # noqa: E402
+from .rca38 import RCA38  # noqa: E402
+from .thomson7 import THOMSON7  # noqa: E402
+
+REGISTRY.update({p.name: p for p in (RC6, RCA38, THOMSON7)})
+__all__ += ["RC6", "RCA38", "THOMSON7"]
 
 
 def get(name: str) -> Protocol:
