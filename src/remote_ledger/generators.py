@@ -41,6 +41,10 @@ class Generator:
     run: Callable[[Path, Path], list[str]] | None = None
     #: Further paths the same stage wholly owns (D69: the index's shards).
     also_owns: tuple[str, ...] = ()
+    #: Paths under ``owns`` that another stage owns (D74: the app API sits in
+    #: ``site/``). Every generated file has one owner, so the owner's diff does
+    #: not see them and a stage run alone does not call them orphans.
+    excludes: tuple[str, ...] = ()
 
     @property
     def registered(self) -> bool:
@@ -147,6 +151,13 @@ def run_site(root: Path, out_root: Path) -> list[str]:
     return build_site(root, out_root)
 
 
+def run_app(root: Path, out_root: Path) -> list[str]:
+    """Generate the app API under ``site/app/v1/`` (D74)."""
+    from .app_api import write_app_api
+
+    return write_app_api(root, out_root)
+
+
 #: Declared in pipeline order. `index` registers in Phase 5, `site` in Phase 6
 #: (DESIGN.md section 8). `index` also owns `build/index/` since D69.
 PIPELINE: tuple[Generator, ...] = (
@@ -156,7 +167,8 @@ PIPELINE: tuple[Generator, ...] = (
         name="index", owns="build/index.json", phase=5, run=run_index,
         also_owns=(f"build/{paths.SHARD_DIR}",),
     ),
-    Generator(name="site", owns="site", phase=6, run=run_site),
+    Generator(name="site", owns="site", phase=6, run=run_site, excludes=(paths.APP_API,)),
+    Generator(name="app", owns=paths.APP_API, phase=7, run=run_app),
 )
 
 
@@ -169,15 +181,16 @@ def owned_paths(stages: tuple[Generator, ...] | None = None) -> tuple[str, ...]:
     return tuple(p for g in (registered() if stages is None else stages) for p in g.paths)
 
 
-def _files_under(root: Path, owned: str) -> set[str]:
+def _files_under(root: Path, owned: str, excludes: tuple[str, ...] = ()) -> set[str]:
     target = root / owned
     if target.is_file():
         return {owned}
     if not target.is_dir():
         return set()
-    return {
+    found = {
         p.relative_to(root).as_posix() for p in target.rglob("*") if p.is_file()
     }
+    return {f for f in found if not any(f.startswith(e + "/") for e in excludes)}
 
 
 def diff_tree(
@@ -196,9 +209,10 @@ def diff_tree(
     orphan against it.
     """
     problems: list[str] = []
-    for owned in owned_paths(owned_by):
-        committed = _files_under(root, owned)
-        generated = _files_under(fresh_root, owned)
+    stages = registered() if owned_by is None else owned_by
+    for owned, excludes in ((p, g.excludes) for g in stages for p in g.paths):
+        committed = _files_under(root, owned, excludes)
+        generated = _files_under(fresh_root, owned, excludes)
         for orphan in sorted(committed - generated):
             problems.append(f"{orphan}: orphaned -- no generator produces it")
         for missing in sorted(generated - committed):

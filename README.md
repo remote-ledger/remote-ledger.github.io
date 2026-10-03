@@ -7,8 +7,9 @@ and not just a guess someone copied from a forum.
 
 **Status:** v1 is built — all seven phases of [DESIGN.md](DESIGN.md) §8.
 Schema, compiler, cross-check, layouts, a generated index, an offline
-lookup and a static site, with CI gating the whole generated tree for drift
-*and* orphans.
+lookup and a static site (which also serves the SwiftRemote app's API under
+`site/app/v1/`), with CI gating the whole generated tree for drift *and*
+orphans.
 
 28 protocols (NEC1, NECx2, RC5 and Sony20, then 24 more added to read the
 IR Blaster database, DESIGN.md §18) and **all three seed remotes

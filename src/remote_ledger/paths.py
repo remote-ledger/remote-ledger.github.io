@@ -77,6 +77,15 @@ def shard_script(name: str, key: str) -> str:
 INDEX_INPUTS = f"{SHARD_DIR}/inputs.json"
 
 
+#: The app API's tree (D74), relative to the repository. The ``app`` stage owns
+#: it; the ``site`` stage owns the rest of ``site/`` and says so by excluding it,
+#: so every generated file has exactly one owner.
+APP_API = "site/app/v1"
+
+#: The import root the app API is a function of.
+APP_API_SOURCE = "remotes/irblaster/"
+
+
 def rel(root: Path, path: Path) -> str:
     """A remote's path relative to the corpus root, as POSIX text.
 

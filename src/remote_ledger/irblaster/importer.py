@@ -247,6 +247,65 @@ def controls_entry(brand: str, model: str) -> str:
     return f"{brand}{CONTROLS_SEP}{model}"
 
 
+def split_controls_entry(entry: str) -> tuple[str, str]:
+    """``<BRAND> | <MODEL>`` back into ``(brand, model)``: the exact inverse of
+    :func:`controls_entry` (D56b), and the one place the format is read.
+
+    Raises ``ValueError`` for an entry with no separator, which an imported
+    file never has."""
+    brand, sep, model = entry.partition(CONTROLS_SEP)
+    if not sep:
+        raise ValueError(f"{entry!r} is not '<BRAND>{CONTROLS_SEP}<MODEL>'")
+    return brand, model
+
+
+# --- the citation (D51) ---------------------------------------------------------------
+
+#: What a key's citation looks like, and the only place that says so. The label
+#: is free text (quotes, spaces, tabs, ``??``), so it is matched greedily up to
+#: the *last* ``'``: everything after it is a hexcode, a DB protocol name, the
+#: ``HOW`` phrase and a ledger protocol name, none of which can hold a quote
+#: (``[^']*`` for the phrase makes that a rule, not a habit), so the last quote
+#: is always the one the importer wrote and a label cannot move the split.
+_CITATION = re.compile(
+    r"irblaster-db@(?P<sha>[0-9a-f]{7}) remote (?P<id>[0-9]+), "
+    r"'(?P<label>.*)' (?P<hex>[0-9A-Za-z]+) (?P<protocol>[A-Za-z0-9_]+): "
+    r"(?P<how>[^']*) as (?P<ledger>[A-Za-z0-9_-]+)",
+    re.DOTALL,
+)
+
+
+def format_citation(sha: str, db_id: int, label: str, hexcode: str,
+                    protocol: str, ledger: str) -> str:
+    """A key's ``source`` (D51): the only place the shape is written."""
+    return (f"{UPSTREAM}@{sha} remote {db_id}, '{label}' "
+            f"{hexcode} {protocol}: {HOW[protocol]} as {ledger}")
+
+
+def parse_citation(source: str) -> tuple[int, str, str, str]:
+    """``(db_id, label, hexcode, db_protocol)`` of a key's citation (D51): the
+    inverse of :func:`format_citation`, and the one parser of the format.
+
+    Raises ``ValueError`` for text that is not one. Everything the app API
+    knows about a key beyond its label comes through here, so
+    ``tests/test_app_api.py`` runs it over every key of the committed tree and
+    requires the label to equal the key's own ``label`` and the hexcode and the
+    protocol to be the ones the form's fields read back from.
+    """
+    m = _CITATION.fullmatch(source)
+    if m is None:
+        raise ValueError(f"{source!r} is not an irblaster-db citation (D51)")
+    return int(m["id"]), m["label"], m["hex"], m["protocol"]
+
+
+def citation_commit(source: str) -> str:
+    """The seven-character commit a citation names."""
+    m = _CITATION.fullmatch(source)
+    if m is None:
+        raise ValueError(f"{source!r} is not an irblaster-db citation (D51)")
+    return m["sha"]
+
+
 def model_name(db_id: int, ledger: str) -> str:
     return f"{MODEL_PREFIX} {db_id} ({ledger})"
 
@@ -433,11 +492,49 @@ def _fields(fields: tuple) -> str:
     return f"{name} D={device} S={sub} F={function}"
 
 
+def report_totals(text: str) -> dict[str, int]:
+    """The ``## Totals`` table of ``IMPORT.md`` as ``{row label: count}``: what
+    :meth:`Report.render` wrote, read back (the app API reports the keys the
+    import could not represent from here, since the tree holds no trace of a
+    key it refused). Empty for text with no such table."""
+    out: dict[str, int] = {}
+    in_totals = False
+    for line in text.splitlines():
+        if line.startswith("## "):
+            in_totals = line == "## Totals"
+        elif in_totals and (m := re.fullmatch(r"\| (.+?) \| ([0-9,]+) \|", line)):
+            out[m[1]] = int(m[2].replace(",", ""))
+    return out
+
+
 def _cell(value: Any) -> str:
     """A table cell, in a code span when that is safe."""
     text = " ".join(str(value).split()) or " "
     text = text.replace("|", "\\|")
     return text if "`" in text or not text.strip() else f"`{text}`"
+
+
+def app_reading_of(protocol: str, hexcode: str, wire: tuple):
+    """``None`` when SwiftRemote reads a code as the ledger does (``wire`` is the
+    ledger's ``(ledger protocol, D, S, F)``), else ``(wire, app fields or None)``;
+    ``None`` as the second member is a code the app's reading cannot send as a
+    frame at all (D55)."""
+    if FROM_DB_HEX_APP.get(protocol) is FROM_DB_HEX[protocol]:
+        return None
+    try:
+        app = tuple(FROM_DB_HEX_APP[protocol](hexcode))
+    except (ValueError, KeyError):
+        return wire, None
+    return None if app == wire else (wire, app)
+
+
+def app_reading_differs(protocol: str, hexcode: str) -> bool:
+    """Whether SwiftRemote's own reading of one code is not the wire reading the
+    ledger holds, computed from the two tables and nothing else. The app API
+    states it per DB protocol (``appReadingDiffers``) as "true when it is true
+    of any code present". Raises ``ValueError`` for a code the wire reading
+    itself refuses, which no committed key has."""
+    return app_reading_of(protocol, hexcode, tuple(FROM_DB_HEX[protocol](hexcode))) is not None
 
 
 # --- one id ------------------------------------------------------------------------
@@ -514,14 +611,8 @@ class Importer:
     def app_reading(self, protocol: str, hexcode: str, mapped: Mapped):
         """``None`` when SwiftRemote reads the code as the ledger does, else
         ``(wire fields, app fields or None)`` (D55)."""
-        if FROM_DB_HEX_APP.get(protocol) is FROM_DB_HEX[protocol]:
-            return None
-        wire = (mapped.ledger, mapped.device, mapped.subdevice, mapped.function)
-        try:
-            app = tuple(FROM_DB_HEX_APP[protocol](hexcode))
-        except (ValueError, KeyError):
-            return wire, None
-        return None if app == wire else (wire, app)
+        return app_reading_of(
+            protocol, hexcode, (mapped.ledger, mapped.device, mapped.subdevice, mapped.function))
 
     # -- one remote id ---------------------------------------------------------
 
@@ -596,8 +687,7 @@ class Importer:
                 form["subdevice"] = mapped.subdevice
             form["function"] = mapped.function
             form["confidence"] = TIER
-            form["source"] = (f"{UPSTREAM}@{self.sha} remote {db_id}, '{label}' "
-                              f"{hexcode} {protocol}: {HOW[protocol]} as {ledger}")
+            form["source"] = format_citation(self.sha, db_id, label, hexcode, protocol, ledger)
             # D56a: the database's own label, verbatim, beside the folded name.
             keys[names[(label, hexcode, protocol)]] = {"label": label, "forms": [form]}
 

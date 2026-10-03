@@ -463,7 +463,9 @@ separately.
   confidence tiers, and citations. Works offline, no hosting, ships first.
 - **R17 — Optional: a hosted, searchable index.** A generated static site
   with search by device or by remote model. Real added value, real added
-  upkeep — gated on Open Decision 2.
+  upkeep — gated on Open Decision 2. The same generated tree carries
+  `site/app/v1/`, the static API a client app reads the imported database
+  through (DESIGN §21); it is built and checked like the rest of `site/`.
 
 ## 10. Sourcing & citation
 

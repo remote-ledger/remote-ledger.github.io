@@ -128,10 +128,10 @@ def test_a_resolved_device_leaves_unresolved_json():
 def test_every_generator_is_registered():
     """D19 in full: the gate widened by itself at Phases 3, 5 and 6, each
     time by registering a generator rather than editing CI."""
-    assert {g.name for g in registered()} == {"check", "compile", "index", "site"}
+    assert {g.name for g in registered()} == {"check", "compile", "index", "site", "app"}
     assert set(owned_paths()) == {
         "build/warnings.json", "build/pronto", "build/index.json",
-        "build/index", "site",
+        "build/index", "site", "site/app/v1",
     }
     assert [g.name for g in PIPELINE if not g.registered] == []
 

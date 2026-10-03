@@ -383,6 +383,47 @@ def cmd_site(args: argparse.Namespace) -> int:
     return EXIT_OK
 
 
+def cmd_app(args: argparse.Namespace) -> int:
+    """D74. The app API under ``site/app/v1/``, from ``remotes/irblaster/``.
+    Corpus-wide, so a path-scoped run may not write it (D19)."""
+    import shutil
+    import tempfile
+
+    from .app_api import build_app_api, write_result
+
+    root = _repo_root()
+    built = build_app_api(root)
+    if built.problems:
+        for message in built.problems:
+            print(f"ERROR {message}", file=sys.stderr)
+        return EXIT_ERROR
+    stats = built.stats
+    if stats:
+        skipped = stats["unrepresentedKeys"]
+        print(
+            f"{stats['files']:,} files, {stats['bytes']:,} bytes: {stats['brands']:,} brands, "
+            f"{stats['models']:,} models, {stats['remotes']:,} remotes, {stats['keys']:,} keys; "
+            f"signals for {', '.join(stats['signalProtocols']) or 'no protocol'}; "
+            f"{stats['power']:,} power codes; keys the import could not represent and the API "
+            f"therefore lacks: {'unknown (no IMPORT.md)' if skipped is None else f'{skipped:,}'}; "
+            f"dataVersion {stats['dataVersion']}"
+        )
+    else:
+        print("no imported remote under remotes/irblaster/, so there is no API")
+    if args.check:
+        out = Path(tempfile.mkdtemp(prefix="rl-app-"))
+        try:
+            write_result(built, out)
+            drift = diff_tree(root, out, tuple(g for g in PIPELINE if g.name == "app"))
+            for message in drift:
+                print(f"ERROR {message}", file=sys.stderr)
+            return EXIT_ERROR if drift else EXIT_OK
+        finally:
+            shutil.rmtree(out, ignore_errors=True)
+    write_result(built, root)
+    return EXIT_OK
+
+
 def cmd_lookup(args: argparse.Namespace) -> int:
     """R16: find a remote by device, model, alias or manufacturer.
 
@@ -585,6 +626,12 @@ def build_parser() -> argparse.ArgumentParser:
     st = sub.add_parser("site", help="generate site/ (R17)", parents=[common])
     st.add_argument("--check", action="store_true", help="diff instead of write")
     st.set_defaults(func=cmd_site)
+
+    ap = sub.add_parser(
+        "app", help="generate site/app/v1/, the SwiftRemote app's API (D74)",
+        parents=[common])
+    ap.add_argument("--check", action="store_true", help="diff instead of write")
+    ap.set_defaults(func=cmd_app)
 
     return p
 
