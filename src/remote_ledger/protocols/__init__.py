@@ -8,8 +8,12 @@ that look like trivial variations of one already present -- ``NEC2`` and
 ``NEC`` are a few lines' difference from ``NEC1``, and waving them through on
 that basis is precisely how an unverified encoder ships.
 
-Backlog, each blocked on that gate and none scheduled: ``NEC2``, ``NEC``
+Backlog, each blocked on that gate and none scheduled: ``NEC``
 (``S`` defaulted to ``~D``), ``Sony12``, ``Sony15``, ``RC6``.
+
+``NEC2`` and ``NECx1`` left the backlog for the SwiftRemote import: each met
+the gate with IrpTransmogrifier's IRP string, a vector rendered by its 1.2.14
+release, and an invariant test.
 
 ``RC5`` left the backlog once the Meridian MSR needed it (DESIGN section 16).
 
@@ -28,12 +32,15 @@ from __future__ import annotations
 from ..errors import ValidationError
 from .base import Protocol
 from .nec import NEC1, NECX2
+from .nec import NEC2, NECX1
 from .rc5 import RC5
 from .sony import SONY20
 
 REGISTRY: dict[str, Protocol] = {p.name: p for p in (NEC1, NECX2, RC5, SONY20)}
+REGISTRY.update({p.name: p for p in (NEC2, NECX1)})
 
 __all__ = ["Protocol", "REGISTRY", "NEC1", "NECX2", "RC5", "SONY20"]
+__all__ += ["NEC2", "NECX1"]
 
 
 def get(name: str) -> Protocol:
