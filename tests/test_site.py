@@ -77,10 +77,16 @@ def test_site_index_json_is_byte_identical_to_the_build_one():
 
 
 def test_no_external_resources_are_loaded(html):
-    """No framework means none: no CDN, no font host, no fetch."""
-    assert "<script src=" not in html
-    assert "http://" not in html.split('id="ledger"')[0]
-    assert "cdn" not in html.lower()
+    """No framework means none: no CDN, no font host, no fetch.
+
+    The page is checked without its data island: the data is brand and model
+    names, and imported ones contain "cdn" as a substring of other words
+    (``ORION G 20 LCDN``)."""
+    page = ISLAND.sub("", html)
+    assert len(page) < 200_000, "the island was not cut out"
+    assert "<script src=" not in page
+    assert "http://" not in page.split('id="ledger"')[0]
+    assert "cdn" not in page.lower()
 
 
 def test_the_island_parses_and_carries_the_ledger(island):
