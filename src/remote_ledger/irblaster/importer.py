@@ -1,17 +1,34 @@
 """``rl import irblaster``: the IR Blaster database, as shipped in SwiftRemote,
 imported under SPEC R19.
 
-NOTES/import-design.md (decisions D46 to D56) is the contract; each decision is
-cited where it is implemented. In outline, the database holds ``remotes(id)``,
-``models(brand, model, id)`` and ``keys(id, label, hexcode, protocol)``. It has
-no remote model and no key names beyond a free-text label, so (D47, D48):
+NOTES/import-design.md (decisions D46 to D56, with D56a and D56b) is the
+contract; each decision is cited where it is implemented. In outline, the
+database holds ``remotes(id)``, ``models(brand, model, id)`` and
+``keys(id, label, hexcode, protocol)``. It has no remote model and no key names
+beyond a free-text label, so (D47, D48):
 
 * **one ledger remote per (database id, ledger protocol)**: a file holds one
   protocol (R3, D23), a database id may use several, and one database protocol
   (``REC80``) lands on six ledger protocols;
 * ``manufacturer`` is the id's most common brand, ``model`` a synthetic
-  ``IR Blaster DB <id> (<ledger protocol>)``, ``controls`` every
-  ``<BRAND> <MODEL>`` row of the id;
+  ``IR Blaster DB <id> (<ledger protocol>)``, and ``controls`` every ``models``
+  row of the id as ``<BRAND> | <MODEL>``: a space, a pipe, a space. **For this
+  tree ``controls`` entries are brand-and-model pairs, not free text** (D56b).
+  584 brands are several words (``ACCESS HD``, ``A TREND``), so a plain
+  ``<BRAND> <MODEL>`` cannot be taken apart again, and a consumer that needs the
+  two (SwiftRemote is to query the ledger online) must not have to guess where
+  the brand ends. The database has no pipe in any brand or model, so
+  ``entry.split(" | ", 1)`` returns the brand and the model exactly;
+  ``controls_entry`` refuses a pipe in either, and every row is checked before
+  the first file is written, so a later checkout that breaks the rule stops the
+  import instead of producing entries that cannot be split. Search ignores
+  spaces and punctuation (``lookup.normalise``), so ``sony kd 49x8088`` still
+  finds ``SONY | KD - 49 X 8088``;
+* every key carries the database label verbatim as its ``label`` (D56a): the
+  text SwiftRemote shows for the key, with its case, spacing and symbols, ``??``
+  included. The key *name* is that label folded mechanically (D49) and is the
+  identifier; the label is for display, search and ranking, never an
+  identifier;
 * every key holds one ``plausible`` ``irp`` form (D50), whose parameters come
   from the *wire reading* of the hexcode (``hex_*.FROM_DB_HEX``): what the data
   means, not what SwiftRemote's own encoders do with it (D50). The places where
@@ -48,6 +65,9 @@ UPSTREAM_URL = "github.com/remote-ledger/SwiftRemote"
 #: committed ``.sqlite`` from the same file).
 INPUT = "assets/db_src/swiftremote.sql"
 IMPORT_ROOT = "remotes/irblaster"
+#: Between brand and model in a ``controls`` entry (D56b). Neither may contain a
+#: pipe, so the first occurrence is always this separator.
+CONTROLS_SEP = " | "
 REPORT = "IMPORT.md"
 TIER = "plausible"
 MODEL_PREFIX = "IR Blaster DB"
@@ -207,6 +227,24 @@ def pick_manufacturer(models: list[tuple[str, str]]) -> str:
     casing is kept (D43)."""
     counts = Counter(brand for brand, _ in models)
     return min(counts, key=lambda b: (-counts[b], b.casefold(), b))
+
+
+def controls_entry(brand: str, model: str) -> str:
+    """One ``controls`` entry: ``<BRAND> | <MODEL>`` (D56b).
+
+    The pipe is the separator, so it must not occur in either part: with none in
+    the brand, the first `` | `` of an entry is the separator whatever the model
+    holds, and ``entry.split(" | ", 1)`` is the inverse of this function. The
+    database has no pipe in any brand or model; a checkout that has one is
+    refused rather than imported into entries that cannot be split.
+    """
+    if "|" in brand or "|" in model:
+        raise ValidationError(
+            f"brand {brand!r} / model {model!r} contains a pipe, so a controls entry "
+            f"'<BRAND>{CONTROLS_SEP}<MODEL>' could not be split back into the two "
+            "(D56b); choose another separator before importing this database"
+        )
+    return f"{brand}{CONTROLS_SEP}{model}"
 
 
 def model_name(db_id: int, ledger: str) -> str:
@@ -492,7 +530,7 @@ class Importer:
         """``(target path, document)`` for every file one id yields."""
         report = self.report
         maker = pick_manufacturer(models) if models else ""
-        controls = sorted({f"{brand} {model}" for brand, model in models})
+        controls = sorted({controls_entry(brand, model) for brand, model in models})
 
         def skip(reason: str, protocol: str, hexcode: str, label: str) -> None:
             report.keys[f"skipped: {reason}"] += 1
@@ -560,7 +598,8 @@ class Importer:
             form["confidence"] = TIER
             form["source"] = (f"{UPSTREAM}@{self.sha} remote {db_id}, '{label}' "
                               f"{hexcode} {protocol}: {HOW[protocol]} as {ledger}")
-            keys[names[(label, hexcode, protocol)]] = {"forms": [form]}
+            # D56a: the database's own label, verbatim, beside the folded name.
+            keys[names[(label, hexcode, protocol)]] = {"label": label, "forms": [form]}
 
             stats = report.protocols[protocol]
             stats.imported += 1
@@ -607,6 +646,11 @@ def iter_documents(checkout: Path, commit: str, authored: dict[tuple[str, str], 
     for db_id, brand, model in con.execute(
             "SELECT id, brand, model FROM models ORDER BY id, brand, model"):
         models[db_id].append((brand, model))
+    # D56b, before any file is written: a brand or model that breaks the
+    # controls format stops the import here, not half-way through the tree.
+    for rows in models.values():
+        for brand, model in rows:
+            controls_entry(brand, model)
     importer = Importer(commit, authored, report)
     ids = [r[0] for r in con.execute("SELECT id FROM remotes ORDER BY id")]
     keys = con.execute(

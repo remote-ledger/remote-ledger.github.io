@@ -56,8 +56,8 @@ REMOTES = {
     # several brands: ACME has the most models; Sony12 power
     2: {"models": [("ZED", "Z1"), ("ACME", "A1"), ("ACME", "A2")],
         "keys": [("POWER", "A90", "SONY12")]},
-    # two DB protocols, two ledger protocols
-    # (also two models rows that spell the same "<BRAND> <MODEL>")
+    # two DB protocols, two ledger protocols (also two models rows that a
+    # plain "<BRAND> <MODEL>" would spell alike, "A B" + "C" and "A" + "B C")
     3: {"models": [("BRAND", "M"), ("BRAND", "N"), ("A B", "C"), ("A", "B C")],
         "keys": [("POWER", "20DF10EF", "NEC"), ("1", "801", "RC5")]},
     # REC80 is a bag of vendors: Panasonic and Denon-K split, one bad Panasonic
@@ -308,16 +308,63 @@ def test_manufacturer_model_controls_and_aliases(imported):
     assert one["manufacturer"] == "ACME"
     assert one["model"] == "IR Blaster DB 1 (NEC1)"
     assert one["aliases"] == []
-    # every models row, "<BRAND> <MODEL>", sorted and de-duplicated
-    assert one["controls"] == ["ACME TV-1", "ACME TV-2"]
+    # every models row, "<BRAND> | <MODEL>" (D56b), sorted
+    assert one["controls"] == ["ACME | TV-1", "ACME | TV-2"]
     two = load(ledger, "ACME/2-Sony12.json")
     assert two["manufacturer"] == "ACME"
-    assert two["controls"] == ["ACME A1", "ACME A2", "ZED Z1"]
+    assert two["controls"] == ["ACME | A1", "ACME | A2", "ZED | Z1"]
     three = load(ledger, "BRAND/3-NEC1.json")
     assert three["manufacturer"] == "BRAND"
-    assert three["controls"] == ["A B C", "BRAND M", "BRAND N"]     # one "A B C"
+    # "A B" + "C" and "A" + "B C" are two entries now; a plain "A B C" was one
+    assert three["controls"] == ["A B | C", "A | B C", "BRAND | M", "BRAND | N"]
     assert three["model"] == "IR Blaster DB 3 (NEC1)"
     assert load(ledger, "BRAND/3-RC5.json")["model"] == "IR Blaster DB 3 (RC5)"
+
+
+def test_a_controls_entry_splits_back_into_brand_and_model(imported):
+    """D56b: the point of the pipe. A brand may be several words, so the entry
+    is the only place the two are told apart."""
+    ledger, _ = imported
+    pairs = set()
+    for path in (ledger / IMPORT_ROOT).rglob("*.json"):
+        for entry in json.loads(path.read_text())["controls"]:
+            brand, model = entry.split(" | ", 1)
+            assert I.controls_entry(brand, model) == entry
+            pairs.add((brand, model))
+    # every models row of every id that wrote a file (id 6 wrote none)
+    assert pairs == {(b, m) for db_id, spec in REMOTES.items() if db_id != 6
+                     for b, m in spec["models"]}
+
+
+@pytest.mark.parametrize("brand, model, entry", [
+    ("ACME", "TV-1", "ACME | TV-1"),
+    ("A B", "C", "A B | C"),
+    ("A", "B C", "A | B C"),
+    ("SONY", "KD - 49 X 8088", "SONY | KD - 49 X 8088"),
+    ("A ", " B", "A  |  B"),            # spaces are kept, the first pipe still splits
+])
+def test_controls_entry_is_brand_pipe_model(brand, model, entry):
+    assert I.controls_entry(brand, model) == entry
+    assert entry.split(" | ", 1) == [brand, model]
+
+
+@pytest.mark.parametrize("brand, model", [
+    ("A | B", "C"), ("A", "B | C"), ("A|B", "C"), ("A", "B|C"), ("A |", "B"), ("A", "| B"),
+])
+def test_a_pipe_in_a_brand_or_model_is_refused(brand, model):
+    """The format stays parseable only while no brand or model holds a pipe."""
+    with pytest.raises(I.ValidationError, match="pipe"):
+        I.controls_entry(brand, model)
+
+
+def test_a_dump_with_a_pipe_in_a_model_writes_nothing(tmp_path, ledger):
+    root = tmp_path / "pipe"
+    (root / "assets/db_src").mkdir(parents=True)
+    remotes = {1: REMOTES[1], 2: {"models": [("ACME", "A | B")], "keys": REMOTES[2]["keys"]}}
+    (root / "assets/db_src/swiftremote.sql").write_text(sql_text(remotes), encoding="utf-8")
+    with pytest.raises(I.ValidationError, match="pipe"):
+        write_import(ledger, root, COMMIT)
+    assert not (ledger / IMPORT_ROOT).exists()     # refused before any file was written
 
 
 def test_the_brand_that_is_no_directory_name_is_a_safe_one(imported):
@@ -379,6 +426,58 @@ def test_a_label_that_folds_alike_on_several_codes_names_every_member_by_its_cod
     # the original label, with its spacing, is in the citation
     assert "'VOL +' 20DF807F NEC" in keys["KEY_VOL_PLUS_20DF807F"]["forms"][0]["source"]
     assert "'ok' 20DF22DD NEC" in keys["KEY_OK_20DF22DD_2"]["forms"][0]["source"]
+
+
+def test_every_key_carries_the_database_label_verbatim(imported):
+    """D56a: the label is what the source shows, not what the name folds to."""
+    ledger, _ = imported
+    seen = 0
+    for path in (ledger / IMPORT_ROOT).rglob("*.json"):
+        doc = json.loads(path.read_text())
+        db_id = int(path.name.split("-")[0])
+        db_labels = {label for label, _h, _p in REMOTES[db_id]["keys"]}
+        for name, spec in doc["keys"].items():
+            seen += 1
+            assert list(spec) == ["label", "forms"], name        # `label`, then `forms`
+            assert spec["label"] in db_labels
+            # ... and it is the one the citation (kept as it was) names
+            assert f", '{spec['label']}' " in spec["forms"][0]["source"]
+    assert seen == 20
+
+
+def test_labels_keep_their_case_spacing_and_symbols_where_the_name_folds_them(imported):
+    ledger, _ = imported
+    keys = load(ledger, "DUP/5-NEC1.json")["keys"]
+    labels = {name: spec["label"] for name, spec in keys.items()}
+    assert labels == {
+        "KEY_A_B": "A B",
+        "KEY_A_MINUS_B": "A-B",
+        "KEY_OK_20DF22DD": "OK",
+        "KEY_OK_20DF22DD_2": "ok",              # two keys whose names fold alike
+        "KEY_POWER": "POWER",
+        "KEY_UNLABELED_20DF08F7": "??",         # the database's own "unknown", verbatim
+        "KEY_UNLABELED_20DF8877": "??",
+        "KEY_VOL_PLUS_20DF40BF": "VOL+",
+        "KEY_VOL_PLUS_20DF807F": "VOL +",
+        "KEY_VOL_PLUS_20DFC03F": "VOL+",        # two keys, one label: fine, it names nothing
+    }
+    assert load(ledger, "ACME/1-NEC1.json")["keys"]["KEY_VOL_MINUS"]["label"] == "VOL-"
+
+
+def test_a_label_is_written_exactly_even_when_it_is_odd(tmp_path, ledger):
+    """A tab and trailing spaces occur in the real database (``'1 \\t\\t\\t'``)."""
+    root = tmp_path / "odd"
+    (root / "assets/db_src").mkdir(parents=True)
+    odd = ["1 \t\t\t", " I 6", "STEREO / LANG. ", "'quoted' \"x\" \\", "⏩", "Ünïcode", "[ | ]"]
+    keys = [(label, f"20DF{i:02X}{255 - i:02X}", "NEC") for i, label in enumerate(odd)]
+    (root / "assets/db_src/swiftremote.sql").write_text(
+        sql_text({1: {"models": [("ACME", "TV")], "keys": keys}}), encoding="utf-8")
+    write_import(ledger, root, COMMIT)
+    doc = load(ledger, "ACME/1-NEC1.json")
+    assert sorted(spec["label"] for spec in doc["keys"].values()) == sorted(odd)
+    path, = (ledger / IMPORT_ROOT).rglob("*.json")
+    assert [str(p) for p in validate_file(path)] == []
+    assert load_remote(path).labels == {n: s["label"] for n, s in doc["keys"].items()}
 
 
 CITATION = re.compile(

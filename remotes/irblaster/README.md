@@ -38,7 +38,26 @@ the key's label and hexcode and its database protocol.
   6,000 of them for the largest. R2 wants `model` to identify the remote, and
   it cannot here, as with SmartIR (D43). `model` is `IR Blaster DB <id>
   (<ledger protocol>)`, `manufacturer` is the id's most common brand, and
-  `controls` lists every `<BRAND> <MODEL>` the id is filed under.
+  `controls` lists every product the id is filed under.
+- **In this tree, `controls` entries are `<BRAND> | <MODEL>` pairs**: the
+  brand, a space, a pipe, a space, the model (`SONY | KD - 49 X 8088`). Elsewhere
+  in the ledger `controls` is free text, a list of product names. Here it is
+  data with a shape, because the database keeps brand and model apart and a
+  consumer that queries the ledger (SwiftRemote is to do so online) needs them
+  apart: 584 of the database's brands are several words (`ACCESS HD`,
+  `A TREND`), so a plain `<BRAND> <MODEL>` cannot be split back except by
+  guessing where the brand ends. The database has no pipe in any of its brands
+  or models, so `entry.split(" | ", 1)` returns the brand and the model
+  exactly; the importer refuses a database that has one (D56b). Search ignores
+  spaces and punctuation, so a person who types `sony kd 49x8088` still finds
+  `SONY | KD - 49 X 8088`, and a `controls` entry written without the pipe, as
+  in every other import, is found the same way.
+- **Every key has a `label`**: the text the database holds for it, verbatim,
+  with its case, spacing and symbols (`VOL+`, `ok`, and `??`, which is kept as
+  it is). The key's name (`KEY_VOL_PLUS`, `KEY_UNLABELED_20DF08F7`) is that
+  label folded into an identifier; the label is for showing, searching and
+  ranking, never for naming, and two keys of one file may carry the same one
+  (D56a). The citation still quotes it too.
 - **One file holds one protocol** (R3). An id that uses several database
   protocols, or one whose protocol is several ledger protocols (`REC80` is
   six Kaseikyo-family ones), is several files, `<id>-<protocol>.json`.
