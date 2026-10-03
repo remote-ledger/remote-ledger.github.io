@@ -27,12 +27,14 @@ import hashlib
 import json
 import os
 from dataclasses import dataclass
+from functools import partial
 from pathlib import Path
 from typing import Any
 
 from . import paths
 from .errors import LedgerError
 from .forms import CONFIDENCE_RANK, PRIMARY, select
+from .parallel import ordered_map
 from .remote import Remote, load_remote
 from .serialize import dumps
 from .validate import corpus_files
@@ -148,6 +150,10 @@ class Built:
     index: dict[str, Any]
     shards: tuple[Shard, ...]
     problems: list[str]
+    #: Some remote in the corpus has key labels (D56a): the page's label code
+    #: is part of the page only then. Found while the summaries are, so no
+    #: remote is compiled just to learn it.
+    labelled: bool = False
 
 
 def shard_key(manufacturer: str) -> str:
@@ -186,15 +192,31 @@ def _shard(name: str, entries: list[dict[str, Any]]) -> Shard:
     return Shard(name, root, {key: parts[key] for key in sorted(parts)})
 
 
+def _summary_of(
+    root: Path, path: Path
+) -> tuple[dict[str, Any] | None, str | None, bool]:
+    """One remote's summary, or the problem line saying why not, and whether it
+    has key labels. A worker's unit."""
+    try:
+        remote = load_remote(path)
+        return summarise(remote, paths.rel(root, path)), None, bool(remote.labels)
+    except LedgerError as exc:
+        return None, f"{path.as_posix()}: {exc}", False
+
+
 def build_all(root: Path) -> Built:
     """Compute the index and its shards from the files (R14, D13, D69)."""
     summaries = []
     problems: list[str] = []
-    for path in corpus_files(root):
-        try:
-            summaries.append(summarise(load_remote(path), paths.rel(root, path)))
-        except LedgerError as exc:
-            problems.append(f"{path.as_posix()}: {exc}")
+    labelled = False
+    for summary, problem, has_labels in ordered_map(
+        partial(_summary_of, root), corpus_files(root)
+    ):
+        if summary is None:
+            problems.append(problem)
+        else:
+            summaries.append(summary)
+        labelled = labelled or has_labels
     summaries.sort(key=_sort_key)
     problems += alias_conflicts(summaries)
 
@@ -226,7 +248,7 @@ def build_all(root: Path) -> Built:
             }
             for shard in shards
         ]
-    return Built(index, shards, problems)
+    return Built(index, shards, problems, labelled)
 
 
 def build_index(root: Path) -> tuple[dict[str, Any], list[str]]:

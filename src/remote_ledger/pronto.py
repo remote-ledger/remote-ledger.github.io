@@ -79,6 +79,17 @@ def cycles_to_us(cycles: int, period: Decimal) -> int:
         return round_half_up(Decimal(cycles) * period)
 
 
+#: Per frequency word, the cycle count of each duration already converted.
+#: ``us_to_cycles`` is a pure function of (duration, word) and costs a Decimal
+#: division and two pinned contexts; a build converts ~4 million durations
+#: drawn from a few hundred distinct values per carrier. The values are the
+#: very ones ``us_to_cycles`` returns -- nothing is approximated -- and the
+#: table is dropped when it grows past the limit, so it cannot grow with the
+#: corpus (a raw capture can carry any duration).
+_CYCLES_BY_WORD: dict[int, dict[int, int]] = {}
+_CYCLES_TABLE_LIMIT = 50_000
+
+
 def quantize(
     signal: IrSignal, *, freq_word: int | None = None
 ) -> tuple[tuple[int, ...], tuple[int, ...]]:
@@ -91,21 +102,30 @@ def quantize(
     if freq_word is None:
         freq_word = frequency_word(signal.carrier_hz)
     period = period_us(freq_word)
+    table = _CYCLES_BY_WORD.get(freq_word)
+    if table is None:
+        table = _CYCLES_BY_WORD[freq_word] = {}
+    elif len(table) > _CYCLES_TABLE_LIMIT:
+        table.clear()
     out = []
     for name, seq in zip(("intro", "repeat"), signal.sequences):
         cycles = []
         for i, d in enumerate(seq):
-            c = us_to_cycles(d, period)
+            c = table.get(d)
+            if c is None:
+                c = table[d] = us_to_cycles(d, period)
             # D28: the lower bound is the important one. At 38 kHz a cycle is
             # ~26 us, so anything under ~13 us rounds away. No real protocol
             # has such a burst, which is exactly why hitting it means
             # something upstream is wrong -- emitting `0000` would hide it.
-            check_bounds(
-                f"{name}[{i}] ({d} us) in cycles",
-                c,
-                BURST_CYCLES_MIN,
-                BURST_CYCLES_MAX,
-            )
+            # The message is only built when the bound is broken.
+            if not BURST_CYCLES_MIN <= c <= BURST_CYCLES_MAX:
+                check_bounds(
+                    f"{name}[{i}] ({d} us) in cycles",
+                    c,
+                    BURST_CYCLES_MIN,
+                    BURST_CYCLES_MAX,
+                )
             cycles.append(c)
         out.append(tuple(cycles))
     return out[0], out[1]

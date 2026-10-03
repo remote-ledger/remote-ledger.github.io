@@ -32,6 +32,7 @@ from __future__ import annotations
 
 import json
 import shutil
+from functools import partial
 from pathlib import Path
 from typing import Any
 
@@ -39,6 +40,7 @@ from . import paths
 from .encoding import css_ident, json_payload
 from .forms import PRIMARY, select
 from .index import Built, Shard, build_all, shard_files
+from .parallel import ordered_map
 from .remote import load_remote
 from .serialize import dumps
 from .validate import corpus_files
@@ -59,8 +61,18 @@ def payload(
     script like any other.
     """
     index = (built or build_all(root)).index
+    return index, site_extra(root, corpus_files(root))
+
+
+def site_extra(root: Path, files: list[Path]) -> dict[str, Any]:
+    """What the page needs beyond the index, for the given remote files only.
+
+    Split out of :func:`payload` so ``build_site`` can run it over a few files
+    at a time -- in worker processes, and without holding every remote's keys
+    in memory at once -- while ``payload`` keeps returning the whole of it.
+    """
     extra: dict[str, Any] = {}
-    for path in corpus_files(root):
+    for path in files:
         remote = load_remote(path)
         where = paths.rel(root, path)
         keys: dict[str, Any] = {}
@@ -101,7 +113,7 @@ def payload(
         # remote is byte for byte what it was before the field existed.
         if remote.labels:
             extra[where]["labels"] = dict(sorted(remote.labels.items()))
-    return index, extra
+    return extra
 
 
 def _grid_rules(file: str, layouts: dict[str, Any]) -> str:
@@ -548,12 +560,20 @@ returns nothing at all is one nobody has looked up yet.
 """
 
 
+def _write_script(root: Path, out_root: Path, path: Path) -> None:
+    """Write one remote's script under ``site/r/``. A worker's unit."""
+    for file, data in site_extra(root, [path]).items():
+        script = out_root / "site" / paths.site_script(file)
+        script.parent.mkdir(parents=True, exist_ok=True)
+        script.write_text(remote_script(file, data), encoding="utf-8", newline="\n")
+
+
 def build_site(root: Path, out_root: Path) -> list[str]:
     built = build_all(root)
-    index, extra = payload(root, built)
+    index = built.index
     target = out_root / "site"
     target.mkdir(parents=True, exist_ok=True)
-    labelled = any("labels" in data for data in extra.values())
+    labelled = built.labelled
     (target / "index.html").write_text(
         render_html(index, built.shards, labelled=labelled),
         encoding="utf-8",
@@ -575,8 +595,8 @@ def build_site(root: Path, out_root: Path) -> list[str]:
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(text, encoding="utf-8", newline="\n")
 
-    for file, data in sorted(extra.items()):
-        script = target / paths.site_script(file)
-        script.parent.mkdir(parents=True, exist_ok=True)
-        script.write_text(remote_script(file, data), encoding="utf-8", newline="\n")
+    # One file per remote, each written by whichever worker computed it, so
+    # neither the order they finish in nor the worker count can change a byte.
+    for _ in ordered_map(partial(_write_script, root, out_root), corpus_files(root)):
+        pass
     return []

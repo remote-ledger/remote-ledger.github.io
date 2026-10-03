@@ -13,7 +13,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from . import __version__, protocols
+from . import __version__, parallel, protocols
 from .errors import LedgerError, ValidationError
 from .generators import PIPELINE, diff_tree, owned_paths, registered
 from .check import check_remote
@@ -21,7 +21,7 @@ from .fmt import format_document
 from .pronto import encode as pronto_encode
 from .remote import load_remote
 from .serialize import dumps
-from .validate import corpus_files, validate_file
+from .validate import corpus_files, validate_file, validate_files
 
 EXIT_OK, EXIT_ERROR, EXIT_UNAVAILABLE = 0, 1, 2
 
@@ -78,7 +78,7 @@ def _resolve_targets(raw: str | None) -> list[Path]:
 
 def cmd_validate(args: argparse.Namespace) -> int:
     targets = _resolve_targets(args.path)
-    problems = [p for t in targets for p in validate_file(t)]
+    problems = validate_files(targets)
     for p in problems:
         print(f"ERROR {p}", file=sys.stderr)
     print(f"{len(targets)} file(s) checked, {len(problems)} error(s)")
@@ -98,18 +98,22 @@ def cmd_encode(args: argparse.Namespace) -> int:
     return EXIT_OK
 
 
+def _check_target(target: Path) -> tuple[list[str], list]:
+    """One file's share of ``rl check``: (problems, warnings), as text lines."""
+    schema_errors = validate_file(target)
+    if schema_errors:
+        return [str(p) for p in schema_errors], []
+    file_problems, file_warnings = check_remote(load_remote(target))
+    return [f"{target.as_posix()}: {p}" for p in file_problems], file_warnings
+
+
 def cmd_check(args: argparse.Namespace) -> int:
     """R13 cross-check plus D9's derived-form regeneration."""
     targets = _resolve_targets(args.path)
     problems, warnings = [], []
-    for target in targets:
-        schema_errors = validate_file(target)
-        if schema_errors:
-            problems += [str(p) for p in schema_errors]
-            continue
-        file_problems, file_warnings = check_remote(load_remote(target))
-        problems += [f"{target.as_posix()}: {p}" for p in file_problems]
-        warnings += file_warnings
+    for target_problems, target_warnings in parallel.ordered_map(_check_target, targets):
+        problems += target_problems
+        warnings += target_warnings
 
     for warning in warnings:
         print(warning, file=sys.stderr)
@@ -288,7 +292,7 @@ def cmd_build(args: argparse.Namespace) -> int:
             )
             return EXIT_ERROR
 
-    problems = [str(p) for t in corpus_files(root) for p in validate_file(t)]
+    problems = [str(p) for p in validate_files(corpus_files(root))]
     if problems:
         for problem in problems:
             print(f"ERROR {problem}", file=sys.stderr)
@@ -460,6 +464,13 @@ def _unavailable(name: str, phase: int) -> int:
     return EXIT_UNAVAILABLE
 
 
+def _jobs_argument(text: str) -> int:
+    try:
+        return parallel.parse_jobs(text, source="--jobs")
+    except ValidationError as exc:
+        raise argparse.ArgumentTypeError(str(exc)) from None
+
+
 def build_parser() -> argparse.ArgumentParser:
     # Global flags live on a shared parent so they are accepted *after* the
     # subcommand too. Previously `rl build --check --allow-dirty` was an
@@ -479,6 +490,12 @@ def build_parser() -> argparse.ArgumentParser:
     common.add_argument(
         "--allow-dirty", action="store_true", default=argparse.SUPPRESS,
         help="let --check run with uncommitted changes under an owned path (D11)",
+    )
+    common.add_argument(
+        "-j", "--jobs", type=_jobs_argument, default=argparse.SUPPRESS, metavar="N",
+        help="worker processes for the per-remote loops; 1 runs everything in "
+             f"this process. Default: ${parallel.ENV_JOBS}, else the usable "
+             f"CPUs up to {parallel.MAX_AUTO_JOBS}. Output never depends on it",
     )
 
     p = argparse.ArgumentParser(
@@ -581,11 +598,16 @@ def main(argv: list[str] | None = None) -> int:
     for flag in GLOBAL_FLAGS:
         if not hasattr(args, flag):
             setattr(args, flag, False)
+    # Set for this call only, so a count given to one call cannot leak into the
+    # next one made in the same process (the test suite makes many).
+    parallel.configure(getattr(args, "jobs", None))
     try:
         return args.func(args)
     except LedgerError as exc:
         print(f"ERROR {exc}", file=sys.stderr)
         return EXIT_ERROR
+    finally:
+        parallel.configure(None)
 
 
 if __name__ == "__main__":  # pragma: no cover
