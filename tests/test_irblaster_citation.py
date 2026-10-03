@@ -50,11 +50,22 @@ def test_parse_citation_refuses_what_is_not_a_citation(text):
 
 
 def test_the_label_ends_at_the_last_quote_whatever_it_holds():
-    """The tail after the label has no quote in it, so the split cannot be moved
-    by a label that looks like one (the case a lazy ``'(.*?)'`` gets wrong)."""
+    """The tail after the label has no quote in it (``[^']*`` for the phrase makes
+    that a rule), so the split cannot be moved by a label that looks like a tail."""
     label = "x' 00FF609F NEC: 32 wire bits, bytes bit-reversed as NEC1' ZZ"
     source = format_citation("6aafd15", 1, label, "20DF10EF", "NEC", "NEC1")
     assert parse_citation(source) == (1, label, "20DF10EF", "NEC")
+    # a label that is itself a whole citation of another key
+    inner = format_citation("6aafd15", 9, "A", "00FF609F", "NEC", "NEC1")
+    nested = format_citation("6aafd15", 1, inner, "20DF10EF", "NEC", "NEC1")
+    assert parse_citation(nested) == (1, inner, "20DF10EF", "NEC")
+
+
+def test_the_first_separator_is_the_one_whatever_the_model_holds():
+    """D56b: no pipe in a brand, so the first ` | ` ends it; a model that still
+    held one (the importer refuses it today) stays whole."""
+    assert split_controls_entry("A | B | C") == ("A", "B | C")
+    assert split_controls_entry("A B | C D") == ("A B", "C D")
 
 
 def test_split_controls_entry_inverts_controls_entry():
