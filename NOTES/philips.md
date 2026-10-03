@@ -1,5 +1,10 @@
 # Philips family: RC5, RC6, RCA_38, Thomson7
 
+> **Update after the import was written (NOTES/import-design.md, D50, D53).** The
+> owner chose the wire reading, which is what `FROM_DB_HEX["Thomson7"]` already
+> was. `hex_philips.FROM_DB_HEX_APP["Thomson7"]` now holds the app's reading
+> (`thomson7_as_the_app_sends` as a hex map); `explain` in the oracle tool uses it.
+
 For the integrator. Nothing here edits DESIGN.md; the items that belong in it
 are listed at the end. Line numbers are for this branch.
 

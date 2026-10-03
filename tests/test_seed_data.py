@@ -12,12 +12,17 @@ from remote_ledger.validate import corpus_files, schema_problems, validate_file
 ROOT = Path(__file__).resolve().parents[1]
 CORPUS = corpus_files(ROOT)
 IMPORT_ROOT = ROOT / "remotes" / "lirc"
+IRBLASTER_ROOT = ROOT / "remotes" / "irblaster"
 #: Authored files, tested one by one. Imported ones are thousands and are
 #: regenerated rather than written (D39): `rl build --check` validates every
 #: one of them in CI, and test_the_imported_tree_keeps_r19 below checks R19's
-#: invariants over all of them at once.
-AUTHORED = [p for p in CORPUS if IMPORT_ROOT not in p.parents]
+#: invariants over all of them at once. The IR Blaster import is ten thousand
+#: files and 400,000 keys; one parametrized test per file would turn a
+#: one-minute suite into an hour, so it is scanned, like LIRC's, not enumerated.
+AUTHORED = [p for p in CORPUS
+            if IMPORT_ROOT not in p.parents and IRBLASTER_ROOT not in p.parents]
 IMPORTED = [p for p in CORPUS if IMPORT_ROOT in p.parents]
+IRBLASTER = [p for p in CORPUS if IRBLASTER_ROOT in p.parents]
 
 
 def test_the_corpus_is_not_empty():
@@ -45,6 +50,36 @@ def test_the_imported_tree_keeps_r19():
             for form in spec["forms"]:
                 if (form["confidence"] != "plausible" or "verifiedBy" in form
                         or not shape.match(form.get("source", ""))):
+                    bad.append(f"{path.relative_to(ROOT)}:{key}")
+    assert bad == []
+
+
+def test_the_irblaster_import_keeps_r19():
+    """SPEC R19's conditions 1 to 3 over every form of the IR Blaster import
+    (DESIGN D46 to D56): its licence and README sit beside it, every key holds
+    one plausible `irp` form, and every citation has D51's shape. A cheap scan
+    of the JSON, not a load."""
+    import re
+
+    from remote_ledger.serialize import load
+
+    assert (IRBLASTER_ROOT / "README.md").is_file()
+    assert (IRBLASTER_ROOT / "LICENSE").is_file()
+    if not IRBLASTER:
+        pytest.skip("remotes/irblaster has not been generated (rl import irblaster)")
+    shape = re.compile(
+        r"^irblaster-db@[0-9a-f]{7} remote \d+, '.*' [0-9A-Za-z]+ [A-Za-z0-9_]+: .+ as [A-Za-z0-9_-]+$",
+        re.S)
+    assert (IRBLASTER_ROOT / "IMPORT.md").is_file()
+    bad = []
+    for path in IRBLASTER:
+        for key, spec in load(path)["keys"].items():
+            forms = spec["forms"]
+            if len(forms) != 1:
+                bad.append(f"{path.relative_to(ROOT)}:{key}")
+            for form in forms:
+                if (form["type"] != "irp" or form["confidence"] != "plausible"
+                        or "verifiedBy" in form or not shape.match(form.get("source", ""))):
                     bad.append(f"{path.relative_to(ROOT)}:{key}")
     assert bad == []
 
@@ -138,7 +173,7 @@ def test_generation_is_byte_reproducible(tmp_path):
     from remote_ledger.generators import registered
 
     sample = tmp_path / "corpus"
-    for path in AUTHORED + IMPORTED[::50]:
+    for path in AUTHORED + IMPORTED[::50] + IRBLASTER[::200]:
         target = sample / path.relative_to(ROOT)
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(path, target)

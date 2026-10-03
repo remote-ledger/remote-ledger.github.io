@@ -1,5 +1,11 @@
 # The japan family: Pioneer, JVC, Sharp, Denon
 
+> **Update after the import was written (NOTES/import-design.md, D50, D53).** The
+> owner chose the wire reading. `FROM_DB_HEX` is now what this note calls
+> `FROM_DB_HEX_WIRE`, and the app's reading is `FROM_DB_HEX_APP`; the sections below were
+> written when the names were the other way round. The oracle tool's
+> `--reading app` (the default) is now the run that proves the encoders.
+
 For the integrator. Four SwiftRemote database protocols (1,673 + 1,023 + 590 +
 519 distinct codes; 18,378 keys) registered in the ledger and mapped.
 Nothing here edits DESIGN, SPEC, README, `build/`, `site/` or `remotes/`.

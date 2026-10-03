@@ -256,6 +256,7 @@ def test_the_manufacturer_is_the_brand_with_most_models_and_keeps_its_casing():
     assert pick_manufacturer([("ZED", "1"), ("Acme", "1"), ("Acme", "2")]) == "Acme"
     # a tie goes to the casefolded alphabetical first, then to the exact string
     assert pick_manufacturer([("beta", "1"), ("ALPHA", "1")]) == "ALPHA"
+    assert pick_manufacturer([("BETA", "1"), ("alpha", "1")]) == "alpha"    # not ASCII order
     assert pick_manufacturer([("acme", "1"), ("ACME", "1")]) == "ACME"
     assert pick_manufacturer([("Bb", "1"), ("aA", "1"), ("AA", "9"), ("aA", "2")]) == "aA"
 

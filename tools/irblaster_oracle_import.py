@@ -234,7 +234,10 @@ def _signal(ledger: str, fields, remote, toggle, quantise: bool = True):
 
 
 def _match(db_protocol: str, ledger: str, signal, remote, app: list[int]):
-    return compare(db_protocol, ledger, burst(db_protocol, ledger, signal, remote.protocol.min_sends), app)
+    why, notes = compare(db_protocol, ledger, burst(db_protocol, ledger, signal, remote.protocol.min_sends), app)
+    if why is None and ledger in CLOSING_SYNC:
+        notes = sorted({*notes, "closing sync added back (D1)"})
+    return why, notes
 
 
 def _app_difference_confirmed(db_protocol, hexcode, app_fields, remote, app):
@@ -599,15 +602,15 @@ def print_report(result: dict, out=None) -> None:
         codes = {c: len(entry["codes"][c]) for c in CLASSES}
         # a code is counted once, in the class of its keys (they agree, or one is unexplained)
         all_codes = set().union(*entry["codes"].values()) if entry["codes"] else set()
-        print(f"{proto:<12}{'codes':>2}{len(all_codes):>8}"
+        print(f"{proto:<12}{'codes':>2}{len(all_codes):>8,}"
               + "".join(f"{codes[c]:>20,}" for c in CLASSES), file=out)
-        print(f"{'':<12}{'keys':>2}{sum(keys.values()):>8}"
+        print(f"{'':<12}{'keys':>2}{sum(keys.values()):>8,}"
               + "".join(f"{keys[c]:>20,}" for c in CLASSES), file=out)
         totals.update(keys)
         code_totals.update(codes)
-    print(f"{'total':<12}{'codes':>2}{sum(code_totals.values()):>8}"
+    print(f"{'total':<12}{'codes':>2}{sum(code_totals.values()):>8,}"
           + "".join(f"{code_totals[c]:>20,}" for c in CLASSES), file=out)
-    print(f"{'':<12}{'keys':>2}{sum(totals.values()):>8}"
+    print(f"{'':<12}{'keys':>2}{sum(totals.values()):>8,}"
           + "".join(f"{totals[c]:>20,}" for c in CLASSES), file=out)
     print("\nnotes (matched keys: the documented framing used; differs by reading: how the "
           "app's own reading accounts for its signal):", file=out)
