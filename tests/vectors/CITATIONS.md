@@ -267,7 +267,14 @@ instrument bias, so the durations are information, not a pass mark:
 
 **The Samsung36 numbers are a recorded disagreement with the IRP, not a
 confirmation of it.** Followed anyway (gate 1 is "the IRP verbatim"), and the
-two ways the ledger can say otherwise are in NOTES/misc.md.
+two ways the ledger can say otherwise are in NOTES/misc.md. A second source
+agrees with the captures: `crankyoldgit/IRremoteESP8266` @`1e2f0f3`,
+`src/ir_Samsung.cpp` L59-L63 and L175-L190 (`sendSamsung36`, marked "Works on
+real devices") sends a 4515/4438 us header, 512 us bit marks, 490 and 1468 us
+spaces, a 512/4438 us divider after 16 bits, MSB first at 38 kHz. That is the
+same frame with a unit near 500 us, and it calls its own inter-frame gap "just a
+guess", so it supports the unit finding and says nothing for or against the
+122 ms period.
 
 **The SwiftRemote database corroborates two bit orders against these captures,
 independently of the app's code.** Its Samsung BD remotes (ids 159, 2665, 5249)
