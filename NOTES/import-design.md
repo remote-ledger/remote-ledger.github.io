@@ -1,4 +1,4 @@
-# Importing the SwiftRemote code database: decisions D46 to D56
+# Importing the SwiftRemote code database: decisions D46 to D56 (with D56a and D56b)
 
 For the integrator, who folds this into DESIGN.md as a new section after
 section 17 (the registry additions), numbered to continue from D45. Nothing
@@ -58,11 +58,13 @@ filed under, as with SmartIR (D43). So:
 - **`model`** is `IR Blaster DB <id> (<ledger protocol>)`, always with the
   protocol, so the two files of one id never share a name (R15). R2's "`model`
   identifies the remote" is not met and cannot be: nothing in the data does.
-- **`controls`** is every `models` row of the id as `<BRAND> <MODEL>`, sorted
-  and de-duplicated (`importer.py` `Importer.import_id`; two rows can spell the
-  same string, 280,956 rows give 280,954 distinct). Ids carry up to 6,268
-  (id 286); 43 files have more than 1,000. A split id repeats its list in each
-  file, 306,631 entries in all. The schema puts no bound on `controls`.
+- **`controls`** is every `models` row of the id, sorted and de-duplicated
+  (`importer.py` `Importer.import_id`). First written as `<BRAND> <MODEL>`, where
+  two rows could spell the same string (280,956 rows gave 280,954 distinct);
+  **since D56b it is `<BRAND> | <MODEL>`**, which cannot collide, so all 280,956
+  rows are distinct entries. Ids carry up to 6,268 (id 286); 43 files have more
+  than 1,000. A split id repeats its list in each file: 306,631 entries in the
+  first import, 306,633 with D56b. The schema puts no bound on `controls`.
 - **`aliases`** is `[]`.
 
 **D49 -- Key names are the label folded mechanically, and every member of an
@@ -91,7 +93,8 @@ the rule makes can collide with another key's plain name (`KEY_OK_A_2` against
 are written in name order. Members are the keys *written* to the file, not the
 rows of the id: a refused key does not make its neighbour's name ambiguous, and
 the cost is that a hex map that later accepts a code can rename a key. The
-original label, with its spacing, is in the citation (D51). An exact duplicate
+original label, with its spacing, is in the citation (D51) and, since D56a, in the
+key's `label`. An exact duplicate
 row is dropped and counted (the real schema's primary key makes it
 impossible, the code does not rely on that).
 
@@ -222,6 +225,80 @@ named file would otherwise cite a tree the data did not come from. Output is a
 pure function of the dump, the commit and the code: every ordering is sorted,
 the key names do not depend on row order, and a test shuffles the dump four
 ways and compares the bytes.
+
+**D56a -- A key may carry a `label`, and every imported key does.** Serves R10,
+D49. The SwiftRemote app will query the ledger online instead of bundling its
+database, and needs each key's text for display, search and ranking without
+parsing a citation. A key's name is a mechanical fold of the label (D49) and
+loses it: `KEY_VOL_PLUS` for `VOL+`, `KEY_UNLABELED_<HEX>` for `??`, and 3,880
+imported keys (3,931 rows; 1,567 distinct labels) have a lower-case letter in
+theirs. So the schema's `key` object gets an optional `label`, a non-empty
+string, "the text the source shows for this key; display only, never an
+identifier", and `rl fmt` orders a key's own properties `label`, then `forms`.
+Decisions inside it:
+- **It is free text and unique to nothing.** Two keys of one file may carry the
+  same label (16,367 repeats in the data), and the name stays the only
+  identifier. The schema asks `minLength: 1` and no more: the database has no
+  empty or whitespace-only label, but it does have five with leading or trailing
+  whitespace (one ends in tabs, `'1 \t\t\t'`) and one with a tab in it, and the
+  label is written exactly as the database holds it, `??` included. A stricter rule would have to reject or
+  rewrite what the app shows.
+- **It travels with the key.** `Remote.labels` (key name to label, only for keys
+  that have one); the compiled artifact gets `"label"` beside `"candidates"` in a
+  key's entry (`cli.compiled_artifact`, which `generators.run_compile` calls);
+  the site's per-remote script gets a `labels` map beside `keys` (not inside it,
+  where a candidate named `label` would collide), and the page shows the label
+  next to the key name; `rl lookup` prints it after the key name, quoted
+  (`json.dumps`) so spaces and control characters show; `build/index.json` is
+  untouched, because D40's index carries nothing per key. The importer writes
+  the label on every key, from the database row, and keeps the citation as it was.
+- **A remote without labels generates the very bytes it did before.** Every
+  addition is conditional: the artifact's `label` only on a key that has one, the
+  script's `labels` only for a remote that has any, and, the one place that needs
+  an argument, **the page**: the JavaScript line that renders a key's name and
+  one CSS rule are part of `site/index.html` only when some remote in the corpus
+  has a label (`site.page_parts`, one line of `SCRIPT` replaced, asserted to be
+  there exactly once). Making the page's script unconditional would have changed
+  `site/index.html` for a corpus with no labels; if the integrator prefers that
+  (one generator path, no gate) it is a one-line change, and `rl build` rewrites
+  the page anyway when the import lands, since the corpus then has labels.
+- **Tested as JavaScript.** `tests/page_driver.py` runs the page's own script
+  under node against a stub document and returns what it renders (skipped when
+  node is absent); the tests check the label is escaped (D29), that a key
+  without one has no span, and that `norm()` and `hit()` find the pipe form of D56b.
+
+**D56b -- `controls` entries are `<BRAND> | <MODEL>` in this tree, and the
+importer proves the format parseable.** Serves R2, D48. `<BRAND> <MODEL>` cannot
+be taken apart again: 584 of the database's 4,912 brands are several words
+(`ACCESS HD`, `A TREND`), and the first import wrote the two spellings of
+`CRISTOR | ATLAS HD 200 S` and `CRISTOR ATLAS | HD 200 S` as one string. The
+owner's app needs brand and model apart. So each entry is the brand, a space, a
+pipe, a space and the model, and `entry.split(" | ", 1)` is its exact inverse.
+- **The importer refuses a pipe anywhere in a brand or model**, not only the
+  five-character ` | ` the brief named: with no pipe in the brand the first
+  ` | ` of an entry is the separator whatever the model holds, but a brand ending
+  in a pipe (`A |`, then ` | `) would break `split` and `A | | B` could be either
+  reading. The database has no pipe in any brand or model (checked over the 4,912
+  brands and the 280,956 `models` rows), so the stronger rule costs nothing today.
+  `controls_entry` raises `ValidationError`, and `iter_documents` checks every
+  `models` row before the first file is written, so a later checkout that breaks
+  it stops the import instead of leaving a half-written tree.
+- **It is the tree's convention, not the ledger's.** Elsewhere `controls` is free
+  text (`DX3 Pro`), and every other import writes plain product names. The
+  importer's module docstring and `remotes/irblaster/README.md` say so. Nothing
+  in the schema, the index or lookup depends on the shape.
+- **Search is unchanged and finds both spellings.** `lookup.normalise` and the
+  page's `norm()` drop every non-alphanumeric character (PR #20), so
+  `sony kd 49x8088` normalises to the same string as `SONY | KD - 49 X 8088` and
+  as the plain `SONY KD - 49 X 8088`. `tests/test_lookup.py` pins it in Python and
+  `tests/test_site.py` in the page's own script. One consequence that was already
+  true and stays: a query's words may fall in different `controls` entries of one
+  remote (the every-word fallback), so `access hd dl20` can match a remote that
+  lists `ACCESS HD | A 1` and `DE LONGHI | DL 20`.
+- **What changes in size.** `controls` are 63 % of the index; each entry gains two
+  characters (a pipe and a space), about +0.61 MB on `build/index.json` (+4.1 %),
+  the same on its copy in `site/` and in the page's island. Computed from the
+  entries, not measured on a full build.
 
 ## Measurements: the full run, in a scratch copy
 
@@ -365,6 +442,80 @@ Per family, the counts agree with the family notes' own: NEC 33,116 / 4,855 /
 codes matched, 308 unrepresentable; Pioneer 1,667, JVC 1,020, Sharp 586, Denon 332
 codes differ (japan.md); Sony 2,838 of 2,858 differ.
 
+## After D56a and D56b: the re-run
+
+In a fresh scratch copy (`scratchpad/fullrun2/`: `src/`, `tools/`,
+`pyproject.toml` and `remotes/` as committed, without the data), the same
+command as before, `rl import irblaster /home/shanjian/srcs/SwiftRemote --commit
+6aafd15`. Nothing below is in the worktree.
+
+- **The import**: 10,013 remotes, 411,265 keys (as before), 65.3 s, peak 260 MB.
+  `IMPORT.md` is byte-identical to the first import's. Compared with the first
+  import's files, parsed, **every one of the 10,013 differs in exactly two ways
+  and no other**: each key has a `label` first in its object, and `controls` is the
+  pipe form (joining each entry's two parts with a space and de-duplicating gives
+  the old list). The two files whose old list had collapsed two rows into one
+  string now carry both: `ATLAS/7767-NEC1.json` and `BRAIN_WAVE/4736-RC5.json`
+  (306,633 entries against 306,631). 411,265 of 411,265 keys have a label; 9,853
+  are `??` (the notes' D49 count), 3,880 have a lower-case letter.
+- **Sizes** (bytes; MB is 1e6, as above):
+
+| | first import | with labels and pipes |
+|---|---|---|
+| `remotes/irblaster/` (10,016 files) | 161,188,850 | **171,427,573** (+10,238,723, +6.35 %) |
+| the same, as a `.tar.gz` (gzip -6) | 9,010,442 | 9,854,277 (+9.4 %) |
+| `remotes/` (13,226 files) | 240,946,000 | 251,184,723 |
+| `build/pronto/irblaster/` | 260.2 MB | +9,624,014 B, to about 269.8 MB (computed) |
+| `site/r/irblaster/` | 219.9 MB | +8,806,926 B, to about 228.7 MB (computed) |
+| `build/index.json`, its copy, the page's island | 15,075,980 B | +613,332 B, +4.1 % (computed) |
+
+  The last three rows were not built: another worktree is making `rl build`
+  fast, and the full build is 18 minutes. They are arithmetic on the files'
+  labels and controls, with the label's cost per key checked against a real
+  build of a 299-file sample (below), where it predicted the growth of
+  `build/pronto/irblaster/` (292,722 B) and `site/r/irblaster/` (266,265 B)
+  exactly. In an artifact a label costs 17 bytes of JSON around its quoted
+  text; in a script, the quoted text and a key name, once per remote that has
+  labels.
+- **The oracle** (`tools/irblaster_oracle_import.py`, 16 workers, 30.9 s): **0
+  unexplained, 0 problems**, the same totals and per-protocol table as above
+  (58,766 codes; 366,476 matched, 44,789 differ by reading, 2,066 unrepresentable;
+  413,331 keys). It now also requires every key's label to equal the label of the
+  row its citation names, and that row to be a row of the dump; `controls`
+  re-derived as `<BRAND> | <MODEL>` and split back into the id's `models` rows;
+  and it reports a pipe in any brand or model of the dump. A negative control on
+  the real tree (one label with a letter added) is reported as `label '0x' is
+  not the database's '0'`.
+- **Reproducible**: the tree's manifest hash (sha256 of every file's sha256,
+  sorted) is the same after a first import, after re-importing over its own
+  output, and after importing into an empty tree; `diff -rq` of the first and
+  the last is empty.
+- `rl fmt --check remotes/irblaster`: 10,013 files, 0 would change (12.8 s).
+  `rl validate remotes/irblaster`: 10,013 files, 0 errors (2 min 6 s).
+- **A build of a sample** (299 irblaster files, every 34th plus the ones holding
+  the Sony `KD - 49 X 8088`, a `??` key, a lower-case label and the tab label,
+  with the authored Topping, 25 s): all 12,520 keys carry their label in their
+  `build/pronto/` artifact and in their `site/r/` script's `labels`; Topping's
+  files carry none and `build/index.json` has no `label`. The page's own script,
+  run under node on the real script of the Sony file, renders `<h3>KEY_0 <span
+  class="klabel">0</span></h3>`, and `'1 \t\t\t'` intact for the tab label.
+  `rl lookup "sony kd 49x8088"` finds the Sony remote through `SONY | KD - 49 X
+  8088` and prints each key as `KEY_0  "0"`.
+
+**Nothing that existed changes** (the check the brief asked for). A copy of the
+committed tree (`remotes/`, `build/`, `site/`, `unresolved.json`: 3,204 remotes)
+built with the code before these changes and with the code after them, each with
+`rl build` into its own directory, gives `diff -r` equal for `build/` and
+`site/` (6,412 files), 3 min 30 s each. But `rl build --check` against the
+*committed* tree reports **one difference, with the old code as with the new**:
+`site/index.html`, whose island lacks the `remotes/irblaster/` entry of
+`paths.IMPORTS` (added in 0d093c2 without regenerating the page; with the island
+cut out the committed page and the regenerated one are identical). That is the
+"second expected failure" of the previous section, not a consequence of the label.
+Re-running `rl build --check` over the tree the new code regenerated: 0
+differences. A labelled page differs from an unlabelled one by 244 bytes of
+script and style, and only when a label exists (D56a).
+
 ## What is not proven
 
 - **No hardware.** Every claim is a comparison of waveforms with the app's own,
@@ -403,6 +554,19 @@ Found by running the whole suite in the scratch copy (`tests/`, `DESIGN.md`,
 
 ## What the integrator has to do
 
+- **After D56a and D56b the first import's files are stale**: run `rl import
+  irblaster /home/shanjian/srcs/SwiftRemote --commit 6aafd15` again (the result
+  of the re-run above), then `rl build`. The label code in `site/index.html`
+  appears with the first labelled remote, so the regenerated page differs from
+  today's by it as well as by the `imports` entry (D56a).
+- D56a and D56b are for DESIGN.md too: the schema's `key.label`, the compiled
+  artifact's `keys.<key>.label` and the site script's `labels` are new public
+  shapes (SPEC section 5's key object, D20's artifact, D40's script), and the
+  `controls` format is this tree's convention. The suite grew by 66 tests:
+  2,245 passed before, 2,311 after (9 skipped both times), the same two
+  expected failures in both (`test_documented_test_count_is_current`,
+  `test_the_island_parses_and_carries_the_ledger`).
+- `tests/page_driver.py` is a new helper: it needs `node` and skips without it.
 - Run `rl import irblaster /home/shanjian/srcs/SwiftRemote --commit 6aafd15`, then
   `rl build`, and commit `remotes/irblaster/`, `build/` and `site/`. Until then
   `tests/test_site.py::test_the_island_parses_and_carries_the_ledger` fails, as
