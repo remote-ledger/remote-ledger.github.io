@@ -9,16 +9,14 @@ that look like trivial variations of one already present -- ``NEC2`` and
 that basis is precisely how an unverified encoder ships.
 
 Backlog, each blocked on that gate and none scheduled: ``NEC``
-(``S`` defaulted to ``~D``), ``Sony12``, ``Sony15``, ``RC6``.
-
-``NEC2`` and ``NECx1`` left the backlog for the SwiftRemote import: each met
-the gate with IrpTransmogrifier's IRP string, a vector rendered by its 1.2.14
-release, and an invariant test.
+(``S`` defaulted to ``~D``).
 
 ``RC5`` left the backlog once the Meridian MSR needed it (DESIGN section 16).
-
-``RC6`` (mode 0 only), ``RCA-38`` and ``Thomson7`` joined for the SwiftRemote
-database import, each through the same three gates (NOTES/philips.md).
+Every other protocol below the first four joined for the SwiftRemote database
+import (DESIGN section 17), each through the same three gates: ``NEC2``,
+``NECx1``, ``Sony12``, ``Sony15``, ``RC6`` (mode 0 only), ``RCA-38``,
+``Thomson7``, ``Pioneer-2Part``, ``JVC``, ``Sharp``, ``Denon``, ``Samsung36``,
+``Proton``, ``F12_relaxed``, ``RECS80`` and ``RECS80-0068``.
 
 ``Samsung32`` is **not** backlogged -- it does not exist. D18's table carried
 an IRP string for it that was written from memory during design and never
@@ -34,37 +32,37 @@ from __future__ import annotations
 
 from ..errors import ValidationError
 from .base import Protocol
-from .nec import NEC1, NECX2
-from .nec import NEC2, NECX1
+from .denon import DENON
+from .f12 import F12_RELAXED
+from .jvc import JVC
+from .nec import NEC1, NEC2, NECX1, NECX2
+from .pioneer import PIONEER_2PART
+from .proton import PROTON
 from .rc5 import RC5
+from .rc6 import RC6
+from .rca38 import RCA38
+from .recs80 import RECS80, RECS80_0068
+from .samsung36 import SAMSUNG36
+from .sharp import SHARP
 from .sony import SONY12, SONY15, SONY20
+from .thomson7 import THOMSON7
 
-REGISTRY: dict[str, Protocol] = {p.name: p for p in (NEC1, NECX2, RC5, SONY20)}
-REGISTRY.update({p.name: p for p in (NEC2, NECX1)})
+_PROTOCOLS = (
+    NEC1, NECX2, RC5, SONY20,
+    NEC2, NECX1, SONY12, SONY15, RC6, RCA38, THOMSON7,
+    PIONEER_2PART, JVC, SHARP, DENON,
+    SAMSUNG36, PROTON, F12_RELAXED, RECS80, RECS80_0068,
+)
 
-# --- the japan family (SwiftRemote DB import): Pioneer-2Part, JVC, Sharp, Denon
-from .denon import DENON  # noqa: E402
-from .jvc import JVC  # noqa: E402
-from .pioneer import PIONEER_2PART  # noqa: E402
-from .sharp import SHARP  # noqa: E402
+REGISTRY: dict[str, Protocol] = {p.name: p for p in _PROTOCOLS}
 
-REGISTRY.update({p.name: p for p in (PIONEER_2PART, JVC, SHARP, DENON)})
-
-__all__ = ["Protocol", "REGISTRY", "NEC1", "NECX2", "RC5", "SONY20"]
-__all__ += ["NEC2", "NECX1"]
-
-# Sony SIRC's other two widths, each through D18's three gates (tests/vectors/CITATIONS.md).
-REGISTRY.update({p.name: p for p in (SONY12, SONY15)})
-__all__ += ["SONY12", "SONY15"]
-
-# --- philips family (SwiftRemote DB import) ---
-from .rc6 import RC6  # noqa: E402
-from .rca38 import RCA38  # noqa: E402
-from .thomson7 import THOMSON7  # noqa: E402
-
-REGISTRY.update({p.name: p for p in (RC6, RCA38, THOMSON7)})
-__all__ += ["RC6", "RCA38", "THOMSON7"]
-__all__ += ["PIONEER_2PART", "JVC", "SHARP", "DENON"]
+__all__ = [
+    "Protocol", "REGISTRY",
+    "NEC1", "NECX2", "RC5", "SONY20",
+    "NEC2", "NECX1", "SONY12", "SONY15", "RC6", "RCA38", "THOMSON7",
+    "PIONEER_2PART", "JVC", "SHARP", "DENON",
+    "SAMSUNG36", "PROTON", "F12_RELAXED", "RECS80", "RECS80_0068",
+]
 
 
 def get(name: str) -> Protocol:
