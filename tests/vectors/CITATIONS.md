@@ -278,6 +278,63 @@ What it establishes that no other source here does:
 
 It also bears on the carrier, as one remote and so only as corroboration:
 38404 Hz is IrpTransmogrifier's 38.4k, not DecodeIR's 38.0k.
+
+### Gate 2b — golden Pronto
+
+| Protocol | Vector | Provenance | Our bytes differ at |
+|---|---|---|---|
+| NEC2 | D=90 S=165 F=38 @ 40k: `DecoderNGTest.java` L178-L186 @ `c945e76`, `testDecodePioneer` | **published**, with a caveat below | words 4 and 6-71 (every duration but the lead-in space: 564 us is 22.5 cycles at 40 kHz and the two rounding rules split the half differently) |
+| NEC2 | D=12 S=34 F=56 @ 38.4k: IrpTransmogrifier 1.2.14 release, `render -n D=12,S=34,F=56 -p nec2` | **reproducible** | words 4, 71 (lead-in mark and gap) |
+| NECx1 | D=12 S=34 F=56 @ 38.4k: the same release, `render ... -p necx1` | **reproducible** | words 71, 77 (both gaps) |
+| NECx1 | D=13 S=34 F=56 @ 38.4k: the same | **reproducible** | words 71, 77 |
+
+**NEC2's published vector is weaker than NEC1's, and says so.** The string is
+a Pioneer signal, which IrpTransmogrifier defines as NEC2 at 40 kHz
+("distinguished from NEC2 only by frequency", `IrpProtocols.xml`). The test
+asserts it decodes as Pioneer and, within a 2000 Hz tolerance, as NEC2 (L185),
+and not as NEC2 within 1000 Hz (L190). No parameters are stated. The 1.2.14
+release decodes it as `Pioneer: {D=90,F=38}` and its `render -n D=90,F=38 -p
+pioneer` reproduces the string byte for byte, which fixes the parameters; S
+defaults to 255-D = 165, and our NEC2 encoder at 40 kHz reproduces every
+duration under IrpTransmogrifier's rounding rule. What was **not** re-run is
+the NEC2 half of the assertion: that release's `decode` lists NEC, NEC-f16,
+NEC-Shirriff-32 and Pioneer for the string, not NEC2, so the claim "the tool
+decodes this as NEC2" belongs to the pinned commit's library, which was not
+built here. It is the only Pronto string in the tests that has NEC2's
+shape, which is why NEC2 also carries the render at 38.4k, where the carrier is
+the IRP's own.
+
+**NECx1 has no published Pronto vector.** IrpTransmogrifier's tests at
+`c945e76` mention NECx1 only in the capture's decode expectations above. Two
+renders are used so that both values of the one field NECx1 adds to NECx2, the
+repeat frame's bit `~D:1`, are pinned: an even D gives a one-bit (`1,-3`), an
+odd D a zero-bit (`1,-1`). The capture shows only the even case.
+
+**NECx2: searched again, still no published Pronto vector.** `git grep` of
+IrpTransmogrifier `@c945e76` for `necx`, `nec2`, `samsung32` and `nec-f16`
+across `src/test`, and for Pronto strings with an 8-unit lead-in at 36, 38,
+38.4 and 40 kHz, finds only the teaser files above (decode expectations on a
+capture, now used for gate 2a), `IrpDatabaseNGTest`'s database checks and
+`DecoderNGTest`'s Pioneer test. NECx2's gate 2b therefore stays "reproducible",
+and `test_registry` still warns about it, now together with NECx1.
+
+### Gate 3 — invariant tests: **MET**
+
+`tests/test_nec2.py` and `tests/test_necx1.py`: lead-in widths, pair counts,
+each sequence padding to its own 108 ms, LSB-first order and the complement
+byte read back out of the durations, an exhaustive round trip over all 65,536
+device/function pairs and all 256 subdevices, and, for NECx1, the repeat bit
+for each of the 256 devices.
+
+### Not established
+
+- NEC2's and NECx1's *byte-level* Pronto against a published NEC2 or NECx1
+  vector, as above.
+- Whether a real NECx1 receiver needs the repeat frame sent at all: the
+  ledger encodes it, `minSends` never plays it.
+
+---
+
 ## Sony12 and Sony15 (added for the SwiftRemote database import)
 
 Both are `Sony20` with a different field after the command, which is exactly
@@ -338,55 +395,6 @@ the repeat, as Sony20 does.
 
 | Protocol | Vector | Provenance | Our bytes differ at |
 |---|---|---|---|
-| NEC2 | D=90 S=165 F=38 @ 40k: `DecoderNGTest.java` L178-L186 @ `c945e76`, `testDecodePioneer` | **published**, with a caveat below | words 4 and 6-71 (every duration but the lead-in space: 564 us is 22.5 cycles at 40 kHz and the two rounding rules split the half differently) |
-| NEC2 | D=12 S=34 F=56 @ 38.4k: IrpTransmogrifier 1.2.14 release, `render -n D=12,S=34,F=56 -p nec2` | **reproducible** | words 4, 71 (lead-in mark and gap) |
-| NECx1 | D=12 S=34 F=56 @ 38.4k: the same release, `render ... -p necx1` | **reproducible** | words 71, 77 (both gaps) |
-| NECx1 | D=13 S=34 F=56 @ 38.4k: the same | **reproducible** | words 71, 77 |
-
-**NEC2's published vector is weaker than NEC1's, and says so.** The string is
-a Pioneer signal, which IrpTransmogrifier defines as NEC2 at 40 kHz
-("distinguished from NEC2 only by frequency", `IrpProtocols.xml`). The test
-asserts it decodes as Pioneer and, within a 2000 Hz tolerance, as NEC2 (L185),
-and not as NEC2 within 1000 Hz (L190). No parameters are stated. The 1.2.14
-release decodes it as `Pioneer: {D=90,F=38}` and its `render -n D=90,F=38 -p
-pioneer` reproduces the string byte for byte, which fixes the parameters; S
-defaults to 255-D = 165, and our NEC2 encoder at 40 kHz reproduces every
-duration under IrpTransmogrifier's rounding rule. What was **not** re-run is
-the NEC2 half of the assertion: that release's `decode` lists NEC, NEC-f16,
-NEC-Shirriff-32 and Pioneer for the string, not NEC2, so the claim "the tool
-decodes this as NEC2" belongs to the pinned commit's library, which was not
-built here. It is the only Pronto string in the tests that has NEC2's
-shape, which is why NEC2 also carries the render at 38.4k, where the carrier is
-the IRP's own.
-
-**NECx1 has no published Pronto vector.** IrpTransmogrifier's tests at
-`c945e76` mention NECx1 only in the capture's decode expectations above. Two
-renders are used so that both values of the one field NECx1 adds to NECx2, the
-repeat frame's bit `~D:1`, are pinned: an even D gives a one-bit (`1,-3`), an
-odd D a zero-bit (`1,-1`). The capture shows only the even case.
-
-**NECx2: searched again, still no published Pronto vector.** `git grep` of
-IrpTransmogrifier `@c945e76` for `necx`, `nec2`, `samsung32` and `nec-f16`
-across `src/test`, and for Pronto strings with an 8-unit lead-in at 36, 38,
-38.4 and 40 kHz, finds only the teaser files above (decode expectations on a
-capture, now used for gate 2a), `IrpDatabaseNGTest`'s database checks and
-`DecoderNGTest`'s Pioneer test. NECx2's gate 2b therefore stays "reproducible",
-and `test_registry` still warns about it, now together with NECx1.
-
-### Gate 3 — invariant tests: **MET**
-
-`tests/test_nec2.py` and `tests/test_necx1.py`: lead-in widths, pair counts,
-each sequence padding to its own 108 ms, LSB-first order and the complement
-byte read back out of the durations, an exhaustive round trip over all 65,536
-device/function pairs and all 256 subdevices, and, for NECx1, the repeat bit
-for each of the 256 devices.
-
-### Not established
-
-- NEC2's and NECx1's *byte-level* Pronto against a published NEC2 or NECx1
-  vector, as above.
-- Whether a real NECx1 receiver needs the repeat frame sent at all: the
-  ledger encodes it, `minSends` never plays it.
 | Sony12 | D=1 F=21 @ 40k: Girr `commandset_sony.girr` L42-47 @`5ca171e`, evidently IrpTransmogrifier's output (all 25 commands match its rule word for word) committed to a sibling repository with the parameters beside it. D=1 F=21 is Sony's TV power, `A90` in transmission order | **published** | word 29 (lead-out) |
 | Sony12 | D=23 F=70 @ 40k: IrpTransmogrifier 1.2.14 release, `render -n D=23,F=70 -p sony12`; the first capture in its own teaser set, whose durations we also reproduce | **reproducible** | word 29 |
 | Sony15 | D=164 F=61 @ 40k: IrpTransmogrifier 1.2.14 release, `render -n D=164,F=61 -p sony15`; the parameters of the one published Sony15 string | **reproducible** | word 35 |
@@ -409,6 +417,9 @@ against a published string, which the render supplies.
 layout (`tests/sirc_reference.py`), extent, pair count, field and bit order,
 bounds. `tests/test_sony.py` gained exhaustive Sony20 sweeps in the same
 style.
+
+---
+
 ## RC6, RCA-38 and Thomson7 (the SwiftRemote database import)
 
 Three protocols joined the registry together, each through the same three
@@ -499,6 +510,9 @@ of every duration, and what ratio the capture sits at.
   (`329`, `32A`, `305`, `30B`, `30D`), read as the frame in transmission order,
   are exactly the capture's `D=12`, `F=74, 42, 80, 104, 88`. See
   DESIGN D63: SwiftRemote's own encoder does not read them that way.
+
+---
+
 ## The japan family: Pioneer-2Part, JVC, Sharp, Denon
 
 Added for the SwiftRemote database import (DESIGN D64 has the
@@ -582,6 +596,9 @@ nominal-carrier rule; all timings agree exactly under the tool's own rule):
 The Pioneer figure is a property of D6 rule 4 at 40 kHz and 564 us, not of
 this protocol's constants; it does not occur at 38 kHz or 38.4 kHz, where the
 two roundings agree for 564 us.
+
+---
+
 ## The `misc` family: Samsung36, Proton, F12_relaxed, RECS80, RECS80-0068
 
 Added for the SwiftRemote database import. **Gate 2b is `reproducible` for all
@@ -662,6 +679,9 @@ pins both readings.
   Proton's 17 possible lead-out gaps, 8 are exact ties and the doubles round
   three of them down (17,000, 21,000 and 25,000 us). The two Proton vectors were
   chosen to avoid those; the helper was not changed (shared file).
+
+---
+
 ## Aiwa, Blaupunkt and the Kaseikyo family
 
 Eight protocols registered together because SwiftRemote's database names
