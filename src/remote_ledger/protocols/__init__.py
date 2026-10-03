@@ -26,12 +26,31 @@ speaks is open work, recorded in ``unresolved.json``.
 from __future__ import annotations
 
 from ..errors import ValidationError
+from .aiwa import AIWA
 from .base import Protocol
+from .blaupunkt import BLAUPUNKT
+from .kaseikyo import DENON_K, FUJITSU, JVC48, PANASONIC, SHARP_DVD, TEAC_K
 from .nec import NEC1, NECX2
 from .rc5 import RC5
 from .sony import SONY20
 
-REGISTRY: dict[str, Protocol] = {p.name: p for p in (NEC1, NECX2, RC5, SONY20)}
+REGISTRY: dict[str, Protocol] = {
+    p.name: p
+    for p in (
+        NEC1,
+        NECX2,
+        RC5,
+        SONY20,
+        AIWA,
+        BLAUPUNKT,
+        PANASONIC,
+        JVC48,
+        FUJITSU,
+        TEAC_K,
+        DENON_K,
+        SHARP_DVD,
+    )
+}
 
 __all__ = ["Protocol", "REGISTRY", "NEC1", "NECX2", "RC5", "SONY20"]
 

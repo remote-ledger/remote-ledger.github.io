@@ -87,5 +87,222 @@
     "gate2b_byte_divergence": [
       27
     ]
+  },
+  "Aiwa": {
+    "gate1_irp_source": "IrpTransmogrifier IrpProtocols.xml L223 (the same in release 1.2.14 and @c945e76), verbatim, 38.123k; also, commented out, in its ProtocolNGTest.java L108 @c945e76. The upstream SwiftRemote app (iodn/android-ir-blaster test/rcc2026_protocol_test.dart @3bb60e3178) reads the same 42 bits as the NEC42 layout D:13,~D:13,F:8,~F:8, which is this frame with D13 = D + 256*S",
+    "regression_snapshot": null,
+    "snapshot_is_evidence": false,
+    "gate2a_structural_vector": "bengtmartensson/IrpTransmogrifier src/test/teaserfiles/Aiwa_left.ict @c945e76, a hardware capture, whose expected decode in the matching .exp is Aiwa {D=8,S=0,F=21}. A capture carries instrument bias (marks run long, spaces short, the carrier is measured), so it verifies layout and ratios, not absolute durations. Carrier 37,718 Hz against the IRP's 38,123. See tests/vectors/irpt-teaser-captures.json",
+    "gate2a_pending_reason": null,
+    "gate2b_golden_pronto": "irpt_aiwa_D8_S0_F21.pronto",
+    "gate2b_pending_reason": null,
+    "gate2b_vector_source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "gate2b_vector_params": {
+      "device": 8,
+      "subdevice": 0,
+      "function": 21,
+      "carrier_hz": 38123
+    },
+    "gate2b_vector_quantization": "irpt-nominal-carrier",
+    "gate2b_vector_provenance": "reproducible",
+    "gate2b_vector_reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=8,S=0,F=21 -p Aiwa",
+    "gate2b_byte_divergence": [
+      5,
+      91,
+      93,
+      95
+    ]
+  },
+  "Blaupunkt": {
+    "gate1_irp_source": "IrpTransmogrifier IrpProtocols.xml L441 (the same in release 1.2.14 and @c945e76), verbatim, 30.3k, alternate name Motorola; the same string is the fixture in its ProtocolNGTest.java L100 @c945e76",
+    "regression_snapshot": null,
+    "snapshot_is_evidence": false,
+    "gate2a_structural_vector": "bengtmartensson/IrpTransmogrifier src/test/teaserfiles/Blaupunkt.ict @c945e76, a hardware capture, whose expected decode in the matching .exp is Blaupunkt {F=21,D=2}. A capture carries instrument bias (marks run long, spaces short, the carrier is measured), so it verifies layout and ratios, not absolute durations. Carrier 30,225 Hz against 30,300; its unit is about 532 us against 512 and its sync gap 20.6 ms against the IRP's 23.0 ms. See tests/vectors/irpt-teaser-captures.json",
+    "gate2a_pending_reason": null,
+    "gate2b_golden_pronto": "irpt_blaupunkt_D2_F21.pronto",
+    "gate2b_pending_reason": null,
+    "gate2b_vector_source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "gate2b_vector_params": {
+      "device": 2,
+      "subdevice": null,
+      "function": 21,
+      "carrier_hz": 30300
+    },
+    "gate2b_vector_quantization": "irpt-nominal-carrier",
+    "gate2b_vector_provenance": "reproducible",
+    "gate2b_vector_reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=2,F=21 -p Blaupunkt",
+    "gate2b_byte_divergence": [
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      36,
+      37,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      52,
+      53,
+      56,
+      57
+    ]
+  },
+  "Panasonic": {
+    "gate1_irp_source": "IrpTransmogrifier IrpProtocols.xml release 1.2.14 L1939 (@c945e76 L1958), verbatim; corroborated for every timing, the gap and the field layout by crankyoldgit/IRremoteESP8266 src/ir_Panasonic.cpp @1e2f0f3, and named for Panasonic devices by probonopd/irdb",
+    "regression_snapshot": null,
+    "snapshot_is_evidence": false,
+    "gate2a_structural_vector": "crankyoldgit/IRremoteESP8266 src/ir_Panasonic.cpp @1e2f0f3 L28-L35 and L104-L112: a published constant table, 3456/1728/432/1296/432 and a 74,736 us gap (exactly 173 units), with the 48 bits laid out as a 16-bit manufacturer, device, subdevice, function and their XOR -- sent MSB-first, so each byte is the bit-reverse of the IRP's LSB-first one. Reproduced exactly by tests/test_kaseikyo.py. Also bengtmartensson/IrpTransmogrifier src/test/teaserfiles/Panasonic.ict @c945e76, a hardware capture (carrier 36,240 Hz) whose expected decode in Panasonic.exp is Panasonic {D=176,S=0,F=54}; a capture carries instrument bias, so it verifies ratios and layout, not absolute durations",
+    "gate2a_pending_reason": null,
+    "gate2b_golden_pronto": "irpt_panasonic_D176_S0_F54.pronto",
+    "gate2b_pending_reason": null,
+    "gate2b_vector_source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "gate2b_vector_params": {
+      "device": 176,
+      "subdevice": 0,
+      "function": 54,
+      "carrier_hz": 37000
+    },
+    "gate2b_vector_quantization": "irpt-nominal-carrier",
+    "gate2b_vector_provenance": "reproducible",
+    "gate2b_vector_reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=176,S=0,F=54 -p Panasonic",
+    "gate2b_byte_divergence": [
+      103
+    ]
+  },
+  "JVC-48": {
+    "gate1_irp_source": "IrpTransmogrifier IrpProtocols.xml L1219 (the same in release 1.2.14 and @c945e76), verbatim; named for JVC receivers and CD players (device 34) by probonopd/irdb",
+    "regression_snapshot": null,
+    "snapshot_is_evidence": false,
+    "gate2a_structural_vector": null,
+    "gate2a_pending_reason": "No independent capture or constant table for JVC-48's own byte layout was found (searched IrpTransmogrifier's test resources, IRremoteESP8266, the DecodeIR documentation, Flipper and Arduino-IRremote). Arduino-IRremote src/ir_Kaseikyo.hpp @6158d65 L113-L117 publishes the vendor IDs as 0x2002 Panasonic, 0x3254 Denon, 0x5AAA Sharp and 0x0103 JVC, which are these protocols' fixed bytes (2,32), (84,50), (170,90) and (3,1) read little-endian, and L99-L106 the 432 us unit with 8/4-unit header and 1/3-unit bits. That corroborates the vendor bytes and the shared frame, not the layout of the remaining bytes. probonopd/irdb lists JVC-48 for JVC receivers and CD players (device 34), which corroborates the parameters and not the waveform.",
+    "gate2b_golden_pronto": "irpt_jvc48_D34_S33_F12.pronto",
+    "gate2b_pending_reason": null,
+    "gate2b_vector_source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "gate2b_vector_params": {
+      "device": 34,
+      "subdevice": 33,
+      "function": 12,
+      "carrier_hz": 37000
+    },
+    "gate2b_vector_quantization": "irpt-nominal-carrier",
+    "gate2b_vector_provenance": "reproducible",
+    "gate2b_vector_reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=34,S=33,F=12 -p JVC-48",
+    "gate2b_byte_divergence": [
+      103
+    ]
+  },
+  "Fujitsu": {
+    "gate1_irp_source": "IrpTransmogrifier IrpProtocols.xml L929 (the same in release 1.2.14 and @c945e76), verbatim",
+    "regression_snapshot": null,
+    "snapshot_is_evidence": false,
+    "gate2a_structural_vector": "bengtmartensson/IrpTransmogrifier src/test/teaserfiles/Fujitsu_pronto.txt @c945e76, a Pronto capture of a Fujitsu remote (carrier word 006C), whose expected decode in Fujitsu_pronto.exp is Fujitsu {D=132,F=0} for 'Power'. A capture carries instrument bias (its unit is 417 us against the IRP's 432), so it verifies layout and ratios, not absolute durations. See tests/vectors/irpt-teaser-captures.json",
+    "gate2a_pending_reason": null,
+    "gate2b_golden_pronto": "irpt_fujitsu_D132_S132_F0.pronto",
+    "gate2b_pending_reason": null,
+    "gate2b_vector_source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "gate2b_vector_params": {
+      "device": 132,
+      "subdevice": 132,
+      "function": 0,
+      "carrier_hz": 37000
+    },
+    "gate2b_vector_quantization": "irpt-nominal-carrier",
+    "gate2b_vector_provenance": "reproducible",
+    "gate2b_vector_reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=132,S=132,F=0 -p Fujitsu",
+    "gate2b_byte_divergence": [
+      103
+    ]
+  },
+  "Teac-K": {
+    "gate1_irp_source": "IrpTransmogrifier IrpProtocols.xml release 1.2.14 L2830 (@c945e76 L2849), verbatim; named for the Samsung RCD-M70 (device 0, subdevice 4) by probonopd/irdb",
+    "regression_snapshot": null,
+    "snapshot_is_evidence": false,
+    "gate2a_structural_vector": "bengtmartensson/IrpTransmogrifier src/test/teaserfiles/Teac_0_4_Input.ict @c945e76, a hardware capture, whose expected decode in the matching .exp is Teac-K {D=0,S=4,F=19}. A capture carries instrument bias (marks run long, spaces short, the carrier is measured), so it verifies layout and ratios, not absolute durations. It carries both the frame and the shorter 8,-8 repeat. See tests/vectors/irpt-teaser-captures.json",
+    "gate2a_pending_reason": null,
+    "gate2b_golden_pronto": "irpt_teack_D0_S4_F19.pronto",
+    "gate2b_pending_reason": null,
+    "gate2b_vector_source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "gate2b_vector_params": {
+      "device": 0,
+      "subdevice": 4,
+      "function": 19,
+      "carrier_hz": 37000
+    },
+    "gate2b_vector_quantization": "irpt-nominal-carrier",
+    "gate2b_vector_provenance": "reproducible",
+    "gate2b_vector_reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=0,S=4,F=19 -p Teac-K",
+    "gate2b_byte_divergence": [
+      103,
+      107
+    ]
+  },
+  "Denon-K": {
+    "gate1_irp_source": "IrpTransmogrifier IrpProtocols.xml L511 (the same in release 1.2.14 and @c945e76), verbatim; named for Denon Blu-ray players (device 2, subdevice 1) by probonopd/irdb",
+    "regression_snapshot": null,
+    "snapshot_is_evidence": false,
+    "gate2a_structural_vector": "bengtmartensson/IrpTransmogrifier src/test/teaserfiles/Denon-K_Denon.ict @c945e76, a hardware capture, whose expected decode in the matching .exp is Denon-K {D=4,S=1,F=28}. A capture carries instrument bias (marks run long, spaces short, the carrier is measured), so it verifies layout and ratios, not absolute durations. See tests/vectors/irpt-teaser-captures.json",
+    "gate2a_pending_reason": null,
+    "gate2b_golden_pronto": "irpt_denonk_D4_S1_F28.pronto",
+    "gate2b_pending_reason": null,
+    "gate2b_vector_source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "gate2b_vector_params": {
+      "device": 4,
+      "subdevice": 1,
+      "function": 28,
+      "carrier_hz": 37000
+    },
+    "gate2b_vector_quantization": "irpt-nominal-carrier",
+    "gate2b_vector_provenance": "reproducible",
+    "gate2b_vector_reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=4,S=1,F=28 -p Denon-K",
+    "gate2b_byte_divergence": [
+      103
+    ]
+  },
+  "SharpDVD": {
+    "gate1_irp_source": "IrpTransmogrifier IrpProtocols.xml release 1.2.14 L2500 (@c945e76 L2519), verbatim, whose documentation calls it the Kaseikyo-family member with OEM codes 170 and 90; named for the Sharp RRMCGA030WJSA (device 8, subdevice 48) by probonopd/irdb",
+    "regression_snapshot": null,
+    "snapshot_is_evidence": false,
+    "gate2a_structural_vector": null,
+    "gate2a_pending_reason": "No independent capture or constant table for SharpDVD's own byte layout was found (searched IrpTransmogrifier's test resources, IRremoteESP8266, the DecodeIR documentation, Flipper and Arduino-IRremote). Arduino-IRremote src/ir_Kaseikyo.hpp @6158d65 L113-L117 publishes the vendor IDs as 0x2002 Panasonic, 0x3254 Denon, 0x5AAA Sharp and 0x0103 JVC, which are these protocols' fixed bytes (2,32), (84,50), (170,90) and (3,1) read little-endian, and L99-L106 the 432 us unit with 8/4-unit header and 1/3-unit bits. That corroborates the vendor bytes and the shared frame, not the layout of the remaining bytes. probonopd/irdb codes/Sharp/Unknown_RRMCGA030WJSA/8,48.csv lists SharpDVD D=8 S=48 and its keys agree with the SwiftRemote database code for code (digits F=1-10, UP 32, DOWN 33, LEFT 34, MENU 27, ENTER 28), which corroborates the parameters and not the waveform.",
+    "gate2b_golden_pronto": "irpt_sharpdvd_D8_S48_F1.pronto",
+    "gate2b_pending_reason": null,
+    "gate2b_vector_source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "gate2b_vector_params": {
+      "device": 8,
+      "subdevice": 48,
+      "function": 1,
+      "carrier_hz": 38000
+    },
+    "gate2b_vector_quantization": "irpt-nominal-carrier",
+    "gate2b_vector_provenance": "reproducible",
+    "gate2b_vector_reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=8,S=48,F=1 -p SharpDVD",
+    "gate2b_byte_divergence": []
   }
 }

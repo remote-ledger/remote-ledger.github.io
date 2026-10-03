@@ -12,7 +12,21 @@ from reference_quantizers import RULES
 
 VECTORS = Path(__file__).parent / "vectors"
 VECTOR_INDEX = VECTORS / "index.json"
-V1_REGISTRY = {"NEC1", "NECx2", "RC5", "Sony20"}
+V1_REGISTRY = {
+    "NEC1",
+    "NECx2",
+    "RC5",
+    "Sony20",
+    # the `unknown` family: what the DB calls REC80, RCC2026 and RCC0082
+    "Aiwa",
+    "Blaupunkt",
+    "Panasonic",
+    "JVC-48",
+    "Fujitsu",
+    "Teac-K",
+    "Denon-K",
+    "SharpDVD",
+}
 BACKLOG = {"NEC2", "NEC", "Sony12", "Sony15", "RC6"}
 #: Not backlogged -- `Samsung32` does not exist in any consulted source, and
 #: the question it stood for is now answered: the BN59-01199F speaks NECx2,
