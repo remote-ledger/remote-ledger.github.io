@@ -1,0 +1,211 @@
+{
+  "manufacturer": "ODEON",
+  "model": "IR Blaster DB 500159 (NEC1)",
+  "aliases": [],
+  "controls": [
+    "ODEON | AV-100"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_AM_SLASH_FM": {
+      "label": "AM/FM",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 500159, 'AM/FM' 00FF10EF NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_FUNCTION_DOWN": {
+      "label": "FUNCTION DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 500159, 'FUNCTION DOWN' 00FF8877 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_FUNCTION_UP": {
+      "label": "FUNCTION UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 500159, 'FUNCTION UP' 00FF6897 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_INPUT_SEL": {
+      "label": "INPUT SEL",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 500159, 'INPUT SEL' 00FF20DF NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_MEMORY": {
+      "label": "MEMORY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 500159, 'MEMORY' 00FF30CF NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_MODE": {
+      "label": "MODE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 500159, 'MODE' 00FF609F NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 500159, 'MUTE' 00FF40BF NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 500159, 'power' 00FF00FF NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_PRESELECT_MINUS": {
+      "label": "PRESELECT-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 500159, 'PRESELECT-' 00FFB04F NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_PRESELECT_PLUS": {
+      "label": "PRESELECT+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x0E",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 500159, 'PRESELECT+' 00FF708F NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_TUNE_MINUS": {
+      "label": "TUNE-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 500159, 'TUNE-' 00FF906F NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_TUNE_PLUS": {
+      "label": "TUNE+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 500159, 'TUNE+' 00FF50AF NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 500159, 'VOL-' 00FF28D7 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 500159, 'VOL+' 00FF08F7 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    }
+  }
+}

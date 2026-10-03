@@ -1,0 +1,72 @@
+{
+  "manufacturer": "FT",
+  "model": "IR Blaster DB 7952 (NEC1)",
+  "aliases": [],
+  "controls": [
+    "FT | M239",
+    "LG | 105-230L"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_GREEN": {
+      "label": "GREEN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x5E",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7952, 'GREEN' 0AF57A85 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_RED": {
+      "label": "RED",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x5B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7952, 'RED' 0AF5DA25 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_SLEEP_SLASH_TIMER": {
+      "label": "SLEEP/TIMER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7952, 'SLEEP/TIMER' 0AF58877 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_YELLOW": {
+      "label": "YELLOW",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x5D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7952, 'YELLOW' 0AF5BA45 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    }
+  }
+}

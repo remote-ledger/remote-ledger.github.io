@@ -1,0 +1,852 @@
+{
+  "manufacturer": "UNIVERSUM",
+  "model": "IR Blaster DB 2247 (Samsung36)",
+  "aliases": [],
+  "controls": [
+    "BRAVO | D 118",
+    "SAMSUNG | BD - D 8200 (2  VERS.)",
+    "UNIVERSUM | 5260",
+    "UNIVERSUM | 52605",
+    "UNIVERSUM | 6114"
+  ],
+  "protocol": {
+    "name": "Samsung36",
+    "carrierHz": 37900,
+    "unitUs": 500,
+    "minSends": 1,
+    "claims": {
+      "unitUs": {
+        "reason": "the IRP says 560 us; SwiftRemote's own encoder, eight real captures and IRremoteESP8266 all say about 500 us (marks 512, spaces 490/1468), so the compiled signal follows them and not the IRP's unit",
+        "source": "https://github.com/bengtmartensson/IrpTransmogrifier/tree/c945e76/src/test/teaserfiles Samsung36.ict (eight keys of a Samsung Blu-ray remote, median unit about 496 us; tools/misc_capture_audit.py); https://github.com/crankyoldgit/IRremoteESP8266/blob/1e2f0f3/src/ir_Samsung.cpp#L59-L63 and #L175-L190 (sendSamsung36, 'Works on real devices'); tests/vectors/CITATIONS.md, section 'The misc family'"
+      }
+    }
+  },
+  "keys": {
+    "KEY_0": {
+      "label": "0",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x80",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, '0' 0C58001 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_1": {
+      "label": "1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x81",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, '1' 0C58081 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_2": {
+      "label": "2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x82",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, '2' 0C58041 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_3": {
+      "label": "3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x83",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, '3' 0C580C1 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_4": {
+      "label": "4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x84",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, '4' 0C58021 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_5": {
+      "label": "5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x85",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, '5' 0C580A1 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_6": {
+      "label": "6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x86",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, '6' 0C58061 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_7": {
+      "label": "7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x87",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, '7' 0C580E1 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_8": {
+      "label": "8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x88",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, '8' 0C58011 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_9": {
+      "label": "9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x89",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, '9' 0C58091 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_AUDIO_0C58010": {
+      "label": "AUDIO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'AUDIO' 0C58010 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_AUDIO_0C580E3": {
+      "label": "AUDIO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0xC7",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'AUDIO' 0C580E3 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_AV_SLASH_SOURCE": {
+      "label": "AV/SOURCE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x8C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'AV/SOURCE' 0C58031 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_BACK": {
+      "label": "BACK",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x95",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'BACK' 0C580A9 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_BLUE_0C58042": {
+      "label": "BLUE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x42",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'BLUE' 0C58042 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_BLUE_0C58079": {
+      "label": "BLUE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x9E",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'BLUE' 0C58079 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_DISPLAY": {
+      "label": "DISPLAY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x41",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'DISPLAY' 0C58082 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_DOWN": {
+      "label": "DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x98",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'DOWN' 0C58019 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_EJECT": {
+      "label": "EJECT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x8C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'EJECT' 0C58031 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_EXIT_SLASH_RETURN": {
+      "label": "EXIT/RETURN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'EXIT/RETURN' 0C580A0 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_FORWARD": {
+      "label": "FORWARD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x9E",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'FORWARD' 0C58079 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_GREEN_0C58003": {
+      "label": "GREEN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0xC0",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'GREEN' 0C58003 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_GREEN_0C58039": {
+      "label": "GREEN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x9C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'GREEN' 0C58039 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_INFO_0C58039": {
+      "label": "INFO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x9C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'INFO' 0C58039 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_INFO_0C58082": {
+      "label": "INFO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x41",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'INFO' 0C58082 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_LEFT": {
+      "label": "LEFT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x9A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'LEFT' 0C58059 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_MENU": {
+      "label": "MENU",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x8B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'MENU' 0C580D1 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_MINUS_SLASH_MINUS_MINUS": {
+      "label": "-/--",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x47",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, '-/--' 0C580E2 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0xCA",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'MUTE' 0C58053 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_NEXT": {
+      "label": "NEXT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0xA1",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'NEXT' 0C58085 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_OK": {
+      "label": "OK",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x9B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'OK' 0C580D9 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_PAUSE_0C58079": {
+      "label": "PAUSE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x9E",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'PAUSE' 0C58079 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_PAUSE_0C580C5": {
+      "label": "PAUSE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0xA3",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'PAUSE' 0C580C5 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_PICT": {
+      "label": "PICT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0xC9",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'PICT' 0C58093 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_PLAY": {
+      "label": "PLAY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0xA0",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'PLAY' 0C58005 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x91",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'POWER' 0C58089 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_PREV": {
+      "label": "PREV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x9F",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'PREV' 0C580F9 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_P_MINUS": {
+      "label": "P-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0xC6",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'P-' 0C58063 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_P_PLUS": {
+      "label": "P+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0xC5",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'P+' 0C580A3 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_P_SLASH_C": {
+      "label": "P/C",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x93",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'P/C' 0C580C9 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_RECORD": {
+      "label": "RECORD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0xC2",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'RECORD' 0C58043 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_RED_0C58009": {
+      "label": "RED",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x90",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'RED' 0C58009 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_RED_0C58043": {
+      "label": "RED",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0xC2",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'RED' 0C58043 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_REWIND": {
+      "label": "REWIND",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x9C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'REWIND' 0C58039 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_RIGHT": {
+      "label": "RIGHT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x99",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'RIGHT' 0C58099 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_SKIP_PREV": {
+      "label": "SKIP PREV.",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0xC4",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'SKIP PREV.' 0C58023 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_SLEEP_SLASH_TIMER": {
+      "label": "SLEEP/TIMER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'SLEEP/TIMER' 0C580D0 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_STOP": {
+      "label": "STOP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0xA2",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'STOP' 0C58045 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_SUBTITLE": {
+      "label": "SUBTITLE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'SUBTITLE' 0C580C0 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_TEXT": {
+      "label": "TEXT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x8F",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'TEXT' 0C580F1 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_TITLE": {
+      "label": "TITLE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0xC8",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'TITLE' 0C58013 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_TOP_MENU": {
+      "label": "TOP MENU",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'TOP MENU' 0C58010 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_TV": {
+      "label": "TV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x94",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'TV' 0C58029 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_UP": {
+      "label": "UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x97",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'UP' 0C580E9 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x9F",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'VOL-' 0C580F9 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0xA1",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'VOL+' 0C58085 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_YELLOW_0C58005": {
+      "label": "YELLOW",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0xA0",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'YELLOW' 0C58005 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_YELLOW_0C5806E": {
+      "label": "YELLOW",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x76",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'YELLOW' 0C5806E Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_ZOOM": {
+      "label": "ZOOM",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2247, 'ZOOM' 0C58090 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    }
+  }
+}

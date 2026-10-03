@@ -1,0 +1,106 @@
+{
+  "manufacturer": "LG",
+  "model": "IR Blaster DB 5316 (RC5)",
+  "aliases": [],
+  "controls": [
+    "LG | 671CDAL01B"
+  ],
+  "protocol": {
+    "name": "RC5",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_CH_SLASH_TV_MINUS": {
+      "label": "CH/TV-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x21",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 5316, 'CH/TV-' 821 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_CH_SLASH_TV_PLUS": {
+      "label": "CH/TV+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x20",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 5316, 'CH/TV+' 820 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_INPUT_SLASH_TV": {
+      "label": "INPUT/TV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x38",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 5316, 'INPUT/TV' 838 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_MUTE_SLASH_TV": {
+      "label": "MUTE/TV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 5316, 'MUTE/TV' 80D RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_TV_SLASH_POWER": {
+      "label": "TV/POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 5316, 'TV/POWER' 80C RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_VOL_SLASH_TV_MINUS": {
+      "label": "VOL/TV-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 5316, 'VOL/TV-' 811 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_VOL_SLASH_TV_PLUS": {
+      "label": "VOL/TV+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 5316, 'VOL/TV+' 810 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    }
+  }
+}

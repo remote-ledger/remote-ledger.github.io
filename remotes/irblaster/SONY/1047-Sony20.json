@@ -1,0 +1,92 @@
+{
+  "manufacturer": "SONY",
+  "model": "IR Blaster DB 1047 (Sony20)",
+  "aliases": [],
+  "controls": [
+    "BRAVO | T 631",
+    "HUAYU | RM - D 637",
+    "HUAYU | SN - 03",
+    "SONY | KV - SA 282",
+    "SONY | KV - SA 322",
+    "SONY | RM - GA 001",
+    "SONY | RM 1022",
+    "SONY | WEGA 0505"
+  ],
+  "protocol": {
+    "name": "Sony20",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_FAV": {
+      "label": "FAV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0x49",
+          "function": "0x1F",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1047, 'FAV' F8B92 SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_P_RIGHT": {
+      "label": "P. RIGHT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0x49",
+          "function": "0x23",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1047, 'P. RIGHT' C4B92 SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_P_UP": {
+      "label": "P. UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0x49",
+          "function": "0x39",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1047, 'P. UP' 9CB92 SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_UNLABELED_4CB92": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0x49",
+          "function": "0x32",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1047, '??' 4CB92 SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_UNLABELED_A8B92": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0x49",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1047, '??' A8B92 SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    }
+  }
+}

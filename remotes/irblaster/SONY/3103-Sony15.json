@@ -1,0 +1,256 @@
+{
+  "manufacturer": "SONY",
+  "model": "IR Blaster DB 3103 (Sony15)",
+  "aliases": [],
+  "controls": [
+    "BRAVO | A 024",
+    "SONY | 146372011 - HIFI",
+    "SONY | 146540711 - HIFI",
+    "SONY | 146580111 FUNCT.",
+    "SONY | D 707 PRECISE - EQUAL.",
+    "SONY | LBTD 707 - EQUAL",
+    "SONY | LBTV 702 MIDI - EQUAL",
+    "SONY | RM - S 703 FUNCT.",
+    "SONY | RM - S 730 HI FI",
+    "SONY | RM - S 771 EQUAL.",
+    "SONY | TA - F 333 ESL FUNCT.",
+    "SONY | TA - F 590 ES FUNCT.",
+    "SONY | TA - F 606 ES FUNCT.",
+    "SONY | TA - F 690 ES FUNCT.",
+    "SONY | TA - F 707 ES FUNCT.",
+    "SONY | TA - F 770 ESL FUNCT.",
+    "SONY | TA - F 808 ES FUNCT.",
+    "SONY | TA - F 870 ESL FUNCT.",
+    "SONY | TA - FA 5 ES FUNCT.",
+    "SONY | TA - FA 7 ES FUNCT.",
+    "SONY | V 702 PRECISE - HI FI"
+  ],
+  "protocol": {
+    "name": "Sony15",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_AUDIO": {
+      "label": "AUDIO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xFF",
+          "function": "0x23",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3103, 'AUDIO' C5FE SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    },
+    "KEY_CANCEL": {
+      "label": "CANCEL",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xFF",
+          "function": "0x21",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3103, 'CANCEL' 85FE SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    },
+    "KEY_DISPLAY": {
+      "label": "DISPLAY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xFF",
+          "function": "0x22",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3103, 'DISPLAY' 45FE SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    },
+    "KEY_EXIT_SLASH_RETURN": {
+      "label": "EXIT/RETURN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xFF",
+          "function": "0x21",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3103, 'EXIT/RETURN' 85FE SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    },
+    "KEY_INFO": {
+      "label": "INFO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xFF",
+          "function": "0x22",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3103, 'INFO' 45FE SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    },
+    "KEY_MENU": {
+      "label": "MENU",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xFF",
+          "function": "0x25",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3103, 'MENU' A5FE SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    },
+    "KEY_PICT": {
+      "label": "PICT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xFF",
+          "function": "0x24",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3103, 'PICT' 25FE SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xFF",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3103, 'POWER' A9FE SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    },
+    "KEY_SKIP_NEXT": {
+      "label": "SKIP NEXT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xFF",
+          "function": "0x35",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3103, 'SKIP NEXT' ADFE SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    },
+    "KEY_SKIP_PREV": {
+      "label": "SKIP PREV.",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xFF",
+          "function": "0x34",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3103, 'SKIP PREV.' 2DFE SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    },
+    "KEY_SLEEP_SLASH_TIMER": {
+      "label": "SLEEP/TIMER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xFF",
+          "function": "0x18",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3103, 'SLEEP/TIMER' 19FE SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    },
+    "KEY_TEXT": {
+      "label": "TEXT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xFF",
+          "function": "0x1E",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3103, 'TEXT' 79FE SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    },
+    "KEY_TV": {
+      "label": "TV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xFF",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3103, 'TV' 59FE SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    },
+    "KEY_UNLABELED_15FE": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xFF",
+          "function": "0x28",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3103, '??' 15FE SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    },
+    "KEY_UNLABELED_39FE": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xFF",
+          "function": "0x1C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3103, '??' 39FE SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xFF",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3103, 'VOL-' C9FE SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xFF",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3103, 'VOL+' 49FE SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    }
+  }
+}

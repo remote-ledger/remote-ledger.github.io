@@ -1,0 +1,28 @@
+{
+  "manufacturer": "SHARP",
+  "model": "IR Blaster DB 9104 (Denon)",
+  "aliases": [],
+  "controls": [
+    "SHARP | SD-AT1000"
+  ],
+  "protocol": {
+    "name": "Denon",
+    "carrierHz": 38000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_INPUT_DIGITAL_2": {
+      "label": "INPUT DIGITAL 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x12",
+          "function": "0x5D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9104, 'INPUT DIGITAL 2' 4DD0 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    }
+  }
+}

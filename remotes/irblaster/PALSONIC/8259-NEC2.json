@@ -1,0 +1,268 @@
+{
+  "manufacturer": "PALSONIC",
+  "model": "IR Blaster DB 8259 (NEC2)",
+  "aliases": [],
+  "controls": [
+    "PALSONIC | TFTV 826 HD",
+    "PALSONIC | TFTV826HD"
+  ],
+  "protocol": {
+    "name": "NEC2",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_ASPECT": {
+      "label": "ASPECT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x82",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8259, 'ASPECT' 10EF41BE NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_BLUE": {
+      "label": "BLUE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x91",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8259, 'BLUE' 10EF8976 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_GREEN": {
+      "label": "GREEN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x89",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8259, 'GREEN' 10EF916E NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_MEDIA": {
+      "label": "MEDIA",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0xD3",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8259, 'MEDIA' 10EFCB34 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_PAUSE": {
+      "label": "PAUSE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0xD2",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8259, 'PAUSE' 10EF4BB4 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_PLAY": {
+      "label": "PLAY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0xD2",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8259, 'PLAY' 10EF4BB4 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0xD7",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8259, 'POWER' 10EFEB14 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_REC": {
+      "label": "REC",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x87",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8259, 'REC' 10EFE11E NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_RED": {
+      "label": "RED",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x85",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8259, 'RED' 10EFA15E NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_SLEEP": {
+      "label": "SLEEP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0xC0",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8259, 'SLEEP' 10EF03FC NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_SOURCE": {
+      "label": "SOURCE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0xC3",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8259, 'SOURCE' 10EFC33C NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_STOP": {
+      "label": "STOP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x8B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8259, 'STOP' 10EFD12E NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_SUBTITLE": {
+      "label": "SUBTITLE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0xC8",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8259, 'SUBTITLE' 10EF13EC NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_TEXT_HOLD": {
+      "label": "TEXT HOLD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0xD0",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8259, 'TEXT HOLD' 10EF0BF4 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_TEXT_SIZE": {
+      "label": "TEXT SIZE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0xD1",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8259, 'TEXT SIZE' 10EF8B74 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_YELLOW": {
+      "label": "YELLOW",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x8D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8259, 'YELLOW' 10EFB14E NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY__10EF0BF4": {
+      "label": "⏩",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0xD0",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8259, '⏩' 10EF0BF4 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY__10EF8B74": {
+      "label": "⏪",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0xD1",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8259, '⏪' 10EF8B74 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "manufacturer": "ONKYO",
+  "model": "IR Blaster DB 3458 (NEC2)",
+  "aliases": [],
+  "controls": [
+    "ONKYO | A 9155",
+    "ONKYO | A 9355",
+    "ONKYO | A9355",
+    "ONKYO | A9555",
+    "ONKYO | A973",
+    "ONKYO | RC - 627 S"
+  ],
+  "protocol": {
+    "name": "NEC2",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_CD_4BC051AE": {
+      "label": "CD ⏩",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x03",
+          "function": "0x8A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3458, 'CD ⏩' 4BC051AE NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_CD_4BC0D12E": {
+      "label": "CD ⏪",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x03",
+          "function": "0x8B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3458, 'CD ⏪' 4BC0D12E NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_DOWN": {
+      "label": "DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x04",
+          "function": "0x43",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3458, 'DOWN' 4B20C23D NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_UP": {
+      "label": "UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x04",
+          "function": "0x42",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3458, 'UP' 4B2042BD NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x03",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3458, 'VOL-' 4BC0C03F NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x03",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3458, 'VOL+' 4BC040BF NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "manufacturer": "FT",
+  "model": "IR Blaster DB 8052 (NEC1)",
+  "aliases": [],
+  "controls": [
+    "FT | FT-M239"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_BLUE": {
+      "label": "BLUE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x5C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8052, 'BLUE' 0AF53AC5 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_GREEN": {
+      "label": "GREEN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x5E",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8052, 'GREEN' 0AF57A85 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_RED": {
+      "label": "RED",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x5B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8052, 'RED' 0AF5DA25 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_SLEEP_SLASH_TIMER": {
+      "label": "SLEEP/TIMER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8052, 'SLEEP/TIMER' 0AF58877 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_YELLOW": {
+      "label": "YELLOW",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x5D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8052, 'YELLOW' 0AF5BA45 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    }
+  }
+}

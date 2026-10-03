@@ -1,0 +1,158 @@
+{
+  "manufacturer": "ALTEC LANSING",
+  "model": "IR Blaster DB 148 (RC5)",
+  "aliases": [],
+  "controls": [
+    "ALTEC LANSING | IM7"
+  ],
+  "protocol": {
+    "name": "RC5",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_BASS_MINUS": {
+      "label": "BASS -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0F",
+          "function": "0x17",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 148, 'BASS -' BD7 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_BASS_PLUS": {
+      "label": "BASS +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0F",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 148, 'BASS +' BD6 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_PAUSE": {
+      "label": "PAUSE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0F",
+          "function": "0x35",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 148, 'PAUSE' BF5 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_PLAY": {
+      "label": "PLAY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0F",
+          "function": "0x35",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 148, 'PLAY' BF5 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0F",
+          "function": "0x3D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 148, 'POWER' BFD RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_TREBLE_MINUS": {
+      "label": "TREBLE -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0F",
+          "function": "0x19",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 148, 'TREBLE -' BD9 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_TREBLE_PLUS": {
+      "label": "TREBLE +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0F",
+          "function": "0x18",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 148, 'TREBLE +' BD8 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0F",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 148, 'VOL-' BD1 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0F",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 148, 'VOL+' BD0 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY__BE0": {
+      "label": "⏩|",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0F",
+          "function": "0x20",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 148, '⏩|' BE0 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY__BE1": {
+      "label": "|⏪",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0F",
+          "function": "0x21",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 148, '|⏪' BE1 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    }
+  }
+}

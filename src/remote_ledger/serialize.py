@@ -169,6 +169,7 @@ SOURCE_KEY_ORDER: dict[str, tuple[str, ...]] = {
         "name", "carrierHz", "unitUs", "minSends",
         "defaultGapUs", "tolerance", "claims",
     ),
+    "key": ("label", "forms"),
     "form": (
         "id", "type", "candidate", "device", "subdevice", "function",
         "intro", "repeat", "truncated", "hex", "confidence",

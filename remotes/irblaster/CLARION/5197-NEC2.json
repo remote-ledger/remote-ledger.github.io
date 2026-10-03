@@ -1,0 +1,40 @@
+{
+  "manufacturer": "CLARION",
+  "model": "IR Blaster DB 5197 (NEC2)",
+  "aliases": [],
+  "controls": [
+    "CLARION | AUTO IPOD",
+    "CLARION | MAX385VD",
+    "CLARION | NX409",
+    "CLARION | NX500",
+    "CLARION | NZ409",
+    "CLARION | NZ500",
+    "CLARION | VRX485VD",
+    "CLARION | VRX486VD",
+    "CLARION | VX400",
+    "CLARION | VX409",
+    "CLARION | VZ400",
+    "CLARION | VZ409"
+  ],
+  "protocol": {
+    "name": "NEC2",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_IPOD": {
+      "label": "iPOD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0xFB",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 5197, 'iPOD' 20DF28D7 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    }
+  }
+}

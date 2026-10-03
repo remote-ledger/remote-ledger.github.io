@@ -13,7 +13,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from . import __version__, protocols
+from . import __version__, parallel, protocols
 from .errors import LedgerError, ValidationError
 from .generators import PIPELINE, diff_tree, owned_paths, registered
 from .check import check_remote
@@ -21,7 +21,7 @@ from .fmt import format_document
 from .pronto import encode as pronto_encode
 from .remote import load_remote
 from .serialize import dumps
-from .validate import corpus_files, validate_file
+from .validate import corpus_files, validate_file, validate_files
 
 EXIT_OK, EXIT_ERROR, EXIT_UNAVAILABLE = 0, 1, 2
 
@@ -78,7 +78,7 @@ def _resolve_targets(raw: str | None) -> list[Path]:
 
 def cmd_validate(args: argparse.Namespace) -> int:
     targets = _resolve_targets(args.path)
-    problems = [p for t in targets for p in validate_file(t)]
+    problems = validate_files(targets)
     for p in problems:
         print(f"ERROR {p}", file=sys.stderr)
     print(f"{len(targets)} file(s) checked, {len(problems)} error(s)")
@@ -98,18 +98,22 @@ def cmd_encode(args: argparse.Namespace) -> int:
     return EXIT_OK
 
 
+def _check_target(target: Path) -> tuple[list[str], list]:
+    """One file's share of ``rl check``: (problems, warnings), as text lines."""
+    schema_errors = validate_file(target)
+    if schema_errors:
+        return [str(p) for p in schema_errors], []
+    file_problems, file_warnings = check_remote(load_remote(target))
+    return [f"{target.as_posix()}: {p}" for p in file_problems], file_warnings
+
+
 def cmd_check(args: argparse.Namespace) -> int:
     """R13 cross-check plus D9's derived-form regeneration."""
     targets = _resolve_targets(args.path)
     problems, warnings = [], []
-    for target in targets:
-        schema_errors = validate_file(target)
-        if schema_errors:
-            problems += [str(p) for p in schema_errors]
-            continue
-        file_problems, file_warnings = check_remote(load_remote(target))
-        problems += [f"{target.as_posix()}: {p}" for p in file_problems]
-        warnings += file_warnings
+    for target_problems, target_warnings in parallel.ordered_map(_check_target, targets):
+        problems += target_problems
+        warnings += target_warnings
 
     for warning in warnings:
         print(warning, file=sys.stderr)
@@ -134,7 +138,8 @@ def compiled_artifact(remote) -> dict:
     holds no non-reproducible value is what makes ``--check`` viable at all.
     ``minSends`` sits once at the protocol level, not per key -- it is a fact
     about the hardware, and a consumer repeating the Pronto repeat sequence
-    needs it exactly once (D3a).
+    needs it exactly once (D3a). A key's optional display ``label`` (what the
+    source shows for it) rides beside its candidates, only when it has one.
     """
     protocol = {
         "carrierHz": remote.protocol.carrier_hz,
@@ -159,6 +164,10 @@ def compiled_artifact(remote) -> dict:
                 entry["label"] = remote.variants[name].label
             candidates[name] = entry
         keys[key] = {"candidates": candidates}
+        # Only a key that has one: a file without labels compiles to the very
+        # bytes it did before the field existed.
+        if key in remote.labels:
+            keys[key]["label"] = remote.labels[key]
 
     return {
         "schemaVersion": 1,
@@ -283,7 +292,7 @@ def cmd_build(args: argparse.Namespace) -> int:
             )
             return EXIT_ERROR
 
-    problems = [str(p) for t in corpus_files(root) for p in validate_file(t)]
+    problems = [str(p) for p in validate_files(corpus_files(root))]
     if problems:
         for problem in problems:
             print(f"ERROR {problem}", file=sys.stderr)
@@ -335,7 +344,12 @@ def cmd_index(args: argparse.Namespace) -> int:
         out = Path(tempfile.mkdtemp(prefix="rl-index-"))
         try:
             problems = run_index(root, out)
-            drift = diff_tree(root, out) if not problems else []
+            # Only what the index stage owns: against a tree holding nothing
+            # else, every other owned path would read as an orphan.
+            drift = (
+                diff_tree(root, out, tuple(g for g in PIPELINE if g.name == "index"))
+                if not problems else []
+            )
             for message in problems + drift:
                 print(f"ERROR {message}", file=sys.stderr)
             return EXIT_ERROR if (problems or drift) else EXIT_OK
@@ -356,7 +370,9 @@ def cmd_site(args: argparse.Namespace) -> int:
         import shutil, tempfile
         out = Path(tempfile.mkdtemp(prefix="rl-site-"))
         try:
-            problems = run_site(root, out) + diff_tree(root, out)
+            problems = run_site(root, out) + diff_tree(
+                root, out, tuple(g for g in PIPELINE if g.name == "site")
+            )
             for message in problems:
                 print(f"ERROR {message}", file=sys.stderr)
             return EXIT_ERROR if problems else EXIT_OK
@@ -368,12 +384,23 @@ def cmd_site(args: argparse.Namespace) -> int:
 
 
 def cmd_lookup(args: argparse.Namespace) -> int:
-    """R16: find a remote by device, model, alias or manufacturer."""
-    from .index import build_index
+    """R16: find a remote by device, model, alias or manufacturer.
+
+    Reads the committed index and every shard of it when they were generated
+    from exactly the files on disk (D69), which is what keeps a lookup under a
+    second however much is imported; otherwise rebuilds them from the files,
+    as it always did, and says so on stderr.
+    """
+    from .index import build_all, load_committed, merge, shard_entries
     from .lookup import keys_for, render, search
 
     root = _repo_root()
-    index, _ = build_index(root)
+    index, why = load_committed(root)
+    if index is None:
+        print(f"note: {why}; rebuilding the index from the files "
+              "(`rl build` refreshes it)", file=sys.stderr)
+        built = build_all(root)
+        index = merge(built.index, shard_entries(built.shards))
     query = " ".join(args.query)
     matches = search(index, query)
     print(render(matches, query, keys_for(root, matches)))
@@ -381,16 +408,20 @@ def cmd_lookup(args: argparse.Namespace) -> int:
 
 
 def cmd_import(args: argparse.Namespace) -> int:
-    """SPEC R19 / DESIGN sections 14-15: rewrite remotes/<source>/ from a
+    """SPEC R19 / DESIGN sections 14, 15 and 17: rewrite remotes/<source>/ from a
     checkout.
 
     The commit is read from the checkout itself, and must match ``--commit``
     when one is given, so every citation names the tree it was built from.
     """
+    from .irblaster import importer as irblaster_importer
     from .lirc import importer as lirc_importer
     from .smartir import importer as smartir_importer
 
-    module = {"lirc": lirc_importer, "smartir": smartir_importer}[args.source]
+    module = {
+        "lirc": lirc_importer, "smartir": smartir_importer,
+        "irblaster": irblaster_importer,
+    }[args.source]
 
     checkout = Path(args.checkout)
     try:
@@ -404,6 +435,19 @@ def cmd_import(args: argparse.Namespace) -> int:
         raise ValidationError(
             f"{checkout} is at {head}, not the requested {args.commit}"
         )
+    # An importer that reads one named file must read the commit's version of
+    # it, or every citation would name a tree the data did not come from.
+    source = getattr(module, "INPUT", None)
+    if source is not None:
+        dirty = subprocess.run(
+            ["git", "-C", str(checkout), "status", "--porcelain", "--", source],
+            check=True, capture_output=True, text=True,
+        ).stdout.strip()
+        if dirty:
+            raise ValidationError(
+                f"{checkout}/{source} differs from the commit {head[:7]}; "
+                "commit or restore it so the pinned commit names the data"
+            )
     report = module.write_import(_repo_root(), checkout, head)
     imported = sum(n for k, n in report.keys.items() if k.startswith("imported"))
     print(f"{module.IMPORT_ROOT}/: {report.remotes['imported']:,} remotes, "
@@ -418,6 +462,13 @@ def _unavailable(name: str, phase: int) -> int:
         file=sys.stderr,
     )
     return EXIT_UNAVAILABLE
+
+
+def _jobs_argument(text: str) -> int:
+    try:
+        return parallel.parse_jobs(text, source="--jobs")
+    except ValidationError as exc:
+        raise argparse.ArgumentTypeError(str(exc)) from None
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -439,6 +490,12 @@ def build_parser() -> argparse.ArgumentParser:
     common.add_argument(
         "--allow-dirty", action="store_true", default=argparse.SUPPRESS,
         help="let --check run with uncommitted changes under an owned path (D11)",
+    )
+    common.add_argument(
+        "-j", "--jobs", type=_jobs_argument, default=argparse.SUPPRESS, metavar="N",
+        help="worker processes for the per-remote loops; 1 runs everything in "
+             f"this process. Default: ${parallel.ENV_JOBS}, else the usable "
+             f"CPUs up to {parallel.MAX_AUTO_JOBS}. Output never depends on it",
     )
 
     p = argparse.ArgumentParser(
@@ -504,7 +561,8 @@ def build_parser() -> argparse.ArgumentParser:
     f.set_defaults(func=cmd_fmt)
 
     ix = sub.add_parser(
-        "index", help="regenerate build/index.json (R14)", parents=[common]
+        "index", help="regenerate build/index.json and build/index/ (R14, D69)",
+        parents=[common]
     )
     ix.add_argument("--check", action="store_true", help="diff instead of write")
     ix.set_defaults(func=cmd_index)
@@ -518,7 +576,7 @@ def build_parser() -> argparse.ArgumentParser:
     im = sub.add_parser(
         "import", help="import an upstream database under SPEC R19", parents=[common]
     )
-    im.add_argument("source", choices=["lirc", "smartir"],
+    im.add_argument("source", choices=["lirc", "smartir", "irblaster"],
                      help="a source meeting SPEC R19's five conditions")
     im.add_argument("checkout", help="a git checkout of the upstream source")
     im.add_argument("--commit", help="refuse unless the checkout is at this commit")
@@ -540,11 +598,16 @@ def main(argv: list[str] | None = None) -> int:
     for flag in GLOBAL_FLAGS:
         if not hasattr(args, flag):
             setattr(args, flag, False)
+    # Set for this call only, so a count given to one call cannot leak into the
+    # next one made in the same process (the test suite makes many).
+    parallel.configure(getattr(args, "jobs", None))
     try:
         return args.func(args)
     except LedgerError as exc:
         print(f"ERROR {exc}", file=sys.stderr)
         return EXIT_ERROR
+    finally:
+        parallel.configure(None)
 
 
 if __name__ == "__main__":  # pragma: no cover

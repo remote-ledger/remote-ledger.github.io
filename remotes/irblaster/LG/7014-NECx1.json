@@ -1,0 +1,338 @@
+{
+  "manufacturer": "LG",
+  "model": "IR Blaster DB 7014 (NECx1)",
+  "aliases": [],
+  "controls": [
+    "LG | CM 2460",
+    "LG | COV 30748175"
+  ],
+  "protocol": {
+    "name": "NECx1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_ALARM": {
+      "label": "ALARM",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x10",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7014, 'ALARM' 0808B04F NECx1: 32 wire bits, bytes bit-reversed as NECx1"
+        }
+      ]
+    },
+    "KEY_CLOCR": {
+      "label": "CLOCR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x10",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7014, 'CLOCR' 080830CF NECx1: 32 wire bits, bytes bit-reversed as NECx1"
+        }
+      ]
+    },
+    "KEY_DELETE": {
+      "label": "DELETE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x10",
+          "function": "0xB0",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7014, 'DELETE' 08080DF2 NECx1: 32 wire bits, bytes bit-reversed as NECx1"
+        }
+      ]
+    },
+    "KEY_DIMMER": {
+      "label": "DIMMER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x10",
+          "function": "0x5E",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7014, 'DIMMER' 08087A85 NECx1: 32 wire bits, bytes bit-reversed as NECx1"
+        }
+      ]
+    },
+    "KEY_EJECT": {
+      "label": "EJECT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x10",
+          "function": "0x9A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7014, 'EJECT' 080859A6 NECx1: 32 wire bits, bytes bit-reversed as NECx1"
+        }
+      ]
+    },
+    "KEY_FUNCTION": {
+      "label": "FUNCTION",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x10",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7014, 'FUNCTION' 0808C03F NECx1: 32 wire bits, bytes bit-reversed as NECx1"
+        }
+      ]
+    },
+    "KEY_INFO": {
+      "label": "INFO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x10",
+          "function": "0x77",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7014, 'INFO' 0808EE11 NECx1: 32 wire bits, bytes bit-reversed as NECx1"
+        }
+      ]
+    },
+    "KEY_MEMORY_SLASH_PROGRAM": {
+      "label": "MEMORY/PROGRAM",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x10",
+          "function": "0x4D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7014, 'MEMORY/PROGRAM' 0808B24D NECx1: 32 wire bits, bytes bit-reversed as NECx1"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x10",
+          "function": "0x1F",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7014, 'MUTE' 0808F807 NECx1: 32 wire bits, bytes bit-reversed as NECx1"
+        }
+      ]
+    },
+    "KEY_PLAY_SLASH_PAUSE": {
+      "label": "PLAY/PAUSE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x10",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7014, 'PLAY/PAUSE' 080820DF NECx1: 32 wire bits, bytes bit-reversed as NECx1"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x10",
+          "function": "0x1E",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7014, 'POWER' 08087887 NECx1: 32 wire bits, bytes bit-reversed as NECx1"
+        }
+      ]
+    },
+    "KEY_PRESET_FOLDER_MINUS": {
+      "label": "PRESET FOLDER-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x10",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7014, 'PRESET FOLDER-' 080848B7 NECx1: 32 wire bits, bytes bit-reversed as NECx1"
+        }
+      ]
+    },
+    "KEY_PRESET_FOLDER_PLUS": {
+      "label": "PRESET FOLDER+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x10",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7014, 'PRESET FOLDER+' 0808C837 NECx1: 32 wire bits, bytes bit-reversed as NECx1"
+        }
+      ]
+    },
+    "KEY_RDS_SLASH_SET": {
+      "label": "RDS/SET",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x10",
+          "function": "0x60",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7014, 'RDS/SET' 080806F9 NECx1: 32 wire bits, bytes bit-reversed as NECx1"
+        }
+      ]
+    },
+    "KEY_REPEAT": {
+      "label": "REPEAT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x10",
+          "function": "0x4E",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7014, 'REPEAT' 0808728D NECx1: 32 wire bits, bytes bit-reversed as NECx1"
+        }
+      ]
+    },
+    "KEY_SLASH_TUN_MINUS": {
+      "label": "|⏪ / TUN.-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x10",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7014, '|⏪ / TUN.-' 0808609F NECx1: 32 wire bits, bytes bit-reversed as NECx1"
+        }
+      ]
+    },
+    "KEY_SLASH_TUN_PLUS": {
+      "label": "⏩| / TUN.+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x10",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7014, '⏩| / TUN.+' 0808E01F NECx1: 32 wire bits, bytes bit-reversed as NECx1"
+        }
+      ]
+    },
+    "KEY_SLEEP": {
+      "label": "SLEEP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x10",
+          "function": "0xC2",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7014, 'SLEEP' 080843BC NECx1: 32 wire bits, bytes bit-reversed as NECx1"
+        }
+      ]
+    },
+    "KEY_SOUND_EFFECT": {
+      "label": "SOUND EFFECT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x10",
+          "function": "0x40",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7014, 'SOUND EFFECT' 080802FD NECx1: 32 wire bits, bytes bit-reversed as NECx1"
+        }
+      ]
+    },
+    "KEY_STOP": {
+      "label": "STOP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x10",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7014, 'STOP' 0808A05F NECx1: 32 wire bits, bytes bit-reversed as NECx1"
+        }
+      ]
+    },
+    "KEY_USB_REC": {
+      "label": "USB REC",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x10",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7014, 'USB REC' 0808A857 NECx1: 32 wire bits, bytes bit-reversed as NECx1"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x10",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7014, 'VOL-' 08086897 NECx1: 32 wire bits, bytes bit-reversed as NECx1"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x10",
+          "function": "0x17",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7014, 'VOL+' 0808E817 NECx1: 32 wire bits, bytes bit-reversed as NECx1"
+        }
+      ]
+    }
+  }
+}

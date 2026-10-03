@@ -1,0 +1,116 @@
+{
+  "manufacturer": "REVITIVE",
+  "model": "IR Blaster DB 7180 (NEC2)",
+  "aliases": [],
+  "controls": [
+    "REVITIVE | MEDIC COACH",
+    "REVITIVE | MEDIC GENOLI",
+    "REVITIVE | MEDIC GENOU",
+    "REVITIVE | MEDIC PLUS"
+  ],
+  "protocol": {
+    "name": "NEC2",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_EMS": {
+      "label": "EMS",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x9D",
+          "function": "0x1C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7180, 'EMS' 40B938C7 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_INTENSITY_CONTROL_MINUS": {
+      "label": "INTENSITY CONTROL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x9D",
+          "function": "0x0E",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7180, 'INTENSITY CONTROL-' 40B9708F NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_INTENSITY_CONTROL_PLUS": {
+      "label": "INTENSITY CONTROL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x9D",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7180, 'INTENSITY CONTROL+' 40B9D02F NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_POWER_ON_SLASH_OFF": {
+      "label": "POWER ON/OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x9D",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7180, 'POWER ON/OFF' 40B950AF NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_TENS": {
+      "label": "TENS",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x9D",
+          "function": "0x17",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7180, 'TENS' 40B9E817 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_TIME_CONTOL_MINUS": {
+      "label": "TIME CONTOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x9D",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7180, 'TIME CONTOL-' 40B9C837 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_TIME_CONTOL_PLUS": {
+      "label": "TIME CONTOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x9D",
+          "function": "0x1E",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7180, 'TIME CONTOL+' 40B97887 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    }
+  }
+}

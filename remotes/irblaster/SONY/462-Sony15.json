@@ -1,0 +1,108 @@
+{
+  "manufacturer": "SONY",
+  "model": "IR Blaster DB 462 (Sony15)",
+  "aliases": [],
+  "controls": [
+    "SONY | CMT-SBT100",
+    "SONY | CMT-SBT100B",
+    "SONY | RM-AMU171"
+  ],
+  "protocol": {
+    "name": "Sony15",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_BASS_BOOST": {
+      "label": "BASS BOOST",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x90",
+          "function": "0x4D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 462, 'BASS BOOST' B212 SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    },
+    "KEY_BASS_MINUS": {
+      "label": "BASS-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x90",
+          "function": "0x51",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 462, 'BASS-' 8A12 SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    },
+    "KEY_BASS_PLUS": {
+      "label": "BASS+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x90",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 462, 'BASS+' 0A12 SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    },
+    "KEY_FM_MODE": {
+      "label": "FM MODE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x90",
+          "function": "0x2D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 462, 'FM MODE' B412 SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    },
+    "KEY_TRE_MINUS": {
+      "label": "TRE-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x90",
+          "function": "0x57",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 462, 'TRE-' EA12 SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    },
+    "KEY_TRE_PLUS": {
+      "label": "TRE+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x90",
+          "function": "0x56",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 462, 'TRE+' 6A12 SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    },
+    "KEY_TUNING_MODE": {
+      "label": "TUNING MODE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x90",
+          "function": "0x2F",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 462, 'TUNING MODE' F412 SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    }
+  }
+}

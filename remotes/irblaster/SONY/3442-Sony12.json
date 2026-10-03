@@ -1,0 +1,53 @@
+{
+  "manufacturer": "SONY",
+  "model": "IR Blaster DB 3442 (Sony12)",
+  "aliases": [],
+  "controls": [
+    "SONY | 1 - 487 - 137 - 11",
+    "SONY | 148767512",
+    "SONY | DAV - D 310",
+    "SONY | DAV - DZ 270",
+    "SONY | DAV - DZ 280",
+    "SONY | DAV - DZ 680",
+    "SONY | DAV - DZ 680 W",
+    "SONY | DAV - DZ 780",
+    "SONY | DAV - DZ 880 W",
+    "SONY | DAV - F 300",
+    "SONY | DAV - F 310",
+    "SONY | DAV - SR 2",
+    "SONY | HBD - F 300",
+    "SONY | HBD - F 310",
+    "SONY | HBD - TZ 140",
+    "SONY | HBD - TZ 230",
+    "SONY | HCD - DZ 280",
+    "SONY | HCD - DZ 680",
+    "SONY | HCD - DZ 780",
+    "SONY | HCD-DZ260",
+    "SONY | HDC - DZ 280",
+    "SONY | RM - ADU 050",
+    "SONY | RM - ADU 083",
+    "SONY | RM - ADU 093",
+    "SONY | RM - ADU 101",
+    "SONY | RM - SP 320"
+  ],
+  "protocol": {
+    "name": "Sony12",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_AV_SLASH_SOURCE": {
+      "label": "AV/SOURCE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x25",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3442, 'AV/SOURCE' A40 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    }
+  }
+}

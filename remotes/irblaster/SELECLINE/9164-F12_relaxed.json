@@ -1,0 +1,71 @@
+{
+  "manufacturer": "SELECLINE",
+  "model": "IR Blaster DB 9164 (F12_relaxed)",
+  "aliases": [],
+  "controls": [
+    "SELECLINE | 866036/RD-404AC"
+  ],
+  "protocol": {
+    "name": "F12_relaxed",
+    "carrierHz": 37900,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_1": {
+      "label": "1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x03",
+          "subdevice": "0x01",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9164, '1' D88 F12_relaxed: 12-bit number, fields bit-reversed as F12_relaxed"
+        }
+      ]
+    },
+    "KEY_2": {
+      "label": "2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x03",
+          "subdevice": "0x01",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9164, '2' D90 F12_relaxed: 12-bit number, fields bit-reversed as F12_relaxed"
+        }
+      ]
+    },
+    "KEY_3": {
+      "label": "3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x03",
+          "subdevice": "0x01",
+          "function": "0x81",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9164, '3' D81 F12_relaxed: 12-bit number, fields bit-reversed as F12_relaxed"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x03",
+          "subdevice": "0x01",
+          "function": "0x41",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9164, 'POWER' D82 F12_relaxed: 12-bit number, fields bit-reversed as F12_relaxed"
+        }
+      ]
+    }
+  }
+}

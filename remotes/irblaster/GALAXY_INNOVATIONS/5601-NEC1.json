@@ -1,0 +1,43 @@
+{
+  "manufacturer": "GALAXY INNOVATIONS",
+  "model": "IR Blaster DB 5601 (NEC1)",
+  "aliases": [],
+  "controls": [
+    "GALAXY INNOVATIONS | S2020"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_VOL_MINUS": {
+      "label": "vol-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x11",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 5601, 'vol-' 208848B7 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "vol+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x11",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 5601, 'vol+' 2088C837 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    }
+  }
+}

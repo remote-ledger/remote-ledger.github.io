@@ -1,0 +1,85 @@
+{
+  "manufacturer": "TIMBERK",
+  "model": "IR Blaster DB 8673 (NEC1)",
+  "aliases": [],
+  "controls": [
+    "TIMBERK | TFH W200 TR"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_MODE": {
+      "label": "MODE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x94",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8673, 'MODE' 00FF29D6 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_OSCIL": {
+      "label": "OSCIL",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x90",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8673, 'OSCIL' 00FF09F6 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x98",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8673, 'POWER' 00FF19E6 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_SPRYATANA": {
+      "label": "SPRYATANA",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x88",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8673, 'SPRYATANA' 00FF11EE NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_TIMER": {
+      "label": "TIMER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x8C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8673, 'TIMER' 00FF31CE NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    }
+  }
+}

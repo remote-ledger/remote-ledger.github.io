@@ -1,0 +1,48 @@
+{
+  "manufacturer": "SONY",
+  "model": "IR Blaster DB 3489 (Sony15)",
+  "aliases": [],
+  "controls": [
+    "SONY | 149274511",
+    "SONY | A 1438479 A",
+    "SONY | CMT - BX 20 I",
+    "SONY | CMT - BX 70 DBI",
+    "SONY | CMT - FX 300 I",
+    "SONY | CMT - HX 35 R",
+    "SONY | CMT - HX 50 BTR",
+    "SONY | CMT - HX 70 BTR",
+    "SONY | CMT - LX 30 IR",
+    "SONY | CMT - X 5 CD",
+    "SONY | CMT - X 5 CDB",
+    "SONY | CMT - X 7 CD",
+    "SONY | CMT - X 7 CDB",
+    "SONY | HCD - CX 5 IP",
+    "SONY | HCD - FX 300 I",
+    "SONY | HCD - HX 70 BTR",
+    "SONY | HDC - FX 300 I",
+    "SONY | RM - AMU 009",
+    "SONY | RM - AMU 197",
+    "TEAC/TEAK | CMT - H 35 R",
+    "TEAC/TEAK | RM - AMU 009"
+  ],
+  "protocol": {
+    "name": "Sony15",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_EQ": {
+      "label": "EQ",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x90",
+          "function": "0x63",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3489, 'EQ' C612 SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    }
+  }
+}

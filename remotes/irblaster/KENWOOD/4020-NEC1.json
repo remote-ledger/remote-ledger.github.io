@@ -1,0 +1,690 @@
+{
+  "manufacturer": "KENWOOD",
+  "model": "IR Blaster DB 4020 (NEC1)",
+  "aliases": [],
+  "controls": [
+    "KENWOOD | RA 5000",
+    "KENWOOD | RC - R 0734",
+    "KENWOOD | RV 6000",
+    "KENWOOD | RV 7000"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_0": {
+      "label": "0",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x00",
+          "function": "0x80",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, '0' 1D0001FE NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_1": {
+      "label": "1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x00",
+          "function": "0x81",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, '1' 1D00817E NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_2": {
+      "label": "2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x00",
+          "function": "0x82",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, '2' 1D0041BE NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_3": {
+      "label": "3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x00",
+          "function": "0x83",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, '3' 1D00C13E NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_4": {
+      "label": "4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x00",
+          "function": "0x84",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, '4' 1D0021DE NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_5": {
+      "label": "5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x00",
+          "function": "0x85",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, '5' 1D00A15E NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_6": {
+      "label": "6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x00",
+          "function": "0x86",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, '6' 1D00619E NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_7": {
+      "label": "7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x00",
+          "function": "0x87",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, '7' 1D00E11E NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_8": {
+      "label": "8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x00",
+          "function": "0x88",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, '8' 1D0011EE NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_9": {
+      "label": "9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x00",
+          "function": "0x89",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, '9' 1D00916E NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_ACTIVE_EQ": {
+      "label": "ACTIVE EQ",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x06",
+          "function": "0x48",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, 'ACTIVE EQ' 1D6012ED NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_AUTO_MEMORY": {
+      "label": "AUTO MEMORY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x03",
+          "function": "0x4D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, 'AUTO MEMORY' 1DC0B24D NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_AUTO_SLASH_MONO": {
+      "label": "AUTO / MONO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x02",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, 'AUTO / MONO' 1D4020DF NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_AUX": {
+      "label": "AUX",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x00",
+          "function": "0x8A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, 'AUX' 1D0051AE NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_AV_AUX": {
+      "label": "AV AUX",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x00",
+          "function": "0x93",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, 'AV AUX' 1D00C936 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_BAND": {
+      "label": "BAND",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x03",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, 'BAND' 1DC0609F NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_BASS_BOOST": {
+      "label": "BASS BOOST",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x02",
+          "function": "0x57",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, 'BASS BOOST' 1D40EA15 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_CD": {
+      "label": "CD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x00",
+          "function": "0x92",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, 'CD' 1D0049B6 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_DIMMER": {
+      "label": "DIMMER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x02",
+          "function": "0x1D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, 'DIMMER' 1D40B847 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_DISPLAY": {
+      "label": "DISPLAY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x02",
+          "function": "0x1E",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, 'DISPLAY' 1D407887 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_DVD": {
+      "label": "DVD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x03",
+          "function": "0x80",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, 'DVD' 1DC001FE NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_HDMI_1": {
+      "label": "HDMI 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x07",
+          "function": "0xD0",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, 'HDMI 1' 1DE00BF4 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_HDMI_2": {
+      "label": "HDMI 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x07",
+          "function": "0xD1",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, 'HDMI 2' 1DE08B74 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_HDMI_3": {
+      "label": "HDMI 3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x07",
+          "function": "0xD2",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, 'HDMI 3' 1DE04BB4 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_HDMI_4": {
+      "label": "HDMI 4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x07",
+          "function": "0xD3",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, 'HDMI 4' 1DE0CB34 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_HDMI_SETUP": {
+      "label": "HDMI SETUP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x07",
+          "function": "0x5D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, 'HDMI SETUP' 1DE0BA45 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_LISTEN_MODE": {
+      "label": "LISTEN MODE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x00",
+          "function": "0xDF",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, 'LISTEN MODE' 1D00FB04 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_MEMORY": {
+      "label": "MEMORY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x06",
+          "function": "0x42",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, 'MEMORY' 1D6042BD NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_MULTI_CONTOROL_DOWN": {
+      "label": "MULTI CONTOROL DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x01",
+          "function": "0x54",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, 'MULTI CONTOROL DOWN' 1D802AD5 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_MULTI_CONTOROL_UP": {
+      "label": "MULTI CONTOROL UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x01",
+          "function": "0x55",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, 'MULTI CONTOROL UP' 1D80AA55 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x00",
+          "function": "0x9C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, 'MUTE' 1D0039C6 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_PLUS_10": {
+      "label": "+10",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x00",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, '+10' 1D00B04F NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_POWER_RECEIVER": {
+      "label": "POWER RECEIVER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x00",
+          "function": "0x9D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, 'POWER RECEIVER' 1D00B946 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_PTY": {
+      "label": "PTY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x01",
+          "function": "0x9C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, 'PTY' 1D8039C6 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_PURE_AUDIO_MODE": {
+      "label": "PURE AUDIO MODE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x07",
+          "function": "0x18",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, 'PURE AUDIO MODE' 1DE018E7 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_SETUP": {
+      "label": "SETUP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x03",
+          "function": "0x19",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, 'SETUP' 1DC09867 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_SLASH_P_CALL_1D4000FF": {
+      "label": "|⏪ / P.CALL",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x02",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, '|⏪ / P.CALL' 1D4000FF NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_SLASH_P_CALL_1D40807F": {
+      "label": "⏩| / P.CALL",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x02",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, '⏩| / P.CALL' 1D40807F NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_SLASH_TUNING_1D4040BF": {
+      "label": "⏪ / TUNING",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x02",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, '⏪ / TUNING' 1D4040BF NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_SLASH_TUNING_1D40C03F": {
+      "label": "⏩ / TUNING",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x02",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, '⏩ / TUNING' 1D40C03F NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_SOUND": {
+      "label": "SOUND",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x01",
+          "function": "0x57",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, 'SOUND' 1D80EA15 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_TUNE": {
+      "label": "TUNE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x01",
+          "function": "0xD5",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, 'TUNE' 1D80AB54 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_TUNER": {
+      "label": "TUNER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x00",
+          "function": "0x91",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, 'TUNER' 1D008976 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_TV": {
+      "label": "TV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x00",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, 'TV' 1D00807F NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_VIDEO": {
+      "label": "VIDEO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x00",
+          "function": "0x96",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, 'VIDEO' 1D006996 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_VIRTUAL": {
+      "label": "VIRTUAL",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x07",
+          "function": "0x1D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, 'VIRTUAL' 1DE0B847 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x00",
+          "function": "0x9A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, 'VOL-' 1D0059A6 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xB8",
+          "subdevice": "0x00",
+          "function": "0x9B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4020, 'VOL+' 1D00D926 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    }
+  }
+}

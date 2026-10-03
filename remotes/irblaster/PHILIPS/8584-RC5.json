@@ -1,0 +1,41 @@
+{
+  "manufacturer": "PHILIPS",
+  "model": "IR Blaster DB 8584 (RC5)",
+  "aliases": [],
+  "controls": [
+    "PHILIPS | 313925870111"
+  ],
+  "protocol": {
+    "name": "RC5",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_TV_VOL_MINUS": {
+      "label": "TV VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8584, 'TV VOL-' 811 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_TV_VOL_PLUS": {
+      "label": "TV VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8584, 'TV VOL+' 810 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    }
+  }
+}

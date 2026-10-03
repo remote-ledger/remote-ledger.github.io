@@ -1,0 +1,483 @@
+{
+  "manufacturer": "CAMBRIDGE AUDIO",
+  "model": "IR Blaster DB 206 (RC5)",
+  "aliases": [],
+  "controls": [
+    "CAMBRIDGE AUDIO | AZUR-640R"
+  ],
+  "protocol": {
+    "name": "RC5",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_7_1_DIRECT": {
+      "label": "7.1 Direct",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x5F",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 206, '7.1 Direct' 41F RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_ANALOG_DIRECT": {
+      "label": "Analog Direct",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x4E",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 206, 'Analog Direct' 40E RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_APS": {
+      "label": "APS",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x55",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 206, 'APS' 415 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_AUDIO_IN_TYPE": {
+      "label": "Audio In Type",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x60",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 206, 'Audio In Type' 420 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_BASS_SLASH_TREBLE": {
+      "label": "Bass/Treble",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x5E",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 206, 'Bass/Treble' 41E RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_DD_EX_SLASH_DTS_ES": {
+      "label": "DD EX/DTS ES",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 206, 'DD EX/DTS ES' 410 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_DISPLAY": {
+      "label": "Display",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x56",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 206, 'Display' 416 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_DOWN": {
+      "label": "Down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x4D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 206, 'Down' 40D RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_DYNAMIC": {
+      "label": "Dynamic",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x52",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 206, 'Dynamic' 412 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_ENTER": {
+      "label": "Enter",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x5B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 206, 'Enter' 41B RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_INPUT_AUX": {
+      "label": "Input Aux",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x45",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 206, 'Input Aux' 405 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_INPUT_BD_SLASH_DVD": {
+      "label": "Input BD/DVD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x41",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 206, 'Input BD/DVD' 401 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_INPUT_CD": {
+      "label": "Input CD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x46",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 206, 'Input CD' 406 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_INPUT_DVD": {
+      "label": "Input DVD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x41",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 206, 'Input DVD' 401 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_INPUT_REC_1": {
+      "label": "Input Rec 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x44",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 206, 'Input Rec 1' 404 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_INPUT_REC_2": {
+      "label": "Input Rec 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x47",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 206, 'Input Rec 2' 407 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_INPUT_VIDEO_1": {
+      "label": "Input Video 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x42",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 206, 'Input Video 1' 402 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_INPUT_VIDEO_2": {
+      "label": "Input Video 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x43",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 206, 'Input Video 2' 403 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_I_SLASH_0": {
+      "label": "I/0",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x5D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 206, 'I/0' 41D RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_LEFT": {
+      "label": "Left",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x5A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 206, 'Left' 41A RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_LIP_SYNC": {
+      "label": "Lip Sync",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x7F",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 206, 'Lip Sync' 43F RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_MODE": {
+      "label": "Mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x59",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 206, 'Mode' 419 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "Mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x4B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 206, 'Mute' 40B RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_PLIIX_SLASH_NEO_SLASH_DSP": {
+      "label": "PLIIx/Neo/DSP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x51",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 206, 'PLIIx/Neo/DSP' 411 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "Power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x4A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 206, 'Power' 40A RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_PTY": {
+      "label": "PTY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x54",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 206, 'PTY' 414 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_RIGHT": {
+      "label": "Right",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x5C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 206, 'Right' 41C RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_STEREO_MODES": {
+      "label": "Stereo Modes",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x4F",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 206, 'Stereo Modes' 40F RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_STEREO_MONO": {
+      "label": "Stereo Mono",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x57",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 206, 'Stereo Mono' 417 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_STORE": {
+      "label": "Store",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x58",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 206, 'Store' 418 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_SUB_ON_SLASH_OFF": {
+      "label": "Sub On/Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x53",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 206, 'Sub On/Off' 413 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_TUNER_AM_SLASH_FM": {
+      "label": "Tuner AM/FM",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x40",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 206, 'Tuner AM/FM' 400 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_UP": {
+      "label": "Up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x4C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 206, 'Up' 40C RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_VIDEO_IN_TYPE": {
+      "label": "Video In Type",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x61",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 206, 'Video In Type' 421 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "Vol-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x4D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 206, 'Vol-' 40D RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "Vol+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x4C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 206, 'Vol+' 40C RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    }
+  }
+}

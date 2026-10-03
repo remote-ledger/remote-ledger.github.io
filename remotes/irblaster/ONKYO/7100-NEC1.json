@@ -1,0 +1,410 @@
+{
+  "manufacturer": "ONKYO",
+  "model": "IR Blaster DB 7100 (NEC1)",
+  "aliases": [],
+  "controls": [
+    "ONKYO | DR - L 50(TV/TV SETUP)",
+    "ONKYO | DR-L50 [TV/TVSETUP]",
+    "ONKYO | RC - 505 M(TV/TV SETUP)",
+    "ONKYO | RC505M [TV/TVSETUP]"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_0_SLASH_RANDOM": {
+      "label": "0 / RANDOM",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x49",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7100, '0 / RANDOM' 4B36926D NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_1_SLASH_SP_SETUP": {
+      "label": "1 / SP SETUP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0xDB",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7100, '1 / SP SETUP' 4B36DB24 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_2_SLASH_TEST_TONE": {
+      "label": "2 / TEST TONE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x9A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7100, '2 / TEST TONE' 4BB659A6 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_3_SLASH_CH_SEL": {
+      "label": "3 / CH. SEL.",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x44",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7100, '3 / CH. SEL.' 4B3622DD NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_4_SLASH_SW_MODE": {
+      "label": "4 / SW. MODE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0xDE",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7100, '4 / SW. MODE' 4B367B84 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_5_SLASH_DISTANCE": {
+      "label": "5 / DISTANCE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0xDF",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7100, '5 / DISTANCE' 4B36FB04 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_6_SLASH_UP": {
+      "label": "6 / UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x42",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7100, '6 / UP' 4B3642BD NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_7_SLASH_IPM": {
+      "label": "7 / IPM",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0xDA",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7100, '7 / IPM' 4B365BA4 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_8_SLASH_T_MINUS_D_SETUP": {
+      "label": "8 / T-D SETUP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0xDD",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7100, '8 / T-D SETUP' 4B36BB44 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_9_SLASH_DOWN": {
+      "label": "9 / DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x43",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7100, '9 / DOWN' 4B36C23D NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_ENTER": {
+      "label": "ENTER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x9E",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7100, 'ENTER' 4B367986 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_P_MINUS_SLASH_LEFT": {
+      "label": "P - / LEFT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x64",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7100, 'P - / LEFT' 0126D02F NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_P_PLUS_SLASH_RIGHT": {
+      "label": "P + / RIGHT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x64",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7100, 'P + / RIGHT' 012650AF NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_TV_INPUT": {
+      "label": "TV INPUT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x64",
+          "function": "0x46",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7100, 'TV INPUT' 0126629D NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_TV_MUTE": {
+      "label": "TV MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x64",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7100, 'TV MUTE' 0126B04F NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_TV_POWER": {
+      "label": "TV POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x64",
+          "function": "0x49",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7100, 'TV POWER' 0126926D NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_TV_SETUP_MINUS_0_SLASH_RANDOM": {
+      "label": "TV SETUP - 0 / RANDOM",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7100, 'TV SETUP - 0 / RANDOM' 4B3650AF NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_TV_SETUP_MINUS_1_SLASH_SP_SETUP": {
+      "label": "TV SETUP - 1 / SP SETUP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x94",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7100, 'TV SETUP - 1 / SP SETUP' 4B3629D6 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_TV_SETUP_MINUS_2_SLASH_TEST_TONE": {
+      "label": "TV SETUP - 2 / TEST TONE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0xC6",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7100, 'TV SETUP - 2 / TEST TONE' 4B36639C NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_TV_SETUP_MINUS_3_SLASH_CH_SEL": {
+      "label": "TV SETUP - 3 / CH. SEL.",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0xC7",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7100, 'TV SETUP - 3 / CH. SEL.' 4B36E31C NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_TV_SETUP_MINUS_4_SLASH_SW_MODE": {
+      "label": "TV SETUP - 4 / SW. MODE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7100, 'TV SETUP - 4 / SW. MODE' 4B3610EF NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_TV_SETUP_MINUS_5_SLASH_DISTANCE": {
+      "label": "TV SETUP - 5 / DISTANCE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7100, 'TV SETUP - 5 / DISTANCE' 4B36906F NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_TV_SETUP_MINUS_6_SLASH_UP": {
+      "label": "TV SETUP - 6 / UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x96",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7100, 'TV SETUP - 6 / UP' 4B366996 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_TV_SETUP_MINUS_7_SLASH_IPM": {
+      "label": "TV SETUP - 7 / IPM",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0xD7",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7100, 'TV SETUP - 7 / IPM' 4B36EB14 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_TV_SETUP_MINUS_8_SLASH_T_MINUS_D_SETUP": {
+      "label": "TV SETUP - 8 / T-D SETUP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0xDC",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7100, 'TV SETUP - 8 / T-D SETUP' 4B363BC4 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_TV_SETUP_MINUS_9_SLASH_DOWN": {
+      "label": "TV SETUP - 9 / DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x4C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7100, 'TV SETUP - 9 / DOWN' 4BB632CD NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x64",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7100, 'VOL-' 0126F00F NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x64",
+          "function": "0x0E",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7100, 'VOL+' 0126708F NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    }
+  }
+}

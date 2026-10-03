@@ -1,0 +1,49 @@
+{
+  "manufacturer": "BBK",
+  "model": "IR Blaster DB 4860 (NEC2)",
+  "aliases": [],
+  "controls": [
+    "BBK | INNOVATION SUB 5.1",
+    "BBK | MA-900S",
+    "BBK | MA-960S",
+    "BBK | MA-965S",
+    "BBK | MA-970S",
+    "BBK | RC-05",
+    "BBK | RC-58"
+  ],
+  "protocol": {
+    "name": "NEC2",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_2_SLASH_5CH": {
+      "label": "2/5CH",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x42",
+          "subdevice": "0xBD",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4860, '2/5CH' 42BD48B7 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_INPUT": {
+      "label": "INPUT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x42",
+          "subdevice": "0xBD",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4860, 'INPUT' 42BD08F7 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    }
+  }
+}

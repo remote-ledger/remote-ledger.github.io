@@ -1,0 +1,113 @@
+{
+  "manufacturer": "SAMSUNG",
+  "model": "IR Blaster DB 7232 (NECx2)",
+  "aliases": [],
+  "controls": [
+    "SAMSUNG | SV-3000W"
+  ],
+  "protocol": {
+    "name": "NECx2",
+    "carrierHz": 38000,
+    "minSends": 2
+  },
+  "keys": {
+    "KEY_DISPLAY": {
+      "label": "DISPLAY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0x05",
+          "function": "0x1E",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7232, 'DISPLAY' A0A07887 NECx2: 32 wire bits, bytes bit-reversed as NECx2"
+        }
+      ]
+    },
+    "KEY_DOWN": {
+      "label": "DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0x05",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7232, 'DOWN' A0A0A857 NECx2: 32 wire bits, bytes bit-reversed as NECx2"
+        }
+      ]
+    },
+    "KEY_EJECT": {
+      "label": "EJECT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0x05",
+          "function": "0x32",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7232, 'EJECT' A0A04CB3 NECx2: 32 wire bits, bytes bit-reversed as NECx2"
+        }
+      ]
+    },
+    "KEY_LEFT": {
+      "label": "LEFT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0x05",
+          "function": "0x18",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7232, 'LEFT' A0A018E7 NECx2: 32 wire bits, bytes bit-reversed as NECx2"
+        }
+      ]
+    },
+    "KEY_MENU": {
+      "label": "MENU",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0x05",
+          "function": "0x1F",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7232, 'MENU' A0A0F807 NECx2: 32 wire bits, bytes bit-reversed as NECx2"
+        }
+      ]
+    },
+    "KEY_RIGHT": {
+      "label": "RIGHT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0x05",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7232, 'RIGHT' A0A058A7 NECx2: 32 wire bits, bytes bit-reversed as NECx2"
+        }
+      ]
+    },
+    "KEY_UP": {
+      "label": "UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0x05",
+          "function": "0x19",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7232, 'UP' A0A09867 NECx2: 32 wire bits, bytes bit-reversed as NECx2"
+        }
+      ]
+    }
+  }
+}

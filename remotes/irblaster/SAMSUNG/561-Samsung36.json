@@ -1,0 +1,262 @@
+{
+  "manufacturer": "SAMSUNG",
+  "model": "IR Blaster DB 561 (Samsung36)",
+  "aliases": [],
+  "controls": [
+    "SAMSUNG | AH59 - 02710 A",
+    "SAMSUNG | HW - J 250/EN",
+    "SAMSUNG | HW-JM25"
+  ],
+  "protocol": {
+    "name": "Samsung36",
+    "carrierHz": 37900,
+    "unitUs": 500,
+    "minSends": 1,
+    "claims": {
+      "unitUs": {
+        "reason": "the IRP says 560 us; SwiftRemote's own encoder, eight real captures and IRremoteESP8266 all say about 500 us (marks 512, spaces 490/1468), so the compiled signal follows them and not the IRP's unit",
+        "source": "https://github.com/bengtmartensson/IrpTransmogrifier/tree/c945e76/src/test/teaserfiles Samsung36.ict (eight keys of a Samsung Blu-ray remote, median unit about 496 us; tools/misc_capture_audit.py); https://github.com/crankyoldgit/IRremoteESP8266/blob/1e2f0f3/src/ir_Samsung.cpp#L59-L63 and #L175-L190 (sendSamsung36, 'Works on real devices'); tests/vectors/CITATIONS.md, section 'The misc family'"
+      }
+    }
+  },
+  "keys": {
+    "KEY_AUTO_POWER": {
+      "label": "AUTO POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x79",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 561, 'AUTO POWER' 0CF009E Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_AUX": {
+      "label": "AUX",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x94",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 561, 'AUX' 0CF0029 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_BLUETOOTH": {
+      "label": "BLUETOOTH",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x96",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 561, 'BLUETOOTH' 0CF0069 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_BLUETOOTH_POWER": {
+      "label": "BLUETOOTH POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x9D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 561, 'BLUETOOTH POWER' 0CF00B9 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_D_IN": {
+      "label": "D. IN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x93",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 561, 'D. IN' 0CF00C9 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x71",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 561, 'MUTE' 0CF008E Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_PLAY_SLASH_PAUSE": {
+      "label": "PLAY/PAUSE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x8A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 561, 'PLAY/PAUSE' 0CF0051 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x70",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 561, 'POWER' 0CF000E Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_REPEAT_SLASH_USB": {
+      "label": "REPEAT / USB",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x95",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 561, 'REPEAT / USB' 0CF00A9 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_SKIP_NEXT": {
+      "label": "SKIP NEXT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x8C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 561, 'SKIP NEXT' 0CF0031 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_SKIP_PREV": {
+      "label": "SKIP PREV.",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x8B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 561, 'SKIP PREV.' 0CF00D1 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_SOUND_EFFECT": {
+      "label": "SOUND EFFECT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x7B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 561, 'SOUND EFFECT' 0CF00DE Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_TV_SOUND_CONNECT": {
+      "label": "TV SOUND CONNECT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x91",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 561, 'TV SOUND CONNECT' 0CF0089 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x78",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 561, 'VOL-' 0CF001E Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x77",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 561, 'VOL+' 0CF00EE Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_WOOFER_LEVEL_DOWN": {
+      "label": "WOOFER LEVEL DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x83",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 561, 'WOOFER LEVEL DOWN' 0CF00C1 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    },
+    "KEY_WOOFER_LEVEL_UP": {
+      "label": "WOOFER LEVEL UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x82",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 561, 'WOOFER LEVEL UP' 0CF0041 Samsung36: wire-order bits, fields bit-reversed as Samsung36"
+        }
+      ]
+    }
+  }
+}

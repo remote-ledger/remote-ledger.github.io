@@ -1,0 +1,29 @@
+{
+  "manufacturer": "BBK",
+  "model": "IR Blaster DB 7824 (NEC2)",
+  "aliases": [],
+  "controls": [
+    "BBK | AV320T"
+  ],
+  "protocol": {
+    "name": "NEC2",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_TEST": {
+      "label": "TEST",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0E",
+          "subdevice": "0xF1",
+          "function": "0xC7",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7824, 'TEST' 708FE31C NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    }
+  }
+}

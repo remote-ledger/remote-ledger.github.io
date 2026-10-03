@@ -1,0 +1,76 @@
+{
+  "_comment": "Summary of three hardware captures published as test data in IrpTransmogrifier (src/test/teaserfiles/NECx2_NECx1.ict, with the tool's expected decodes in NECx2_NECx1.exp), @c945e76. Used as a STRUCTURAL vector (D18 gate 2a) for NEC2, NECx1 and NECx2. A capture carries instrument bias (medians within about 2% of the IRP's, in no one direction), so it verifies layout and ratios, not absolute durations. Only medians and the first frame quantised to 564 us units are kept; no raw durations are copied.",
+  "source": "https://github.com/bengtmartensson/IrpTransmogrifier/tree/c945e7638355ca5697f458d33338ee1bfd4d1640/src/test/teaserfiles",
+  "files": [
+    "NECx2_NECx1.ict",
+    "NECx2_NECx1.exp"
+  ],
+  "measuredCarrierHz": 38404,
+  "unitUs": 564,
+  "captures": {
+    "Vol+ NEC2": {
+      "decodeLine": "NEC2: {D=31,F=223}",
+      "params": {
+        "device": 31,
+        "function": 223,
+        "subdevice": 224,
+        "subdeviceDefaulted": true
+      },
+      "protocol": "NEC2",
+      "fullFrames": 4,
+      "shortFrames": 0,
+      "medianLeadMarkUs": 8930,
+      "medianLeadSpaceUs": 4470,
+      "medianBitMarkUs": 552,
+      "medianZeroSpaceUs": 570,
+      "medianOneSpaceUs": 1692,
+      "firstFrameGapUs": 39648,
+      "firstFrameUnits": "16 8 1 3 1 3 1 3 1 3 1 3 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 3 1 3 1 3 1 3 1 3 1 3 1 3 1 3 1 1 1 3 1 3 1 1 1 1 1 1 1 1 1 1 1 3 1 1 1 1 1",
+      "firstFrameActiveUs": 67456
+    },
+    "Mute": {
+      "decodeLine": "NECx2: {D=67,S=83,F=57}",
+      "params": {
+        "device": 67,
+        "function": 57,
+        "subdevice": 83
+      },
+      "protocol": "NECx2",
+      "fullFrames": 3,
+      "shortFrames": 0,
+      "medianLeadMarkUs": 4408,
+      "medianLeadSpaceUs": 4470,
+      "medianBitMarkUs": 556,
+      "medianZeroSpaceUs": 570,
+      "medianOneSpaceUs": 1670,
+      "firstFrameGapUs": 45270,
+      "firstFrameUnits": "8 8 1 3 1 3 1 1 1 1 1 1 1 1 1 3 1 1 1 3 1 3 1 1 1 1 1 3 1 1 1 3 1 1 1 3 1 1 1 1 1 3 1 3 1 3 1 1 1 1 1 1 1 3 1 3 1 1 1 1 1 1 1 3 1 3 1",
+      "firstFrameActiveUs": 61808
+    },
+    "Play": {
+      "decodeLine": "NECx1: {D=44,S=44,F=4}",
+      "params": {
+        "device": 44,
+        "function": 4,
+        "subdevice": 44
+      },
+      "protocol": "NECx1",
+      "fullFrames": 1,
+      "shortFrames": 3,
+      "medianLeadMarkUs": 4434,
+      "medianLeadSpaceUs": 4470,
+      "medianBitMarkUs": 552,
+      "medianZeroSpaceUs": 570,
+      "medianOneSpaceUs": 1670,
+      "firstFrameGapUs": 46392,
+      "firstFrameUnits": "8 8 1 1 1 1 1 3 1 3 1 1 1 3 1 1 1 1 1 1 1 1 1 3 1 3 1 1 1 3 1 1 1 1 1 1 1 1 1 3 1 1 1 1 1 1 1 1 1 1 1 3 1 3 1 1 1 3 1 3 1 3 1 3 1 3 1",
+      "firstFrameActiveUs": 60734,
+      "repeatFrame": {
+        "unitsBeforeGap": "8 8 1 3 1",
+        "medianGapUs": 95422,
+        "medianLeadMarkUs": 4430,
+        "medianLeadSpaceUs": 4448
+      }
+    }
+  }
+}

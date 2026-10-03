@@ -1,0 +1,296 @@
+{
+  "manufacturer": "PIONEER",
+  "model": "IR Blaster DB 205 (NEC1)",
+  "aliases": [],
+  "controls": [
+    "PIONEER | AXD 1498",
+    "PIONEER | PDP 42 MVE 1"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_CLEAR": {
+      "label": "CLEAR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0xE7",
+          "function": "0x19",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 205, 'CLEAR' 18E79867 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_DISPLAY": {
+      "label": "DISPLAY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0xE7",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 205, 'DISPLAY' 18E7F00F NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_DOWN": {
+      "label": "DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0xB1",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 205, 'DOWN' 18188D72 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_EXIT": {
+      "label": "EXIT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0xC5",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 205, 'EXIT' 1818A35C NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_LEFT": {
+      "label": "LEFT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0xB2",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 205, 'LEFT' 18184DB2 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_MENU_SLASH_SET": {
+      "label": "MENU / SET",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0xB4",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 205, 'MENU / SET' 18182DD2 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_MUTING": {
+      "label": "MUTING",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0xE7",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 205, 'MUTING' 18E7906F NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_OK": {
+      "label": "OK",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0xCD",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 205, 'OK' 1818B34C NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_POINT_ZOOM": {
+      "label": "POINT ZOOM",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0xC9",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 205, 'POINT ZOOM' 1818936C NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_POWER_181803FC": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0xC0",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 205, 'POWER' 181803FC NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_POWER_18E710EF": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0xE7",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 205, 'POWER' 18E710EF NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_RGB_SLASH_PC": {
+      "label": "RGB / PC",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0xE7",
+          "function": "0x58",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 205, 'RGB / PC' 18E71AE5 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_RIGHT": {
+      "label": "RIGHT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0xB3",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 205, 'RIGHT' 1818CD32 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_SCREEN_SIZE": {
+      "label": "SCREEN SIZE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0xAD",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 205, 'SCREEN SIZE' 1818B54A NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_UP": {
+      "label": "UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0xB0",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 205, 'UP' 18180DF2 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_VIDEO": {
+      "label": "VIDEO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0xE7",
+          "function": "0x55",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 205, 'VIDEO' 18E7AA55 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0xE7",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 205, 'VOL-' 18E7C03F NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0xE7",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 205, 'VOL+' 18E740BF NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_ZOOM_MINUS": {
+      "label": "ZOOM-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0xCB",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 205, 'ZOOM-' 1818D32C NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_ZOOM_PLUS": {
+      "label": "ZOOM+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0xCA",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 205, 'ZOOM+' 181853AC NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    }
+  }
+}

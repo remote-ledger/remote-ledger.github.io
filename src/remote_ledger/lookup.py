@@ -13,6 +13,7 @@ ever typed in, or that afternoon gets repeated.
 
 from __future__ import annotations
 
+import json
 import re
 from dataclasses import dataclass
 from pathlib import Path
@@ -71,20 +72,27 @@ def _matches(query: str, values: list[str]) -> bool:
 
 def search(index: dict[str, Any], query: str) -> list[Match]:
     """Search every identifying field, ignoring case, spaces and punctuation."""
-    if not normalise(query):
+    needle = normalise(query)
+    if not needle:
         return []
+    words = [w for w in (normalise(w) for w in query.split()) if w]
 
     matches: list[Match] = []
     for remote in index.get("remotes", []):
         fields = list(_fields(remote))
-        needle = normalise(query)
+        # Each field normalised once: with the imported database in the index
+        # that is 300,000 strings, and this loop is most of a lookup.
+        norm = [normalise(value) for _, value in fields]
         hit = next(
-            (field for field, value in fields if needle in normalise(value)),
+            (field for (field, _), value in zip(fields, norm) if needle in value),
             None,
         )
         # A query naming both maker and model ("Sony BDP-BX510") is inside
-        # neither field alone, so fall back to matching every word.
-        if hit is None and _matches(query, [v for _, v in fields]):
+        # neither field alone, so fall back to matching every word -- each
+        # in some field, as `_matches` says.
+        if hit is None and len(words) > 1 and all(
+            any(w in value for value in norm) for w in words
+        ):
             hit = "combined"
         if hit:
             matches.append(Match("remote", remote, hit))
@@ -100,8 +108,8 @@ def _render_remote(
     remote: dict[str, Any], matched_on: str, keys: Mapping[str, Any]
 ) -> list[str]:
     """``keys`` is the remote's compiled artifact's key map: since D40 the
-    index carries identity and roll-ups only, and per-key detail lives in
-    each remote's own artifact."""
+    index carries identity and roll-ups only, and per-key detail (each key's
+    optional display label included) lives in each remote's own artifact."""
     lines = [
         f"{remote['manufacturer']} {remote['model']}"
         + (f"  [{remote['confidence']}]" if remote.get("confidence") else "")
@@ -127,7 +135,11 @@ def _render_remote(
 
     for key in sorted(keys):
         candidates = keys[key]["candidates"]
-        lines.append(f"  {key}")
+        # The source's own label, quoted so that its spaces and any control
+        # character show; present only on a key that has one.
+        key_label = keys[key].get("label")
+        lines.append(f"  {key}" if key_label is None else
+                     f"  {key}  {json.dumps(key_label, ensure_ascii=False)}")
         for name in sorted(candidates, key=lambda n: (n != "primary", n)):
             entry = candidates[name]
             label = entry.get("label", name)

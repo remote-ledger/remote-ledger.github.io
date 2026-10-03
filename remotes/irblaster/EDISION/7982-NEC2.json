@@ -1,0 +1,44 @@
+{
+  "manufacturer": "EDISION",
+  "model": "IR Blaster DB 7982 (NEC2)",
+  "aliases": [],
+  "controls": [
+    "EDISION | MINI TRITON SD",
+    "FT | M87"
+  ],
+  "protocol": {
+    "name": "NEC2",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_BLUE": {
+      "label": "BLUE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xFE",
+          "function": "0xD5",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7982, 'BLUE' 407FAB54 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_FORWARD": {
+      "label": "FORWARD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xFE",
+          "function": "0xD5",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7982, 'FORWARD' 407FAB54 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    }
+  }
+}

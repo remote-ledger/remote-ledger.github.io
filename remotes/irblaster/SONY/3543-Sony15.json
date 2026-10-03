@@ -1,0 +1,91 @@
+{
+  "manufacturer": "SONY",
+  "model": "IR Blaster DB 3543 (Sony15)",
+  "aliases": [],
+  "controls": [
+    "AIWA | 1478 520 11",
+    "AIWA | 1479 276 11",
+    "AIWA | RM - Z 20066",
+    "RCA | VSQS 1306",
+    "SONY | 147852011",
+    "SONY | 149016511",
+    "SONY | 149016711",
+    "SONY | 149248411",
+    "SONY | A 1944589 A",
+    "SONY | A 1944590 A",
+    "SONY | A 2059264 A",
+    "SONY | A 2060832 A",
+    "SONY | CMT - S 20",
+    "SONY | CMT - S 20 B",
+    "SONY | CMT - S 30 IP",
+    "SONY | CMT - SBT 20",
+    "SONY | CMT - SBT 20 B",
+    "SONY | CMT - SBT 20 CEL",
+    "SONY | CMT - V 09",
+    "SONY | CMT - V 10 IP",
+    "SONY | CMT - V 11 IP",
+    "SONY | CMT - V 9",
+    "SONY | CMT - X 3 CD",
+    "SONY | HCD - S 20",
+    "SONY | HCD - SBT 20",
+    "SONY | HCD - SBT 20 B",
+    "SONY | MHC - ECL 77 BT",
+    "SONY | MHC - ECL 99 BT",
+    "SONY | RM - AMU 149",
+    "SONY | RM - AMU 149 W",
+    "SONY | RM - AMU 153",
+    "SONY | RM - AMU 153 W",
+    "SONY | RM - AMU 178",
+    "SONY | RM - AMU 179",
+    "SONY | RM - AMU 186",
+    "SONY | RM - AMU 211",
+    "SONY | RM - AMU 212",
+    "SONY | SS - SBT 20"
+  ],
+  "protocol": {
+    "name": "Sony15",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_BASS_BOOST": {
+      "label": "BASS BOOST",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x90",
+          "function": "0x4D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3543, 'BASS BOOST' B212 SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    },
+    "KEY_EQ": {
+      "label": "EQ.",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x90",
+          "function": "0x4B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3543, 'EQ.' D212 SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    },
+    "KEY_FM_MODE": {
+      "label": "FM MODE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x90",
+          "function": "0x2D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3543, 'FM MODE' B412 SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    }
+  }
+}

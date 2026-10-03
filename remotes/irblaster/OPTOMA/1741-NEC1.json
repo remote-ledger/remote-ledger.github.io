@@ -1,0 +1,282 @@
+{
+  "manufacturer": "OPTOMA",
+  "model": "IR Blaster DB 1741 (NEC1)",
+  "aliases": [],
+  "controls": [
+    "OPTOMA | 45.71P01G002",
+    "OPTOMA | BR-3079N",
+    "OPTOMA | BR323",
+    "OPTOMA | BR326",
+    "OPTOMA | BR329",
+    "OPTOMA | BR334",
+    "OPTOMA | DAEHHZZ+",
+    "OPTOMA | DASSSG",
+    "OPTOMA | DAWSSG",
+    "OPTOMA | DAWSSU",
+    "OPTOMA | DS344",
+    "OPTOMA | DS346",
+    "OPTOMA | DS347",
+    "OPTOMA | DS348",
+    "OPTOMA | DS349",
+    "OPTOMA | DW346",
+    "OPTOMA | DX342",
+    "OPTOMA | DX345",
+    "OPTOMA | DX346",
+    "OPTOMA | DX349",
+    "OPTOMA | EH331",
+    "OPTOMA | EH334",
+    "OPTOMA | EH335",
+    "OPTOMA | EH336",
+    "OPTOMA | EH337",
+    "OPTOMA | EH345",
+    "OPTOMA | EH400+",
+    "OPTOMA | EX715",
+    "OPTOMA | H114",
+    "OPTOMA | H116ST",
+    "OPTOMA | H183X",
+    "OPTOMA | H184X",
+    "OPTOMA | IR29033",
+    "OPTOMA | S310E",
+    "OPTOMA | S315",
+    "OPTOMA | S316",
+    "OPTOMA | S321",
+    "OPTOMA | S321P",
+    "OPTOMA | S322E",
+    "OPTOMA | S334",
+    "OPTOMA | S334E",
+    "OPTOMA | S340",
+    "OPTOMA | S341",
+    "OPTOMA | S342E",
+    "OPTOMA | S343",
+    "OPTOMA | S343E",
+    "OPTOMA | W300",
+    "OPTOMA | W307UST",
+    "OPTOMA | W310",
+    "OPTOMA | W316",
+    "OPTOMA | W317UST",
+    "OPTOMA | W330",
+    "OPTOMA | W331",
+    "OPTOMA | W334",
+    "OPTOMA | W335",
+    "OPTOMA | W341",
+    "OPTOMA | W355",
+    "OPTOMA | W400+",
+    "OPTOMA | WU334",
+    "OPTOMA | WU335",
+    "OPTOMA | WU336",
+    "OPTOMA | WU337",
+    "OPTOMA | X307UST",
+    "OPTOMA | X312",
+    "OPTOMA | X315",
+    "OPTOMA | X316",
+    "OPTOMA | X340",
+    "OPTOMA | X341",
+    "OPTOMA | X342",
+    "OPTOMA | X343",
+    "OPTOMA | X343E",
+    "OPTOMA | X400+"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_3D": {
+      "label": "3D",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "subdevice": "0xCD",
+          "function": "0x93",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1741, '3D' 4CB3C936 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_BRIGHTNESS": {
+      "label": "BRIGHTNESS",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "subdevice": "0xCD",
+          "function": "0xC0",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1741, 'BRIGHTNESS' 4CB303FC NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_ENTER": {
+      "label": "ENTER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "subdevice": "0xCD",
+          "function": "0xC5",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1741, 'ENTER' 4CB3A35C NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_HDMI": {
+      "label": "HDMI",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "subdevice": "0xCD",
+          "function": "0x86",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1741, 'HDMI' 4CB3619E NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_HIDE": {
+      "label": "HIDE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "subdevice": "0xCD",
+          "function": "0x8A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1741, 'HIDE' 4CB351AE NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_MENU": {
+      "label": "MENU",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "subdevice": "0xCD",
+          "function": "0x88",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1741, 'MENU' 4CB311EE NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "subdevice": "0xCD",
+          "function": "0x92",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1741, 'MUTE' 4CB349B6 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "subdevice": "0xCD",
+          "function": "0x81",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1741, 'POWER' 4CB3817E NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_RE_SYNC": {
+      "label": "RE SYNC",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "subdevice": "0xCD",
+          "function": "0xC4",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1741, 'RE SYNC' 4CB323DC NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_SOURCE": {
+      "label": "SOURCE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "subdevice": "0xCD",
+          "function": "0xC3",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1741, 'SOURCE' 4CB3C33C NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_VGA": {
+      "label": "VGA",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "subdevice": "0xCD",
+          "function": "0x8E",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1741, 'VGA' 4CB3718E NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_VIDEO": {
+      "label": "VIDEO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "subdevice": "0xCD",
+          "function": "0xCE",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1741, 'VIDEO' 4CB3738C NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_V_MINUS_FORMAT": {
+      "label": "V-FORMAT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "subdevice": "0xCD",
+          "function": "0x98",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1741, 'V-FORMAT' 4CB319E6 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_ZOOM": {
+      "label": "ZOOM",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "subdevice": "0xCD",
+          "function": "0x89",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1741, 'ZOOM' 4CB3916E NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    }
+  }
+}

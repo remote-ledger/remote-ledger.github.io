@@ -1,0 +1,244 @@
+{
+  "manufacturer": "SONY",
+  "model": "IR Blaster DB 2483 (Sony12)",
+  "aliases": [],
+  "controls": [
+    "SONY | RM - LJ 304 - DVD",
+    "SONY | RM - U 303(MD-TAPE/5.1 CH/TUNER)",
+    "SONY | STR - DB 840 QS",
+    "SONY | STR - DB 840(DVD)",
+    "SONY | STR - DB 940 QS",
+    "SONY | STR - DB 940(DVD)",
+    "SONY | STR - DE 335(MD-TAPE/5.1 CH/TUNER)",
+    "SONY | STR - DE 945(DVD)",
+    "SONY | STR-DE345"
+  ],
+  "protocol": {
+    "name": "Sony12",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_AV_SLASH_SOURCE": {
+      "label": "AV/SOURCE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0F",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2483, 'AV/SOURCE' A9E SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_EJECT": {
+      "label": "EJECT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0F",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2483, 'EJECT' A9E SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_FAV": {
+      "label": "FAV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x53",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2483, 'FAV' CB6 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_MINUS_SLASH_MINUS_MINUS": {
+      "label": "-/--",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x33",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2483, '-/--' CD6 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_NEXT": {
+      "label": "NEXT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2483, 'NEXT' 096 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "function": "0x37",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2483, 'POWER' EC4 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_PREV": {
+      "label": "PREV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2483, 'PREV' 896 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_UNLABELED_016": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2483, '??' 016 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_UNLABELED_116": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2483, '??' 116 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_UNLABELED_216": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2483, '??' 216 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_UNLABELED_416": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2483, '??' 416 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_UNLABELED_616": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2483, '??' 616 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_UNLABELED_816": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2483, '??' 816 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_UNLABELED_916": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2483, '??' 916 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_UNLABELED_A16": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2483, '??' A16 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_UNLABELED_C16": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2483, '??' C16 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_UNLABELED_E16": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2483, '??' E16 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    }
+  }
+}

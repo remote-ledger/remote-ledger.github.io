@@ -1,0 +1,76 @@
+{
+  "manufacturer": "PHILIPS",
+  "model": "IR Blaster DB 2261 (RC6)",
+  "aliases": [],
+  "controls": [
+    "PHILIPS | 51 TA 1471/03(VCR)",
+    "PHILIPS | 51 TA 1471/05(VCR)",
+    "PHILIPS | 51 TA 1471/08(VCR)",
+    "PHILIPS | 51 TA 1471/11(VCR)",
+    "PHILIPS | 51 TA 1471/16(VCR)",
+    "PHILIPS | 51 TA 1471/25(VCR)",
+    "PHILIPS | RT 301",
+    "PHILIPS | RT 302",
+    "PHILIPS | RT 53",
+    "PHILIPS | RT 598",
+    "PHILIPS | RT 721/111",
+    "PHILIPS | RT 722",
+    "PHILIPS | RT 8964",
+    "PHILIPS | U 074",
+    "PHILIPS | U 352",
+    "PHILIPS | VR 122/02",
+    "PHILIPS | VR 297",
+    "PHILIPS | VR 448/73",
+    "PHILIPS | VR 455",
+    "PHILIPS | VR 540",
+    "PHILIPS | VR 755",
+    "PHILIPS | VR 797",
+    "PHILIPS | VR 897"
+  ],
+  "protocol": {
+    "name": "RC6",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_10_PLUS": {
+      "label": "10+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "function": "0x78",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2261, '10+' 0478 RC6: 16 bits, mode 0 as RC6"
+        }
+      ]
+    },
+    "KEY_AUDIO": {
+      "label": "AUDIO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "function": "0x4E",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2261, 'AUDIO' 044E RC6: 16 bits, mode 0 as RC6"
+        }
+      ]
+    },
+    "KEY_CLEAR": {
+      "label": "CLEAR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "function": "0x3A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2261, 'CLEAR' 043A RC6: 16 bits, mode 0 as RC6"
+        }
+      ]
+    }
+  }
+}

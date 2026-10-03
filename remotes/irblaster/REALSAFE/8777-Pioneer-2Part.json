@@ -1,0 +1,28 @@
+{
+  "manufacturer": "REALSAFE",
+  "model": "IR Blaster DB 8777 (Pioneer-2Part)",
+  "aliases": [],
+  "controls": [
+    "REALSAFE | PTZ-117 SPEEDOME RC"
+  ],
+  "protocol": {
+    "name": "Pioneer-2Part",
+    "carrierHz": 40000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_S4": {
+      "label": "S4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x4040",
+          "function": "0x4C4C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8777, 'S4' 02320232 Pioneer: wire-order bytes, bit-reversed as Pioneer-2Part"
+        }
+      ]
+    }
+  }
+}

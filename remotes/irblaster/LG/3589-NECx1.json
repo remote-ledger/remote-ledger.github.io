@@ -1,0 +1,234 @@
+{
+  "manufacturer": "LG",
+  "model": "IR Blaster DB 3589 (NECx1)",
+  "aliases": [],
+  "controls": [
+    "BRAVO | A 612",
+    "BRAVO | A 709",
+    "LG | AKB 74 B 15341",
+    "LG | AKB 74815331",
+    "LG | AKB 74815341",
+    "LG | AKB74815301",
+    "LG | COV 30742128",
+    "LG | COV 30748128",
+    "LG | COV 33552424",
+    "LG | COV 33903002",
+    "LG | LAP 240",
+    "LG | LAS 400",
+    "LG | LAS 400 B",
+    "LG | LAS 454 B",
+    "LG | NB 2540",
+    "LG | NB 2540 A",
+    "LG | NB 4540",
+    "LG | S 4 HD",
+    "LG | S J 1",
+    "LG | S J 2",
+    "LG | S J 4",
+    "LG | SH 3 B",
+    "LG | SH 4 D",
+    "LG | SJ 4"
+  ],
+  "protocol": {
+    "name": "NECx1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_AUTO_POWER_OFF": {
+      "label": "AUTO POWER OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x2C",
+          "subdevice": "0x2C",
+          "function": "0xC8",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3589, 'AUTO POWER OFF' 343413EC NECx1: 32 wire bits, bytes bit-reversed as NECx1"
+        }
+      ]
+    },
+    "KEY_AUTO_POWER_ON": {
+      "label": "AUTO POWER ON",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x2C",
+          "subdevice": "0x2C",
+          "function": "0xC7",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3589, 'AUTO POWER ON' 3434E31C NECx1: 32 wire bits, bytes bit-reversed as NECx1"
+        }
+      ]
+    },
+    "KEY_CINEMA": {
+      "label": "CINEMA",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x2C",
+          "subdevice": "0x2C",
+          "function": "0x90",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3589, 'CINEMA' 343409F6 NECx1: 32 wire bits, bytes bit-reversed as NECx1"
+        }
+      ]
+    },
+    "KEY_DRC_OFF": {
+      "label": "DRC OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x2C",
+          "subdevice": "0x2C",
+          "function": "0xC4",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3589, 'DRC OFF' 343423DC NECx1: 32 wire bits, bytes bit-reversed as NECx1"
+        }
+      ]
+    },
+    "KEY_DRC_ON": {
+      "label": "DRC ON",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x2C",
+          "subdevice": "0x2C",
+          "function": "0xC3",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3589, 'DRC ON' 3434C33C NECx1: 32 wire bits, bytes bit-reversed as NECx1"
+        }
+      ]
+    },
+    "KEY_F": {
+      "label": "F",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x2C",
+          "subdevice": "0x2C",
+          "function": "0x8A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3589, 'F' 343451AE NECx1: 32 wire bits, bytes bit-reversed as NECx1"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x2C",
+          "subdevice": "0x2C",
+          "function": "0x1F",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3589, 'MUTE' 3434F807 NECx1: 32 wire bits, bytes bit-reversed as NECx1"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x2C",
+          "subdevice": "0x2C",
+          "function": "0x1E",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3589, 'POWER' 34347887 NECx1: 32 wire bits, bytes bit-reversed as NECx1"
+        }
+      ]
+    },
+    "KEY_STANDARD": {
+      "label": "STANDARD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x2C",
+          "subdevice": "0x2C",
+          "function": "0x36",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3589, 'STANDARD' 34346C93 NECx1: 32 wire bits, bytes bit-reversed as NECx1"
+        }
+      ]
+    },
+    "KEY_VOICE": {
+      "label": "VOICE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x2C",
+          "subdevice": "0x2C",
+          "function": "0x96",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3589, 'VOICE' 34346996 NECx1: 32 wire bits, bytes bit-reversed as NECx1"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x2C",
+          "subdevice": "0x2C",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3589, 'VOL-' 34346897 NECx1: 32 wire bits, bytes bit-reversed as NECx1"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x2C",
+          "subdevice": "0x2C",
+          "function": "0x17",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3589, 'VOL+' 3434E817 NECx1: 32 wire bits, bytes bit-reversed as NECx1"
+        }
+      ]
+    },
+    "KEY_WOOFER_LEVEL_MINUS": {
+      "label": "WOOFER LEVEL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x2C",
+          "subdevice": "0x2C",
+          "function": "0xC9",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3589, 'WOOFER LEVEL-' 3434936C NECx1: 32 wire bits, bytes bit-reversed as NECx1"
+        }
+      ]
+    },
+    "KEY_WOOFER_LEVEL_PLUS": {
+      "label": "WOOFER LEVEL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x2C",
+          "subdevice": "0x2C",
+          "function": "0xCA",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3589, 'WOOFER LEVEL+' 343453AC NECx1: 32 wire bits, bytes bit-reversed as NECx1"
+        }
+      ]
+    }
+  }
+}

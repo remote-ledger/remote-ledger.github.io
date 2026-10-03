@@ -1,0 +1,49 @@
+{
+  "manufacturer": "JVC",
+  "model": "IR Blaster DB 20 (NEC2)",
+  "aliases": [],
+  "controls": [
+    "JVC | CA-UXG3",
+    "JVC | CA-UXG4",
+    "JVC | RM-SUXG3R",
+    "JVC | SP-UXG3",
+    "JVC | SP-UXG4",
+    "JVC | UX-G3",
+    "JVC | UX-G4"
+  ],
+  "protocol": {
+    "name": "NEC2",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x2B",
+          "function": "0x46",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 20, 'POWER' 01D4629D NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x2B",
+          "function": "0x48",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 20, 'VOL+' 01D412ED NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "manufacturer": "AKIRA",
+  "model": "IR Blaster DB 3732 (NEC2)",
+  "aliases": [],
+  "controls": [
+    "AKIRA | DSL 19 V 2 WCD",
+    "AKIRA | LCT - B 85 T 22 H",
+    "AKIRA | LCT - B 85 TDU 19 H",
+    "AKIRA | LCT - B 85 TDU 22 H",
+    "AKIRA | LCT - B 92 T 22 H",
+    "AKIRA | TV 22 LCD",
+    "BRAVO | T 046",
+    "BRAVO | T 910",
+    "CISCO | IPV5001",
+    "CM REMOTES | 90 02 40 61",
+    "DAEWOO | DSL 19 V 2 WCD",
+    "GRAN PRIX | LT 200 COMBI",
+    "GRAN PRIX | LT 200 DVD",
+    "GRAN PRIX | LT 210 DVD",
+    "GRAN PRIX | LT 229 HD",
+    "GRAN PRIX | LT 239 HD"
+  ],
+  "protocol": {
+    "name": "NEC2",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_UNLABELED": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xBF",
+          "function": "0x53",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3732, '??' 00FDCA35 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    }
+  }
+}

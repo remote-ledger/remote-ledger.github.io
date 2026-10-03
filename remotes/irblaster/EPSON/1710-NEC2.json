@@ -1,0 +1,357 @@
+{
+  "manufacturer": "EPSON",
+  "model": "IR Blaster DB 1710 (NEC2)",
+  "aliases": [],
+  "controls": [
+    "EPSON | EMP-TW1000",
+    "EPSON | EMP-TW520",
+    "EPSON | EMP-TW600",
+    "EPSON | EMP-TW680",
+    "EPSON | EMP-TW700",
+    "EPSON | EMP-TW980",
+    "EPSON | RC144609601"
+  ],
+  "protocol": {
+    "name": "NEC2",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_ASPECT": {
+      "label": "ASPECT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0x55",
+          "function": "0x8A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1710, 'ASPECT' C1AA51AE NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_BLANK": {
+      "label": "BLANK",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0x55",
+          "function": "0x93",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1710, 'BLANK' C1AAC936 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_COLOR_MODE": {
+      "label": "COLOR MODE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0x55",
+          "function": "0x8F",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1710, 'COLOR MODE' C1AAF10E NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_COLOR_TEMP": {
+      "label": "COLOR TEMP.",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0x55",
+          "function": "0x2D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1710, 'COLOR TEMP.' C1AAB44B NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_CONTRAST": {
+      "label": "CONTRAST",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0x55",
+          "function": "0x2C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1710, 'CONTRAST' C1AA34CB NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_D4_SLASH_SCART": {
+      "label": "D4 / SCART",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0x55",
+          "function": "0x72",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1710, 'D4 / SCART' C1AA4EB1 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_DOWN": {
+      "label": "DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0x55",
+          "function": "0xB2",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1710, 'DOWN' C1AA4DB2 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_ESC": {
+      "label": "ESC",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0x55",
+          "function": "0x84",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1710, 'ESC' C1AA21DE NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_GAMMA": {
+      "label": "GAMMA",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0x55",
+          "function": "0x7E",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1710, 'GAMMA' C1AA7E81 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_HDMI": {
+      "label": "HDMI",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0x55",
+          "function": "0x73",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1710, 'HDMI' C1AACE31 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_INPUT_A": {
+      "label": "INPUT A",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0x55",
+          "function": "0x71",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1710, 'INPUT A' C1AA8E71 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_INPUT_B": {
+      "label": "INPUT B",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0x55",
+          "function": "0x9D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1710, 'INPUT B' C1AAB946 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_LEFT": {
+      "label": "LEFT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0x55",
+          "function": "0xB3",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1710, 'LEFT' C1AACD32 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_MEMORY": {
+      "label": "MEMORY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0x55",
+          "function": "0x8B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1710, 'MEMORY' C1AAD12E NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_MENU": {
+      "label": "MENU",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0x55",
+          "function": "0x9A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1710, 'MENU' C1AA59A6 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_PATTERN": {
+      "label": "PATTERN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0x55",
+          "function": "0x96",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1710, 'PATTERN' C1AA6996 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0x55",
+          "function": "0x90",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1710, 'POWER' C1AA09F6 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_POWER_OFF": {
+      "label": "POWER OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0x55",
+          "function": "0x91",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1710, 'POWER OFF' C1AA8976 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_RIGHT": {
+      "label": "RIGHT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0x55",
+          "function": "0xB1",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1710, 'RIGHT' C1AA8D72 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_SELECT_SLASH_LINE_MENU": {
+      "label": "SELECT / LINE MENU",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0x55",
+          "function": "0x85",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1710, 'SELECT / LINE MENU' C1AAA15E NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_S_TONE": {
+      "label": "S. TONE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0x55",
+          "function": "0x2A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1710, 'S. TONE' C1AA54AB NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_S_VIDEO": {
+      "label": "S. VIDEO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0x55",
+          "function": "0x9C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1710, 'S. VIDEO' C1AA39C6 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_UP": {
+      "label": "UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0x55",
+          "function": "0xB0",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1710, 'UP' C1AA0DF2 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_VIDEO": {
+      "label": "VIDEO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0x55",
+          "function": "0x70",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1710, 'VIDEO' C1AA0EF1 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    }
+  }
+}

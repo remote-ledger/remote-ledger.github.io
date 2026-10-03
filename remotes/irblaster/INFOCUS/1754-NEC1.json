@@ -1,0 +1,46 @@
+{
+  "manufacturer": "INFOCUS",
+  "model": "IR Blaster DB 1754 (NEC1)",
+  "aliases": [],
+  "controls": [
+    "INFOCUS | X15",
+    "INFOCUS | X6",
+    "INFOCUS | X7",
+    "INFOCUS | X9"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_AV_MUTE": {
+      "label": "AV MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x4F",
+          "subdevice": "0x50",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1754, 'AV MUTE' F20AC03F NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_RESET": {
+      "label": "RESET",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x4F",
+          "subdevice": "0x50",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1754, 'RESET' F20AB04F NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    }
+  }
+}

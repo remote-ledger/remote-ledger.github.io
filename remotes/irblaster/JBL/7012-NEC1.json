@@ -1,0 +1,216 @@
+{
+  "manufacturer": "JBL",
+  "model": "IR Blaster DB 7012 (NEC1)",
+  "aliases": [],
+  "controls": [
+    "JBL | CINEMA SB 100",
+    "JBL | CINEMA SB 230",
+    "JBL | CINEMA SB 250",
+    "JBL | CINEMA SB100",
+    "JBL | CINEMA SB200",
+    "JBL | CINEMA SB400"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_AUX_IN": {
+      "label": "AUX IN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xB4",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7012, 'AUX IN' 010E2DD2 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_BASS_BOOST": {
+      "label": "BASS BOOST",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xE7",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7012, 'BASS BOOST' 010EE718 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_BLUETOOTH": {
+      "label": "BLUETOOTH",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xBA",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7012, 'BLUETOOTH' 010E5DA2 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_HDMI_1": {
+      "label": "HDMI 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xF2",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7012, 'HDMI 1' 010E4FB0 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_HDMI_2": {
+      "label": "HDMI 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xF3",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7012, 'HDMI 2' 010ECF30 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_HDMI_3": {
+      "label": "HDMI 3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xFC",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7012, 'HDMI 3' 010E3FC0 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_HDMI_TV": {
+      "label": "HDMI TV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xB9",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7012, 'HDMI TV' 010E9D62 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xC1",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7012, 'MUTE' 010E837C NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_OPTICAL": {
+      "label": "OPTICAL",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xF9",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7012, 'OPTICAL' 010E9F60 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x84",
+          "subdevice": "0x74",
+          "function": "0xFF",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7012, 'POWER' 212EFF00 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_SOURCE": {
+      "label": "SOURCE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xC9",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7012, 'SOURCE' 010E936C NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_SURROUND_MODE": {
+      "label": "SURROUND MODE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x82",
+          "subdevice": "0x72",
+          "function": "0xA8",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7012, 'SURROUND MODE' 414E15EA NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xC8",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7012, 'VOL-' 010E13EC NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xC7",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7012, 'VOL+' 010EE31C NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,157 @@
+{
+  "manufacturer": "HARMAN KARDON",
+  "model": "IR Blaster DB 7369 (NEC1)",
+  "aliases": [],
+  "controls": [
+    "HARMAN KARDON | HK 3700",
+    "HARMAN KARDON | HK 3770",
+    "HARMAN KARDON | HK-3700, HK-3770"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_CABLE_SLASH_SAT": {
+      "label": "CABLE / SAT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xB0",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7369, 'CABLE / SAT' 010E0DF2 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_CD": {
+      "label": "CD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xD0",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7369, 'CD' 010E0BF4 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_DOWN": {
+      "label": "DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x82",
+          "subdevice": "0x72",
+          "function": "0x9A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7369, 'DOWN' 414E59A6 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xC1",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7369, 'MUTE' 010E837C NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_TV": {
+      "label": "TV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xB1",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7369, 'TV' 010E8D72 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_UP": {
+      "label": "UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x82",
+          "subdevice": "0x72",
+          "function": "0x99",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7369, 'UP' 414E9966 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xC8",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7369, 'VOL-' 010E13EC NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xC7",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7369, 'VOL+' 010EE31C NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY__212E5BA4": {
+      "label": "⏪",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x84",
+          "subdevice": "0x74",
+          "function": "0xDA",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7369, '⏪' 212E5BA4 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY__212EDB24": {
+      "label": "⏩",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x84",
+          "subdevice": "0x74",
+          "function": "0xDB",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7369, '⏩' 212EDB24 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    }
+  }
+}

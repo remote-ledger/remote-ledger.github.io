@@ -1,0 +1,36 @@
+{
+  "manufacturer": "DAEWOO",
+  "model": "IR Blaster DB 985 (NEC1)",
+  "aliases": [],
+  "controls": [
+    "CM REMOTES | 90 11 54 49",
+    "DAEWOO | DDT 14 H 9",
+    "DAEWOO | DSL 15 DIT",
+    "DAEWOO | R - 52 C 03",
+    "DAEWOO | R - 52 C 19",
+    "DAEWOO | R-52C19",
+    "DAEWOO | RH 43 - 0072",
+    "DIAMOND | R - 52 C 03"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x45",
+          "subdevice": "0x16",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 985, 'POWER' A26808F7 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    }
+  }
+}

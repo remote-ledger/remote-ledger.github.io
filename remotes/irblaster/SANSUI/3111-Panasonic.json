@@ -1,0 +1,613 @@
+{
+  "manufacturer": "SANSUI",
+  "model": "IR Blaster DB 3111 (Panasonic)",
+  "aliases": [],
+  "controls": [
+    "BRAVO | D 143",
+    "SAMSUNG | AH59 - 000438",
+    "SAMSUNG | MAX - N 75",
+    "SAMSUNG | SOME MODELS",
+    "SANSUI | RS - 1960",
+    "SANSUI | RS - 1970",
+    "SANSUI | RZ - 3700",
+    "SANSUI | RZ - 5700",
+    "SANSUI | RZ - 6700",
+    "SANSUI | RZ - 7700",
+    "TEAC/TEAK | SOME MODELS"
+  ],
+  "protocol": {
+    "name": "Panasonic",
+    "carrierHz": 37000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_0": {
+      "label": "0",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x00",
+          "function": "0x77",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3111, '0' 40042000EECE REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_5": {
+      "label": "5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x00",
+          "function": "0x74",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3111, '5' 400420002E0E REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_AUDIO_4004200080A0": {
+      "label": "AUDIO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x00",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3111, 'AUDIO' 4004200080A0 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_AUDIO_4004200088A8": {
+      "label": "AUDIO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x00",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3111, 'AUDIO' 4004200088A8 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_AV_SLASH_SOURCE": {
+      "label": "AV/SOURCE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x00",
+          "function": "0x70",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3111, 'AV/SOURCE' 400420000E2E REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_BACK": {
+      "label": "BACK",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x00",
+          "function": "0x45",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3111, 'BACK' 40042000A282 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_CANCEL": {
+      "label": "CANCEL",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x00",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3111, 'CANCEL' 400420004060 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_DISPLAY": {
+      "label": "DISPLAY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x00",
+          "function": "0x53",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3111, 'DISPLAY' 40042000CAEA REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_DOWN": {
+      "label": "DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x00",
+          "function": "0x30",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3111, 'DOWN' 400420000C2C REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_EJECT": {
+      "label": "EJECT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x00",
+          "function": "0x70",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3111, 'EJECT' 400420000E2E REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_EXIT_SLASH_RETURN": {
+      "label": "EXIT/RETURN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x00",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3111, 'EXIT/RETURN' 400420004060 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_INFO": {
+      "label": "INFO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x00",
+          "function": "0x53",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3111, 'INFO' 40042000CAEA REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_LEFT": {
+      "label": "LEFT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x00",
+          "function": "0x32",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3111, 'LEFT' 400420004C6C REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_MENU": {
+      "label": "MENU",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x00",
+          "function": "0x40",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3111, 'MENU' 400420000222 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_MINUS_SLASH_MINUS_MINUS": {
+      "label": "-/--",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x00",
+          "function": "0x66",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3111, '-/--' 400420006646 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x00",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3111, 'MUTE' 400420000828 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_OK": {
+      "label": "OK",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x00",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3111, 'OK' 400420000828 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_PAUSE": {
+      "label": "PAUSE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x00",
+          "function": "0x73",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3111, 'PAUSE' 40042000CEEE REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_PICT": {
+      "label": "PICT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x00",
+          "function": "0x21",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3111, 'PICT' 4004200084A4 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x00",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3111, 'POWER' 400420000020 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_P_DOWN": {
+      "label": "P. DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x00",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3111, 'P. DOWN' 400420004868 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_P_LEFT": {
+      "label": "P. LEFT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x00",
+          "function": "0x33",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3111, 'P. LEFT' 40042000CCEC REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_P_MINUS": {
+      "label": "P-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x00",
+          "function": "0x65",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3111, 'P-' 40042000A686 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_P_PLUS": {
+      "label": "P+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x00",
+          "function": "0x55",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3111, 'P+' 40042000AA8A REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_P_RIGHT": {
+      "label": "P. RIGHT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x00",
+          "function": "0x23",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3111, 'P. RIGHT' 40042000C4E4 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_P_SLASH_C": {
+      "label": "P/C",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x00",
+          "function": "0x76",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3111, 'P/C' 400420006E4E REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_RIGHT": {
+      "label": "RIGHT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x00",
+          "function": "0x22",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3111, 'RIGHT' 400420004464 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_SKIP_NEXT": {
+      "label": "SKIP NEXT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x00",
+          "function": "0x72",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3111, 'SKIP NEXT' 400420004E6E REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_SKIP_PREV": {
+      "label": "SKIP PREV.",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x00",
+          "function": "0x62",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3111, 'SKIP PREV.' 400420004666 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_SLEEP_SLASH_TIMER": {
+      "label": "SLEEP/TIMER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x00",
+          "function": "0x67",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3111, 'SLEEP/TIMER' 40042000E6C6 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_STOP": {
+      "label": "STOP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x00",
+          "function": "0x63",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3111, 'STOP' 40042000C6E6 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_SUBTITLE": {
+      "label": "SUBTITLE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x00",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3111, 'SUBTITLE' 40042000C8E8 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_TEXT": {
+      "label": "TEXT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x00",
+          "function": "0x60",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3111, 'TEXT' 400420000626 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_TOP_MENU": {
+      "label": "TOP MENU",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x00",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3111, 'TOP MENU' 4004200080A0 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_TV": {
+      "label": "TV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x00",
+          "function": "0x44",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3111, 'TV' 400420002202 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_UNLABELED_400420004262": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x00",
+          "function": "0x42",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3111, '??' 400420004262 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_UNLABELED_400420004A6A": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x00",
+          "function": "0x52",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3111, '??' 400420004A6A REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_UNLABELED_400420008EAE": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x00",
+          "function": "0x71",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3111, '??' 400420008EAE REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_UP": {
+      "label": "UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x00",
+          "function": "0x20",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3111, 'UP' 400420000424 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x00",
+          "function": "0x30",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3111, 'VOL-' 400420000C2C REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x00",
+          "function": "0x20",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3111, 'VOL+' 400420000424 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_ZOOM": {
+      "label": "ZOOM",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x00",
+          "function": "0x75",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3111, 'ZOOM' 40042000AE8E REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    }
+  }
+}

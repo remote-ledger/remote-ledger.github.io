@@ -1,0 +1,150 @@
+{
+  "manufacturer": "CAMBRIDGE AUDIO",
+  "model": "IR Blaster DB 3512 (RC5)",
+  "aliases": [],
+  "controls": [
+    "CAMBRIDGE AUDIO | AZUR 340 A - V 1",
+    "CAMBRIDGE AUDIO | AZUR 340 C - V 1",
+    "CAMBRIDGE AUDIO | AZUR 340A (AMP)",
+    "CAMBRIDGE AUDIO | AZUR 340C (AMP)",
+    "CAMBRIDGE AUDIO | AZUR 540 A - V 1",
+    "CAMBRIDGE AUDIO | AZUR 540 AC",
+    "CAMBRIDGE AUDIO | AZUR 540 C - V 1",
+    "CAMBRIDGE AUDIO | AZUR 540 R - V 1",
+    "CAMBRIDGE AUDIO | AZUR 540 R - V 3",
+    "CAMBRIDGE AUDIO | AZUR 640 A - V 1",
+    "CAMBRIDGE AUDIO | AZUR 640 C - V 1",
+    "CAMBRIDGE AUDIO | AZUR RC - 540 AC",
+    "CAMBRIDGE AUDIO | AZUR RC - 540 R - V 3",
+    "CAMBRIDGE AUDIO | AZUR RC - 640 AC",
+    "CAMBRIDGE AUDIO | AZUR RC - 640 AT",
+    "CAMBRIDGE AUDIO | RC 340 AC",
+    "CAMBRIDGE AUDIO | RC 540 AC",
+    "CAMBRIDGE AUDIO | RC 640 AC",
+    "CAMBRIDGE AUDIO | RC 640 AT"
+  ],
+  "protocol": {
+    "name": "RC5",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_INPUT_AUX_SLASH_PHONO": {
+      "label": "INPUT AUX/PHONO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x48",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3512, 'INPUT AUX/PHONO' 508 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_INPUT_AV_SLASH_MD": {
+      "label": "INPUT AV/MD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3512, 'INPUT AV/MD' 510 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_INPUT_CD": {
+      "label": "INPUT CD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x68",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3512, 'INPUT CD' 528 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_INPUT_DVD": {
+      "label": "INPUT DVD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x60",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3512, 'INPUT DVD' 520 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_INPUT_TAPE_SLASH_MON": {
+      "label": "INPUT TAPE/MON",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x40",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3512, 'INPUT TAPE/MON' 500 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_INPUT_TUNER_SLASH_DAB": {
+      "label": "INPUT TUNER/DAB",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x70",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3512, 'INPUT TUNER/DAB' 530 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x72",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3512, 'MUTE' 532 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x7A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3512, 'VOL-' 53A RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x5A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3512, 'VOL+' 51A RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    }
+  }
+}

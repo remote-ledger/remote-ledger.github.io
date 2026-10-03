@@ -13,21 +13,34 @@ is a script rather than JSON because a ``<script src>`` loads from
 Its payload is ``json.dumps`` output with ``ensure_ascii``, never string
 concatenation, so D29's rule -- data enters as data -- still holds.
 
+**The imported database is not in the page (D69).** Its index entries are a
+shard, and embedding them put 10 MB of text in the page and in front of every
+visitor. The page embeds only what ``index.json`` lists, and loads the shard
+the first time the visitor searches, as one script per part,
+``index/<name>/<key>.js`` -- scripts for D40's reason, so a page opened from
+disk still finds them. Until every part has answered, the page says it is
+still searching and does not say a device is absent (R20); a part that fails
+to load is reported, not read as "nothing found".
+
 ``site/index.json`` is written by the same serializer as
 ``build/index.json`` and must be byte-identical to it: the site needs its
-own copy because Pages serves only ``site/``.
+own copy because Pages serves only ``site/``. So are its shard files: the
+manifest and the parts, as JSON for clients next to the scripts for the page.
 """
 
 from __future__ import annotations
 
 import json
+import shutil
+from functools import partial
 from pathlib import Path
 from typing import Any
 
 from . import paths
 from .encoding import css_ident, json_payload
 from .forms import PRIMARY, select
-from .index import build_index
+from .index import Built, Shard, build_all, shard_files
+from .parallel import ordered_map
 from .remote import load_remote
 from .serialize import dumps
 from .validate import corpus_files
@@ -35,17 +48,31 @@ from .validate import corpus_files
 TITLE = "Remote Ledger"
 
 
-def payload(root: Path) -> tuple[dict[str, Any], dict[str, Any]]:
+def payload(
+    root: Path, built: Built | None = None
+) -> tuple[dict[str, Any], dict[str, Any]]:
     """(index, embedded) -- the index verbatim, plus what the page also needs.
 
     The index alone cannot render a remote: it carries no codes and no
     layouts by design, since D13 keeps it a *view* over identity and
     confidence. The page needs both, so they ride alongside rather than
-    being bolted into the index and changing what OD4 commits.
+    being bolted into the index and changing what OD4 commits. ``embedded``
+    covers every remote, those of the shards included: opening one loads its
+    script like any other.
     """
-    index, _ = build_index(root)
+    index = (built or build_all(root)).index
+    return index, site_extra(root, corpus_files(root))
+
+
+def site_extra(root: Path, files: list[Path]) -> dict[str, Any]:
+    """What the page needs beyond the index, for the given remote files only.
+
+    Split out of :func:`payload` so ``build_site`` can run it over a few files
+    at a time -- in worker processes, and without holding every remote's keys
+    in memory at once -- while ``payload`` keeps returning the whole of it.
+    """
     extra: dict[str, Any] = {}
-    for path in corpus_files(root):
+    for path in files:
         remote = load_remote(path)
         where = paths.rel(root, path)
         keys: dict[str, Any] = {}
@@ -80,7 +107,13 @@ def payload(root: Path) -> tuple[dict[str, Any], dict[str, Any]]:
             "minSends": remote.protocol.min_sends,
             "css": _grid_rules(where, layouts),
         }
-    return index, extra
+        # A key's display label (what the source shows for it), beside `keys`
+        # rather than inside it, where a candidate's name could collide with
+        # it. Only for a remote that has any, so the script of every other
+        # remote is byte for byte what it was before the field existed.
+        if remote.labels:
+            extra[where]["labels"] = dict(sorted(remote.labels.items()))
+    return extra
 
 
 def _grid_rules(file: str, layouts: dict[str, Any]) -> str:
@@ -109,6 +142,33 @@ def remote_script(file: str, data: dict[str, Any]) -> str:
     args = json.dumps([file, data], sort_keys=True, ensure_ascii=True,
                       separators=(",", ":"))
     return f"ledgerRemote(...{args});\n"
+
+
+def shard_script(name: str, key: str, entries: list[dict[str, Any]]) -> str:
+    """``index/<name>/<key>.js``: one part's entries, for the page (D69).
+
+    The same encoding as :func:`remote_script`, for the same reasons.
+    """
+    args = json.dumps([name, key, entries], sort_keys=True, ensure_ascii=True,
+                      separators=(",", ":"))
+    return f"ledgerShard(...{args});\n"
+
+
+def shard_descriptors(shards: tuple[Shard, ...]) -> list[dict[str, Any]]:
+    """What the page embeds about the shards: enough to load them."""
+    return [
+        {
+            "name": shard.name,
+            "parts": [
+                {"key": key, "remotes": len(entries),
+                 "script": paths.shard_script(shard.name, key)}
+                for key, entries in shard.parts.items()
+            ],
+            "remotes": shard.remotes,
+            "root": shard.root,
+        }
+        for shard in shards
+    ]
 
 
 STYLE = """
@@ -172,6 +232,11 @@ footer { color: var(--muted); font-size: 0.8rem; margin-top: 40px;
   border-top: 1px solid var(--line); padding-top: 14px; }
 """
 
+#: Shown only on a page whose ledger has key labels (:func:`page_parts`).
+LABEL_STYLE = """.key h3 .klabel { font-family: ui-sans-serif, system-ui, sans-serif;
+  font-weight: 400; color: var(--muted); }
+"""
+
 SCRIPT = r"""
 const data = JSON.parse(document.getElementById('ledger').textContent);
 const results = document.getElementById('results');
@@ -222,8 +287,52 @@ function matches(q, values) {
   const words = q.split(/\s+/).map(norm).filter(Boolean);
   return words.length > 1 && words.every(w => vs.some(v => v.includes(w)));
 }
-const hit = (r, q) => matches(q, fields(r));
+// The same rule, compiled once per query and run over each remote's fields
+// normalised once (not once per keystroke): the imported database is 300,000
+// controls strings, which cost a regex apiece to normalise.
+function matcher(q) {
+  const needle = norm(q);
+  const words = q.split(/\s+/).map(norm).filter(Boolean);
+  return vs => !needle || vs.some(v => v.includes(needle)) ||
+    (words.length > 1 && words.every(w => vs.some(v => v.includes(w))));
+}
+const haystack = r => r._n || (r._n = fields(r).map(norm));
 const hitUnresolved = (u, q) => matches(q, [u.device]);
+
+// D69: the imported database is not in this page. Its index entries are in
+// index/<name>/<key>.js, one script per part, fetched the first time the
+// visitor searches. Scripts rather than fetch(), as above, so a page opened
+// from disk finds them too.
+const parts = [];
+for (const shard of data.shards)
+  for (const p of shard.parts)
+    parts.push({ id: shard.name + '/' + p.key, script: p.script, state: 'idle', entries: [] });
+const shardLabel = data.shards.map(s => (data.imports[s.root] || {}).name || s.name).join(' and ');
+const shardTotal = data.shards.reduce((n, s) => n + s.remotes, 0);
+const inState = state => parts.filter(p => p.state === state).length;
+window.ledgerShard = (name, key, entries) => {
+  const part = parts.find(p => p.id === name + '/' + key);
+  if (!part || part.state !== 'loading') return;
+  part.entries = entries;
+  part.state = 'loaded';
+  run();
+};
+function loadParts(retry) {
+  for (const p of parts) {
+    if (p.state !== 'idle' && !(retry && p.state === 'failed')) continue;
+    p.state = 'loading';
+    const s = document.createElement('script');
+    s.src = p.script;
+    // A script that ran has called ledgerShard, which leaves 'loading'; one
+    // that loaded without doing so, or never loaded, has failed.
+    const failed = () => {
+      s.remove();
+      if (p.state === 'loading') { p.state = 'failed'; run(); }
+    };
+    s.onload = s.onerror = failed;
+    document.head.appendChild(s);
+  }
+}
 
 function renderRemote(r, i) {
   let html = `<article class="card"><h2>${esc(r.manufacturer)} ${esc(r.model)}`;
@@ -280,10 +389,14 @@ function renderDetail(r) {
 }
 
 let shown = [];
+// The remotes the visitor has opened for this query: a part of the imported
+// database arriving can redraw the list, and the redraw must not close them.
+const opened = new Set();
 function open(i) {
   const r = shown[i];
   const slot = results.querySelector(`.detail[data-i="${i}"]`);
   if (!r || !slot) return;
+  opened.add(r.file);
   load(r.file, () => { slot.innerHTML = renderDetail(r); });
 }
 
@@ -293,28 +406,75 @@ function renderUnresolved(u) {
     `<p class="meta">checked ${esc(u.checked)}</p></article>`;
 }
 
+let drawn = null, drawnFor = null;
 function run() {
   const q = box.value.trim().toLowerCase();
-  const remotes = data.remotes.filter(r => hit(r, q));
+  const searching = !!norm(q);
+  if (searching) loadParts(false);
+  const match = matcher(q);
+  const here = data.remotes.filter(r => match(haystack(r)));
+  const imported = [];
+  // Without a query the page lists what it holds, as it always did; the
+  // imported database is only ever searched.
+  if (searching)
+    for (const p of parts)
+      if (p.state === 'loaded') for (const r of p.entries) if (match(haystack(r))) imported.push(r);
+  const remotes = here.concat(imported);
   const unresolved = data.unresolved.filter(u => hitUnresolved(u, q));
-  count.textContent = `${remotes.length} remote(s), ${unresolved.length} recorded as checked-and-not-found`;
-  if (!remotes.length && !unresolved.length) {
-    results.innerHTML = q
-      ? `<p class="absent">Nothing for &ldquo;${esc(box.value)}&rdquo;, and nothing recorded as
-         having been searched for it either &mdash; so this is a device nobody has looked up yet,
-         not one checked and found to have no known remote.</p>`
-      : `<p class="absent">The ledger is empty.</p>`;
-    return;
+
+  // R20: "nobody has looked" may only be said once every part has answered.
+  const pending = inState('idle') + inState('loading'), failed = inState('failed');
+  let line = `${remotes.length} remote(s)`;
+  if (searching && parts.length) line += ` (${imported.length} from the ${shardLabel})`;
+  line += `, ${unresolved.length} recorded as checked-and-not-found`;
+  if (remotes.length > MAX_SHOWN)
+    line += `. Showing ${MAX_SHOWN} of ${remotes.length}; refine the search to see the rest`;
+  if (!searching && parts.length)
+    line += `. ${shardTotal.toLocaleString()} more are in the ${shardLabel}, searched when you type`;
+  else if (pending)
+    line += `. Still searching the ${shardLabel}: ${inState('loaded')} of ${parts.length} files loaded`;
+  else if (failed)
+    line += `. The ${shardLabel} did not load in full (${failed} of ${parts.length} files missing)`;
+  count.textContent = line;
+  if (searching && !pending && failed) {
+    const retry = document.createElement('button');
+    retry.className = 'more';
+    retry.id = 'retry';
+    retry.textContent = 'Try again';
+    count.append(' ', retry);
   }
-  shown = remotes.slice(0, MAX_SHOWN);
-  const more = remotes.length > shown.length
-    ? `<p class="absent">Showing ${shown.length} of ${remotes.length}; refine the search to see the rest.</p>`
-    : '';
-  results.innerHTML = shown.map(renderRemote).join('') + more +
-                      unresolved.map(renderUnresolved).join('');
-  if (shown.length <= AUTO_OPEN) shown.forEach((_, i) => open(i));
+
+  let html;
+  if (!remotes.length && !unresolved.length) {
+    if (!q) html = `<p class="absent">The ledger is empty.</p>`;
+    else if (pending) html = `<p class="absent">Nothing yet for &ldquo;${esc(box.value)}&rdquo;
+         in the part of the ledger loaded so far; still searching the ${esc(shardLabel)}.</p>`;
+    else if (failed) html = `<p class="absent">Nothing for &ldquo;${esc(box.value)}&rdquo; in
+         the part of the ledger that loaded, but ${failed} of ${parts.length} files of the
+         ${esc(shardLabel)} did not, so this does not show that nobody has looked up the device.</p>`;
+    else html = `<p class="absent">Nothing for &ldquo;${esc(box.value)}&rdquo;, and nothing recorded as
+         having been searched for it either &mdash; so this is a device nobody has looked up yet,
+         not one checked and found to have no known remote.</p>`;
+    shown = [];
+  } else {
+    shown = remotes.slice(0, MAX_SHOWN);
+    html = shown.map(renderRemote).join('') + unresolved.map(renderUnresolved).join('');
+  }
+  if (q !== drawnFor) { opened.clear(); drawnFor = q; }
+  // A part arriving that adds nothing to the page must not redraw it, and one
+  // that does must not close what the visitor opened.
+  if (html === drawn) return;
+  drawn = html;
+  results.innerHTML = html;
+  const reopen = [...opened];
+  shown.forEach((r, i) => {
+    if (shown.length <= AUTO_OPEN || reopen.includes(r.file)) open(i);
+  });
 }
 
+count.addEventListener('click', ev => {
+  if (ev.target.closest('#retry')) { loadParts(true); run(); }
+});
 results.addEventListener('click', ev => {
   const more = ev.target.closest('button.more');
   if (more) return open(Number(more.dataset.i));
@@ -329,9 +489,41 @@ run();
 """
 
 
-def render_html(index: dict[str, Any]) -> str:
+#: The line of SCRIPT that shows a key's name, and what it becomes on a page
+#: whose ledger has key labels: the label, when the key has one, beside the name.
+_KEY_HEAD = "    html += `<div class=\"key\"><h3>${esc(key)}</h3>`;\n"
+_KEY_HEAD_LABELLED = (
+    "    const label = (extra.labels || {})[key];\n"
+    "    html += `<div class=\"key\"><h3>${esc(key)}` +\n"
+    "      (label === undefined ? '' : ` <span class=\"klabel\">${esc(label)}</span>`) +"
+    " `</h3>`;\n"
+)
+
+
+def page_parts(labelled: bool) -> tuple[str, str]:
+    """``(style, script)`` of the page.
+
+    The code that shows key labels is part of the page only when some remote in
+    the ledger has one (``labelled``), so a ledger without any generates the
+    very page it did before the field existed, and ``rl build --check`` has
+    nothing to say about it. The edit is one line of SCRIPT, asserted to be
+    there exactly once, so a change to that line cannot silently drop it.
+    """
+    if not labelled:
+        return STYLE, SCRIPT
+    if SCRIPT.count(_KEY_HEAD) != 1:
+        raise RuntimeError("the line that renders a key's name is not in SCRIPT once")
+    return STYLE + LABEL_STYLE, SCRIPT.replace(_KEY_HEAD, _KEY_HEAD_LABELLED)
+
+
+def render_html(
+    index: dict[str, Any], shards: tuple[Shard, ...] = (), *, labelled: bool = False
+) -> str:
+    """``labelled``: some remote in the ledger has key labels (:func:`page_parts`)."""
+    style, script = page_parts(labelled)
     embedded = {
         "remotes": index["remotes"],
+        "shards": shard_descriptors(shards),
         "unresolved": index["unresolved"],
         "imports": paths.IMPORTS,
     }
@@ -341,7 +533,7 @@ def render_html(index: dict[str, Any]) -> str:
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{TITLE}</title>
-<style>{STYLE}</style>
+<style>{style}</style>
 </head>
 <body>
 <main>
@@ -362,23 +554,49 @@ returns nothing at all is one nobody has looked up yet.
 </footer>
 </main>
 <script type="application/json" id="ledger">{json_payload(embedded)}</script>
-<script>{SCRIPT}</script>
+<script>{script}</script>
 </body>
 </html>
 """
 
 
+def _write_script(root: Path, out_root: Path, path: Path) -> None:
+    """Write one remote's script under ``site/r/``. A worker's unit."""
+    for file, data in site_extra(root, [path]).items():
+        script = out_root / "site" / paths.site_script(file)
+        script.parent.mkdir(parents=True, exist_ok=True)
+        script.write_text(remote_script(file, data), encoding="utf-8", newline="\n")
+
+
 def build_site(root: Path, out_root: Path) -> list[str]:
-    index, extra = payload(root)
+    built = build_all(root)
+    index = built.index
     target = out_root / "site"
     target.mkdir(parents=True, exist_ok=True)
+    labelled = built.labelled
     (target / "index.html").write_text(
-        render_html(index), encoding="utf-8", newline="\n"
+        render_html(index, built.shards, labelled=labelled),
+        encoding="utf-8",
+        newline="\n",
     )
     # D20: the same serializer, so this is byte-identical to build/index.json.
     (target / "index.json").write_text(dumps(index), encoding="utf-8", newline="\n")
-    for file, data in sorted(extra.items()):
-        script = target / paths.site_script(file)
-        script.parent.mkdir(parents=True, exist_ok=True)
-        script.write_text(remote_script(file, data), encoding="utf-8", newline="\n")
+
+    # D69: the shards' manifests and parts, byte for byte what build/ holds
+    # (JSON, for clients), and the page's copy of each part as a script. The
+    # directory is the site's alone, so a part that is gone is removed.
+    shutil.rmtree(target / paths.SHARD_DIR, ignore_errors=True)
+    files = shard_files(built.shards)
+    for shard in built.shards:
+        for key, entries in shard.parts.items():
+            files[paths.shard_script(shard.name, key)] = shard_script(shard.name, key, entries)
+    for rel, text in files.items():
+        out = target / rel
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(text, encoding="utf-8", newline="\n")
+
+    # One file per remote, each written by whichever worker computed it, so
+    # neither the order they finish in nor the worker count can change a byte.
+    for _ in ordered_map(partial(_write_script, root, out_root), corpus_files(root)):
+        pass
     return []

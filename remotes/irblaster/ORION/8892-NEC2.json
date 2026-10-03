@@ -1,0 +1,29 @@
+{
+  "manufacturer": "ORION",
+  "model": "IR Blaster DB 8892 (NEC2)",
+  "aliases": [],
+  "controls": [
+    "ORION | PCDRS-835, -836"
+  ],
+  "protocol": {
+    "name": "NEC2",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_SLASH_SCAN_MINUS": {
+      "label": "⏪/SCAN -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8892, '⏪/SCAN -' 00FFE01F NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    }
+  }
+}

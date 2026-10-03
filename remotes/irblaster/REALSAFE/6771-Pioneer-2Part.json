@@ -1,0 +1,54 @@
+{
+  "manufacturer": "REALSAFE",
+  "model": "IR Blaster DB 6771 (Pioneer-2Part)",
+  "aliases": [],
+  "controls": [
+    "REALSAFE | DVR-9214, DVR-9218"
+  ],
+  "protocol": {
+    "name": "Pioneer-2Part",
+    "carrierHz": 40000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_": {
+      "label": "⏩",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x9C9C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 6771, '⏩' 00390039 Pioneer: wire-order bytes, bit-reversed as Pioneer-2Part"
+        }
+      ]
+    },
+    "KEY_SLASH": {
+      "label": "/◄",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x9090",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 6771, '/◄' 00090009 Pioneer: wire-order bytes, bit-reversed as Pioneer-2Part"
+        }
+      ]
+    },
+    "KEY_YELLOW": {
+      "label": "YELLOW",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x8C8C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 6771, 'YELLOW' 00310031 Pioneer: wire-order bytes, bit-reversed as Pioneer-2Part"
+        }
+      ]
+    }
+  }
+}

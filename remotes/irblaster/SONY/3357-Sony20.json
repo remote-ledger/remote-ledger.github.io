@@ -1,0 +1,638 @@
+{
+  "manufacturer": "SONY",
+  "model": "IR Blaster DB 3357 (Sony20)",
+  "aliases": [],
+  "controls": [
+    "SONY | RM - U 304(DVD/LD)",
+    "SONY | RM - U 305 A(VIDEO 2-DVD/LD)",
+    "SONY | RM - U 305(VIDEO 2-DVD/LD)",
+    "SONY | STR - DB 870(VIDEO 2-DVD/LD)",
+    "SONY | STR - DE 245(DVD/LD)",
+    "SONY | STR - DE 445(DVD/LD)",
+    "SONY | STR - DE 475(DVD/LD)",
+    "SONY | STR - DE 545(DVD/LD)"
+  ],
+  "protocol": {
+    "name": "Sony20",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_AUDIO": {
+      "label": "AUDIO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "subdevice": "0x57",
+          "function": "0x56",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3357, 'AUDIO' 6A5EA SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_BLUE": {
+      "label": "BLUE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "subdevice": "0x57",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3357, 'BLUE' 305EA SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_CANCEL": {
+      "label": "CANCEL",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x15",
+          "subdevice": "0x57",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3357, 'CANCEL' 095EA SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_EJECT": {
+      "label": "EJECT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "subdevice": "0x57",
+          "function": "0x1C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3357, 'EJECT' 385EA SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_FAV": {
+      "label": "FAV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "subdevice": "0x57",
+          "function": "0x56",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3357, 'FAV' 6A5EA SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_FORWARD": {
+      "label": "FORWARD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "subdevice": "0x57",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3357, 'FORWARD' 305EA SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_GREEN": {
+      "label": "GREEN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "subdevice": "0x57",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3357, 'GREEN' B05EA SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_GUIDE": {
+      "label": "GUIDE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "subdevice": "0x57",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3357, 'GUIDE' 485EA SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_INFO": {
+      "label": "INFO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "subdevice": "0x57",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3357, 'INFO' D05EA SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_NEXT": {
+      "label": "NEXT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "subdevice": "0x57",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3357, 'NEXT' 085EA SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_PAUSE": {
+      "label": "PAUSE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "subdevice": "0x57",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3357, 'PAUSE' 905EA SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_PLAY": {
+      "label": "PLAY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "subdevice": "0x57",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3357, 'PLAY' 105EA SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_PREV": {
+      "label": "PREV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "subdevice": "0x57",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3357, 'PREV' 885EA SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_P_DOWN": {
+      "label": "P. DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "subdevice": "0x57",
+          "function": "0x59",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3357, 'P. DOWN' 9A5EA SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_P_LEFT": {
+      "label": "P. LEFT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "subdevice": "0x57",
+          "function": "0x53",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3357, 'P. LEFT' CA5EA SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_P_RIGHT": {
+      "label": "P. RIGHT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "subdevice": "0x57",
+          "function": "0x52",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3357, 'P. RIGHT' 4A5EA SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_P_UP": {
+      "label": "P. UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "subdevice": "0x57",
+          "function": "0x58",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3357, 'P. UP' 1A5EA SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_REWIND": {
+      "label": "REWIND",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "subdevice": "0x57",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3357, 'REWIND' B05EA SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_SKIP_NEXT": {
+      "label": "SKIP NEXT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "subdevice": "0x57",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3357, 'SKIP NEXT' 505EA SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_SKIP_PREV": {
+      "label": "SKIP PREV.",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "subdevice": "0x57",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3357, 'SKIP PREV.' D05EA SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_STOP": {
+      "label": "STOP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "subdevice": "0x57",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3357, 'STOP' 905EA SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_SUBTITLE": {
+      "label": "SUBTITLE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "subdevice": "0x57",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3357, 'SUBTITLE' 205EA SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_TITLE": {
+      "label": "TITLE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x15",
+          "subdevice": "0x57",
+          "function": "0x49",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3357, 'TITLE' 935EA SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_TOP_MENU": {
+      "label": "TOP MENU",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "subdevice": "0x57",
+          "function": "0x56",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3357, 'TOP MENU' 6A5EA SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_UNLABELED_185EA": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "subdevice": "0x57",
+          "function": "0x18",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3357, '??' 185EA SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_UNLABELED_285EA": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "subdevice": "0x57",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3357, '??' 285EA SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_UNLABELED_2A5EA": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "subdevice": "0x57",
+          "function": "0x54",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3357, '??' 2A5EA SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_UNLABELED_395EA": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x15",
+          "subdevice": "0x57",
+          "function": "0x1C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3357, '??' 395EA SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_UNLABELED_509E6": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x12",
+          "subdevice": "0x67",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3357, '??' 509E6 SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_UNLABELED_585EA": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "subdevice": "0x57",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3357, '??' 585EA SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_UNLABELED_605EA": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "subdevice": "0x57",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3357, '??' 605EA SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_UNLABELED_615EA": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x15",
+          "subdevice": "0x57",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3357, '??' 615EA SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_UNLABELED_685EA": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "subdevice": "0x57",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3357, '??' 685EA SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_UNLABELED_A15EA": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x15",
+          "subdevice": "0x57",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3357, '??' A15EA SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_UNLABELED_A85EA": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "subdevice": "0x57",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3357, '??' A85EA SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_UNLABELED_A95EA": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x15",
+          "subdevice": "0x57",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3357, '??' A95EA SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_UNLABELED_AA5EA": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "subdevice": "0x57",
+          "function": "0x55",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3357, '??' AA5EA SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_UNLABELED_D85EA": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "subdevice": "0x57",
+          "function": "0x1B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3357, '??' D85EA SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_UNLABELED_E15EA": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x15",
+          "subdevice": "0x57",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3357, '??' E15EA SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_UNLABELED_E85EA": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "subdevice": "0x57",
+          "function": "0x17",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3357, '??' E85EA SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_UNLABELED_EA5EA": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "subdevice": "0x57",
+          "function": "0x57",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3357, '??' EA5EA SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_UNLABELED_F05EA": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "subdevice": "0x57",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3357, '??' F05EA SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_UNLABELED_F85EA": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "subdevice": "0x57",
+          "function": "0x1F",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3357, '??' F85EA SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_YELLOW": {
+      "label": "YELLOW",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "subdevice": "0x57",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3357, 'YELLOW' 105EA SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "manufacturer": "METZ",
+  "model": "IR Blaster DB 6845 (Blaupunkt)",
+  "aliases": [],
+  "controls": [
+    "METZ | SOME MODELS",
+    "T+A | SOME MODELS"
+  ],
+  "protocol": {
+    "name": "Blaupunkt",
+    "carrierHz": 30300,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "function": "0x32",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 6845, 'MUTE' 580 RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 6845, 'VOL-' 3E0 RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 6845, 'VOL+' 7E0 RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    }
+  }
+}

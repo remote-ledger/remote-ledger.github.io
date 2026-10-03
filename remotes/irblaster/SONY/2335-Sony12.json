@@ -1,0 +1,110 @@
+{
+  "manufacturer": "SONY",
+  "model": "IR Blaster DB 2335 (Sony12)",
+  "aliases": [],
+  "controls": [
+    "SONY | 1 - 480 - 619 - 11",
+    "SONY | BDV - 360",
+    "SONY | BDV - FS 350",
+    "SONY | HT - FS 1",
+    "SONY | RM - AAU 028"
+  ],
+  "protocol": {
+    "name": "Sony12",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_INPUT_SAT": {
+      "label": "Input SAT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2335, 'Input SAT' 490 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "Power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2335, 'Power' A90 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_PROG_MINUS": {
+      "label": "Prog -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2335, 'Prog -' 890 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_PROG_PLUS": {
+      "label": "Prog +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2335, 'Prog +' 090 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_SOURCE": {
+      "label": "Source",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x25",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2335, 'Source' A50 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2335, 'VOL-' C90 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2335, 'VOL+' 490 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    }
+  }
+}

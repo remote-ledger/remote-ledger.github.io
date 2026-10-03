@@ -1,0 +1,71 @@
+{
+  "manufacturer": "SONY",
+  "model": "IR Blaster DB 3255 (Sony20)",
+  "aliases": [],
+  "controls": [
+    "SONY | RM - X 122"
+  ],
+  "protocol": {
+    "name": "Sony20",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_AUDIO": {
+      "label": "AUDIO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x0C",
+          "function": "0x59",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3255, 'AUDIO' 9A430 SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_MENU": {
+      "label": "MENU",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x0C",
+          "function": "0x5A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3255, 'MENU' 5A430 SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x0C",
+          "function": "0x5E",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3255, 'MUTE' 7A430 SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_PICT": {
+      "label": "PICT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x0C",
+          "function": "0x5D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3255, 'PICT' BA430 SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "manufacturer": "SONY",
+  "model": "IR Blaster DB 3610 (Sony20)",
+  "aliases": [],
+  "controls": [
+    "SONY | 1 - 474 - 301 - 11",
+    "SONY | 147402711",
+    "SONY | 147402811",
+    "SONY | RM - AAL 003",
+    "SONY | RM - AAL 004",
+    "SONY | RM - AAL 006",
+    "SONY | RM-AAL003",
+    "SONY | RM-AAL004",
+    "SONY | STR - DA 3200 ES",
+    "SONY | STR - DA 5200 ES",
+    "SONY | STR-DA3200ES"
+  ],
+  "protocol": {
+    "name": "Sony20",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_CATEGORY_MINUS": {
+      "label": "CATEGORY-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x28",
+          "function": "0x1B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3610, 'CATEGORY-' D8114 SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_CATEGORY_MODE": {
+      "label": "CATEGORY MODE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x28",
+          "function": "0x19",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3610, 'CATEGORY MODE' 98114 SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_CATEGORY_PLUS": {
+      "label": "CATEGORY+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x28",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3610, 'CATEGORY+' 58114 SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_HDMI_1": {
+      "label": "HDMI 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x28",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3610, 'HDMI 1' 08114 SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_HDMI_2": {
+      "label": "HDMI 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x28",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3610, 'HDMI 2' 88114 SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_RETURN_SLASH_EXIT": {
+      "label": "RETURN / EXIT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x08",
+          "function": "0x7D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3610, 'RETURN / EXIT' BE110 SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    }
+  }
+}

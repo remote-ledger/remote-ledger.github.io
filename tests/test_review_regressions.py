@@ -35,7 +35,12 @@ def _is_ignored(relpath: str) -> bool:
     ).returncode == 0
 
 
-@pytest.mark.parametrize("owned", ["build/pronto/x/y.json", "build/warnings.json"])
+@pytest.mark.parametrize("owned", [
+    "build/pronto/x/y.json", "build/warnings.json", "build/index.json",
+    # D69: the index's shards and the digest rl lookup trusts it by.
+    "build/index/inputs.json", "build/index/irblaster/a.json",
+    "build/index/irblaster/manifest.json",
+])
 def test_generator_owned_paths_are_committable(owned):
     """Finding 1. OD4 commits the generated tree and D19 diffs it for drift
     and orphans; ignoring it disables that gate *and* blinds D11's
@@ -57,7 +62,7 @@ def test_gitignore_negations_mirror_the_generator_owner_table():
         line[1:].rstrip("/") for line in text.splitlines()
         if line.startswith("!")
     }
-    owned = {g.owns for g in PIPELINE if g.owns.startswith("build/")}
+    owned = {p for g in PIPELINE for p in g.paths if p.startswith("build/")}
     assert owned <= negated, f"not exempted from build/*: {owned - negated}"
 
 

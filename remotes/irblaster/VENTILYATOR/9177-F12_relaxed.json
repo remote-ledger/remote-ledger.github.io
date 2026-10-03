@@ -1,0 +1,71 @@
+{
+  "manufacturer": "VENTILYATOR",
+  "model": "IR Blaster DB 9177 (F12_relaxed)",
+  "aliases": [],
+  "controls": [
+    "VENTILYATOR | XXX1"
+  ],
+  "protocol": {
+    "name": "F12_relaxed",
+    "carrierHz": 37900,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_MODE": {
+      "label": "MODE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x03",
+          "subdevice": "0x01",
+          "function": "0x21",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9177, 'MODE' D84 F12_relaxed: 12-bit number, fields bit-reversed as F12_relaxed"
+        }
+      ]
+    },
+    "KEY_OFF": {
+      "label": "OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x03",
+          "subdevice": "0x01",
+          "function": "0x81",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9177, 'OFF' D81 F12_relaxed: 12-bit number, fields bit-reversed as F12_relaxed"
+        }
+      ]
+    },
+    "KEY_ON_SLASH_SPEED": {
+      "label": "ON/SPEED",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x03",
+          "subdevice": "0x01",
+          "function": "0x41",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9177, 'ON/SPEED' D82 F12_relaxed: 12-bit number, fields bit-reversed as F12_relaxed"
+        }
+      ]
+    },
+    "KEY_TIME": {
+      "label": "TIME",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x03",
+          "subdevice": "0x01",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9177, 'TIME' D88 F12_relaxed: 12-bit number, fields bit-reversed as F12_relaxed"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "manufacturer": "BBK",
+  "model": "IR Blaster DB 2078 (NEC2)",
+  "aliases": [],
+  "controls": [
+    "AIRIS | L 103 C",
+    "ALL TEL | XX600",
+    "ALLTEL | XX 600",
+    "ATACOM | DV 967",
+    "ATACOM | DVD 3004",
+    "BBK | BBK-911S",
+    "BBK | BBK-917S",
+    "BBK | BBK-918S",
+    "BBK | BBK-920",
+    "BBK | BBK-920S",
+    "BBK | BBK-930S",
+    "BBK | DV112S",
+    "BBK | DV113S",
+    "BBK | DV311S",
+    "BBK | DV313S",
+    "BBK | DV911SM",
+    "BBK | DV912S",
+    "BBK | DV913S",
+    "BBK | RC 019 - 01 R",
+    "BRAVO | D 130",
+    "CM REMOTES | 90 71 34 80",
+    "HOHER | T 058",
+    "HOMETECH | HT 1000 DX",
+    "IRRADIO | DVX 105",
+    "LA FAYETTE | LFD 971",
+    "LA FAYETTE | RCO 19 - 06 R",
+    "LAFAYETTE | LFD 971",
+    "LAFAYETTE | RC 019 - 06 R",
+    "NIKOJ | DV 961",
+    "PEEKTON | PK 6003",
+    "PEEKTON | RC 6003",
+    "SCOTT | DVXI 950 CS",
+    "SEITECH | RC 6003",
+    "SEITECH | SEDIVX 961",
+    "SIGMATEK | VISION - SLX",
+    "SIGMATEK | XM - 400 PRO",
+    "SILTEX | DV 967",
+    "SOUND COLOR | DV 961",
+    "TSM | 310",
+    "TSM | MP 117 L",
+    "TSM | TSM 309",
+    "TSM | TSM 310",
+    "WAITEC | VISION HTX",
+    "WAITEC | VISION SLX",
+    "WOXTER | DVD - X DIV 200",
+    "WOXTER | DVD - X DIV 600",
+    "WOXTER | X - DIV 200",
+    "WOXTER | X - DIV 600",
+    "WOXTER | X - DIV 650"
+  ],
+  "protocol": {
+    "name": "NEC2",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_EJECT": {
+      "label": "EJECT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x49",
+          "subdevice": "0xB6",
+          "function": "0x1B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2078, 'EJECT' 926DD827 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x49",
+          "subdevice": "0xB6",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2078, 'POWER' 926D58A7 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    }
+  }
+}

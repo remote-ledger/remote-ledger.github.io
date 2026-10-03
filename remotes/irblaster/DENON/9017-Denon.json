@@ -1,0 +1,107 @@
+{
+  "manufacturer": "DENON",
+  "model": "IR Blaster DB 9017 (Denon)",
+  "aliases": [],
+  "controls": [
+    "DENON | AVR-A100",
+    "DENON | RC-1145"
+  ],
+  "protocol": {
+    "name": "Denon",
+    "carrierHz": 38000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_CH_LEVEL": {
+      "label": "CH. LEVEL",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xAF",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9017, 'CH. LEVEL' 37A8 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_MULTEQ": {
+      "label": "MULTEQ.",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "function": "0x9D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9017, 'MULTEQ.' 25C8 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_SETUP": {
+      "label": "SETUP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xA0",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9017, 'SETUP' 3028 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_SIMULATION": {
+      "label": "SIMULATION",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xE6",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9017, 'SIMULATION' 4338 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_STANDARD": {
+      "label": "STANDARD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xE4",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9017, 'STANDARD' 4138 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_TUNER_BAND": {
+      "label": "TUNER BAND",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xD7",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9017, 'TUNER BAND' 3758 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_TUNER_MODE": {
+      "label": "TUNER MODE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xD8",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9017, 'TUNER MODE' 30D8 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    }
+  }
+}

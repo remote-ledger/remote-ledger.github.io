@@ -1,0 +1,57 @@
+{
+  "manufacturer": "ACCUPHASE",
+  "model": "IR Blaster DB 6844 (NEC2)",
+  "aliases": [],
+  "controls": [
+    "ACCUPHASE | SOME MODELS"
+  ],
+  "protocol": {
+    "name": "NEC2",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x84",
+          "subdevice": "0x6C",
+          "function": "0xCF",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 6844, 'MUTE' 2136F30C NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x84",
+          "subdevice": "0x6C",
+          "function": "0xC3",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 6844, 'VOL-' 2136C33C NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x84",
+          "subdevice": "0x6C",
+          "function": "0xC2",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 6844, 'VOL+' 213643BC NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    }
+  }
+}

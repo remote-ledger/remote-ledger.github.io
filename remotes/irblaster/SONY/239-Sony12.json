@@ -1,0 +1,66 @@
+{
+  "manufacturer": "SONY",
+  "model": "IR Blaster DB 239 (Sony12)",
+  "aliases": [],
+  "controls": [
+    "SONY | DAV-DZ370",
+    "SONY | DAV-DZ560",
+    "SONY | DAV-DZ570",
+    "SONY | DAV-DZ660",
+    "SONY | DAV-DZ665K",
+    "SONY | DAV-DZ670K",
+    "SONY | DAV-DZ670M",
+    "SONY | DAV-DZ777",
+    "SONY | DAV-DZ777K",
+    "SONY | DAV-DZ77T",
+    "SONY | DAV-DZ870KW",
+    "SONY | DAV-DZ870M",
+    "SONY | DAV-FXG99K",
+    "SONY | HCD-DZ370",
+    "SONY | HCD-DZ560",
+    "SONY | HCD-DZ570",
+    "SONY | HCD-DZ660",
+    "SONY | HCD-DZ777",
+    "SONY | HCD-DZ77T",
+    "SONY | HCD-DZ860W",
+    "SONY | HCD-DZ870KW",
+    "SONY | HCD-DZ870M",
+    "SONY | HCD-DZ870W",
+    "SONY | RM - ADP 022 AV SYSTEM",
+    "SONY | RM-ADP022",
+    "SONY | RM-ADP023"
+  ],
+  "protocol": {
+    "name": "Sony12",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_AV_TV": {
+      "label": "AV TV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x25",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 239, 'AV TV' A50 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_TV_POWER": {
+      "label": "TV POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 239, 'TV POWER' A90 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    }
+  }
+}

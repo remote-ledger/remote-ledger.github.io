@@ -1,0 +1,43 @@
+{
+  "manufacturer": "@STAR",
+  "model": "IR Blaster DB 1575 (Panasonic)",
+  "aliases": [],
+  "controls": [
+    "@STAR | 11"
+  ],
+  "protocol": {
+    "name": "Panasonic",
+    "carrierHz": 37000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER": {
+      "label": "power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0xC2",
+          "function": "0xBC",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1575, 'power' 400405433D7B REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_UNLABELED": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0xC2",
+          "function": "0xBE",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1575, '??' 400405437D3B REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    }
+  }
+}

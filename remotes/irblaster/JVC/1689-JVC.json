@@ -1,0 +1,494 @@
+{
+  "manufacturer": "JVC",
+  "model": "IR Blaster DB 1689 (JVC)",
+  "aliases": [],
+  "controls": [
+    "JVC | DLA-G150CL",
+    "JVC | DLA-G150CLU",
+    "JVC | DLA-HX1E",
+    "JVC | DLA-HX1U",
+    "JVC | DLA-HX2",
+    "JVC | DLA-HX2U",
+    "JVC | DLA-SX21E",
+    "JVC | DLA-SX21SE",
+    "JVC | DLA-SX21SU",
+    "JVC | DLA-SX21U",
+    "JVC | DLA-SX21UH",
+    "JVC | RM-M160"
+  ],
+  "protocol": {
+    "name": "JVC",
+    "carrierHz": 37900,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_COMPUTER_SLASH_PC": {
+      "label": "COMPUTER / PC",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x73",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1689, 'COMPUTER / PC' CE08 JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_DIGITAL_ZOOM_MINUS": {
+      "label": "DIGITAL ZOOM-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x73",
+          "function": "0x2B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1689, 'DIGITAL ZOOM-' CED4 JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_DIGITAL_ZOOM_PLUS": {
+      "label": "DIGITAL ZOOM+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x73",
+          "function": "0x2A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1689, 'DIGITAL ZOOM+' CE54 JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_DOWN": {
+      "label": "DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x73",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1689, 'DOWN' CE40 JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_ENTER": {
+      "label": "ENTER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x73",
+          "function": "0x2F",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1689, 'ENTER' CEF4 JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_EXIT": {
+      "label": "EXIT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x73",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1689, 'EXIT' CEC0 JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_FOCUS_MINUS": {
+      "label": "FOCUS-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x73",
+          "function": "0x3D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1689, 'FOCUS-' CEBC JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_FOCUS_PLUS": {
+      "label": "FOCUS+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x73",
+          "function": "0x3C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1689, 'FOCUS+' CE3C JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_FREEZE": {
+      "label": "FREEZE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x73",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1689, 'FREEZE' CEF0 JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_HIDE": {
+      "label": "HIDE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x73",
+          "function": "0x1D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1689, 'HIDE' CEB8 JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_H_MINUS_KEYSTONE_LEFT": {
+      "label": "H-KEYSTONE LEFT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x73",
+          "function": "0x40",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1689, 'H-KEYSTONE LEFT' CE02 JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_H_MINUS_KEYSTONE_RIGHT": {
+      "label": "H-KEYSTONE RIGHT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x73",
+          "function": "0x41",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1689, 'H-KEYSTONE RIGHT' CE82 JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_INPUT_COMP1": {
+      "label": "INPUT COMP1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x73",
+          "function": "0x4D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1689, 'INPUT COMP1' CEB2 JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_INPUT_COMP2_SLASH_DVI": {
+      "label": "INPUT COMP2/DVI",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x73",
+          "function": "0x48",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1689, 'INPUT COMP2/DVI' CE12 JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_INPUT_NEXT": {
+      "label": "INPUT NEXT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x73",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1689, 'INPUT NEXT' CE10 JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_INPUT_PC1": {
+      "label": "INPUT PC1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x73",
+          "function": "0x46",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1689, 'INPUT PC1' CE62 JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_INPUT_PC2": {
+      "label": "INPUT PC2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x73",
+          "function": "0x47",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1689, 'INPUT PC2' CEE2 JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_INPUT_VIDEO": {
+      "label": "INPUT VIDEO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x73",
+          "function": "0x4B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1689, 'INPUT VIDEO' CED2 JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_INPUT_Y_SLASH_C": {
+      "label": "INPUT Y/C",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x73",
+          "function": "0x4C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1689, 'INPUT Y/C' CE32 JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_LEFT": {
+      "label": "LEFT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x73",
+          "function": "0x36",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1689, 'LEFT' CE6C JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_MENU": {
+      "label": "MENU",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x73",
+          "function": "0x30",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1689, 'MENU' CE0C JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_MENU_SLASH_ENTER": {
+      "label": "MENU / ENTER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x73",
+          "function": "0x2E",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1689, 'MENU / ENTER' CE74 JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_POWER_SLASH_OPERATE": {
+      "label": "POWER / OPERATE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x73",
+          "function": "0x17",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1689, 'POWER / OPERATE' CEE8 JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_PRESET": {
+      "label": "PRESET",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x73",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1689, 'PRESET' CE20 JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_QUICK_ALIGN": {
+      "label": "QUICK ALIGN.",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x73",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1689, 'QUICK ALIGN.' CEC8 JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_RIGHT": {
+      "label": "RIGHT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x73",
+          "function": "0x34",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1689, 'RIGHT' CE2C JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_SCREEN_S": {
+      "label": "SCREEN S",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x73",
+          "function": "0x57",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1689, 'SCREEN S' CEEA JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_SCREEN_W": {
+      "label": "SCREEN W",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x73",
+          "function": "0x56",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1689, 'SCREEN W' CE6A JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_UP": {
+      "label": "UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x73",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1689, 'UP' CE80 JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_VIDEO": {
+      "label": "VIDEO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x73",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1689, 'VIDEO' CE88 JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x73",
+          "function": "0x1F",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1689, 'VOL-' CEF8 JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x73",
+          "function": "0x1E",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1689, 'VOL+' CE78 JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_V_MINUS_KEYSTONE_DOWN": {
+      "label": "V-KEYSTONE DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x73",
+          "function": "0x1C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1689, 'V-KEYSTONE DOWN' CE38 JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_V_MINUS_KEYSTONE_UP": {
+      "label": "V-KEYSTONE UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x73",
+          "function": "0x1B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1689, 'V-KEYSTONE UP' CED8 JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_ZOOM_T": {
+      "label": "ZOOM T",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x73",
+          "function": "0x23",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1689, 'ZOOM T' CEC4 JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_ZOOM_W": {
+      "label": "ZOOM W",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x73",
+          "function": "0x24",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1689, 'ZOOM W' CE24 JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    }
+  }
+}

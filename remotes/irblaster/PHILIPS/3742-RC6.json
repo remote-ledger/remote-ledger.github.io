@@ -1,0 +1,36 @@
+{
+  "manufacturer": "PHILIPS",
+  "model": "IR Blaster DB 3742 (RC6)",
+  "aliases": [],
+  "controls": [
+    "PHILIPS | 310421904310",
+    "PHILIPS | FR 740",
+    "PHILIPS | FR 966",
+    "PHILIPS | FR 984",
+    "PHILIPS | FR 985",
+    "PHILIPS | FR 986",
+    "PHILIPS | FR 994",
+    "PHILIPS | FR 995",
+    "PHILIPS | FR 996"
+  ],
+  "protocol": {
+    "name": "RC6",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_DVD_SLASH_6_CH": {
+      "label": "DVD / 6 CH.",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "function": "0x3F",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3742, 'DVD / 6 CH.' 043F RC6: 16 bits, mode 0 as RC6"
+        }
+      ]
+    }
+  }
+}

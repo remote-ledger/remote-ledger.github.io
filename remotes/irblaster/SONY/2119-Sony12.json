@@ -1,0 +1,132 @@
+{
+  "manufacturer": "SONY",
+  "model": "IR Blaster DB 2119 (Sony12)",
+  "aliases": [],
+  "controls": [
+    "AIWA | 9885 041 95",
+    "AIWA | HV - DH 10",
+    "AIWA | HV - DH 10 E",
+    "AIWA | RM - Z 484 D",
+    "AIWA | XD - DH 10 E",
+    "AIWA | XV - DH 10",
+    "AIWA | XV - DH 10 E",
+    "BRAVO | D 174",
+    "SILVERCREST | DC 5900",
+    "SONY | 988504308",
+    "SONY | 988506747",
+    "SONY | LSV-D990P",
+    "SONY | REMCON 1327",
+    "SONY | RMT - V 503",
+    "SONY | RMT - V 503 B",
+    "SONY | RMT - V 503 C",
+    "SONY | RMT-V501E",
+    "SONY | RMT-V504A",
+    "SONY | SLV - D 900 E",
+    "SONY | SLV - D 910 E",
+    "SONY | SLV - D 920 E",
+    "SONY | SLV - D 925 E",
+    "SONY | SLV - D 930 D",
+    "SONY | SLV - D 950 B",
+    "SONY | SLV - D 950 E",
+    "SONY | SLV - D 960 P E",
+    "SONY | SLV - D 970 PE",
+    "SONY | SLV - D 975 PE",
+    "SONY | SLV - D 980 PD",
+    "SONY | SLV - D 983 PD",
+    "SONY | SLV - D 990 PB",
+    "SONY | SLV - D 990 PE",
+    "SONY | SLV - D 993 PE",
+    "SONY | SLV - D 998 PD",
+    "SONY | SLV-216 EE",
+    "SONY | SLV-D100",
+    "SONY | SLV-D201P",
+    "SONY | SLV-D261P",
+    "SONY | SLV-D271P",
+    "SONY | SLV-D281P",
+    "SONY | SLV-D300P",
+    "SONY | SLV-D350P",
+    "SONY | SLV-D360P",
+    "SONY | SLV-D370P",
+    "SONY | SLV-D380P",
+    "SONY | SLV-D560P",
+    "SONY | SLV-D900",
+    "SONY | SLV-D900E",
+    "SONY | SLV-D910B",
+    "SONY | SLV-D930",
+    "SONY | SLV-D940P",
+    "SONY | SLV-D960P",
+    "SONY | SLV-D980P"
+  ],
+  "protocol": {
+    "name": "Sony12",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_TV_POWER": {
+      "label": "TV POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2119, 'TV POWER' A90 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_TV_PROG_MINUS": {
+      "label": "TV PROG.-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2119, 'TV PROG.-' 890 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_TV_PROG_PLUS": {
+      "label": "TV PROG.+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2119, 'TV PROG.+' 090 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_TV_VOL_MINUS": {
+      "label": "TV VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2119, 'TV VOL-' C90 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_TV_VOL_PLUS": {
+      "label": "TV VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2119, 'TV VOL+' 490 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "manufacturer": "OPTOMA",
+  "model": "IR Blaster DB 1653 (NEC2)",
+  "aliases": [],
+  "controls": [
+    "OPTOMA | BR-3068N",
+    "OPTOMA | BR-ML50N",
+    "OPTOMA | ML1000",
+    "OPTOMA | ML1000CA",
+    "OPTOMA | ML1000P",
+    "OPTOMA | ML500",
+    "OPTOMA | ML800"
+  ],
+  "protocol": {
+    "name": "NEC2",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_DOWN": {
+      "label": "DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0x13",
+          "function": "0xB2",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1653, 'DOWN' 10C84DB2 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_LEFT": {
+      "label": "LEFT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0x13",
+          "function": "0x4E",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1653, 'LEFT' 10C8728D NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_RIGHT": {
+      "label": "RIGHT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0x13",
+          "function": "0x4F",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1653, 'RIGHT' 10C8F20D NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_UP": {
+      "label": "UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0x13",
+          "function": "0xB1",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1653, 'UP' 10C88D72 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0x13",
+          "function": "0x64",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1653, 'VOL-' 10C826D9 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0x13",
+          "function": "0x63",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1653, 'VOL+' 10C8C639 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    }
+  }
+}

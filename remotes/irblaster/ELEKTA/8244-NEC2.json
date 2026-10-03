@@ -1,0 +1,29 @@
+{
+  "manufacturer": "ELEKTA",
+  "model": "IR Blaster DB 8244 (NEC2)",
+  "aliases": [],
+  "controls": [
+    "ELEKTA | E-D1100"
+  ],
+  "protocol": {
+    "name": "NEC2",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_SETUP": {
+      "label": "SETUP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8244, 'SETUP' 00FFE01F NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    }
+  }
+}
