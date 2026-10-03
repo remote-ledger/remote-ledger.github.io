@@ -253,6 +253,17 @@ the repeat, as Sony20 does.
   order, not `^45m`. No test in the pinned tree reads these files; they are
   published test data with expected decodes, which is weaker than an
   assertion.
+- **Measured captures of Sony15 and Sony20 remotes**, from the same teaser
+  directory (`Sony_15_20.ict` and `Sony_A2172.ict`, each with the decode
+  IrpTransmogrifier expects; AV receivers at D=48 and D=176, D=16, D=26).
+  Unlike the nominal files above these are evidently from hardware: durations
+  jitter by one 25 µs sample tick and each capture holds three to seven
+  frames. All 25 (20 Sony15, 5 Sony20) have a first frame within one tick of
+  ours on every duration, and **a frame period of 45.0 ms to within 150 µs**
+  (44,975-45,150 µs): the one independent measurement of the `^45m` extent
+  here, and of a real remote sending SIRC at least three times. Captures carry
+  instrument bias, so this verifies ratios and the extent to within a tick,
+  not exact durations. There is no measured Sony12 capture in the set.
 - **Girr's Sony12 reference set**, `src/test/reference/commandset_sony.girr`
   @`5ca171e`: 25 commands at D=1 with their Pronto. Every string is
   reproduced word for word under IrpTransmogrifier's rule, lead-out

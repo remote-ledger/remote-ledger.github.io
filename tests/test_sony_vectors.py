@@ -15,6 +15,13 @@ cited to a pinned commit:
 * **One published Sony15 Pronto string** with the decode asserted of it
   (IrpTransmogrifierNGTest testDecodeSony15). Its header and lead-out are not
   ours, and the test below says exactly how.
+* **25 measured captures** of Sony15 and Sony20 remotes (``Sony_15_20.ict``,
+  ``Sony_A2172.ict``): jittered by one 25 us sample tick and three to seven
+  frames long, so unlike the rest they are evidently from hardware. They check
+  every duration of the first frame to within a tick, **and the 45 ms frame
+  period**, which no other source here measures. The captures carry instrument
+  bias, so they verify ratios and the extent to within a tick, not exact
+  durations.
 
 What none of it can do is tell us what a DB hexcode *means*; that is the
 app's, and tests/test_irblaster_hex_sony.py covers it.
@@ -35,6 +42,10 @@ DATA = json.loads((VECTORS / "sirc-structural.json").read_text())
 TEASER = DATA["teaser"]["captures"]
 GIRR = DATA["girrSony12"]
 ASSERTION = DATA["irptDecodeAssertion"]
+REAL = DATA["realCaptures"]["captures"]
+
+#: One IrScope sample tick, and the slack the captures need beyond it.
+TICK_US = 25
 
 
 def _encode(protocol, params, carrier_hz=40_000):
@@ -115,3 +126,48 @@ def test_the_published_sony15_string_decodes_to_the_asserted_parameters():
     bits = read_bits(durations)
     assert (field(bits, 0, 7), field(bits, 7, 8)) == (
         ASSERTION["params"]["function"], ASSERTION["params"]["device"])
+
+
+# --- measured captures ---------------------------------------------------------
+
+def _first_frame(capture):
+    return [int(x) for x in capture["firstFrameUs"].split()]
+
+
+def test_the_measured_captures_cover_both_widths_and_several_devices():
+    assert {c["protocol"] for c in REAL} == {"Sony15", "Sony20"}
+    assert len(REAL) == 25
+    assert {c["params"]["device"] for c in REAL} >= {16, 26, 48, 176}
+    assert all(c["frames"] >= 3 for c in REAL)  # a real remote sends SIRC at least three times
+
+
+@pytest.mark.parametrize("capture", REAL, ids=lambda c: f"{c['file']}:{c['note']}")
+def test_every_duration_of_a_measured_frame_is_ours_to_within_a_sample_tick(capture):
+    ours = list(_encode(capture["protocol"], capture["params"]).repeat)
+    theirs = _first_frame(capture)
+    assert len(ours) == len(theirs)
+    # The last space is the extent's remainder, so it is held to the frame
+    # period below rather than here.
+    worst = max(abs(a - b) for a, b in zip(ours[:-1], theirs[:-1]))
+    assert worst <= TICK_US + 5
+
+
+@pytest.mark.parametrize("capture", REAL, ids=lambda c: f"{c['file']}:{c['note']}")
+def test_a_measured_frame_period_is_forty_five_milliseconds(capture):
+    """^45m, against hardware: every capture's first frame spans 45 ms, to
+    within the 150 us the captures' own jitter and sample clock allow."""
+    assert abs(sum(_first_frame(capture)) - REGISTRY[capture["protocol"]].extent_us) <= 150
+
+
+@pytest.mark.parametrize("capture", REAL, ids=lambda c: f"{c['file']}:{c['note']}")
+def test_the_reference_reader_decodes_a_measured_frame_to_the_expected_parameters(capture):
+    """Snap the jittered durations to whole units, read them with the reader
+    that knows nothing of the encoder, and expect the decode in the .exp."""
+    snapped = [round(d / 600) * 600 for d in _first_frame(capture)[:-1]] + [600]
+    bits = read_bits(snapped)
+    p = capture["params"]
+    widths = {"Sony15": 8, "Sony20": 5}[capture["protocol"]]
+    assert field(bits, 0, 7) == p["function"]
+    assert field(bits, 7, widths) == p["device"]
+    if capture["protocol"] == "Sony20":
+        assert field(bits, 12, 8) == p["subdevice"]
