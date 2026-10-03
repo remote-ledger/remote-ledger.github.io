@@ -13,12 +13,14 @@ three distinguishable answers instead of two.
 from __future__ import annotations
 
 import json
+from functools import partial
 from pathlib import Path
 from typing import Any
 
 from . import paths
 from .errors import LedgerError
 from .forms import CONFIDENCE_RANK, PRIMARY, select
+from .parallel import ordered_map
 from .remote import Remote, load_remote
 from .validate import corpus_files
 
@@ -113,15 +115,23 @@ def load_unresolved(root: Path) -> list[dict[str, Any]]:
     return sorted(entries, key=lambda e: e["device"])
 
 
+def _summary_of(root: Path, path: Path) -> tuple[dict[str, Any] | None, str | None]:
+    """One remote's summary, or the problem line saying why not. A worker's unit."""
+    try:
+        return summarise(load_remote(path), paths.rel(root, path)), None
+    except LedgerError as exc:
+        return None, f"{path.as_posix()}: {exc}"
+
+
 def build_index(root: Path) -> tuple[dict[str, Any], list[str]]:
     """Compute the index from the files. Returns (index, problems)."""
     summaries = []
     problems: list[str] = []
-    for path in corpus_files(root):
-        try:
-            summaries.append(summarise(load_remote(path), paths.rel(root, path)))
-        except LedgerError as exc:
-            problems.append(f"{path.as_posix()}: {exc}")
+    for summary, problem in ordered_map(partial(_summary_of, root), corpus_files(root)):
+        if summary is None:
+            problems.append(problem)
+        else:
+            summaries.append(summary)
     summaries.sort(key=lambda s: (s["manufacturer"].casefold(), s["model"].casefold()))
     problems += alias_conflicts(summaries)
     return (

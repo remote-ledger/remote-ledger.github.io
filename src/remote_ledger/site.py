@@ -21,6 +21,7 @@ own copy because Pages serves only ``site/``.
 from __future__ import annotations
 
 import json
+from functools import partial
 from pathlib import Path
 from typing import Any
 
@@ -28,6 +29,7 @@ from . import paths
 from .encoding import css_ident, json_payload
 from .forms import PRIMARY, select
 from .index import build_index
+from .parallel import ordered_map
 from .remote import load_remote
 from .serialize import dumps
 from .validate import corpus_files
@@ -44,8 +46,18 @@ def payload(root: Path) -> tuple[dict[str, Any], dict[str, Any]]:
     being bolted into the index and changing what OD4 commits.
     """
     index, _ = build_index(root)
+    return index, site_extra(root, corpus_files(root))
+
+
+def site_extra(root: Path, files: list[Path]) -> dict[str, Any]:
+    """What the page needs beyond the index, for the given remote files only.
+
+    Split out of :func:`payload` so ``build_site`` can run it over a few files
+    at a time -- in worker processes, and without holding every remote's keys
+    in memory at once -- while ``payload`` keeps returning the whole of it.
+    """
     extra: dict[str, Any] = {}
-    for path in corpus_files(root):
+    for path in files:
         remote = load_remote(path)
         where = paths.rel(root, path)
         keys: dict[str, Any] = {}
@@ -80,7 +92,7 @@ def payload(root: Path) -> tuple[dict[str, Any], dict[str, Any]]:
             "minSends": remote.protocol.min_sends,
             "css": _grid_rules(where, layouts),
         }
-    return index, extra
+    return extra
 
 
 def _grid_rules(file: str, layouts: dict[str, Any]) -> str:
@@ -368,8 +380,16 @@ returns nothing at all is one nobody has looked up yet.
 """
 
 
+def _write_script(root: Path, out_root: Path, path: Path) -> None:
+    """Write one remote's script under ``site/r/``. A worker's unit."""
+    for file, data in site_extra(root, [path]).items():
+        script = out_root / "site" / paths.site_script(file)
+        script.parent.mkdir(parents=True, exist_ok=True)
+        script.write_text(remote_script(file, data), encoding="utf-8", newline="\n")
+
+
 def build_site(root: Path, out_root: Path) -> list[str]:
-    index, extra = payload(root)
+    index, _ = build_index(root)
     target = out_root / "site"
     target.mkdir(parents=True, exist_ok=True)
     (target / "index.html").write_text(
@@ -377,8 +397,8 @@ def build_site(root: Path, out_root: Path) -> list[str]:
     )
     # D20: the same serializer, so this is byte-identical to build/index.json.
     (target / "index.json").write_text(dumps(index), encoding="utf-8", newline="\n")
-    for file, data in sorted(extra.items()):
-        script = target / paths.site_script(file)
-        script.parent.mkdir(parents=True, exist_ok=True)
-        script.write_text(remote_script(file, data), encoding="utf-8", newline="\n")
+    # One file per remote, each written by whichever worker computed it, so
+    # neither the order they finish in nor the worker count can change a byte.
+    for _ in ordered_map(partial(_write_script, root, out_root), corpus_files(root)):
+        pass
     return []

@@ -20,6 +20,7 @@ from jsonschema import Draft202012Validator
 
 from . import protocols
 from .errors import LedgerError, ValidationError
+from .parallel import ordered_map
 from .serialize import load
 
 #: Package data, not a repo-relative path: a non-editable ``pip install .``
@@ -287,6 +288,16 @@ def validate_file(path: Path) -> list[Problem]:
     problems += list(layout_problems(doc, where))
     problems += list(structural_problems(path, where))
     return problems
+
+
+def validate_files(targets: list[Path]) -> list[Problem]:
+    """:func:`validate_file` over every target, problems in target order.
+
+    The files are independent, so the loop runs across the worker processes
+    (see ``parallel``); the order of the problems is the order of ``targets``
+    whatever the worker count, and every rule still runs on every file.
+    """
+    return [p for batch in ordered_map(validate_file, targets) for p in batch]
 
 
 def corpus_files(root: Path) -> list[Path]:

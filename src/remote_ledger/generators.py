@@ -15,12 +15,14 @@ from __future__ import annotations
 
 import filecmp
 from dataclasses import dataclass
+from functools import partial
 from pathlib import Path
 from typing import Callable
 
 from . import paths
 from .check import check_remote
 from .errors import LedgerError
+from .parallel import ordered_map
 from .remote import load_remote
 from .serialize import dumps
 from .validate import corpus_files
@@ -48,6 +50,15 @@ def _artifact_path(out_root: Path, where: str) -> Path:
     return out_root / paths.artifact(where)
 
 
+def _check_path(path: Path) -> tuple[list[str], list]:
+    """One remote's cross-check: (problem lines, warnings). A worker's unit."""
+    try:
+        file_problems, file_warnings = check_remote(load_remote(path))
+    except LedgerError as exc:
+        return [f"{path.as_posix()}: {exc}"], []
+    return [f"{path.as_posix()}: {p}" for p in file_problems], file_warnings
+
+
 def run_check(root: Path, out_root: Path) -> list[str]:
     """Cross-check the corpus and write ``build/warnings.json`` (D32).
 
@@ -57,13 +68,8 @@ def run_check(root: Path, out_root: Path) -> list[str]:
     """
     problems: list[str] = []
     warnings = []
-    for path in corpus_files(root):
-        try:
-            file_problems, file_warnings = check_remote(load_remote(path))
-        except LedgerError as exc:
-            problems.append(f"{path.as_posix()}: {exc}")
-            continue
-        problems += [f"{path.as_posix()}: {p}" for p in file_problems]
+    for file_problems, file_warnings in ordered_map(_check_path, corpus_files(root)):
+        problems += file_problems
         warnings += file_warnings
 
     target = out_root / "build" / "warnings.json"
@@ -89,16 +95,24 @@ def run_index(root: Path, out_root: Path) -> list[str]:
     return problems
 
 
-def run_compile(root: Path, out_root: Path) -> list[str]:
-    """Render each candidate group's trusted form (R12, D20)."""
+def _compile_path(root: Path, out_root: Path, path: Path) -> None:
+    """Compile one remote and write its artifact. A worker's unit."""
     from .cli import compiled_artifact
 
-    for path in corpus_files(root):
-        remote = load_remote(path)
-        target = _artifact_path(out_root, paths.rel(root, path))
-        target.parent.mkdir(parents=True, exist_ok=True)
-        target.write_text(dumps(compiled_artifact(remote)), encoding="utf-8",
-                          newline="\n")
+    remote = load_remote(path)
+    target = _artifact_path(out_root, paths.rel(root, path))
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(dumps(compiled_artifact(remote)), encoding="utf-8",
+                      newline="\n")
+
+
+def run_compile(root: Path, out_root: Path) -> list[str]:
+    """Render each candidate group's trusted form (R12, D20)."""
+    # Each remote's artifact is its own file, so the workers write them
+    # directly (nothing large travels back) and the order they finish in
+    # cannot change a byte.
+    for _ in ordered_map(partial(_compile_path, root, out_root), corpus_files(root)):
+        pass
     return []
 
 
