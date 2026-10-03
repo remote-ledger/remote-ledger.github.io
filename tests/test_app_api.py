@@ -77,6 +77,11 @@ _TOOLS: dict = {}
 
 
 def load_tool(name: str):
+    """A tool of ``tools/`` by file name. One that another test module already
+    loaded is used as it is: replacing it in ``sys.modules`` would leave that
+    module's worker processes unpickling functions of a module that is gone."""
+    if name in sys.modules:
+        return sys.modules[name]
     if name not in _TOOLS:
         spec = importlib.util.spec_from_file_location(name, ROOT / "tools" / f"{name}.py")
         module = importlib.util.module_from_spec(spec)
@@ -676,7 +681,7 @@ def test_check_catches_drift_a_missing_file_and_an_orphan(repo, monkeypatch, cap
     assert run(monkeypatch, repo, "build", "--check") == 0
 
 
-def test_a_whole_build_without_the_import_has_no_app_directory(tmp_path, monkeypatch, capsys):
+def test_a_whole_build_without_the_import_has_no_app_directory(tmp_path, monkeypatch):
     from shard_corpus import write_remote
     write_remote(tmp_path, "remotes/topping/RC-15A.json", "Topping", "RC-15A", ["DX3 Pro"])
     (tmp_path / "unresolved.json").write_text("[]", encoding="utf-8")

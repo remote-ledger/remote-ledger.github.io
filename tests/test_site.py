@@ -45,10 +45,12 @@ def test_the_site_is_one_page_an_index_and_a_script_per_remote(scripts):
     """D15 and D40: no framework, no build step, no server. Since D40 each
     remote's detail is its own small script, so no file grows with the
     corpus."""
-    # `index/` (D69) exists exactly when the index advertises a shard.
+    # `index/` (D69) exists exactly when the index advertises a shard, and so
+    # does `app/` (D74): the app API is a function of the imported database that
+    # the shard is the index of, and is the `app` stage's directory, not the page's.
     advertised = json.loads((ROOT / "site" / "index.json").read_text()).get("shards")
     assert sorted(p.name for p in (ROOT / "site").iterdir()) == \
-        sorted(["index.html", "index.json", "r", *(["index"] if advertised else [])])
+        sorted(["index.html", "index.json", "r", *(["index", "app"] if advertised else [])])
     expected = {paths.site_script(paths.rel(ROOT, p)) for p in corpus_files(ROOT)}
     assert set(scripts) == expected
 
