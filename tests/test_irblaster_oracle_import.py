@@ -324,6 +324,48 @@ def test_a_wrong_manufacturer_controls_or_model_is_reported(world, broken):
     assert any("model 'IR Blaster DB 1'" in p for p in problems)
 
 
+def test_a_key_label_that_is_not_the_databases_is_reported(world, broken):
+    """D56a: the label must be the database's, verbatim, case included."""
+    path = first_file(broken, "*-RC5.json")
+    def change(doc):
+        spec = next(iter(doc["keys"].values()))
+        spec["label"] = spec["label"].lower()                 # 'K0' written as 'k0'
+    _edit(path, change)
+    problems = _problems(world, broken)
+    assert any("label 'k0' is not the database's 'K0'" in p for p in problems)
+
+
+def test_a_key_without_a_label_is_reported(world, broken):
+    path = first_file(broken, "*-RC5.json")
+    _edit(path, lambda doc: next(iter(doc["keys"].values())).pop("label"))
+    assert any("the key has no label" in p for p in _problems(world, broken))
+
+
+def test_controls_in_the_old_space_format_are_reported(world, broken):
+    """D56b: "<BRAND> | <MODEL>"; the plain "<BRAND> <MODEL>" cannot be split."""
+    path = first_file(broken, "*-RC6.json")
+    _edit(path, lambda doc: doc.update(controls=["MAKER RC6 M-RC6"]))
+    assert any("as '<BRAND> | <MODEL>'" in p for p in _problems(world, broken))
+
+
+def test_controls_in_the_pipe_format_pass(world, clean):
+    path = first_file(world["ledger"], "*-RC6.json")
+    assert json.loads(path.read_text())["controls"] == ["MAKER RC6 | M-RC6"]
+    assert clean["problems"] == []
+
+
+def test_a_pipe_in_the_dump_is_reported(world, tmp_path):
+    """The format is only parseable while no brand or model holds a pipe."""
+    checkout = tmp_path / "SwiftRemote"
+    (checkout / "assets" / "db_src").mkdir(parents=True)
+    sql = (world["checkout"] / "assets" / "db_src" / "swiftremote.sql").read_text()
+    assert "'M-RC6'" in sql
+    (checkout / "assets" / "db_src" / "swiftremote.sql").write_text(
+        sql.replace("'M-RC6'", "'M | RC6'"), encoding="utf-8")
+    problems = tool.run(world["ledger"], checkout, world["oracle"], workers=1)["problems"]
+    assert any("contain a pipe" in p for p in problems)
+
+
 def test_a_skipped_row_the_report_does_not_list_is_reported(world, broken):
     report = broken / IMPORT_ROOT / "IMPORT.md"
     text = report.read_text()

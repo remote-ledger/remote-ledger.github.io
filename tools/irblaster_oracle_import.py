@@ -19,7 +19,11 @@ For every ``keys`` row of the dump (``assets/db_src/swiftremote.sql``), it
    with ``Remote.compile_group`` (a Pronto string, R12), decodes that string
    back with ``pronto.decode``, and plays it the way the file's ``minSends``
    says;
-3. compares it with the signal the app transmits for the same
+3. checks the key's ``label`` is the database's, verbatim: it must equal the
+   label of the row the citation names, and that row must be a row of the dump,
+   so a label that differs from the database's, or a key without one, is a
+   problem (D56a);
+4. compares it with the signal the app transmits for the same
    ``(DB protocol, hexcode)`` (``<oracle>/by_protocol/<PROTOCOL>.jsonl``, the
    app's own ``buildButtonFromDbRow`` then ``previewIRButton``) under the family
    tools' rule: the carrier within 5 %, the same number of durations, every
@@ -48,7 +52,8 @@ The classes, per DB protocol (distinct codes and keys): ``matched``,
 in ``IMPORT.md``, and refused by the hex map), ``UNEXPLAINED`` (anything else,
 including a skipped row the report does not list and a report row that was not
 skipped). Exit status is 1 on any unexplained row, on a report that disagrees
-with the files, or on a structural fault (manufacturer, controls, model, path).
+with the files, or on a structural fault (manufacturer, controls, model, path,
+a key's label).
 
 Usage::
 
@@ -295,6 +300,13 @@ def process_file(path: str):
         if cited_ledger != ledger:
             problems.append(f"citation says {cited_ledger}, the file {ledger}")
         fields = (ledger, form.device, form.subdevice, form.function)
+        # D56a: the key's label is the database's, verbatim. The citation names the
+        # row, and `run` requires that row to be in the dump, so equal to the
+        # citation's label is equal to the dump's.
+        if key not in remote.labels:
+            problems.append("the key has no label")
+        elif remote.labels[key] != label:
+            problems.append(f"label {remote.labels[key]!r} is not the database's {label!r}")
         # the file says what the wire reading of the hexcode says
         try:
             expected = WIRE[db_protocol](hexcode)
@@ -460,9 +472,14 @@ def structure_problems(ledger_root: Path, models, files: list[Path]) -> list[str
             problems.append(f"{rel}: protocol {doc['protocol'].get('name')!r} is not the file name's")
         if doc.get("aliases") != []:
             problems.append(f"{rel}: aliases are not empty")
-        controls = sorted({f"{b} {mo}" for b, mo in rows})
+        # D56b: "<BRAND> | <MODEL>", a space, a pipe, a space
+        controls = sorted({f"{b} | {mo}" for b, mo in rows})
         if doc.get("controls") != controls:
-            problems.append(f"{rel}: controls are not the id's models rows")
+            problems.append(f"{rel}: controls are not the id's models rows as '<BRAND> | <MODEL>'")
+        else:
+            # and the entries split back into exactly the rows (needs no pipe in a brand)
+            if {tuple(e.split(" | ", 1)) for e in controls} != set(rows):
+                problems.append(f"{rel}: controls do not split back into the id's models rows")
     return problems
 
 
@@ -577,6 +594,11 @@ def run(ledger_root: Path, checkout: Path, oracle_dir: Path, workers: int, limit
                 problems.append(f"IMPORT.md's difference table for {proto} is {said}; "
                                 f"the files give {mine} (codes, differing, app cannot send, "
                                 "keys, differing keys)")
+        piped = sorted({(b, mo) for rows_ in models.values() for b, mo in rows_
+                        if "|" in b or "|" in mo})
+        if piped:
+            problems.append(f"{len(piped)} brand/model pair(s) of the dump contain a pipe, so "
+                            f"'<BRAND> | <MODEL>' cannot be split back (D56b), e.g. {piped[0]!r}")
         problems += structure_problems(ledger_root, models, files)
 
     return {
