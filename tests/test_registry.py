@@ -20,6 +20,10 @@ BACKLOG -= {"NEC2"}
 # (tests/vectors/CITATIONS.md); appended rather than edited into the sets above.
 V1_REGISTRY |= {"Sony12", "Sony15"}
 BACKLOG -= {"Sony12", "Sony15"}
+# --- philips family (SwiftRemote DB import): RC6 left the backlog; RCA-38 and
+# Thomson7 were never on it.
+V1_REGISTRY |= {"RC6", "RCA-38", "Thomson7"}
+BACKLOG -= {"RC6"}
 #: Not backlogged -- `Samsung32` does not exist in any consulted source, and
 #: the question it stood for is now answered: the BN59-01199F speaks NECx2,
 #: per IRDB (device 7, subdevice 7) and corroborated by IRremoteESP8266's

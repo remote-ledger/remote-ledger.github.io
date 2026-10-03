@@ -17,6 +17,9 @@ release, and an invariant test.
 
 ``RC5`` left the backlog once the Meridian MSR needed it (DESIGN section 16).
 
+``RC6`` (mode 0 only), ``RCA-38`` and ``Thomson7`` joined for the SwiftRemote
+database import, each through the same three gates (NOTES/philips.md).
+
 ``Samsung32`` is **not** backlogged -- it does not exist. D18's table carried
 an IRP string for it that was written from memory during design and never
 checked against a source; two reads of DecodeIR and one of
@@ -45,6 +48,14 @@ __all__ += ["NEC2", "NECX1"]
 # Sony SIRC's other two widths, each through D18's three gates (tests/vectors/CITATIONS.md).
 REGISTRY.update({p.name: p for p in (SONY12, SONY15)})
 __all__ += ["SONY12", "SONY15"]
+
+# --- philips family (SwiftRemote DB import) ---
+from .rc6 import RC6  # noqa: E402
+from .rca38 import RCA38  # noqa: E402
+from .thomson7 import THOMSON7  # noqa: E402
+
+REGISTRY.update({p.name: p for p in (RC6, RCA38, THOMSON7)})
+__all__ += ["RC6", "RCA38", "THOMSON7"]
 
 
 def get(name: str) -> Protocol:

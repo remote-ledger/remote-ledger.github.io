@@ -240,5 +240,91 @@
     "gate2b_byte_divergence": [
       35
     ]
+  },
+  "RC6": {
+    "gate1_irp_source": "IrpTransmogrifier IrpProtocols.xml @c945e76 L2143-L2145 (verbatim), whose documentation calls it the first member of the RC6 family, technically RC6-0-16. DecodeIR's documentation (hifi-remote.com/johnsfine/DecodeIR.html, retrieved 2026-10-03) gives the same frame as '{36k,444,msb}<-1,1|1,-1>(6,-2,1:1,0:3,<-2,2|2,-2>(T:1),D:8,F:8,^107m)+', with '+' where IrpTransmogrifier has '*,T=1-T'. Mode 0 only: RC6-6-20 and the RC6-M-* entries are other frames and are not registered",
+    "regression_snapshot": null,
+    "snapshot_is_evidence": false,
+    "gate2a_structural_vector": "bengtmartensson/IrpTransmogrifier @c945e76 src/test/java/org/harctoolbox/analyze/BiphaseWithDoubleToggleDecoderNGTest.java L27-L32 (D=255, F=0, both toggle states) and BiphaseDecoderNGTest.java L23-L26 (D=120, F=3): three published microsecond sequences, each asserted to decode to the stated fields. The encoder reproduces all three to the microsecond (tests/test_rc6.py): two end on a mark, one on a space, and both toggle states occur. Weaker than a published constant table: the sequences are exact multiples of the unit and appear to be this tool's own output, so they verify layout, the double-width trailer and the 107 ms extent, not that a receiver accepts them",
+    "gate2a_pending_reason": null,
+    "gate2b_golden_pronto": "irpt_rc6_D12_F34.pronto",
+    "gate2b_pending_reason": null,
+    "gate2b_vector_source": "https://github.com/bengtmartensson/IrpTransmogrifier/blob/c945e7638355ca5697f458d33338ee1bfd4d1640/src/test/java/org/harctoolbox/irp/ProtocolNGTest.java#L230-L237",
+    "gate2b_vector_params": {
+      "device": 12,
+      "subdevice": null,
+      "function": 34,
+      "carrier_hz": 36000,
+      "toggle": 0
+    },
+    "gate2b_vector_quantization": "irpt-nominal-carrier",
+    "gate2b_vector_provenance": "published",
+    "gate2b_byte_divergence": [
+      41
+    ]
+  },
+  "RCA-38": {
+    "gate1_irp_source": "IrpTransmogrifier IrpProtocols.xml @c945e76 L2254-L2256 (verbatim), whose documentation says it is a recently discovered variant of RCA that differs only in carrier, 38.7 kHz instead of 58. DecodeIR's documentation (hifi-remote.com/johnsfine/DecodeIR.html, retrieved 2026-10-03) gives the same frame as '{38.7k,460,msb}<1,-2|1,-4>(8,-8,D:4,F:8,~D:4,~F:8,1,-16)+', with '+' where IrpTransmogrifier has '*'. RCA, RCA(Old) and RCA-38(Old) are other signals and are not registered",
+    "regression_snapshot": null,
+    "snapshot_is_evidence": false,
+    "gate2a_structural_vector": "bengtmartensson/IrpTransmogrifier @c945e76 src/test/teaserfiles/RCA-38.ict and RCA-38.exp -- an irscope capture of an RCA remote, 31 keys, each asserted to decode to RCA-38 {D=15,F=...}. Cited, not vendored (GPL-3.0 test data of another project); tools/philips_capture_audit.py --irpt DIR reproduces the audit: every key's 24 bits decode to the .exp fields with the complement half intact, and this encoder's frame is within 12% or 150 us of every duration. A capture carries instrument bias and one remote's tolerances, so it verifies layout and ratios rather than absolute durations -- and its durations sit uniformly 1.085 times the IRP's (marks and spaces alike, so a 500 us unit against 460), a disagreement CITATIONS.md records",
+    "gate2a_pending_reason": null,
+    "gate2b_golden_pronto": "irpt_rca38_D15_F144.pronto",
+    "gate2b_pending_reason": null,
+    "gate2b_vector_source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "gate2b_vector_params": {
+      "device": 15,
+      "subdevice": null,
+      "function": 144,
+      "carrier_hz": 38700
+    },
+    "gate2b_vector_quantization": "irpt-nominal-carrier",
+    "gate2b_vector_provenance": "reproducible",
+    "gate2b_vector_reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=15,F=144 -p rca-38",
+    "gate2b_byte_divergence": [
+      4,
+      5
+    ]
+  },
+  "Thomson7": {
+    "gate1_irp_source": "IrpTransmogrifier IrpProtocols.xml @c945e76 L2869-L2873 (verbatim; the entry is commented 'like DecodeIR'). DecodeIR's documentation (hifi-remote.com/johnsfine/DecodeIR.html, retrieved 2026-10-03) gives '{33k,500}<1,-4|1,-9>(D:4,T:1,F:7,1,^80m)+' with an LSB-first EFC translation, '+' where IrpTransmogrifier has '*,T=1-T', and says it replaced the five-bit-device 'Thomson'",
+    "regression_snapshot": null,
+    "snapshot_is_evidence": false,
+    "gate2a_structural_vector": "bengtmartensson/IrpTransmogrifier @c945e76 src/test/teaserfiles/Thomson-0625.ict and Thomson-0625.exp -- an irscope capture of a Thomson TV remote, 7 keys, each asserted to decode to Thomson7 {D=12,F=...[,T=1]} (despite the file name). Cited, not vendored (GPL-3.0 test data of another project); tools/philips_capture_audit.py --irpt DIR reproduces the audit: every key's twelve bits decode to the .exp fields, LSB first, and this encoder's frame is within 12% or 150 us of every duration. A capture carries instrument bias, so it verifies layout and ratios, not absolute durations: marks sit at 0.961 and spaces at 1.020 of the IRP's, and the first-frame period at 80.16-80.19 ms against ^80m",
+    "gate2a_pending_reason": null,
+    "gate2b_golden_pronto": "irpt_thomson7_D12_F74_T0.pronto",
+    "gate2b_pending_reason": null,
+    "gate2b_vector_source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "gate2b_vector_params": {
+      "device": 12,
+      "subdevice": null,
+      "function": 74,
+      "carrier_hz": 33000,
+      "toggle": 0
+    },
+    "gate2b_vector_quantization": "irpt-nominal-carrier",
+    "gate2b_vector_provenance": "reproducible",
+    "gate2b_vector_reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=12,F=74 -p thomson7",
+    "gate2b_byte_divergence": [
+      4,
+      6,
+      8,
+      9,
+      10,
+      11,
+      12,
+      14,
+      16,
+      17,
+      18,
+      20,
+      21,
+      22,
+      24,
+      26,
+      27,
+      28,
+      29
+    ]
   }
 }

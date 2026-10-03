@@ -409,3 +409,93 @@ against a published string, which the render supplies.
 layout (`tests/sirc_reference.py`), extent, pair count, field and bit order,
 bounds. `tests/test_sony.py` gained exhaustive Sony20 sweeps in the same
 style.
+## RC6, RCA-38 and Thomson7 (the SwiftRemote database import)
+
+Three protocols joined the registry together, each through the same three
+gates. Their IRP strings come from IrpTransmogrifier's `IrpProtocols.xml`
+@`c945e76` (`RC6` L2143-L2145, `RCA-38` L2254-L2256, `Thomson7`
+L2869-L2873), verbatim, and each is corroborated by DecodeIR's documentation
+(<http://www.hifi-remote.com/johnsfine/DecodeIR.html>, retrieved 2026-10-03),
+which gives the same frames with `+` where IrpTransmogrifier has `*`:
+
+> `{36k,444,msb}<-1,1|1,-1>(6,-2,1:1,0:3,<-2,2|2,-2>(T:1),D:8,F:8,^107m)+`
+> `{38.7k,460,msb}<1,-2|1,-4>(8,-8,D:4,F:8,~D:4,~F:8,1,-16)+`
+> `{33k,500}<1,-4|1,-9>(D:4,T:1,F:7,1,^80m)+`
+
+**Which IRPT entry, and why.** The database has four RCA entries and a family
+of RC6 ones, and the app's frames pick exactly one of each (`NOTES/philips.md`
+has the evidence): `RC6` is mode bits `000` and a sixteen-bit payload, which
+`RC6-6-20` (mode 6, a four-bit subdevice) and `RC6-M-*` (mode a parameter) are
+not; `RCA-38` is the 38.7 kHz frame with a plain 8,-8 lead-in and a single
+stop mark, which `RCA` and `RCA(Old)` (58 kHz) and `RCA-38(Old)` (a longer
+first lead-in and a double stop mark) are not.
+
+### Gate 2b
+
+| Protocol | Vector | Provenance | Our bytes differ at |
+|---|---|---|---|
+| RC6 | D=12 F=34 @ 36k, T=0: IrpTransmogrifier `ProtocolNGTest.java` L230-237 @ `c945e76` (`testToIrSignalRc6`, parameters stated; the assertion is `approximatelyEquals`) | **published** | word 41 (lead-out) |
+| RC6 | D=1 F=3 @ 36k, T=0: `ShortProntoNGTest.java` L20 @ `c945e76` (constant `RC6_1_3`; parameters decoded from the name and the frame). Ends on a space, which the first does not | **published** | word 43 (lead-out) |
+| RCA-38 | D=15 F=144 @ 38.7k: IrpTransmogrifier 1.2.14 release, `render -n D=15,F=144 -p rca-38` | **reproducible** | words 4, 5 (lead-in) |
+| Thomson7 | D=12 F=74 T=0 @ 33k: IrpTransmogrifier 1.2.14 release, `render -n D=12,F=74 -p thomson7` | **reproducible** | 19 words (500 us is 16.5 cycles at the nominal carrier) |
+
+Both RC6 strings are also exactly what the 1.2.14 release renders, so the
+reproducible vectors rest on a tool that reproduces the published ones.
+`test_registry` warns, as intended, that RCA-38 and Thomson7 have no
+*published* Pronto vector. Searched and not found: every test source in
+IrpTransmogrifier @`c945e76` (the only RCA-38 and Thomson7 data in it is the
+captures below), Girr (`bengtmartensson/Girr`: its Philips RC6 command set,
+`src/test/girr/philips_tv_cmdset_rc6.girr`, lists device 0 with power as
+function 12 and volume 16/17, which agrees with the database's RC6 hexcodes,
+but holds no waveforms), IrScrutinizer and probonopd/irdb (one Thomson7 row,
+a Sony receiver at D=8 F=8, no waveform).
+
+**A tie the quantizer rule gets wrong, found while choosing the Thomson7
+vector.** `tests/reference_quantizers.py`'s `irpt` rule rounds in exact
+decimal, half up. IrpTransmogrifier rounds a double, and where a duration is
+exactly half a cycle (Thomson7 T=1 with D=12 F=74: a 34,500 us gap is 1138.5
+cycles at 33 kHz) its product falls just under .5 and rounds down, so the
+rule says 0x473 where the tool says 0x472. The T=0 vector has no tie and is
+exact. The rule is shared and not changed here.
+
+### Gate 2a
+
+**RC6, on a published but self-generated sequence.** Three microsecond
+sequences IrpTransmogrifier's analyzer tests hold @`c945e76`
+(`BiphaseWithDoubleToggleDecoderNGTest.java` L27-L32: D=255 F=0 in both toggle
+states; `BiphaseDecoderNGTest.java` L23-L26: D=120 F=3), each asserted to decode
+to the stated fields. The encoder reproduces all three to the microsecond
+(`tests/test_rc6.py`): no quantization is involved. They are exact multiples of
+the unit and appear to be that tool's own output, so they verify layout, the
+double-width trailer and the extent, not that a receiver accepts them.
+
+**RCA-38 and Thomson7, on hardware captures.** `src/test/teaserfiles/
+RCA-38.ict` (31 keys) and `Thomson-0625.ict` (7 keys) @`c945e76` are `irscope`
+captures of real remotes, with the decodes IrpTransmogrifier is expected to
+give them in the matching `.exp`. They are cited, not vendored (they are
+GPL-3.0 test data of another project); `tools/philips_capture_audit.py --irpt
+DIR` repeats the audit from a checkout. A capture carries instrument bias, so
+it verifies layout and ratios, not absolute durations. For every key it checks
+that the bits decode to the `.exp` fields (bit order, the RCA complement half,
+Thomson's toggle position), that the encoder's frame is within 12 % or 150 us
+of every duration, and what ratio the capture sits at.
+
+- **RCA-38 disagrees with its IRP by a uniform 8.5 %.** The capture's marks
+  and spaces, lead-in included, are all 1.085 times the IRP's, so the unit is
+  about 500 us where the IRP and DecodeIR say 460 (an instrument bias on
+  marks would not move spaces the same way; one remote's clock could). Within
+  tolerance for every duration, so the encoder follows the IRP, as does the
+  app. One remote is one measurement. A remote file can set `protocol.unitUs` to 500 with a `claims`
+  entry (D27) if a receiver turns out to care.
+- **Thomson7 agrees to 4 %.** Marks sit at 0.961 and spaces at 1.020 of the
+  IRP's, the first frame's period is 80.16-80.19 ms against `^80m`, and the
+  carrier is measured at 33.19 kHz. Here the *app's* durations (460 us marks,
+  2000 and 4600 us spaces) are closer to the capture than the IRP's (500, 2000,
+  4500); that is not used to bend the encoder.
+- **Thomson7's capture also settles what the database's hexcodes mean**, which
+  is why it matters beyond gate 2a. Five keys of the capture (Vol+, Vol-, Mute,
+  Up, Down) are the five SwiftRemote's Thomson7 remote shares by name, and
+  `tools/philips_capture_audit.py` shows the database's hexcodes
+  (`329`, `32A`, `305`, `30B`, `30D`), read as the frame in transmission order,
+  are exactly the capture's `D=12`, `F=74, 42, 80, 104, 88`. See
+  `NOTES/philips.md`: SwiftRemote's own encoder does not read them that way.
