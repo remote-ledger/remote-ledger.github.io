@@ -83,6 +83,7 @@ sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "tools"))
 
 from remote_ledger import pronto  # noqa: E402
+from remote_ledger.app_api import FULL_SIGNAL_PROTOCOLS  # noqa: E402
 from remote_ledger.irblaster import (  # noqa: E402
     hex_japan, hex_misc, hex_nec, hex_philips, hex_sony, hex_unknown,
 )
@@ -117,8 +118,10 @@ for _m in MODULES:
 # Nothing else about a signal is forgiven. Each entry cites the note that argues it.
 
 #: The app's three Sharp/Denon frames are the IRP's intro plus one pass of its
-#: repeat (DESIGN D64); the file's minSends of 1 plays the intro only.
-FULL_SIGNAL = frozenset({"Sharp", "Denon"})
+#: repeat (DESIGN D64); the file's minSends of 1 plays the intro only. Defined in
+#: ``remote_ledger.app_api``, which publishes it to the app as ``play`` (D78),
+#: so the rule this tool plays and the one the API states are one.
+FULL_SIGNAL = FULL_SIGNAL_PROTOCOLS
 #: The app's legacy NEC path stops at the last mark (DESIGN D61, disagreement 3).
 DROP_FINAL = frozenset({"NEC"})
 #: The app uses one constant idle gap per protocol where the IRP pads to an
