@@ -44,8 +44,10 @@ def test_the_site_is_one_page_an_index_and_a_script_per_remote(scripts):
     """D15 and D40: no framework, no build step, no server. Since D40 each
     remote's detail is its own small script, so no file grows with the
     corpus."""
+    # `index/` (D57) exists exactly when the index advertises a shard.
+    advertised = json.loads((ROOT / "site" / "index.json").read_text()).get("shards")
     assert sorted(p.name for p in (ROOT / "site").iterdir()) == \
-        ["index.html", "index.json", "r"]
+        sorted(["index.html", "index.json", "r", *(["index"] if advertised else [])])
     expected = {paths.site_script(paths.rel(ROOT, p)) for p in corpus_files(ROOT)}
     assert set(scripts) == expected
 
@@ -90,7 +92,7 @@ def test_no_external_resources_are_loaded(html):
 
 
 def test_the_island_parses_and_carries_the_ledger(island):
-    assert sorted(island) == ["imports", "remotes", "unresolved"]
+    assert sorted(island) == ["imports", "remotes", "shards", "unresolved"]
     assert island["remotes"] and island["unresolved"]
     assert island["imports"] == paths.IMPORTS
 
