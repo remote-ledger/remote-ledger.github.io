@@ -13,7 +13,7 @@ from pathlib import Path
 
 import pytest
 
-from remote_ledger.irblaster.hex_unknown import FROM_DB_HEX, FROM_DB_HEX_SWIFTREMOTE, MIN_SENDS
+from remote_ledger.irblaster.hex_unknown import FROM_DB_HEX, FROM_DB_HEX_APP, MIN_SENDS
 from remote_ledger.protocols import REGISTRY
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -122,13 +122,13 @@ def test_rcc2026_reads_the_first_42_bits_not_the_last():
 
 @pytest.mark.parametrize("hexcode", ["0087FBC03FC", "00FFF8043BC", "0087FBCA35C"])
 def test_the_swiftremote_reading_reproduces_the_app_wherever_it_maps(hexcode):
-    """``FROM_DB_HEX_SWIFTREMOTE`` is the stale reading. Where it maps at all
+    """``FROM_DB_HEX_APP`` is the stale reading. Where it maps at all
     (71 of 1,231 codes) the ledger's burst is exactly what the app sends, which
     is what makes it the app's reading and not a guess at it. For these codes
     the two readings give different parameters: ``0087FBC03FC``, the app's own
     Universal Power default, is Aiwa D=0 S=1 F=0 -- F=0 is POWER in irdb's Aiwa
     tables (codes/Aiwa/Mini System/110,0.csv) -- and F=192 the stale way."""
-    name, d, s, f = FROM_DB_HEX_SWIFTREMOTE["RCC2026"](hexcode)
+    name, d, s, f = FROM_DB_HEX_APP["RCC2026"](hexcode)
     burst, _ = tool.ledger_burst(name, d, s, f, 38222, MIN_SENDS["RCC2026"])
     assert burst == tool.app_rcc2026(hexcode, "last")
     assert FROM_DB_HEX["RCC2026"](hexcode)[1:] != (d, s, f)
@@ -139,7 +139,7 @@ def test_the_swiftremote_reading_reproduces_the_app_wherever_it_maps(hexcode):
 
 def test_most_rcc2026_codes_are_not_an_aiwa_frame_the_way_swiftremote_reads_them():
     with pytest.raises(ValueError, match="not an Aiwa frame"):
-        FROM_DB_HEX_SWIFTREMOTE["RCC2026"]("38863BD42BC")
+        FROM_DB_HEX_APP["RCC2026"]("38863BD42BC")
 
 
 # --- unrepresentable codes: stable, hexcode-free reasons ------------------------------------

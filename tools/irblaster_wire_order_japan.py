@@ -2,8 +2,8 @@
 """Which reading of a SwiftRemote Pioneer/JVC/Sharp/Denon code matches real remotes?
 
 ``remote_ledger.irblaster.hex_japan`` has two readings of the database's
-hexcodes: ``FROM_DB_HEX``, which is what SwiftRemote's code does with them,
-and ``FROM_DB_HEX_WIRE``, which treats each code as the bit string that goes on
+hexcodes: ``FROM_DB_HEX_APP``, which is what SwiftRemote's code does with them,
+and ``FROM_DB_HEX``, which treats each code as the bit string that goes on
 the wire, first bit most significant. This tool tests both against an
 independent source of real waveforms.
 
@@ -118,7 +118,7 @@ def study(db: sqlite3.Connection, oracle: Path, corpus: Path, protocol: str) -> 
             "SELECT hexcode FROM keys WHERE id = ? AND protocol = ?", (remote_id, protocol)
         ):
             app_frame = _frames(app_rows[hexcode]["pattern"])[0]
-            name, device, subdevice, function = hex_japan.FROM_DB_HEX_WIRE[protocol](hexcode)
+            name, device, subdevice, function = hex_japan.FROM_DB_HEX[protocol](hexcode)
             signal = REGISTRY[name].encode(
                 device=device, subdevice=subdevice, function=function, carrier_hz=38_000
             )

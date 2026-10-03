@@ -14,9 +14,7 @@ from pathlib import Path
 import pytest
 
 from remote_ledger.irblaster import hex_misc
-from remote_ledger.irblaster.hex_misc import (
-    FROM_DB_HEX, MIN_SENDS, proton_wire_order,
-)
+from remote_ledger.irblaster.hex_misc import FROM_DB_HEX, FROM_DB_HEX_APP, MIN_SENDS
 from remote_ledger.protocols import REGISTRY
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -41,8 +39,10 @@ def _fixture(db_protocol):
 # --- the contract ------------------------------------------------------------
 
 def test_the_module_exports_the_agreed_names():
-    assert set(FROM_DB_HEX) == set(STEMS)
+    assert set(FROM_DB_HEX) == set(FROM_DB_HEX_APP) == set(STEMS)
     assert set(MIN_SENDS) <= set(FROM_DB_HEX)
+    # The app and the wire disagree about Proton and nothing else here.
+    assert {n for n in STEMS if FROM_DB_HEX[n] is not FROM_DB_HEX_APP[n]} == {"Proton"}
     assert all(1 <= n <= 10 for n in MIN_SENDS.values())
 
 
@@ -180,19 +180,19 @@ PROTON_TV = {
 def test_proton_read_high_byte_first_is_the_published_capture(hexcode):
     """All nine keys of the capture are in one DB remote and the DB reads them
     in wire order: high byte (rev8(20) = 0x28) first. This is the reading the
-    capture's own frame has."""
+    capture's own frame has, and ``FROM_DB_HEX`` is the wire reading."""
     _, f = PROTON_TV[hexcode]
-    assert proton_wire_order(hexcode) == ("Proton", 20, None, f)
+    assert FROM_DB_HEX["Proton"](hexcode) == ("Proton", 20, None, f)
 
 
 @pytest.mark.parametrize("hexcode", sorted(PROTON_TV))
 def test_proton_as_the_app_sends_it_is_the_other_way_round(hexcode):
     """The finding, pinned (NOTES/misc.md): the app sends the low byte first,
-    so ``FROM_DB_HEX['Proton']`` -- which must reproduce the app's signal --
+    so ``FROM_DB_HEX_APP['Proton']`` -- which reproduces the app's signal --
     puts the address in F and the key in D, which is not what the real remote
     sends."""
     _, f = PROTON_TV[hexcode]
-    name, device, subdevice, function = FROM_DB_HEX["Proton"](hexcode)
+    name, device, subdevice, function = FROM_DB_HEX_APP["Proton"](hexcode)
     assert (device, function) == (hex_misc._rev(int(hexcode[2:], 16), 8), 20)
     assert (device, function) != (20, f) or f == 20
 

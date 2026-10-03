@@ -33,12 +33,14 @@ For every code the tool reports exactly one of:
     RCC2026 only: SwiftRemote's copy of the encoder reads the LAST 42 of the
     44 bits, upstream's current one reads the FIRST 42 (commit 3bb60e3178,
     "fix: preserve all 42 RCC2026 database payload bits"). The ledger follows
-    the left-aligned reading. A code is explained when this tool's port of the
-    stale reading reproduces the oracle exactly, its port of the fixed reading
-    reproduces the ledger's signal, and the two differ. The report then also
-    maps the same codes the way SwiftRemote reads them
-    (``FROM_DB_HEX_SWIFTREMOTE``), which must match the oracle wherever it
-    maps at all, and counts the rest as unrepresentable.
+    the left-aligned reading (``FROM_DB_HEX``, what the importer uses). A code
+    is explained when this tool's port of the stale reading reproduces the
+    oracle exactly, its port of the fixed reading reproduces the ledger's
+    signal, and the two differ. The report then also maps the same codes the
+    way SwiftRemote reads them (``FROM_DB_HEX_APP``), which must match the
+    oracle wherever it maps at all, and counts the rest as unrepresentable.
+    That second pass is the proof that the ledger's Aiwa encoder reproduces
+    what the app transmits; it is part of the exit status.
 ``unrepresentable``
     ``hex_unknown`` raised ValueError; counted by its (stable) reason.
 ``UNEXPLAINED``
@@ -58,7 +60,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
-from remote_ledger.irblaster.hex_unknown import FROM_DB_HEX, FROM_DB_HEX_SWIFTREMOTE, MIN_SENDS  # noqa: E402
+from remote_ledger.irblaster.hex_unknown import FROM_DB_HEX, FROM_DB_HEX_APP, MIN_SENDS  # noqa: E402
 from remote_ledger.protocols import REGISTRY  # noqa: E402
 
 CARRIER_TOL = 0.05
@@ -275,11 +277,11 @@ def report(oracle: Path, db: Path | None, out=sys.stdout) -> int:
                   f"{abs(worst[0] - worst[1]) / worst[1]:.1%} ({worst[0]} vs {worst[1]})", file=out)
             for (a, b), n in sorted(pairs.items(), key=lambda kv: -abs(kv[0][0] - kv[0][1]) / kv[0][1])[:8]:
                 print(f"      {a:7d} vs {b:7d}  {abs(a - b) / b:6.1%}  x{n}", file=out)
-        if proto in FROM_DB_HEX_SWIFTREMOTE:
+        if FROM_DB_HEX_APP[proto] is not FROM_DB_HEX[proto]:
             # The alternative reading: what the app sends today. It must match
             # the oracle wherever it maps at all, which is what makes the
             # explanation above a measurement and not an assertion.
-            stale = [classify(r, FROM_DB_HEX_SWIFTREMOTE[proto]) for r in records]
+            stale = [classify(r, FROM_DB_HEX_APP[proto]) for r in records]
             sc = Counter(r["class"] for r in stale)
             by_key_stale = defaultdict(int)
             for r, res in zip(records, stale):
@@ -288,7 +290,7 @@ def report(oracle: Path, db: Path | None, out=sys.stdout) -> int:
                 f"{cls} {n}" + (f" ({by_key_stale[cls]} keys)" if keys else "")
                 for cls, n in sorted(sc.items())
             )
-            print(f"  read the way SwiftRemote reads it (FROM_DB_HEX_SWIFTREMOTE): {note}", file=out)
+            print(f"  read the way SwiftRemote reads it (FROM_DB_HEX_APP): {note}", file=out)
             unexplained += sc.get("UNEXPLAINED", 0) + sc.get("mismatched, explained", 0)
         unexplained += classes.get("UNEXPLAINED", 0) + port_bad
     print(f"\nunexplained: {unexplained}", file=out)

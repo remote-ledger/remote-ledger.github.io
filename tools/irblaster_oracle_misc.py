@@ -9,8 +9,10 @@ the result is one JSON object per line in ``<ORACLE>/by_protocol/<DB>.jsonl``::
 
 where ``pattern`` is the app's mark/space durations in microseconds and
 ``freq`` the carrier in Hz. For each code this tool maps the hexcode with
-``remote_ledger.irblaster.hex_misc.FROM_DB_HEX``, compiles it with the
-registered encoder at the registry's nominal carrier, and requires:
+``remote_ledger.irblaster.hex_misc.FROM_DB_HEX_APP`` (the reading SwiftRemote
+applies to a code, which is what this tool must reproduce; it differs from the
+importer's ``FROM_DB_HEX`` for Proton only), compiles it with the registered
+encoder at the registry's nominal carrier, and requires:
 
 * the carrier within 5 % of the app's;
 * the same number of durations;
@@ -59,7 +61,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
 from remote_ledger.errors import EncodeError  # noqa: E402
-from remote_ledger.irblaster.hex_misc import FROM_DB_HEX  # noqa: E402
+from remote_ledger.irblaster.hex_misc import FROM_DB_HEX_APP  # noqa: E402
 from remote_ledger.protocols import REGISTRY  # noqa: E402
 
 CARRIER_TOLERANCE_PCT = 5
@@ -102,7 +104,7 @@ def within(ours: int, app: int) -> bool:
 def compile_ledger(db_protocol: str, hexcode: str, unit_us: int | None):
     """``(ledger name, durations, carrier)`` or raises ValueError (unrepresentable)
     or EncodeError."""
-    name, device, subdevice, function = FROM_DB_HEX[db_protocol](hexcode)
+    name, device, subdevice, function = FROM_DB_HEX_APP[db_protocol](hexcode)
     entry = REGISTRY[name]
     signal = entry.encode(
         device=device, subdevice=subdevice, function=function,

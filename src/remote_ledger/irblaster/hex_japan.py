@@ -5,19 +5,23 @@ device, subdevice, function)`` or raises ``ValueError`` with a one-line,
 hexcode-free reason, so the importer can group its report by the message.
 The functions are pure.
 
-**What the hexcode means is what the app's code does with it**
+**What the hexcode means is the wire reading.** The database stores every
+code as the bit string that goes on the wire, first bit the most significant
+bit of the hexcode. ``FROM_DB_HEX`` reads it that way, so the ledger holds the
+frame a real remote sends. SwiftRemote's own code
 (``lib/utils/db_button_import.dart`` ``_deriveProtocolFieldTextFromHex`` and
-``lib/ir/protocols/{pioneer,jvc,sharp,denon}.dart``), and ``FROM_DB_HEX``
-follows the app exactly, so the ledger signal is the one SwiftRemote
-transmits today. For these four protocols that is **not what the database's
-own data means**: the codes are bit strings written most significant bit
-first in the order they go on the wire, and the app reads them differently
-(JVC and Pioneer send each byte least significant bit first, Sharp unpacks a
-register layout the data does not have, and Denon takes its thirteenth bit from
-the wrong place). The evidence is in ``NOTES/japan.md``. The reading that
-the evidence supports is ``FROM_DB_HEX_WIRE``, with the same signature, for
-the integrator to choose; ``tools/irblaster_oracle_japan.py --reading wire``
-reports how many codes differ.
+``lib/ir/protocols/{pioneer,jvc,sharp,denon}.dart``) reads the same codes four
+different ways, all wrong for that data (JVC and Pioneer send each byte least
+significant bit first, Sharp unpacks a register layout the data does not have,
+and Denon takes its thirteenth bit from the wrong place). The evidence is in
+``NOTES/japan.md``.
+
+``FROM_DB_HEX_APP`` (same keys, same signature) reads the codes the way the app
+does today. It is not for import: the oracle tools use it to prove the ledger's
+encoders reproduce what the app transmits
+(``tools/irblaster_oracle_japan.py``), and the importer uses it to report the
+codes on which the app and the ledger disagree
+(``tools/irblaster_oracle_japan.py --reading wire`` counts them).
 
 The ledger protocol is ``Pioneer-2Part``, ``JVC``, ``Sharp`` or ``Denon``.
 ``Pioneer-2Part`` packs two bytes into each of ``device`` and ``function``
@@ -68,7 +72,7 @@ def _rev(value: int, width: int) -> int:
     return int(format(value, f"0{width}b")[::-1], 2)
 
 
-# --- what the app does --------------------------------------------------------
+# --- what the app does (FROM_DB_HEX_APP) --------------------------------------------------------
 
 
 def _pioneer_app(hexcode: str) -> Mapped:
@@ -111,7 +115,8 @@ def _denon_app(hexcode: str) -> Mapped:
     return "Denon", device, None, function
 
 
-FROM_DB_HEX: dict[str, Callable[[str], Mapped]] = {
+#: What SwiftRemote transmits today for each code. Not for import.
+FROM_DB_HEX_APP: dict[str, Callable[[str], Mapped]] = {
     "Pioneer": _pioneer_app,
     "JVC": _jvc_app,
     "Sharp": _sharp_app,
@@ -119,7 +124,7 @@ FROM_DB_HEX: dict[str, Callable[[str], Mapped]] = {
 }
 
 
-# --- what the data means ------------------------------------------------------
+# --- what the data means (FROM_DB_HEX) ------------------------------------------------------
 # Every code is the bit string that goes on the wire, first bit most
 # significant. A byte or field that the protocol sends LSB first therefore
 # appears here bit-reversed.
@@ -167,7 +172,8 @@ def _denon_wire(hexcode: str) -> Mapped:
     return "Denon", _rev((v >> 11) & 0x1F, 5), None, _rev((v >> 3) & 0xFF, 8)
 
 
-FROM_DB_HEX_WIRE: dict[str, Callable[[str], Mapped]] = {
+#: What the data means: the reading the importer uses.
+FROM_DB_HEX: dict[str, Callable[[str], Mapped]] = {
     "Pioneer": _pioneer_wire,
     "JVC": _jvc_wire,
     "Sharp": _sharp_wire,

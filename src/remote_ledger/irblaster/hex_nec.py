@@ -124,6 +124,13 @@ FROM_DB_HEX: dict[str, Callable[[str], tuple[str, int, int | None, int]]] = {
     "NECx2": _make("NECx2"),
 }
 
+#: What SwiftRemote transmits today. The NEC family needs no second reading:
+#: the app and the wire agree (the oracle tool proves it), so these are the same
+#: functions.
+FROM_DB_HEX_APP: dict[str, Callable[[str], tuple[str, int, int | None, int]]] = dict(
+    FROM_DB_HEX
+)
+
 #: ``protocol.minSends`` per DB protocol; a missing name means 1.
 #: The app sends NECx2 as two back-to-back copies of the frame
 #: (``lib/ir/protocols/necx2.dart`` L75-L76) and every other one of these as a

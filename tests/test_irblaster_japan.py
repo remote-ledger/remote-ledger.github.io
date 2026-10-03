@@ -32,7 +32,7 @@ def _fixture(name):
 
 
 def _results(name, table=None):
-    table = table or H.FROM_DB_HEX
+    table = table or H.FROM_DB_HEX_APP
     for row in _fixture(name):
         proto_name, device, subdevice, function = table[name](row["hex"])
         signal = REGISTRY[proto_name].encode(
@@ -47,7 +47,7 @@ def _results(name, table=None):
 
 def test_the_module_exports_what_the_importer_loads():
     assert set(H.FROM_DB_HEX) == set(NAMES)
-    assert set(H.FROM_DB_HEX_WIRE) == set(NAMES)
+    assert set(H.FROM_DB_HEX_APP) == set(NAMES)
     assert H.MIN_SENDS == {n: 1 for n in NAMES}
     for name in NAMES:
         proto, device, subdevice, function = H.FROM_DB_HEX[name](
@@ -57,7 +57,7 @@ def test_the_module_exports_what_the_importer_loads():
         assert subdevice is None and isinstance(device, int) and isinstance(function, int)
 
 
-# --- the app's reading (FROM_DB_HEX) -------------------------------------------
+# --- the app's reading (FROM_DB_HEX_APP) ---------------------------------------
 
 
 @pytest.mark.parametrize(
@@ -77,23 +77,23 @@ def test_the_module_exports_what_the_importer_loads():
     ],
 )
 def test_the_apps_reading_of_a_code(name, hexcode, expected):
-    assert H.FROM_DB_HEX[name](hexcode) == expected
+    assert H.FROM_DB_HEX_APP[name](hexcode) == expected
 
 
 def test_the_app_cleans_a_hexcode_before_reading_it():
     """``_cleanHex``: trimmed, upper-cased, everything but 0-9A-F dropped."""
-    assert H.FROM_DB_HEX["JVC"](" c0-3f ") == H.FROM_DB_HEX["JVC"]("C03F")
+    assert H.FROM_DB_HEX_APP["JVC"](" c0-3f ") == H.FROM_DB_HEX_APP["JVC"]("C03F")
 
 
 def test_jvc_and_denon_keep_the_last_four_digits_of_a_longer_code():
     """The app's 4-digit field truncates from the left; Sharp's does not."""
-    assert H.FROM_DB_HEX["JVC"]("FFC03F") == H.FROM_DB_HEX["JVC"]("C03F")
-    assert H.FROM_DB_HEX["Denon"]("991408") == H.FROM_DB_HEX["Denon"]("1408")
+    assert H.FROM_DB_HEX_APP["JVC"]("FFC03F") == H.FROM_DB_HEX_APP["JVC"]("C03F")
+    assert H.FROM_DB_HEX_APP["Denon"]("991408") == H.FROM_DB_HEX_APP["Denon"]("1408")
     with pytest.raises(ValueError, match="Sharp hexcode is not 4 hex digits"):
-        H.FROM_DB_HEX["Sharp"]("018344")
+        H.FROM_DB_HEX_APP["Sharp"]("018344")
 
 
-@pytest.mark.parametrize("table", ["FROM_DB_HEX", "FROM_DB_HEX_WIRE"])
+@pytest.mark.parametrize("table", ["FROM_DB_HEX", "FROM_DB_HEX_APP"])
 @pytest.mark.parametrize(
     "name, hexcode, message",
     [
@@ -114,7 +114,7 @@ def test_a_code_the_app_cannot_send_is_refused_with_a_stable_reason(table, name,
         assert hexcode not in message
 
 
-# --- the reading the evidence supports (FROM_DB_HEX_WIRE) -----------------------
+# --- the reading the evidence supports (FROM_DB_HEX) ---------------------------
 
 
 @pytest.mark.parametrize(
@@ -137,19 +137,19 @@ def test_the_wire_reading_gives_the_published_decode_and_the_apps_reading_does_n
     """Each of these codes is in the database. Read the wire way it is exactly
     what IrpTransmogrifier decodes from a real remote; read the app's way it is
     something else."""
-    assert H.FROM_DB_HEX_WIRE[name](hexcode) == published
-    assert H.FROM_DB_HEX[name](hexcode) != published
+    assert H.FROM_DB_HEX[name](hexcode) == published
+    assert H.FROM_DB_HEX_APP[name](hexcode) != published
 
 
 def test_jvc_wire_reading_reverses_each_byte():
-    assert H.FROM_DB_HEX_WIRE["JVC"]("C03F") == ("JVC", 0x03, None, 0xFC)
+    assert H.FROM_DB_HEX["JVC"]("C03F") == ("JVC", 0x03, None, 0xFC)
 
 
 def test_sharp_wire_reading_of_a_complement_frame_inverts_the_function():
     """A trailer of ``2:2`` marks a code recorded from the inverted half; the
     function is then the complement of the bits."""
-    assert H.FROM_DB_HEX_WIRE["Sharp"]("8344") == ("Sharp", 1, None, 22)
-    assert H.FROM_DB_HEX_WIRE["Sharp"]("8342") == ("Sharp", 1, None, 22 ^ 0xFF)
+    assert H.FROM_DB_HEX["Sharp"]("8344") == ("Sharp", 1, None, 22)
+    assert H.FROM_DB_HEX["Sharp"]("8342") == ("Sharp", 1, None, 22 ^ 0xFF)
 
 
 @pytest.mark.parametrize(
@@ -163,13 +163,13 @@ def test_sharp_wire_reading_of_a_complement_frame_inverts_the_function():
 )
 def test_sharp_wire_reading_refuses_a_code_without_a_known_trailer(hexcode, message):
     with pytest.raises(ValueError) as caught:
-        H.FROM_DB_HEX_WIRE["Sharp"](hexcode)
+        H.FROM_DB_HEX["Sharp"](hexcode)
     assert str(caught.value) == message
 
 
 def test_denon_wire_reading_refuses_a_set_last_bit():
     with pytest.raises(ValueError, match="Denon hexcode has its last bit set"):
-        H.FROM_DB_HEX_WIRE["Denon"]("1409")
+        H.FROM_DB_HEX["Denon"]("1409")
 
 
 # --- the oracle: the app's reading against what the app transmits -----------------
@@ -213,14 +213,14 @@ def test_sharp_and_denon_send_the_whole_signal(name):
 @pytest.mark.parametrize("name", ["Pioneer", "JVC", "Sharp"])
 def test_the_wire_reading_differs_from_the_app_on_most_codes(name):
     """The point of the alternative reading: it is *not* what the app sends."""
-    kinds = [r["kind"] for _, r in _results(name, H.FROM_DB_HEX_WIRE)]
+    kinds = [r["kind"] for _, r in _results(name, H.FROM_DB_HEX)]
     assert kinds.count(tool.MISMATCHED) > len(kinds) * 0.9
 
 
 def test_denon_wire_reading_differs_exactly_where_the_app_drops_a_bit():
     """The app's thirteenth bit is hex bit 0, the data's is hex bit 3, so a code
     differs exactly when hex bit 3 is set (a fourth digit of 8 or E)."""
-    for row, result in _results("Denon", H.FROM_DB_HEX_WIRE):
+    for row, result in _results("Denon", H.FROM_DB_HEX):
         differs = result["kind"] == tool.MISMATCHED
         assert differs == (row["hex"][3] in "8E"), row["hex"]
 

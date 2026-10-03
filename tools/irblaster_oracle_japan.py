@@ -18,10 +18,13 @@ Usage::
                                            [--strict-gaps] [--json FILE]
 
 ``DIR`` (or ``$IRBLASTER_ORACLE``) holds ``by_protocol/``. ``--reading app``
-(the default) is ``FROM_DB_HEX``, which follows the app; ``--reading wire`` is
-``FROM_DB_HEX_WIRE``, which follows the evidence in ``NOTES/japan.md``, and
-there a disagreement with the app is the point rather than a failure, so the
-exit status stays 0.
+(the default) is ``FROM_DB_HEX_APP``, the reading SwiftRemote applies to a
+code, and **this is the run that proves the ledger's encoders**: they compile
+the signal the app transmits, so it must pass (exit 0). ``--reading wire`` is
+``FROM_DB_HEX``, the reading the importer uses, which follows the evidence in
+``NOTES/japan.md``; there a disagreement with the app is the point rather than
+a failure, so the exit status stays 0 and the tool counts the codes on which
+the two readings differ.
 
 **The comparison**, per code:
 
@@ -120,8 +123,8 @@ def compare(app: list[int], signal) -> dict:
 
 
 def run(oracle: Path, reading: str, strict_gaps: bool) -> tuple[dict, int]:
-    table = hex_japan.FROM_DB_HEX if reading == "app" else hex_japan.FROM_DB_HEX_WIRE
-    app_table = hex_japan.FROM_DB_HEX
+    table = hex_japan.FROM_DB_HEX_APP if reading == "app" else hex_japan.FROM_DB_HEX
+    app_table = hex_japan.FROM_DB_HEX_APP
     report: dict = {}
     failures = 0
     for db_name in DB_PROTOCOLS:

@@ -12,7 +12,12 @@ subdevice, function)``. A code the ledger cannot represent raises
 its class (the importer groups by it, so the hexcode is never in the message).
 
 ``FROM_DB_HEX`` is keyed by the protocol name exactly as the database spells
-it. ``MIN_SENDS`` omits a name to mean 1.
+it, and is what the importer uses: the wire reading. For RC5, RC6 and RCA_38
+that is what the app does too. For Thomson7 it is not (the app builds a
+different frame from the same twelve bits, and the database means the one the
+real remote sends), so ``FROM_DB_HEX_APP`` (same keys, same signature) holds
+the app's reading. The oracle tool compares the ledger's encoders with what the
+app transmits under ``FROM_DB_HEX_APP``. ``MIN_SENDS`` omits a name to mean 1.
 
 What none of these can carry is the toggle bit (DESIGN D3b). The database
 stores no toggle, and SwiftRemote alternates it itself on every press, so a
@@ -122,11 +127,32 @@ def thomson7_as_the_app_sends(hexcode: str) -> tuple[int, int]:
     return _reverse(masked & 0xF, 4), _reverse(masked >> 5, 7)
 
 
+def thomson7_app(hexcode: str) -> tuple[str, int, int | None, int]:
+    """The ledger fields of the frame SwiftRemote sends for a Thomson7 code.
+
+    :func:`thomson7_as_the_app_sends` as a hex map, for ``FROM_DB_HEX_APP``.
+    The app's mask drops hexcode bits 4 and 7 (and the order is wrong), so two
+    codes may give one frame; every code is representable.
+    """
+    device, function = thomson7_as_the_app_sends(hexcode)
+    return "Thomson7", device, None, function
+
+
+#: DB protocol name -> function(hexcode) -> (ledger protocol, D, S, F). Thomson7
+#: is the wire reading, which the importer uses.
 FROM_DB_HEX: dict[str, Callable[[str], tuple[str, int, int | None, int]]] = {
     "RC5": rc5,
     "RC6": rc6,
     "RCA_38": rca_38,
     "Thomson7": thomson7,
+}
+
+#: What SwiftRemote transmits today for each code. Not for import. Only
+#: Thomson7 differs from ``FROM_DB_HEX``; the other three are the same
+#: functions, transcriptions of the app's own.
+FROM_DB_HEX_APP: dict[str, Callable[[str], tuple[str, int, int | None, int]]] = {
+    **FROM_DB_HEX,
+    "Thomson7": thomson7_app,
 }
 
 #: The app sends Thomson7's frame twice in every press (thomson7.dart L100-103,

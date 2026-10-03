@@ -26,10 +26,12 @@ hexcode in it, so an importer can group by the text).
 ``MIN_SENDS`` is how many sends the app makes per press, in the ledger's
 ``min_repeat + 1`` sense (DESIGN D38); a name left out means 1.
 
-``FROM_DB_HEX_SWIFTREMOTE`` holds the one alternative: RCC2026 read the way
-SwiftRemote's stale copy of the encoder reads it. ``FROM_DB_HEX`` follows the
-evidence (upstream's fixed encoder, 1,210 valid Aiwa frames of 1,231), not that
-copy; see ``rcc2026`` below.
+``FROM_DB_HEX`` is the reading the evidence supports, which the importer uses.
+``FROM_DB_HEX_APP`` has the same keys and reads each code the way SwiftRemote
+does today. It differs from ``FROM_DB_HEX`` only for RCC2026, where
+SwiftRemote's copy of the encoder is stale; REC80 and RCC0082 are the same
+function in both. ``FROM_DB_HEX`` follows upstream's fixed encoder (1,210 valid
+Aiwa frames of 1,231), not that copy; see ``rcc2026`` below.
 """
 
 from __future__ import annotations
@@ -183,19 +185,20 @@ def rcc0082(hexcode: str) -> _Mapped:
     return ("Blaupunkt", device, None, function)
 
 
+#: The reading the evidence supports: what the importer uses.
 FROM_DB_HEX: dict[str, Callable[[str], _Mapped]] = {
     "REC80": rec80,
     "RCC2026": rcc2026,
     "RCC0082": rcc0082,
 }
 
-#: The one place the DB's hexcodes mean something other than what SwiftRemote
-#: does with them: RCC2026, where its copy of the encoder is stale. Same
-#: signature as ``FROM_DB_HEX``; the importer may use either, and the choice is
-#: whether the ledger records what the app sends or what the remotes send. Only
-#: 71 of the 1,231 codes are an Aiwa frame under this reading, so most are
-#: reported unrepresentable.
-FROM_DB_HEX_SWIFTREMOTE: dict[str, Callable[[str], _Mapped]] = {
+#: What SwiftRemote transmits today for each code. Not for import. The one
+#: place the DB's hexcodes mean something other than what SwiftRemote does with
+#: them is RCC2026, where its copy of the encoder is stale; REC80 and RCC0082
+#: are the same functions as in ``FROM_DB_HEX``. Only 71 of the 1,231 RCC2026
+#: codes are an Aiwa frame under the stale reading, so the rest raise.
+FROM_DB_HEX_APP: dict[str, Callable[[str], _Mapped]] = {
+    **FROM_DB_HEX,
     "RCC2026": rcc2026_as_swiftremote_sends_it,
 }
 

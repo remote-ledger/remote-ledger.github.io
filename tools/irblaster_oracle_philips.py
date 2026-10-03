@@ -31,6 +31,13 @@ defect in the app produces; the exit status is 1 only for an unexplained one.
 Nothing is loosened to make a mismatch pass: the explained ones are still
 counted as mismatches.
 
+**Which reading.** The importer's table is ``FROM_DB_HEX`` (the wire reading);
+SwiftRemote's own is ``FROM_DB_HEX_APP``. They are the same function for RC5,
+RC6 and RCA_38, so those are compared directly. For Thomson7 they differ, and
+the comparison above fails for all 29 codes; ``explain`` is then the proof that
+the ledger's encoder reproduces what the app transmits: the app's pattern must
+be exactly the ledger encoding of ``FROM_DB_HEX_APP``'s fields, sent twice.
+
 Usage::
 
     python tools/irblaster_oracle_philips.py --oracle ORACLE [--protocol RC5] [-v]
@@ -141,7 +148,7 @@ def explain(record: dict) -> str:
     """
     if record["protocol"] != "Thomson7":
         return ""
-    device, function = hex_philips.thomson7_as_the_app_sends(record["hex"])
+    _, device, _, function = hex_philips.FROM_DB_HEX_APP["Thomson7"](record["hex"])
     for toggle in (0, 1):
         _, ledger = _signal("Thomson7", device, None, function, toggle)
         why, _ = _compare_frames("Thomson7", ledger, record["pattern"])

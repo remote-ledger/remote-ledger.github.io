@@ -42,6 +42,10 @@ Documented framing, the only differences the comparison forgives:
     The app sends the frame twice back to back (necx2.dart L75-L76). The
     ledger holds it once, in the repeat slot, and ``minSends`` is 2.
 
+The app and the wire agree for the NEC family, so ``hex_nec.FROM_DB_HEX_APP`` is
+the same table as ``FROM_DB_HEX``; this tool therefore proves the encoders
+against what the app transmits and the importer's reading at once.
+
 A code the mapping refuses (``ValueError``) is **unrepresentable**, counted by
 its stable reason, and is not a mismatch. A code the mapping accepts whose
 signal fails the comparison is a **mismatch**, and the exit status is 1.

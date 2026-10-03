@@ -26,19 +26,19 @@ three numbers. ``function`` carries ``E:F`` as one 12-bit value,
 ``E * 256 + F`` (see ``protocols/samsung36.py``). 269 of the DB's 643 distinct
 Samsung36 codes have ``E != 0``, so refusing them would lose 42 %.
 
-**Proton's byte order is the app's, and the app's looks reversed.** The app
+**Proton's byte order is the wire's, and the app's is reversed.** The app
 sends the hex's *low* byte first and its high byte second (``proton.dart``:
 "sends last 8 bits, separator, then first 8 bits"). The IRP, and the one real
-capture there is, send the device byte first. So this mapping gives
-``D = rev8(low byte), F = rev8(high byte)`` -- the signal the app sends today,
-which the oracle requires -- but the DB's own structure reads the other way:
+capture there is, send the device byte first, and the DB's own structure agrees:
 in 169 of its 187 Proton remotes the high byte is constant across all keys and
 in none is the low byte, which is what an *address* does. DB remote 18's keys
 ``0``, ``1``, ``8``, ``9`` are ``2800``, ``2880``, ``2810``, ``2890``, and
 IrpTransmogrifier's capture of a Proton remote has ``D=20,F=0/1/8/9`` for the
 same keys: hex ``28`` is rev8(20), and read high-byte-first it *is* the
-capture's frame. ``proton_wire_order`` is that reading. It is **not** in
-``FROM_DB_HEX``; switching to it is the owner's decision (NOTES/misc.md).
+capture's frame. So ``FROM_DB_HEX["Proton"]`` gives ``D = rev8(high byte),
+F = rev8(low byte)``, the wire reading, and ``FROM_DB_HEX_APP["Proton"]`` gives
+the reading the app sends today (``D = rev8(low byte), F = rev8(high byte)``),
+which the oracle tool uses to prove the encoder (NOTES/misc.md).
 
 **RECS80's toggle.** ``T`` is not in the hexcode: the app flips it on every
 press. The ledger carries ``T=0`` (D3b). The nine data bits are the top nine of
@@ -48,6 +48,11 @@ compile to one signal. None of the DB's 555 RECS80 and RECS80_L codes has one.
 
 A code the protocol cannot hold raises ``ValueError`` with fixed text, no
 hexcode in it, so an importer can group by reason.
+
+``FROM_DB_HEX`` is the wire reading, which the importer uses.
+``FROM_DB_HEX_APP`` has the same keys and what SwiftRemote does today; it
+differs from ``FROM_DB_HEX`` only for Proton, and the other four names are the
+same function in both.
 """
 
 from __future__ import annotations
@@ -79,18 +84,19 @@ def samsung36(hexcode: str) -> Mapped:
 
 
 def proton(hexcode: str) -> Mapped:
-    """Four digits, sent low byte first, the app's order. See the module doc."""
-    v = _hex_value(hexcode, "Proton", (4,), "exactly four")
-    return ("Proton", _rev(v & 0xFF, 8), None, _rev(v >> 8, 8))
-
-
-def proton_wire_order(hexcode: str) -> Mapped:
     """Four digits read high byte first, as IrpTransmogrifier's capture is.
 
-    Not registered in ``FROM_DB_HEX``: it is *not* what the app sends.
+    The wire reading. It is *not* what the app sends; see
+    :func:`proton_as_the_app_sends`.
     """
     v = _hex_value(hexcode, "Proton", (4,), "exactly four")
     return ("Proton", _rev(v >> 8, 8), None, _rev(v & 0xFF, 8))
+
+
+def proton_as_the_app_sends(hexcode: str) -> Mapped:
+    """Four digits, sent low byte first, which is what ``proton.dart`` does."""
+    v = _hex_value(hexcode, "Proton", (4,), "exactly four")
+    return ("Proton", _rev(v & 0xFF, 8), None, _rev(v >> 8, 8))
 
 
 def f12_relaxed(hexcode: str) -> Mapped:
@@ -114,7 +120,8 @@ def _recs80(ledger_name: str, db_name: str) -> Callable[[str], Mapped]:
     return from_db_hex
 
 
-#: DB protocol name -> function(hexcode) -> (ledger protocol, D, S, F).
+#: DB protocol name -> function(hexcode) -> (ledger protocol, D, S, F), the
+#: wire reading.
 FROM_DB_HEX: dict[str, Callable[[str], Mapped]] = {
     "Samsung36": samsung36,
     "Proton": proton,
@@ -124,6 +131,13 @@ FROM_DB_HEX: dict[str, Callable[[str], Mapped]] = {
     # RECS80: its unit is 180 us, not 158 us, and it pads to a 138 ms extent
     # where RECS80 ends in a plain 45 ms gap.
     "RECS80_L": _recs80("RECS80-0068", "RECS80_L"),
+}
+
+#: What SwiftRemote transmits today for each code. Not for import. Only Proton
+#: differs from ``FROM_DB_HEX``; the rest are the same functions.
+FROM_DB_HEX_APP: dict[str, Callable[[str], Mapped]] = {
+    **FROM_DB_HEX,
+    "Proton": proton_as_the_app_sends,
 }
 
 #: ``protocol.minSends`` per DB protocol; a missing name means 1. The app sends
