@@ -37,10 +37,18 @@ class Generator:
     phase: int
     #: Writes its artifact under ``out_root``. None until the phase lands.
     run: Callable[[Path, Path], list[str]] | None = None
+    #: Further paths the same stage wholly owns (D57: the index's shards).
+    also_owns: tuple[str, ...] = ()
 
     @property
     def registered(self) -> bool:
         return self.run is not None
+
+    @property
+    def paths(self) -> tuple[str, ...]:
+        """Every path the stage owns: what D19 diffs, D11 guards, and
+        ``.gitignore`` must not hide."""
+        return (self.owns, *self.also_owns)
 
 
 def _artifact_path(out_root: Path, where: str) -> Path:
@@ -79,14 +87,30 @@ def run_check(root: Path, out_root: Path) -> list[str]:
 
 
 def run_index(root: Path, out_root: Path) -> list[str]:
-    """Compute the index from the files and write it (R14, D13, OD4)."""
-    from .index import build_index
+    """Compute the index from the files and write it (R14, D13, OD4).
 
-    index, problems = build_index(root)
-    target = out_root / "build" / "index.json"
-    target.parent.mkdir(parents=True, exist_ok=True)
-    target.write_text(dumps(index), encoding="utf-8", newline="\n")
-    return problems
+    ``build/index.json``, then ``build/index/``: the shards of the imports that
+    have one, and the digest of the inputs ``rl lookup`` checks (D57). The
+    directory is wholly this stage's, so a part that no longer exists is
+    removed rather than left to be reported as an orphan.
+    """
+    import shutil
+
+    from .index import build_all, inputs_record, shard_files
+
+    built = build_all(root)
+    build = out_root / "build"
+    build.mkdir(parents=True, exist_ok=True)
+    (build / "index.json").write_text(dumps(built.index), encoding="utf-8", newline="\n")
+
+    shutil.rmtree(build / paths.SHARD_DIR, ignore_errors=True)
+    files = shard_files(built.shards)
+    files[paths.INDEX_INPUTS] = dumps(inputs_record(root))
+    for rel, text in files.items():
+        target = build / rel
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(text, encoding="utf-8", newline="\n")
+    return built.problems
 
 
 def run_compile(root: Path, out_root: Path) -> list[str]:
@@ -110,11 +134,14 @@ def run_site(root: Path, out_root: Path) -> list[str]:
 
 
 #: Declared in pipeline order. `index` registers in Phase 5, `site` in Phase 6
-#: (DESIGN.md section 8).
+#: (DESIGN.md section 8). `index` also owns `build/index/` since D57.
 PIPELINE: tuple[Generator, ...] = (
     Generator(name="check", owns="build/warnings.json", phase=3, run=run_check),
     Generator(name="compile", owns="build/pronto", phase=3, run=run_compile),
-    Generator(name="index", owns="build/index.json", phase=5, run=run_index),
+    Generator(
+        name="index", owns="build/index.json", phase=5, run=run_index,
+        also_owns=(f"build/{paths.SHARD_DIR}",),
+    ),
     Generator(name="site", owns="site", phase=6, run=run_site),
 )
 
@@ -123,8 +150,9 @@ def registered() -> tuple[Generator, ...]:
     return tuple(g for g in PIPELINE if g.registered)
 
 
-def owned_paths() -> tuple[str, ...]:
-    return tuple(g.owns for g in registered())
+def owned_paths(stages: tuple[Generator, ...] | None = None) -> tuple[str, ...]:
+    """Every path the registered generators own, or those of ``stages``."""
+    return tuple(p for g in (registered() if stages is None else stages) for p in g.paths)
 
 
 def _files_under(root: Path, owned: str) -> set[str]:
@@ -138,7 +166,9 @@ def _files_under(root: Path, owned: str) -> set[str]:
     }
 
 
-def diff_tree(root: Path, fresh_root: Path) -> list[str]:
+def diff_tree(
+    root: Path, fresh_root: Path, owned_by: tuple[Generator, ...] | None = None,
+) -> list[str]:
     """Diff the committed tree against a freshly generated one (D19).
 
     File set *and* contents. A file present in the committed tree but absent
@@ -146,9 +176,13 @@ def diff_tree(root: Path, fresh_root: Path) -> list[str]:
     compiled artifact would otherwise linger forever, a stale code with no
     source, which is precisely the failure OD4 accepted committed artifacts
     in exchange for avoiding.
+
+    ``owned_by`` limits the diff to what some stages own: `rl index --check`
+    regenerates only the index, and every other owned path would read as an
+    orphan against it.
     """
     problems: list[str] = []
-    for owned in owned_paths():
+    for owned in owned_paths(owned_by):
         committed = _files_under(root, owned)
         generated = _files_under(fresh_root, owned)
         for orphan in sorted(committed - generated):

@@ -340,7 +340,12 @@ def cmd_index(args: argparse.Namespace) -> int:
         out = Path(tempfile.mkdtemp(prefix="rl-index-"))
         try:
             problems = run_index(root, out)
-            drift = diff_tree(root, out) if not problems else []
+            # Only what the index stage owns: against a tree holding nothing
+            # else, every other owned path would read as an orphan.
+            drift = (
+                diff_tree(root, out, tuple(g for g in PIPELINE if g.name == "index"))
+                if not problems else []
+            )
             for message in problems + drift:
                 print(f"ERROR {message}", file=sys.stderr)
             return EXIT_ERROR if (problems or drift) else EXIT_OK
@@ -361,7 +366,9 @@ def cmd_site(args: argparse.Namespace) -> int:
         import shutil, tempfile
         out = Path(tempfile.mkdtemp(prefix="rl-site-"))
         try:
-            problems = run_site(root, out) + diff_tree(root, out)
+            problems = run_site(root, out) + diff_tree(
+                root, out, tuple(g for g in PIPELINE if g.name == "site")
+            )
             for message in problems:
                 print(f"ERROR {message}", file=sys.stderr)
             return EXIT_ERROR if problems else EXIT_OK
@@ -373,12 +380,23 @@ def cmd_site(args: argparse.Namespace) -> int:
 
 
 def cmd_lookup(args: argparse.Namespace) -> int:
-    """R16: find a remote by device, model, alias or manufacturer."""
-    from .index import build_index
+    """R16: find a remote by device, model, alias or manufacturer.
+
+    Reads the committed index and every shard of it when they were generated
+    from exactly the files on disk (D57), which is what keeps a lookup under a
+    second however much is imported; otherwise rebuilds them from the files,
+    as it always did, and says so on stderr.
+    """
+    from .index import build_all, load_committed, merge, shard_entries
     from .lookup import keys_for, render, search
 
     root = _repo_root()
-    index, _ = build_index(root)
+    index, why = load_committed(root)
+    if index is None:
+        print(f"note: {why}; rebuilding the index from the files "
+              "(`rl build` refreshes it)", file=sys.stderr)
+        built = build_all(root)
+        index = merge(built.index, shard_entries(built.shards))
     query = " ".join(args.query)
     matches = search(index, query)
     print(render(matches, query, keys_for(root, matches)))
@@ -526,7 +544,8 @@ def build_parser() -> argparse.ArgumentParser:
     f.set_defaults(func=cmd_fmt)
 
     ix = sub.add_parser(
-        "index", help="regenerate build/index.json (R14)", parents=[common]
+        "index", help="regenerate build/index.json and build/index/ (R14, D57)",
+        parents=[common]
     )
     ix.add_argument("--check", action="store_true", help="diff instead of write")
     ix.set_defaults(func=cmd_index)

@@ -130,7 +130,8 @@ def test_every_generator_is_registered():
     time by registering a generator rather than editing CI."""
     assert {g.name for g in registered()} == {"check", "compile", "index", "site"}
     assert set(owned_paths()) == {
-        "build/warnings.json", "build/pronto", "build/index.json", "site"
+        "build/warnings.json", "build/pronto", "build/index.json",
+        "build/index", "site",
     }
     assert [g.name for g in PIPELINE if not g.registered] == []
 

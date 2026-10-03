@@ -45,8 +45,10 @@ def test_the_site_is_one_page_an_index_and_a_script_per_remote(scripts):
     """D15 and D40: no framework, no build step, no server. Since D40 each
     remote's detail is its own small script, so no file grows with the
     corpus."""
+    # `index/` (D57) exists exactly when the index advertises a shard.
+    advertised = json.loads((ROOT / "site" / "index.json").read_text()).get("shards")
     assert sorted(p.name for p in (ROOT / "site").iterdir()) == \
-        ["index.html", "index.json", "r"]
+        sorted(["index.html", "index.json", "r", *(["index"] if advertised else [])])
     expected = {paths.site_script(paths.rel(ROOT, p)) for p in corpus_files(ROOT)}
     assert set(scripts) == expected
 
@@ -91,7 +93,7 @@ def test_no_external_resources_are_loaded(html):
 
 
 def test_the_island_parses_and_carries_the_ledger(island):
-    assert sorted(island) == ["imports", "remotes", "unresolved"]
+    assert sorted(island) == ["imports", "remotes", "shards", "unresolved"]
     assert island["remotes"] and island["unresolved"]
     assert island["imports"] == paths.IMPORTS
 
@@ -216,7 +218,9 @@ def test_the_page_finds_a_device_whether_its_controls_entry_has_a_pipe(tmp_path)
     cases = [[remote(entry), q] for entry in ("SONY | KD - 49 X 8088", "SONY KD - 49 X 8088")
              for q in queries]
     cases.append([remote("SONY | KD - 49 X 8088"), "sony | "])      # punctuation is no query
-    expr = f"JSON.stringify({json.dumps(cases)}.map(([r, q]) => hit(r, q.trim().toLowerCase())))"
+    # `hit` is now `matcher(query)` applied to `haystack(remote)` (D57's cached form).
+    expr = (f"JSON.stringify({json.dumps(cases)}"
+            ".map(([r, q]) => matcher(q.trim().toLowerCase())(haystack(r))))")
     value = json.loads(run_page(tmp_path, tmp_path, expr)["value"])
     assert value[:-1] == [True] * (2 * len(queries))
     # `matches` treats an empty needle as "show everything" (the empty box), as before

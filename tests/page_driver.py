@@ -29,7 +29,8 @@ DRIVER = textwrap.dedent("""
     const results = { innerHTML: '', addEventListener() {}, querySelector: () => slot };
     const els = {
       ledger: { textContent: island }, results,
-      count: { textContent: '' }, q: { value: '', addEventListener() {} },
+      count: { textContent: '', children: [], addEventListener() {}, append() {} },
+      q: { value: '', addEventListener() {} },
     };
     const ctx = {
       document: {
@@ -39,7 +40,7 @@ DRIVER = textwrap.dedent("""
           if (s.src) vm.runInContext(fs.readFileSync(site + '/' + s.src, 'utf8'), ctx);
         } },
       },
-      navigator: {}, setTimeout() {},
+      navigator: {}, setTimeout() {}, console,
     };
     ctx.window = ctx;
     vm.createContext(ctx);
