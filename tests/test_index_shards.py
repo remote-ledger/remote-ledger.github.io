@@ -1,4 +1,4 @@
-"""The index's shards (D57): what index.json keeps, what moves out of it, and
+"""The index's shards (D69): what index.json keeps, what moves out of it, and
 what must not change when it does.
 
 The point of the whole mechanism is a promise to a reader this repository

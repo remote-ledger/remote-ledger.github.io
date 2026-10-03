@@ -383,7 +383,7 @@ def cmd_lookup(args: argparse.Namespace) -> int:
     """R16: find a remote by device, model, alias or manufacturer.
 
     Reads the committed index and every shard of it when they were generated
-    from exactly the files on disk (D57), which is what keeps a lookup under a
+    from exactly the files on disk (D69), which is what keeps a lookup under a
     second however much is imported; otherwise rebuilds them from the files,
     as it always did, and says so on stderr.
     """
@@ -544,7 +544,7 @@ def build_parser() -> argparse.ArgumentParser:
     f.set_defaults(func=cmd_fmt)
 
     ix = sub.add_parser(
-        "index", help="regenerate build/index.json and build/index/ (R14, D57)",
+        "index", help="regenerate build/index.json and build/index/ (R14, D69)",
         parents=[common]
     )
     ix.add_argument("--check", action="store_true", help="diff instead of write")

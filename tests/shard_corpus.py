@@ -1,4 +1,4 @@
-"""A throwaway corpus with an imported database in it (D57), for the tests of
+"""A throwaway corpus with an imported database in it (D69), for the tests of
 the shards and of what reads them."""
 
 import json

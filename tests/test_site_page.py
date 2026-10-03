@@ -1,5 +1,5 @@
 """The page's own script, run under node against the site it was generated
-with (D57).
+with (D69).
 
 The page used to hold the whole index. Now the imported database arrives after
 the visitor starts typing, so for a moment the page does not know whether a

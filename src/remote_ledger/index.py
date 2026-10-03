@@ -9,7 +9,7 @@ whole-tree check is what keeps those two facts compatible.
 It also folds in ``unresolved.json``, which is what gives a lookup R20's
 three distinguishable answers instead of two.
 
-**Shards (D57).** ``index.json`` is read in the field by a shipped app that
+**Shards (D69).** ``index.json`` is read in the field by a shipped app that
 downloads the whole file on every search, so it must not grow with the
 imports. A root in ``paths.SHARDED`` is therefore indexed in separate files,
 ``index/<name>/<key>.json``, one per initial letter of the manufacturer, with
@@ -130,7 +130,7 @@ def load_unresolved(root: Path) -> list[dict[str, Any]]:
 
 @dataclass(frozen=True)
 class Shard:
-    """The index entries of one sharded import root (D57)."""
+    """The index entries of one sharded import root (D69)."""
 
     name: str
     root: str
@@ -187,7 +187,7 @@ def _shard(name: str, entries: list[dict[str, Any]]) -> Shard:
 
 
 def build_all(root: Path) -> Built:
-    """Compute the index and its shards from the files (R14, D13, D57)."""
+    """Compute the index and its shards from the files (R14, D13, D69)."""
     summaries = []
     problems: list[str] = []
     for path in corpus_files(root):
@@ -289,7 +289,7 @@ def shard_files(shards: tuple[Shard, ...]) -> dict[str, str]:
 
 
 def inputs_record(root: Path) -> dict[str, Any]:
-    """A digest of everything the index is computed from (D57).
+    """A digest of everything the index is computed from (D69).
 
     SHA-256 over every ``remotes/**/*.json`` in corpus order, then
     ``unresolved.json`` when there is one, each as its path, its length and its

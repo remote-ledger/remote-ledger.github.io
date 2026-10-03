@@ -37,7 +37,7 @@ def _is_ignored(relpath: str) -> bool:
 
 @pytest.mark.parametrize("owned", [
     "build/pronto/x/y.json", "build/warnings.json", "build/index.json",
-    # D57: the index's shards and the digest rl lookup trusts it by.
+    # D69: the index's shards and the digest rl lookup trusts it by.
     "build/index/inputs.json", "build/index/irblaster/a.json",
     "build/index/irblaster/manifest.json",
 ])

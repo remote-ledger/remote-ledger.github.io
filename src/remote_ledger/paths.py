@@ -37,7 +37,7 @@ IMPORTS: dict[str, dict[str, str]] = {
 
 
 #: Import roots whose remotes are indexed in their own shard files instead of
-#: in ``index.json`` (D57), as root -> shard name. The roots stay in
+#: in ``index.json`` (D69), as root -> shard name. The roots stay in
 #: ``IMPORTS`` too: a shard changes where an entry is *listed*, not what it is.
 #:
 #: Moving a root in or out of this table changes ``index.json`` for every
@@ -73,7 +73,7 @@ def shard_script(name: str, key: str) -> str:
 
 
 #: What the index files were computed from, which ``rl lookup`` compares with
-#: the files on disk before it trusts them (D57). Written under ``build/`` only.
+#: the files on disk before it trusts them (D69). Written under ``build/`` only.
 INDEX_INPUTS = f"{SHARD_DIR}/inputs.json"
 
 

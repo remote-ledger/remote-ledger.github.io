@@ -1,4 +1,4 @@
-"""The site with a sharded import (D57): what the page no longer embeds, and
+"""The site with a sharded import (D69): what the page no longer embeds, and
 the files it loads instead."""
 
 import json

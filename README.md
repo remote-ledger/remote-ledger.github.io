@@ -111,6 +111,6 @@ $ rl build && open site/index.html
 notation, Pronto Hex, LIRC, IRDB, SmartIR, the IR Blaster database), the data
 model, layout, compiling and cross-validation, and the resolved decisions.
 
-**[DESIGN.md](DESIGN.md)** — how it is built: decisions D1 to D68, the
+**[DESIGN.md](DESIGN.md)** — how it is built: decisions D1 to D71, the
 Pronto contract to the byte, the seven-phase plan, the three imports, and what
 is not yet proven.

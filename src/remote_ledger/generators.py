@@ -37,7 +37,7 @@ class Generator:
     phase: int
     #: Writes its artifact under ``out_root``. None until the phase lands.
     run: Callable[[Path, Path], list[str]] | None = None
-    #: Further paths the same stage wholly owns (D57: the index's shards).
+    #: Further paths the same stage wholly owns (D69: the index's shards).
     also_owns: tuple[str, ...] = ()
 
     @property
@@ -90,7 +90,7 @@ def run_index(root: Path, out_root: Path) -> list[str]:
     """Compute the index from the files and write it (R14, D13, OD4).
 
     ``build/index.json``, then ``build/index/``: the shards of the imports that
-    have one, and the digest of the inputs ``rl lookup`` checks (D57). The
+    have one, and the digest of the inputs ``rl lookup`` checks (D69). The
     directory is wholly this stage's, so a part that no longer exists is
     removed rather than left to be reported as an orphan.
     """
@@ -134,7 +134,7 @@ def run_site(root: Path, out_root: Path) -> list[str]:
 
 
 #: Declared in pipeline order. `index` registers in Phase 5, `site` in Phase 6
-#: (DESIGN.md section 8). `index` also owns `build/index/` since D57.
+#: (DESIGN.md section 8). `index` also owns `build/index/` since D69.
 PIPELINE: tuple[Generator, ...] = (
     Generator(name="check", owns="build/warnings.json", phase=3, run=run_check),
     Generator(name="compile", owns="build/pronto", phase=3, run=run_compile),

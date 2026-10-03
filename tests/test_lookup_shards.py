@@ -1,4 +1,4 @@
-"""`rl lookup` over an index with a shard (D57), and R20 across it.
+"""`rl lookup` over an index with a shard (D69), and R20 across it.
 
 R20 says a device in the ledger reads as in the ledger. With the imported
 database in files of its own, "the ledger" is the index *and* every shard, and

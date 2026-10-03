@@ -13,7 +13,7 @@ is a script rather than JSON because a ``<script src>`` loads from
 Its payload is ``json.dumps`` output with ``ensure_ascii``, never string
 concatenation, so D29's rule -- data enters as data -- still holds.
 
-**The imported database is not in the page (D57).** Its index entries are a
+**The imported database is not in the page (D69).** Its index entries are a
 shard, and embedding them put 10 MB of text in the page and in front of every
 visitor. The page embeds only what ``index.json`` lists, and loads the shard
 the first time the visitor searches, as one script per part,
@@ -133,7 +133,7 @@ def remote_script(file: str, data: dict[str, Any]) -> str:
 
 
 def shard_script(name: str, key: str, entries: list[dict[str, Any]]) -> str:
-    """``index/<name>/<key>.js``: one part's entries, for the page (D57).
+    """``index/<name>/<key>.js``: one part's entries, for the page (D69).
 
     The same encoding as :func:`remote_script`, for the same reasons.
     """
@@ -287,7 +287,7 @@ function matcher(q) {
 const haystack = r => r._n || (r._n = fields(r).map(norm));
 const hitUnresolved = (u, q) => matches(q, [u.device]);
 
-// D57: the imported database is not in this page. Its index entries are in
+// D69: the imported database is not in this page. Its index entries are in
 // index/<name>/<key>.js, one script per part, fetched the first time the
 // visitor searches. Scripts rather than fetch(), as above, so a page opened
 // from disk finds them too.
@@ -562,7 +562,7 @@ def build_site(root: Path, out_root: Path) -> list[str]:
     # D20: the same serializer, so this is byte-identical to build/index.json.
     (target / "index.json").write_text(dumps(index), encoding="utf-8", newline="\n")
 
-    # D57: the shards' manifests and parts, byte for byte what build/ holds
+    # D69: the shards' manifests and parts, byte for byte what build/ holds
     # (JSON, for clients), and the page's copy of each part as a script. The
     # directory is the site's alone, so a part that is gone is removed.
     shutil.rmtree(target / paths.SHARD_DIR, ignore_errors=True)
