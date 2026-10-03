@@ -446,6 +446,12 @@ def run(args: argparse.Namespace) -> int:
     if counts != expect_counts:
         finds.add("UNEXPLAINED: manifest counts", (counts, expect_counts))
     finds.add("info: keys in the dump (rows)", n=all_sql_keys)
+    # what de-duplicating buys: the old queries returned a row per model and key
+    finds.add("info: rows of the old brand-only listings (one per model and key)",
+              n=con.execute("SELECT COUNT(*) FROM models m JOIN keys k ON k.id = m.id").fetchone()[0])
+    finds.add("info: the same, de-duplicated by (id, label, hexcode, protocol) per brand",
+              n=con.execute("SELECT COUNT(*) FROM (SELECT DISTINCT m.brand, k.id, k.label, k.hexcode, "
+                            "k.protocol FROM models m JOIN keys k ON k.id = m.id)").fetchone()[0])
 
     check_signals_and_power(api, con, skipped_codes, finds, rank)
 
