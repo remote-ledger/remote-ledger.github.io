@@ -218,3 +218,77 @@ MakeHex's own NECx2 definition uses a fixed `1,-78` lead-out instead of
   shape IrpTransmogrifier renders for `*`, and every vector above matches it
   in its pair counts. R3's `minSends` is what guarantees the frame goes out
   at least once.
+
+---
+
+## Sony12 and Sony15 (added for the SwiftRemote database import)
+
+Both are `Sony20` with a different field after the command, which is exactly
+the kind of variant D18 warns about. They went through the three gates
+separately; nothing was waved through on the strength of Sony20's vectors.
+
+### Gate 1 — IRP strings with their source: **MET**
+
+> `{40k,600}<1,-1|2,-1>(4,-1,F:7,D:5,^45m)*[D:0..31,F:0..127]` (Sony12)
+> `{40k,600}<1,-1|2,-1>(4,-1,F:7,D:8,^45m)*[D:0..255,F:0..127]` (Sony15)
+
+Source: IrpTransmogrifier `src/main/resources/IrpProtocols.xml` @`c945e76`,
+L2581 and L2591, verbatim, and identical in the 1.2.14 release's copy
+(L2562, L2572). John Fine's DecodeIR documentation on hifi-remote.com gives
+the same timings and field layouts with `+` where this has `*`; the
+registry records IrpTransmogrifier's spelling. Both emit the whole frame as
+the repeat, as Sony20 does.
+
+### Gate 2a — structural: **MET**, on `tests/vectors/sirc-structural.json`
+
+- **IrpTransmogrifier's teaser set**, `src/test/teaserfiles` @`c945e76`:
+  `.ict` captures each paired with the decode IrpTransmogrifier expects in
+  the `.exp` beside it. The encoders reproduce **every one** of the 21
+  Sony12 captures (`Sony12B` D=23 F=70..76; `Sony` D=16, D=36 sets), the 49
+  Sony15 captures (`Sony15B` D=167 F=91..98; `Sony`) and the 10 Sony20
+  captures copied, duration for duration. These are exactly nominal
+  durations ending in a 500 ms gap, so they carry no instrument bias but
+  are not an independent measurement either, and the gap stands in for the
+  extent: they verify ratios, lead-in, bit shapes, field order and bit
+  order, not `^45m`. No test in the pinned tree reads these files; they are
+  published test data with expected decodes, which is weaker than an
+  assertion.
+- **Girr's Sony12 reference set**, `src/test/reference/commandset_sony.girr`
+  @`5ca171e`: 25 commands at D=1 with their Pronto. Every string is
+  reproduced word for word under IrpTransmogrifier's rule, lead-out
+  included; our own bytes differ from them only in the last word.
+- **One published Sony15 string with its decode asserted**,
+  `IrpTransmogrifierNGTest.java` L383-389 @`c945e76` (`testDecodeSony15`):
+  `decode -p sony15` of it must give `Sony15: {D=164,F=61}`. Its sixteen
+  pairs are ours exactly except the last word. It differs in two other
+  ways, and `tests/test_sony_vectors.py` pins both: it puts the frame in
+  the once-sequence (a decode input is written that way), and it totals
+  44.4 ms, so its `0300` is not the `^45m` lead-out (`0318` under
+  IrpTransmogrifier's rule). It is therefore **not** a gate 2b vector.
+
+### Gate 2b — golden Pronto
+
+| Protocol | Vector | Provenance | Our bytes differ at |
+|---|---|---|---|
+| Sony12 | D=1 F=21 @ 40k: Girr `commandset_sony.girr` L42-47 @`5ca171e`, evidently IrpTransmogrifier's output (all 25 commands match its rule word for word) committed to a sibling repository with the parameters beside it. D=1 F=21 is Sony's TV power, `A90` in transmission order | **published** | word 29 (lead-out) |
+| Sony12 | D=23 F=70 @ 40k: IrpTransmogrifier 1.2.14 release, `render -n D=23,F=70 -p sony12`; the first capture in its own teaser set, whose durations we also reproduce | **reproducible** | word 29 |
+| Sony15 | D=164 F=61 @ 40k: IrpTransmogrifier 1.2.14 release, `render -n D=164,F=61 -p sony15`; the parameters of the one published Sony15 string | **reproducible** | word 35 |
+
+**The honest residual: Sony15 has no *published* byte-level vector.** The
+only published Sony15 string (above) does not carry the `^45m` lead-out,
+the other candidates in the pinned tree are captures, and none was found
+elsewhere: IrpTransmogrifier's tests and documentation, Girr's reference and
+test files (its only Sony15 file, `sony_vlp_hw50es.girr`, states parameters
+and no waveform), and the teaser set. Searched with `gh search code` as
+well, which returned nothing. `test_registry` warns about it on every run,
+as it does for NECx2. The decode of a real frame (D=164 F=61) and 49 teaser
+captures do pin its framing; what is unproven is only the lead-out word
+against a published string, which the render supplies.
+
+### Gate 3 — invariant tests: **MET**
+
+`tests/test_sony12.py` and `tests/test_sony15.py`: the whole 4,096- and
+32,768-frame spaces round-tripped through a frame reader written from the
+layout (`tests/sirc_reference.py`), extent, pair count, field and bit order,
+bounds. `tests/test_sony.py` gained exhaustive Sony20 sweeps in the same
+style.

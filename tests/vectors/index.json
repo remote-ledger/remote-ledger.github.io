@@ -87,5 +87,48 @@
     "gate2b_byte_divergence": [
       27
     ]
+  },
+  "Sony12": {
+    "gate1_irp_source": "IrpTransmogrifier IrpProtocols.xml @c945e76 L2581 (verbatim; identical in the 1.2.14 release's copy), corroborated for every timing and the F:7,D:5 field layout by hifi-remote.com/johnsfine/DecodeIR.html, which has '+' where IrpTransmogrifier has '*'",
+    "regression_snapshot": null,
+    "snapshot_is_evidence": false,
+    "gate2a_structural_vector": "bengtmartensson/IrpTransmogrifier src/test/teaserfiles @c945e76 (Sony12B and Sony.ict/.exp: 21 Sony12 captures with the decode IrpTransmogrifier expects, D=23 F=70..76 and D=16/D=36 sets), and Girr src/test/reference/commandset_sony.girr @5ca171e (25 commands at D=1) -- see tests/vectors/sirc-structural.json and tests/test_sony_vectors.py. A capture file carries a 500000 us gap in place of the extent, and its durations are exactly nominal (no instrument bias, but no independent measurement either), so those verify ratios, the lead-in, bit shapes and field and bit order, not the lead-out; the Girr Pronto strings verify the lead-out too",
+    "gate2a_pending_reason": null,
+    "gate2b_golden_pronto": "girr_sony12_D1_F21.pronto",
+    "gate2b_pending_reason": null,
+    "gate2b_vector_source": "https://github.com/bengtmartensson/Girr/blob/5ca171ede8688a7452d67c8df80f20eaa4269eb5/src/test/reference/commandset_sony.girr#L42-L47",
+    "gate2b_vector_params": {
+      "device": 1,
+      "subdevice": null,
+      "function": 21,
+      "carrier_hz": 40000
+    },
+    "gate2b_vector_quantization": "irpt-nominal-carrier",
+    "gate2b_vector_provenance": "published",
+    "gate2b_byte_divergence": [
+      29
+    ]
+  },
+  "Sony15": {
+    "gate1_irp_source": "IrpTransmogrifier IrpProtocols.xml @c945e76 L2591 (verbatim; identical in the 1.2.14 release's copy), corroborated for every timing and the F:7,D:8 field layout by hifi-remote.com/johnsfine/DecodeIR.html, which has '+' where IrpTransmogrifier has '*'",
+    "regression_snapshot": null,
+    "snapshot_is_evidence": false,
+    "gate2a_structural_vector": "bengtmartensson/IrpTransmogrifier src/test/java/.../IrpTransmogrifierNGTest.java L383-L389 @c945e76 (testDecodeSony15: a Pronto string asserted to decode as Sony15 {D=164,F=61}), plus src/test/teaserfiles @c945e76 (Sony15B and Sony.ict/.exp: 49 Sony15 captures with the decode IrpTransmogrifier expects) -- see tests/vectors/sirc-structural.json and tests/test_sony_vectors.py. The assertion's string puts the frame in the once-sequence and ends in 0300 rather than the ^45m lead-out, and a capture ends in a 500000 us gap with exactly nominal durations (no instrument bias, but no independent measurement either), so these verify ratios, the lead-in, bit shapes and field and bit order, not the extent",
+    "gate2a_pending_reason": null,
+    "gate2b_golden_pronto": "irpt_sony15_D164_F61.pronto",
+    "gate2b_pending_reason": null,
+    "gate2b_vector_source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "gate2b_vector_params": {
+      "device": 164,
+      "subdevice": null,
+      "function": 61,
+      "carrier_hz": 40000
+    },
+    "gate2b_vector_quantization": "irpt-nominal-carrier",
+    "gate2b_vector_provenance": "reproducible",
+    "gate2b_vector_reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=164,F=61 -p sony15",
+    "gate2b_byte_divergence": [
+      35
+    ]
   }
 }

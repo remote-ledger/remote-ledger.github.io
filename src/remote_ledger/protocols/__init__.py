@@ -29,11 +29,15 @@ from ..errors import ValidationError
 from .base import Protocol
 from .nec import NEC1, NECX2
 from .rc5 import RC5
-from .sony import SONY20
+from .sony import SONY12, SONY15, SONY20
 
 REGISTRY: dict[str, Protocol] = {p.name: p for p in (NEC1, NECX2, RC5, SONY20)}
 
 __all__ = ["Protocol", "REGISTRY", "NEC1", "NECX2", "RC5", "SONY20"]
+
+# Sony SIRC's other two widths, each through D18's three gates (tests/vectors/CITATIONS.md).
+REGISTRY.update({p.name: p for p in (SONY12, SONY15)})
+__all__ += ["SONY12", "SONY15"]
 
 
 def get(name: str) -> Protocol:

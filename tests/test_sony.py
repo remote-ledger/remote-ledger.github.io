@@ -109,3 +109,58 @@ def test_device_field_is_five_bits_not_eight():
     passing an eight-bit device is the obvious mistake."""
     with pytest.raises(EncodeError, match="eight-bit field is the subdevice"):
         SONY20.encode(**{**BX510, "device": 200})
+
+
+# --- Sony20 against the reference frame reader (SwiftRemote DB import) ------
+#
+# The three cases above recover fields from one frame. These sweep: the 20-bit
+# space is 1,048,576 frames, so the address pair is swept exhaustively at one
+# command, the command at one address pair, and every single field bit alone.
+
+from sirc_reference import EXTENT, field, read_bits  # noqa: E402
+
+
+def _bits(device, subdevice, function):
+    return read_bits(SONY20.encode(device=device, subdevice=subdevice,
+                                   function=function, carrier_hz=40_000).repeat)
+
+
+def test_every_device_and_subdevice_round_trips_at_one_function():
+    """8,192 address pairs; the 13 address bits are D (low five) then S."""
+    for device in range(32):
+        for subdevice in range(256):
+            bits = _bits(device, subdevice, 0x55)
+            assert bits is not None and len(bits) == 20, (device, subdevice)
+            assert (field(bits, 0, 7), field(bits, 7, 5), field(bits, 12, 8)) == (
+                0x55, device, subdevice)
+
+
+def test_every_function_round_trips_at_the_bx510_address():
+    for function in range(128):
+        bits = _bits(26, 218, function)
+        assert (field(bits, 0, 7), field(bits, 7, 5), field(bits, 12, 8)) == (
+            function, 26, 218)
+
+
+def test_each_field_bit_alone_lands_on_its_own_wire_position():
+    for bit in range(7):
+        assert _bits(0, 0, 1 << bit) == [int(i == bit) for i in range(20)]
+    for bit in range(5):
+        assert _bits(1 << bit, 0, 0) == [int(i == 7 + bit) for i in range(20)]
+    for bit in range(8):
+        assert _bits(0, 1 << bit, 0) == [int(i == 12 + bit) for i in range(20)]
+
+
+def test_the_thirteen_bit_address_is_device_low_subdevice_high():
+    """What the SwiftRemote app calls a 13-bit address, packed above the
+    command, is D | S << 5 -- the split tools/irblaster_oracle_sony.py checks
+    against the app's own output for all 1,213 Sony20 codes in its database."""
+    for address in (0, 1, 0x1F, 0x20, 0x1FFF, 0x0ABC, 0x1A5A):
+        bits = _bits(address & 0x1F, address >> 5, 0)
+        assert field(bits, 7, 13) == address
+
+
+def test_every_sony20_frame_pads_to_the_extent():
+    for subdevice in range(256):
+        assert sum(SONY20.encode(device=31, subdevice=subdevice, function=127,
+                                 carrier_hz=40_000).repeat) == EXTENT
