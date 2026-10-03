@@ -10,6 +10,14 @@ the intro is a 16-unit mark, an 8-unit space, four LSB-first bytes
 (device, subdevice, function, function complement), a 1-unit stop mark, and
 then whatever space pads the sequence to 108 ms; the repeat is a 16-unit
 mark, a 4-unit space, a 1-unit mark, padded to 108 ms the same way.
+
+The same module holds the other members of the family that are registered,
+each with the IRP string it was taken from beside its ``Protocol``:
+
+* ``NECx2`` -- NEC1's frame with an 8-unit lead-in, repeating the whole frame.
+* ``NEC2`` -- NEC1's frame, repeating the whole frame instead of a ditto.
+* ``NECx1`` -- NECx2's 8-unit lead-in, repeating with a short frame that
+  carries a single bit, the complement of D's low bit.
 """
 
 from __future__ import annotations
@@ -41,7 +49,8 @@ def _bits_lsb_first(value: int, count: int) -> list[int]:
     return [(value >> i) & 1 for i in range(count)]
 
 
-def _pad_to_extent(durations: list[int], unit_us: int, what: str) -> list[int]:
+def _pad_to_extent(durations: list[int], unit_us: int, what: str,
+                   proto: str = "NEC1") -> list[int]:
     """Append the space that pads a sequence to its own extent (D31, R12).
 
     The extent sits *inside* a sequence in IRP notation, so the intro and the
@@ -51,7 +60,7 @@ def _pad_to_extent(durations: list[int], unit_us: int, what: str) -> list[int]:
     gap = _EXTENT_US - head
     if gap < unit_us:
         raise EncodeError(
-            f"NEC1 {what}: marks and spaces already total {head} us against "
+            f"{proto} {what}: marks and spaces already total {head} us against "
             f"an extent of {_EXTENT_US} us, leaving a gap of {gap} us which is "
             f"below one unit ({unit_us} us). Clamping would fabricate a "
             "waveform that fails the extent it claims (D31)"
@@ -60,18 +69,19 @@ def _pad_to_extent(durations: list[int], unit_us: int, what: str) -> list[int]:
 
 
 def _frame(device: int, subdevice: int, function: int, unit: int,
-           lead_units: int, name: str) -> list[int]:
+           lead_units: int, name: str, proto: str = "NEC1") -> list[int]:
     """The NEC family's common frame: lead-in, four LSB-first bytes, stop mark.
 
-    NEC1 and NECx2 differ only in the lead-in width -- 16 units against 8 --
-    and in what repeats, so the frame itself is shared rather than copied.
+    NEC1, NEC2, NECx1 and NECx2 differ only in the lead-in width -- 16 units
+    against 8 -- and in what repeats, so the frame itself is shared rather
+    than copied.
     """
     frame: list[int] = [lead_units * unit, 8 * unit]
     for byte in (device, subdevice, function, (~function) & 0xFF):
         for bit in _bits_lsb_first(byte, 8):
             frame += [unit, 3 * unit] if bit else [unit, unit]
     frame.append(unit)  # the stop mark, before ^108m pads the sequence
-    return _pad_to_extent(frame, unit, name)
+    return _pad_to_extent(frame, unit, name, proto)
 
 
 def _check_params(device, subdevice, function, name: str, needs_subdevice: str):
@@ -136,6 +146,112 @@ def encode_necx2(
     )
     frame = _frame(device, subdevice, function, unit, 8, "frame")
     return IrSignal(carrier_hz=carrier_hz, repeat=tuple(frame))
+
+
+def encode_nec2(
+    *,
+    device: int,
+    subdevice: int | None,
+    function: int,
+    carrier_hz: int,
+    unit_us: int | None = None,
+) -> IrSignal:
+    """NEC2: NEC1's 16-unit frame, repeated whole instead of as a ditto.
+
+    The `*` in its IRP leaves the intro empty and puts the frame in the
+    repeat sequence, which is what IrpTransmogrifier renders for it, so the
+    shape is NECx2's, not NEC1's.
+    """
+    unit = _UNIT_US if unit_us is None else unit_us
+    check_bounds("unitUs", unit, UNIT_US_MIN, UNIT_US_MAX)
+    _check_params(
+        device, subdevice, function, "NEC2",
+        "NEC2 requires an explicit subdevice (S:8). IrpTransmogrifier gives S "
+        "the default 255-D; the value is stated here rather than assumed",
+    )
+    frame = _frame(device, subdevice, function, unit, 16, "frame", "NEC2")
+    return IrSignal(carrier_hz=carrier_hz, repeat=tuple(frame))
+
+
+def encode_necx1(
+    *,
+    device: int,
+    subdevice: int | None,
+    function: int,
+    carrier_hz: int,
+    unit_us: int | None = None,
+) -> IrSignal:
+    """NECx1: an 8-unit-lead-in frame, then a one-bit repeat frame.
+
+    The repeat ``(8,-8,~D:1,1,^108m)`` is a lead-in, one bit, a stop mark and
+    the padding to its own 108 ms. The bit is the low bit of the *complement*
+    of D (``~D:1``), so an even D repeats with a one-bit and an odd D with a
+    zero-bit. A hardware capture (tests/vectors/nec-family-captures.json,
+    D=44) shows the even case; the odd case rests on IrpTransmogrifier's
+    ``render`` output alone.
+    """
+    unit = _UNIT_US if unit_us is None else unit_us
+    check_bounds("unitUs", unit, UNIT_US_MIN, UNIT_US_MAX)
+    _check_params(
+        device, subdevice, function, "NECx1",
+        "NECx1 requires an explicit subdevice (S:8). Most NECx1 signals have "
+        "S = D, but the value is stated rather than assumed",
+    )
+    intro = _frame(device, subdevice, function, unit, 8, "intro", "NECx1")
+    ditto_bit = (~device) & 1  # ~D:1
+    repeat = _pad_to_extent(
+        [8 * unit, 8 * unit, unit, (3 if ditto_bit else 1) * unit, unit],
+        unit, "repeat", "NECx1",
+    )
+    return IrSignal(
+        carrier_hz=carrier_hz, intro=tuple(intro), repeat=tuple(repeat)
+    )
+
+
+NEC2 = Protocol(
+    name="NEC2",
+    irp="{38.4k,564}<1,-1|1,-3>(16,-8,D:8,S:8,F:8,~F:8,1,^108m)*",
+    irp_source=(
+        "IrpTransmogrifier's IrpProtocols.xml (bengtmartensson/"
+        "IrpTransmogrifier), the 1.2.14 release (`list -i NEC2`) and @c945e76 "
+        "L1670, which give this IRP string verbatim (its parameter list "
+        "`[D:0..255,S:0..255=255-D,F:0..255]` is not part of the IRP). "
+        "Corroborated by hifi-remote.com/johnsfine/DecodeIR.html (John Fine), "
+        "retrieved 2026-10-02: the same frame and `^108m` extent, `+` where "
+        "IrpTransmogrifier has `*`, at 38.0k where it has 38.4k; "
+        "nominal_carrier_hz follows IrpTransmogrifier, as NEC1's does. It is "
+        "informational either way (D3)."
+    ),
+    unit_us=_UNIT_US,
+    nominal_carrier_hz=38_400,
+    extent_us=_EXTENT_US,
+    bits=_BITS,
+    encode=encode_nec2,
+)
+
+
+NECX1 = Protocol(
+    name="NECx1",
+    irp="{38.4k,564}<1,-1|1,-3>(8,-8,D:8,S:8,F:8,~F:8,1,^108m,(8,-8,~D:1,1,^108m)*)",
+    irp_source=(
+        "IrpTransmogrifier's IrpProtocols.xml (bengtmartensson/"
+        "IrpTransmogrifier), the 1.2.14 release (`list -i NECx1`) and @c945e76 "
+        "L1742, which give this IRP string verbatim (its parameter list "
+        "`[D:0..255,S:0..255=255-D,F:0..255]` is not part of the IRP). "
+        "Corroborated by hifi-remote.com/johnsfine/DecodeIR.html (John Fine), "
+        "retrieved 2026-10-02: the same frame, the same one-bit repeat "
+        "`(8,-8,~D:1,1,^108m)*`, and the note that most NECx1 signals have "
+        "S = D; DecodeIR writes the complement as `~F8`, a typo for `~F:8`, "
+        "and gives 38.0k where IrpTransmogrifier has 38.4k. "
+        "nominal_carrier_hz follows IrpTransmogrifier, as NEC1's does. It is "
+        "informational either way (D3)."
+    ),
+    unit_us=_UNIT_US,
+    nominal_carrier_hz=38_400,
+    extent_us=_EXTENT_US,
+    bits=_BITS,
+    encode=encode_necx1,
+)
 
 
 NECX2 = Protocol(

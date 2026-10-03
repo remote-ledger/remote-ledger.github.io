@@ -218,3 +218,117 @@ MakeHex's own NECx2 definition uses a fixed `1,-78` lead-out instead of
   shape IrpTransmogrifier renders for `*`, and every vector above matches it
   in its pair counts. R3's `minSends` is what guarantees the frame goes out
   at least once.
+
+---
+
+## NEC2 and NECx1 (the SwiftRemote import), and a second search for NECx2
+
+Both were in or beside the backlog "a few lines' difference from NEC1", and
+the gate was applied to them as to anything else.
+
+### Gate 1 — IRP strings with their sources: **MET** for both
+
+- `NEC2`: `{38.4k,564}<1,-1|1,-3>(16,-8,D:8,S:8,F:8,~F:8,1,^108m)*`
+- `NECx1`: `{38.4k,564}<1,-1|1,-3>(8,-8,D:8,S:8,F:8,~F:8,1,^108m,(8,-8,~D:1,1,^108m)*)`
+
+Source: IrpTransmogrifier's `IrpProtocols.xml`, verbatim: the 1.2.14 release
+(`list -i NEC2`, `list -i NECx1`) and `@c945e76` L1670 and L1742, identical in
+both. (Each is followed there by the parameter list
+`[D:0..255,S:0..255=255-D,F:0..255]`, which is not part of the IRP.)
+
+Independently corroborated by DecodeIR (hifi-remote.com/johnsfine/
+DecodeIR.html, retrieved 2026-10-02), which gives NEC2 as `(16,-8,D:8,S:8,
+F:8,~F:8,1,^108m)+` and NECx1 as `(8,-8,D:8,S:8,F:8,~F8,1,^108m,(8,-8,~D:1,
+1,^108m)*)`: the same frames, the same extent, and, for NECx1, the same
+one-bit repeat. Three differences, recorded and not smoothed over: DecodeIR
+writes `+` where IrpTransmogrifier writes `*` for NEC2 (the signal is the
+same, a frame in the repeat slot); it writes the carrier as 38.0k; and its
+NECx1 string has `~F8`, which is a typo for `~F:8`, since its own prose says
+the stream is `D:8,S:8,F:8,~F:8`. `nominal_carrier_hz` follows
+IrpTransmogrifier, as NEC1's does.
+
+### Gate 2a — structural: **MET** for NEC2 and NECx1, and now also a second source for NECx2
+
+Source: `src/test/teaserfiles/NECx2_NECx1.ict` and its expected decodes in
+`NECx2_NECx1.exp`, IrpTransmogrifier `@c945e76`. It is a hardware capture
+(irscope, measured carrier 38404 Hz) of a single remote that sends NEC2,
+NECx2 and NECx1 on different keys, and the `.exp` is the tool's own decode of
+it, run by `dotest.sh`: `NEC2: {D=31,F=223}`, `NECx2: {D=67,S=83,F=57}`,
+`NECx1: {D=44,S=44,F=4}`.
+
+**A capture carries instrument bias**: its medians sit within about 2 % of the
+IRP's, without one direction (NEC2 lead-in 8930/4470 against 9024/4512, bit
+mark 552 against 564, zero space 570 against 564). So it verifies layout,
+ratios and the extent, not absolute durations, and gate 2b covers those.
+What it establishes that no other source here does:
+
+- every duration of a real frame, quantised to 564 us, is the multiple our
+  encoder emits -- lead-in width (16 against 8 units), LSB-first bit order,
+  the complement byte, the stop mark;
+- the `^108m` extent: a frame's active time plus its trailing gap sums to
+  107.1 ms on all three (-0.8 %);
+- NECx1's repeat is the three-pair frame the IRP describes (an 8-unit
+  lead-in, one bit, a stop mark, padded to 108 ms) and its bit is a one for
+  D=44, which is even, as `~D:1` requires;
+- NEC2 and NECx2 repeat the whole frame and nothing else (four and three full
+  frames in the captures, no short ones).
+
+`nec-family-captures.json` keeps medians and the first frame quantised to
+564 us units, not the durations; `tests/test_nec_captures.py` runs it.
+
+It also bears on the carrier, as one remote and so only as corroboration:
+38404 Hz is IrpTransmogrifier's 38.4k, not DecodeIR's 38.0k.
+
+### Gate 2b — golden Pronto
+
+| Protocol | Vector | Provenance | Our bytes differ at |
+|---|---|---|---|
+| NEC2 | D=90 S=165 F=38 @ 40k: `DecoderNGTest.java` L178-L186 @ `c945e76`, `testDecodePioneer` | **published**, with a caveat below | words 4 and 6-71 (every duration but the lead-in space: 564 us is 22.5 cycles at 40 kHz and the two rounding rules split the half differently) |
+| NEC2 | D=12 S=34 F=56 @ 38.4k: IrpTransmogrifier 1.2.14 release, `render -n D=12,S=34,F=56 -p nec2` | **reproducible** | words 4, 71 (lead-in mark and gap) |
+| NECx1 | D=12 S=34 F=56 @ 38.4k: the same release, `render ... -p necx1` | **reproducible** | words 71, 77 (both gaps) |
+| NECx1 | D=13 S=34 F=56 @ 38.4k: the same | **reproducible** | words 71, 77 |
+
+**NEC2's published vector is weaker than NEC1's, and says so.** The string is
+a Pioneer signal, which IrpTransmogrifier defines as NEC2 at 40 kHz
+("distinguished from NEC2 only by frequency", `IrpProtocols.xml`). The test
+asserts it decodes as Pioneer and, within a 2000 Hz tolerance, as NEC2 (L185),
+and not as NEC2 within 1000 Hz (L190). No parameters are stated. The 1.2.14
+release decodes it as `Pioneer: {D=90,F=38}` and its `render -n D=90,F=38 -p
+pioneer` reproduces the string byte for byte, which fixes the parameters; S
+defaults to 255-D = 165, and our NEC2 encoder at 40 kHz reproduces every
+duration under IrpTransmogrifier's rounding rule. What was **not** re-run is
+the NEC2 half of the assertion: that release's `decode` lists NEC, NEC-f16,
+NEC-Shirriff-32 and Pioneer for the string, not NEC2, so the claim "the tool
+decodes this as NEC2" belongs to the pinned commit's library, which was not
+built here. It is the only Pronto string in the tests that has NEC2's
+shape, which is why NEC2 also carries the render at 38.4k, where the carrier is
+the IRP's own.
+
+**NECx1 has no published Pronto vector.** IrpTransmogrifier's tests at
+`c945e76` mention NECx1 only in the capture's decode expectations above. Two
+renders are used so that both values of the one field NECx1 adds to NECx2, the
+repeat frame's bit `~D:1`, are pinned: an even D gives a one-bit (`1,-3`), an
+odd D a zero-bit (`1,-1`). The capture shows only the even case.
+
+**NECx2: searched again, still no published Pronto vector.** `git grep` of
+IrpTransmogrifier `@c945e76` for `necx`, `nec2`, `samsung32` and `nec-f16`
+across `src/test`, and for Pronto strings with an 8-unit lead-in at 36, 38,
+38.4 and 40 kHz, finds only the teaser files above (decode expectations on a
+capture, now used for gate 2a), `IrpDatabaseNGTest`'s database checks and
+`DecoderNGTest`'s Pioneer test. NECx2's gate 2b therefore stays "reproducible",
+and `test_registry` still warns about it, now together with NECx1.
+
+### Gate 3 — invariant tests: **MET**
+
+`tests/test_nec2.py` and `tests/test_necx1.py`: lead-in widths, pair counts,
+each sequence padding to its own 108 ms, LSB-first order and the complement
+byte read back out of the durations, an exhaustive round trip over all 65,536
+device/function pairs and all 256 subdevices, and, for NECx1, the repeat bit
+for each of the 256 devices.
+
+### Not established
+
+- NEC2's and NECx1's *byte-level* Pronto against a published NEC2 or NECx1
+  vector, as above.
+- Whether a real NECx1 receiver needs the repeat frame sent at all: the
+  ledger encodes it, `minSends` never plays it.

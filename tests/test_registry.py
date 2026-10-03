@@ -13,7 +13,9 @@ from reference_quantizers import RULES
 VECTORS = Path(__file__).parent / "vectors"
 VECTOR_INDEX = VECTORS / "index.json"
 V1_REGISTRY = {"NEC1", "NECx2", "RC5", "Sony20"}
+V1_REGISTRY |= {"NEC2", "NECx1"}
 BACKLOG = {"NEC2", "NEC", "Sony12", "Sony15", "RC6"}
+BACKLOG -= {"NEC2"}
 #: Not backlogged -- `Samsung32` does not exist in any consulted source, and
 #: the question it stood for is now answered: the BN59-01199F speaks NECx2,
 #: per IRDB (device 7, subdevice 7) and corroborated by IRremoteESP8266's
