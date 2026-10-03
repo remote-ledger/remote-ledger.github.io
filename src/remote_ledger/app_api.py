@@ -57,7 +57,6 @@ from .irblaster.importer import (
 from .parallel import ordered_map
 from .remote import remote_from_doc
 from .serialize import load
-from .validate import corpus_files
 
 SCHEMA_VERSION = 1
 
@@ -116,6 +115,7 @@ _LOWER = str.maketrans(string.ascii_uppercase, string.ascii_lowercase)
 _UPPER = str.maketrans(string.ascii_lowercase, string.ascii_uppercase)
 
 
+@lru_cache(maxsize=None)
 def nocase_key(text: str) -> tuple[str, str]:
     """SQLite's ``COLLATE NOCASE``: fold ASCII letters to lower case, compare
     the UTF-8 bytes (so a non-ASCII letter is untouched and code point order is
@@ -124,6 +124,7 @@ def nocase_key(text: str) -> tuple[str, str]:
     return text.translate(_LOWER), text
 
 
+@lru_cache(maxsize=None)
 def upper_key(text: str) -> str:
     """SQLite's ``UPPER``: ASCII letters only; non-ASCII are left as they are."""
     return text.translate(_UPPER)
@@ -199,7 +200,10 @@ def _read_file(root: Path, path: Path) -> dict[str, Any]:
     keys as ``(label, DB protocol, hexcode)``, the commit its citations name,
     and the Pronto string of every key of a candidate protocol.
     """
-    where = paths.rel(root, path)
+    try:
+        where = path.relative_to(root).as_posix()
+    except ValueError:
+        where = path.as_posix()
     out: dict[str, Any] = {"where": where, "problems": [], "keys": [], "signals": {}}
     try:
         _read_into(out, root, path, where)
@@ -253,6 +257,10 @@ def _read_into(out: dict[str, Any], root: Path, path: Path, where: str) -> None:
                 out["problems"].append(
                     f"{where}: {protocol} {hexcode} compiles to two different Pronto strings")
     out["commits"] = sorted(commits)
+    by_protocol: dict[str, set[str]] = {}
+    for _label, protocol, hexcode in out["keys"]:
+        by_protocol.setdefault(protocol, set()).add(hexcode)
+    out["byProtocol"] = by_protocol
 
 
 # --- assembling ----------------------------------------------------------------------------
@@ -318,8 +326,7 @@ def _unrepresented(root: Path) -> int | None:
 def source_files(root: Path) -> list[Path]:
     """The remote files the API is a function of: everything under the
     imported database's directory."""
-    return [p for p in corpus_files(root)
-            if paths.rel(root, p).startswith(paths.APP_API_SOURCE)]
+    return sorted((root / paths.APP_API_SOURCE).glob("**/*.json"))
 
 
 def build_app_api(root: Path) -> AppApi:
@@ -351,7 +358,7 @@ def build_app_api(root: Path) -> AppApi:
         id_keys[db_id].update(fact["keys"])
         id_pairs[db_id].update(fact["pairs"])
         commits.update(fact["commits"])
-        for _label, protocol, hexcode in fact["keys"]:
+        for protocol, hexcodes in fact["byProtocol"].items():
             ledgers[protocol].add(fact["ledger"])
             carriers.setdefault((protocol, fact["ledger"]), fact["carrierHz"])
             if carriers[(protocol, fact["ledger"])] != fact["carrierHz"]:
@@ -359,13 +366,14 @@ def build_app_api(root: Path) -> AppApi:
                     f"{fact['where']}: {protocol} as {fact['ledger']} has carrierHz "
                     f"{fact['carrierHz']}, another file {carriers[(protocol, fact['ledger'])]}")
             min_sends[protocol].add(fact["minSends"])
-            codes[protocol].add(hexcode)
+            codes[protocol] |= hexcodes
         for code, pronto in fact["signals"].items():
             seen = signals.setdefault(code, (pronto, fact["where"]))
             if seen[0] != pronto:
                 result.problems.append(
                     f"{code[0]} {code[1]} compiles to different Pronto strings in "
                     f"{seen[1]} and {fact['where']}")
+    facts = fact = None          # the per-file records are not needed again
     for protocol, values in sorted(min_sends.items()):
         if len(values) > 1:
             result.problems.append(f"{protocol}: files disagree on minSends: {sorted(values)}")
@@ -424,6 +432,12 @@ def build_app_api(root: Path) -> AppApi:
         return result
 
     # -- brands, models and keys -----------------------------------------------------
+    for db_id in sorted(id_keys):
+        if id_keys[db_id] and not id_pairs[db_id]:
+            result.problems.append(
+                f"remote {db_id}: no file of it has a controls entry, so no brand lists its keys")
+    if result.problems:
+        return result
     sorted_keys: dict[int, list[list[Any]]] = {}
     id_mask: dict[int, int] = {}
     for db_id, keys in id_keys.items():
@@ -434,6 +448,7 @@ def build_app_api(root: Path) -> AppApi:
                               for label, protocol, hexcode in ordered]
         id_mask[db_id] = sum(1 << i for i in {PROTOCOL_INDEX[k[1]] for k in keys})
 
+    id_keys.clear()
     brand_ids: dict[str, set[int]] = defaultdict(set)
     brand_models: dict[str, dict[str, set[int]]] = defaultdict(lambda: defaultdict(set))
     for db_id, pairs in id_pairs.items():
