@@ -662,3 +662,123 @@ pins both readings.
   Proton's 17 possible lead-out gaps, 8 are exact ties and the doubles round
   three of them down (17,000, 21,000 and 25,000 us). The two Proton vectors were
   chosen to avoid those; the helper was not changed (shared file).
+## Aiwa, Blaupunkt and the Kaseikyo family
+
+Eight protocols registered together because SwiftRemote's database names
+three of them under labels no published list contains -- `REC80`, `RCC2026`,
+`RCC0082` -- and each turned out to be a known waveform, found by matching
+timings and bit counts against IrpTransmogrifier's database. The app that
+defined those names says it found no public definition
+(`iodn/android-ir-blaster` `report-source.md`: "Evidence gap").
+
+| DB name | Ledger protocol(s) | IRP source |
+|---|---|---|
+| `RCC0082` | Blaupunkt | `IrpProtocols.xml` L441 (release 1.2.14 and @`c945e76` alike), alternate name Motorola; also the fixture string in `ProtocolNGTest.java` L100 |
+| `RCC2026` | Aiwa | `IrpProtocols.xml` L223; also, commented out, `ProtocolNGTest.java` L108 |
+| `REC80` | Panasonic, JVC-48, Fujitsu, Teac-K, Denon-K, SharpDVD | `IrpProtocols.xml` L1939, L1219, L929, L2830, L511, L2500 (@`c945e76`: L1958, L1219, L929, L2849, L511, L2519) |
+
+Every IRP string is verbatim from that file; the two commits agree on all
+eight. `Kaseikyo` and `Aiwa2`, which the same file lists, are deliberately not
+registered (see `protocols/kaseikyo.py` and `protocols/aiwa.py`).
+
+### Gate 1 and gate 3: MET for all eight
+
+`tests/test_kaseikyo.py` (six protocols), `tests/test_aiwa.py`,
+`tests/test_blaupunkt.py`. Blaupunkt is swept exhaustively (512 frames); the
+others sweep every field completely against awkward fixed values and add
+20,000 seeded random frames, because Panasonic's 16 M and Denon-K's 1 M
+frames are too many for pure Python. Each decoder is written from the IRP's
+layout, not from the encoder. Checked separately, 200 randomly chosen and
+boundary parameter sets across the eight were rendered by the
+IrpTransmogrifier 1.2.14 release (`render -r`) and compared with the encoders'
+intro and repeat: 200 of 200 identical.
+
+### Gate 2a: MET for six, PENDING for two
+
+A hardware capture or a published constant table, each with a decode that the
+source itself asserts:
+
+- **Panasonic** -- two sources. `crankyoldgit/IRremoteESP8266`
+  `src/ir_Panasonic.cpp` @`1e2f0f3` L28-L35 and L104-L112 publish the timings
+  (3456/1728, 432, 1296, and a 74,736 us gap, which is exactly 173 units) and
+  the layout (16-bit manufacturer, device, subdevice, function, XOR), and our
+  frame reproduces it exactly. **The two spell the bytes differently**: they
+  send the 48-bit value MSB-first, the IRP sends each field LSB-first, so their
+  `device` is the bit-reverse of the IRP's `D`. Their manufacturer `0x4004` is
+  our vendor bytes 02 20, which is why every Panasonic code in the DB starts
+  `4004`. Second, `Panasonic.ict` in IrpTransmogrifier's teaser tests, decoded
+  by that project as `{D=176,S=0,F=54}`.
+- **Aiwa** -- `Aiwa_left.ict`, `{D=8,S=0,F=21}`.
+- **Blaupunkt** -- `Blaupunkt.ict`, key Ch+, `{F=21,D=2}`.
+- **Teac-K** -- `Teac_0_4_Input.ict`, `{D=0,S=4,F=19}`, which carries the
+  shorter `8,-8` repeat as well as the frame.
+- **Denon-K** -- `Denon-K_Denon.ict`, `{D=4,S=1,F=28}`.
+- **Fujitsu** -- `Fujitsu_pronto.txt`, a Pronto capture, `{D=132,F=0}`.
+
+All of those files are IrpTransmogrifier's own test resources
+(`src/test/teaserfiles`, pinned at `c945e76`) and are copied, one frame each,
+to `irpt-teaser-captures.json`. A capture carries instrument bias, so these
+verify layout and ratios (every duration within 12 %, 150 us), not absolute
+durations. One real difference showed up: Blaupunkt's capture has a 20.6 ms
+sync gap where the IRP says 45 units (23.0 ms), 10.7 % apart.
+
+**JVC-48 and SharpDVD have no gate-2a evidence for their own bytes.**
+Searched: IrpTransmogrifier's test resources, IRremoteESP8266, the DecodeIR
+documentation, Flipper and Arduino-IRremote. Two things do exist.
+`Arduino-IRremote` `src/ir_Kaseikyo.hpp` @`6158d65` L113-L117 publishes vendor
+IDs 0x2002 Panasonic, 0x3254 Denon, 0x5AAA Sharp and 0x0103 JVC, which are the
+fixed bytes (2,32), (84,50), (170,90) and (3,1) of Panasonic, Denon-K,
+SharpDVD and JVC-48 read little-endian, and L99-L106 give the shared 432 us
+unit and 8/4-unit header; Flipper's `infrared_protocol_kaseikyo_i.h` says the
+same. That corroborates the vendor bytes and the frame, not the layout of the
+remaining bytes. And `probonopd/irdb`, which lists both by name
+with device codes -- JVC-48 for JVC receivers and CD players (device 34),
+SharpDVD for the Sharp RRMCGA030WJSA (device 8, subdevice 48) -- and whose
+SharpDVD keys agree with the SwiftRemote database code for code (digits 1-9 =
+F 1-9, 0 = F 10, Up 32, Down 33, Left 34, Menu 27, Enter 28). That
+corroborates the *parameter mapping*, not the waveform. Both share the
+Panasonic frame, whose waveform is verified. What is not verified is the
+layout after the vendor bytes (JVC-48's is Panasonic's, SharpDVD's is not)
+and, for SharpDVD, its 400 us unit, 38 kHz carrier and 48-unit gap.
+
+### Gate 2b: MET for all eight, every one reproducible, none published
+
+| Protocol | Vector | Provenance | Our bytes differ at |
+|---|---|---|---|
+| Aiwa | D=8 S=0 F=21 @ 38.123k | reproducible | words 5, 91, 93, 95 |
+| Blaupunkt | D=2 F=21 @ 30.3k | reproducible | 40 words: see below |
+| Panasonic | D=176 S=0 F=54 @ 37k | reproducible | word 103 (lead-out) |
+| JVC-48 | D=34 S=33 F=12 @ 37k | reproducible | word 103 |
+| Fujitsu | D=132 S=132 F=0 @ 37k | reproducible | word 103 |
+| Teac-K | D=0 S=4 F=19 @ 37k | reproducible | words 103, 107 |
+| Denon-K | D=4 S=1 F=28 @ 37k | reproducible | word 103 |
+| SharpDVD | D=8 S=48 F=1 @ 38k | reproducible | none: bytes identical |
+
+All are `render -n ... -p <protocol>` from the IrpTransmogrifier 1.2.14
+release, which also reproduces the published NEC1 strings exactly. Our
+timings, quantized by that tool's own rule, reproduce each vector word for
+word. `test_registry` warns about all eight on every run, as it does for
+NECx2. **No published vector with stated parameters was found for any of
+them**: IrpTransmogrifier's tests assert decodes of captures, not Pronto
+strings it generated.
+
+Two published Pronto strings exist and are not usable as gate 2b, because
+they are captures and cannot reproduce under an exact rule: `GRAHAM_PANASONIC`
+(`IrpTransmogrifierNGTest.java` L29, decoded at L581 as Panasonic
+`{D=176,S=16,F=17}`; a shorter gap and carrier word 0x71 against our 0x70) and
+`Fujitsu_pronto.txt`. Both are used for gate 2a.
+
+**Blaupunkt's 40 differing words are one rounding case, not an error.** At
+30.3 kHz a 512 us unit is 15.51 cycles. IrpTransmogrifier rounds each duration
+against the nominal carrier (16 cycles, 528 us on playback); D6 rule 4 rounds
+against the period the frequency word implies (15 cycles, 496 us). Neither is
+wrong; they land 3 % either side of 512, and every unit-length run differs.
+
+### What is not proven
+
+- Eight encoders ship on IrpTransmogrifier's definitions and a render of
+  IrpTransmogrifier; none has a published Pronto vector.
+- Blaupunkt's closing sync cannot be carried (`IrSignal.ending` is reserved,
+  D1). The ledger drops it as IrpTransmogrifier's own Pronto does, which warns.
+- Fujitsu `E`, Teac-K `X` and SharpDVD `E` are IRP parameters a remote file
+  cannot name; the encoders fix them at the IRP default and say so.

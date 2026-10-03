@@ -16,7 +16,9 @@ Every other protocol below the first four joined for the SwiftRemote database
 import (DESIGN section 17), each through the same three gates: ``NEC2``,
 ``NECx1``, ``Sony12``, ``Sony15``, ``RC6`` (mode 0 only), ``RCA-38``,
 ``Thomson7``, ``Pioneer-2Part``, ``JVC``, ``Sharp``, ``Denon``, ``Samsung36``,
-``Proton``, ``F12_relaxed``, ``RECS80`` and ``RECS80-0068``.
+``Proton``, ``F12_relaxed``, ``RECS80``, ``RECS80-0068``, ``Aiwa``,
+``Blaupunkt``, ``Panasonic``, ``JVC-48``, ``Fujitsu``, ``Teac-K``, ``Denon-K``
+and ``SharpDVD``.
 
 ``Samsung32`` is **not** backlogged -- it does not exist. D18's table carried
 an IRP string for it that was written from memory during design and never
@@ -31,10 +33,13 @@ speaks is open work, recorded in ``unresolved.json``.
 from __future__ import annotations
 
 from ..errors import ValidationError
+from .aiwa import AIWA
 from .base import Protocol
+from .blaupunkt import BLAUPUNKT
 from .denon import DENON
 from .f12 import F12_RELAXED
 from .jvc import JVC
+from .kaseikyo import DENON_K, FUJITSU, JVC48, PANASONIC, SHARP_DVD, TEAC_K
 from .nec import NEC1, NEC2, NECX1, NECX2
 from .pioneer import PIONEER_2PART
 from .proton import PROTON
@@ -52,6 +57,7 @@ _PROTOCOLS = (
     NEC2, NECX1, SONY12, SONY15, RC6, RCA38, THOMSON7,
     PIONEER_2PART, JVC, SHARP, DENON,
     SAMSUNG36, PROTON, F12_RELAXED, RECS80, RECS80_0068,
+    AIWA, BLAUPUNKT, PANASONIC, JVC48, FUJITSU, TEAC_K, DENON_K, SHARP_DVD,
 )
 
 REGISTRY: dict[str, Protocol] = {p.name: p for p in _PROTOCOLS}
@@ -62,6 +68,7 @@ __all__ = [
     "NEC2", "NECX1", "SONY12", "SONY15", "RC6", "RCA38", "THOMSON7",
     "PIONEER_2PART", "JVC", "SHARP", "DENON",
     "SAMSUNG36", "PROTON", "F12_RELAXED", "RECS80", "RECS80_0068",
+    "AIWA", "BLAUPUNKT", "PANASONIC", "JVC48", "FUJITSU", "TEAC_K", "DENON_K", "SHARP_DVD",
 ]
 
 

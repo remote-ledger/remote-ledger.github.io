@@ -18,6 +18,7 @@ V1_REGISTRY = {
     "NEC2", "NECx1", "Sony12", "Sony15", "RC6", "RCA-38", "Thomson7",
     "Pioneer-2Part", "JVC", "Sharp", "Denon",
     "Samsung36", "Proton", "F12_relaxed", "RECS80", "RECS80-0068",
+    "Aiwa", "Blaupunkt", "Panasonic", "JVC-48", "Fujitsu", "Teac-K", "Denon-K", "SharpDVD",
 }
 BACKLOG = {"NEC"}
 #: Not backlogged -- `Samsung32` does not exist in any consulted source, and
