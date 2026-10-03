@@ -81,5 +81,115 @@
     "source": "https://github.com/bengtmartensson/IrpTransmogrifier/blob/c945e7638355ca5697f458d33338ee1bfd4d1640/src/test/java/org/harctoolbox/irp/IrpTransmogrifierNGTest.java#L237-L239",
     "note": "testDecodeRc5: decode --strict -p rc5 on this string must give RC5: {D=7,F=5}. A decode assertion, not a render one, so the parameters are the tool's own answer; T=0 is what our encoder must use to reproduce it. A different address and command from D=1, F=1, so it pins the field bit order.",
     "byteDivergence": [25]
+  },
+  {
+    "file": "irpt_samsung36_D32_S0_E7_F24.pronto",
+    "protocol": "Samsung36",
+    "params": {"device": 32, "subdevice": 0, "function": 1816, "carrier_hz": 37900},
+    "quantization": "irpt-nominal-carrier",
+    "provenance": "reproducible",
+    "source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=32,S=0,E=7,F=24 -p Samsung36",
+    "note": "Up on the Samsung Blu-ray remote whose capture IrpTransmogrifier's own test data holds (Samsung36.exp: Up decodes as Samsung36 {D=32,S=0,F=24,E=7}). `function` is the ledger's E:F packing, 7*256 + 24 = 1816. No Pronto string for Samsung36 is published, so this is a render of the pinned release; the same parameters are what the DB's UP key (hex 0400E18) maps to.",
+    "byteDivergence": [39, 81]
+  },
+  {
+    "file": "irpt_samsung36_D18_S52_E5_F86.pronto",
+    "protocol": "Samsung36",
+    "params": {"device": 18, "subdevice": 52, "function": 1366, "carrier_hz": 37900},
+    "quantization": "irpt-nominal-carrier",
+    "provenance": "reproducible",
+    "source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=18,S=52,E=5,F=86 -p Samsung36",
+    "note": "Every field different (D=0x12, S=0x34, E=5, F=0x56), so a swapped D and S, a wrong bit order or a misplaced E nibble cannot pass. `function` = 5*256 + 86 = 1366. A render of the pinned release, like its sibling; nothing published to compare it with.",
+    "byteDivergence": [39, 81]
+  },
+  {
+    "file": "irpt_proton_D20_F1.pronto",
+    "protocol": "Proton",
+    "params": {"device": 20, "subdevice": null, "function": 1, "carrier_hz": 38500},
+    "quantization": "irpt-nominal-carrier",
+    "provenance": "reproducible",
+    "source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=20,F=1 -p Proton",
+    "note": "Key 1 of the Proton remote whose capture IrpTransmogrifier's test data holds (Proton.exp: Proton {D=20,F=1}). A render of the pinned release; no Pronto string for Proton is published.",
+    "byteDivergence": [4, 41]
+  },
+  {
+    "file": "irpt_proton_D18_F53.pronto",
+    "protocol": "Proton",
+    "params": {"device": 18, "subdevice": null, "function": 53, "carrier_hz": 38500},
+    "quantization": "irpt-nominal-carrier",
+    "provenance": "reproducible",
+    "source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=18,F=53 -p Proton",
+    "note": "D=0x12, F=0x35: every bit of both bytes in play and the two different, so swapped bytes or reversed bit order cannot pass. Chosen so that no duration lands exactly half-way between two cycle counts (see NOTES/misc.md on tests/reference_quantizers.py).",
+    "byteDivergence": [4, 41]
+  },
+  {
+    "file": "irpt_f12relaxed_D0_S1_F16.pronto",
+    "protocol": "F12_relaxed",
+    "params": {"device": 0, "subdevice": 1, "function": 16, "carrier_hz": 37900},
+    "quantization": "irpt-nominal-carrier",
+    "provenance": "reproducible",
+    "source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=0,S=1,F=16 -p F12_relaxed",
+    "note": "Close on the strict-F12 remote whose capture IrpTransmogrifier's test data holds (F12.exp: F12 {D=0,S=1,F=16}); the frame is the same as F12_relaxed's. A render of the pinned release.",
+    "byteDivergence": [27]
+  },
+  {
+    "file": "irpt_f12relaxed_D3_S1_F33.pronto",
+    "protocol": "F12_relaxed",
+    "params": {"device": 3, "subdevice": 1, "function": 33, "carrier_hz": 37900},
+    "quantization": "irpt-nominal-carrier",
+    "provenance": "reproducible",
+    "source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=3,S=1,F=33 -p F12_relaxed",
+    "note": "D=3 (011b) is not its own bit reversal (110b), S=1, and F=33 has bits 0 and 5 set, so a reversed bit order in D or F, or a misplaced S, cannot pass. A render of the pinned release.",
+    "byteDivergence": [27]
+  },
+  {
+    "file": "irpt_recs80_D6_F56_T1.pronto",
+    "protocol": "RECS80",
+    "params": {"device": 6, "subdevice": null, "function": 56, "carrier_hz": 38000, "toggle": 1},
+    "quantization": "irpt-nominal-carrier",
+    "provenance": "reproducible",
+    "source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=6,F=56,T=1 -p RECS80",
+    "note": "The signal of IrpTransmogrifierNGTest.testDecodeRecs80Junk (L333-L336 @ c945e76): eleven exact durations asserted to decode as RECS80 {D=6,F=56,T=1}. That assertion is published; this Pronto string is not, so it is a render of the pinned release, and tests/test_recs80.py separately checks this encoder reproduces the published microsecond durations exactly.",
+    "byteDivergence": [27]
+  },
+  {
+    "file": "irpt_recs80_D2_F1_T0.pronto",
+    "protocol": "RECS80",
+    "params": {"device": 2, "subdevice": null, "function": 1, "carrier_hz": 38000, "toggle": 0},
+    "quantization": "irpt-nominal-carrier",
+    "provenance": "reproducible",
+    "source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=2,F=1,T=0 -p RECS80",
+    "note": "The parameters of the second published decode assertion (testDecodeRecs80Multiple, L348-L351: a capture whose frames decode to D=2,F=1 with T=1 then T=0), in the T=0 state a remote file carries. A render of the pinned release.",
+    "byteDivergence": [27]
+  },
+  {
+    "file": "irpt_recs80_0068_D6_F56_T1.pronto",
+    "protocol": "RECS80-0068",
+    "params": {"device": 6, "subdevice": null, "function": 56, "carrier_hz": 33300, "toggle": 1},
+    "quantization": "irpt-nominal-carrier",
+    "provenance": "reproducible",
+    "source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=6,F=56,T=1 -p RECS80-0068",
+    "note": "RECS80-0068 has no published vector of its own; this is a render of the pinned release at the parameters of the published RECS80 assertion. Our bytes differ from the tool's at every space word but one: at 33.3 kHz the Pronto frequency word is 124, which plays at 33.46 kHz, and D6 rule 4 measures against that period where IrpTransmogrifier measures against 33.3 kHz.",
+    "byteDivergence": [5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27]
+  },
+  {
+    "file": "irpt_recs80_0068_D2_F1_T0.pronto",
+    "protocol": "RECS80-0068",
+    "params": {"device": 2, "subdevice": null, "function": 1, "carrier_hz": 33300, "toggle": 0},
+    "quantization": "irpt-nominal-carrier",
+    "provenance": "reproducible",
+    "source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=2,F=1,T=0 -p RECS80-0068",
+    "note": "As above at the second assertion's parameters and T=0. Differs from our bytes at the same words, for the same reason (the 33.3 kHz word truncates to 124).",
+    "byteDivergence": [5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27]
   }
 ]

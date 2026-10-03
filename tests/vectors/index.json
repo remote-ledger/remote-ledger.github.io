@@ -87,5 +87,130 @@
     "gate2b_byte_divergence": [
       27
     ]
+  },
+  "Samsung36": {
+    "gate1_irp_source": "IrpTransmogrifier IrpProtocols.xml @c945e76 L2409-L2411 (verbatim; identical in the 1.2.14 release), whose documentation cites elektrolab.wz.cz/katalog/samsung_protocol.pdf. Corroborated by IrpTransmogrifier's own hardware captures of a Samsung Blu-ray remote (see gate 2a) and, for the DB's bit order and E nibble, by the SwiftRemote database itself: its Samsung BD remotes carry UP/DOWN/LEFT/RIGHT/OK/PLAY at exactly the hexcodes those captures' decodes predict",
+    "regression_snapshot": null,
+    "snapshot_is_evidence": false,
+    "gate2a_structural_vector": "bengtmartensson/IrpTransmogrifier @c945e76 src/test/teaserfiles/Samsung36.ict and Samsung36.exp: eight captures of a Samsung Blu-ray remote (Teaser, hifi-remote.com forum), each with the decode IrpTransmogrifier's own test expects. Not vendored (a GPL-3.0 repository, the files used there by permission of the capture's author); tools/misc_capture_audit.py --irpt DIR re-runs the comparison. All 8 keys' bits decode, by a threshold decoder written from the frame layout, to the .exp fields and re-encode to the same bit pattern. A capture carries instrument bias, so this verifies layout, bit order and framing, not absolute durations: capture durations are 0.84-1.00x the encoder's (the unit is nearer 500 us than the IRP's 560) and the frame period is 1.13x (122 ms against ^108m)",
+    "gate2a_pending_reason": null,
+    "gate2b_golden_pronto": "irpt_samsung36_D32_S0_E7_F24.pronto",
+    "gate2b_pending_reason": null,
+    "gate2b_vector_source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "gate2b_vector_params": {
+      "device": 32,
+      "subdevice": 0,
+      "function": 1816,
+      "carrier_hz": 37900
+    },
+    "gate2b_vector_quantization": "irpt-nominal-carrier",
+    "gate2b_vector_provenance": "reproducible",
+    "gate2b_vector_reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=32,S=0,E=7,F=24 -p Samsung36",
+    "gate2b_byte_divergence": [
+      39,
+      81
+    ]
+  },
+  "Proton": {
+    "gate1_irp_source": "IrpTransmogrifier IrpProtocols.xml @c945e76 L2084-L2086 (verbatim; identical in the 1.2.14 release). Corroborated by IrpTransmogrifier's own hardware captures of a Proton remote (see gate 2a), whose nine keys all appear, with the same device byte, in one SwiftRemote database remote",
+    "regression_snapshot": null,
+    "snapshot_is_evidence": false,
+    "gate2a_structural_vector": "bengtmartensson/IrpTransmogrifier @c945e76 src/test/teaserfiles/Proton.ict and Proton.exp: nine captures of a Proton-protocol TV remote (Teaser, hifi-remote.com forum), each with the decode IrpTransmogrifier's own test expects. Not vendored (a GPL-3.0 repository, the files used there by permission of the capture's author); tools/misc_capture_audit.py --irpt DIR re-runs the comparison. All 9 keys' bits decode, by a threshold decoder written from the frame layout, to the .exp fields and re-encode to the same bit pattern. A capture carries instrument bias, so this verifies layout, bit order and framing, not absolute durations: capture durations are 1.01-1.10x the encoder's (unit ~530 us against the IRP's 500) and the frame period 1.01x, matching ^63m",
+    "gate2a_pending_reason": null,
+    "gate2b_golden_pronto": "irpt_proton_D20_F1.pronto",
+    "gate2b_pending_reason": null,
+    "gate2b_vector_source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "gate2b_vector_params": {
+      "device": 20,
+      "subdevice": null,
+      "function": 1,
+      "carrier_hz": 38500
+    },
+    "gate2b_vector_quantization": "irpt-nominal-carrier",
+    "gate2b_vector_provenance": "reproducible",
+    "gate2b_vector_reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=20,F=1 -p Proton",
+    "gate2b_byte_divergence": [
+      4,
+      41
+    ]
+  },
+  "F12_relaxed": {
+    "gate1_irp_source": "IrpTransmogrifier IrpProtocols.xml @c945e76 L893-L895 (verbatim; identical in the 1.2.14 release), the 'relaxed' form of F12, whose strict form is DecodeIR's (hifi-remote.com/wiki/index.php?title=DecodeIR#F12). Corroborated by IrpTransmogrifier's hardware captures of a strict-F12 remote, whose frame is the same (see gate 2a)",
+    "regression_snapshot": null,
+    "snapshot_is_evidence": false,
+    "gate2a_structural_vector": "bengtmartensson/IrpTransmogrifier @c945e76 src/test/teaserfiles/F12.ict and F12.exp: eleven captures of a strict-F12 remote (Teaser, hifi-remote.com forum); the strict form repeats this frame, so the frame is F12_relaxed's, each with the decode IrpTransmogrifier's own test expects. Not vendored (a GPL-3.0 repository, the files used there by permission of the capture's author); tools/misc_capture_audit.py --irpt DIR re-runs the comparison. All 11 keys' bits decode, by a threshold decoder written from the frame layout, to the .exp fields and re-encode to the same bit pattern. A capture carries instrument bias, so this verifies layout, bit order and framing, not absolute durations: capture durations are 0.94-1.08x the encoder's and the frame period 0.99x",
+    "gate2a_pending_reason": null,
+    "gate2b_golden_pronto": "irpt_f12relaxed_D0_S1_F16.pronto",
+    "gate2b_pending_reason": null,
+    "gate2b_vector_source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "gate2b_vector_params": {
+      "device": 0,
+      "subdevice": 1,
+      "function": 16,
+      "carrier_hz": 37900
+    },
+    "gate2b_vector_quantization": "irpt-nominal-carrier",
+    "gate2b_vector_provenance": "reproducible",
+    "gate2b_vector_reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=0,S=1,F=16 -p F12_relaxed",
+    "gate2b_byte_divergence": [
+      27
+    ]
+  },
+  "RECS80": {
+    "gate1_irp_source": "IrpTransmogrifier IrpProtocols.xml @c945e76 L2272-L2275 (verbatim; identical in the 1.2.14 release); the file's own comment says it is 'like DecodeIR'. Corroborated by two published decode assertions in IrpTransmogrifierNGTest.java (see gate 2a)",
+    "regression_snapshot": null,
+    "snapshot_is_evidence": false,
+    "gate2a_structural_vector": "bengtmartensson/IrpTransmogrifier @c945e76 src/test/java/org/harctoolbox/irp/IrpTransmogrifierNGTest.java L333-L336, a published decode assertion: eleven exact durations (158 us marks, 4,898 and 7,426 us spaces, a 45,000 us gap) decode, strict, as RECS80 {D=6,F=56,T=1}; and L348-L351, a real multi-frame capture (marks 150-200 us, spaces 4,800-7,350 us, 30 ms gaps, so a ratio-and-layout check only, with instrument bias) decoding to D=2,F=1 with T=1 and then T=0. tests/test_recs80.py re-checks both against this encoder; the first reproduces exactly",
+    "gate2a_pending_reason": null,
+    "gate2b_golden_pronto": "irpt_recs80_D6_F56_T1.pronto",
+    "gate2b_pending_reason": null,
+    "gate2b_vector_source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "gate2b_vector_params": {
+      "device": 6,
+      "subdevice": null,
+      "function": 56,
+      "carrier_hz": 38000,
+      "toggle": 1
+    },
+    "gate2b_vector_quantization": "irpt-nominal-carrier",
+    "gate2b_vector_provenance": "reproducible",
+    "gate2b_vector_reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=6,F=56,T=1 -p RECS80",
+    "gate2b_byte_divergence": [
+      27
+    ]
+  },
+  "RECS80-0068": {
+    "gate1_irp_source": "IrpTransmogrifier IrpProtocols.xml @c945e76 L2288-L2290 (verbatim; identical in the 1.2.14 release); its uei-executor is 0068. The same frame as RECS80 at a 180 us unit and 33.3 kHz with a ^138m extent",
+    "regression_snapshot": null,
+    "snapshot_is_evidence": false,
+    "gate2a_structural_vector": null,
+    "gate2a_pending_reason": "No independent capture, constant table or assertion exists for the 180 us / 33.3 kHz clock. Its frame layout is RECS80's, which gate 2a does verify against published assertions; the 180 us unit, the 5,580 / 8,460 us spaces and the 138 ms extent rest on the IRP string and on the IrpTransmogrifier render vector alone",
+    "gate2b_golden_pronto": "irpt_recs80_0068_D6_F56_T1.pronto",
+    "gate2b_pending_reason": null,
+    "gate2b_vector_source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "gate2b_vector_params": {
+      "device": 6,
+      "subdevice": null,
+      "function": 56,
+      "carrier_hz": 33300,
+      "toggle": 1
+    },
+    "gate2b_vector_quantization": "irpt-nominal-carrier",
+    "gate2b_vector_provenance": "reproducible",
+    "gate2b_vector_reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=6,F=56,T=1 -p RECS80-0068",
+    "gate2b_byte_divergence": [
+      5,
+      7,
+      9,
+      11,
+      13,
+      15,
+      17,
+      19,
+      21,
+      23,
+      25,
+      27
+    ]
   }
 }

@@ -218,3 +218,79 @@ MakeHex's own NECx2 definition uses a fixed `1,-78` lead-out instead of
   shape IrpTransmogrifier renders for `*`, and every vector above matches it
   in its pair counts. R3's `minSends` is what guarantees the frame goes out
   at least once.
+
+---
+
+## The `misc` family: Samsung36, Proton, F12_relaxed, RECS80, RECS80-0068
+
+Added for the SwiftRemote database import. **Gate 2b is `reproducible` for all
+five: no Pronto string for any of them is published**, so `test_registry`
+warns about each on every run, as it does for NECx2. What exists instead, and
+is used:
+
+- **Gate 1**, all five: the IRP verbatim from IrpTransmogrifier's
+  `IrpProtocols.xml` @`c945e76` (Samsung36 L2409-L2411, Proton L2084-L2086,
+  F12_relaxed L893-L895, RECS80 L2272-L2275, RECS80-0068 L2288-L2290). Each is
+  character for character the same in the 1.2.14 release jar the vectors were
+  rendered with.
+- **Gate 2b**, all five: two renders each from that jar
+  (`java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n ... -p
+  <name>`, recorded per vector in `pronto-vectors.json`). Our microsecond
+  timings reproduce every one **exactly** under IrpTransmogrifier's own rounding
+  rule (`reference_quantizers.irpt`), and our bytes differ only where declared.
+  The second vector of each protocol sets every field to a different, asymmetric
+  value so a swapped field or reversed bit order cannot pass.
+- **Gate 2a** is stronger than for NECx2, from IrpTransmogrifier's own test
+  data at the same commit:
+
+| Protocol | Independent evidence | Kind |
+|---|---|---|
+| RECS80 | `IrpTransmogrifierNGTest.java` L333-L336: eleven exact durations assert `RECS80: {D=6,F=56,T=1}`; `tests/test_recs80.py` reproduces them to the microsecond | **published decode assertion**, exact |
+| RECS80 | same file L348-L351: five frames of a real capture assert `D=2,F=1`, `T=1` then `T=0` | published, a capture (layout only) |
+| Samsung36 | `src/test/teaserfiles/Samsung36.ict` + `.exp`: eight keys of a Samsung Blu-ray remote | hardware capture, expected decodes published |
+| Proton | `teaserfiles/Proton.ict` + `.exp`: nine keys of a Proton TV remote | hardware capture |
+| F12_relaxed | `teaserfiles/F12.ict` + `.exp`: eleven keys of a strict-F12 remote (same frame) | hardware capture |
+| RECS80-0068 | none | gate 2a pending, with a reason |
+
+The teaser captures are **cited, not vendored** (a GPL-3.0 repository; the files
+are "used with permission of the author" there, README.txt). `tools/misc_capture_audit.py
+--irpt DIR` re-runs the comparison from a checkout. Every key decodes, by a
+threshold decoder written from the frame layout, to the fields the `.exp` states
+and re-encodes to the same bit pattern: 8/8, 9/9 and 11/11. A capture carries
+instrument bias, so the durations are information, not a pass mark:
+
+| | capture / encoder, every duration but the lead-out | frame period, capture / encoder |
+|---|---|---|
+| Samsung36 | 0.84-1.00x (median 0.886: unit ~496 us against the IRP's 560 us) | 1.13x (122.3 ms against `^108m`) |
+| Proton | 1.01-1.10x (median 1.063: unit ~532 us against 500 us) | 1.01x (63.7 ms against `^63m`) |
+| F12 | 0.94-1.08x (median 1.003) | 0.99x (53.5 ms against 54.0 ms) |
+
+**The Samsung36 numbers are a recorded disagreement with the IRP, not a
+confirmation of it.** Followed anyway (gate 1 is "the IRP verbatim"), and the
+two ways the ledger can say otherwise are in NOTES/misc.md.
+
+**The SwiftRemote database corroborates two bit orders against these captures,
+independently of the app's code.** Its Samsung BD remotes (ids 159, 2665, 5249)
+carry UP/DOWN/LEFT/RIGHT/OK/PLAY/REW at `0400E18`, `0400E98`, `0400ED8`,
+`0400E58`, `0400E38`, `0400E28`, `0400E48`, which are exactly rev8(D=32), rev8(S=0),
+rev4(E=7) and rev8(F=24/25/27/26/28/20/18) for the capture's decodes. Its Proton
+remote 18 has digits 0/1/8/9 at `2800`/`2880`/`2810`/`2890` and P+/P-/VOL-/VOL+/
+NORMAL-OK at `28E8`/`2818`/`2828`/`28C8`/`28E4` -- all nine keys of the Proton
+capture, with `0x28` = rev8(20) leading, **read high byte first**. The app sends
+those bytes the other way round (NOTES/misc.md); `tests/test_irblaster_misc.py`
+pins both readings.
+
+**Two notes on the vectors themselves.**
+
+- *Samsung36's `function` is 12 bits.* The ledger packs the IRP's `E:4` and `F:8`
+  into `function = E*256 + F` (`protocols/samsung36.py`), so the vector params
+  say `function: 1816` for `E=7,F=24` and `1366` for `E=5,F=86`.
+- *A tie in the reference quantizer.* `reference_quantizers.irpt` rounds with
+  exact decimals; IrpTransmogrifier rounds `0.000001 * us * frequency` in
+  doubles. They differ when a duration lands exactly half-way between two cycle
+  counts and the double comes out a hair under: Proton at 38.5 kHz with a 25,000
+  us gap is 962.5 cycles, which IrpTransmogrifier renders 0x03C2 and the helper
+  predicts as 0x03C3. This is one cycle (26 us), not a timing disagreement. Of
+  Proton's 17 possible lead-out gaps, 8 are exact ties and the doubles round
+  three of them down (17,000, 21,000 and 25,000 us). The two Proton vectors were
+  chosen to avoid those; the helper was not changed (shared file).

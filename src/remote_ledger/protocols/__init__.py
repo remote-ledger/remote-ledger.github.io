@@ -27,13 +27,24 @@ from __future__ import annotations
 
 from ..errors import ValidationError
 from .base import Protocol
+from .f12 import F12_RELAXED
 from .nec import NEC1, NECX2
+from .proton import PROTON
 from .rc5 import RC5
+from .recs80 import RECS80, RECS80_0068
+from .samsung36 import SAMSUNG36
 from .sony import SONY20
 
 REGISTRY: dict[str, Protocol] = {p.name: p for p in (NEC1, NECX2, RC5, SONY20)}
 
 __all__ = ["Protocol", "REGISTRY", "NEC1", "NECX2", "RC5", "SONY20"]
+
+# The `misc` family, added for the SwiftRemote DB import: one line per
+# protocol, appended so that the families' edits merge (NOTES/misc.md).
+REGISTRY.update(
+    {p.name: p for p in (SAMSUNG36, PROTON, F12_RELAXED, RECS80, RECS80_0068)}
+)
+__all__ += ["SAMSUNG36", "PROTON", "F12_RELAXED", "RECS80", "RECS80_0068"]
 
 
 def get(name: str) -> Protocol:
