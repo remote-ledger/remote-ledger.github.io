@@ -6,6 +6,7 @@ from pathlib import Path
 
 import pytest
 
+from page_driver import HAVE_NODE, run_page
 from remote_ledger import paths
 from remote_ledger.site import build_site, payload, remote_script, render_html
 from remote_ledger.validate import corpus_files
@@ -194,3 +195,32 @@ def test_the_page_normalises_queries_as_lookup_does(html):
     """The site's norm() is lookup.normalise in JavaScript; both must strip
     the same characters, or the page and `rl lookup` disagree on a match."""
     assert "replace(/[^\\p{L}\\p{N}]+/gu, '')" in html
+
+
+@pytest.mark.skipif(not HAVE_NODE, reason="node is not installed")
+def test_the_page_finds_a_device_whether_its_controls_entry_has_a_pipe(tmp_path):
+    """The IR Blaster import writes ``<BRAND> | <MODEL>`` (D56b). The page's
+    own ``hit`` must find 'SONY | KD - 49 X 8088' for what a person types, and
+    find the plain spelling the same way."""
+    doc = json.loads((ROOT / "remotes" / "topping" / "RC-15A.json").read_text())
+    (tmp_path / "remotes" / "t").mkdir(parents=True)
+    (tmp_path / "remotes" / "t" / "a.json").write_text(json.dumps(doc))
+    build_site(tmp_path, tmp_path)
+
+    def remote(entry):
+        return {"manufacturer": "SONY", "model": "IR Blaster DB 1 (NEC1)",
+                "aliases": [], "controls": [entry]}
+
+    queries = ["sony kd 49x8088", "SONY KD-49X8088", "kd - 49 x 8088", "49x8088",
+               "sony | kd - 49 x 8088", "sony|kd|49x8088", "KD 49 X 8088 sony"]
+    cases = [[remote(entry), q] for entry in ("SONY | KD - 49 X 8088", "SONY KD - 49 X 8088")
+             for q in queries]
+    cases.append([remote("SONY | KD - 49 X 8088"), "sony | "])      # punctuation is no query
+    expr = f"JSON.stringify({json.dumps(cases)}.map(([r, q]) => hit(r, q.trim().toLowerCase())))"
+    value = json.loads(run_page(tmp_path, tmp_path, expr)["value"])
+    assert value[:-1] == [True] * (2 * len(queries))
+    # `matches` treats an empty needle as "show everything" (the empty box), as before
+    assert value[-1] is True
+    assert json.loads(run_page(
+        tmp_path, tmp_path, "JSON.stringify(norm('SONY | KD - 49 X 8088') === norm('SONY KD - 49 X 8088'))"
+    )["value"]) is True

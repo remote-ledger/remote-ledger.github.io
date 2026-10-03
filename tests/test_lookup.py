@@ -147,3 +147,52 @@ def test_normalise():
     assert normalise("SONY BLU RAY BDP S360") == "sonybluraybdps360"
     assert normalise("BDP-S360") == normalise("bdp.s360") == "bdps360"
     assert normalise("CT21AM2(A)") == "ct21am2a"
+
+
+# --- controls written as "<BRAND> | <MODEL>" (the IR Blaster import, D56b) ----------
+
+PIPE = "SONY | KD - 49 X 8088"
+PLAIN = "SONY KD - 49 X 8088"
+
+
+def _controls_index(*controls):
+    return {"remotes": [{
+        "file": "remotes/irblaster/SONY/1-NEC1.json", "manufacturer": "SONY",
+        "model": "IR Blaster DB 1 (NEC1)", "aliases": [], "controls": list(controls),
+    }], "unresolved": []}
+
+
+def test_the_pipe_and_the_plain_spelling_normalise_to_one_string():
+    from remote_ledger.lookup import normalise
+
+    assert normalise(PIPE) == normalise(PLAIN) == "sonykd49x8088"
+
+
+@pytest.mark.parametrize("controls", [PIPE, PLAIN], ids=["brand | model", "brand model"])
+@pytest.mark.parametrize("query", [
+    "sony kd 49x8088",              # how a person types it
+    "SONY KD-49X8088",
+    "kd - 49 x 8088",               # the model alone
+    "49x8088",
+    "sony | kd - 49 x 8088",        # the stored spelling
+    "sony|kd|49x8088",
+    "KD 49 X 8088 sony",            # every word, in any order
+])
+def test_search_finds_a_device_whichever_way_its_controls_entry_is_written(controls, query):
+    """A person searching 'sony kd 49x8088' must find 'SONY | KD - 49 X 8088':
+    the pipe is punctuation, and punctuation is ignored (PR #20)."""
+    matches = search(_controls_index(controls), query)
+    assert [m.kind for m in matches] == ["remote"]
+
+
+def test_a_pipe_alone_is_no_query():
+    assert search(_controls_index(PIPE), " | ") == []
+    assert search(_controls_index(PIPE), "||") == []
+
+
+def test_a_multi_word_brand_is_found_by_brand_and_model_typed_plainly():
+    index = _controls_index("ACCESS HD | A 1", "DE LONGHI | DL 20")
+    assert [m.kind for m in search(index, "access hd a1")] == ["remote"]
+    assert [m.kind for m in search(index, "delonghi dl-20")] == ["remote"]
+    assert [m.matched_on for m in search(index, "sony")] == ["manufacturer"]
+    assert search(index, "philips") == []
