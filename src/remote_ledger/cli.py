@@ -335,7 +335,12 @@ def cmd_index(args: argparse.Namespace) -> int:
         out = Path(tempfile.mkdtemp(prefix="rl-index-"))
         try:
             problems = run_index(root, out)
-            drift = diff_tree(root, out) if not problems else []
+            # Only what the index stage owns: against a tree holding nothing
+            # else, every other owned path would read as an orphan.
+            drift = (
+                diff_tree(root, out, tuple(g for g in PIPELINE if g.name == "index"))
+                if not problems else []
+            )
             for message in problems + drift:
                 print(f"ERROR {message}", file=sys.stderr)
             return EXIT_ERROR if (problems or drift) else EXIT_OK
@@ -356,7 +361,9 @@ def cmd_site(args: argparse.Namespace) -> int:
         import shutil, tempfile
         out = Path(tempfile.mkdtemp(prefix="rl-site-"))
         try:
-            problems = run_site(root, out) + diff_tree(root, out)
+            problems = run_site(root, out) + diff_tree(
+                root, out, tuple(g for g in PIPELINE if g.name == "site")
+            )
             for message in problems:
                 print(f"ERROR {message}", file=sys.stderr)
             return EXIT_ERROR if problems else EXIT_OK
