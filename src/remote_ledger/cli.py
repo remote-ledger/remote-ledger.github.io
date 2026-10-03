@@ -375,12 +375,23 @@ def cmd_site(args: argparse.Namespace) -> int:
 
 
 def cmd_lookup(args: argparse.Namespace) -> int:
-    """R16: find a remote by device, model, alias or manufacturer."""
-    from .index import build_index
+    """R16: find a remote by device, model, alias or manufacturer.
+
+    Reads the committed index and every shard of it when they were generated
+    from exactly the files on disk (D57), which is what keeps a lookup under a
+    second however much is imported; otherwise rebuilds them from the files,
+    as it always did, and says so on stderr.
+    """
+    from .index import build_all, load_committed, merge, shard_entries
     from .lookup import keys_for, render, search
 
     root = _repo_root()
-    index, _ = build_index(root)
+    index, why = load_committed(root)
+    if index is None:
+        print(f"note: {why}; rebuilding the index from the files "
+              "(`rl build` refreshes it)", file=sys.stderr)
+        built = build_all(root)
+        index = merge(built.index, shard_entries(built.shards))
     query = " ".join(args.query)
     matches = search(index, query)
     print(render(matches, query, keys_for(root, matches)))

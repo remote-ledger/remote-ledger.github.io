@@ -71,20 +71,27 @@ def _matches(query: str, values: list[str]) -> bool:
 
 def search(index: dict[str, Any], query: str) -> list[Match]:
     """Search every identifying field, ignoring case, spaces and punctuation."""
-    if not normalise(query):
+    needle = normalise(query)
+    if not needle:
         return []
+    words = [w for w in (normalise(w) for w in query.split()) if w]
 
     matches: list[Match] = []
     for remote in index.get("remotes", []):
         fields = list(_fields(remote))
-        needle = normalise(query)
+        # Each field normalised once: with the imported database in the index
+        # that is 300,000 strings, and this loop is most of a lookup.
+        norm = [normalise(value) for _, value in fields]
         hit = next(
-            (field for field, value in fields if needle in normalise(value)),
+            (field for (field, _), value in zip(fields, norm) if needle in value),
             None,
         )
         # A query naming both maker and model ("Sony BDP-BX510") is inside
-        # neither field alone, so fall back to matching every word.
-        if hit is None and _matches(query, [v for _, v in fields]):
+        # neither field alone, so fall back to matching every word -- each
+        # in some field, as `_matches` says.
+        if hit is None and len(words) > 1 and all(
+            any(w in value for value in norm) for w in words
+        ):
             hit = "combined"
         if hit:
             matches.append(Match("remote", remote, hit))
