@@ -33,7 +33,16 @@ from .sony import SONY20
 
 REGISTRY: dict[str, Protocol] = {p.name: p for p in (NEC1, NECX2, RC5, SONY20)}
 
+# --- the japan family (SwiftRemote DB import): Pioneer-2Part, JVC, Sharp, Denon
+from .denon import DENON  # noqa: E402
+from .jvc import JVC  # noqa: E402
+from .pioneer import PIONEER_2PART  # noqa: E402
+from .sharp import SHARP  # noqa: E402
+
+REGISTRY.update({p.name: p for p in (PIONEER_2PART, JVC, SHARP, DENON)})
+
 __all__ = ["Protocol", "REGISTRY", "NEC1", "NECX2", "RC5", "SONY20"]
+__all__ += ["PIONEER_2PART", "JVC", "SHARP", "DENON"]
 
 
 def get(name: str) -> Protocol:
