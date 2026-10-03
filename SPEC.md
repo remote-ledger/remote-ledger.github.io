@@ -1,7 +1,8 @@
 # Remote Ledger — Requirements Spec
 
-**Draft v0.9** · Status: §12 resolved; v1 implemented (Phases 0-6); LIRC
-import specified (R19) · Depends on nothing upstream (self-contained)
+**Draft v0.10** · Status: §12 resolved; v1 implemented (Phases 0-6); R19
+admits three imports: LIRC, SmartIR and the IR Blaster database · Depends on
+nothing upstream (self-contained)
 
 A self-contained JSON file per remote, where every key can hold several
 independently-sourced representations at once — each with its own confidence
@@ -74,9 +75,10 @@ formats that each grew to own one layer of the problem.
 |---|---|---|
 | Protocol | **IRP notation** | A small formal grammar for describing a protocol — Sony12, Sony20, NEC1 — as parameters, timing, and checksum in one line. Maintained on the JP1/hifi-remote wiki; `IrpTransmogrifier` is the actively-developed reference implementation. Closest thing to an actual standard in this space. |
 | Waveform | **Pronto Hex** | Philips' proprietary format for a Pronto remote's learned/generated codes, adopted everywhere as the raw interchange format because it needs no protocol decoder — just carrier frequency and burst-pair timings. The compiled output this project produces. |
-| Remote file | **LIRC's `lircd.conf`** | The de facto standard remote-configuration file, and the shape of most public captures in the wild. One of the two databases R19 admits for import (DESIGN §14), and otherwise a common authoring source, not a dependency. |
+| Remote file | **LIRC's `lircd.conf`** | The de facto standard remote-configuration file, and the shape of most public captures in the wild. One of the three databases R19 admits for import (DESIGN §14), and otherwise a common authoring source, not a dependency. |
 | By address | **IRDB** ([probonopd/irdb](https://github.com/probonopd/irdb)) | A large crowd-sourced code database, organized `<manufacturer>/<devicetype>/<device>,<subdevice>.csv` — by *protocol address*, not model name. Its licence is conditional and revocable, so R19 does not admit it (§4). |
-| By model | **SmartIR** ([smartHomeHub/SmartIR](https://github.com/smartHomeHub/SmartIR)) | Each JSON file carries an explicit `manufacturer` and a `supportedModels` array. Closest existing prior art to Remote Ledger's shape — but no confidence tier, no citation field, one code per function, not several coexisting ones. MIT-licensed; the other database R19 admits (DESIGN §15, `media_player`/`fan` only). |
+| By model | **SmartIR** ([smartHomeHub/SmartIR](https://github.com/smartHomeHub/SmartIR)) | Each JSON file carries an explicit `manufacturer` and a `supportedModels` array. Closest existing prior art to Remote Ledger's shape — but no confidence tier, no citation field, one code per function, not several coexisting ones. MIT-licensed; one of the three databases R19 admits (DESIGN §15, `media_player`/`fan` only). |
+| By brand, as hex | **The IR Blaster database**, as shipped in SwiftRemote (`github.com/iodn/android-ir-blaster`, GPL-3.0) | 9,388 remote ids, each a bag of keys filed under a list of brand and model names, so there is no remote model, as with SmartIR. Each code is a hexcode and one of 23 protocol names, with no timings: what a hexcode *means* is a claim the ledger has to check, and for ten protocols SwiftRemote's own app reads a code differently from the published decodes of real remotes (DESIGN §18). No confidence, no citation, and nothing recording where any code came from. GPL-3.0 only by inheritance from the app it ships in. The third database R19 admits, on the weakest licence footing of the three (R19.1; DESIGN §17). |
 | Layout | **CSS Grid's `grid-template-areas`** | A named cell per line, `.` for a gap, spans by repeating a name — an already-standardized grammar, not a bespoke one. See §6. |
 
 **What that means here:** IRDB dedupes by address and loses the retail model
@@ -84,7 +86,11 @@ name; SmartIR keeps the model name but has no notion of confidence,
 citation, or competing representations. §5 borrows a piece from each: IRP's
 parametric (protocol, device, function) shape as one of a key's possible
 `forms`, and SmartIR's per-file model metadata as the seed of a generated
-index — but adds the citation and multi-form structure neither one has.
+index — but adds the citation and multi-form structure neither one has. The IR
+Blaster database shares SmartIR's missing remote model without its stated
+licence, and stores each code as a hexcode whose meaning an importer has to
+establish, so importing it means checking what each code means as well as
+citing it (R19.2).
 
 ## 3. Goals
 
@@ -101,9 +107,9 @@ index — but adds the citation and multi-form structure neither one has.
 - Generate the manufacturer+model index as a view over every file's own
   metadata. Nothing hand-maintained can go stale.
 - Make adding one device cheap and require nothing upstream. Coverage is
-  built one lookup at a time, and seeded by importing what an openly
-  licensed source already holds, at a tier that says it is only imported
-  (R19).
+  built one lookup at a time, and seeded by importing what an existing
+  database already holds, on the licence footing R19.1 states for it, at a
+  tier that says it is only imported (R19).
 
 ## 4. Scope
 
@@ -125,8 +131,10 @@ index — but adds the citation and multi-form structure neither one has.
   That rules out IRDB's conditional, revocable permission, Flipper-IRDB
   files from before its CC0 cutoff, Global Caché and Remote Central. As of
   v0.9, R19 admits any source meeting its five conditions (§5); LIRC's
-  remotes database and SmartIR's `media_player`/`fan` codes are the two
-  that currently do.
+  remotes database, SmartIR's `media_player`/`fan` codes and, as of v0.10, the
+  IR Blaster database are the three that currently do. The last meets the
+  licence condition by inheritance only (R19.1), which is the weakest way any
+  of them does.
 
 ## 5. Data model
 
@@ -485,24 +493,44 @@ is the *only* place trust comes from — so it has to hold up on its own.
 
   1. **The licence permits republishing.** This repository is public. The
      imported files carry their source's licence and attribution, and live
-     under their own directory so the licence boundary is a path:
-     `remotes/lirc/`, under GPL-2.0-or-later (Debian's reading of the LIRC
-     remotes database, whose repository states none), crediting each file's
-     contributor.
+     under their own directory so the licence boundary is a path. **How
+     firmly each licence is established differs, and the ledger says which
+     kind it holds** (v0.10):
+     - `remotes/lirc/`: GPL-2.0-or-later, as a *reading*. It is Debian's
+       record for the pre-0.9.0 subset of the LIRC remotes database, whose
+       repository states no licence. Each file's contributor is credited.
+     - `remotes/smartir/`: MIT, *stated* by the upstream and confirmed
+       against GitHub's licence API.
+     - `remotes/irblaster/`: GPL-3.0-only, **by inheritance and nothing
+       more**. The data ships in SwiftRemote (GPL-3.0), a fork of IR Blaster
+       (GPL-3.0), a fork of osram-remote, and nobody in that chain says where
+       the data came from. That is neither a grant by the data's authors nor
+       a reading of one. This import meets the condition on the weakest
+       footing of the three; its README says so, and deleting the directory
+       removes every imported file.
   2. **Every form cites exactly where it came from:** the upstream
-     repository, pinned commit, file, remote block and line, and *how* the
-     form was produced. It is either a `raw_codes` capture, a parametric
-     block decoded to an `irp` form, or a parametric block expanded to raw
-     timings by lircd's own transmit rules. R18 then holds per form, as for
-     any authored entry.
+     repository, pinned commit, the unit within it (file, remote block and
+     line for LIRC; profile and command for SmartIR; remote id, label and
+     hexcode for IR Blaster), and *how* the form was produced. For LIRC it
+     is a `raw_codes` capture, a parametric block decoded to an `irp` form,
+     or a parametric block expanded to raw timings by lircd's own transmit
+     rules. **Where a source stores a code as a hexcode and a protocol name,
+     what the hexcode means is the importer's claim, not the source's.** The
+     importer states its reading in the citation's fixed phrase and checks it
+     against the source's own app, and where that app reads a code
+     differently the committed report (condition 5) counts the codes, so
+     that nothing about the difference is silent. R18 then holds per form,
+     as for any authored entry.
   3. **Nothing is imported above Plausible.** The upstream's own claims
      carry over as text in the citation, never as a tier. A single capture
-     that nothing cross-checks is Plausible by definition (§5). A key
-     earns Verified the way any key does: by a second, independent source.
+     that nothing cross-checks is Plausible by definition (§5), and so is a
+     single source of unknown origin: for the IR Blaster database the
+     tier means one unattributed source. A key earns Verified the way any
+     key does: by a second, independent source.
   4. **Authored data wins.** An import that collides with an authored
      remote, by manufacturer and model or by alias, is not written. To
-     curate an imported remote, move it out of `remotes/lirc/`: from then
-     on it is authored, and the import skips it.
+     curate an imported remote, move it out of its import directory: from
+     then on it is authored, and the import skips it.
   5. **The import is regenerable.** Re-running it over the same pinned
      upstream commit reproduces every imported file byte for byte. What it
      could not represent is listed in a committed report, with reasons, not
@@ -566,13 +594,19 @@ how to turn microseconds into Pronto cycles. IrpTransmogrifier rounds
 against the nominal carrier, while R12's contract rounds against the period
 the frequency word implies, which is closer to what a player transmits. So
 a vector must be reproduced exactly by our timings under the tool's own
-rule, and our bytes may differ from it only at declared words. All four
-protocols meet this. NEC1's, RC5's and Sony20's vectors are published; NECx2's is
-generated by a pinned IrpTransmogrifier release, because no published one
-was found.
+rule, and our bytes may differ from it only at declared words. All 28
+protocols meet this. Six have a published vector (NEC1, Sony20, RC5, NEC2,
+Sony12, RC6); the other 22 have one generated by a pinned IrpTransmogrifier
+release, because no published one was found. For those, the vector checks that
+our encoder implements the IRP the registry took from the same tool's
+database, not that the IRP is right, and three of them (RECS80-0068, JVC-48,
+SharpDVD) have no capture or published table behind the IRP either. DESIGN.md
+§12 lists each vector and D68 says what the gate does and does not establish.
 
 ---
 
 **Build plan:** DESIGN.md §8 has the seven phases, and all seven are
 implemented: v1 is complete. DESIGN.md §9 lists the edits each phase made to
-this document, and DESIGN.md §12 records what is still unproven.
+this document, and DESIGN.md §12 records what is still unproven. The imports
+that followed (DESIGN.md §14, §15, §17) and the protocols the third one needed
+(§18) are post-v1 work outside the phases.
