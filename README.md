@@ -101,7 +101,7 @@ $ rl encode --protocol NEC1 --device 0x88 --subdevice 0x77 \
 
 $ pytest
 $ rl lookup "DX3 Pro"      # offline lookup, R20's three states
-$ rl build --check         # the CI gate: drift and orphans
+$ rl build --check         # the CI gate: drift and orphans (-j N or RL_JOBS sets the workers)
 $ rl build && open site/index.html
 ```
 
@@ -111,6 +111,6 @@ $ rl build && open site/index.html
 notation, Pronto Hex, LIRC, IRDB, SmartIR, the IR Blaster database), the data
 model, layout, compiling and cross-validation, and the resolved decisions.
 
-**[DESIGN.md](DESIGN.md)** — how it is built: decisions D1 to D71, the
+**[DESIGN.md](DESIGN.md)** — how it is built: decisions D1 to D73, the
 Pronto contract to the byte, the seven-phase plan, the three imports, and what
 is not yet proven.
