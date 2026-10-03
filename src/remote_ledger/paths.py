@@ -28,6 +28,11 @@ IMPORTS: dict[str, dict[str, str]] = {
         "licence": "MIT",
         "readme": "remotes/smartir/README.md",
     },
+    "remotes/irblaster/": {
+        "name": "IR Blaster database (as shipped in SwiftRemote)",
+        "licence": "GPL-3.0-only",
+        "readme": "remotes/irblaster/README.md",
+    },
 }
 
 

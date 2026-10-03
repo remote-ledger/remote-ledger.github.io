@@ -387,10 +387,14 @@ def cmd_import(args: argparse.Namespace) -> int:
     The commit is read from the checkout itself, and must match ``--commit``
     when one is given, so every citation names the tree it was built from.
     """
+    from .irblaster import importer as irblaster_importer
     from .lirc import importer as lirc_importer
     from .smartir import importer as smartir_importer
 
-    module = {"lirc": lirc_importer, "smartir": smartir_importer}[args.source]
+    module = {
+        "lirc": lirc_importer, "smartir": smartir_importer,
+        "irblaster": irblaster_importer,
+    }[args.source]
 
     checkout = Path(args.checkout)
     try:
@@ -404,6 +408,19 @@ def cmd_import(args: argparse.Namespace) -> int:
         raise ValidationError(
             f"{checkout} is at {head}, not the requested {args.commit}"
         )
+    # An importer that reads one named file must read the commit's version of
+    # it, or every citation would name a tree the data did not come from.
+    source = getattr(module, "INPUT", None)
+    if source is not None:
+        dirty = subprocess.run(
+            ["git", "-C", str(checkout), "status", "--porcelain", "--", source],
+            check=True, capture_output=True, text=True,
+        ).stdout.strip()
+        if dirty:
+            raise ValidationError(
+                f"{checkout}/{source} differs from the commit {head[:7]}; "
+                "commit or restore it so the pinned commit names the data"
+            )
     report = module.write_import(_repo_root(), checkout, head)
     imported = sum(n for k, n in report.keys.items() if k.startswith("imported"))
     print(f"{module.IMPORT_ROOT}/: {report.remotes['imported']:,} remotes, "
@@ -518,7 +535,7 @@ def build_parser() -> argparse.ArgumentParser:
     im = sub.add_parser(
         "import", help="import an upstream database under SPEC R19", parents=[common]
     )
-    im.add_argument("source", choices=["lirc", "smartir"],
+    im.add_argument("source", choices=["lirc", "smartir", "irblaster"],
                      help="a source meeting SPEC R19's five conditions")
     im.add_argument("checkout", help="a git checkout of the upstream source")
     im.add_argument("--commit", help="refuse unless the checkout is at this commit")
