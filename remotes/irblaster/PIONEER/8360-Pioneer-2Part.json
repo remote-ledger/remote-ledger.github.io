@@ -1,0 +1,358 @@
+{
+  "manufacturer": "PIONEER",
+  "model": "IR Blaster DB 8360 (Pioneer-2Part)",
+  "aliases": [],
+  "controls": [
+    "PIONEER | AXD7592 (TUNER)",
+    "PIONEER | AXD7595 (TUNER)",
+    "PIONEER | AXD7596 (TUNER)",
+    "PIONEER | VSX-1020-K (TUNER)",
+    "PIONEER | VSX-1025-K (TUNER)",
+    "PIONEER | VSX-920-K (TUNER)"
+  ],
+  "protocol": {
+    "name": "Pioneer-2Part",
+    "carrierHz": 40000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_BAND": {
+      "label": "BAND",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA4A4",
+          "function": "0x1313",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8360, 'BAND' 25C825C8 Pioneer: wire-order bytes, bit-reversed as Pioneer-2Part"
+        }
+      ]
+    },
+    "KEY_GUIDE": {
+      "label": "GUIDE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA4A4",
+          "function": "0x5858",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8360, 'GUIDE' 251A251A Pioneer: wire-order bytes, bit-reversed as Pioneer-2Part"
+        }
+      ]
+    },
+    "KEY_MASTER_VOL_MINUS": {
+      "label": "MASTER VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA5A5",
+          "function": "0xB0B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8360, 'MASTER VOL-' A5D0A5D0 Pioneer: wire-order bytes, bit-reversed as Pioneer-2Part"
+        }
+      ]
+    },
+    "KEY_MASTER_VOL_PLUS": {
+      "label": "MASTER VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA5A5",
+          "function": "0xA0A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8360, 'MASTER VOL+' A550A550 Pioneer: wire-order bytes, bit-reversed as Pioneer-2Part"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA5A5",
+          "function": "0x1212",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8360, 'MUTE' A548A548 Pioneer: wire-order bytes, bit-reversed as Pioneer-2Part"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA5A5",
+          "function": "0x1C1C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8360, 'POWER' A538A538 Pioneer: wire-order bytes, bit-reversed as Pioneer-2Part"
+        }
+      ]
+    },
+    "KEY_PTY_SEARCH": {
+      "label": "PTY SEARCH",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA4A4",
+          "function": "0x4242",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8360, 'PTY SEARCH' 25422542 Pioneer: wire-order bytes, bit-reversed as Pioneer-2Part"
+        }
+      ]
+    },
+    "KEY_TUNER0": {
+      "label": "TUNER0",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA4A4",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8360, 'TUNER0' 25002500 Pioneer: wire-order bytes, bit-reversed as Pioneer-2Part"
+        }
+      ]
+    },
+    "KEY_TUNER1": {
+      "label": "TUNER1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA4A4",
+          "function": "0x101",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8360, 'TUNER1' 25802580 Pioneer: wire-order bytes, bit-reversed as Pioneer-2Part"
+        }
+      ]
+    },
+    "KEY_TUNER2": {
+      "label": "TUNER2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA4A4",
+          "function": "0x202",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8360, 'TUNER2' 25402540 Pioneer: wire-order bytes, bit-reversed as Pioneer-2Part"
+        }
+      ]
+    },
+    "KEY_TUNER3": {
+      "label": "TUNER3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA4A4",
+          "function": "0x303",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8360, 'TUNER3' 25C025C0 Pioneer: wire-order bytes, bit-reversed as Pioneer-2Part"
+        }
+      ]
+    },
+    "KEY_TUNER4": {
+      "label": "TUNER4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA4A4",
+          "function": "0x404",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8360, 'TUNER4' 25202520 Pioneer: wire-order bytes, bit-reversed as Pioneer-2Part"
+        }
+      ]
+    },
+    "KEY_TUNER5": {
+      "label": "TUNER5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA4A4",
+          "function": "0x505",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8360, 'TUNER5' 25A025A0 Pioneer: wire-order bytes, bit-reversed as Pioneer-2Part"
+        }
+      ]
+    },
+    "KEY_TUNER6": {
+      "label": "TUNER6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA4A4",
+          "function": "0x606",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8360, 'TUNER6' 25602560 Pioneer: wire-order bytes, bit-reversed as Pioneer-2Part"
+        }
+      ]
+    },
+    "KEY_TUNER7": {
+      "label": "TUNER7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA4A4",
+          "function": "0x707",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8360, 'TUNER7' 25E025E0 Pioneer: wire-order bytes, bit-reversed as Pioneer-2Part"
+        }
+      ]
+    },
+    "KEY_TUNER8": {
+      "label": "TUNER8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA4A4",
+          "function": "0x808",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8360, 'TUNER8' 25102510 Pioneer: wire-order bytes, bit-reversed as Pioneer-2Part"
+        }
+      ]
+    },
+    "KEY_TUNER9": {
+      "label": "TUNER9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA4A4",
+          "function": "0x909",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8360, 'TUNER9' 25902590 Pioneer: wire-order bytes, bit-reversed as Pioneer-2Part"
+        }
+      ]
+    },
+    "KEY_TUNER_25082508": {
+      "label": "TUNER►",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA4A4",
+          "function": "0x1010",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8360, 'TUNER►' 25082508 Pioneer: wire-order bytes, bit-reversed as Pioneer-2Part"
+        }
+      ]
+    },
+    "KEY_TUNER_25882588": {
+      "label": "TUNER◄",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA4A4",
+          "function": "0x1111",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8360, 'TUNER◄' 25882588 Pioneer: wire-order bytes, bit-reversed as Pioneer-2Part"
+        }
+      ]
+    },
+    "KEY_TUNER_CLASS_SLASH_ENTER": {
+      "label": "TUNER CLASS/ENTER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA4A4",
+          "function": "0x4040",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8360, 'TUNER CLASS/ENTER' 25022502 Pioneer: wire-order bytes, bit-reversed as Pioneer-2Part"
+        }
+      ]
+    },
+    "KEY_TUNER_ENTER": {
+      "label": "TUNER ENTER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA4A4",
+          "function": "0x5959",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8360, 'TUNER ENTER' 259A259A Pioneer: wire-order bytes, bit-reversed as Pioneer-2Part"
+        }
+      ]
+    },
+    "KEY_TUNER_MPX": {
+      "label": "TUNER MPX",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA4A4",
+          "function": "0x1E1E",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8360, 'TUNER MPX' 25782578 Pioneer: wire-order bytes, bit-reversed as Pioneer-2Part"
+        }
+      ]
+    },
+    "KEY_TUNER_RETURN": {
+      "label": "TUNER RETURN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA4A4",
+          "function": "0x5B5B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8360, 'TUNER RETURN' 25DA25DA Pioneer: wire-order bytes, bit-reversed as Pioneer-2Part"
+        }
+      ]
+    },
+    "KEY_TUNER_SLASH_256A256A": {
+      "label": "TUNER/\\",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA4A4",
+          "function": "0x5656",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8360, 'TUNER/\\' 256A256A Pioneer: wire-order bytes, bit-reversed as Pioneer-2Part"
+        }
+      ]
+    },
+    "KEY_TUNER_SLASH_25EA25EA": {
+      "label": "TUNER\\/",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA4A4",
+          "function": "0x5757",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8360, 'TUNER\\/' 25EA25EA Pioneer: wire-order bytes, bit-reversed as Pioneer-2Part"
+        }
+      ]
+    },
+    "KEY_TUNER_SLASH_CLR": {
+      "label": "TUNER ./CLR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA4A4",
+          "function": "0x4343",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8360, 'TUNER ./CLR' 25C225C2 Pioneer: wire-order bytes, bit-reversed as Pioneer-2Part"
+        }
+      ]
+    }
+  }
+}

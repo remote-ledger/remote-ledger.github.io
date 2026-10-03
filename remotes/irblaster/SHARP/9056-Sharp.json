@@ -1,0 +1,93 @@
+{
+  "manufacturer": "SHARP",
+  "model": "IR Blaster DB 9056 (Sharp)",
+  "aliases": [],
+  "controls": [
+    "SHARP | GA630PA"
+  ],
+  "protocol": {
+    "name": "Sharp",
+    "carrierHz": 38000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_TV_CH_MINUS": {
+      "label": "TV CH-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9056, 'TV CH-' 8244 Sharp: 15 wire bits, pad bit 0 as Sharp"
+        }
+      ]
+    },
+    "KEY_TV_CH_PLUS": {
+      "label": "TV CH+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9056, 'TV CH+' 8444 Sharp: 15 wire bits, pad bit 0 as Sharp"
+        }
+      ]
+    },
+    "KEY_TV_INPUT": {
+      "label": "TV INPUT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9056, 'TV INPUT' 8644 Sharp: 15 wire bits, pad bit 0 as Sharp"
+        }
+      ]
+    },
+    "KEY_TV_POWER": {
+      "label": "TV POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9056, 'TV POWER' 8344 Sharp: 15 wire bits, pad bit 0 as Sharp"
+        }
+      ]
+    },
+    "KEY_TV_VOL_MINUS": {
+      "label": "TV VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9056, 'TV VOL-' 8544 Sharp: 15 wire bits, pad bit 0 as Sharp"
+        }
+      ]
+    },
+    "KEY_TV_VOL_PLUS": {
+      "label": "TV VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9056, 'TV VOL+' 8144 Sharp: 15 wire bits, pad bit 0 as Sharp"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,169 @@
+{
+  "manufacturer": "ELENBERG",
+  "model": "IR Blaster DB 9181 (F12_relaxed)",
+  "aliases": [],
+  "controls": [
+    "ELENBERG | MC-4040"
+  ],
+  "protocol": {
+    "name": "F12_relaxed",
+    "carrierHz": 37900,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_I_D02": {
+      "label": ">>I",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x03",
+          "subdevice": "0x01",
+          "function": "0x40",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9181, '>>I' D02 F12_relaxed: 12-bit number, fields bit-reversed as F12_relaxed"
+        }
+      ]
+    },
+    "KEY_I_D04": {
+      "label": "I<<",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x03",
+          "subdevice": "0x01",
+          "function": "0x20",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9181, 'I<<' D04 F12_relaxed: 12-bit number, fields bit-reversed as F12_relaxed"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x03",
+          "subdevice": "0x00",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9181, 'MUTE' CA0 F12_relaxed: 12-bit number, fields bit-reversed as F12_relaxed"
+        }
+      ]
+    },
+    "KEY_PAUSE": {
+      "label": "PAUSE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x03",
+          "subdevice": "0x01",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9181, 'PAUSE' D08 F12_relaxed: 12-bit number, fields bit-reversed as F12_relaxed"
+        }
+      ]
+    },
+    "KEY_PLAY": {
+      "label": "PLAY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x03",
+          "subdevice": "0x01",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9181, 'PLAY' D08 F12_relaxed: 12-bit number, fields bit-reversed as F12_relaxed"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x03",
+          "subdevice": "0x00",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9181, 'POWER' C90 F12_relaxed: 12-bit number, fields bit-reversed as F12_relaxed"
+        }
+      ]
+    },
+    "KEY_PROG": {
+      "label": "PROG",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x03",
+          "subdevice": "0x00",
+          "function": "0x21",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9181, 'PROG' C84 F12_relaxed: 12-bit number, fields bit-reversed as F12_relaxed"
+        }
+      ]
+    },
+    "KEY_REP": {
+      "label": "REP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x03",
+          "subdevice": "0x00",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9181, 'REP' C88 F12_relaxed: 12-bit number, fields bit-reversed as F12_relaxed"
+        }
+      ]
+    },
+    "KEY_STOP": {
+      "label": "STOP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x03",
+          "subdevice": "0x00",
+          "function": "0x41",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9181, 'STOP' C82 F12_relaxed: 12-bit number, fields bit-reversed as F12_relaxed"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x03",
+          "subdevice": "0x01",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9181, 'VOL-' D10 F12_relaxed: 12-bit number, fields bit-reversed as F12_relaxed"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x03",
+          "subdevice": "0x01",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9181, 'VOL+' D20 F12_relaxed: 12-bit number, fields bit-reversed as F12_relaxed"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,535 @@
+{
+  "manufacturer": "BQS",
+  "model": "IR Blaster DB 8390 (RECS80)",
+  "aliases": [],
+  "controls": [
+    "BQS | 357"
+  ],
+  "protocol": {
+    "name": "RECS80",
+    "carrierHz": 38000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_0_SLASH_AV": {
+      "label": "0 / AV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8390, '0 / AV' E00 RECS80: 9 bits, MSB first, 3 unused as RECS80"
+        }
+      ]
+    },
+    "KEY_1": {
+      "label": "1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8390, '1' E08 RECS80: 9 bits, MSB first, 3 unused as RECS80"
+        }
+      ]
+    },
+    "KEY_2": {
+      "label": "2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8390, '2' E10 RECS80: 9 bits, MSB first, 3 unused as RECS80"
+        }
+      ]
+    },
+    "KEY_3": {
+      "label": "3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8390, '3' E18 RECS80: 9 bits, MSB first, 3 unused as RECS80"
+        }
+      ]
+    },
+    "KEY_4": {
+      "label": "4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8390, '4' E20 RECS80: 9 bits, MSB first, 3 unused as RECS80"
+        }
+      ]
+    },
+    "KEY_5": {
+      "label": "5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8390, '5' E28 RECS80: 9 bits, MSB first, 3 unused as RECS80"
+        }
+      ]
+    },
+    "KEY_6": {
+      "label": "6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8390, '6' E30 RECS80: 9 bits, MSB first, 3 unused as RECS80"
+        }
+      ]
+    },
+    "KEY_7": {
+      "label": "7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8390, '7' E38 RECS80: 9 bits, MSB first, 3 unused as RECS80"
+        }
+      ]
+    },
+    "KEY_8": {
+      "label": "8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8390, '8' E40 RECS80: 9 bits, MSB first, 3 unused as RECS80"
+        }
+      ]
+    },
+    "KEY_9": {
+      "label": "9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8390, '9' E48 RECS80: 9 bits, MSB first, 3 unused as RECS80"
+        }
+      ]
+    },
+    "KEY_AUDIO_FB8": {
+      "label": "( AUDIO )",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "function": "0x37",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8390, '( AUDIO )' FB8 RECS80: 9 bits, MSB first, 3 unused as RECS80"
+        }
+      ]
+    },
+    "KEY_AUDIO_FB8_2": {
+      "label": "AUDIO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "function": "0x37",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8390, 'AUDIO' FB8 RECS80: 9 bits, MSB first, 3 unused as RECS80"
+        }
+      ]
+    },
+    "KEY_BLUE": {
+      "label": "BLUE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8390, 'BLUE' EA0 RECS80: 9 bits, MSB first, 3 unused as RECS80"
+        }
+      ]
+    },
+    "KEY_GREEN": {
+      "label": "GREEN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8390, 'GREEN' EA8 RECS80: 9 bits, MSB first, 3 unused as RECS80"
+        }
+      ]
+    },
+    "KEY_MINUS": {
+      "label": "-►)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8390, '-►)' E50 RECS80: 9 bits, MSB first, 3 unused as RECS80"
+        }
+      ]
+    },
+    "KEY_MINUS_SLASH_MINUS_MINUS_SLASH_TV": {
+      "label": "-/--  / TV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "function": "0x2C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8390, '-/--  / TV' F60 RECS80: 9 bits, MSB first, 3 unused as RECS80"
+        }
+      ]
+    },
+    "KEY_MIX": {
+      "label": "MIX",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "function": "0x25",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8390, 'MIX' F28 RECS80: 9 bits, MSB first, 3 unused as RECS80"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "function": "0x29",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8390, 'MUTE' F48 RECS80: 9 bits, MSB first, 3 unused as RECS80"
+        }
+      ]
+    },
+    "KEY_PIP_ED0": {
+      "label": "PIP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8390, 'PIP' ED0 RECS80: 9 bits, MSB first, 3 unused as RECS80"
+        }
+      ]
+    },
+    "KEY_PIP_F38": {
+      "label": "PIP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "function": "0x27",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8390, 'PIP' F38 RECS80: 9 bits, MSB first, 3 unused as RECS80"
+        }
+      ]
+    },
+    "KEY_PIP_MINUS_MINUS_EA8": {
+      "label": "PIP  -►-►",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8390, 'PIP  -►-►' EA8 RECS80: 9 bits, MSB first, 3 unused as RECS80"
+        }
+      ]
+    },
+    "KEY_PIP_MINUS_MINUS_ED8": {
+      "label": "PIP !-!-!",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "function": "0x1B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8390, 'PIP !-!-!' ED8 RECS80: 9 bits, MSB first, 3 unused as RECS80"
+        }
+      ]
+    },
+    "KEY_PIP_MINUS_TV": {
+      "label": "PIP ◄-► TV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8390, 'PIP ◄-► TV' EA0 RECS80: 9 bits, MSB first, 3 unused as RECS80"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "function": "0x30",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8390, 'POWER' F80 RECS80: 9 bits, MSB first, 3 unused as RECS80"
+        }
+      ]
+    },
+    "KEY_PROG_MINUS": {
+      "label": "PROG -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8390, 'PROG -' E98 RECS80: 9 bits, MSB first, 3 unused as RECS80"
+        }
+      ]
+    },
+    "KEY_PROG_PLUS": {
+      "label": "PROG +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8390, 'PROG +' E90 RECS80: 9 bits, MSB first, 3 unused as RECS80"
+        }
+      ]
+    },
+    "KEY_RED": {
+      "label": "RED",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "function": "0x1B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8390, 'RED' ED8 RECS80: 9 bits, MSB first, 3 unused as RECS80"
+        }
+      ]
+    },
+    "KEY_TTX_SLASH_MIX": {
+      "label": "TTX / MIX",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "function": "0x36",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8390, 'TTX / MIX' FB0 RECS80: 9 bits, MSB first, 3 unused as RECS80"
+        }
+      ]
+    },
+    "KEY_TXT_F68": {
+      "label": "TXT  ?",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "function": "0x2D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8390, 'TXT  ?' F68 RECS80: 9 bits, MSB first, 3 unused as RECS80"
+        }
+      ]
+    },
+    "KEY_TXT_F88": {
+      "label": "TXT ◄!►",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "function": "0x31",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8390, 'TXT ◄!►' F88 RECS80: 9 bits, MSB first, 3 unused as RECS80"
+        }
+      ]
+    },
+    "KEY_TXT_F98": {
+      "label": "TXT  ►!◄",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "function": "0x33",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8390, 'TXT  ►!◄' F98 RECS80: 9 bits, MSB first, 3 unused as RECS80"
+        }
+      ]
+    },
+    "KEY_TXT_INDEX": {
+      "label": "TXT  INDEX",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "function": "0x28",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8390, 'TXT  INDEX' F40 RECS80: 9 bits, MSB first, 3 unused as RECS80"
+        }
+      ]
+    },
+    "KEY_TXT_TIME": {
+      "label": "TXT  TIME",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "function": "0x26",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8390, 'TXT  TIME' F30 RECS80: 9 bits, MSB first, 3 unused as RECS80"
+        }
+      ]
+    },
+    "KEY_TXT_X_SLASH_PIP": {
+      "label": "TXT  X  / PIP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "function": "0x27",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8390, 'TXT  X  / PIP' F38 RECS80: 9 bits, MSB first, 3 unused as RECS80"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8390, 'VOL-' E88 RECS80: 9 bits, MSB first, 3 unused as RECS80"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8390, 'VOL+' E80 RECS80: 9 bits, MSB first, 3 unused as RECS80"
+        }
+      ]
+    },
+    "KEY_YELLOW": {
+      "label": "YELLOW",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8390, 'YELLOW' ED0 RECS80: 9 bits, MSB first, 3 unused as RECS80"
+        }
+      ]
+    },
+    "KEY__F00": {
+      "label": "►!◄",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "function": "0x20",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8390, '►!◄' F00 RECS80: 9 bits, MSB first, 3 unused as RECS80"
+        }
+      ]
+    },
+    "KEY__F18": {
+      "label": "!...!",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "function": "0x23",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8390, '!...!' F18 RECS80: 9 bits, MSB first, 3 unused as RECS80"
+        }
+      ]
+    },
+    "KEY__F78": {
+      "label": "((  ))",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "function": "0x2F",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8390, '((  ))' F78 RECS80: 9 bits, MSB first, 3 unused as RECS80"
+        }
+      ]
+    }
+  }
+}

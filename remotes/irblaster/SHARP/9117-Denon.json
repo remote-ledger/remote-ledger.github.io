@@ -1,0 +1,67 @@
+{
+  "manufacturer": "SHARP",
+  "model": "IR Blaster DB 9117 (Denon)",
+  "aliases": [],
+  "controls": [
+    "SHARP | G 0009 AJ"
+  ],
+  "protocol": {
+    "name": "Denon",
+    "carrierHz": 38000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_BACK": {
+      "label": "BACK",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x03",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9117, 'BACK' C046 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_OK": {
+      "label": "OK",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x03",
+          "function": "0x29",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9117, 'OK' C4A6 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_PICT": {
+      "label": "PICT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x03",
+          "function": "0x90",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9117, 'PICT' C04E Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_TEXT": {
+      "label": "TEXT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x03",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9117, 'TEXT' C586 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    }
+  }
+}

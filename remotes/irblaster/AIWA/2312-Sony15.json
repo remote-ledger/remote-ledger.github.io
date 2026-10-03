@@ -1,0 +1,61 @@
+{
+  "manufacturer": "AIWA",
+  "model": "IR Blaster DB 2312 (Sony15)",
+  "aliases": [],
+  "controls": [
+    "AIWA | FX 5950",
+    "AIWA | GX 1250",
+    "AIWA | HV - FX 5950",
+    "AIWA | RM - Z 446 D",
+    "AIWA | RM - Z 448 D",
+    "BRAVO | V 065",
+    "PANASONIC | TNQ 8E 0463(VCR)",
+    "SONY | 147727311"
+  ],
+  "protocol": {
+    "name": "Sony15",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_P_SLASH_C": {
+      "label": "P/C",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xBA",
+          "function": "0x4B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2312, 'P/C' D2BA SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    },
+    "KEY_SKIP_NEXT": {
+      "label": "SKIP NEXT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xBA",
+          "function": "0x4A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2312, 'SKIP NEXT' 52BA SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    },
+    "KEY_SLEEP_SLASH_TIMER": {
+      "label": "SLEEP/TIMER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xBA",
+          "function": "0x2C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2312, 'SLEEP/TIMER' 34BA SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    }
+  }
+}

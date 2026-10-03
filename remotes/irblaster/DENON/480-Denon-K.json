@@ -1,0 +1,86 @@
+{
+  "manufacturer": "DENON",
+  "model": "IR Blaster DB 480 (Denon-K)",
+  "aliases": [],
+  "controls": [
+    "DENON | DCD-A100",
+    "DENON | RC-1138"
+  ],
+  "protocol": {
+    "name": "Denon-K",
+    "carrierHz": 37000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_MODE_SELECT": {
+      "label": "MODE SELECT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x02",
+          "function": "0x4B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 480, 'MODE SELECT' 2A4C044D2069 REC80: 48 wire bits, bytes bit-reversed as Denon-K"
+        }
+      ]
+    },
+    "KEY_PLAY_SELECT": {
+      "label": "PLAY SELECT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x02",
+          "function": "0x4C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 480, 'PLAY SELECT' 2A4C04432067 REC80: 48 wire bits, bytes bit-reversed as Denon-K"
+        }
+      ]
+    },
+    "KEY_RESTORER": {
+      "label": "RESTORER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x02",
+          "function": "0x4A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 480, 'RESTORER' 2A4C04452061 REC80: 48 wire bits, bytes bit-reversed as Denon-K"
+        }
+      ]
+    },
+    "KEY_SOURCE": {
+      "label": "SOURCE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x02",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 480, 'SOURCE' 2A4C0440A0E4 REC80: 48 wire bits, bytes bit-reversed as Denon-K"
+        }
+      ]
+    },
+    "KEY_TITLE_SLASH_ARTIST": {
+      "label": "TITLE / ARTIST",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x02",
+          "function": "0x4D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 480, 'TITLE / ARTIST' 2A4C044B206F REC80: 48 wire bits, bytes bit-reversed as Denon-K"
+        }
+      ]
+    }
+  }
+}

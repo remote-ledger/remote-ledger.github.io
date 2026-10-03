@@ -1,0 +1,41 @@
+{
+  "manufacturer": "DIGITAL BOX",
+  "model": "IR Blaster DB 8380 (Pioneer-2Part)",
+  "aliases": [],
+  "controls": [
+    "DIGITAL BOX | DIGITAL BOX"
+  ],
+  "protocol": {
+    "name": "Pioneer-2Part",
+    "carrierHz": 40000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_BLUE": {
+      "label": "BLUE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x808",
+          "function": "0x1414",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8380, 'BLUE' 10281028 Pioneer: wire-order bytes, bit-reversed as Pioneer-2Part"
+        }
+      ]
+    },
+    "KEY_FORWARD": {
+      "label": "FORWARD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x808",
+          "function": "0x1414",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8380, 'FORWARD' 10281028 Pioneer: wire-order bytes, bit-reversed as Pioneer-2Part"
+        }
+      ]
+    }
+  }
+}

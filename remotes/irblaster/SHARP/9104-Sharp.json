@@ -1,0 +1,340 @@
+{
+  "manufacturer": "SHARP",
+  "model": "IR Blaster DB 9104 (Sharp)",
+  "aliases": [],
+  "controls": [
+    "SHARP | SD-AT1000"
+  ],
+  "protocol": {
+    "name": "Sharp",
+    "carrierHz": 38000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_AMP_RETURN": {
+      "label": "AMP RETURN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0x43",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9104, 'AMP RETURN' 3614 Sharp: 15 wire bits, pad bit 0 as Sharp"
+        }
+      ]
+    },
+    "KEY_AMP_SETUP": {
+      "label": "AMP SETUP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0x52",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9104, 'AMP SETUP' 3254 Sharp: 15 wire bits, pad bit 0 as Sharp"
+        }
+      ]
+    },
+    "KEY_CLEAR": {
+      "label": "CLEAR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "function": "0x30",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9104, 'CLEAR' 2064 Sharp: 15 wire bits, pad bit 0 as Sharp"
+        }
+      ]
+    },
+    "KEY_CLOCK": {
+      "label": "CLOCK",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "function": "0x89",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9104, 'CLOCK' 248C Sharp: 15 wire bits, pad bit 0 as Sharp"
+        }
+      ]
+    },
+    "KEY_DIMMER": {
+      "label": "DIMMER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "function": "0xC7",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9104, 'DIMMER' 271C Sharp: 15 wire bits, pad bit 0 as Sharp"
+        }
+      ]
+    },
+    "KEY_DOWN": {
+      "label": "DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "function": "0x42",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9104, 'DOWN' 2214 Sharp: 15 wire bits, pad bit 0 as Sharp"
+        }
+      ]
+    },
+    "KEY_ENTER": {
+      "label": "ENTER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "function": "0x8B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9104, 'ENTER' 268C Sharp: 15 wire bits, pad bit 0 as Sharp"
+        }
+      ]
+    },
+    "KEY_INPUT_BAND": {
+      "label": "INPUT BAND",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x12",
+          "function": "0x19",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9104, 'INPUT BAND' 4CC4 Sharp: 15 wire bits, pad bit 0 as Sharp"
+        }
+      ]
+    },
+    "KEY_INPUT_DIGITAL_1": {
+      "label": "INPUT DIGITAL 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x12",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9104, 'INPUT DIGITAL 1' 4D84 Sharp: 15 wire bits, pad bit 0 as Sharp"
+        }
+      ]
+    },
+    "KEY_INPUT_LINE_1": {
+      "label": "INPUT LINE 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "function": "0x1D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9104, 'INPUT LINE 1' 25C4 Sharp: 15 wire bits, pad bit 0 as Sharp"
+        }
+      ]
+    },
+    "KEY_INPUT_LINE_2": {
+      "label": "INPUT LINE 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x12",
+          "function": "0x9F",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9104, 'INPUT LINE 2' 4FCC Sharp: 15 wire bits, pad bit 0 as Sharp"
+        }
+      ]
+    },
+    "KEY_INPUT_LINE_3": {
+      "label": "INPUT LINE 3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x12",
+          "function": "0x5F",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9104, 'INPUT LINE 3' 4FD4 Sharp: 15 wire bits, pad bit 0 as Sharp"
+        }
+      ]
+    },
+    "KEY_LEFT": {
+      "label": "LEFT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "function": "0xCD",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9104, 'LEFT' 259C Sharp: 15 wire bits, pad bit 0 as Sharp"
+        }
+      ]
+    },
+    "KEY_MULTI_CHANNEL": {
+      "label": "MULTI CHANNEL",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x12",
+          "function": "0xFA",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9104, 'MULTI CHANNEL' 4AFC Sharp: 15 wire bits, pad bit 0 as Sharp"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "function": "0x17",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9104, 'MUTE' 2744 Sharp: 15 wire bits, pad bit 0 as Sharp"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x12",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9104, 'POWER' 4B44 Sharp: 15 wire bits, pad bit 0 as Sharp"
+        }
+      ]
+    },
+    "KEY_PRESET_MINUS": {
+      "label": "PRESET-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9104, 'PRESET-' 2244 Sharp: 15 wire bits, pad bit 0 as Sharp"
+        }
+      ]
+    },
+    "KEY_PRESET_PLUS": {
+      "label": "PRESET+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9104, 'PRESET+' 2444 Sharp: 15 wire bits, pad bit 0 as Sharp"
+        }
+      ]
+    },
+    "KEY_RIGHT": {
+      "label": "RIGHT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "function": "0xCE",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9104, 'RIGHT' 239C Sharp: 15 wire bits, pad bit 0 as Sharp"
+        }
+      ]
+    },
+    "KEY_SOUND_MODE": {
+      "label": "SOUND MODE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "function": "0x4E",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9104, 'SOUND MODE' 2394 Sharp: 15 wire bits, pad bit 0 as Sharp"
+        }
+      ]
+    },
+    "KEY_STEREO": {
+      "label": "STEREO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x12",
+          "function": "0xF9",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9104, 'STEREO' 4CFC Sharp: 15 wire bits, pad bit 0 as Sharp"
+        }
+      ]
+    },
+    "KEY_TIMER": {
+      "label": "TIMER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "function": "0x87",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9104, 'TIMER' 270C Sharp: 15 wire bits, pad bit 0 as Sharp"
+        }
+      ]
+    },
+    "KEY_UP": {
+      "label": "UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "function": "0x41",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9104, 'UP' 2414 Sharp: 15 wire bits, pad bit 0 as Sharp"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9104, 'VOL-' 2544 Sharp: 15 wire bits, pad bit 0 as Sharp"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9104, 'VOL+' 2144 Sharp: 15 wire bits, pad bit 0 as Sharp"
+        }
+      ]
+    }
+  }
+}

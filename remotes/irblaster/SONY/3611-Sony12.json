@@ -1,0 +1,48 @@
+{
+  "manufacturer": "SONY",
+  "model": "IR Blaster DB 3611 (Sony12)",
+  "aliases": [],
+  "controls": [
+    "SONY | 148057211",
+    "SONY | 148058521",
+    "SONY | RM - AAU 020",
+    "SONY | RM-AAU020",
+    "SONY | STR - DH 500",
+    "SONY | STR - DH 500 CEL",
+    "SONY | STR-DG520",
+    "SONY | STR-DH500"
+  ],
+  "protocol": {
+    "name": "Sony12",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_FWD_SLASH_TUNING_PLUS": {
+      "label": "FWD/TUNING +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0B",
+          "function": "0x42",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3611, 'FWD/TUNING +' 43A SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_REW_SLASH_TUNING_MINUS": {
+      "label": "REW/TUNING -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0B",
+          "function": "0x43",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3611, 'REW/TUNING -' C3A SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    }
+  }
+}

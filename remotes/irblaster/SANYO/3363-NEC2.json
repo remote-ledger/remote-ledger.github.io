@@ -1,0 +1,74 @@
+{
+  "manufacturer": "SANYO",
+  "model": "IR Blaster DB 3363 (NEC2)",
+  "aliases": [],
+  "controls": [
+    "BRAVO | T 1006",
+    "CLASSIC | IRC 81569",
+    "HUAYU | RM - 108 B",
+    "HUAYU | SY - 03",
+    "SANYO | 27 LC 4 BKC",
+    "SANYO | 32 LC 4 BKC",
+    "SANYO | CE 23 LD 4 B",
+    "SANYO | CE 23 LD 4 WB",
+    "SANYO | CE 27 LC 4 B",
+    "SANYO | CE 27 LC 4 BK - B",
+    "SANYO | CE 27 LC 4 BK - C",
+    "SANYO | CE 27 LC 4 C",
+    "SANYO | CE 27 LC 5",
+    "SANYO | CE 27 LC 5 B",
+    "SANYO | CE 27 LC 6 B",
+    "SANYO | CE 27 LC 6 BKC",
+    "SANYO | CE 27 LD 4 B",
+    "SANYO | CE 27 LD 4 BK - B",
+    "SANYO | CE 27 LD 5 B",
+    "SANYO | CE 27 LD 6 B",
+    "SANYO | CE 27 LD 6 BK - C",
+    "SANYO | CE 28 DFN 3 B",
+    "SANYO | CE 28 DFN 3 B 01",
+    "SANYO | CE 32 DFN 3 B",
+    "SANYO | CE 32 DFN 3 B 01",
+    "SANYO | CE 32 KD 6 BK - C",
+    "SANYO | CE 32 LC 4",
+    "SANYO | CE 32 LC 4 B",
+    "SANYO | CE 32 LC 4 BK - B",
+    "SANYO | CE 32 LC 4 BK - C",
+    "SANYO | CE 32 LC 4 C",
+    "SANYO | CE 32 LC 5 B",
+    "SANYO | CE 32 LC 5 BK",
+    "SANYO | CE 32 LC 6 B",
+    "SANYO | CE 32 LC 6 BK - C",
+    "SANYO | CE 32 LD 4 B",
+    "SANYO | CE 32 LD 4 BK - B",
+    "SANYO | CE 32 LD 5 B",
+    "SANYO | CE 32 LD 6 B",
+    "SANYO | CE 32 LD 6 BK - C",
+    "SANYO | CE 32 LDY 1 - C",
+    "SANYO | CE32LD6BK-C [TV+DVD]",
+    "SANYO | CM 32WF8S",
+    "SANYO | JXPTA",
+    "SANYO | JXPWA",
+    "SANYO | SEC 3476"
+  ],
+  "protocol": {
+    "name": "NEC2",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x38",
+          "subdevice": "0xC7",
+          "function": "0x1C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3363, 'POWER' 1CE338C7 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    }
+  }
+}

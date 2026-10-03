@@ -1,0 +1,46 @@
+{
+  "manufacturer": "DENON",
+  "model": "IR Blaster DB 9106 (Denon)",
+  "aliases": [],
+  "controls": [
+    "DENON | AVC-X8500H",
+    "DENON | AVR-X4300H",
+    "DENON | AVR-X4400H",
+    "DENON | RC-1211",
+    "DENON | RC-1219",
+    "DENON | RC-1221"
+  ],
+  "protocol": {
+    "name": "Denon",
+    "carrierHz": 38000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x79",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9106, 'POWER' 44F0 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_POWER_OFF": {
+      "label": "POWER OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x7A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9106, 'POWER OFF' 42F0 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    }
+  }
+}

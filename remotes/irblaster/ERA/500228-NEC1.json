@@ -1,0 +1,185 @@
+{
+  "manufacturer": "ERA",
+  "model": "IR Blaster DB 500228 (NEC1)",
+  "aliases": [],
+  "controls": [
+    "ERA | SPB-6 MW",
+    "LED Lamp | ЭРА SPB-6 MW",
+    "ЭРА | SPB-6 MW"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_100": {
+      "label": "100%",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0xB7",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 500228, '100%' 05ED40BF NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_25": {
+      "label": "25%",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0xB7",
+          "function": "0xAC",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 500228, '25%' 05ED35CA NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_50": {
+      "label": "50%",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0xB7",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 500228, '50%' 05ED906F NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_BRI_MINUS": {
+      "label": "BRI-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0xB7",
+          "function": "0xBC",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 500228, 'BRI-' 05ED3DC2 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_BRI_PLUS": {
+      "label": "BRI+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0xB7",
+          "function": "0xAB",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 500228, 'BRI+' 05EDD52A NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_K_MINUS": {
+      "label": "K-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0xB7",
+          "function": "0xEF",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 500228, 'K-' 05EDF708 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_K_PLUS": {
+      "label": "K+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0xB7",
+          "function": "0xEB",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 500228, 'K+' 05EDD728 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_MODE": {
+      "label": "MODE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0xB7",
+          "function": "0xDB",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 500228, 'MODE' 05EDDB24 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0xB7",
+          "function": "0xE9",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 500228, 'POWER' 05ED9768 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_SLEEP": {
+      "label": "SLEEP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0xB7",
+          "function": "0xF5",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 500228, 'SLEEP' 05EDAF50 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_TIMER_0_5H": {
+      "label": "TIMER 0.5H",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0xB7",
+          "function": "0xFA",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 500228, 'TIMER 0.5H' 05ED5FA0 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_TIMER_1H": {
+      "label": "TIMER 1H",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0xB7",
+          "function": "0xA8",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 500228, 'TIMER 1H' 05ED15EA NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    }
+  }
+}

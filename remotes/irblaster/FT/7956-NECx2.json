@@ -1,0 +1,30 @@
+{
+  "manufacturer": "FT",
+  "model": "IR Blaster DB 7956 (NECx2)",
+  "aliases": [],
+  "controls": [
+    "FT | M267",
+    "NEXT | NEXT"
+  ],
+  "protocol": {
+    "name": "NECx2",
+    "carrierHz": 38000,
+    "minSends": 2
+  },
+  "keys": {
+    "KEY_STOP": {
+      "label": "STOP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x03",
+          "subdevice": "0xFC",
+          "function": "0x52",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7956, 'STOP' C03F4AB5 NECx2: 32 wire bits, bytes bit-reversed as NECx2"
+        }
+      ]
+    }
+  }
+}

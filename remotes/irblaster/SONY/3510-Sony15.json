@@ -1,0 +1,91 @@
+{
+  "manufacturer": "SONY",
+  "model": "IR Blaster DB 3510 (Sony15)",
+  "aliases": [],
+  "controls": [
+    "SONY | 148767711",
+    "SONY | A 2060834 A",
+    "SONY | CMT - SBT 40 D",
+    "SONY | CMT-DH70SWR",
+    "SONY | CMT-DX400",
+    "SONY | HBD-N7100W",
+    "SONY | HCD - DX 400",
+    "SONY | HCD - SBT 40 D",
+    "SONY | RM - AMU 085",
+    "SONY | RM - AMU 214",
+    "SONY | RM-ADP093",
+    "SONY | RM-AMU063"
+  ],
+  "protocol": {
+    "name": "Sony15",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_DSGX": {
+      "label": "DSGX",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x90",
+          "function": "0x4D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3510, 'DSGX' B212 SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    },
+    "KEY_EQ": {
+      "label": "EQ",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x90",
+          "function": "0x4B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3510, 'EQ' D212 SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    },
+    "KEY_INPUT_NEXT": {
+      "label": "INPUT NEXT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x90",
+          "function": "0x69",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3510, 'INPUT NEXT' 9612 SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    },
+    "KEY_INPUT_PREVIOUS": {
+      "label": "INPUT PREVIOUS",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x90",
+          "function": "0x6A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3510, 'INPUT PREVIOUS' 5612 SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    },
+    "KEY_SETUP": {
+      "label": "SETUP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x90",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3510, 'SETUP' E012 SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    }
+  }
+}

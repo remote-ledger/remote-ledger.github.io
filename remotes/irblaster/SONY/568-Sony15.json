@@ -1,0 +1,93 @@
+{
+  "manufacturer": "SONY",
+  "model": "IR Blaster DB 568 (Sony15)",
+  "aliases": [],
+  "controls": [
+    "AIWA | A751",
+    "AIWA | AWP - ZX 7",
+    "AIWA | JAX-S77",
+    "AIWA | RBT-3000M",
+    "AIWA | RM - Z 20051",
+    "AIWA | RM-AMU006",
+    "AIWA | RM-Z20031",
+    "AIWA | RM-Z20066",
+    "AIWA | XR-FA660",
+    "AIWA | XR-FA770",
+    "AIWA | XR-MN75",
+    "SONY | AUD751",
+    "SONY | CMT-CPX11",
+    "SONY | CMT-CPZ1",
+    "SONY | CMT-GPX7",
+    "SONY | CMT-HPX7",
+    "SONY | CMT-HX30R",
+    "SONY | CMT-HX3R",
+    "SONY | CMT-U1CEL",
+    "SONY | HCD-CPX22",
+    "SONY | HCD-GT222",
+    "SONY | HCD-GT44",
+    "SONY | HCD-GX355",
+    "SONY | HCD-GX555",
+    "SONY | HCD-HX9",
+    "SONY | HCD-NXM3",
+    "SONY | HCD-RG270",
+    "SONY | HCD-RG475",
+    "SONY | HCD-RG490",
+    "SONY | HCD-RG575",
+    "SONY | HCD-RG590",
+    "SONY | HCD-U1BT",
+    "SONY | MHC-AG121",
+    "SONY | MHC-EC68",
+    "SONY | MHC-GNX60",
+    "SONY | MHC-GX250",
+    "SONY | MHC-GX450",
+    "SONY | MHC-GX750",
+    "SONY | MHC-RG100",
+    "SONY | MHC-RG121",
+    "SONY | MHC-RG190",
+    "SONY | MHC-RG221",
+    "SONY | MHC-RG222",
+    "SONY | MHC-RG270",
+    "SONY | MHC-RG333",
+    "SONY | MHC-RG441",
+    "SONY | MHC-RG444S",
+    "SONY | MHC-RG470",
+    "SONY | MHC-RG490S",
+    "SONY | MHC-RG551S",
+    "SONY | MHC-RG555",
+    "SONY | MHC-RG590S",
+    "SONY | MHC-RX550"
+  ],
+  "protocol": {
+    "name": "Sony15",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_EQ": {
+      "label": "EQ",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x90",
+          "function": "0x63",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 568, 'EQ' C612 SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    },
+    "KEY_FUNCTION": {
+      "label": "FUNCTION",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x90",
+          "function": "0x69",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 568, 'FUNCTION' 9612 SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    }
+  }
+}

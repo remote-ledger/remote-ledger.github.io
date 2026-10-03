@@ -1,0 +1,54 @@
+{
+  "manufacturer": "ACER",
+  "model": "IR Blaster DB 1599 (NEC2)",
+  "aliases": [],
+  "controls": [
+    "ACER | P5205",
+    "ACER | RC-260RR-190",
+    "ACER | RC-261RR-190",
+    "ACER | RC-262RR-190",
+    "ACER | S5200",
+    "ACER | VZ.J9000.001",
+    "ACER | VZ.K0300.001",
+    "ACER | VZ.K0300.002",
+    "ACER | X1110",
+    "ACER | X1110A",
+    "ACER | X1130",
+    "ACER | X1130P",
+    "ACER | X1130PA",
+    "ACER | X1130PS",
+    "ACER | X1210",
+    "ACER | X1210A",
+    "ACER | X1210K",
+    "ACER | X1210S",
+    "ACER | X1213",
+    "ACER | X1216",
+    "ACER | X1230",
+    "ACER | X1230PA",
+    "ACER | X1230PK",
+    "ACER | X1230PS",
+    "ACER | X1230S",
+    "ACER | X1237"
+  ],
+  "protocol": {
+    "name": "NEC2",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_INTUT_WIRELESS": {
+      "label": "Intut Wireless",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0x13",
+          "function": "0x71",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1599, 'Intut Wireless' 10C88E71 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    }
+  }
+}

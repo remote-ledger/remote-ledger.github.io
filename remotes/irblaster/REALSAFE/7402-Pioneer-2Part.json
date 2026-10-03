@@ -1,0 +1,28 @@
+{
+  "manufacturer": "REALSAFE",
+  "model": "IR Blaster DB 7402 (Pioneer-2Part)",
+  "aliases": [],
+  "controls": [
+    "REALSAFE | LCDM-9"
+  ],
+  "protocol": {
+    "name": "Pioneer-2Part",
+    "carrierHz": 40000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_7": {
+      "label": "7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x2020",
+          "function": "0x1818",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7402, '7' 04180418 Pioneer: wire-order bytes, bit-reversed as Pioneer-2Part"
+        }
+      ]
+    }
+  }
+}

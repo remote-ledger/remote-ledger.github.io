@@ -1,0 +1,99 @@
+{
+  "manufacturer": "LG",
+  "model": "IR Blaster DB 466 (NEC1)",
+  "aliases": [],
+  "controls": [
+    "LG | 6870R1498"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_CLC_SLASH_CNT": {
+      "label": "CLC/CNT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0x4C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 466, 'CLC/CNT' 768932CD NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_EJECT": {
+      "label": "EJECT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 466, 'EJECT' 768900FF NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_OUTPUT_SELECT": {
+      "label": "OUTPUT SELECT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0x67",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 466, 'OUTPUT SELECT' 7689E619 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_POWER_VHS": {
+      "label": "POWER VHS",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 466, 'POWER VHS' 768928D7 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_TV_SLASH_VCR": {
+      "label": "TV/VCR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 466, 'TV/VCR' 7689A857 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_VHS": {
+      "label": "VHS",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0xF1",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 466, 'VHS' 76898F70 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    }
+  }
+}

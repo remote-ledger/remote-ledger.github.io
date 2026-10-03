@@ -1,0 +1,77 @@
+{
+  "manufacturer": "PHILIPS",
+  "model": "IR Blaster DB 2034 (RC5)",
+  "aliases": [],
+  "controls": [
+    "BRAVO | D 004",
+    "MAGNAVOX | 2422 549 00988(DVD)",
+    "MAGNAVOX | 242254900988[DVD]",
+    "MAGNAVOX | MRV 810 H(DVD)",
+    "MAGNAVOX | MRV810H[DVD]",
+    "PHILIPS | 2422 5490 0587",
+    "PHILIPS | 2422 5490 0968",
+    "PHILIPS | DVD - R 3300 H",
+    "PHILIPS | DVD - R 3300 H - 19",
+    "PHILIPS | DVD - R 3300 H/19",
+    "PHILIPS | DVD - R 3330 H",
+    "PHILIPS | DVD - R 3360 H",
+    "PHILIPS | DVD - R 5330 H",
+    "PHILIPS | DVD - R 5330 H - 19",
+    "PHILIPS | DVD - R 5350 H",
+    "PHILIPS | DVD - R 725 H",
+    "PHILIPS | DVD - R 725/00",
+    "PHILIPS | DVD - R 725/02",
+    "PHILIPS | DVD - R 725/05",
+    "PHILIPS | DVD - R 7250 H",
+    "PHILIPS | DVD - R 7250 H - 05",
+    "PHILIPS | DVD - R 7250 H - 32",
+    "PHILIPS | DVD - R 7250 H - 58",
+    "PHILIPS | DVD - R 7250 H/05",
+    "PHILIPS | DVD - R 7250 H/32",
+    "PHILIPS | DVD - R 7250 H/58",
+    "PHILIPS | DVD - R 7260 H",
+    "PHILIPS | DVD - R 7300 H",
+    "PHILIPS | DVD - R 7310 H",
+    "PHILIPS | HD - RW 720 - 00",
+    "PHILIPS | HD - RW 720 - 02",
+    "PHILIPS | HD - RW 720 - 05",
+    "PHILIPS | HD - RW 720 - 17",
+    "PHILIPS | HD - RW 720 - 69",
+    "PHILIPS | HDR 1000",
+    "PHILIPS | RC 19046006/01",
+    "PHILIPS | RC 4700"
+  ],
+  "protocol": {
+    "name": "RC5",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_VOL_MINUS_TV": {
+      "label": "VOL- TV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2034, 'VOL- TV' 811 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS_TV": {
+      "label": "VOL+ TV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2034, 'VOL+ TV' 810 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    }
+  }
+}

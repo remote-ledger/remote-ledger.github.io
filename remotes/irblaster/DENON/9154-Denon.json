@@ -1,0 +1,42 @@
+{
+  "manufacturer": "DENON",
+  "model": "IR Blaster DB 9154 (Denon)",
+  "aliases": [],
+  "controls": [
+    "DENON | AVR-S530BT",
+    "DENON | RC-1216"
+  ],
+  "protocol": {
+    "name": "Denon",
+    "carrierHz": 38000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x79",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9154, 'POWER' 44F0 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_POWER_OFF": {
+      "label": "POWER OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x7A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9154, 'POWER OFF' 42F0 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    }
+  }
+}

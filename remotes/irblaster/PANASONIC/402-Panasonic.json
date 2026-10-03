@@ -1,0 +1,156 @@
+{
+  "manufacturer": "PANASONIC",
+  "model": "IR Blaster DB 402 (Panasonic)",
+  "aliases": [],
+  "controls": [
+    "PANASONIC | EUR7651120 [VCR]",
+    "PANASONIC | EUR7651150 [VCR]",
+    "PANASONIC | N20AYB000354 [VCR]",
+    "PANASONIC | N2QAYB000228 [VCR]",
+    "PANASONIC | N2QAYB000354 [VCR]",
+    "PANASONIC | TX-L26C20B [VCR]",
+    "PANASONIC | TX-L32X10Y [VCR]",
+    "PANASONIC | TX-P42V10E [VCR]",
+    "PANASONIC | TX-P50S10E [VCR]",
+    "PANASONIC | TX-P50V10E [VCR]",
+    "PANASONIC | TX-PF37X10 [VCR]",
+    "PANASONIC | TX-PF42S10 [VCR]",
+    "PANASONIC | TX-PF42X10 [VCR]",
+    "PANASONIC | TX-PF46S10 [VCR]",
+    "PANASONIC | TX-PF50S10 [VCR]",
+    "PANASONIC | TX-PF50X10 [VCR]"
+  ],
+  "protocol": {
+    "name": "Panasonic",
+    "carrierHz": 37000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_FWD_SLASH_SKIP_NEXT": {
+      "label": "FWD / SKIP NEXT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x90",
+          "subdevice": "0x00",
+          "function": "0x4A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 402, 'FWD / SKIP NEXT' 40040900525B REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_PAUSE_SLASH": {
+      "label": "PAUSE / |►",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x90",
+          "subdevice": "0x00",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 402, 'PAUSE / |►' 40040900C0C9 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_PLAY": {
+      "label": "PLAY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x90",
+          "subdevice": "0x00",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 402, 'PLAY' 400409005059 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x90",
+          "subdevice": "0x00",
+          "function": "0x3D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 402, 'POWER' 40040900BCB5 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_PROGRAMME_DOWN": {
+      "label": "PROGRAMME DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x90",
+          "subdevice": "0x00",
+          "function": "0x35",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 402, 'PROGRAMME DOWN' 40040900ACA5 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_PROGRAMME_UP": {
+      "label": "PROGRAMME UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x90",
+          "subdevice": "0x00",
+          "function": "0x34",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 402, 'PROGRAMME UP' 400409002C25 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_REC": {
+      "label": "REC",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x90",
+          "subdevice": "0x00",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 402, 'REC' 400409001019 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_REW_SLASH_SKIP_PREV": {
+      "label": "REW / SKIP PREV.",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x90",
+          "subdevice": "0x00",
+          "function": "0x49",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 402, 'REW / SKIP PREV.' 40040900929B REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_STOP": {
+      "label": "STOP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x90",
+          "subdevice": "0x00",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 402, 'STOP' 400409000009 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    }
+  }
+}

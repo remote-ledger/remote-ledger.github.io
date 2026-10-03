@@ -1,0 +1,29 @@
+{
+  "manufacturer": "AKIRA",
+  "model": "IR Blaster DB 7867 (NEC2)",
+  "aliases": [],
+  "controls": [
+    "AKIRA | HTS - 18DVD (2)"
+  ],
+  "protocol": {
+    "name": "NEC2",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_KARAOKE": {
+      "label": "KARAOKE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0xDF",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7867, 'KARAOKE' 00FFFB04 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    }
+  }
+}

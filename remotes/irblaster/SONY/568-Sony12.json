@@ -1,0 +1,210 @@
+{
+  "manufacturer": "SONY",
+  "model": "IR Blaster DB 568 (Sony12)",
+  "aliases": [],
+  "controls": [
+    "AIWA | A751",
+    "AIWA | AWP - ZX 7",
+    "AIWA | JAX-S77",
+    "AIWA | RBT-3000M",
+    "AIWA | RM - Z 20051",
+    "AIWA | RM-AMU006",
+    "AIWA | RM-Z20031",
+    "AIWA | RM-Z20066",
+    "AIWA | XR-FA660",
+    "AIWA | XR-FA770",
+    "AIWA | XR-MN75",
+    "SONY | AUD751",
+    "SONY | CMT-CPX11",
+    "SONY | CMT-CPZ1",
+    "SONY | CMT-GPX7",
+    "SONY | CMT-HPX7",
+    "SONY | CMT-HX30R",
+    "SONY | CMT-HX3R",
+    "SONY | CMT-U1CEL",
+    "SONY | HCD-CPX22",
+    "SONY | HCD-GT222",
+    "SONY | HCD-GT44",
+    "SONY | HCD-GX355",
+    "SONY | HCD-GX555",
+    "SONY | HCD-HX9",
+    "SONY | HCD-NXM3",
+    "SONY | HCD-RG270",
+    "SONY | HCD-RG475",
+    "SONY | HCD-RG490",
+    "SONY | HCD-RG575",
+    "SONY | HCD-RG590",
+    "SONY | HCD-U1BT",
+    "SONY | MHC-AG121",
+    "SONY | MHC-EC68",
+    "SONY | MHC-GNX60",
+    "SONY | MHC-GX250",
+    "SONY | MHC-GX450",
+    "SONY | MHC-GX750",
+    "SONY | MHC-RG100",
+    "SONY | MHC-RG121",
+    "SONY | MHC-RG190",
+    "SONY | MHC-RG221",
+    "SONY | MHC-RG222",
+    "SONY | MHC-RG270",
+    "SONY | MHC-RG333",
+    "SONY | MHC-RG441",
+    "SONY | MHC-RG444S",
+    "SONY | MHC-RG470",
+    "SONY | MHC-RG490S",
+    "SONY | MHC-RG551S",
+    "SONY | MHC-RG555",
+    "SONY | MHC-RG590S",
+    "SONY | MHC-RX550"
+  ],
+  "protocol": {
+    "name": "Sony12",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_CD": {
+      "label": "CD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x25",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 568, 'CD' A41 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_DISPLAY": {
+      "label": "DISPLAY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x4B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 568, 'DISPLAY' D21 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 568, 'POWER' A81 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_SELECT_CLOCK_SLASH_TIMER": {
+      "label": "SELECT CLOCK/TIMER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x62",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 568, 'SELECT CLOCK/TIMER' 461 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_SET_CLOCK_SLASH_TIMER": {
+      "label": "SET CLOCK/TIMER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x65",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 568, 'SET CLOCK/TIMER' A61 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_SLEEP": {
+      "label": "SLEEP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x60",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 568, 'SLEEP' 061 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_TAPE": {
+      "label": "TAPE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x23",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 568, 'TAPE' C41 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_TUNER_MEMORY": {
+      "label": "TUNER MEMORY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x0E",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 568, 'TUNER MEMORY' 701 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_TUNER_SLASH_BAND": {
+      "label": "TUNER / BAND",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 568, 'TUNER / BAND' F01 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 568, 'VOL-' C81 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 568, 'VOL+' 481 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    }
+  }
+}

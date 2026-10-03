@@ -1,0 +1,94 @@
+{
+  "manufacturer": "OPTOMA",
+  "model": "IR Blaster DB 1656 (NEC2)",
+  "aliases": [],
+  "controls": [
+    "OPTOMA | BR-3042B",
+    "OPTOMA | BR-3053B",
+    "OPTOMA | HD20",
+    "OPTOMA | HD200X",
+    "OPTOMA | HD20LV",
+    "OPTOMA | HD22",
+    "OPTOMA | HD2200",
+    "OPTOMA | HD67",
+    "OPTOMA | HD6700",
+    "OPTOMA | HT1081"
+  ],
+  "protocol": {
+    "name": "NEC2",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_DOWN": {
+      "label": "DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "subdevice": "0xCD",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1656, 'DOWN' 4CB328D7 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_LEFT_SLASH_SOURCE": {
+      "label": "LEFT / SOURCE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "subdevice": "0xCD",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1656, 'LEFT / SOURCE' 4CB36897 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_RE_MINUS_SYNC": {
+      "label": "RE-SYNC",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "subdevice": "0xCD",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1656, 'RE-SYNC' 4CB3A857 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_RIGHT_SLASH_RE_MINUS_SYNC": {
+      "label": "RIGHT / RE-SYNC",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "subdevice": "0xCD",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1656, 'RIGHT / RE-SYNC' 4CB3A857 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_UP": {
+      "label": "UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "subdevice": "0xCD",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1656, 'UP' 4CB3C837 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    }
+  }
+}

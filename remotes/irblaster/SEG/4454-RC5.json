@@ -1,0 +1,502 @@
+{
+  "manufacturer": "SEG",
+  "model": "IR Blaster DB 4454 (RC5)",
+  "aliases": [],
+  "controls": [
+    "AMITRONICA | SAT 2450",
+    "ANALOG | SR 2860",
+    "ASCI | ASR500",
+    "ATLANTA | SA 2450",
+    "ATLANTHIA | SAT 2450",
+    "AXIL | SAT 2450",
+    "AXITRONIC | AXT 500",
+    "BRAVO | B848",
+    "BRAVO | S 005",
+    "CHEROKEE | REMCON 1237",
+    "CHEROKEE | WS 55",
+    "CHESS | ODF 3000 CI",
+    "CM REMOTES | 90 02 43 00",
+    "CM REMOTES | 90 19 65 16",
+    "CM REMOTES | 90 80 86 97",
+    "CM REMOTES | 90 86 01 05",
+    "CM REMOTES | 90 96 35 45",
+    "COLUMBUS | REMCON 1237",
+    "COLUMBUS | WS 55",
+    "DCE | S 100",
+    "DISEQC | D 9520",
+    "FMD | ST 860 DD",
+    "FMD | ST 863 D",
+    "FMD | ST 872 D",
+    "FRIGOR ELECTRONIC | SAT 507",
+    "FUBA | 642 AA",
+    "FUBA | 9608 B 3003",
+    "FUBA | ODE 150 F",
+    "FUBA | ODE 250",
+    "FUBA | RC 801",
+    "HB | HB 242",
+    "INGELEN | HP 242",
+    "KATHREIN | 19900352",
+    "KATHREIN | UFE 135",
+    "KITON | SR 1900",
+    "KITON | SR 2000",
+    "KREILING | KR 99 OSD",
+    "LENSON | LA 3002",
+    "LENSON | LA 3003",
+    "MAESTRO | WS 55",
+    "MONTEREY | WS 55",
+    "OPTEX | 709240/STAR",
+    "OPTEX | 709240/STARCOM",
+    "OPTEX | 709240/STARcoru",
+    "OPTEX | 709351",
+    "OPTEX | 9351 MK 111",
+    "OPTEX | 9351 MK II",
+    "OPTEX | ORS 2450",
+    "OPTEX | ORS 9351",
+    "OPTEX | STAR - COM",
+    "ORBITECH | OSD 610",
+    "ORBITECH | SKYSAT OSD 90",
+    "PILOT | P 949",
+    "QUADRO | AN - 100",
+    "QUADRO | AN - 200",
+    "REGAL | ASR 102 OSD",
+    "SEDEA | 900 S",
+    "SEDEA | AR 5713",
+    "SEDEA | REMCON 1237",
+    "SEDEA | S 800(2  VERS.)",
+    "SEDEA | S800",
+    "SEG | RS 852",
+    "SEG | SR 2761",
+    "SEG | SR 2860",
+    "SEG | SR 2862",
+    "SEG | SR 4761",
+    "SEG | SR 4762",
+    "SEG | SR 4862",
+    "SEG | SR 751",
+    "SEG | SR 761",
+    "SEG | SR 850",
+    "SKYSAT | OSD 90",
+    "STARCOM | 507032 SC",
+    "STARCOM | SAT 3901",
+    "STARCOM | STAR - COMX",
+    "TECHWOOD | AU 610 MK II",
+    "TECHWOOD | AU 631",
+    "TELESTAR | SATINCO OSD",
+    "TELESTAR | SATINCO OSD SCART",
+    "TELETECH | SR 750",
+    "TELETECH | SR 751",
+    "TELETECH | SR 761",
+    "TELEVIEW | SR 2000 KITON",
+    "TELKOM | SR 1000",
+    "TELKOM | SR 2000",
+    "TELKOM | SR 3000",
+    "TELKOM | SR 5000",
+    "TRIAX | RC 801",
+    "TRIAX | SPSR 64",
+    "TRIAX | SR 26 OM",
+    "TRIAX | SR 26 PAL(1  VERS.)",
+    "TRIAX | SR26",
+    "TWINSAT | REMCON 1237",
+    "TWINSAT | WS 55",
+    "UNIVERSUM | RC 320",
+    "UNIVERSUM | RC320+FUN",
+    "UNIVERSUM | SR 8101",
+    "VESTEL | 026648",
+    "VESTEL | 26648",
+    "VESTEL | SAT 3800",
+    "VESTEL | SR 1000",
+    "VESTEL | TK 305",
+    "VISIOSAT | 110",
+    "VISIOSAT | 110 MK 2",
+    "VISIOSAT | 160 MK 2",
+    "VISIOSAT | DV 110",
+    "VISIOSAT | DV 110 MK II",
+    "VISIOSAT | DV 160 MK II",
+    "VISIOSAT | DV 180 MK II",
+    "VISIOSAT | DV160MK2",
+    "WORLDSAT | DRIVER 2200",
+    "WORLDSAT | HT 6230",
+    "WORLDSAT | REMCON 1237",
+    "WORLDSAT | TO 6 MAGIC 1",
+    "WORLDSAT | TWINSAT DRIVER",
+    "WORLDSAT | WS 55",
+    "ZEHNDER | BX 300",
+    "ZEHNDER | BX 360",
+    "ZEHNDER | BX 380",
+    "ZEHNDER | BX 450",
+    "ZEHNDER | BX 460",
+    "ZEHNDER | REMCON 1237",
+    "ZEHNDER | ZE 55",
+    "ZEHNDER | ZX 55"
+  ],
+  "protocol": {
+    "name": "RC5",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_0": {
+      "label": "0",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x06",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4454, '0' 980 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_1": {
+      "label": "1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x06",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4454, '1' 981 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_2": {
+      "label": "2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x06",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4454, '2' 982 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_3": {
+      "label": "3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x06",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4454, '3' 983 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_4": {
+      "label": "4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x06",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4454, '4' 984 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_5": {
+      "label": "5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x06",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4454, '5' 985 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_6": {
+      "label": "6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x06",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4454, '6' 986 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_7": {
+      "label": "7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x06",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4454, '7' 987 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_8": {
+      "label": "8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x06",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4454, '8' 988 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_9": {
+      "label": "9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x06",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4454, '9' 989 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_AV_SLASH_SOURCE": {
+      "label": "AV/SOURCE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x06",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4454, 'AV/SOURCE' 980 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_BLUE": {
+      "label": "BLUE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x06",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4454, 'BLUE' 98A RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_DOWN": {
+      "label": "DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x06",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4454, 'DOWN' 993 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_EJECT": {
+      "label": "EJECT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x06",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4454, 'EJECT' 980 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_LEFT": {
+      "label": "LEFT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x06",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4454, 'LEFT' 991 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_MENU": {
+      "label": "MENU",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x06",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4454, 'MENU' 98F RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x06",
+          "function": "0x0E",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4454, 'MUTE' 98E RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x06",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4454, 'POWER' 98C RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_P_MINUS": {
+      "label": "P-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x06",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4454, 'P-' 993 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_P_PLUS": {
+      "label": "P+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x06",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4454, 'P+' 992 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_P_SLASH_C": {
+      "label": "P/C",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x06",
+          "function": "0x1C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4454, 'P/C' 99C RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_RIGHT": {
+      "label": "RIGHT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x06",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4454, 'RIGHT' 990 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_SLEEP_SLASH_TIMER": {
+      "label": "SLEEP/TIMER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x06",
+          "function": "0x1E",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4454, 'SLEEP/TIMER' 99E RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_TV": {
+      "label": "TV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x06",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4454, 'TV' 98D RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_UP": {
+      "label": "UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x06",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4454, 'UP' 992 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x06",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4454, 'VOL-' 991 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x06",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4454, 'VOL+' 990 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_YELLOW": {
+      "label": "YELLOW",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x06",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4454, 'YELLOW' 98B RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    }
+  }
+}

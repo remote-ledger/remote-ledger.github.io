@@ -1,0 +1,28 @@
+{
+  "manufacturer": "PHILIPS",
+  "model": "IR Blaster DB 5191 (RC6)",
+  "aliases": [],
+  "controls": [
+    "PHILIPS | PRC500-47"
+  ],
+  "protocol": {
+    "name": "RC6",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_SYSTEM_MENU": {
+      "label": "SYSTEM MENU",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "function": "0x82",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 5191, 'SYSTEM MENU' 0482 RC6: 16 bits, mode 0 as RC6"
+        }
+      ]
+    }
+  }
+}

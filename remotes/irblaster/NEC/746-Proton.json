@@ -1,0 +1,325 @@
+{
+  "manufacturer": "NEC",
+  "model": "IR Blaster DB 746 (Proton)",
+  "aliases": [],
+  "controls": [
+    "NEC | LCD 4020",
+    "NEC | LCD 4620",
+    "NEC | LCD 5220",
+    "NEC | MULTISYNC - LCD 4020",
+    "NEC | MULTISYNC - LCD 4620",
+    "NEC | MULTISYNC - LCD 5220",
+    "NEC | MULTISYNC - V 321",
+    "NEC | MULTISYNC - V 421",
+    "NEC | MULTISYNC - V 461",
+    "NEC | RU - H 111",
+    "NEC | RU - M 111",
+    "NEC | RU - M 118"
+  ],
+  "protocol": {
+    "name": "Proton",
+    "carrierHz": 38500,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_AUDIO_INPUT": {
+      "label": "AUDIO INPUT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF4",
+          "function": "0x1E",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 746, 'AUDIO INPUT' 2F78 Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_AUTO_SETUP": {
+      "label": "AUTO SETUP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF4",
+          "function": "0x1C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 746, 'AUTO SETUP' 2F38 Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_C_C": {
+      "label": "C.C.",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF4",
+          "function": "0x2C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 746, 'C.C.' 2F34 Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_DISPLAY": {
+      "label": "DISPLAY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF4",
+          "function": "0x19",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 746, 'DISPLAY' 2F98 Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_DOWN": {
+      "label": "DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF4",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 746, 'DOWN' 2F28 Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_EXIT": {
+      "label": "EXIT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF4",
+          "function": "0x1F",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 746, 'EXIT' 2FF8 Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_INPUT": {
+      "label": "INPUT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF4",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 746, 'INPUT' 2F80 Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_MENU": {
+      "label": "MENU",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF4",
+          "function": "0x20",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 746, 'MENU' 2F04 Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_MINUS": {
+      "label": "-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF4",
+          "function": "0x21",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 746, '-' 2F84 Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF4",
+          "function": "0x1B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 746, 'MUTE' 2FD8 Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_PICTURE_MODE": {
+      "label": "PICTURE MODE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF4",
+          "function": "0x1D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 746, 'PICTURE MODE' 2FB8 Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_PIP_CHANGE": {
+      "label": "PIP – CHANGE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF4",
+          "function": "0x26",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 746, 'PIP – CHANGE' 2F64 Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_PIP_INPUT": {
+      "label": "PIP – INPUT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF4",
+          "function": "0x25",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 746, 'PIP – INPUT' 2FA4 Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_PIP_ON_SLASH_OFF": {
+      "label": "PIP – ON/OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF4",
+          "function": "0x24",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 746, 'PIP – ON/OFF' 2F24 Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_PLUS": {
+      "label": "+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF4",
+          "function": "0x22",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 746, '+' 2F44 Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF4",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 746, 'POWER' 2FC0 Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_SET": {
+      "label": "SET",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF4",
+          "function": "0x23",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 746, 'SET' 2FC4 Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_SIZE": {
+      "label": "SIZE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF4",
+          "function": "0x29",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 746, 'SIZE' 2F94 Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_STILL_CAPTURE": {
+      "label": "STILL – CAPTURE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF4",
+          "function": "0x28",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 746, 'STILL – CAPTURE' 2F14 Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_STILL_ON_SLASH_OFF": {
+      "label": "STILL – ON/OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF4",
+          "function": "0x27",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 746, 'STILL – ON/OFF' 2FE4 Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_UP": {
+      "label": "UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF4",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 746, 'UP' 2FA8 Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF4",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 746, 'VOL-' 2F68 Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF4",
+          "function": "0x17",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 746, 'VOL+' 2FE8 Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    }
+  }
+}

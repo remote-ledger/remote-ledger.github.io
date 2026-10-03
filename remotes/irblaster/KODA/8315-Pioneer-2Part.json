@@ -1,0 +1,93 @@
+{
+  "manufacturer": "KODA",
+  "model": "IR Blaster DB 8315 (Pioneer-2Part)",
+  "aliases": [],
+  "controls": [
+    "KODA | IP915"
+  ],
+  "protocol": {
+    "name": "Pioneer-2Part",
+    "carrierHz": 40000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_": {
+      "label": "|⏪",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x4141",
+          "function": "0xC0C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8315, '|⏪' 82308230 Pioneer: wire-order bytes, bit-reversed as Pioneer-2Part"
+        }
+      ]
+    },
+    "KEY_BASS_MINUS": {
+      "label": "BASS-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x4141",
+          "function": "0x1818",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8315, 'BASS-' 82188218 Pioneer: wire-order bytes, bit-reversed as Pioneer-2Part"
+        }
+      ]
+    },
+    "KEY_BASS_PLUS": {
+      "label": "BASS+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x4141",
+          "function": "0x1414",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8315, 'BASS+' 82288228 Pioneer: wire-order bytes, bit-reversed as Pioneer-2Part"
+        }
+      ]
+    },
+    "KEY_DIMMER": {
+      "label": "DIMMER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x4141",
+          "function": "0x1717",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8315, 'DIMMER' 82E882E8 Pioneer: wire-order bytes, bit-reversed as Pioneer-2Part"
+        }
+      ]
+    },
+    "KEY_PLAY_SLASH_PAUSE": {
+      "label": "PLAY/PAUSE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x4141",
+          "function": "0xD0D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8315, 'PLAY/PAUSE' 82B082B0 Pioneer: wire-order bytes, bit-reversed as Pioneer-2Part"
+        }
+      ]
+    },
+    "KEY_RESET": {
+      "label": "RESET",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x4141",
+          "function": "0x1616",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8315, 'RESET' 82688268 Pioneer: wire-order bytes, bit-reversed as Pioneer-2Part"
+        }
+      ]
+    }
+  }
+}

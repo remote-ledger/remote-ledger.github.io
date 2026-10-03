@@ -1,0 +1,29 @@
+{
+  "manufacturer": "WOKSTER",
+  "model": "IR Blaster DB 8564 (NEC2)",
+  "aliases": [],
+  "controls": [
+    "WOKSTER | W-304"
+  ],
+  "protocol": {
+    "name": "NEC2",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_FWD": {
+      "label": "FWD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x49",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8564, 'FWD' 00FF926D NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    }
+  }
+}

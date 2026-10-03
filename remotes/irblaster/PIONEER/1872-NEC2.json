@@ -1,0 +1,125 @@
+{
+  "manufacturer": "PIONEER",
+  "model": "IR Blaster DB 1872 (NEC2)",
+  "aliases": [],
+  "controls": [
+    "PIONEER | DVR - RT 602 H",
+    "PIONEER | DVR - RT 602 HS",
+    "PIONEER | DVR - RT 602 S",
+    "PIONEER | DVR 440 HK",
+    "PIONEER | DVR 440 HS",
+    "PIONEER | DVR 540 HS",
+    "PIONEER | DVR 545 HS",
+    "PIONEER | DVR 545 HX",
+    "PIONEER | DVR 555 H",
+    "PIONEER | DVR 645 HS",
+    "PIONEER | VXX 3048",
+    "PIONEER | VXX 3107",
+    "PIONEER | VXX 3129"
+  ],
+  "protocol": {
+    "name": "NEC2",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_PAUSE": {
+      "label": "PAUSE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xAB",
+          "subdevice": "0x54",
+          "function": "0x23",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1872, 'PAUSE' D52AC43B NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_PLAY": {
+      "label": "PLAY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xAB",
+          "subdevice": "0x54",
+          "function": "0x22",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1872, 'PLAY' D52A44BB NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_REC": {
+      "label": "REC",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xAB",
+          "subdevice": "0x54",
+          "function": "0x28",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1872, 'REC' D52A14EB NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_SKIP_NEXT": {
+      "label": "SKIP NEXT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xAB",
+          "subdevice": "0x54",
+          "function": "0x26",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1872, 'SKIP NEXT' D52A649B NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_SKIP_PREV": {
+      "label": "SKIP PREV.",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xAB",
+          "subdevice": "0x54",
+          "function": "0x27",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1872, 'SKIP PREV.' D52AE41B NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_STOP": {
+      "label": "STOP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xAB",
+          "subdevice": "0x54",
+          "function": "0x20",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1872, 'STOP' D52A04FB NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_STOP_REC": {
+      "label": "STOP REC",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xAB",
+          "subdevice": "0x54",
+          "function": "0x21",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1872, 'STOP REC' D52A847B NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,964 @@
+{
+  "manufacturer": "BQS",
+  "model": "IR Blaster DB 8775 (Blaupunkt)",
+  "aliases": [],
+  "controls": [
+    "BQS | 489"
+  ],
+  "protocol": {
+    "name": "Blaupunkt",
+    "carrierHz": 30300,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_0_LP": {
+      "label": "0  LP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, '0  LP' 7BC RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_1": {
+      "label": "1 (⏪)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, '1 (⏪)' 3BC RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_1_MINUS_1_PLUS": {
+      "label": "1- (1+)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, '1- (1+)' 53C RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_1_MINUS_2_SLASH": {
+      "label": "1-2  \\/  ()()",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, '1-2  \\/  ()()' 17C RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_2": {
+      "label": "2 (⏩)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, '2 (⏩)' 5BC RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_2_MINUS_OK": {
+      "label": "2-  (OK)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x1B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, '2-  (OK)' 13C RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_3": {
+      "label": "3 ||►",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, '3 ||►' 1BC RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_4_P_MINUS": {
+      "label": "4   P -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, '4   P -' 6BC RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_5_P_PLUS": {
+      "label": "5  P+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, '5  P+' 2BC RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_6_HIFI": {
+      "label": "6  HIFI",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, '6  HIFI' 4BC RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_7": {
+      "label": "7 ⏪",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x17",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, '7 ⏪' 0BC RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_8": {
+      "label": "8 ⏩",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x18",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, '8 ⏩' 73C RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_9_MINUS": {
+      "label": "9 ◄-►",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x19",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, '9 ◄-►' 33C RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_BALANCE": {
+      "label": "BALANCE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x31",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, 'BALANCE' 39C RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_BLUE": {
+      "label": "BLUE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x3A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, 'BLUE' 51C RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_BRIGHT": {
+      "label": "BRIGHT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x2B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, 'BRIGHT' 15C RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_COLOR": {
+      "label": "COLOR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x2A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, 'COLOR' 55C RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_COLOR_TON": {
+      "label": "COLOR TON",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x2C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, 'COLOR TON' 65C RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_CONTR": {
+      "label": "CONTR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x29",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, 'CONTR' 35C RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_C_SLASH_P_4DC": {
+      "label": "C/ P",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x26",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, 'C/ P' 4DC RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_C_SLASH_P_63C": {
+      "label": "?  C/P",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x1C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, '?  C/P' 63C RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_C_SLASH_P_VCR": {
+      "label": "C/P  VCR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x26",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, 'C/P  VCR' 4D4 RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_C_TV": {
+      "label": "C ( TV)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x21",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, 'C ( TV)' 3DC RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_E": {
+      "label": "E",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, 'E' 27C RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_GREEN_MINUS": {
+      "label": "GREEN  -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x3E",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, 'GREEN  -' 41C RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_GREEN_PLUS": {
+      "label": "GREEN  +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x3F",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, 'GREEN  +' 01C RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_HIFI": {
+      "label": "HIFI",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, 'HIFI' 4B4 RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_INFO_VCR": {
+      "label": "INFO VCR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x35",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, 'INFO VCR' 294 RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_I_I": {
+      "label": "I ( i )",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x35",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, 'I ( i )' 29C RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_L_P": {
+      "label": "L P",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, 'L P' 7B4 RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_MINUS_214": {
+      "label": "-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x3D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, '-' 214 RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_MINUS_334": {
+      "label": "◄-►",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x19",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, '◄-►' 334 RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_MINUS_3FC": {
+      "label": "-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, '-' 3FC RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_MINUS_5DC": {
+      "label": "-► .",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x22",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, '-► .' 5DC RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_MINUS_MINUS": {
+      "label": "|-►|◄-|",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x30",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, '|-►|◄-|' 79C RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, 'MUTE' 67C RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_NOTE_DOWN": {
+      "label": "NOTE  DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x2E",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, 'NOTE  DOWN' 45C RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_NOTE_UP": {
+      "label": "NOTE  UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x2F",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, 'NOTE  UP' 05C RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_OK": {
+      "label": "OK",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x1B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, 'OK' 134 RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_PAGE_MINUS": {
+      "label": "(PAGE -)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x3D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, '(PAGE -)' 21C RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_PAGE_PLUS": {
+      "label": "( PAGE +)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x38",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, '( PAGE +)' 71C RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_PAUSE": {
+      "label": "PAUSE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, 'PAUSE' 174 RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_PLAY": {
+      "label": "PLAY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, 'PLAY' 574 RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_PLUS_1": {
+      "label": "+1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, '+1' 534 RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_PLUS_714": {
+      "label": "+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x38",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, '+' 714 RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_PLUS_7FC": {
+      "label": "+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, '+' 7FC RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x33",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, 'POWER' 19C RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_POWER_VCR": {
+      "label": "POWER  VCR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x33",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, 'POWER  VCR' 194 RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_P_MINUS_1FC": {
+      "label": "P -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, 'P -' 1FC RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_P_MINUS_6B4": {
+      "label": "P-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, 'P-' 6B4 RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_P_PLUS_2B4": {
+      "label": "P+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, 'P+' 2B4 RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_P_PLUS_5FC": {
+      "label": "P +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, 'P +' 5FC RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_REC": {
+      "label": "REC",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, 'REC' 274 RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_RED_SAT": {
+      "label": "RED  (SAT)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x34",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, 'RED  (SAT)' 69C RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_STOP": {
+      "label": "STOP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, 'STOP' 674 RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_TV_SLASH_TXT": {
+      "label": "TV / TXT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x39",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, 'TV / TXT' 31C RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_TV_VCR": {
+      "label": "TV  VCR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x39",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, 'TV  VCR' 314 RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_TXT": {
+      "label": "TXT◄|►",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x37",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, 'TXT◄|►' 09C RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_UNLABELED_014": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x3F",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, '??' 014 RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_UNLABELED_114": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x3B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, '??' 114 RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_UNLABELED_414": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x3E",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, '??' 414 RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_UNLABELED_59C": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x32",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, '??' 59C RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_UNLABELED_614": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x3C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, '??' 614 RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_VOL_TV": {
+      "label": "VOL  TV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x28",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, 'VOL  TV' 75C RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_VOL_VCR": {
+      "label": "VOL  VCR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x28",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, 'VOL  VCR' 754 RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_X_080": {
+      "label": "X(080)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x36",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, 'X(080)' 49C RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_YELLOW_MINUS": {
+      "label": "YELLOW  -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x3C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, 'YELLOW  -' 61C RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_YELLOW_PLUS": {
+      "label": "YELLOW  +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x3B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, 'YELLOW  +' 11C RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY__0B4": {
+      "label": "⏪",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x17",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, '⏪' 0B4 RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY__1B4": {
+      "label": "|||►",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, '|||►' 1B4 RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY__3B4": {
+      "label": "(⏪)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, '(⏪)' 3B4 RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY__5B4": {
+      "label": "(⏩)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, '(⏩)' 5B4 RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY__734": {
+      "label": "⏩",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x18",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8775, '⏩' 734 RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    }
+  }
+}

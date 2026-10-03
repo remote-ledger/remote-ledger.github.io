@@ -1,0 +1,54 @@
+{
+  "manufacturer": "RCA",
+  "model": "IR Blaster DB 6795 (Proton)",
+  "aliases": [],
+  "controls": [
+    "RCA | SOME MODELS"
+  ],
+  "protocol": {
+    "name": "Proton",
+    "carrierHz": 38500,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x15",
+          "function": "0x39",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 6795, 'MUTE' A89C Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x15",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 6795, 'VOL-' A858 Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x15",
+          "function": "0x19",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 6795, 'VOL+' A898 Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    }
+  }
+}

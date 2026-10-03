@@ -1,0 +1,88 @@
+{
+  "manufacturer": "TEAC/TEAK",
+  "model": "IR Blaster DB 8676 (NEC2)",
+  "aliases": [],
+  "controls": [
+    "TEAC/TEAK | AX-501",
+    "TEAC/TEAK | AX-501-B",
+    "TEAC/TEAK | AX-501-S",
+    "TEAC/TEAK | RC-1309"
+  ],
+  "protocol": {
+    "name": "NEC2",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_INPUT_LINE_1": {
+      "label": "INPUT LINE 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x81",
+          "subdevice": "0x73",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8676, 'INPUT LINE 1' 81CE08F7 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_INPUT_LINE_2": {
+      "label": "INPUT LINE 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x81",
+          "subdevice": "0x73",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8676, 'INPUT LINE 2' 81CE48B7 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_INPUT_LINE_3": {
+      "label": "INPUT LINE 3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x81",
+          "subdevice": "0x73",
+          "function": "0x20",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8676, 'INPUT LINE 3' 81CE04FB NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_INPUT_XLR": {
+      "label": "INPUT XLR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x81",
+          "subdevice": "0x73",
+          "function": "0x21",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8676, 'INPUT XLR' 81CE847B NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_METER": {
+      "label": "METER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x81",
+          "subdevice": "0x73",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8676, 'METER' 81CE6897 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    }
+  }
+}

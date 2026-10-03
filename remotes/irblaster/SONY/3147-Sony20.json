@@ -1,0 +1,55 @@
+{
+  "manufacturer": "SONY",
+  "model": "IR Blaster DB 3147 (Sony20)",
+  "aliases": [],
+  "controls": [
+    "SONY | 149054011",
+    "SONY | 149271111",
+    "SONY | CT - 60 BT",
+    "SONY | HT - CT - 60 BT",
+    "SONY | HT - CT 60",
+    "SONY | HT - CT 60 BT",
+    "SONY | HT - CT 60 C",
+    "SONY | RM - ANU 159",
+    "SONY | RM - ANU 160",
+    "SONY | RM - ANU 191",
+    "SONY | SA - CT 60 BT",
+    "SONY | SA-CT60",
+    "SONY | SACT60"
+  ],
+  "protocol": {
+    "name": "Sony20",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_INPUT_BLUETOOTH": {
+      "label": "INPUT BLUETOOTH",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x28",
+          "function": "0x71",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3147, 'INPUT BLUETOOTH' 8E114 SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_PAIRING": {
+      "label": "PAIRING",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x28",
+          "function": "0x77",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3147, 'PAIRING' EE114 SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "manufacturer": "PHILIPS",
+  "model": "IR Blaster DB 7805 (RC6)",
+  "aliases": [],
+  "controls": [
+    "PHILIPS | 32PFL5203"
+  ],
+  "protocol": {
+    "name": "RC6",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_INPUT_TV": {
+      "label": "INPUT TV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x9F",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7805, 'INPUT TV' 009F RC6: 16 bits, mode 0 as RC6"
+        }
+      ]
+    }
+  }
+}

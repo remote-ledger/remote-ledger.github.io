@@ -1,0 +1,54 @@
+{
+  "manufacturer": "@STAR",
+  "model": "IR Blaster DB 1575 (RC6)",
+  "aliases": [],
+  "controls": [
+    "@STAR | 11"
+  ],
+  "protocol": {
+    "name": "RC6",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_BOOK2": {
+      "label": "book2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x5D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1575, 'book2' 005D RC6: 16 bits, mode 0 as RC6"
+        }
+      ]
+    },
+    "KEY__0045": {
+      "label": "|►",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x45",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1575, '|►' 0045 RC6: 16 bits, mode 0 as RC6"
+        }
+      ]
+    },
+    "KEY__00F3": {
+      "label": "?",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0xF3",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1575, '?' 00F3 RC6: 16 bits, mode 0 as RC6"
+        }
+      ]
+    }
+  }
+}

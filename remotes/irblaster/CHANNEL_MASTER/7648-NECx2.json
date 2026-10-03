@@ -1,0 +1,32 @@
+{
+  "manufacturer": "CHANNEL MASTER",
+  "model": "IR Blaster DB 7648 (NECx2)",
+  "aliases": [],
+  "controls": [
+    "CHANNEL MASTER | CM-7004",
+    "CHANNEL MASTER | CM-7500",
+    "CHANNEL MASTER | CM-7500GB16",
+    "CHANNEL MASTER | DVR+"
+  ],
+  "protocol": {
+    "name": "NECx2",
+    "carrierHz": 38000,
+    "minSends": 2
+  },
+  "keys": {
+    "KEY_INPUT_TV": {
+      "label": "INPUT TV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "subdevice": "0x07",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7648, 'INPUT TV' E0E0807F NECx2: 32 wire bits, bytes bit-reversed as NECx2"
+        }
+      ]
+    }
+  }
+}

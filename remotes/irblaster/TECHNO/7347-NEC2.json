@@ -1,0 +1,29 @@
+{
+  "manufacturer": "TECHNO",
+  "model": "IR Blaster DB 7347 (NEC2)",
+  "aliases": [],
+  "controls": [
+    "TECHNO | DVDR-2086"
+  ],
+  "protocol": {
+    "name": "NEC2",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_ADD_SLASH_CLEAR": {
+      "label": "ADD/CLEAR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7347, 'ADD/CLEAR' 00FFC837 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    }
+  }
+}

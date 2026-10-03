@@ -1,0 +1,29 @@
+{
+  "manufacturer": "CAHORS",
+  "model": "IR Blaster DB 5314 (RC5)",
+  "aliases": [],
+  "controls": [
+    "CAHORS | SHARP LE 350 EBK",
+    "CAHORS | TOSHIBA 1(CUSTOM KEYB.)"
+  ],
+  "protocol": {
+    "name": "RC5",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER_2": {
+      "label": "POWER 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 5314, 'POWER 2' 84C RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    }
+  }
+}

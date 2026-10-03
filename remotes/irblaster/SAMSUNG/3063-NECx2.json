@@ -1,0 +1,99 @@
+{
+  "manufacturer": "SAMSUNG",
+  "model": "IR Blaster DB 3063 (NECx2)",
+  "aliases": [],
+  "controls": [
+    "SAMSUNG | 3F14-00038-450"
+  ],
+  "protocol": {
+    "name": "NECx2",
+    "carrierHz": 38000,
+    "minSends": 2
+  },
+  "keys": {
+    "KEY_ON_SLASH_OF_VCR": {
+      "label": "ON/OF VCR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0x05",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3063, 'ON/OF VCR' A0A040BF NECx2: 32 wire bits, bytes bit-reversed as NECx2"
+        }
+      ]
+    },
+    "KEY_PAUSE": {
+      "label": "PAUSE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0x05",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3063, 'PAUSE' A0A06897 NECx2: 32 wire bits, bytes bit-reversed as NECx2"
+        }
+      ]
+    },
+    "KEY_PLAY": {
+      "label": "PLAY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0x05",
+          "function": "0x19",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3063, 'PLAY' A0A09867 NECx2: 32 wire bits, bytes bit-reversed as NECx2"
+        }
+      ]
+    },
+    "KEY_STOP": {
+      "label": "STOP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0x05",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3063, 'STOP' A0A0A857 NECx2: 32 wire bits, bytes bit-reversed as NECx2"
+        }
+      ]
+    },
+    "KEY__A0A018E7": {
+      "label": "⏪",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0x05",
+          "function": "0x18",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3063, '⏪' A0A018E7 NECx2: 32 wire bits, bytes bit-reversed as NECx2"
+        }
+      ]
+    },
+    "KEY__A0A058A7": {
+      "label": "⏩",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0x05",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3063, '⏩' A0A058A7 NECx2: 32 wire bits, bytes bit-reversed as NECx2"
+        }
+      ]
+    }
+  }
+}

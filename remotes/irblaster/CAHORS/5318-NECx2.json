@@ -1,0 +1,73 @@
+{
+  "manufacturer": "CAHORS",
+  "model": "IR Blaster DB 5318 (NECx2)",
+  "aliases": [],
+  "controls": [
+    "CAHORS | SAMSUNG 1 TVT 300 YUV - VOD",
+    "CAHORS | SAMSUNG TVT 300 YUV - VOD(CUSTOM KEYB.)",
+    "CAHORS | SAMSUNG1_TVT300YUV_VOD (CUSTOM KEYB.)"
+  ],
+  "protocol": {
+    "name": "NECx2",
+    "carrierHz": 38000,
+    "minSends": 2
+  },
+  "keys": {
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "subdevice": "0x07",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 5318, 'MUTE' E0E0F00F NECx2: 32 wire bits, bytes bit-reversed as NECx2"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "subdevice": "0x07",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 5318, 'POWER' E0E040BF NECx2: 32 wire bits, bytes bit-reversed as NECx2"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "subdevice": "0x07",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 5318, 'VOL-' E0E0D02F NECx2: 32 wire bits, bytes bit-reversed as NECx2"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "subdevice": "0x07",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 5318, 'VOL+' E0E0E01F NECx2: 32 wire bits, bytes bit-reversed as NECx2"
+        }
+      ]
+    }
+  }
+}

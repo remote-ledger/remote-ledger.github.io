@@ -1,0 +1,28 @@
+{
+  "manufacturer": "DIGITURK",
+  "model": "IR Blaster DB 5853 (RC5)",
+  "aliases": [],
+  "controls": [
+    "DIGITURK | MODEL 5"
+  ],
+  "protocol": {
+    "name": "RC5",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 5853, 'MUTE' 80D RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    }
+  }
+}

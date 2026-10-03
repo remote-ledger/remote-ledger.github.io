@@ -1,0 +1,44 @@
+{
+  "manufacturer": "YAMAHA",
+  "model": "IR Blaster DB 581 (NEC2)",
+  "aliases": [],
+  "controls": [
+    "YAMAHA | RAV324",
+    "YAMAHA | RX-N600"
+  ],
+  "protocol": {
+    "name": "NEC2",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER_OFF_MINUS_MAIN_ZONE": {
+      "label": "POWER OFF - MAIN ZONE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x7F",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 581, 'POWER OFF - MAIN ZONE' 7E81FE01 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_POWER_ON_MINUS_MAIN_ZONE": {
+      "label": "POWER ON - MAIN ZONE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x7E",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 581, 'POWER ON - MAIN ZONE' 7E817E81 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "manufacturer": "PIONEER",
+  "model": "IR Blaster DB 3087 (NEC1)",
+  "aliases": [],
+  "controls": [
+    "PIONEER | DCZ 72 - CD",
+    "PIONEER | DCZ 82 - CD",
+    "PIONEER | DCZ 92 - CD",
+    "PIONEER | PD 5300 - CD",
+    "PIONEER | PD 6300 - CD",
+    "PIONEER | PD 7300 - CD",
+    "PIONEER | PD 91 - CD",
+    "PIONEER | PD 93 - CD",
+    "PIONEER | PD 9300 - CD",
+    "PIONEER | PDM 610 - CD",
+    "PIONEER | PDM 710 - CD",
+    "PIONEER | PDM 730 - CD",
+    "PIONEER | XDZ 62 M - CD",
+    "PIONEER | XDZ 62 T - CD"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA2",
+          "subdevice": "0x5D",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3087, 'POWER' 45BA58A7 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_POWER_OFF": {
+      "label": "POWER OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA2",
+          "subdevice": "0x5D",
+          "function": "0x1C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3087, 'POWER OFF' 45BA38C7 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    }
+  }
+}

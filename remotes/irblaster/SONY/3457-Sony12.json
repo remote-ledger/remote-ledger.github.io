@@ -1,0 +1,145 @@
+{
+  "manufacturer": "SONY",
+  "model": "IR Blaster DB 3457 (Sony12)",
+  "aliases": [],
+  "controls": [
+    "BRAVO | A 347",
+    "SONY | 1 - 489 - 951 - 11",
+    "SONY | 148764811",
+    "SONY | 148940011",
+    "SONY | 148944111",
+    "SONY | 149194011",
+    "SONY | 149277611",
+    "SONY | 149277711",
+    "SONY | 149277911",
+    "SONY | A 1846295 A",
+    "SONY | BDEV 870",
+    "SONY | BDEV 970 W",
+    "SONY | BDV - E 2100",
+    "SONY | BDV - E 280",
+    "SONY | BDV - E 290",
+    "SONY | BDV - E 3100",
+    "SONY | BDV - E 370",
+    "SONY | BDV - E 380",
+    "SONY | BDV - E 4100",
+    "SONY | BDV - E 490",
+    "SONY | BDV - E 580",
+    "SONY | BDV - E 6100",
+    "SONY | BDV - E 670 W",
+    "SONY | BDV - E 690",
+    "SONY | BDV - E 780 W",
+    "SONY | BDV - E 870",
+    "SONY | BDV - E 880",
+    "SONY | BDV - E 980",
+    "SONY | BDV - EF 1100",
+    "SONY | BDV - EF 200",
+    "SONY | BDV - EF 220",
+    "SONY | BDV - EF 420",
+    "SONY | BDV - F 500",
+    "SONY | BDV - F 700",
+    "SONY | BDV - L 600",
+    "SONY | BDV - L 800",
+    "SONY | BDV - N 5200 W",
+    "SONY | BDV - N 590",
+    "SONY | BDV - N 7200 W",
+    "SONY | BDV - N 7200 WL",
+    "SONY | BDV - N 790",
+    "SONY | BDV - N 790 W",
+    "SONY | BDV - N 9200 W",
+    "SONY | BDV - N 9200 WB",
+    "SONY | BDV - N 9200 WL",
+    "SONY | BDV - N 990 W",
+    "SONY | BDV - T 58",
+    "SONY | BDV-E280",
+    "SONY | BDV-E3100",
+    "SONY | BDV-E6100",
+    "SONY | BDV-N7100",
+    "SONY | BDV-N790W",
+    "SONY | BDV-N9100",
+    "SONY | BVD-E380",
+    "SONY | DAV - DZ 830",
+    "SONY | HBD - E 190",
+    "SONY | HBD - E 2100",
+    "SONY | HBD - E 280",
+    "SONY | HBD - E 370",
+    "SONY | HBD - E 580",
+    "SONY | HBD - E 6100",
+    "SONY | HBD - E 870",
+    "SONY | HBD - E 880",
+    "SONY | HBD - EF 1100",
+    "SONY | HBD - EF 200",
+    "SONY | HBD - N 9200 W",
+    "SONY | HDB - EF 200",
+    "SONY | KD 55 SD 8505",
+    "SONY | RM - ADP 053",
+    "SONY | RM - ADP 054",
+    "SONY | RM - ADP 058",
+    "SONY | RM - ADP 069",
+    "SONY | RM - ADP 074",
+    "SONY | RM - ADP 090",
+    "SONY | RM - ADP 118",
+    "SONY | RM - ADP 120",
+    "SONY | RM - ADP 120 W",
+    "SONY | RM-ADP074",
+    "SONY | RM-ADP092"
+  ],
+  "protocol": {
+    "name": "Sony12",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_P_DOWN": {
+      "label": "P. DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3457, 'P. DOWN' C90 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_P_UP": {
+      "label": "P. UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3457, 'P. UP' 490 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_SLEEP_SLASH_TIMER": {
+      "label": "SLEEP/TIMER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3457, 'SLEEP/TIMER' A90 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_UNLABELED": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x25",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3457, '??' A50 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    }
+  }
+}
