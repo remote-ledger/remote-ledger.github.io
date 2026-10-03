@@ -642,3 +642,24 @@ def test_the_site_scripts_do_not_depend_on_the_batch_a_worker_took(tmp_path):
     for path in files:
         pieces.update(site_extra(root, [path]))
     assert pieces == whole and list(pieces) == sorted(pieces)
+
+
+def test_text_the_parent_has_buffered_is_not_written_again_by_the_workers():
+    """Workers are forked. A forked copy of a half-full stdout buffer written
+    out by each of them would repeat the parent's output once per worker; the
+    standard library flushes before forking, and this keeps it that way."""
+    import subprocess
+    import sys
+
+    script = (
+        "from remote_ledger import parallel\n"
+        "print('before', end='')            # buffered: stdout is a pipe\n"
+        "parallel.configure(3)\n"
+        "assert list(parallel.ordered_map(abs, range(-20, 0))) == list(range(20, 0, -1))\n"
+        "print(' after')\n"
+    )
+    done = subprocess.run(
+        [sys.executable, "-c", script], capture_output=True, text=True, check=True,
+        env={**os.environ, "PYTHONPATH": str(ROOT / "src")},
+    )
+    assert done.stdout == "before after\n" and done.stderr == ""
