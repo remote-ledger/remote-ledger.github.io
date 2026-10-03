@@ -1,6 +1,6 @@
 # Remote Ledger — Design & Build Plan
 
-**Draft v2.0** · Status: v1 complete; all three seed remotes authored; LIRC import designed (§14) · Implements [SPEC.md](SPEC.md) v0.9
+**Draft v2.1** · Status: v1 complete; all three seed remotes authored; LIRC, SmartIR and IR Blaster imports built (§14, §15, §17); 28 protocols (§18) · Implements [SPEC.md](SPEC.md) v0.10
 
 SPEC.md says *what* the format has to hold and why. This says *how it gets
 built*: the resolved open decisions, the one intermediate representation
@@ -12,7 +12,9 @@ requirement (**R*n*** / **OD*n***) it serves. Numbers are stable
 identifiers assigned in the order decisions were *made*, not the order they
 appear — D16–D20 came out of the v0.1 review, D21–D26 out of the v0.2
 review, D27–D29 out of the v0.3 review, and D30–D33 out of the v0.4 review,
-each sitting wherever it belongs topically. §11 lists what changed.
+each sitting wherever it belongs topically. D34–D45 came with the LIRC and
+SmartIR imports (§14, §15), D46–D56 with the IR Blaster importer (§17) and
+D57–D68 with the protocols it needed (§18). §11 lists what changed.
 
 ---
 
@@ -35,7 +37,10 @@ lists the edits to make.
 `pytest`. No JVM, no Node for the core toolchain.
 
 **Protocol engine:** hand-written encoders, no external oracle. §5 covers
-what that costs and how the test strategy pays for it.
+what that costs and how the test strategy pays for it. (The oracle tools the
+imports added, §14, §15 and §17, are development tools that compare an
+importer with another program's output; none runs in a build, and D68 says
+how far a generated vector can be trusted.)
 
 ---
 
@@ -149,7 +154,11 @@ Making `extent_us` a field is what lets D4a substitute a truncated
 capture's gap without inspecting prose. Making `irp_source` a field turns
 D18's first gate from a convention into a test: a registry entry with an
 empty `irp_source` fails the suite. Extents for the v1 registry:
-`NEC1` 108 000 µs, `Sony20` 45 000 µs, `Samsung32` 108 000 µs.
+`NEC1` 108 000 µs, `Sony20` 45 000 µs, `NECx2` 108 000 µs. (v0.1 listed
+`Samsung32` here, which never existed; see D18.) Of the 28 protocols the
+registry holds since §18, 13 declare an extent and 15 declare none, because
+their IRPs pad with a fixed gap (`-80`, `-173`) or carry several extents inside
+one sequence, which D31's single figure cannot express.
 
 **Carrier ownership, since v0.4 left two numbers in play.** The registry
 said `default_carrier_hz: 38400` for NEC1 while D24 required a file-level
@@ -189,6 +198,30 @@ seed data actually exercises:
 | `NECx2` | `{38.0k,564}<1,-1\|1,-3>(8,-8,D:8,S:8,F:8,~F:8,1,^108m)+` | Samsung BN59-01199F | post-6 |
 | `Sony20` | `{40k,600}<1,-1\|2,-1>(4,-1,F:7,D:5,S:8,^45m)+` | Sony RMT-B118P | 3 |
 | `RC5` | `{36k,msb,889}<1,-1\|-1,1>((1,~F:1:6,T:1,D:5,F:6,^114m)*,T=1-T)[D:0..31,F:0..127,T@:0..1=0]` | Meridian MSR | post-v1 (§16) |
+| `NEC2` | `{38.4k,564}<1,-1\|1,-3>(16,-8,D:8,S:8,F:8,~F:8,1,^108m)*` | DB `NEC2` | §18 (D61) |
+| `NECx1` | `{38.4k,564}<1,-1\|1,-3>(8,-8,D:8,S:8,F:8,~F:8,1,^108m,(8,-8,~D:1,1,^108m)*)` | DB `NECx1` | §18 (D61) |
+| `Sony12` | `{40k,600}<1,-1\|2,-1>(4,-1,F:7,D:5,^45m)*[D:0..31,F:0..127]` | DB `SONY12` | §18 (D62) |
+| `Sony15` | `{40k,600}<1,-1\|2,-1>(4,-1,F:7,D:8,^45m)*[D:0..255,F:0..127]` | DB `SONY15` | §18 (D62) |
+| `RC6` | `{36k,444,msb}<-1,1\|1,-1>((6,-2,1:1,0:3,<-2,2\|2,-2>(T:1),D:8,F:8,^107m)*,T=1-T) [D:0..255,F:0..255,T@:0..1=0]` | DB `RC6` | §18 (D63) |
+| `RCA-38` | `{38.7k,460,msb}<1,-2\|1,-4>(8,-8,D:4,F:8,~D:4,~F:8,1,-16)*[D:0..15,F:0..255]` | DB `RCA_38` | §18 (D63) |
+| `Thomson7` | `{33k,500}<1,-4\|1,-9>((D:4,T:1,F:7,1,^80m)*,T=1-T) [D:0..15,F:0..127,T@:0..1=0]` | DB `Thomson7` | §18 (D63) |
+| `Pioneer-2Part` | `{40k,564}<1,-1\|1,-3>(16,-8,D0:8,~D0:8,F0:8,~F0:8,1,^90m,(16,-8,D:8,~D:8,F:8,~F:8,1,^90m)+) [D0:0..255,F0:0..255,D:0..255=D0,F:0..255=F0]` | DB `Pioneer` | §18 (D64) |
+| `JVC` | `{37.9k,527,33%}<1,-1\|1,-3>(16,-8,D:8,F:8,1,^59.08m,(D:8,F:8,1,^46.42m)*) [D:0..255,F:0..255]` | DB `JVC` | §18 (D64) |
+| `Sharp` | `{38k,264}<1,-3\|1,-7>(D:5,F:8,1:2,1,^67m,(D:5,~F:8,2:2,1,^67m,D:5,F:8,1:2,1,^67m)*)[D:0..31,F:0..255]` | DB `Sharp` | §18 (D64) |
+| `Denon` | `{38k,264}<1,-3\|1,-7>(D:5,F:8,0:2,1,^67m,(D:5,~F:8,3:2,1,^67m,D:5,F:8,0:2,1,^67m)*)[D:0..31,F:0..255]` | DB `Denon` | §18 (D64) |
+| `Samsung36` | `{37.9k,560,33%}<1,-1\|1,-3>(4500u,-4500u,D:8,S:8,1,-9,E:4,F:8,~F:8,1,^108m)*[D:0..255,S:0..255,F:0..255,E:0..15]` | DB `Samsung36` | §18 (D65) |
+| `Proton` | `{38.5k,500}<1,-1\|1,-3>(16,-8,D:8,1,-8,F:8,1,^63m)*[D:0..255,F:0..255]` | DB `Proton` | §18 (D65) |
+| `F12_relaxed` | `{37.9k,422}<1,-3\|3,-1>(D:3,S:1,F:8,-80)*  [D:0..7,S:0..1,F:0..255]` | DB `F12_relaxed` | §18 (D65) |
+| `RECS80` | `{38k,158,msb}<1,-31\|1,-47>(1:1,T:1,D:3,F:6,1,-45m)* {}[D:0..7,F:0..63, T@:0..1=0]` | DB `RECS80` | §18 (D65) |
+| `RECS80-0068` | `{33.3k,180,msb}<1,-31\|1,-47>(1:1,T:1,D:3,F:6,1,^138m)* [D:0..7,F:0..63, T@:0..1=0]` | DB `RECS80_L` | §18 (D65) |
+| `Aiwa` | `{38.123k,550}<1,-1\|1,-3>(16,-8,D:8,S:5,~D:8,~S:5,F:8,~F:8,1,-42,(16,-8,1,-165)*)[D:0..255,S:0..31,F:0..255]` | DB `RCC2026` | §18 (D66) |
+| `Blaupunkt` | `{30.3k,512}<-1,1\|1,-1>(1,-5,1023:10, -44, (1,-5,1:1,F:6,D:3,-236)+ ,1,-5,1023:10,-44)[F:0..63,D:0..7]` | DB `RCC0082` | §18 (D66) |
+| `Panasonic` | `{37k,432}<1,-1\|1,-3>(8,-4,2:8,32:8,D:8,S:8,F:8,(D^S^F):8,1,-173)* [D:0..255,S:0..255,F:0..255]` | DB `REC80` | §18 (D66) |
+| `JVC-48` | `{37k,432}<1,-1\|1,-3>(8,-4,3:8,1:8,D:8,S:8,F:8,(D^S^F):8,1,-173)* [D:0..255,S:0..255,F:0..255]` | DB `REC80` | §18 (D66) |
+| `Fujitsu` | `{37k,432}<1,-1\|1,-3>(8,-4,20:8,99:8,0:4,E:4,D:8,S:8,F:8,1,-110)* [D:0..255,S:0..255=D,F:0..255,E:0..15=0]` | DB `REC80` | §18 (D66) |
+| `Teac-K` | `{37k,432}<1,-1\|1,-3>(8,-4,67:8,83:8,X:4,D:4,S:8,F:8,T:8,1,-100,(8,-8,1,-100)*) {T=D+S:4:0+S:4:4+F:4:0+F:4:4} [D:0..15,S:0..255,F:0..255,X:0..15=1]` | DB `REC80` | §18 (D66) |
+| `Denon-K` | `{37k,432}<1,-1\|1,-3>(8,-4,84:8,50:8,0:4,D:4,S:4,F:12,((D*16)^S^(F*16)^(F:8:4)):8,1,-173)* [D:0..15,S:0..15,F:0..4095]` | DB `REC80` | §18 (D66) |
+| `SharpDVD` | `{38k,400}<1,-1\|1,-3>(8,-4,170:8,90:8,15:4,D:4,S:8,F:8,E:4,C:4,1,-48)*{C = D ^ S:4:0 ^ S:4:4 ^ F:4:0 ^ F:4:4 ^ E:4}[D:0..15,S:0..255,F:0..255,E:0..15=1]` | DB `REC80` | §18 (D66) |
 
 > ⚠️ **`Samsung32` was struck from this table: it never existed — and the
 > question it stood for is now answered.** v0.1 carried
@@ -208,9 +241,23 @@ seed data actually exercises:
 > This also retires §10's "disputed lead-in" for good: the ~4500 µs real
 > captures were an **8**-unit lead-in, not a 9-unit one at a different tick.
 
-That is the whole v1 registry, and the narrowness is the point: it matches
-the project's own premise that coverage is built one lookup at a time
-(R19), rather than declared up front and half-delivered.
+The first three rows are the whole v1 registry (`RC5`, the fourth, joined for
+§16), and the narrowness was the point: it matches the project's own premise that coverage is
+built one lookup at a time (R19), rather than declared up front and
+half-delivered. **The registry now holds 28.** The other 24 rows were added in
+one stretch for the SwiftRemote database import (§17), because a database code
+whose protocol the registry does not hold cannot become an `irp` form, and
+each went through the three gates below: §18 records each family's decisions,
+and §12 each protocol's gate-2b vector. Every IRP string above is the
+registry's own, verbatim. DB `NEC` lands on `NEC1`, `NECx2` on `NECx2`, `SONY20`
+on `Sony20` and `RC5` on `RC5`.
+
+That growth bent the premise, and it should be said where the rule is stated.
+It was "one lookup at a time"; it was 24 protocols in one go, for a corpus of
+413,331 keys. What did not bend is the gate. Twenty-two of the 28 have a gate-2b
+vector that only a pinned tool release can generate (D68), and three of those
+have no gate-2a evidence either: the gate held, but on weaker evidence than
+the v1 protocols' and the table in §12 says which.
 
 **Adding a protocol is a self-contained change** requiring all three of:
 
@@ -218,15 +265,20 @@ the project's own premise that coverage is built one lookup at a time
 2. At least one **independently cited** golden vector (D10).
 3. An invariant test — framing, bit count, total extent.
 
-Backlog, each blocked on that gate and none scheduled: `NEC2`, `NEC`
-(`S` defaulted to `~D`), `Sony12`, `Sony15`, `RC6`. (`RC5` was the sixth until
-§16: a remote the ledger already served needed it, and it met the gate.)
+Backlog, each blocked on that gate and none scheduled: `NEC` (`S` defaulted
+to `~D`), and the relaxed `NEC1-f16` and `NEC2-f16`, which would hold 635 of
+the database's codes that no registered NEC variant can (D67). `RC5` left the
+backlog in §16, and `NEC2`, `Sony12`, `Sony15` and `RC6` in §18, each through
+the gate.
 
-`NEC2` and `NEC` are the tempting ones — both are a few lines' difference
-from `NEC1`, and waving them through on that basis is precisely how an
-unverified encoder ships. The gate applies to them identically. RC6 is
-further out regardless: its trailer bit is double-width, which needs a
-bitspec exception none of the other protocols require.
+`NEC2` and `NEC` were the tempting ones — both are a few lines' difference from
+`NEC1`, and waving them through on that basis is precisely how an unverified
+encoder ships. The gate applied to `NEC2` identically (D61), and applies to `NEC`
+and the `-f16` forms. v0.1 said RC6 was further out because its trailer bit is
+double-width and needs a bitspec exception none of the other protocols require.
+**That was wrong as built** (D63): the encoder builds the frame as per-unit
+levels and run-length encodes them, and the registry's `encode` interface is
+unchanged. RC6 is registered for mode 0 only.
 
 **D23 — One protocol per remote file in v1.** Serves R3, D17, D20.
 
@@ -285,10 +337,11 @@ Two conditional rules the validator enforces:
   landed before anyone worked out what it was.
 - **`defaultGapUs` is required exactly when** a `truncated` raw form exists
   *and* `name` is omitted or its registry entry has `extent_us = None`. All
-  three v1 protocols declare an extent, so in practice this only bites
-  raw-only files — which is exactly where truncation is most likely. A
-  truncated form with neither an extent nor `defaultGapUs` is a validation
-  error, never a guess (D4a).
+  three v1 protocols declared an extent, so in practice this only bit
+  raw-only files — which is exactly where truncation is most likely. Since §18
+  fifteen of the 28 protocols declare none (D3), so it now bites a file that
+  names one of them as well. A truncated form with neither an extent nor
+  `defaultGapUs` is a validation error, never a guess (D4a).
 
 **D27 — Anything that loosens a check carries a citation, not just a
 reason.** Serves R5, R18, D24.
@@ -329,17 +382,24 @@ never multiplies the repeat sequence into the Pronto string. Baking it in
 would make the same code compile differently depending on a field that
 describes the hardware, not the waveform.
 
-**D3b — Open: the RC5/RC6 toggle bit.** RC5's `T` flips on each press,
-so one Pronto string can carry only one of its two states. RC5 landed in §16
-and emits `T=0`, the IRP's own default, with no marker: the compiled artifact
-(D20) still has no toggle field, and a remote file cannot set one (`encode`
-takes `toggle` for the tests only). A player therefore sends the same `T` on
-every press. Whether that matters depends on the receiver, and nothing the
-ledger holds says how a given unit treats a repeated `T`. The open choice is
-unchanged: emit a `toggle: true` marker for the player to alternate, or emit
-both states as two candidate groups (D16), which reuses machinery that
-already exists. Either needs the player to alternate, so it is a contract
-with the apps, not a ledger change alone. RC6 is still unregistered.
+**D3b — Open: the toggle bit of RC5, RC6, Thomson7, RECS80 and RECS80-0068.**
+RC5's `T` flips on each press, so one Pronto string can carry only one of its
+two states. RC5 landed in §16 and emits `T=0`, the IRP's own default, with no
+marker: the compiled artifact (D20) still has no toggle field, and a remote
+file cannot set one (`encode` takes `toggle` for the tests only). A player
+therefore sends the same `T` on every press. Whether that matters depends on
+the receiver, and nothing the ledger holds says how a given unit treats a
+repeated `T`. The open choice is unchanged: emit a `toggle: true` marker for
+the player to alternate, or emit both states as two candidate groups (D16),
+which reuses machinery that already exists. Either needs the player to
+alternate, so it is a contract with the apps, not a ledger change alone.
+
+§18 made it five protocols. RC6 (D63), Thomson7 (D63), RECS80 and RECS80-0068
+(D65) have a toggle too, and the database stores none, so every imported key
+of those protocols compiles `T=0`. SwiftRemote alternates `T` itself, and its
+preview shows `T=1`: for 47,137 keys of RC5, RC6, RECS80 and RECS80-0068 the
+compiled signal matches the app's only at `T=1`, which the oracle counts as
+its own allowance and not as a match (D58).
 
 ### D4 — `raw` forms: lircd-style microsecond lists
 
@@ -1274,7 +1334,9 @@ remote-ledger/
 ├── src/remote_ledger/
 │   ├── signal.py      IrSignal, cycle quantization        D1
 │   ├── pronto.py      encode / decode                     D5 D6
-│   ├── protocols/     nec.py sony.py samsung.py rc5.py    D3
+│   ├── protocols/     one module per family (28 protocols) D3 D18 §18
+│   ├── irblaster/     importer + six hex_*.py maps        §17 §18
+│   ├── lirc/ smartir/ importers                           §14 §15
 │   ├── forms.py       form → IrSignal, precedence         D7
 │   ├── crosscheck.py  pairwise comparison                 D8
 │   ├── layout.py      grid-template-areas parser          D14
@@ -1714,7 +1776,9 @@ backlogged protocols (D18), and — per OD1 — any contribution workflow.
 bulk import under R19's five conditions. It lands in four PRs, in order:
 this design; the lircd transmit port, verified against lircd itself (D36);
 index and site sharding, so the ledger scales past one page (D40); then
-the data.
+the data. SmartIR (§15), RC-5 (§16) and the IR Blaster import (§17, §18) followed
+as post-v1 work outside the seven phases, and the last of them is the one that
+no longer fits D40's promise (§17).
 
 ---
 
@@ -1755,6 +1819,7 @@ Applying the rule, in the phase that makes each true:
 | **~~5~~ done** | **SPEC §11, R20** — reference `unresolved.json`; as written R20 has no mechanism behind it, and Phase 5 is where the mechanism lands | D12 |
 | **7 done** | **SPEC §3, §4, §2 and R19 (v0.9).** R19 now permits importing a database on five checkable conditions: the licence permits republishing, each form cites its origin, nothing lands above Plausible, authored data wins, and the import is regenerable. §4 names the sources that stay excluded, and why. **R15** is scoped to a manufacturer: the global model-name check was written against three files, and the import has 55 cross-maker pairs such as Apple's and Pioneer's `CD` | D34–D40, D13 |
 | **post-6 done** | **SPEC §1 and §5's tier table.** §1 stated the lookups' claims as if they were the ledger's contents, and its RMT-B118P row claimed Verified at subdevice 218. It now records the claims as claims, then what the ledger holds. Plausible now also covers a single capture that nothing cross-checks, which is how PR #8 tiered 11 keys: no existing tier fitted, and the data came before the definition | §13 |
+| **post-7 done** | **SPEC §2, §3, §4, R19 and §12 (v0.10).** R19 admits a third database, the IR Blaster code database as shipped in SwiftRemote. R19.1 now says how each of the three meets the licence condition: LIRC by a reading (Debian's), SmartIR by a stated MIT licence, and IR Blaster **by inheritance only**, because nobody in its lineage says where the data came from. R19.2 generalises the citation beyond LIRC's file, block and line, and adds that where a source stores a code as a hexcode and a protocol name, the reading is the importer's claim and the committed report counts where the source's own app reads it differently. R19.3 adds that one source of unknown origin is Plausible, and R19.4 stops naming `remotes/lirc/`. §2 gains the database as prior art, §3 stops calling the admitted sources "openly licensed", §4 counts three, and §12's note on gate-2b vectors counts 28 protocols | D46, D50, D55, D68 |
 
 Decisions that are *not* spec edits, for contrast: D19's tree ownership,
 D20's serialization, D28's `Decimal` context, D10's vector-citation gate,
@@ -1777,7 +1842,7 @@ Recording it as a late edit is more honest than folding it back into Phase 3.
 
 | Risk | Severity | Mitigation |
 |---|---|---|
-| A hand-written encoder is subtly wrong, with no oracle to catch it | **High** | D10's cited golden vectors, gated: no protocol ships without one. The honest residual: a protocol whose only published vectors share a common ancestor error stays wrong. If a vector can't be sourced independently, don't ship the protocol. |
+| A hand-written encoder is subtly wrong, with no oracle to catch it | **High** | D10's cited golden vectors, gated: no protocol ships without one. The honest residual: a protocol whose only published vectors share a common ancestor error stays wrong. If a vector can't be sourced independently, don't ship the protocol. **Since §18 the residual is live**: 22 of the 28 protocols' vectors are generated by the same tool whose database supplied their IRP strings, and three of them (RECS80-0068, JVC-48, SharpDVD) have no capture or published table behind the IRP either. They are in the registry, so that last sentence is not met for them (D68) |
 | Rounding drift breaks byte-identical output (R12) | Medium | D6 pins `ROUND_HALF_UP` on `Decimal` and the clock constant; corpus snapshot test in CI |
 | ~~Samsung32's lead-in is disputed~~ — **resolved, and it was never a timing dispute** | — | The protocol was misidentified. The BN59-01199F speaks `NECx2`: an **8**-unit lead-in at 564 µs, 8 × 564 = 4512 µs, which is what the "real captures" were showing (D18, PR #7). Phase 3's interim explanation, Samsung36's 9-unit lead-in at 500 µs, fitted the same ~4500 µs and was wrong. It was recorded as a hypothesis only, never as data, and the device waited in `unresolved.json` until a cited source settled it (D12) |
 | `raw` jitter tolerance passes a genuinely wrong code | Medium | D8's tolerances are tight by LIRC standards, symmetric so order can't change a verdict, and per-file overridable; an override needs a `source` explaining itself |
@@ -1787,6 +1852,9 @@ Recording it as a late edit is more honest than folding it back into Phase 3.
 | The LIRC import makes the repo and the site large (~2,800 upstream files, ~115k keys with timings) | Medium | D40 shards the index and site per remote, so no committed file grows with the corpus. D20's one-line integer arrays cut raw forms roughly in half. The size is measured before the data PR, not after |
 | Imported data is taken for authored data | Medium | R19's conditions, enforced: the `remotes/lirc/` path is the licence *and* trust boundary, every form's citation names its upstream file and line, nothing is above Plausible, and the site labels imported remotes as imported |
 | The GPL reading of the LIRC database is wrong | Low | It is Debian's reading, cited, and the only one on record (the upstream repository states no licence). The boundary is one directory, so reversing it is one deletion and one re-import |
+| The IR Blaster data belongs to someone who does not allow its republication | Medium | Nothing mitigates the *probability*: its origin is unknown and the licence is inherited from the app it ships in, not granted for the data (D46). What is bounded is the cost: one directory, one deletion, the same exit as LIRC's. R19.1 now names the footing, and the importer's README says it without softening |
+| The wire reading of a hexcode is wrong for a family, and the ledger holds a bug SwiftRemote does not | Medium | For ten protocols the ledger holds a reading that differs from the app's, for 44,789 keys (D57). The evidence is published decodes, real LIRC frames and structure, and no device was tested. The reading is isolated in one `FROM_DB_HEX` function per protocol, the app's reading is kept beside it as `FROM_DB_HEX_APP`, and `IMPORT.md` counts every code on which they differ, so reversing a family is one function and one re-import. Plausible is the tier that says none of it was checked on hardware |
+| The IR Blaster import makes the index, the site page, `rl build` and CI too heavy | Medium | Measured, not mitigated (§17). `build/index.json` is 15 MB (12× larger) and the page embeds 11.5 MB; `rl build` and `rl build --check` take 18 minutes each; `rl lookup` takes 12 to 17 s. D40's per-remote sharding bounds the per-remote files and no longer the index. The decision is open |
 | Provenance quietly degrades as variants are expanded and re-expanded | Low | D22's field partition is mechanical and `expandedFrom` is machine-checkable; `rl fmt --expand` shows exactly what a variant produced. D21's non-positional ids remove the silent-retarget path |
 | A `claims` entry gets written to satisfy the validator rather than to inform | Low | **Presence is machine-validated; truthfulness is not.** The validator confirms `reason` and `source` are there and non-empty — it cannot confirm the source says what the claim says, or that it exists. Reviewing that is a human job, and with OD1 the human is you, reading the diff. The gain over v0.3 is narrow but real: nothing had to be written down at all before |
 
@@ -1800,6 +1868,25 @@ reproduces a published Pronto string byte for byte.
 ---
 
 ## 11. Revision history
+
+### v2.1 — the IR Blaster import and twenty-four protocols
+
+Not a review: the work in §17 and §18 made earlier statements stale or false,
+and this entry records what it changed. §14 to §16 landed without entries
+here, so nothing below covers the LIRC, SmartIR or Meridian work. Ten rows.
+
+| Issue | Resolution |
+|---|---|
+| D18 said the registry held three protocols (four since §16) and named `NEC2`, `Sony12`, `Sony15` and `RC6` as backlog | **D18** — the table carries all 28, every IRP string the registry's own; the backlog is `NEC` and the relaxed `-f16` forms. "One lookup at a time" is marked as bent, since 24 protocols arrived in one stretch, though through the same gate |
+| D18 said RC6 needs a bitspec exception | **D18, D63** — it did not: the encoder builds per-unit levels and run-length encodes them, and the `encode` interface is unchanged. RC6 is registered for mode 0 only |
+| D3b counted RC5 as the one toggle protocol and said RC6 is unregistered | **D3b** — five protocols have a toggle (RC5, RC6, Thomson7, RECS80, RECS80-0068), and 47,137 imported keys compile `T=0` and match the app only at `T=1`. Still open, still a contract with the apps |
+| D3 listed `Samsung32`'s extent, which never existed, and D24 said all three protocols declare one | **D3, D24** — corrected. Fifteen of the 28 declare no extent, so D24's `defaultGapUs` rule now bites a file that names one of them, not only a raw-only file |
+| §12's gate-2b table covered four protocols and one of them was reproducible-only | **§12** — 28 rows, each with its vector's provenance and where our bytes differ. Six are published and 22 reproducible only. **D68** says what that does and does not establish |
+| §10's first mitigation, "if a vector can't be sourced independently, don't ship the protocol", is not met for `RECS80-0068`, `JVC-48` and `SharpDVD` | **§10, D68** — said in the risk row and in D68 rather than left for a reader to find. The owner may prefer to remove the three until a source appears |
+| D40 promised that nothing committed grows with the whole corpus; the index does, at 12× | **§17** — measured (15 MB index, 11.5 MB page, an 18-minute `rl build`), not fixed, and the open decision is named. D40 carries a pointer |
+| R19.1 named one licence and one directory, and the third import's footing is weaker | **SPEC v0.10, §9, D46** — R19.1 now says how each of the three meets the condition, and the IR Blaster's is "by inheritance and nothing more". The repository root has no licence file, which D46 flags as a TODO |
+| The working rule for the importer was "a hexcode means what the app's code says", and for ten protocols the app and the data disagree | **D50, D57, D53** — the owner chose the wire reading. The app's reading is kept beside it as `FROM_DB_HEX_APP` and `IMPORT.md` counts the 44,789 affected keys. What the app does differently, a stale copy of upstream among it, is listed in §18 for the app's owner |
+| §6's layout named `samsung.py`, §12 documented 890 tests, and README said "33 numbered decisions" | **§6, §12, README** — fixed. The count is 2,257 on this branch; the suite asserts it (`test_documented_test_count_is_current`), and whoever adds tests next re-fixes it |
 
 ### v0.9 — eighth review
 
@@ -1932,11 +2019,16 @@ note rather than a live contract.
 
 ## 12. Implementation status
 
-Phases 0-6 are implemented: 890 tests, `jsonschema` the only runtime
+Phases 0-6 are implemented: 2257 tests, `jsonschema` the only runtime
 dependency. Phase 2 landed its nine SPEC edits *before* its code, per §9 --
 the spec change is what authorises the implementation. (That count is asserted by the suite itself -- see
 `test_documented_test_count_is_current` -- so it cannot drift the way the
-three stale "148" figures did.) `rl encode --protocol NEC1 --device 0x88 --subdevice 0x77
+three stale "148" figures did. It was 890 before the IR Blaster work, which
+added 1,367; it moves again whenever a test is added, and the figure here
+has to be re-fixed with it.) Post-v1 work has landed outside the phases: RC5
+(§16), the LIRC and SmartIR imports (§14, §15), and the IR Blaster importer
+with the 24 protocols it needed (§17, §18). The registry holds 28 protocols.
+`rl encode --protocol NEC1 --device 0x88 --subdevice 0x77
 --function 0x18 --carrier 38000` emits the Topping RC-15A Power key. Until
 the RC-15A was corrected this read `0x11 / 0xEE`: the capture's MSB-first
 digits, transcribed without reversing, which the NEC complement check cannot
@@ -1959,7 +2051,8 @@ layer that catches a wrong constant. Two things closed it:
 1. **Gate 2a, structural** (PRs #7, #8). The NEC family's constants match
    IRremoteESP8266's published tick table. Sony20's match a hardware
    capture, which is weaker because a capture carries instrument bias.
-2. **Gate 2b, a golden vector per protocol** (post-v1). The strongest is
+2. **Gate 2b, a golden vector per protocol** (post-v1; the table below grew from
+   four rows to 28 with §18). The strongest is
    IrpTransmogrifier's own test assertion for NEC1 `D=12,F=34`. Our timings
    reproduce it exactly, but our bytes differ in 4 words. The cause is
    quantization, not a constant: IrpTransmogrifier rounds against the
@@ -1967,12 +2060,52 @@ layer that catches a wrong constant. Two things closed it:
    a third thing (D6, after rule 10). So gate 2b now checks timings under
    the tool's own rule and pins the byte differences (D10).
 
-| Protocol | Gate 2b vector | Provenance |
-|---|---|---|
-| NEC1 | IrpTransmogrifier test assertions, two parameter sets | published |
-| Sony20 | IrpTransmogrifier `Decoder.java` string, plus a 128-function MakeHex sweep matching our bytes on 127 | published, and reproducible |
-| NECx2 | IrpTransmogrifier 1.2.14 `render` output | reproducible only. **No published NECx2 vector was found**, and `test_registry` warns about it on every run |
-| RC5 | IrpTransmogrifier `ShortProntoNGTest` (D=1, F=1, both toggle states) and `IrpTransmogrifierNGTest.testDecodeRc5` (D=7, F=5) | published. Timings exact under the tool's rule; our bytes differ at the lead-out word only |
+| Protocol | Gate 2b vector | Provenance | Our bytes differ at |
+|---|---|---|---|
+| NEC1 | IrpTransmogrifier test assertions, two parameter sets (D=12 F=34 and D=12 S=34 F=56, both at 38.4k) | published | words 4, 71, 72, 75 (lead-in mark and both gaps) |
+| Sony20 | IrpTransmogrifier `Decoder.java` string (D=12 S=34 F=56), plus a 128-function MakeHex sweep (26.226, F=0..127) matching our bytes on 127 | published, and reproducible | word 45 (lead-out); the sweep, only F=127 |
+| NECx2 | IrpTransmogrifier 1.2.14 `render`, D=7 S=7 F=2 | reproducible only. **No published NECx2 vector was found**, searched twice | word 71 |
+| RC5 | IrpTransmogrifier `ShortProntoNGTest` (D=1, F=1, both toggle states) and `IrpTransmogrifierNGTest.testDecodeRc5` (D=7, F=5) | published | words 27 and 25 (lead-out). Timings exact under the tool's rule |
+| NEC2 | `DecoderNGTest.testDecodePioneer` (D=90 S=165 F=38 at 40 kHz; IrpTransmogrifier defines Pioneer as NEC2 at 40 kHz, and **the NEC2 half of the assertion was not re-run**), plus a 1.2.14 render at 38.4k | published, weakly; the render reproducible | 67 of 72 words (564 µs is 22.5 cycles at 40 kHz); the render, words 4 and 71 |
+| NECx1 | 1.2.14 `render`, D=12 and D=13 (both polarities of the repeat bit) | reproducible only | words 71, 77 |
+| Sony12 | Girr `commandset_sony.girr` D=1 F=21 (L42-47 @`5ca171e`), plus a 1.2.14 render, D=23 F=70 | published (Girr's strings are evidently IrpTransmogrifier's output), and reproducible | word 29 (lead-out) |
+| Sony15 | 1.2.14 `render`, D=164 F=61. The one published Sony15 string has no `^45m` lead-out and cannot serve (D62) | reproducible only | word 35 |
+| RC6 | `ProtocolNGTest` L230-237 (D=12 F=34 T=0) and `ShortProntoNGTest` L20 (D=1 F=3) | published | words 41, 43 (lead-out) |
+| RCA-38 | 1.2.14 `render`, D=15 F=144 | reproducible only | words 4, 5 (lead-in) |
+| Thomson7 | 1.2.14 `render`, D=12 F=74 T=0 | reproducible only | 19 of 30 words (500 µs is 16.5 cycles at the nominal carrier) |
+| Pioneer-2Part | 1.2.14 `render`, D0=170 F0=91 D=175 F=36 | reproducible only | 201 of 208 words (564 µs is 22.56 cycles at 40 kHz) |
+| JVC | 1.2.14 `render`, D=5 F=19 | reproducible only | words 4, 39, 73 |
+| Sharp | 1.2.14 `render`, D=1 F=22 | reproducible only | words 35, 67, 99 (the three gaps) |
+| Denon | 1.2.14 `render`, D=8 F=175. IrpTransmogrifier's own Denon string is the superseded IRP and is checked for marks and spaces only (D64) | reproducible only | words 35, 67, 99 |
+| Samsung36 | 1.2.14 `render`, D=32 S=0 E=7 F=24 and D=18 S=52 E=5 F=86 (`function` 1816 and 1366) | reproducible only | words 39, 81 |
+| Proton | 1.2.14 `render`, D=20 F=1 and D=18 F=53 | reproducible only | words 4, 41 |
+| F12_relaxed | 1.2.14 `render`, D=0 S=1 F=16 and D=3 S=1 F=33 | reproducible only | word 27 |
+| RECS80 | 1.2.14 `render`, D=6 F=56 T=1 and D=2 F=1 T=0. A published decode assertion gives the same fields and serves gate 2a | reproducible only | word 27 |
+| RECS80-0068 | The same two renders. **No gate-2a evidence** (D65) | reproducible only | 12 of 28 words |
+| Aiwa | 1.2.14 `render`, D=8 S=0 F=21 | reproducible only | words 5, 91, 93, 95 |
+| Blaupunkt | 1.2.14 `render`, D=2 F=21 | reproducible only | 40 of 58 words (512 µs is 15.51 cycles at 30.3 kHz) |
+| Panasonic | 1.2.14 `render`, D=176 S=0 F=54 | reproducible only | word 103 (lead-out) |
+| JVC-48 | 1.2.14 `render`, D=34 S=33 F=12. **No gate-2a evidence** (D66) | reproducible only | word 103 |
+| Fujitsu | 1.2.14 `render`, D=132 S=132 F=0 | reproducible only | word 103 |
+| Teac-K | 1.2.14 `render`, D=0 S=4 F=19 | reproducible only | words 103, 107 |
+| Denon-K | 1.2.14 `render`, D=4 S=1 F=28 | reproducible only | word 103 |
+| SharpDVD | 1.2.14 `render`, D=8 S=48 F=1. **No gate-2a evidence** (D66) | reproducible only | none: our bytes are identical |
+
+**Six of the 28 are published and 22 are not.** "1.2.14 `render`" is IrpTransmogrifier's
+1.2.14 release run with the command recorded in `pronto-vectors.json`
+(`render -n D=…,F=… -p <protocol>`); a *reproducible* vector is one generated here by a
+pinned release, and a *published* one was found in print and pinned to a commit (D10).
+All 28 are checked the same way: our microsecond signal, quantized by the generating
+tool's own rule, must reproduce the vector word for word, and our own bytes may differ
+only at the words listed (D10). `test_registry` warns, on every run, about the 22 whose gate 2b rests on
+a tool-generated, unpublished vector, and names them. **D68 says what that does and does not
+establish**, and that three of them (RECS80-0068, JVC-48, SharpDVD) have no gate-2a evidence
+behind the IRP either.
+
+Gate 2a for the 24 added protocols is set out per family in §18: IrpTransmogrifier's teaser
+captures and their published decodes, IRremoteESP8266's constant tables, Girr's reference
+sets, and 25 measured Sony captures that bound `^45m` to 150 µs. A capture carries
+instrument bias, so it verifies layout and ratios and not absolute durations.
 
 `tests/vectors/CITATIONS.md` and `pronto-vectors.json` carry every source,
 pinned to a commit. The self-derived snapshot is still labelled as proving
@@ -2175,6 +2308,11 @@ corpus:
 
 `rl build --check` still regenerates and diffs the whole tree (D19). Only
 the files' shapes change.
+
+*(Revised by §17: with the IR Blaster database imported, `build/index.json`
+is 15 MB, 12× larger, and `site/index.html` embeds it, so "nothing committed
+grows with the whole corpus" holds for the per-remote files and no longer for
+the index. The decision about it is open.)*
 
 **The result, first import** (lirc-remotes @ `291b40f`, recorded in
 `remotes/lirc/IMPORT.md`):
@@ -2445,3 +2583,1444 @@ the other imports, were one-off analyses and are not part of it.
   RC-5X; that is part of IrpTransmogrifier's plain `RC5`. Its `RC5x` is a
   different 20-bit protocol and stays unregistered.
 
+---
+
+## 17. Importing the IR Blaster database
+
+SPEC R19 (v0.10) admits a third source: the code database that SwiftRemote
+ships, which SwiftRemote took, with the rest of its code, from IR Blaster. It
+is the weakest of the three on licence and the least remote-shaped of them on
+structure, and it adds a problem neither LIRC nor SmartIR had. LIRC's blocks
+and SmartIR's captures say what they are; this database stores each code as a
+**hexcode and a protocol name**, and what a hexcode means is itself a claim
+the ledger has to check. D50 and §18 deal with that. This section is the
+importer's own decisions, D46 to D56, with the measurements the full run gave.
+
+The source is `assets/db_src/swiftremote.sql` at SwiftRemote
+`6aafd15e1c95cf494ac729339b9a4701a4ab8f0a`: four tables, `brands`,
+`remotes(id)`, `models(brand, model, id)` and `keys(id, label, hexcode,
+protocol)`. It holds 9,388 remote ids, 413,331 keys, 23 protocol names and
+58,766 distinct `(protocol, hexcode)` codes. The importer is
+`src/remote_ledger/irblaster/importer.py`, the command `rl import irblaster
+<checkout>`, and the end-to-end oracle `tools/irblaster_oracle_import.py`.
+
+**D46 — The licence boundary is a directory, and R19.1 is met by inheritance
+only.** Serves R19.1. Everything imported lives under `remotes/irblaster/`,
+registered in `paths.py`'s `IMPORTS` (name "IR Blaster database (as shipped in
+SwiftRemote)", licence `GPL-3.0-only`, readme `remotes/irblaster/README.md`).
+`LICENSE` is SwiftRemote's own, byte for byte. `README.md` says, without
+softening it, what the licence rests on: SwiftRemote is GPL-3.0 and so, it
+says, is this repository, so the data is republished under the licence it
+arrived under. That is not a grant by the data's authors and not a reading of
+one (LIRC's is a reading, D34), because nobody in the chain says where the data
+came from.
+
+Lineage as far as it is written down: SwiftRemote forked IR Blaster
+(`github.com/iodn/android-ir-blaster`, GPL-3.0, KaijinLab Inc.), itself a fork
+of `github.com/TalkingPanda0/osram-remote`. No project in it names the data's
+source, and IR Blaster's own audit (`report-source.md`) lists `REC80`,
+`RCC2026` and `RCC0082` as having no public definition. The README closes with
+the same exit as LIRC's: deleting the directory removes every imported file.
+This is the one import whose condition 1 is weaker than the others', and SPEC
+R19.1 now says so in its own words rather than leaving it to this section.
+
+> **TODO for the integrator.** The importer's README says this repository is
+> GPL-3.0. At this commit the repository root holds no `LICENSE` and
+> `pyproject.toml` declares no licence, so the sentence cannot be checked from
+> the tree. Either the root licence is added, or the README's wording changes,
+> before the data is committed. Nothing in the notes settles which.
+
+**D47 — One ledger remote per (database id, ledger protocol).** Serves R3,
+D23. A file holds one protocol; 581 ids use several database protocols, and one
+database protocol (`REC80`) lands on six ledger protocols. So an id becomes
+`remotes/irblaster/<slug(manufacturer)>/<id>-<slug(ledger protocol)>.json`
+(`importer.py`'s `target_path` and `Importer.import_id`). A database protocol
+that maps to a ledger protocol gets one file per ledger protocol it reaches,
+and an (id, protocol) whose keys are all unrepresentable gets none. On the real
+database that is 10,013 files from 9,388 ids; 573 ids are split over several
+files and 27 ids write none (every key refused, all listed).
+
+`slug` is the other importers' (`[^A-Za-z0-9._+-]` becomes `_`), applied to the
+directory by `dir_slug`, which also refuses `.` and `..` and turns a leading or
+trailing dot into `_`. Thirteen brands end in a dot (`C.P.`, `T.V.E.`); a
+directory name ending in a dot cannot be checked out on Windows, and a brand
+named `..` must never reach a path. No brand in this database is a Windows
+reserved name, and none collides with another once casefolded (checked).
+
+**D48 — Names, and why R2 cannot be honoured.** Serves R1, R2, R10. The
+database has no remote model: an id is a bag of keys and the list of products
+it is filed under, as with SmartIR (D43). So:
+
+- **`manufacturer`** is the brand with the most `models` rows for the id. A tie
+  goes to the casefolded alphabetical first, then to the exact string, so the
+  rule is total (`pick_manufacturer`). The database's casing is kept. 3,934
+  ids have several brands and 976 have a tie.
+- **`model`** is `IR Blaster DB <id> (<ledger protocol>)`, always with the
+  protocol, so the two files of one id never share a name (R15). R2's "`model`
+  identifies the remote" is not met and cannot be: nothing in the data does.
+- **`controls`** is every `models` row of the id as `<BRAND> <MODEL>`, sorted
+  and de-duplicated (two rows can spell the same string: 280,956 rows give
+  280,954 distinct). Ids carry up to 6,268 (id 286), and 43 files have more than
+  1,000. A split id repeats its list in each file, 306,631 entries in all. The
+  schema puts no bound on `controls`.
+- **`aliases`** is `[]`.
+
+[The `controls` format above describes the tree as the importer first wrote it;
+see the placeholder after D56 for the decision that changes it.]
+
+**D49 — Key names are the label folded mechanically, and every member of an
+ambiguous name carries its code.** Serves R10, D29. `key_base`: ASCII
+upper-case, then `??` becomes `UNLABELED`, `+` `PLUS`, `-` `MINUS`, `/` `SLASH`,
+`*` `STAR`, `#` `HASH` (each as a separate word), every other run of
+non-`[A-Z0-9]` becomes one `_`, trimmed, prefixed `KEY_`. Three consequences:
+
+- A `-` inside a word is `MINUS` too (`A-B` is `KEY_A_MINUS_B`), where LIRC's
+  D37 learned to treat it as a separator. The decision was made, and it is
+  spelled out so nobody reads `MINUS` as a claim.
+- Only ASCII letters are upper-cased. `str.upper` also changes some non-ASCII
+  letters (`ß` becomes `SS`) and its tables move between Unicode versions, and
+  a regenerated import must not depend on the interpreter.
+- A label with nothing alphanumeric in it (`►`, `⏩`, `?`: 6,942 keys) is
+  `KEY_`, valid under the schema's key-name pattern.
+
+The labels are not unique in an id (16,367 repeats; `??` on 9,853 imported
+keys), so `key_names` does what D21 does for ids and avoids position: when a
+folded name carries more than one distinct `(label, hexcode)` in the file,
+**every** member gets `_<HEXCODE>`, so a name does not depend on the order the
+rows arrive in. A collision left over (two labels that fold alike on one code)
+gets `_2`, `_3` in sorted order of `(label, DB protocol)`. A name the rule makes
+can collide with another key's plain name (`KEY_OK_A_2` against `OK A 2`), and
+the loop numbers again until the name is free. On the real database 360,384
+keys have the plain name, 50,505 carry a code and 376 are numbered. Keys are
+written in name order.
+
+Members are the keys *written* to the file, not the rows of the id: a refused
+key does not make its neighbour's name ambiguous. The cost is that a hex map
+that later accepts a code can rename a key. The original label, with its
+spacing, is in the citation (D51). An exact duplicate row is dropped and
+counted; the real schema's primary key makes it impossible, and the code does
+not rely on that.
+
+**D50 — The form is one `irp` form per key, read the way the data means it.**
+Serves R19.3. `confidence: plausible`, `id: primary.irp` (`rl fmt` writes the
+auto id, so leaving it out would not survive `rl fmt --check`), ledger protocol
+and `device`/`subdevice`/`function` from `FROM_DB_HEX[<DB protocol>]`, with
+`subdevice` left out when the protocol has none.
+
+**The hexcode is read as the wire reading.** The database stores every code in
+wire order, and for Sony, Pioneer, JVC, Sharp, Denon, Thomson7, Proton and
+RCC2026 SwiftRemote's own encoder reads it differently (D57 has the table and
+the evidence). The ledger holds what the data means, per independent evidence:
+published decodes of real remotes, real LIRC frames, structure. No second form
+is added for the app's reading, and no non-primary candidate either. The raw
+pattern would fail D8 (D64, "For the importer"), and a candidate group per
+reading would put 44,789 keys' worth of a bug into the data. The disagreement
+is measured and reported instead (D55).
+
+**D51 — The citation is short and fixed.** Serves R19.2, R18. The shape, 94.9
+characters on average (median 95, longest 134, because of long labels), is
+
+```
+irblaster-db@6aafd15 remote 286, 'VOL+' 20DF40BF NEC: 32 wire bits, bytes bit-reversed as NEC1
+```
+
+The prefix is the pinned SwiftRemote commit's first seven characters, then the
+remote id, the label as the database spells it, the hexcode and the database
+protocol. `<how>` is a fixed phrase **per database protocol**, with the ledger
+protocol appended (`importer.py`'s `HOW`; REC80's six ledger protocols need the
+suffix to be told apart). An earlier draft of the phrase carried the
+parameters (`wire-order hex read as Sony12 D=1 F=21`). The form already does,
+413,331 times, so the phrase does not, and a reader checks the claim by applying
+the phrase to the hexcode. No claim about trust is made beyond `plausible`, and
+none about where the code came from, because that is not known (D46).
+
+**D52 — The protocol block.** Serves R3, D3, D24, D27.
+
+- `name` is the ledger protocol, `carrierHz` the registry's
+  `nominal_carrier_hz`, so no `carrier-off-nominal` warning appears (D32). The
+  app's own carriers are within 5 % of every one (the oracle tools check it);
+  D60 has the table. One consequence worth seeing: NEC1's 38,400 is 1.0 % from
+  the 38,000 the app sends for a database NEC code, and the LIRC import and
+  the authored Topping use 38,000, so these files differ in carrier word
+  (`006C` against `006D`) from those.
+- `minSends` is `hex_*.MIN_SENDS`, default 1: Sony 3, NECx2 2, Thomson7 2, Aiwa
+  (RCC2026) 2. Sharp and Denon stay at 1 although the app sends three frames
+  per press (their intro plus one pass of the repeat); the oracle tool plays
+  their whole signal for that reason and says so.
+- **Samsung36 alone** gets `unitUs: 500` and `claims.unitUs`. The IRP says 560
+  µs; the app, IrpTransmogrifier's eight real captures (median unit about 496
+  µs) and IRremoteESP8266's `sendSamsung36` (512 µs marks, 490/1468 µs spaces)
+  agree on about 500 (D65). The claim's source cites the capture audit and the
+  IRremoteESP8266 line range. At 500 µs the compiled signal equals the app's to
+  the microsecond but for the lead-out, which no field changes. `rl build
+  --check` passes on it.
+- **Raised, not decided.** Where another protocol shows the same pattern, the
+  IRP's unit disagreeing with the app and with real captures, the question was
+  raised and no override written. `Blaupunkt` (IRP 512 µs, app 528,
+  `Blaupunkt.ict` about 532; the app's sync gap is 9.1 % short of the IRP's and
+  nearer the capture) and `Thomson7` (IRP 500/2000/4500, app 460/2000/4600,
+  capture marks 0.961× and spaces 1.020× of the IRP) both agree with the app
+  against the IRP by a few percent, and neither has a second source like
+  IRremoteESP8266's. `RCA-38` is a different case (the IRP and the app say 460
+  µs, only the capture says 500) and `Pioneer-2Part` is mixed (app marks 500 µs,
+  IRP 564, IRremoteESP8266 568, the capture 548).
+
+**D53 — The hex maps have one contract.** Serves D50. Every
+`irblaster/hex_*.py` exports `FROM_DB_HEX` (DB protocol name → function(hexcode)
+→ `(ledger protocol, device, subdevice, function)`: the wire reading, what the
+importer writes), `FROM_DB_HEX_APP` (the same keys and signature: what
+SwiftRemote does today, used only by the oracle tools and by the report in D55)
+and `MIN_SENDS`. Where the app and the data agree the APP entry **is** the same
+function object, so the set of protocols on which they differ is a property a
+test can state (`tests/test_irblaster_hex_contract.py`): the ten Sony12,
+Sony15, Sony20, Pioneer, JVC, Sharp, Denon, Thomson7, Proton and RCC2026.
+
+Before this contract the family modules named the two readings three different
+ways: `hex_japan` had them the other way round (`FROM_DB_HEX_WIRE`), `hex_misc`
+kept Proton's wire reading outside the table (`proton_wire_order`), and
+`hex_unknown` called its table `FROM_DB_HEX_SWIFTREMOTE`. Those names are gone.
+The per-family oracle tools keep proving the encoders against what the app
+transmits, now through the APP tables, and their docstrings say so
+(`irblaster_oracle_japan.py --reading app`, the default, is the proof;
+`--reading wire` is the importer's reading and cannot fail).
+
+**D54 — What cannot be represented is skipped and listed, never dropped.**
+Serves R19.5. A hex map that raises `ValueError` (its text has no hexcode in
+it, so the report groups on it), a DB protocol with no map (none today: all 23
+have one) and a form that does not compile to Pronto
+(`import_common.form_compiles`, memoised per distinct signal, since 413,331 keys
+are 58,766 distinct codes and the answer is a function of the protocol,
+carrier, unit and parameters) are skipped key by key. An id with no
+representable key writes no file and is listed as a skipped remote; so is an id
+with no `models` row (no manufacturer to file it under; none today). An authored
+collision (`import_common.authored_names`) skips the file and counts its keys
+(none today; the synthetic model names make it unlikely, as D45 said of
+SmartIR).
+
+On the real database **2,066 keys, 964 distinct codes** are skipped, all for
+reasons D67 gives: NEC 406 codes / 1,076 keys and NEC2 229 / 434 (byte 4 is not
+the complement of byte 3, and the only registry-shaped protocol that could hold
+it, the `-f16` form, is not registered), RCC2026 21 / 75 (not an Aiwa frame),
+REC80 308 / 481 (a Kaseikyo-family layout the registry does not hold). Every
+reason is a row of `IMPORT.md`, every key one row. The figure going in was about
+2,500; the family counts add to 2,066 exactly.
+
+**D55 — The report says where SwiftRemote's reading differs.** Serves R19.5,
+D50. `IMPORT.md` ends with a section, per DB protocol, of imported distinct
+codes, codes whose `(ledger protocol, D, S, F)` under `FROM_DB_HEX_APP` differs
+from the wire reading (or which the app's reading cannot send as a frame at
+all), imported keys, keys affected, and the first three codes in hexcode order
+with both readings. A code the wire reading refuses is not in it: it is in the
+skipped list.
+
+**Measured: 9,140 distinct codes, 44,789 imported keys** (Sony12 892, Sony15
+733, Sony20 1,213, Pioneer 1,667, JVC 1,020, Sharp 586, Denon 332, Thomson7 29,
+Proton 1,458, RCC2026 1,210 codes). The figure going in was about 12,800; the
+ten protocols' distinct codes add to 9,399 in all, so 12,800 cannot be reached
+from this database, and 9,140 is what the tool recomputes independently. The
+full list is not committed, since it would double `IMPORT.md`;
+`tools/irblaster_oracle_import.py --list-differences` prints it from the dump
+for whoever fixes the app.
+
+**D56 — Authored data wins; the import is a regenerable cache.** Serves
+R19.4, R19.5. As D39 and D45: `rl import irblaster <checkout> [--commit SHA]`
+rewrites `remotes/irblaster/` wholesale. `*.json` and `IMPORT.md` are the
+importer's, `README.md` and `LICENSE` are authored and never touched, files are
+written as they are produced (peak 260 MB, not the whole tree), stale files are
+removed afterwards, and every file passes through `fmt.format_document` so `rl
+fmt --check` stays clean. The input is the SQL executed into an in-memory
+sqlite (what `tools/build_ir_db.py` does to a file), and the pinned commit is
+the checkout's `git rev-parse HEAD`.
+
+One addition over LIRC and SmartIR: `cmd_import` refuses a checkout whose
+`assets/db_src/swiftremote.sql` differs from the commit (`INPUT` on the
+importer module), because an importer that reads one named file would otherwise
+cite a tree the data did not come from. Output is a pure function of the dump,
+the commit and the code: every ordering is sorted, the key names do not depend
+on row order, and a test shuffles the dump four ways and compares the bytes.
+
+> **[D56a/D56b: filled in by the integrator after the label change lands]**
+> Two further decisions belong here. D56a concerns an optional key `label`;
+> D56b concerns `controls` entries in the imported tree as `BRAND | MODEL`
+> pairs. Neither is recorded in the notes this section was written from, and
+> neither is described here. The paragraphs most likely to need revising when
+> they land are D48 (`controls`, written above as `<BRAND> <MODEL>`) and D49
+> (key names, with the original label kept in the citation). The measurements
+> below were taken before either, at importer commit `0d093c2`.
+
+### The full run, measured
+
+The real database was imported into a scratch copy of `remotes/`, `src/`,
+`tools/`, `build/`, `site/` and `pyproject.toml`, then built: importer commit
+`0d093c2`, SwiftRemote `6aafd15`. **These figures are from that scratch copy.**
+When the data is committed, `remotes/irblaster/IMPORT.md` is the record, and this
+section should be checked against it.
+
+| | Before (LIRC + SmartIR + authored) | After |
+|---|---|---|
+| remote files | 3,204 | 13,217 (+10,013) |
+| keys | 113,819 | 525,084 (+411,265) |
+| `remotes/` | 79.8 MB | 240.9 MB; `remotes/irblaster/` 161.2 MB (9.0 MB gzipped tar) |
+| `build/pronto/` | 76.3 MB | 336.5 MB; `irblaster/` 260.2 MB, 10,013 files (10.1 MB gzipped) |
+| `site/r/` | 65.2 MB | 285.2 MB; `irblaster/` 219.9 MB, 10,013 scripts (9.1 MB gzipped) |
+| `build/index.json` | 1,251,008 B | **15,075,980 B** (12.0×) |
+| `site/index.json` | 1,251,008 B | 15,075,980 B (a copy, D20) |
+| `site/index.html` | 1,006,251 B | **11,537,234 B** (11.5×) |
+| `build/warnings.json` | 129 warnings | 129 warnings |
+
+The largest single files are 223 KB in `remotes/irblaster/`, 204 KB in
+`build/pronto/irblaster/` and 180 KB in `site/r/irblaster/`; nothing is near a
+host's per-file limit. The 129 warnings are all `carrier-off-nominal`, all there
+before, none from this import: every file carries the registry's own carrier
+(D52), so the import adds no warning of any kind.
+
+Times, one core, on a 64-core, 125 GB machine:
+
+| | wall | peak RSS |
+|---|---|---|
+| `rl import irblaster` (from an empty directory, and again over its own output) | 64.8 s, 68.9 s | 260 MB |
+| `rl validate remotes/irblaster` | 2 min 9 s | 32 MB |
+| `rl build` (validate, check, compile, index, site) | **18 min 2 s** | 736 MB |
+| `rl build --check` | 17 min 44 s, 0 differences against the tree `rl build` wrote | 732 MB |
+| `tools/irblaster_oracle_import.py` (16 worker processes; 6 min 13 s of CPU) | 30 s | |
+| the whole test suite, in the scratch copy with the data and the fixes below | 3 min 7 s (1 min 37 s without the data) | 957 MB |
+
+D40 recorded 3.5 minutes for the LIRC-era tree (113,819 keys; the machine was
+not recorded). Scaled by keys that is 16 minutes for 525,084, so 18 is about
+linear. Re-running the import over its own output gives byte-identical files
+(`diff -r`, and the report's sha256 matches), and so does importing into an
+empty tree.
+
+**What does not scale**, in the order it will be felt:
+
+1. **The index and the site page.** `build/index.json` grows 12×, to 15 MB, and
+   `site/index.html` embeds it (11.5 MB) and parses it at load. D40's promise
+   that "nothing committed grows with the whole corpus" holds for the
+   per-remote files and **no longer holds for the index.** 63 % of the index is
+   `controls`: 306,631 strings (a split id repeats its list), 7.2 MB of the 11.5
+   MB the index serialises to. Nothing in the index needs more than a prefix of
+   them to search by, and the per-remote artifact already has them. `index.py`
+   and `site.py` were not changed. How long the page takes to open in a browser
+   was not measured, so it is not known.
+2. **`rl lookup`.** It calls `index.build_index(root)`, which loads every remote
+   file. The query `BDP-S360` takes 2.5 s on the committed tree and 12 s with the
+   import, and a query that matches many remotes (`TELEFUNKEN`) 17 s.
+3. **`rl build` and `rl build --check`**: 18 minutes each, with CI's `--check`
+   doing the whole thing again (D11, D19). `validate` is 2 minutes of that for
+   the import alone.
+4. **The repository.** +641 MB in the working tree (161 + 260 + 220), about 28
+   MB compressed per generation of the data, and a regeneration that changes a
+   hex map rewrites a large share of three trees.
+5. **`tests/test_seed_data.py` treated every directory but `remotes/lirc/` as
+   authored**, so the 10,013 imported files would have become 20,000
+   parametrized tests (22,282 collected, an hour). It now scans the IR Blaster
+   tree as it scans LIRC's (`test_the_irblaster_import_keeps_r19`, skipped until
+   the tree exists) and samples every 200th file for the reproducibility test.
+   SmartIR's 62 files are still tested as authored, as before.
+6. **Directory names.** Brands with non-ASCII names slug to underscores
+   (`_________` holds one remote, a nine-letter Cyrillic brand); 223 of 1,755
+   directories contain an underscore. As with LIRC's `slug`, nothing is
+   transliterated.
+
+*Open, and not decided here:* what to do about the index before the data lands
+in the main branch. It is 15 MB, rewritten by every regeneration, copied into
+`site/`, and embedded in the page. The two obvious levers are `controls` (63 %)
+and the eager load, and neither was touched.
+
+**Two tests of the existing suite that the data broke**, both fixed:
+`tests/test_seed_data.py` (above) and `tests/test_site.py`'s
+`test_no_external_resources_are_loaded`, which asserted `"cdn"` is not in the
+whole of `site/index.html`, data included. The import's controls hold `ORION G
+20 LCDN` and fourteen more, so it failed, and pytest then spent half an hour
+building a text diff of an 11.5 MB string for the failure message. It now checks
+the page with the data island cut out. With both fixed the suite in the scratch
+copy passes but for three tests: the documented-count test, and two that need a
+git repository and a `.gitignore` the scratch copy lacked
+(`test_setuptools_scratch_under_build_is_ignored` and
+`test_gitignore_negations_mirror_the_generator_owner_table`). Whether the
+repository's `.gitignore` needs a line for `remotes/irblaster/` was not
+checked.
+
+### The end-to-end oracle
+
+`tools/irblaster_oracle_import.py`, run over the scratch output with the app's
+signals for all 58,766 distinct codes, found **0 unexplained**: no problem of any
+kind. The tool also re-derives every file's manufacturer, model, controls and
+path from the dump's `models` table, and checks `IMPORT.md`'s totals, skipped
+list and difference table against the files. Distinct codes, then keys, per DB
+protocol:
+
+| DB protocol | codes | matched | differs by reading | unrepresentable | keys | matched | differs by reading | unrepresentable |
+|---|---|---|---|---|---|---|---|---|
+| Denon | 519 | 187 | 332 | 0 | 1,675 | 620 | 1,055 | 0 |
+| F12_relaxed | 138 | 138 | 0 | 0 | 331 | 331 | 0 | 0 |
+| JVC | 1,023 | 3 | 1,020 | 0 | 5,782 | 5 | 5,777 | 0 |
+| NEC | 33,522 | 33,116 | 0 | 406 | 274,082 | 273,006 | 0 | 1,076 |
+| NEC2 | 5,084 | 4,855 | 0 | 229 | 10,853 | 10,419 | 0 | 434 |
+| NECx1 | 1,439 | 1,439 | 0 | 0 | 6,887 | 6,887 | 0 | 0 |
+| NECx2 | 1,238 | 1,238 | 0 | 0 | 8,120 | 8,120 | 0 | 0 |
+| Pioneer | 1,673 | 6 | 1,667 | 0 | 5,838 | 25 | 5,813 | 0 |
+| Proton | 1,476 | 18 | 1,458 | 0 | 7,300 | 155 | 7,145 | 0 |
+| RC5 | 2,428 | 2,428 | 0 | 0 | 34,813 | 34,813 | 0 | 0 |
+| RC6 | 1,237 | 1,237 | 0 | 0 | 6,633 | 6,633 | 0 | 0 |
+| RCA_38 | 60 | 60 | 0 | 0 | 89 | 89 | 0 | 0 |
+| RCC0082 | 300 | 300 | 0 | 0 | 3,509 | 3,509 | 0 | 0 |
+| RCC2026 | 1,231 | 0 | 1,210 | 21 | 4,880 | 0 | 4,805 | 75 |
+| REC80 | 2,723 | 2,415 | 0 | 308 | 14,816 | 14,335 | 0 | 481 |
+| RECS80 | 396 | 396 | 0 | 0 | 5,165 | 5,165 | 0 | 0 |
+| RECS80_L | 159 | 159 | 0 | 0 | 526 | 526 | 0 | 0 |
+| SONY12 | 907 | 15 | 892 | 0 | 7,103 | 212 | 6,891 | 0 |
+| SONY15 | 738 | 5 | 733 | 0 | 3,728 | 46 | 3,682 | 0 |
+| SONY20 | 1,213 | 0 | 1,213 | 0 | 4,599 | 0 | 4,599 | 0 |
+| Samsung36 | 643 | 643 | 0 | 0 | 1,488 | 1,488 | 0 | 0 |
+| Sharp | 590 | 4 | 586 | 0 | 5,083 | 92 | 4,991 | 0 |
+| Thomson7 | 29 | 0 | 29 | 0 | 31 | 0 | 31 | 0 |
+| **total** | **58,766** | **48,662** | **9,140** | **964** | **413,331** | **366,476** | **44,789** | **2,066** |
+
+What the classes rest on:
+
+- **matched** is the family tools' rule (D58: carrier within 5 %, same number of
+  durations, each within 12 % or 150 µs), applied to the key compiled *through
+  its file* and decoded from Pronto, with only the allowances D58 lists, each
+  counted under its own note and none folded in. The counts of keys under an
+  allowance: NEC's frame without a lead-out 273,006; a toggle bit a file cannot
+  carry (D3b) in RC5 34,813, RC6 6,633, RECS80 5,165 and RECS80_L 526, where
+  **every key** of these four compiles `T=0` and matches only at `T=1`, which is
+  what the app's preview shows; RC6's longer final space 6,633; the lead-out of
+  Samsung36 1,488 and of the REC80 vendors Fujitsu, Teac-K and SharpDVD 1,061;
+  idle gaps of JVC, Pioneer, Sharp and Denon, only where both signals have a gap;
+  Sharp's and Denon's three frames; Blaupunkt's closing sync. Nothing else
+  differs by more than the tolerance for any of the 366,476 keys.
+- **differs by reading** is the 9,140 codes (44,789 keys) on which
+  `FROM_DB_HEX_APP` gives other fields from `FROM_DB_HEX` or cannot send the
+  code. The tool recomputes that set from the two tables and requires it to equal
+  `IMPORT.md`'s counts (it does, per protocol). For every such key it requires
+  that the app's signal is what the app's own reading compiles to: the encoding,
+  within the tolerance, and to the microsecond before Pronto's rounding for
+  21,013 keys (Proton, Sony12, Sony20, most of Sony15 and 586 of RCC2026's); or,
+  for the 1,890 Sony15 keys whose codes the app masks to 15 bits, what the masked
+  code compiles to; or, for the 4,219 RCC2026 keys the app reads as no Aiwa
+  frame, what a port of its stale encoder produces, exactly. That confirms the
+  classification. It is not a claim that either reading is right (D50).
+- **unrepresentable** is a key `IMPORT.md` lists, whose code the wire reading
+  refuses, and which no file holds: 964 codes, the 2,066 keys of D54.
+- Thirteen codes on which the two readings happen to agree match (Pioneer 6, JVC
+  3, Sharp 4): the "13 Pioneer, JVC and Sharp codes" of D64.
+
+Per family the counts agree with the family tools' own: NEC 33,116 / 4,855 /
+1,439 / 1,238 codes matched with 635 unrepresentable; REC80 2,171 + 244 lead-out
+codes matched with 308 unrepresentable; Pioneer 1,667, JVC 1,020, Sharp 586 and
+Denon 332 codes differ; Sony 2,838 of 2,858 differ.
+
+### What is not proven (the import)
+
+- **No hardware.** Every claim is a comparison of waveforms with the app's own, or
+  with published decodes of real remotes. Nothing here says a device obeys a
+  compiled key, and for the ten protocols whose reading differs from the app's
+  the evidence is the families' (published decodes, LIRC frames, structure), not a
+  receiver.
+- **The provenance of the data.** Nobody says where it came from (D46).
+  `plausible` is the tier for one source nothing cross-checked, and here the
+  source is itself unattributed.
+- **`matched` means the same signal as the app's, within 12 %.** Where the app and
+  the IRP differ in a unit (D52) the ledger follows the IRP, except Samsung36.
+- **Sharp's complement-frame inversion and Denon's `11` flag** (D64) are still the
+  weakest parts of those two readings.
+- **How the site page behaves in a browser** with the 11.5 MB island.
+
+---
+
+## 18. Twenty-four protocols and the readings of the database's hex
+
+The database names 23 protocols; the registry held four (NEC1, NECx2, RC5,
+Sony20). A code whose protocol the registry does not hold cannot become an `irp`
+form, so six families of protocols were registered first, each protocol through
+D18's three gates, and a seventh piece of work wrote the importer (§17). The
+registry now holds **28**: the four, and 24 added here (`NEC2`, `NECx1`, `Sony12`,
+`Sony15`, `RC6`, `RCA-38`, `Thomson7`, `Pioneer-2Part`, `JVC`, `Sharp`, `Denon`,
+`Samsung36`, `Proton`, `F12_relaxed`, `RECS80`, `RECS80-0068`, `Aiwa`,
+`Blaupunkt`, `Panasonic`, `JVC-48`, `Fujitsu`, `Teac-K`, `Denon-K`, `SharpDVD`).
+D18's table carries all 28 with their IRP strings; §12 holds the gate-2b vector for
+each. This section records what was decided per family, and one finding that
+cuts across all of them.
+
+Three terms, used throughout:
+
+- **The wire reading** of a hexcode is the reading under which the code is the
+  bit string that goes on the wire, first bit the most significant bit of the
+  hexcode, so that a field the protocol sends least-significant-bit first
+  appears bit-reversed. It is what `FROM_DB_HEX` implements and what the importer
+  writes (D50).
+- **The app's reading** is what SwiftRemote does with the same code
+  (`FROM_DB_HEX_APP`), which is what the app transmits.
+- **The oracle** is the app's own signal for every distinct code, produced by
+  running SwiftRemote's Dart (`buildButtonFromDbRow`, then `previewIRButton`) and
+  stored as `by_protocol/<DB protocol>.jsonl`, one object per distinct hexcode
+  (`protocol`, `hex`, `appProtocol`, `params`, `code`, `freq`, `mode`, and
+  `pattern`, the app's mark and space durations in µs). The files are not
+  committed. `tests/fixtures/irblaster/` holds a few dozen of the oracle's rows
+  per protocol, unedited, so the per-family tests run without it.
+
+> **TODO for the integrator.** The Dart run that produced the oracle is not in
+> this repository, and the notes do not say where its harness lives. The
+> committed fixtures cover a few dozen codes per protocol, so the full counts in
+> this section and in §17 cannot be regenerated from the repository alone. Either
+> commit the harness or record in `tools/` where it is.
+
+**D57 — The ledger holds the wire reading, and for ten protocols that is not
+what SwiftRemote transmits.** Serves R19.3, D50. The owner's decision: the ledger
+records what a real remote sends, not what the app's encoder does with a code.
+The six family agents worked to the opposite rule, that a hexcode means what the
+app's code says, and each that found the two apart said so rather than quietly
+following the app. Three (Sony, Thomson7, RCC2026) followed the evidence and
+offered the app's reading beside it; two (the Japanese four, and Proton) followed
+the app and put the wire reading beside it for the owner to choose. The owner chose
+the wire reading for all ten, and D53 gave every module one contract.
+**This is the one finding that touches the data's meaning.** In the table below
+every row is a protocol on which the two readings give different signals.
+
+### Where SwiftRemote reads the database differently from the wire
+
+| DB protocol (ledger protocol) | What SwiftRemote does with the hex | Evidence that the wire reading is the data's | Codes that differ | Keys |
+|---|---|---|---|---|
+| `SONY12` (Sony12) | Packs it as an integer `cmd \| addr << 7`, low bit sent first. The data is the frame's bits in transmission order, first bit most significant: TV power (D=1, F=21) is `A90`, which the app reads as command 0x10 on address 0x15 | Girr's Sony12 reference set at D=1: 25 of 25 commands are in the DB as wire hex, 7 as the app's packing (chance, since the DB fills about a fifth of the 4,096 values). Standard-label keys give the standard function under the wire reading for 169 of 264 distinct label/hex pairs (64 %), under the app's for 9 | 892 of 907 | 6,891 |
+| `SONY15` (Sony15) | The same, masked to the 15-bit frame without a word | A Sony projector's protocol manual (via Girr `sony_vlp_hw50es.girr`): D=84, 26 of 30 as wire hex, 1 as the app's. 109 of 141 label/hex pairs (77 %) against 2. All 738 distinct codes have bit 0 clear, which is what padding a 15-bit frame leaves; under the app's packing that is inexplicable, and **362 of the 738 codes have bit 15 set, which the app masks away and sends another code** | 733 of 738 | 3,682 |
+| `SONY20` (Sony20) | The same | The ledger's own hardware-verified `remotes/sony/RMT-B118P.json` (D=26, S=226): **38 of 38 keys** are in the DB as wire hex, 0 of 38 as the app's packing. The projector manual's Sony20 D=26 S=42: 19 of 22 against 0. 193 of 260 label/hex pairs (74 %) against 3 | 1,213 of 1,213 | 4,599 |
+| `Pioneer` (Pioneer-2Part) | Sends each of four bytes least significant bit first (`pioneer.dart:96-123`) | IrpTransmogrifier's decodes of real captures are in the DB in wire order: a Pioneer receiver's Setup key is `{D0=170,F0=91,D=175,F=36}` and the DB holds it as `55DAF524` (Return, F=34, as `55DAF544`); the app-order codes `AA5BAF24` and `AA5BAF22` are not in the DB. Across the 12 models the DB shares with the repository's LIRC import, 638 keys: wire reading finds a real frame for 358, the app's for 0, both 0, neither 280 | 1,667 of 1,673 | 5,813 |
+| `JVC` (JVC) | Sends each of two bytes least significant bit first (`jvc.dart:53-66`) | LIRC overlap, 19 models, 1,172 keys: wire reading finds a real frame for 702, the app's for 0, both 0, neither 470 | 1,020 of 1,023 | 5,777 |
+| `Sharp` (Sharp) | Masks with `0x1FFF` and takes bits 12-8 as address and 7-0 as command, a register layout the data does not have (`sharp.dart:65-67`). The data is address (5 bits), command (8), trailer (2) and a pad bit, in wire order | IrpTransmogrifier's Sharp Pronto export gives Power `{D=1,F=22}` and Input Cycle `{D=1,F=19}`; the DB holds them as `8344` and `8644`. Read the app's way, Power would be one of eight codes `0x0116`, `0x2116` … `0xE116`, and none is in the DB. 561 of the 590 codes end in the bits `100` and the other 29 in `010`: the trailers `1:2` and `2:2` plus a zero pad bit. LIRC overlap, 16 models, 1,026 keys: wire 594, app 6 (coincidences of a 13-bit register), both 17, neither 409 | 586 of 590 | 4,991 |
+| `Denon` (Denon) | Builds its 13-bit field from the first three nibbles plus `nib3.substring(3, 4)`, the *last* bit of the fourth nibble (`denon.dart:77-80`). The data's thirteenth bit is the *first* (`substring(0, 1)`) | Denon receiver decodes `left`, `0` and `OK` as `{D=8,F=175}`, `{D=8,F=129}`, `{D=8,F=187}`; the DB holds `17A8`, `1408`, `16E8`. The fourth digit is only ever 0, 6, 8 or E, so its low three bits are `000` or `110` and bit 0 is never set: thirteen data bits, then three the app ignores. LIRC overlap, 25 models, 1,524 keys: wire 276, app 0, both 851 (the fourth digit is 0 or 6, where the dropped bit is zero), neither 397. Every code whose fourth digit is 8 or E (332 of 519) loses the top bit of its command in the app | 332 of 519 | 1,055 |
+| `Thomson7` (Thomson7) | Masks with `0xF7F`, then sends bits 3..0, **its own toggle**, then bits 11..5. The frame is `first4 + toggle + last7` with the toggle in bit 7's place, and the app's mask clears exactly that bit | All 29 DB codes are device 12 under the wire reading, one address and 29 commands, as one remote looks; the app's reading gives thirteen devices and two commands across the same 29 keys (20 distinct frames; hexcode bit 4 never reaches the air). **A hardware capture agrees key for key**: IrpTransmogrifier's `Thomson-0625.ict` (`.exp`: Thomson7) decodes Vol+ F=74, Vol- 42, Mute 80, Up 104, Down 88 at D=12, and the DB's Thomson7 remote holds VOL+, VOL-, MUTE, J UP, J DOWN as `329`, `32A`, `305`, `30B`, `30D`. Five of five, on a different remote of the same make | 29 of 29 | 31 |
+| `Proton` (Proton) | Sends the hex's **low** byte first, then its high byte (`proton.dart:58-59,75,82`), the reverse of the IRP's `D:8,1,-8,F:8` | In 169 of the DB's 187 Proton remotes the high byte is the same on every key, and in none is the low byte (an address does that; a command does not). IrpTransmogrifier's Proton capture is nine keys, all D=20, F = 0, 1, 8, 9 for the digits: DB remote 18 holds them as `2800 2880 2810 2890`, with `0x28` = rev8(20) leading, high byte first; its P+ P- VOL- VOL+ NORMAL/OK are `28E8 2818 2828 28C8 28E4` | 1,458 of 1,476 | 7,145 |
+| `RCC2026` (Aiwa) | Builds the 42 wire bits from the **last** 42 of a 44-bit number. SwiftRemote's copy of the encoder is stale: upstream `iodn/android-ir-blaster` fixed it on 2026-09-20 in commit `3bb60e3178` (the first 42, "padding after the 42 wire bits"), and SwiftRemote's copy is the V2.0.0 original, `c0658e8` | Under the first-42 reading `~S` is the complement of `S` in 1,210 codes and `~F` of `F` in 1,211; the stale way, 292 and 315 (`D` and `~D` pair up either way). The DB's `LEFT` key `10077FEA15C` is Aiwa D=8, S=0, F=21, exactly IrpTransmogrifier's teaser assertion for a real Aiwa remote's `left` key (`Aiwa_left.exp`). Digits and POWER decode to F = 1..9, 10, 0 (`76044FE01FC`, `76044FC03FC` …), which is how `probonopd/irdb` tables Aiwa. The app's own Universal Power default `0087FBC03FC` is Aiwa D=0 S=1 F=0 this way and F=192 the stale way. **The app reads a valid Aiwa frame for only 71 of the 1,231 codes (586 of 4,880 keys)** | 1,210 of 1,231 (the other 21 are refused by both readings) | 4,805 |
+| **Total** | | | **9,140** | **44,789** |
+
+What the table does and does not say. "Differs" means the two readings give a
+different `(ledger protocol, device, subdevice, function)`, or the app's reading
+cannot send the code as a frame at all. The end-to-end oracle (§17) proves for each
+such key that the app's signal is exactly what the app's own reading compiles to,
+so the classification is measured and not assumed. **That does not prove the wire
+reading right.** The evidence for it is of three kinds, in order of strength:
+decodes of real remotes that other people published (IrpTransmogrifier's teaser
+captures and Girr's reference sets, a Sony manual), real frames from the
+repository's own LIRC import, and the structure of the data (pad bits, trailers,
+constant bytes). No device was tested. Where the evidence is weakest is stated
+under D64 (Sharp's complement frame, Denon's `11` flag) and D62 (a remote that
+mixes conventions cannot be excluded for SONY12 and SONY20, where every hexcode is
+valid either way).
+
+**On the Sony row: the app's reading is deliberate and tested for the editor**
+(`test/sony12_protocol_test.dart:7-33`). It is the import path
+(`db_button_import.dart:246-285`, repeated in
+`ir_finder/ir_finder_models.dart:274-287` and
+`universal_power/power_params.dart:86-99`) that reads database codes with it.
+
+**D58 — Every hex map is checked against the app's own signal, and the framing the
+check forgives is named.** Serves D10, D18, R19.2. For each DB protocol a family
+tool (`tools/irblaster_oracle_<family>.py`) takes every distinct code, has the
+ledger compile it through its own encoder, and compares with the app's signal:
+the registry's nominal carrier within 5 % of the app's, the same number of
+durations, each within 12 % of the larger of the two or 150 µs, whichever is
+more. The tolerance is symmetric and was never widened to make a code pass; the
+widest non-gap deviation in the NEC family is 0.71 %. Each code lands in one
+class: *matched*; *matched, with a named framing difference*; *differs by
+reading* (D57, and only when the app's own reading accounts for the app's
+signal); *unrepresentable* (D54); or *unexplained*, which exits non-zero. There
+is none. `tools/irblaster_oracle_import.py` then repeats the check end to end, for
+every key through its written file (§17).
+
+The framing the check forgives is listed here so that nothing hides inside "matched",
+and each is counted under its own note:
+
+| Difference | Where | Why it is allowed |
+|---|---|---|
+| The app's legacy NEC path ends on the last mark (67 durations); the ledger's NEC1 ends in `^108m` | NEC (273,006 keys) | The app's gap is dropped from the comparison for `NEC` only (D61) |
+| The toggle bit | RC5, RC6, RECS80, RECS80-0068 (47,137 keys) | The app alternates `T` and its preview shows `T=1`; a compiled file carries `T=0` (D3b). Every key of the four matches only at `T=1`. Thomson7's toggle is in hexcode bit 7 and is ignored |
+| RC6's final space | RC6 (6,633) | The app idles six units after the frame, the IRP pads to `^107m`; the ledger's space is longer, and the check requires it never to be shorter (D63) |
+| The lead-out | Samsung36 (1,488 keys); REC80's Fujitsu, Teac-K and SharpDVD (1,061 keys) | The IRP pads to an extent the app does not (D65) or the app uses Panasonic's 173 units for all six vendors (D66) |
+| Idle gaps | JVC, Pioneer-2Part, Sharp, Denon, only where both signals have a gap | The IRPs pad each frame to an extent, so the gap depends on the data; the app uses one constant per protocol (D64) |
+| The repeat sequence | JVC and Pioneer-2Part | The app sends the intro and omits the repeat, the one length difference allowed |
+| Three frames | Sharp, Denon | The app sends normal, complement, normal; the tool plays the intro and one pass of the repeat, though `minSends` stays 1 |
+| Two copies of one frame | NECx2 | The app sends it twice; the ledger has it once in the repeat slot and `minSends` 2 (D3a) |
+| Blaupunkt's closing sync | Blaupunkt | `IrSignal.ending` is reserved (D1), so the ledger drops it; the tool re-adds it from the intro (D66) |
+
+**D59 — The mapping from hexcode to parameters, per database protocol.** Serves
+D50, D53. Every function raises `ValueError` with fixed text and no hexcode in it,
+so the importer's report can group on the reason (D54). `rev*n*` is the
+bit-reversal of an *n*-bit field. All of it is the wire reading (D57); where the
+app's reading differs, `FROM_DB_HEX_APP` holds that one.
+
+| DB protocol | Digits | Ledger protocol | Reading |
+|---|---|---|---|
+| `NEC`, `NEC2`, `NECx1`, `NECx2` | 8 | `NEC1`, `NEC2`, `NECx1`, `NECx2` | `D` = rev8(byte 0), `S` = rev8(byte 1), `F` = rev8(byte 2); byte 3 must be the complement of byte 2, or the code is refused (D61, D67) |
+| `SONY12` | 3 | `Sony12` | 12 wire bits, first most significant: `F` (7 bits, LSB first) then `D` (5). `A90` is D=1, F=21 |
+| `SONY15` | 4 | `Sony15` | 15 wire bits then a pad bit that must be 0: `F` (7), `D` (8) |
+| `SONY20` | 5 | `Sony20` | 20 wire bits: `F` (7), `D` (5), `S` (8). `A8B47` is D=26, S=226, F=21 |
+| `RC5` | 3 | `RC5` | Bit 11 is the second start bit, inverted back into command bit 6 (`~F:1:6`); bits 10-6 are `D`; bits 5-0 are the low command bits |
+| `RC6` | 4 | `RC6` | `D` = high byte, `F` = low byte, mode 0 |
+| `RCA_38` | 3 | `RCA-38` | `D` = high nibble, `F` = low byte |
+| `Thomson7` | 3 | `Thomson7` | `D` = rev4(hex >> 8), `F` = rev7(hex & 0x7F); bit 7, the toggle's place, is ignored |
+| `Pioneer` | 8 | `Pioneer-2Part` | Four bytes, each bit-reversed: `D0`, `F0`, `D`, `F`. `device` = `D0`·256 + `D`, `function` = `F0`·256 + `F`; no subdevice |
+| `JVC` | 4 (the last four if longer) | `JVC` | `D` = rev8(high byte), `F` = rev8(low byte) |
+| `Sharp` | 4 | `Sharp` | 15 wire bits and a pad bit that must be 0: `D` = rev5 of the top five, `F` = rev8 of the next eight, then a two-bit trailer. `10` is the normal frame; `01` is a recording of the complement frame, whose `F` is inverted back; anything else is refused |
+| `Denon` | 4 (the last four if longer) | `Denon` | `D` = rev5 of the top five, `F` = rev8 of the next eight; hex bits 2 and 1 are ignored, bit 0 must be 0 |
+| `Samsung36` | 7 | `Samsung36` | `A(8) B(8) C(4) D(8)`: `D` = rev8(A), `S` = rev8(B), `E` = rev4(C), `F` = rev8(D); `function` = `E`·256 + `F` (D65) |
+| `Proton` | 4 | `Proton` | `D` = rev8(high byte), `F` = rev8(low byte) |
+| `F12_relaxed` | 1 to 3, read as a number | `F12_relaxed` | 12 bits: `D` = rev3 of the top three, `S` = bit 8, `F` = rev8 of the low eight |
+| `RECS80`, `RECS80_L` | 3 | `RECS80`, `RECS80-0068` | Nine bits, MSB first (no reversal): `D` the top three, `F` the next six; the low three bits must be 0 |
+| `REC80` | 12 | `Panasonic`, `JVC-48`, `Fujitsu`, `Teac-K`, `Denon-K`, `SharpDVD` | 48 wire bits, every byte bit-reversed into IRP order. Bytes 0-1 name the vendor: `02 20` Panasonic, `03 01` JVC-48, `14 63` Fujitsu, `43 53` Teac-K, `54 32` Denon-K, `AA 5A` SharpDVD. Each vendor's own check byte or fixed nibble must hold, or the code is refused (D67) |
+| `RCC2026` | 11 | `Aiwa` | 44 bits: the **first** 42 are `D`(8), `S`(5), `~D`(8), `~S`(5), `F`(8), `~F`(8), each LSB first, and the last two must be 0. Refused unless the three complements hold |
+| `RCC0082` | 3 | `Blaupunkt` | Nine biphase bits (the top bit of the first digit and the low two bits of the last are unused and must be 0), each inverted to get the wire bit: `F` the first six LSB first, `D` the next three |
+
+**D60 — Carrier and `minSends`, per ledger protocol.** Serves R3, D3a, D24, D32.
+`protocol.carrierHz` is the registry's `nominal_carrier_hz`, so no
+`carrier-off-nominal` warning appears (D52); the app's own value is within 5 % of
+it in every case. The family agents' working notes recommended the app's carrier
+for some protocols (NEC1 38,000, NECx2 38,400, JVC 38,000, SharpDVD 37,000, Aiwa
+38,222). The importer overruled them and takes the registry's figure, so no file
+carries a carrier the registry does not name and no `carrier-off-nominal` warning
+is added. The table gives both numbers.
+
+| Ledger protocol | Written (`carrierHz`) | The app sends | `minSends` | Why |
+|---|---|---|---|---|
+| NEC1 | 38,400 | 38,000 (legacy path) | 1 | 1.0 % apart; word `006C` against `006D` |
+| NEC2 | 38,400 | 38,222 | 1 | The same word, `006C` |
+| NECx1 | 38,400 | 38,400 | 1 | |
+| NECx2 | 38,000 | 38,400 | 2 | The app sends two back-to-back frames, which the ledger's one frame in the repeat slot loses (D3a). The registry's 38.0k is DecodeIR's figure; the capture measures 38,404 Hz and IrpTransmogrifier gives 38.4k. 1.0 % apart |
+| Sony12, Sony15, Sony20 | 40,000 | 40,000 | 3 | The app sends three frames; Sony hardware wants SIRC at least three times |
+| RC5, RC6 | 36,000 | 36,000 | 1 | |
+| RCA-38 | 38,700 | 38,700 | 1 | |
+| Thomson7 | 33,000 | 33,000 | 2 | **The app's behaviour, not a hardware fact**: its encoder duplicates the frame every press (`thomson7.dart` L100-103). The captured remote sends 5 to 9 repeats while a key is held, so 1 is also defensible |
+| Pioneer-2Part | 40,000 | 40,000 | 1 | |
+| JVC | 37,900 | 38,000 | 1 | 0.26 % apart, the same word `006D`. The LIRC import has 90 of 108 JVC confs at 38,000 and none at 37,900 |
+| Sharp, Denon | 38,000 | 38,000 | 1 | The app sends three frames per press (intro plus one pass of the repeat); `minSends` stays 1 |
+| Samsung36 | 37,900 | 38,000 | 1 | Also `unitUs: 500` with a claim (D52, D65) |
+| Proton | 38,500 | 38,500 | 1 | |
+| F12_relaxed | 37,900 | 38,000 | 1 | |
+| RECS80 | 38,000 | 38,000 | 1 | |
+| RECS80-0068 | 33,300 | within 5 % | 1 | |
+| Aiwa | 38,123 | 38,222 | 2 | The app sends the frame and then the tail once per press: one intro plus one repeat. D3a does not define `minSends` for an intro-plus-repeat signal; D38's `min_repeat + 1` was used. **A gap in D3a, not closed here** |
+| Blaupunkt | 30,300 | 30,300 | 1 | |
+| Panasonic, JVC-48, Fujitsu, Teac-K, Denon-K | 37,000 | 37,000 | 1 | |
+| SharpDVD | 38,000 | 37,000 | 1 | The IRP says 400 µs at 38 kHz; the app sends 432 µs at 37 kHz. 2.6 % apart |
+
+**D61 — NEC2 and NECx1 join; the NEC map reads each hex byte bit-reversed.**
+Serves D18, D50. The four NEC-family database protocols (33,522 + 5,084 + 1,439 +
+1,238 distinct codes) land on four ledger protocols: `NEC` on `NEC1`, the others
+on themselves. `NEC2` was in D18's backlog and `NECx1` in neither; both are "a few
+lines' difference from NEC1", which D18 names as precisely how an unverified
+encoder ships, and the gate was applied to them as to anything else.
+
+- **IRP.** From IrpTransmogrifier's `IrpProtocols.xml`, verbatim, in the 1.2.14
+  release and at `c945e76` (L1670, L1742), with DecodeIR as a second source.
+  `NEC2` is `{38.4k,564}<1,-1|1,-3>(16,-8,D:8,S:8,F:8,~F:8,1,^108m)*` and `NECx1`
+  `{38.4k,564}<1,-1|1,-3>(8,-8,D:8,S:8,F:8,~F:8,1,^108m,(8,-8,~D:1,1,^108m)*)`.
+  DecodeIR differs in three ways, recorded and not smoothed over: `+` where
+  IrpTransmogrifier has `*` for NEC2 (the same signal), 38.0k, and a `~F8` in
+  NECx1's string that is a typo for `~F:8`. `nominal_carrier_hz` follows
+  IrpTransmogrifier, as NEC1's does. **NECx2's registry entry is still sourced
+  from DecodeIR** (`38.0k`, `+`), so the family mixes the two; the capture's 38,404
+  Hz and the app's 38,400 both favour 38.4k, and NECx2 was not changed.
+- **Vectors.** NEC2 is **published, weakly**: `DecoderNGTest.java` L178-L186
+  @`c945e76`, `testDecodePioneer`, a 40 kHz string asserted to decode as Pioneer
+  and, at 2000 Hz tolerance, as NEC2, with no parameters stated. IrpTransmogrifier
+  defines Pioneer as NEC2 at 40 kHz, and its 1.2.14 release reproduces the string
+  byte for byte with `render -n D=90,F=38 -p pioneer`, which fixes the parameters
+  (S defaults to 255 − D = 165). Our NEC2 encoder at 40 kHz reproduces every
+  duration under the tool's rounding. **The NEC2 half of the assertion was not
+  re-run**: 1.2.14's `decode` lists NEC, NEC-f16, NEC-Shirriff-32 and Pioneer for
+  it, and the pinned commit was not built. Our bytes differ from the string at 67
+  of 72 words, because 564 µs is 22.5 cycles at 40 kHz and the two rounding rules
+  split the half the other way. NEC2 also carries a 38.4k render (reproducible).
+  NECx1 is **reproducible only**: two renders, D=12 and D=13, pin both polarities
+  of the repeat bit `~D:1`, and `test_registry` warns about it. NECx2 was searched
+  again, with Pronto strings that have 8-unit lead-ins at four carriers, and still
+  has no published vector.
+- **Gate 2a.** IrpTransmogrifier's `teaserfiles/NECx2_NECx1.ict` and its `.exp`
+  @`c945e76`: a hardware capture (irscope, measured carrier 38,404 Hz) of one remote
+  that sends NEC2, NECx2 and NECx1, with the tool's own decodes `NEC2 {D=31,F=223}`,
+  `NECx2 {D=67,S=83,F=57}` and `NECx1 {D=44,S=44,F=4}`. Our encoders reproduce
+  every duration of a real frame quantised to 564 µs, and the 108 ms extent within
+  0.8 % (107.1 ms); NECx1's repeat is the three-pair frame the IRP describes, with
+  a one-bit for even D; NEC2 and NECx2 repeat the whole frame and nothing else. A
+  capture carries instrument bias, so this is ratios and layout only.
+  `tests/vectors/nec-family-captures.json` keeps medians and the quantised first
+  frame, no raw durations, as the Sony20 capture's precedent has it. Gate 3:
+  `tests/test_nec2.py` and `tests/test_necx1.py`, with exhaustive round trips.
+- **Mapping and the bit order.** The app sends the 32-bit word MSB first
+  (`lib/utils/ir.dart` L126-L143; the loops at `nec2.dart` L60, `necx1.dart` L82,
+  `necx2.dart` L49), and NEC sends each byte LSB first, so each hex byte is the
+  bit reversal of the NEC byte it carries. IrpTransmogrifier calls this
+  `NEC-Shirriff-32`. It is backed by two checks that do not involve the app. The
+  ledger's own `remotes/samsung/BN59-01199F.json` has eight `irp` keys (D 7, S 7,
+  from IRDB, which files them as NECx2); inverting the map gives `E0E040BF` for
+  POWER (F=2), `E0E0F00F` for MUTE and so on, and all eight exist in the DB, 74 to
+  128 keys each under `NECx2` and 4 to 8 under `NEC` (a bit-order mistake would not
+  hit all eight, nor would a byte-order one). And codes derived by hand from the
+  IRP's byte order (`20DF10EF` is D 0x04, S 0xFB, F 0x08). The validity rule
+  `b2 ^ b3 == 0xFF` is invariant under per-byte reversal, so the split into
+  representable and refused does not depend on the reversal being right; the
+  waveform comparison does.
+- **Which protocol a code lands on is what the app transmits.** The app sends
+  every DB `NEC` code with a 9000/4500 µs lead-in, so it is `NEC1` whatever its D
+  and S. Extended NEC is common: of the 33,116 representable `NEC` codes 8,634 have
+  S = ~D, 1,363 have S = D and **23,119 have a free S**, and NEC1's IRP has an
+  explicit `S:8`, so all are NEC1 (NEC2 1,679 / 44 / 3,132; NECx1 74 / 1,306 / 59;
+  NECx2 85 / 480 / 673). IrpTransmogrifier's `S:0..255=255-D` is only a default,
+  which the ledger does not use: its encoders require an explicit subdevice.
+- **Framing the check forgives.** The app's `NEC` path ends on the last mark, so the
+  `^108m` gap is dropped from that comparison; NECx2 is two copies of one frame in
+  the app and one in the ledger (`minSends` 2); NECx1's repeat frame is in the
+  ledger but the app never sends it, and `minSends` 1 does not play it either.
+- **Where the app and the reference differ.** None needed the ledger to follow the
+  app; in each case it follows the IRP and the app's waveform is within tolerance of
+  it. The ones that are the app's to fix are in the findings below: the 107,904 µs
+  frame total its comments call 108,800 (finding 9), NECx1's unused repeat helper
+  (10), the legacy path every DB `NEC` code reaches (11), NEC2 being NEC (12) and a
+  nine-digit truncation (15). Two belong here. **The app's timings are rounded where
+  the IRP's are exact**: 9000/4500, 560 and 1690 µs for legacy NEC, 562/1687 for the
+  rest, against 16 × 564 = 9024, all within 0.71 %, so no `unitUs` override. And
+  **the DB labels one code two ways**: 3,695 distinct `NEC` hexcodes also appear under
+  `NEC2`, `NECx1` or `NECx2` (3,112 / 580 / 312), and the app sends different
+  waveforms for them. 82 `NEC` codes (231 keys, 6 remotes) are `E0E0xxxx`, D = S = 7,
+  the Samsung TV address IRDB files as NECx2 and the same DB holds as 147 codes under
+  `NECx2` (4,512 keys, 112 remotes). They map to `NEC1` because that is what the app
+  sends; whether they should have been NECx2 (an 8-unit lead-in) is a curation
+  question the code cannot answer. Also 1,410 `NEC` codes share a (D, S) with some
+  `NECx1` or `NECx2` code (613 with `NECx2`). The map refuses a code that is not
+  exactly eight hex digits, so it does not inherit the app's nine-digit truncation.
+- **Not proven.** An odd-D NECx1 repeat bit on hardware (the render says a
+  zero-bit; the capture has only D=44); NEC2's and NECx1's byte-level Pronto
+  against a published vector; that a real receiver needs the repeats `minSends`
+  leaves out; and that the 635 refused codes are what they look like (D67).
+
+**D62 — Sony12 and Sony15 join, each through its own gates.** Serves D18, D50. Both
+share Sony20's frame code, and nothing was waved through on that basis: D18's
+"trivial variation" warning was right to insist, because the frame code is shared
+and the evidence (80 teaser captures, 25 measured ones, 25 Girr strings) is per
+protocol.
+
+- **IRP.** IrpTransmogrifier's `IrpProtocols.xml` @`c945e76` L2581 and L2591,
+  verbatim, byte-identical in the 1.2.14 release (L2562, L2572), as D18's table
+  gives them: `…F:7,D:5,^45m)*[D:0..31,F:0..127]` for Sony12 and
+  `…F:7,D:8,^45m)*[D:0..255,F:0..127]` for Sony15. DecodeIR's documentation has `+` for `*`. The
+  registry's Sony20 string is still DecodeIR's `+` spelling, the cosmetic
+  difference D18's gate-1 note already records. One frame builder sits behind
+  three entry points; Sony12 takes `D:5` and Sony15 `D:8`, neither takes a
+  subdevice, and one given is an error pointing at Sony20.
+- **Vectors.** Sony12: Girr's `commandset_sony.girr` D=1 F=21 (L42-47 @`5ca171e`),
+  **published** (Girr's output is evidently IrpTransmogrifier's, committed to a
+  sibling repository with the parameters beside it; all 25 of its commands match
+  the tool's rule word for word), plus a 1.2.14 render D=23 F=70 (reproducible).
+  Sony15: a 1.2.14 render D=164 F=61, **reproducible only**, and `test_registry`
+  warns as for NECx2. The one published Sony15 string with a decode assertion
+  (`IrpTransmogrifierNGTest.java` L383-389 @`c945e76`, D=164 F=61) is **not usable
+  as a gate-2b vector**: its sixteen pairs equal ours except the last word, but it
+  puts the frame in the once-sequence (a decode input is written that way) and it
+  totals 44.4 ms, so its `0300` is not the `^45m` lead-out (`0318` under the tool's
+  rule). Searched for a published Sony15 byte-level vector with the lead-out and
+  not found: IrpTransmogrifier's tests and docs @`c945e76`, the `Decoder.java`
+  strings @`705ce35` that gave Sony20 its vector (they hold no Sony12 or Sony15),
+  Girr's reference and test files (its only Sony15 file, `sony_vlp_hw50es.girr`, is
+  parameters with no waveform), the teaser set, and `gh search code`, which
+  returned nothing and may have been restricted.
+- **Gate 2a**, `tests/vectors/sirc-structural.json`, tested in
+  `tests/test_sony_vectors.py`. IrpTransmogrifier's teaser set: 80 captures
+  reproduced duration for duration (21 Sony12, 49 Sony15, 10 Sony20), exactly
+  nominal and ending in a 500 ms gap, so they check ratios, lead-in, bit shapes and
+  field and bit order, not the 45 ms extent; no test in the pinned tree reads them,
+  so they are test data with expected decodes and not assertions. **Twenty-five
+  measured captures** (`Sony_15_20.ict`, `Sony_A2172.ict`: 20 Sony15 at D=48 and
+  D=176, 5 Sony20 at D=16 and D=26), evidently from real remotes: durations jitter
+  by one 25 µs sample tick and each holds 3 to 7 frames. Every first frame is within
+  one tick of ours on every duration and its period is **45.0 ms to within 150 µs**
+  (44,975 to 45,150 µs). That is the only hardware measurement of `^45m` among the
+  Sony vectors, and every capture has at least three frames, which supports
+  `minSends` 3. No measured Sony12 capture exists. Girr's 25 Sony12 strings
+  reproduce under the tool's rule, lead-out included.
+- **Gate 3.** `tests/test_sony12.py` (all 4,096 frames) and `tests/test_sony15.py`
+  (all 32,768), against `tests/sirc_reference.py`, a frame reader written from the
+  layout and not from the encoder. `tests/test_sony.py` gained Sony20 sweeps (all
+  8,192 address pairs at one function, all functions at the BX510 address, every
+  field bit alone); the 20-bit space (1,048,576) is swept, not exhaustive.
+- **Mapping.** D59. The 13-bit Sony20 address splits as `D` = the low five bits and
+  `S` = the high eight, because the wire order is `F:7,D:5,S:8`. **Verified, not
+  assumed**: for all 1,213 codes the app's own `params.address` equals D | S << 5
+  and its waveform equals the ledger's, and the LIRC importer already splits 20 bits
+  the same way (`lirc/importer.py:193-197`). Hexcodes are taken as the DB spells
+  them (3, 4, 5 digits); the app's lenience (it strips non-hex characters and
+  accepts any length) is not copied.
+- **Framing.** None. The app emits three frames, each padded to exactly 45,000 µs
+  (it removes the last space and re-adds `45000 − used`), which is `^45m`; the
+  ledger's one frame as repeat, played `minSends` = 3 times, is identical. Under the
+  app's reading every compared duration is **exactly** equal (70,746 of 70,746 for
+  SONY12, 36,096 of 36,096 for SONY15, 152,838 of 152,838 for SONY20), so nothing
+  rests on the tolerance. The app's Sony encoders never read `params['_repeat']`
+  (contrast `rc5.dart:139`), so a press always sends three frames and each
+  hold-loop tick another three.
+- **The reading** (D57): 2,838 of the 2,858 distinct Sony codes. **Not proven.** (1)
+  Sony15 has no published byte-level vector with the `^45m` lead-out. (2) The
+  teaser captures are exactly nominal, so they establish layout and not an
+  independent timing measurement. (3) Girr's Sony12 strings are IrpTransmogrifier's
+  output and so test our encoder against the same IRP, not a second implementation;
+  the IRP itself is agreed independently by DecodeIR's documentation (a different
+  author) on timings and fields. (4) Only Sony20 has hardware-verified data in the
+  ledger (RMT-B118P); the wire reading for SONY12 and SONY15 rests on Girr's set,
+  the projector manual, label statistics and SONY15's pad bit, which is strong and
+  not a hardware test, and **a remote that mixes conventions cannot be excluded for
+  SONY12 and SONY20, where every hexcode is valid either way**. (5) No Sony frame
+  was tested on hardware.
+- **Follow-up, not done.** `lirc/importer.py:191-197` turns only 20-bit Sony blocks
+  into an `irp` form; 12- and 15-bit blocks could now become Sony12 and Sony15.
+
+**D63 — RC6, RCA-38 and Thomson7 join; RC6 needed no bitspec exception.** Serves
+D18, D3b, D50.
+
+- **IRP.** IrpTransmogrifier's `IrpProtocols.xml` @`c945e76`, verbatim (RC6
+  L2143-L2145, RCA-38 L2254-L2256, Thomson7 L2869-L2873), each corroborated by
+  DecodeIR's documentation (retrieved 2026-10-03), which gives the same frames with
+  `+` for `*`. The database has four RCA entries and a family of RC6 ones, and the
+  app's frames pick exactly one of each. `RC6` is mode bits `000` and a sixteen-bit
+  payload; `RC6-6-20` (mode 6, a four-bit subdevice) and `RC6-M-16` (mode a
+  parameter, of which `RC6` is the M=0 case) are not it. `RCA-38` is the 38.7 kHz
+  frame with a plain `8,-8` lead-in and a single stop mark; `RCA` and `RCA(Old)` (58
+  kHz) and `RCA-38(Old)` (a longer first lead-in and a double stop mark) are not.
+- **RC6 is mode 0 only, and D18 was wrong that it needs a bitspec exception.** D18
+  said its trailer bit is double-width and "needs a bitspec exception none of the
+  other protocols require". The encoder builds the frame as per-unit levels and
+  run-length encodes them, so it does not; the registry's `encode` interface is
+  unchanged, mode is not a parameter, and the toggle is the existing `toggle=`
+  keyword. Nothing about modes other than 0 was checked.
+- **RCA-38's gap is `-16`, not an extent**, so `extent_us` is `None` (D3). The
+  complement half always contains twelve 1 bits, so every frame is the same 59,340
+  µs whatever the data, and an extent would change nothing.
+- **Vectors.** RC6 has two **published** Pronto strings (`ProtocolNGTest.java`
+  L230-L237, D=12 F=34 T=0, the assertion `approximatelyEquals`; and
+  `ShortProntoNGTest.java` L20, D=1 F=3, which ends on a space where the first does
+  not), both also what the 1.2.14 release renders, with our bytes differing at the
+  lead-out word only (41 and 43). RCA-38 (D=15 F=144) and Thomson7 (D=12 F=74 T=0) are
+  **reproducible only**, from the 1.2.14 release, and `test_registry` warns about
+  them. Searched and not found for those two: every IrpTransmogrifier test source
+  @`c945e76`, Girr (its Philips RC6 command set,
+  `philips_tv_cmdset_rc6.girr`, lists device 0 with power as function 12 and volume
+  16/17, which agrees with the DB's RC6 codes `000C`, `0010`, `0011`, `000D`, but
+  holds no waveforms), IrScrutinizer, and `probonopd/irdb` (one Thomson7 row, a Sony
+  receiver at D=8 F=8, no waveform).
+- **Gate 2a.** RC6: three published microsecond sequences @`c945e76`
+  (`BiphaseWithDoubleToggleDecoderNGTest.java` L27-L32, D=255 F=0 in both toggle
+  states; `BiphaseDecoderNGTest.java` L23-L26, D=120 F=3), each asserted to decode to
+  the stated fields; the encoder reproduces all three to the microsecond
+  (`tests/test_rc6.py`). They are exact multiples of the unit and appear to be that
+  tool's own output, so they verify layout, the double-width trailer and the extent,
+  and not that a receiver accepts them. RCA-38 and Thomson7: IrpTransmogrifier's
+  `teaserfiles/RCA-38.ict` (31 keys) and `Thomson-0625.ict` (7 keys), `irscope`
+  captures of real remotes with the `.exp` decodes. They are cited, not vendored
+  (GPL-3.0 test data of another project), and `tools/philips_capture_audit.py
+  --irpt DIR` repeats the audit: every key's bits decode to the `.exp` fields (bit
+  order, the RCA complement half, Thomson's toggle position) and the encoder's frame
+  is within 12 % or 150 µs of every duration. **RCA-38 disagrees with its IRP by a
+  uniform 8.5 %**: marks and spaces, lead-in included, are all 1.085× the IRP's, a
+  unit of about 500 µs where the IRP and DecodeIR say 460. An instrument bias on
+  marks would not move spaces the same way, though one remote's clock could. The
+  encoder follows the IRP, as does the app, and a remote file can set
+  `protocol.unitUs` to 500 with a `claims` entry (D27) if a receiver turns out to
+  care. **Thomson7 agrees to 4 %**: marks 0.961× and spaces 1.020× of the IRP's, the
+  first frame's period 80.16 to 80.19 ms against `^80m`, the carrier measured at
+  33.19 kHz. Here the app's durations (460 µs marks, 2,000 and 4,600 µs spaces) are
+  closer to the capture than the IRP's (500, 2,000, 4,500); that is not used to bend
+  the encoder.
+- **RC5's map** (RC5 itself registered in §16): twelve bits, all 4,096 codes
+  representable, 2,428 of 2,428 DB codes compare **exactly**, every duration, at the
+  toggle the app showed. The endings agree too: a frame ending on a mark gets the
+  gap appended and one ending on a space has that space lengthened, both to 114,000
+  µs (`rc5.dart` L93-107, `rc5.py` L125-138), and both start on S1's mark with the
+  leading idle half-bit dropped, so no framing allowance is needed. A published raw
+  sequence IrpTransmogrifier holds for RC5
+  (`BiphaseDecoderNGTest.java` L22 @`c945e76`, D=12 F=3 T=1) also reproduces exactly
+  (`tests/test_irblaster_philips.py`); the RC5 index entry does not cite it.
+- **Thomson7 and the wire reading** (D57). The database's Thomson7 codes all belong
+  to one remote (id 800296, "B2B.TEST RCT100 PROMO"), a test entry with 31 keys and
+  the only Thomson7 in the database. The encoder follows the IRP's timings and not the
+  app's, though here the app's are the closer to the capture. The oracle reports all 29
+  codes as explained mismatches and not as matches: the app's frames differ from the
+  ledger's for the reason D57 states and no other.
+- **The toggle (D3b).** The database stores no toggle, and the app alternates it
+  every press. The app's preview shows `T=1` for every RC5 and RC6 code
+  (`rc5.dart` L139-146: the preview resolves `!_toggleFlag` without consuming it,
+  true for a fresh state; `rc6.dart` L132-139 does the same), and the ledger
+  compiles `T=0`. The oracle encodes each code at both states and requires one to
+  match; the ledger's own `T=0` matches for none of them. That is the D3b gap, not a
+  mismatch, and nothing here closes it.
+- **RC6's final space, and who is right.** The app ends every frame after the
+  standard's six-unit signal-free time (`rc6.dart` L99, a 2,664 µs space, 3,108 µs
+  after a last bit of 1). The IRP's `^107m` makes the final space whatever remains
+  of a 107 ms frame period (83,912 µs, or 84,356 after a last bit of 1). Same
+  marks and spaces to the last one; the ledger's final space is longer for all
+  1,237 codes, and the oracle requires it never to be shorter. They are not in
+  conflict: six units is the minimum idle, 107 ms the repeat period the database
+  uses. It matters only to how fast a held key repeats.
+- **A quantizer discrepancy** found while choosing the Thomson7 vector: D68.
+- **Not proven.** That a real Thomson TV obeys the corrected frames: the capture is
+  a different remote, and nothing here transmits. RC6 modes other than 0. The RCA-38
+  unit, which rests on one capture.
+
+**D64 — Pioneer-2Part, JVC, Sharp and Denon join.** Serves D18, D50, D31.
+
+- **IRP.** IrpTransmogrifier's `IrpProtocols.xml` @`c945e76`, identical in the 1.2.14
+  release (Pioneer-2Part L2060, JVC L1207, Sharp L2461, Denon L494); D18's table has
+  the strings.
+- **Pioneer-2Part, not Pioneer.** The app's 136 durations are two 68-duration frames
+  (`pioneer.dart:126-131`, `db_button_import.dart:237-243`): the primary address and
+  command, then the secondary pair, or the primary again. In the database 1,102 of
+  1,673 codes have different halves, and 694 of those have `F5` (device 175 in
+  wire order) as the second address, the "Pioneer Mix" shape that IrpTransmogrifier's
+  own `PioneerMix` teaser files decode. The 571 codes with equal halves are its
+  degenerate case and render to the same two frames. Plain `Pioneer` is one frame at
+  a 108 ms extent, so it would send a different signal and no database code needs
+  it; D18 says the registry holds what something uses, so it is not registered.
+  IrpTransmogrifier prefers plain Pioneer when it *decodes* equal halves; nothing
+  here depends on that. **Parameters.** An `irp` form has `device`, `subdevice` and
+  `function`; Pioneer-2Part has four numbers. `device` = `D0`·256 + `D` and
+  `function` = `F0`·256 + `F`, first frame in the high byte, `subdevice` omitted and
+  refused. The IRP's defaults (`D=D0`, `F=F0`) are not assumed: an equal pair is
+  written out (`0xADAD`). Both fit the schema's 16-bit `hexOrInt`.
+- **JVC.** `JVC{2}` is the repeat frame alone, `JVC_squashed` is decode-only, and
+  `JVC-48` and `JVC-56` are Kaseikyo-family frames. The app's 36 durations are a
+  lead-in, 16 bits and a stop mark, so it is JVC; the intro is that frame and the
+  repeat is the same bits with *no* lead-in at a 46.42 ms extent, as
+  IrpTransmogrifier renders it and as its own `JVC.ict` shows (a 36-duration frame
+  with a lead-in followed by a 34-duration frame without). The app sends the intro
+  and omits the repeat. The IRP's 33 % duty cycle is not modelled (`IrSignal` has
+  none, for any protocol).
+- **Sharp and Denon.** The app sends three frames (normal, complement, normal),
+  which is the IRP's intro (normal) plus one pass of its repeat (complement,
+  normal). `Sharp{1}`, `Sharp{2}`, `Denon{1}` and `Denon{2}` are the two halves
+  alone (the Denon ones decode-only); `Sharp_Old` is a 3-bit device at a 49 ms
+  extent. None is registered. `SharpDVD` and `Denon-K` are Kaseikyo-family frames,
+  registered under D66.
+- **`extent_us` is `None` for all four.** D31 pads a truncated sequence to a single
+  figure, and these have several extents inside one sequence (two frames in
+  Pioneer-2Part's intro and in Sharp's and Denon's repeat, and JVC's intro and
+  repeat differ). `None` sends a truncated raw form down the `defaultGapUs` branch;
+  a figure would make D31 raise.
+- **A superseded IRP, and the app follows it.** Denon's and Sharp's 43,560 µs is
+  exactly 165 units, the *superseded* form of both IRPs that IrpTransmogrifier keeps
+  in a comment beside the live ones (`(D:5,F:8,0:2,1,-165,D:5,~F:8,3:2,1,-165)*`).
+  IrpTransmogrifier's own published Denon Pronto string (`ShortProntoNGTest.java`
+  L21) is that form, with a 0x0677-cycle (43.5 ms) gap. The live `^67m` form is
+  registered because it is what the source's active definition says;
+  `tests/test_denon.py` checks the published string against our encoder, every mark
+  and space equal and only the gaps different.
+- **Vectors.** All four are **reproducible only**, 1.2.14 `render` (D0=170 F0=91
+  D=175 F=36; D=5 F=19; D=1 F=22; D=8 F=175), and `test_registry` warns about each.
+  Searched, and why none is published: `ShortProntoNGTest.java` L21 holds a Denon
+  string with no stated parameters (decoded as `{D=1,F=3}`) in the superseded form
+  above; `DecoderNGTest.testDecodePioneer` asserts a decode of one plain-`Pioneer`
+  frame, no parameters; `ProtocolNGTest` builds `sharp` and `denon` from the
+  superseded IRPs and asserts nothing about their rendering. Nothing asserts a
+  render of `Pioneer-2Part`, `JVC`, `Sharp` or the live `Denon`. The *parameter
+  values* are cited from real decodes (the Pioneer receiver's Setup key, a JVC
+  `.exp` entry, Sharp's Power, Denon's `left`) even though the waveform is
+  generated. **Wider than one vector**: 34 parameter sets per protocol (corners, the
+  published decodes, a seeded random sample) rendered by the same jar in microseconds
+  (`render -r`) and compared duration for duration, **136 renders and 0
+  differences**, every extent-padded gap included
+  (`tests/test_irpt_sweeps_japan.py`).
+- **Gate 2a is weaker than a published constant table.** Two real captures (a
+  Pioneer receiver, `PioneerMix2.ict`, 40.16 kHz with a 548 µs mark against 564; a
+  Denon receiver, `Denon.ict`, 37.4 kHz, marks 254 to 292 µs), a Pronto export
+  (`Sharp_Pronto.txt`), and a JVC file (`JVC.ict`) whose durations are exact
+  multiples of 525 µs and so look generated. They verify layout, bit order and
+  ratios, never the idle gaps or absolute durations;
+  `tests/vectors/irpt_teaser_japan.json` keeps the first signal of nine of them. Gate 3:
+  exhaustive round trips for JVC (all 65,536 pairs), Sharp (8,192) and Denon
+  (8,192), and a 1,024-encode sweep plus 2,000 random frames for Pioneer-2Part.
+- **For the importer: write the `irp` form only.** D8 requires equal burst counts
+  and holds the terminal gap to 150 µs, so the app's raw pattern as a second,
+  cross-checked form would fail on the missing repeat (every JVC and Pioneer-2Part
+  code) and on the gap (the 1,924 "gaps differ" codes), for reasons that are the
+  app's choices and not errors in either signal.
+- **The oracle, under the app's reading** (D58): Pioneer 1,673 codes, 0 matched,
+  1,673 matched with gaps differing; JVC 776 and 247; Sharp 587 and 3; Denon 518 and
+  1; no mismatch and nothing unrepresentable. "Gaps differ" means every mark and
+  space is within tolerance and only the idle gaps are not; it is counted
+  separately, never folded into "matched". Worst non-gap deviation: Pioneer
+  **11.3 %** (a one-space, 1500 against 1692 µs; its gap is 1.195× for every code),
+  JVC 0.4 %, Sharp 7.9 %, Denon 7.9 %. Pioneer is within the tolerance by 0.7
+  points, and the result depends on how the tolerance is read: relative to the
+  larger duration (as here), or to the IRP's value, it passes (192 µs against 203
+  allowed), but relative to the app's own 1500 µs it would not (12.8 %). It was not
+  widened. Under the wire reading (D57), 1,667 of 1,673 Pioneer, 1,020 of 1,023 JVC,
+  586 of 590 Sharp and 332 of 519 Denon codes give a different signal from the app's.
+  The other 200 are the 187 Denon codes whose fourth digit is 0 or 6, where the
+  dropped bit is zero anyway, and 13 Pioneer, JVC and Sharp codes on which the two
+  readings happen to agree.
+- **Gaps.** An IRP `^E` pads each frame to a fixed *extent*, so the gap after a
+  frame depends on its data (JVC's runs from 12.2 ms to 29.0 ms). The app uses one
+  constant per protocol: 21,000 µs for JVC, 26,000 for Pioneer, 43,560 for Sharp and
+  Denon. Real signals follow the extent: over the LIRC import's frames JVC's
+  periods are 59 ms (2,175 frames) and 46 ms (1,994), Sharp's 67 to 68 ms (1,393),
+  Denon's 65 to 68 ms, Pioneer's 89 to 90 ms (1,034). For Pioneer the IRP is not
+  clearly the better figure: a real receiver captured in `PioneerMix2.ict` has a 25.4
+  ms gap, as does IRremoteESP8266's measured minimum (25,181 µs, `src/ir_Pioneer.cpp`),
+  and 880 of the LIRC import's Pioneer gaps are 25.3 to 25.5 ms. The app's 26 ms is
+  within 3 % of that; the IRP's `^90m` gives 21.8 ms. The frame periods agree to 3 %
+  whichever you take: 89.1 ms from IRremoteESP8266's figures, 90.0 from the IRP, 87.2
+  from the app. The ledger follows the IRP, and the "gaps differ" count for Pioneer
+  is a disagreement and not evidence the app is the wrong one.
+- **Timings.** Pioneer's IRP unit is 564 µs (NEC-derived; Pioneer is "distinguished
+  from NEC2 only by frequency"); the app's are 8500/4225, 500 and 500/1500. A
+  measured Pioneer in IRremoteESP8266 (its issue #1220) reads 8506/4191, 568 and
+  487/1542, and `PioneerMix2.ict` 8548/4227, 548 and 527/1577. The app's header is
+  within 0.1 % of the measured one and its spaces within 3 %; its bit mark, 500
+  against 568, is 12 % short, and IrpTransmogrifier's nominal header is 6 % high. The
+  oracle's 11.3 % is the app's spaces against the *nominal* IRP, not against a real
+  remote. Denon and Sharp: the app's marks are 280 µs and its spaces 860 and 1720 (a
+  ratio of 2); the IRP's `<1,-3|1,-7>` is 264, 792 and 1848 (2.33), and `Denon.ict`
+  reads 255, 795 and 1846 on average, so the IRP is within 3 % of a real receiver and
+  the app's zero-space is 8 % above and its one-space 7 % below. JVC is the clean one:
+  8400/4200/525/525/1575 against 8432/4216/527/527/1581, under 0.4 %.
+- **Carriers and `minSends`.** D60. The encoders ignore the `_repeat` flag `sendIR`
+  passes (none reads it), so a held button re-sends the same pattern, and the
+  database holds no repeat count.
+- **Not proven.** (1) **Sharp's complement-frame inversion.** 29 of Sharp's codes
+  end in the trailer `2:2`, recordings of the complement half; `_sharp_wire` returns
+  the *complemented* function by the IRP's definition. Only one such key is in the
+  LIRC overlap and it does not match, so nothing independent supports that
+  inversion, and refusing those 29 would be a defensible alternative. (2) **Denon's
+  `11` flag.** Hexcode bits 2 and 1 are `00` or `11` in the database; the real
+  remotes' frames carry the trailer `00` either way (230 of the 309 LIRC-overlap
+  keys with fourth digit 6, and 25 of the 26 with E, match a real frame that way;
+  the rest are keys the confs lack), so the wire reading ignores them, but what they
+  encode is not known. (3) Nothing was run against hardware. (4) **D6 rounding at 40
+  kHz**: our Pronto bytes differ from IrpTransmogrifier's in 201 of 208 words for
+  Pioneer-2Part, because a 564 µs unit is 22.56 cycles, which rule 4 (against the
+  word's period) rounds to 22 and the tool (against the nominal carrier) to 23. The
+  timings are identical under the tool's rule; it is a property of D6 at this
+  carrier and unit, recorded in `pronto-vectors.json`. (5) Pioneer codes of other
+  than eight digits, and JVC or Denon codes longer than four, are not in the data;
+  the app keeps the last four digits of a longer JVC or Denon code and the mapping
+  does the same.
+
+**D65 — Samsung36, Proton, F12_relaxed, RECS80 and RECS80-0068 join.** Serves D18,
+D24, D27, D50. Five protocols, 2,812 distinct codes, **0 unrepresentable and 0
+mismatched** under the app's reading, with 643 "matched with the lead-out
+differing" (all Samsung36).
+
+- **IRP.** IrpTransmogrifier's `IrpProtocols.xml` @`c945e76` (Samsung36 L2409-L2411,
+  Proton L2084-L2086, F12_relaxed L893-L895, RECS80 L2272-L2275, RECS80-0068
+  L2288-L2290), each character for character the same in the 1.2.14 release; D18's
+  table has the strings.
+- **Ledger names are IrpTransmogrifier's names**, as NEC1, NECx2, RC5 and Sony20
+  already were, so DB `RECS80_L` registers as `RECS80-0068`. **`RECS80_L` is a
+  different IRP definition, not a carrier variant.** The app's own description says
+  "33.3 kHz … Same bit string as RECS80", which reads like a carrier change; it is
+  three differences: carrier 33.3 kHz, unit 180 µs against 158 (bit spaces
+  5,580/8,460 against 4,898/7,426), and the ending (the app pads the whole frame to
+  138,000 µs, the IRP's `^138m`, where `recs80.dart` ends with a plain 45,000 µs gap,
+  `-45m`). All 159 codes match `RECS80-0068` exactly and none matches `RECS80`. Not
+  registered: `RECS80-0045` (the same IRP as `RECS80` minus the empty `{}`, so a second
+  name for one waveform) and `RECS80-0090` (carrier `0k`, nothing to modulate).
+- **Samsung36's `function` is the 12-bit value `E:F` (`E`·256 + `F`).** The IRP has
+  four parameters, `D,S,E,F`; the schema gives an `irp` form exactly `device`,
+  `subdevice` and `function`, with `additionalProperties: false`. The `E:4` nibble
+  sits directly in front of `F` on the wire, so packing it above F's eight bits is
+  contiguous and lossless. 269 of the 643 distinct Samsung36 codes have `E` ≠ 0 (the
+  DB uses E = 0, 1, 3, 4, 7, 8, B, E, F), so refusing them would lose 42 %. This is the
+  ledger's own packing: IrpTransmogrifier's `F` is the low byte only, so a future
+  IRDB-style import of a Samsung36 `{D,S,E,F}` must pack `E` the same way. **It is a
+  design decision the owner has not made.** If it is rejected, the one-line fallback
+  is to raise `ValueError` for `E` ≠ 0 in `hex_misc.samsung36` and cut `FUNCTION_MAX`
+  to 0xFF.
+- **Samsung36's unit and extent, where the IRP disagrees with the app and with
+  hardware.** Three sources agree against the IRP's 560 µs unit and `^108m`: the app
+  (500 µs bits, 500/1500 spaces, a 500/4500 divider, a 59,000 µs lead-out,
+  `samsung36.dart:39-43`); IrpTransmogrifier's eight real captures (every duration
+  0.84 to 1.00× the encoder's, median 0.886, a unit of about 496 µs, and a frame
+  period of 122.25 to 122.28 ms against `^108m`); and IRremoteESP8266's
+  `sendSamsung36` (`crankyoldgit/IRremoteESP8266@1e2f0f3`, `src/ir_Samsung.cpp` L59-63
+  and L175-190, "Works on real devices": a 4515/4438 µs header, 512 µs bit marks, 490
+  and 1468 µs spaces, a 512/4438 µs divider, MSB first at 38 kHz). That supports the
+  unit, and its authors call their own gap "just a guess", so it says nothing about
+  the extent. The IRP's `4500u,-4500u` header is exact; only the `560`-based parts are
+  off. The registry follows the IRP (gate 1 is "the IRP verbatim") and **the importer
+  writes `unitUs: 500` with a `claims.unitUs` entry** (D52), the one place a database
+  file overrides a registry unit. At 500 µs the compiled signal equals the app's to the
+  microsecond but for the lead-out, and no field changes `^108m`, so the lead-out stays
+  at 39 to 48 ms where the app and the hardware have 59 to 61 ms. At the registry's 560
+  µs the oracle comparison passes **only at the boundary**: the IRP's marks are exactly
+  12.0 % above the app's, as are the 1,680 µs one-spaces (against 1,500) and the 5,040
+  µs divider (against 4,500), and the tool's limit is 12 % of the app's value,
+  inclusive. `test_samsung36_at_the_registry_unit_is_exactly_at_the_tolerance` pins
+  that, so it cannot slide unnoticed.
+- **Proton, not Proton-40, by the carrier.** The IRPs are identical but for 40.5 kHz
+  against 38.5 kHz, and the app's Proton carries 38,500 Hz. IrpTransmogrifier's Proton
+  capture measured 37.7 kHz (a rough IrScope figure, closer to 38.5 than 40.5). A
+  carrier is a `protocol.carrierHz` choice, not a second encoder, so this costs nothing
+  if wrong.
+- **F12: only the relaxed form is registered.** Strict `F12` is `((D:3,S:1,F:8,-80)2)*`,
+  two frames per repeat unit; `F12-0` and `F12-1` are DecodeIR's `H` cases; `F12x` has a
+  16-unit gap. The app's frame is one frame and its lead-out is **exactly** the IRP's:
+  `-80` merges into the last bit's own space, giving 35,026 µs after a zero bit and
+  34,182 after a one. The app's constant is `0xD300 = 54016` with a comment saying
+  54000 (`f12_relaxed.dart:40`); 54016 is `(12×4+80)×422`, so the code is right and
+  the comment is wrong. `extent_us` is `None` because `-80` is a plain gap. The app
+  parses the hex as a number and pads to 12 bits, so the DB's 11 two-digit and one
+  one-digit codes are right as they stand, and the map accepts one to three digits.
+- **RECS80's toggle is not a form field** (D3b, as for RC5). Compiled output is
+  `T=0`, the IRP's default. The app flips `T` on every press, so there is no single app
+  signal, and the oracle's preview is always `T=1`. The ledger's own R13 cross-check
+  *does* tell the two apart: an `irp` form and an app-raw form in one candidate group
+  disagree at `repeat[3]` for every RECS80 code. For RECS80-0068 the extent makes the
+  lead-out absorb the toggle's 16 units. **Hex bits the app drops**: the app uses the
+  top nine of the hex's twelve, and the map treats a code with any of the low three set
+  as unrepresentable, because two hexcodes would give one signal. None of the 555 DB
+  codes has any.
+- **Vectors.** All five are **reproducible only**, two renders each, the second setting
+  every field to a different, asymmetric value so a swapped field or reversed bit order
+  cannot pass; `test_registry` warns about each. Our timings reproduce every one
+  exactly under the tool's own rule. **Gate 2a is stronger than NECx2's**, from the same
+  repository @`c945e76`: for RECS80, a published decode assertion
+  (`IrpTransmogrifierNGTest.java` L333-L336: eleven exact durations assert `RECS80:
+  {D=6,F=56,T=1}`, reproduced to the microsecond) and a real capture (L348-L351:
+  `D=2,F=1`, `T=1` then `T=0`); for Samsung36, `Samsung36.ict` (eight keys of a Samsung
+  Blu-ray remote); for Proton, `Proton.ict` (nine keys); for F12_relaxed, `F12.ict`
+  (eleven keys of a *strict*-F12 remote, whose frame is F12_relaxed's). The captures
+  are cited, not vendored (a GPL-3.0 repository; the files are "used with permission
+  of the author" there), and `tools/misc_capture_audit.py --irpt DIR` re-runs the
+  comparison. Every key decodes, by a threshold decoder written from the frame layout,
+  to the `.exp` fields and re-encodes to the same bit pattern: 8 of 8, 9 of 9 and 11 of
+  11. Capture ratios (every duration but the lead-out, then the frame period) are
+  Samsung36 0.84 to 1.00× and 1.13×, Proton 1.01 to 1.10× (median 1.063, a unit of
+  about 532 µs against 500) and 1.01× (63.7 ms against `^63m`), F12 0.94 to 1.08× and
+  0.99× (53.5 against 54.0 ms). **RECS80-0068 has no gate-2a evidence**: no capture,
+  table or assertion was found for its 180 µs / 33.3 kHz clock, and the unit, the
+  5,580/8,460 µs spaces and the 138 ms extent rest on the IRP string and a render alone
+  (recorded as pending, with a reason, in `tests/vectors/index.json`).
+- **The DB corroborates two bit orders against these captures**, independently of the
+  app's code. Its Samsung BD remotes (ids 159, 2665, 5249) carry UP, DOWN, LEFT, RIGHT,
+  OK, PLAY and REW at `0400E18`, `0400E98`, `0400ED8`, `0400E58`, `0400E38`, `0400E28`,
+  `0400E48`, which are exactly rev8(D=32), rev8(S=0), rev4(E=7) and rev8(F=24, 25, 27,
+  26, 28, 20, 18) for the capture's decodes (695 of the DB's Samsung36 keys start with
+  `04`, which is rev8(32)). The Proton evidence is in D57.
+- **Proven by mutation and sweep.** Each of the five encoders' raw durations equals
+  IrpTransmogrifier 1.2.14's `render -r` for 140 parameter sets (28 per protocol:
+  boundary values and a seeded random sample; a one-off, not committed), and mutating
+  the encoders 14 ways was caught 14 times. Proton, F12_relaxed and both RECS80s round-trip exhaustively
+  through an independently written decoder (65,536, 4,096 and 1,024 frames each),
+  Samsung36 per field plus 20,000 seeded frames.
+- **Not proven.** No hardware test of anything. RECS80-0068's clock (above). F12_relaxed's
+  capture is of strict F12, and nothing here tests that a receiver accepts one frame.
+  The `E:F` packing has no external reference. Whether the app's Proton bytes are really
+  swapped for the receivers in the field rests on one capture of one remote and the
+  structure of the DB. Not searched for a published Pronto string: DecodeIR's own test
+  data, Girr, IrScrutinizer, IRDB.
+- **Two stale statements in the code, for whoever next edits it.**
+  `protocols/__init__.py`'s docstring gives Samsung36 as `{38k,500}...(9,-9,...)`,
+  where the IRP is `{37.9k,560,33%}...(4500u,-4500u,...)`, and says the BN59-01199F's
+  protocol is "open work" when it is NECx2 (D18, PR #7).
+
+**D66 — Aiwa, Blaupunkt and the Kaseikyo family join: the three names no published
+list contains.** Serves D18, D50, R3. The database's `REC80`, `RCC2026` and `RCC0082`
+appear in no published protocol list, and the app that defined them says so
+(`iodn/android-ir-blaster`'s `report-source.md`: "Evidence gap: no authoritative
+public protocol definition was found", describing their encoders as "legacy
+application behavior"). The working rule going in was that a protocol with no
+independent reference is not registered. **All three turned out to be known
+waveforms**, so it applied to none. Each pattern was compared with every one of
+IrpTransmogrifier's 217 IRP definitions by carrier, unit, header, bit coding and bit
+count, a mechanical grep over the IRP strings and not a name search. Names were
+searched too and found nothing: no hit in the XML, the DecodeIR and
+IrpTransmogrifier documentation, IRremoteESP8266, Arduino-IRremote or Flipper, and a
+GitHub code search for `RCC2026` finds only SwiftRemote's upstream. The names are the
+legacy app's; the waveforms are not new. Eight protocols are registered between them.
+
+- **`RCC0082` is `Blaupunkt`** (IRP alternate name Motorola, `IrpProtocols.xml:441`):
+  `{30.3k,512}<-1,1|1,-1>(1,-5,1023:10,-44,(1,-5,1:1,F:6,D:3,-236)+,1,-5,1023:10,-44)`.
+  The app's pattern is a 22-duration sync (a mark, five units of space, ten one-unit
+  marks, a long gap), a `1,-5` frame with ten biphase bits and a gap of about 210
+  units, and the same sync again, at a 528 µs unit and 30.3 kHz; rendering
+  `Blaupunkt D=0,F=16` with the 1.2.14 release gives the same shape run for run. The
+  app's transition coder (`rcc0082.dart:75-88`) is a biphase coder whose hex 1 is the
+  IRP's 0, and the first of its ten bits is a fixed dummy. All 300 codes map (D 0 to
+  7, F 0 to 63) and match. Anchors from IrpTransmogrifier's real-remote
+  `Blaupunkt.exp`: D=2, Play 10, Pause 11, Stop 12, Ch- 20, Ch+ 21 are the DB's
+  PLAY, PAUSE, STOP, P-, P+ at `574`, `174`, `674`, `6B4`, `2B4`.
+- **`RCC2026` is `Aiwa`** (`IrpProtocols.xml:223`):
+  `{38.123k,550}<1,-1|1,-3>(16,-8,D:8,S:5,~D:8,~S:5,F:8,~F:8,1,-42,(16,-8,1,-165)*)`.
+  The header 8800/4400, the unit 550, the 42 bits, a 23,100 µs gap and a header-only
+  tail of 8800/4400/550/90750 are the app's numbers to the microsecond. The bits are
+  the same ones upstream's own test calls NEC42's `D:13,~D:13,F:8,~F:8`, with `D13 = D
+  + 256·S`. Matching them to NEC42 (Flipper, upstream's own test) would have been a
+  shortcut that was wrong: the waveform is the same, but Flipper's NEC family is
+  9000/4500/560 and has no 550 µs variant, where IrpTransmogrifier's `Aiwa` is exact to
+  the microsecond. The reading is D57's.
+- **`REC80` is six protocols, not one.** The waveform is the Kaseikyo/AEHA frame: 37
+  kHz, a 432 µs unit, an `8,-4` header, 48 bits `<1,-1|1,-3>`, a stop mark and a
+  173-unit (74,736 µs) gap. The DB hexcode is the 48 wire bits, first bit the top bit
+  of the hex, so each IRP byte is the bit reversal of the hex byte (which is why
+  Panasonic's vendor bytes `02 20` show up as `4004` at the front of every Panasonic
+  code, the 0x4004 IRremoteESP8266 calls Panasonic's manufacturer code). The first two
+  bytes sort the 2,723 codes into exactly six vendors, each an IrpTransmogrifier
+  protocol:
+
+  | Bytes 0-1 | Ledger protocol | `IrpProtocols.xml` | Codes | Keys | Remotes |
+  |---|---|---|---:|---:|---:|
+  | `02 20` | Panasonic | L1939 | 1,687 (+9 bad) | 11,875 (+9) | 236 |
+  | `54 32` | Denon-K | L511 | 440 | 1,355 | 32 |
+  | `14 63` | Fujitsu | L929 | 60 (+111 refused) | 92 (+161) | 5 |
+  | `43 53` | Teac-K | L2830 | 70 (+62 refused) | 587 (+180) | 14 |
+  | `AA 5A` | SharpDVD | L2500 | 114 (+126 refused) | 382 (+131) | 8 |
+  | `03 01` | JVC-48 | L1219 | 44 | 44 | 1 |
+
+  The line numbers are the 1.2.14 release's (at `c945e76`: Panasonic L1958, Teac-K
+  L2849, SharpDVD L2519, the rest the same). Arduino-IRremote `src/ir_Kaseikyo.hpp`
+  @`6158d65` L113-L117 publishes the vendor IDs 0x2002 Panasonic, 0x3254 Denon,
+  0x5AAA Sharp and 0x0103 JVC, which are the same bytes little-endian. **No REC80
+  remote mixes two of the six**, so R3's one-protocol-per-file rule is met without
+  splitting any remote: 236 Panasonic, 32 Denon-K, 14 Teac-K, 8 SharpDVD, 5 Fujitsu, 1
+  JVC-48, and 7 with no representable key. The mapping is corroborated beyond the
+  checksums. IrpTransmogrifier's teaser tests decode real remotes: Panasonic D=176 S=0,
+  Audio F=51 and Angle F=144 are the DB's AUDIO and ANGLE; Fujitsu D=132, Power 0, Vol+
+  32, Vol- 33, Menu 64 are the DB's POWER, VOL+, VOL-, MENU; Denon-K D=4 S=1, Up 27, Down
+  28, Left 29, Right 30; Teac-K D=0 S=4, Power 0, Vol+ 32, Vol- 48. `probonopd/irdb`
+  lists SharpDVD D=8 S=48 (digits 1 to 9 are F 1 to 9, 0 is F 10, Up 32, Down 33, Left
+  34, Menu 27, Enter 28), Denon-K D=2 S=1 and Teac-K D=0 S=4, and the DB agrees code
+  for code. All are pinned in `tests/test_irblaster_unknown.py` (`ANCHORS`).
+- **Registered:** the eight, from IrpTransmogrifier's `IrpProtocols.xml`, verbatim and
+  identical across the 1.2.14 release and `c945e76`, apart from line numbers; D18's
+  table has the strings. **Not registered:** `Kaseikyo` (generic: its `D` is four bits
+  and its last byte a parity pair, so it cannot carry Panasonic's `D:8`, and 343 of the
+  1,696 Panasonic codes have a byte that is not a four-bit `D` plus the vendor parity);
+  `Kaseikyo56`, `Panasonic2`, `JVC-56` and `Fujitsu-56` (56 bits; no DB code is);
+  `Aiwa2` (the same frame, no tail); `Mitsubishi-K` (no REC80 code has its vendor
+  bytes).
+- **Decisions in the encoders.** *Fixed gaps are not extents*: none of the IRPs writes
+  `^`, so `extent_us` is `None` for all eight, and D31 supplies a gap only through
+  `defaultGapUs` for a truncated capture, as for D64's four. *Intro and repeat follow
+  IrpTransmogrifier's render.* `(...)*` with no intro makes the whole frame the repeat
+  (Panasonic, JVC-48, Fujitsu, Denon-K, SharpDVD, as NECx2 and Sony20 already are);
+  Teac-K is the frame, then `(8,-8,1,-100)*`; Aiwa is the frame, then `(16,-8,1,-165)*`,
+  the NEC1 shape; **Blaupunkt is the unusual one**: `intro` is the sync plus one frame
+  and `repeat` is the frame, because that is what IrpTransmogrifier's Pronto does for
+  a bare `+`. *Parameters the IRP defaults and a form cannot name are fixed at the
+  default* (Fujitsu `E`=0, Teac-K `X`=1, SharpDVD `E`=1), and a code that needs another
+  value is unrepresentable (D67). Fujitsu's `S=D` default is not assumed: `subdevice` is
+  required, as NEC1's is. *Blaupunkt's closing sync is dropped*: `IrSignal.ending` is
+  reserved (D1), and IrpTransmogrifier drops it too, with a warning. The ending is the
+  opening sync, so the oracle tool re-adds it from the intro when it compares with the
+  app, which sends all three parts. A ledger player sends no closing sync, and whether
+  a real Blaupunkt receiver minds is not known. *The IRP's unit and carrier, not the
+  app's* (D60).
+- **Gates.** Gate 1 and gate 3 for all eight: `tests/test_kaseikyo.py` (six
+  protocols), `tests/test_aiwa.py`, `tests/test_blaupunkt.py`. Blaupunkt is swept
+  exhaustively (512 frames); the others sweep every field completely against awkward
+  fixed values and add 20,000 seeded random frames, because Panasonic's 16 M and
+  Denon-K's 1 M frames are too many for pure Python; each decoder is written from the
+  IRP's layout, not from the encoder. Separately, 200 randomly chosen and boundary
+  parameter sets across the eight, rendered by the 1.2.14 release (`render -r`), match
+  the encoders' intro and repeat: 200 of 200. **Gate 2b is reproducible for all eight and
+  published for none**: `render -n … -p <protocol>`, our timings reproducing each vector
+  word for word under the tool's rule. IrpTransmogrifier's tests assert decodes of
+  captures, not Pronto strings it generated. Two published Pronto strings exist and
+  cannot serve, because they are captures that cannot reproduce under an exact rule:
+  `GRAHAM_PANASONIC` (`IrpTransmogrifierNGTest.java` L29, decoded at L581 as Panasonic
+  `{D=176,S=16,F=17}`; a shorter gap and carrier word `0x71` against our `0x70`) and
+  `Fujitsu_pronto.txt`; both are used for gate 2a. **Gate 2a is met for six.** Panasonic
+  has two sources: IRremoteESP8266 `src/ir_Panasonic.cpp` @`1e2f0f3` L28-L35 and
+  L104-L112 publish the timings (3456/1728, 432, 1296, and a 74,736 µs gap, exactly 173
+  units) and the layout (a 16-bit manufacturer, device, subdevice, function, XOR), and
+  our frame reproduces it exactly; and `Panasonic.ict`, which IrpTransmogrifier decodes
+  as `{D=176,S=0,F=54}`. The others are teaser captures with the project's decodes:
+  Aiwa `Aiwa_left.ict` `{D=8,S=0,F=21}`, Blaupunkt `Blaupunkt.ict` key Ch+ `{F=21,D=2}`,
+  Teac-K `Teac_0_4_Input.ict` `{D=0,S=4,F=19}` (which carries the shorter `8,-8` repeat
+  as well as the frame), Denon-K `Denon-K_Denon.ict` `{D=4,S=1,F=28}`, and Fujitsu
+  `Fujitsu_pronto.txt`, a Pronto capture, `{D=132,F=0}`. They are copied, one frame
+  each, to `irpt-teaser-captures.json`; instrument bias means they verify layout and
+  ratios (every duration within 12 %, 150 µs), not absolute durations.
+  **Gate 2a is pending for `JVC-48` and `SharpDVD`**, whose own byte layout has none:
+  searched in IrpTransmogrifier's test resources, IRremoteESP8266, the DecodeIR
+  documentation, Flipper and Arduino-IRremote. Two things exist. Arduino-IRremote
+  corroborates the vendor bytes and the shared frame (L99-L106: the 432 µs unit, the
+  8/4-unit header, 1/3-unit bits), and Flipper's `infrared_protocol_kaseikyo_i.h` says
+  the same. `probonopd/irdb` lists both by name with device codes (JVC-48 for JVC
+  receivers and CD players, device 34; SharpDVD for the Sharp RRMCGA030WJSA, device 8,
+  subdevice 48) and its SharpDVD keys agree with the DB code for code, which
+  corroborates the *parameter mapping* and not the waveform. Both share Panasonic's
+  frame, whose waveform is verified. What is not verified is the layout after the vendor
+  bytes (JVC-48's is Panasonic's, SharpDVD's is not) and, for SharpDVD, its 400 µs unit,
+  38 kHz carrier and 48-unit gap. **Blaupunkt's 40 differing words are one rounding
+  case, not an error**: at 30.3 kHz a 512 µs unit is 15.51 cycles, which the tool rounds
+  to 16 (528 µs on playback) and D6 rule 4 to 15 (496 µs). They land 3 % either side of
+  512, and every unit-length run differs.
+- **Where the app and the reference differ.** (1) RCC2026's bit window (D57). (2)
+  **REC80's lead-out.** The app ends every frame with 173 units (74,736 µs), Panasonic's;
+  the IRPs say Fujitsu 110, Teac-K 100 and SharpDVD 48 (at a 400 µs unit): 244 codes,
+  1,061 keys. Everything else in those frames is within tolerance, the ledger follows the
+  IRP, and this is the only place a final duration is outside the tolerance
+  (`LEADOUT_DOCUMENTED` in the tool restricts it to those three protocols). (3)
+  **SharpDVD's unit**: the IRP has 400 µs at 38 kHz, the app sends 432 µs at 37 kHz;
+  every duration differs by 7.4 %, inside the tolerance, not corrected, and the importer
+  writes the IRP's 38,000. (4) **RCC0082's constants**, none beyond 9.1 %: the IRP's unit
+  is 512 µs, the app's 528 (3.0 %) and `Blaupunkt.ict`'s about 532; the IRP's sync gap is
+  45 units (23,040 µs), the app's 40 (21,120 µs, 9.1 %) and the capture's 20,568 µs; the
+  IRP's frame gap is 236 units (120,832 µs), the app's 210 or 211 (110,880 and 111,408
+  µs, 8.9 to 9.0 %) and the capture's 121,635 µs. So the app's sync is closer to the
+  capture than the IRP is, and its frame gap is about 9 % short of both. The ledger
+  follows the IRP; `protocol.unitUs` would carry the app's 528, with a `claims` entry
+  (D24, D27), and none is set. (5) **IRremoteESP8266 spells the bytes the other way
+  round.** Its Panasonic `device` is the bit reversal of the IRP's `D`, the same waveform
+  under different parameter names; a reader comparing the DB's `4004 0D00…` with a
+  published Panasonic table should expect this, and `tests/test_kaseikyo.py` shows the
+  reversal rather than hiding it.
+- **Not proven.** No eight-protocol vector is published. JVC-48 and SharpDVD have no
+  gate-2a evidence for their own byte layout (above), and SharpDVD's 400 µs, 38 kHz and
+  48-unit gap are the IRP's, unverified. Whether any receiver minds Blaupunkt's missing
+  closing sync, or the app's 9 % shorter frame gap, is untested. **The three DB names
+  are the legacy app's labels and nothing more**: no source was found for why a legacy
+  database labels a Panasonic, Denon, Sharp, Fujitsu, Teac and JVC bag "REC80" (a web
+  search summary describes the older Panasonic "REC-80" as a roughly 22-bit code, but
+  that page, `users.telenet.be/davshomepage/panacode.htm`, was unreachable and has not
+  been read) or an Aiwa frame "RCC2026". The tool's Python ports of the three app
+  encoders reproduce the oracle for all 4,254 codes, but the Dart oracle was not run
+  again, and SwiftRemote itself was not run.
+
+**D67 — What the registry still refuses.** Serves R19.5, D54. Every refusal is a
+skipped key with its reason in `IMPORT.md`, and each has one cause: the code is not a
+frame of any protocol the registry holds. 964 distinct codes, 2,066 keys.
+
+| DB protocol | Codes / keys | Reason | What would hold it |
+|---|---|---|---|
+| `NEC` | 406 / 1,076 (53 remotes) | Byte 4 is not the complement of byte 3 | `NEC1-f16`, unregistered |
+| `NEC2` | 229 / 434 (18 remotes) | The same | `NEC2-f16`, unregistered |
+| `REC80` | 126 / 131 | `SharpDVD`-shaped (`AA 5A`), but the IRP's fixed `15:4` nibble is not 15 (byte 2 is `B0` in 67, `84` in 21, others in the rest) | No published definition of this layout; none was invented |
+| `REC80` | 69 / 94 | Fujitsu with `E` = 8 or 9; `E` is an IRP parameter but a form has only device, subdevice and function | A form that can name `E` |
+| `REC80` | 62 / 180 | Teac-K whose check byte is not `D+S:4:0+S:4:4+F:4:0+F:4:4`; in 51 of them it is the constant `01` whatever `F` is, so a different layout under Teac-K's vendor bytes and not a bad checksum | Unknown |
+| `REC80` | 42 / 67 | Fujitsu with the fixed `0:4` nibble set to 1 | Unknown |
+| `REC80` | 9 / 9 | Panasonic whose check byte is not `D^S^F`; all start `400405…` (D=0xA0, S=0x08), most likely typos in the DB | |
+| `RCC2026` | 21 / 75 | All device D=102, S=0 (the `6604CF…` group): `~S` is 23 where it should be 31, and in 20 of them `~F` is not `F`'s complement either. Real Aiwa remotes with D=102 S=0 appear in IrpTransmogrifier's `Aiwa2_Aiwa.exp`, so the device is real and these codes are probably corrupt | |
+
+The 635 NEC and NEC2 codes carry DecodeIR's own list of fourth-byte variants
+(hifi-remote.com/johnsfine/DecodeIR.html, "Variant IRstreams in NEC protocols", retrieved
+2026-10-02). In NEC / NEC2: byte 4 unrelated to byte 3, 235 / 201; complementing bits 0 to
+6 only (Yamaha style y1), 62 / 27; bits 1 to 7 only (y2), 50 / 0; the complement with the
+nibbles swapped (style rnc), 46 / 1; bits 1 to 6 only (y3), 13 / 0. The refusal text names
+the pattern, and y1 to y3 are what IrpTransmogrifier's `NEC1-Yamaha` and `NEC-Yamaha`
+hold, rnc is `NEC1-rnc`. All four NEC ledger protocols spell the fourth byte `~F:8`, so
+none of the other three is an alternative for a code NEC1 cannot hold; **registering
+`NEC1-f16` and `NEC2-f16` (a gate-2 task of its own) would recover all 635**. Whether the
+"unrelated" ones are real `-f16` devices or mis-conversions cannot be said from the data.
+
+**D68 — Gate 2b accepts a reproducible vector where none is published, and says so on
+every run; the reference quantizer has a tie it gets wrong.** Serves D10, D18. Of the 28
+registry protocols **six have a published gate-2b vector** (NEC1, Sony20, RC5, NEC2
+weakly, Sony12, RC6) and **22 have one only a pinned IrpTransmogrifier release can
+generate**: NECx2, NECx1, Sony15, RCA-38, Thomson7, Pioneer-2Part, JVC, Sharp, Denon,
+Samsung36, Proton, F12_relaxed, RECS80, RECS80-0068, Aiwa, Blaupunkt, Panasonic, JVC-48,
+Fujitsu, Teac-K, Denon-K and SharpDVD. `test_registry` warns about all 22 on every run
+and names them, as it did for NECx2 alone before. §12 lists each vector.
+
+What that does and does not establish should be said plainly. Gate 1 takes each IRP
+string from IrpTransmogrifier's database, and a reproducible vector is that same tool
+rendering that same string. So for these 22 the vector checks that **our encoder
+implements the IRP**, and not that the IRP is right. What stands between that and a
+wrong constant is gate 2a (captures and published constant tables, §18's per-family
+paragraphs) and the duration-for-duration renders (136 for D64's four, 140 for D65's
+five, 200 for D66's eight), none of which is a Pronto vector. **Three protocols, `RECS80-0068`,
+`JVC-48` and `SharpDVD`, have no gate-2a evidence either**, so their only evidence beyond
+the IRP string is a render by the tool that holds it. §10's first row says "if a vector
+can't be sourced independently, don't ship the protocol". That rule is not met for those
+three. They are in the registry, with the reason recorded in `tests/vectors/index.json`
+(`gate2a_pending_reason`), and they are the weakest entries in it; the owner may prefer
+to remove them until a source appears.
+
+**The reference quantizer.** `tests/reference_quantizers.py`'s `irpt` rule rounds in
+exact decimal, half up; IrpTransmogrifier computes `Math.round(0.000001 * us *
+frequency)` in doubles (`IrCoreUtils.java:180-182`, `Pronto.java`'s `pulses`), so a
+duration exactly half-way between two cycle counts can round either way. Two cases were
+found. Thomson7 D=12 F=74 T=1: a 34,500 µs gap is 1138.5 cycles at 33 kHz, and the tool
+gives `0x472` where the rule says `0x473`. Proton at 38.5 kHz with a 25,000 µs gap is 962.5
+cycles: the jar renders `03C2`, `irpt()` predicts `03C3`; of Proton's 17 possible lead-out
+gaps, 8 are ties and the jar rounds three down (17,000, 21,000 and 25,000). It is one cycle
+(26 µs) and not a timing disagreement, but it would fail a gate-2b check for no real reason.
+The vectors were chosen to avoid ties (Thomson7 uses `T=0`, Proton D=20 F=1 and D=18 F=53),
+and the shared helper was **not changed**. A faithful fix is `math.floor(0.000001 * t * f +
+0.5)`.
+
+> **TODO for the integrator.** Decide whether to fix `reference_quantizers.irpt`. It is a
+> code change in a shared test helper and outside the documentation work.
+
+### Findings for the app owner
+
+Nothing in SwiftRemote was changed or tested on hardware. Each finding below is a
+measurement of the app's behaviour against the data, an independent reference, or its own
+comments, and each is a candidate fix on the app's side. Items 1 to 8 change what a
+user's device receives. Items 9 to 15 are wrong comments, dead code, behaviour that
+stays inside the tolerance but that the owner may want to know about, and one bug in
+the data's own history.
+
+| # | Where | Finding | Scale |
+|---|---|---|---|
+| 1 | `db_button_import.dart:246-285` (and `ir_finder_models.dart:274-287`, `power_params.dart:86-99`) | Reads a Sony hexcode as a packed integer, `cmd \| addr << 7`, where the data is in wire order (D57). A fix: read the DB hex in transmission order, reversing the frame's bits after dropping SONY15's pad bit, at least on the DB-import path in `_deriveProtocolFieldTextFromHex`. The editor's packing is deliberate and tested (`sony12_protocol_test.dart:7-33`); the import is the path that is wrong | 2,838 of 2,858 distinct Sony codes |
+| 2 | The same, SONY15 | Masks the integer to 15 bits without a word, so 362 codes with bit 15 set transmit a different code than they spell | 362 codes |
+| 3 | `pioneer.dart:96-123`, `jvc.dart:53-66` | Send each byte least significant bit first; the data is in wire order | 1,667 + 1,020 codes |
+| 4 | `sharp.dart:65-67` | Masks with `0x1FFF` and reads a register layout the data does not have | 586 codes |
+| 5 | `denon.dart:77-80` | Takes its thirteenth bit from `substring(3, 4)` where the data has it at `substring(0, 1)`; every code whose fourth digit is 8 or E loses its command's top bit | 332 of 519 codes |
+| 6 | `thomson7.dart` L51-105, and the IR-finder profile `ir_finder_search.dart` L285-290 | Sends `last4 + toggle + first7` where the data and a hardware capture are `first4 + toggle + last7`. **The encoder contradicts its own mask `0xF7F`**, which clears bit 7, the toggle's place in the layout the data has and a meaningless bit in the layout the app then uses; one remote's 29 keys come out as thirteen devices and two commands. The finder profile treats bits 4 and 7 as unimportant, the same mistake. (Its description at L6-10 says "last4 + toggleBit + first7", which is what it implements, so the comment and the code agree and both are wrong) | 29 of 29 codes |
+| 7 | `proton.dart:58-59,75,82` | Sends the low byte first, "last 8 bits first, separator, first 8 bits"; the IRP and the capture send the device byte first | 7,300 keys across 187 remotes |
+| 8 | `rcc2026.dart:64-67` | **A stale copy of upstream.** It builds the 42 wire bits from the last 42 of a 44-bit number (`bin.substring(bin.length - 42)`); `iodn/android-ir-blaster` fixed this on 2026-09-20 in commit `3bb60e3178` ("fix: preserve all 42 RCC2026 database payload bits"), to `bin.substring(0, 42)`, with a test that pins the bundled code `38863BD42BC` as NEC42-layout D13=284, F=10. SwiftRemote's copy is the V2.0.0 original (`c0658e8`). `rec80.dart` and `rcc0082.dart` are byte-identical to upstream's, so only this file drifted. The fix is upstream's three changed lines. Two bits are shifted for every code; a valid Aiwa frame results for only 71 | all 1,231 codes (4,880 keys) |
+| 9 | `nec.dart` L42, `nec2.dart` L42, `necx1.dart` L41, `necx2.dart` L40 | `targetUs = 0x1A580; // 108800`, and the descriptions say "pad to 108800us". `0x1A580` is **107,904**. The comments are wrong, not the waveform, which is 0.09 % from the IRP's `^108m` | every NEC2, NECx1 and NECx2 code (7,761) |
+| 10 | `necx1.dart` L43-61, `encodeToggleFrame` | "Not used automatically", and wrong if it were: the repeat bit is `(firstByte & 1) == 1 ? 3T : T` with `firstByte` = rev8(D), where the IRP's `~D:1` is the complement of D's bit 0. For D=44 it would send a one-unit space where the IRP and the capture have three | nothing calls it |
+| 11 | `db_button_import.dart` L14-L27 → `ir.dart` L390-L398 | Any DB `NEC` code is sent by the legacy path (38,000 Hz, 67 durations, no lead-out, no repeat). The app's own `nec` encoder (38,222 Hz, 562/1687, a gap to 107,904) is unreachable from the DB | 33,522 NEC codes |
+| 12 | `nec2.dart` | "identical builder to NEC in this implementation": one frame, no repeat, so the app does not implement what separates NEC2 from NEC1. Harmless at `minSends` 1 | |
+| 13 | `f12_relaxed.dart:40` | The constant is `0xD300 = 54016` and the comment says 54000. 54016 is `(12×4+80)×422`, so the code is right and the comment is wrong | |
+| 14 | `recs80_l.dart` | Its description says "Same bit string as RECS80", which reads like a carrier change; it differs in carrier, unit and ending (D65) | |
+| 15 | The NEC hex parsing (the notes do not record the file) | `int.tryParse` then `& 0xFFFFFFFF` for `NEC` sends the low 32 bits of a nine-digit code, which is how `807F42BD0` was sent as `07F42BD0` until SwiftRemote's `b78cb5d` ("fix malformed NEC database code") changed the data. No code in the database has nine digits now | |
+
+Not bugs, but places where the app and the references differ and the ledger followed the
+reference: the NEC family's rounded timings (within 0.71 %); the one constant gap per
+protocol where the IRPs pad to an extent (D64); Pioneer's, Denon's and Sharp's units (D64);
+RC6's six-unit final space (D63); RCA-38's and Thomson7's units (D63); Samsung36's unit and
+59,000 µs lead-out, where the app agrees with hardware and the IRP does not (D65);
+REC80's use of Panasonic's 173-unit gap for the three vendors whose IRPs say otherwise
+(D66). Sony's encoders never read `_repeat`, so a press sends three frames and each
+hold-loop tick three more, which agrees with `minSends` 3.
+
+### Reproducing the evidence
+
+With `IRBLASTER_ORACLE` set to the oracle directory (the tools default to it) and
+`swiftremote.sqlite` from the SwiftRemote checkout:
+
+```
+python tools/irblaster_oracle_nec.py                       # NEC, NEC2, NECx1, NECx2 (--file tests/fixtures/irblaster/<p>.json for the subset)
+python tools/irblaster_oracle_sony.py --oracle $IRBLASTER_ORACLE --db swiftremote.sqlite
+python tools/irblaster_oracle_philips.py --oracle $IRBLASTER_ORACLE
+python tools/philips_capture_audit.py --irpt <IrpTransmogrifier @c945e76> --db swiftremote.sqlite
+python tools/irblaster_oracle_japan.py [--reading wire]    # the default, app, is the proof of the encoders
+python tools/irblaster_wire_order_japan.py --db swiftremote.sqlite --oracle $IRBLASTER_ORACLE
+python tools/irblaster_oracle_misc.py
+python tools/misc_capture_audit.py --irpt <IrpTransmogrifier @c945e76>
+python tools/irblaster_oracle_unknown.py --oracle $IRBLASTER_ORACLE --db swiftremote.sqlite
+python tools/irblaster_oracle_import.py --checkout <SwiftRemote> [--list-differences]
+```
+
+The vectors that are renders were generated with
+`java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=…,F=… -p
+<protocol>` (and `render -r` for signed microseconds); the command for each is
+recorded in `tests/vectors/index.json`. The teaser captures are cited, not vendored,
+and the audit tools re-run them from a checkout of IrpTransmogrifier at `c945e76`.
+
+### What is not proven (the protocols)
+
+- **No hardware.** Nothing was sent to a receiver. For ten protocols the ledger holds a
+  reading that differs from the app's on evidence that is published decodes, real LIRC
+  frames and structure (D57); a remote that mixes conventions cannot be excluded for
+  SONY12 and SONY20.
+- **22 of 28 gate-2b vectors are generated, not published**, and three protocols have no
+  gate-2a evidence either (D68).
+- **The wire reading's weakest parts** are Sharp's complement-frame inversion and Denon's
+  `11` flag (D64).
+- **Samsung36's `E:F` packing** has no external reference and is awaiting the owner (D65).
+- **The toggle** (D3b) is open for five protocols, and an `intro`-plus-`repeat` `minSends`
+  is undefined in D3a (D60).
+- **The importer's licence footing** is inheritance only (D46).
