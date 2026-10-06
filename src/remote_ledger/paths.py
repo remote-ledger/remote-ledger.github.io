@@ -86,6 +86,23 @@ APP_API = "site/app/v1"
 APP_API_SOURCE = "remotes/irblaster/"
 
 
+#: The canonical key vocabulary and its alias table (D83). They are ledger data
+#: that is written by hand and never generated, so no stage owns them and
+#: ``build/`` and ``site/`` do not hold a copy. They ship as package data, like
+#: the schemas (``validate.SCHEMA_DIR``): a consumer that installs the package
+#: has no checkout, and ``canonical_id`` has to work for it.
+VOCABULARY_DIR = Path(__file__).resolve().parent / "vocabulary"
+
+#: The vocabulary's files, relative to ``VOCABULARY_DIR`` and the schema each
+#: is validated against (``schema/``).
+KEYS_FILE = "keys.json"
+ALIASES_FILE = "aliases.json"
+VOCABULARY_SCHEMAS = {KEYS_FILE: "keys.schema.json", ALIASES_FILE: "aliases.schema.json"}
+
+#: Where those files sit in the repository, for the messages that name them.
+VOCABULARY_REPO_DIR = "src/remote_ledger/vocabulary"
+
+
 def rel(root: Path, path: Path) -> str:
     """A remote's path relative to the corpus root, as POSIX text.
 

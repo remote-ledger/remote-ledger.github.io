@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/remote-ledger/schema/aliases.schema.json",
+  "title": "Canonical key aliases",
+  "description": "How a source's spelling of a key reaches a canonical key (R22, D84, D85). `tokens` rewrites one word of a folded spelling to another (VOL to VOLUME), and `aliases` lists, per canonical id, spellings that mean it. A spelling is compared after folding (case, KEY_ and BTN_ prefixes, punctuation, + and - signs, `tokens`, spaces), so `Vol +`, `VOL+` and `KEY_VOL_PLUS` are one entry. Two spellings of different ids that fold alike, or one spelling listed twice, are errors, so a spelling means exactly one key. Versioned with keys.json.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "tokens", "aliases"],
+  "properties": {
+    "version": { "const": 1 },
+    "tokens": {
+      "description": "Word to word, both already in folded form (upper case, no separators).",
+      "type": "object",
+      "propertyNames": { "pattern": "^[^\\s]+$", "maxLength": 32 },
+      "additionalProperties": { "type": "string", "pattern": "^[^\\s]+$", "maxLength": 32 }
+    },
+    "aliases": {
+      "description": "Canonical id to the spellings that mean it, besides the id and display name themselves.",
+      "type": "object",
+      "propertyNames": { "pattern": "^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$", "maxLength": 40 },
+      "additionalProperties": {
+        "type": "array",
+        "x-order": "set",
+        "uniqueItems": true,
+        "items": { "type": "string", "minLength": 1, "maxLength": 48 }
+      }
+    }
+  }
+}

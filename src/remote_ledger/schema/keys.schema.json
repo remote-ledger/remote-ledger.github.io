@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/remote-ledger/schema/keys.schema.json",
+  "title": "Canonical key vocabulary",
+  "description": "The meanings a key can have (R22, D83): the groups a generated layout is built from, and for each canonical key its group, display name, standard icon, text glyph, colour and whether holding it repeats it. Ledger data, versioned: a consumer reads `version` first. Ids are never renamed or given another meaning within a version; a key may be added within one. The relationships a schema cannot state (unique ids, groups that exist, one `order` per group in a group, aliases that never collide) are checked by `rl validate` (keys.py).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "groups", "keys"],
+  "properties": {
+    "version": { "const": 1 },
+    "groups": {
+      "type": "array",
+      "x-order": "set",
+      "x-sort": ["order"],
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "order", "name"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$", "maxLength": 32 },
+          "order": { "type": "integer", "minimum": 1, "maximum": 999 },
+          "name": { "type": "string", "minLength": 1, "maxLength": 40 }
+        }
+      }
+    },
+    "keys": {
+      "type": "array",
+      "x-order": "set",
+      "x-sort": ["group", "order"],
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "group", "order", "name", "icon", "glyph", "color", "repeat"],
+        "properties": {
+          "id": {
+            "description": "UPPER_SNAKE_CASE, no KEY_ or BTN_ prefix (those are how a source spells a key, not what it means).",
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$",
+            "not": { "pattern": "^(KEY|BTN)_" },
+            "maxLength": 40
+          },
+          "group": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$", "maxLength": 32 },
+          "order": { "type": "integer", "minimum": 1, "maximum": 999 },
+          "name": { "type": "string", "minLength": 1, "maxLength": 40 },
+          "icon": {
+            "description": "A Material Symbols name (snake_case), or null.",
+            "type": ["string", "null"],
+            "pattern": "^[a-z0-9][a-z0-9_]*$",
+            "maxLength": 64
+          },
+          "glyph": {
+            "description": "Short text the key is shown as (a digit, CH+), or null.",
+            "type": ["string", "null"],
+            "minLength": 1,
+            "maxLength": 8
+          },
+          "color": {
+            "description": "The colour of a colour key, or null.",
+            "enum": ["red", "green", "yellow", "blue", null]
+          },
+          "repeat": { "type": "boolean" }
+        },
+        "anyOf": [
+          { "properties": { "icon": { "type": "string" } } },
+          { "properties": { "glyph": { "type": "string" } } },
+          { "properties": { "color": { "type": "string" } } }
+        ]
+      }
+    }
+  }
+}

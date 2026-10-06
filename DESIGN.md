@@ -14,7 +14,7 @@ appear — D16–D20 came out of the v0.1 review, D21–D26 out of the v0.2
 review, D27–D29 out of the v0.3 review, and D30–D33 out of the v0.4 review,
 each sitting wherever it belongs topically. D34–D45 came with the LIRC and
 SmartIR imports (§14, §15), D46–D56 with the IR Blaster importer (§17) and
-D57–D68 with the protocols it needed (§18), D69–D71 for the index (§19), D72–D73 for the build driver (§20) and D74–D82 for the app API (§21).
+D57–D68 with the protocols it needed (§18), D69–D71 for the index (§19), D72–D73 for the build driver (§20), D74–D82 for the app API (§21) and D83–D87 for the canonical key vocabulary (§22).
 §11 lists what changed.
 
 ---
@@ -1322,7 +1322,12 @@ remote-ledger/
 ├── .gitattributes                      pins LF on generated JSON (D20)
 ├── src/remote_ledger/schema/           package data, not repo-relative:
 │   ├── remote.schema.json              a non-editable install has no
-│   └── unresolved.schema.json          checkout to read from
+│   ├── unresolved.schema.json          checkout to read from
+│   ├── keys.schema.json                the canonical key vocabulary (D83)
+│   └── aliases.schema.json             and its aliases (D85)
+├── src/remote_ledger/vocabulary/       hand-written, shipped as package data, never
+│   ├── keys.json                       generated: the canonical keys and groups (D83)
+│   └── aliases.json                    the spellings that mean each (D85)
 ├── remotes/                            hand-authored, the actual ledger.
 │   ├── sony/RMT-B118P.json             `remotes/**/*.json` is uniformly
 │   ├── topping/RC-15A.json             one remote — no reserved names
@@ -1347,6 +1352,8 @@ remote-ledger/
 │   ├── index.py       R14                                 D13
 │   ├── lookup.py      R16
 │   ├── site.py        R17                                 D15
+│   ├── keys.py        canonical_id, the vocabulary loader  R22 D83-D85
+│   ├── keys_report.py `rl keys report`                    D86
 │   └── cli.py         `rl`
 ├── tests/vectors/ + CITATIONS.md                          D10
 └── .github/workflows/ci.yml                               D11
@@ -1421,12 +1428,13 @@ clean-tree requirement (D11).
 
 | Command | Requirement | Does |
 |---|---|---|
-| `rl validate [path]` | R15, R11 | Schema + semantic checks; exit non-zero on any error |
+| `rl validate [path]` | R15, R11 | Schema + semantic checks; exit non-zero on any error. Run with no path it also validates the canonical key vocabulary (D83) |
 | `rl compile [path] [--check]` | R12 | Write `build/pronto/…`; `--check` diffs instead |
 | `rl check [path]` | R13 | Cross-check every candidate group; the data gate |
 | `rl index [--check]` | R14 | Regenerate `build/index.json` |
 | `rl site [--check]` | R17 | Generate `site/` |
 | `rl app [--check]` | D74 | Generate `site/app/v1/`, the app API (§21) |
+| `rl keys report [--json]` | R22, D86 | How much of the corpus the canonical key vocabulary maps, per source and per remote; read-only (§22) |
 | **`rl build [--check]`** | **D19** | **The whole pipeline — validate → check → compile → index → site → app — whole-tree; `--check` is the CI gate for drift *and* orphans** |
 | `rl lookup "Sony BDP-BX510"` | R16 | Matching files, candidates, tiers, citations. Offline |
 | `rl fmt [--refresh] [--expand] [--sort]` | D9, D17, D20 | Canonicalize field order, hex spelling, and decimal form; refresh `derived` forms; expand `variants` longhand; `--sort` canonically orders *set-like* arrays only, never semantic ones (D20) |
@@ -2022,7 +2030,7 @@ note rather than a live contract.
 
 ## 12. Implementation status
 
-Phases 0-6 are implemented: 2557 tests, `jsonschema` the only runtime
+Phases 0-6 are implemented: 2834 tests, `jsonschema` the only runtime
 dependency. Phase 2 landed its nine SPEC edits *before* its code, per §9 --
 the spec change is what authorises the implementation. (That count is asserted by the suite itself -- see
 `test_documented_test_count_is_current` -- so it cannot drift the way the
@@ -2030,7 +2038,8 @@ three stale "148" figures did. It was 890 before the IR Blaster work, which
 added 1,367; it moves again whenever a test is added, and the figure here
 has to be re-fixed with it.) Post-v1 work has landed outside the phases: RC5
 (§16), the LIRC and SmartIR imports (§14, §15), and the IR Blaster importer
-with the 24 protocols it needed (§17, §18). The registry holds 28 protocols.
+with the 24 protocols it needed (§17, §18), and the canonical key vocabulary
+(§22). The registry holds 28 protocols.
 `rl encode --protocol NEC1 --device 0x88 --subdevice 0x77
 --function 0x18 --carrier 38000` emits the Topping RC-15A Power key. Until
 the RC-15A was corrected this read `0x11 / 0xEE`: the capture's MSB-first
@@ -5129,3 +5138,162 @@ Pronto inline (D79).
   the weakest part of those two readings.
 - **The 2,066 keys the import refused** (964 codes, 27 ids' worth of nothing) are not in
   the app's new database: a loss against today's, by D54's rule, and not the API's.
+
+---
+
+## 22. The canonical key vocabulary
+
+A source spells a key as it likes: `KEY_VOLUMEUP` in LIRC, `VOL+` or `Vol +` in the IR Blaster database (which D49 folds to `KEY_VOL_PLUS`), `volumeUp` in SmartIR. The ledger keeps the spelling and never rewrites it. This section adds the one list of *meanings* those spellings are mapped onto, so that anything that has to understand a key reads an id and not a spelling: a generated layout that groups the volume keys and puts the arrows in a cross, a standard icon for each key, the language a macro or a prompt uses ("volume up"), a comparison between two remotes. SPEC R22 states the requirement.
+
+It adds: `keys.json` (the vocabulary: groups, canonical keys, and for each its display name, icon, glyph, colour and whether holding it repeats it), `aliases.json` (the spellings that mean each key), a schema for each, a validator, `keys.canonical_id(key_name, label)` (the mapping), and `rl keys report` (how far the mapping reaches into the corpus). It changes nothing that exists: no remote file, no importer, and not one byte of `build/`, `site/` or `site/app/v1/` (`rl build --check` reports 0 differences, as before). The vocabulary is **not** added to the app API: a new file there changes `dataVersion` and so every client's cache, which is a decision for the change that needs it. The files are read by code and written by hand, so no stage owns them (D19's owner table is unchanged).
+
+### D83 — The vocabulary is ledger data: two hand-written files, a schema each, a validator, a version
+
+**Where.** `src/remote_ledger/vocabulary/keys.json` and `aliases.json`, with `schema/keys.schema.json` and `schema/aliases.schema.json` beside the others. They ship as package data (`pyproject.toml` lists `vocabulary/*.json` as it lists `schema/*.json`) and `paths.VOCABULARY_DIR` finds them the way `validate.SCHEMA_DIR` finds the schemas: a consumer that installs the package has no checkout, and `canonical_id` must work for it. They are not repo-relative like `unresolved.json`, because the mapping is a library function before it is a command.
+
+**The contract**, the shape downstream code depends on (the field order is the file's, and a test pins it):
+
+```json
+{ "version": 1,
+  "groups": [ {"id": "power", "order": 1, "name": "Power"}, ... ],
+  "keys":   [ {"id": "VOLUME_UP", "group": "volume", "order": 1, "name": "Volume up",
+               "icon": "volume_up", "glyph": null, "color": null, "repeat": true}, ... ] }
+```
+
+- **`id`** is `UPPER_SNAKE_CASE` and never starts with `KEY_` or `BTN_`: those are how a source spells a key, not what it means. Ids are named for the meaning (`VOLUME_UP`, not `KEY_VOLUMEUP`), never for a source, and never for a device (`CD_PLAY` is not a key; it is `PLAY` on a CD player, D87).
+- **`group`**, **`order`**: an order is unique within its group (not across groups), so a layout reads a group in order without sorting ties.
+- **`icon`** is a Material Symbols name (snake_case) or null. **`glyph`** is up to eight characters of text, for a key shown as text (a digit, `CH+`, `OK`) or as a caption beside an icon. **`color`** is `red`, `green`, `yellow`, `blue` or null. **Every key has an icon, a glyph or a colour** (the schema's `anyOf`). A recommended reading, which the client decides: draw the icon when there is one, with the glyph as its caption; a key with only a glyph is text; a colour key is a dot.
+- **`repeat`** says whether holding the key should fire it again. True for the keys one adjusts or moves with (volume, channel, the four arrows, page, bass, treble, zoom, brightness, tuning), false for anything that changes state (power, mute, input, OK, the transport keys, the digits): a finger resting on Power must not switch the set off again. 32 of the 156 are true.
+- **`version`** is 1 and the schema accepts nothing else (`const`), as `schemaVersion` does elsewhere: a reader that sees another number refuses instead of guessing. Within a version an id is never renamed, removed or given another meaning, and a key, a group, an alias or a token may be added; anything else is version 2. A reader ignores ids it does not know and shows them in its "More" group, which is not in the file because it holds no canonical key.
+
+**The groups.** Eleven are required (`power`, `volume`, `channel`, `navigation`, `numbers`, `media`, `input`, `color`, `menu`, `apps`, `other`; the validator requires them and no group may be empty) and three the data asked for: `sound`, `picture` and `teletext`. Teletext is the one that decides it: `TEXT` is on 4,613 of the 10,013 IR Blaster remotes (46%), `HOLD`, `REVEAL` and `SIZE` on more than 300 each, and `SUBPAGE` and `MIX` on about 175; in a "More" group they would be most of what that group holds for a TV that has them. `MENU` is in `menu` and not in `navigation`: `navigation` is the cross (`UP`, `DOWN`, `LEFT`, `RIGHT`, `OK`) and the ways out of it (`BACK`, `HOME`, `EXIT`, `CANCEL`, `PAGE_UP`, `PAGE_DOWN`); `menu` is what opens a screen (`MENU`, `SETTINGS`, `INFO`, `GUIDE`, `DISPLAY`, ...).
+
+| group | keys | | group | keys |
+|---|---|---|---|---|
+| power | 4 | | menu | 13 |
+| volume | 3 | | sound | 15 |
+| channel | 12 | | picture | 17 |
+| navigation | 11 | | teletext | 6 |
+| numbers | 16 | | apps | 2 |
+| media (named Playback) | 23 | | other | 4 |
+| input | 26 | | color | 4 |
+
+156 keys in all. **Choices the data or the layout asked for:**
+
+- *`ENTER` is not `OK`.* They sit in `numbers` and `navigation`. In 37% of the LIRC remotes that have `KEY_ENTER` there is a `KEY_OK` too (229 of 612), so merging them would put two keys on one id in 229 files, and the layout could not tell the centre key from the confirm key.
+- *`STANDBY` is `POWER`*, a toggle with the standby symbol; `POWER_ON` and `POWER_OFF` exist for a key that says on or off and for nothing else (D84).
+- *`FORWARD` is `FAST_FORWARD`.* Of the 538 LIRC remotes with a `KEY_FORWARD`, 55 also have a `KEY_FASTFORWARD`; the others use `FORWARD` for the one fast-forward key, and so do 1,494 IR Blaster remotes (3 have both).
+- *`SOURCE`, `AV`, `TV/AV` and `INPUT SELECT` are all `INPUT`*, the key that steps through the inputs. A key that selects *one* input is `INPUT_TV`, `INPUT_DVD`, `HDMI_2` and so on: `TV` is a source here (4,922 keys), not a device.
+- *Apps are the generic ones only:* `APPS` and `BROWSER`. A streaming service is a brand, and a brand is never an icon here, so none is a key, an id or a glyph (a test searches for the common ones). `NETFLIX` and `YOUTUBE` are among the unmapped (55 and 35 keys) and show as text.
+- *Icons.* Every icon is a Material Symbols name from the Outlined, Rounded and Sharp styles' shared list. **82 distinct names are used**, checked against `google/material-design-icons` at `737e332` (the codepoints file, 4,299 names) by `tools/vocabulary_icons.py`: 0 missing. That needs the network, so it is a tool and not a test. The icon set is Apache-2.0; nothing was copied, only names. 92 keys carry an icon (11 of them with a glyph as caption), 60 are text only, 4 are colours. Whether the 60 want a drawn icon, and a description for a screen reader, is the icon work's.
+
+**Where it is validated.** The schemas hold what structure can say: the id pattern and the prefix rule, field types and bounds, the icon/glyph/colour rule, the version. `keys.semantic_problems` holds what needs two parts of a file related: ids unique, every group named by a key exists, an order unique within its group, no empty group, the eleven groups present, `DIGIT_0` to `DIGIT_9` present (the digit rule answers with them), and the alias rules of D85. It runs as `rl validate` with no path, as the first step of `rl build` (and so of `rl build --check`), and in the suite (`tests/test_key_vocabulary.py` breaks each rule in a copy of the shipped files and asks for the message). `rl validate <file>` is about that file's remote and does not run it.
+
+### D84 — The mapping is a fold and one lookup, and it prefers no answer to a wrong one
+
+`canonical_id(key_name, label=None)` returns an id or None. The pipeline, `keys.fold`, applied identically to a spelling in a file and to one in the alias table:
+
+1. NFKC and upper case, so full-width and compatibility forms are the plain ones (`ＶＯＬ＋` is `VOL+`, `①` is `1`).
+2. One name prefix removed from the start, and only with its underscore: `KEY_`, `BTN_`, and SmartIR's `SOURCES_` (D43's `sources` command group, as in `KEY_SOURCES_HDMI_1`). The word *key* in a label (`KEY LOCK`) is not a prefix.
+3. A hyphen between two letters or digits joins them (`A-B`, `S-VIDEO`, `Vol-Up`); any other hyphen is a sign.
+4. `+`, `-`, `*`, `#` become the words `PLUS`, `MINUS`, `STAR`, `HASH`, the way D49 already names them, so `VOL+` and `KEY_VOL_PLUS` meet.
+5. Split on spaces, `_`, `.`, `,`, `:`, `;`, brackets, quotes, `=`, `~` and `\`. **Not `/`**, and not `!`, `?`, `|` or symbols: `P/C` says "this or that" and is not `PC` (D85), `POWER?` is not `POWER`, and ⏩ is a spelling like any other.
+6. Each word is replaced by its `tokens` entry if it has one (`VOL` to `VOLUME`, `PWR` to `POWER`, `CH`, `CHAN` and `CHNL` to `CHANNEL`, `COLOUR` to `COLOR`).
+7. The words are joined without spaces (`squash`), which is what the lookup compares: `VOLUME UP`, `VOLUME_UP` and LIRC's `VOLUMEUP` are one spelling.
+
+Then **the digit rule** answers `0` to `9` however the source writes them (`1`, `KEY_KP1`, `NUM_1`, `NUMERIC 1`, `NUMBER 1`, `DIGIT 1`, `ONE`, and `CHANNEL 1`, which only the SmartIR import has: its `sources` group lists `Channel 1` to `Channel 9`, the codes that tune them) and not `10`, `0/10`, `D1`. Everything else is **one lookup** in a table of squashed spellings: each key's own id and display name, and every alias.
+
+**The label decides when there is one.** An imported key is named by folding its label to ASCII (D49), so a name says less than the label: ⏩ is `KEY_`, and `-►.◄-` is `KEY_MINUS_MINUS`, which on its own is `DASH`. A first version read both and let the name rescue a label it did not know; measured on the tree it rescued 597 keys, and the ones it got wrong were these (15 keys of `-►.◄-`, 6 of `◄--`, 7 of `TAPE ◄►` read as `INPUT_TAPE`). So the name is read only for a key with no label (every LIRC and SmartIR key; an authored key that names its meaning and prints nothing). A blank label is no label.
+
+**Conservative means these, each decided on the data and each a test in `test_what_does_not_map`:**
+
+- *A bare `POWER` is `POWER`.* `POWER_ON` and `POWER_OFF` are reached by `ON`, `OFF`, `POWER ON`, `PWR OFF`, `TURN ON` and little else; `ON/OFF`, `STANDBY` and `POWER ON/OFF` say both and are the toggle. Nothing else maps to either (a test walks the list).
+- *A device-qualified key is not mapped:* `POWER TV`, `TV_POWER`, `CD_PLAY`, `VCR_STOP`, `TV VOL+`. A layout is of one device, and an icon that hides *which* device a power key is for is worse than the text. LIRC's universal remotes are made of these (`remotes/lirc/philips/FA920.json`: `TV_0` to `TV_9`, `VCR_PLAY`, `LD_TRACK_UP`); they are most of the worst remotes in D86.
+- *A key with two functions is not mapped:* `RIGHT / VOL+`, `UP/CH+`, `RED/AUDIO`, `TV/SAT`, `PAUSE/STEP`. It is both, and which depends on the mode. The exceptions are compounds that say one thing twice (`⏩/FWD`), listed.
+- *A word with several meanings is not mapped:* `MODE`, `TIME`, `VIDEO`, `PROGRAM`, `PROG`, `SELECT`, `INDEX`, `LIST`, `AUTO`, `MEMORY`, `RESET`, `STILL`, `SCAN`, `TEST`. `SELECT` is the only OK-like key in 87% of the LIRC remotes that have it, and in the other 13% a `KEY_OK` is there as well; `INDEX` has a teletext key beside it in 92% of the IR Blaster remotes that have it and in 20% of the LIRC ones.
+- *A glyph that is an arrow or a play key is not mapped:* `►`, `◄`, `/\`, `\/`. D87 has the numbers.
+- *One that the data says is something else:* `P. UP`, `P. DOWN` (D85); `SKIP BACK` and `SKIP FORWARD`, which jump seconds on a recorder, are not `PREVIOUS` and `NEXT`; `ARC` is a soundbar's HDMI input as often as an aspect ratio; `OPT` is options or optical.
+
+### D85 — The aliases: what the table holds, how a collision is caught, and what building it found
+
+`aliases.json` is `{"version", "tokens", "aliases"}`: the six word rewrites of step 6, and for each canonical id the spellings that mean it besides its id and display name, 591 in all (a compound of a glyph and a word, such as `REV ⏪`, is listed only in the forms the data has). A spelling is written as a person would (`VOL+`, `Standby/On`, `⏩|`); the validator folds every one and **refuses** a table in which two ids claim a spelling that folds alike (`VOL UP` under `MUTE` is refused because `VOLUME_UP` has it), in which one id lists two spellings that fold alike (`VOL+` and `vol_plus`: one is redundant), in which a spelling folds to nothing, or is a digit (the rule answers those), or in which two keys' ids and display names fold alike. A token must be one folded word and is rewritten once. The same function folds the spelling in a file and in the table, so there is no second set of rules to drift from the first. Every alias in the table is tested to map to its id however it is spelled: lower case, upper case, as a name, with `KEY_` or `BTN_` in front, with spaces for underscores.
+
+A compound with a slash is listed twice, with and without it, because a name has already lost its slash (LIRC writes `tv_av`). The file keeps the aliases of an id sorted and, where spellings fold alike, the most compact one (`VOL+`, not `VOL +`).
+
+**What building it found**, each a change the first report made visible:
+
+- **`P/C` was `PC`.** Step 5 first split on `/`, and the table's `PC` (the computer input) then took `P/C`, a key on 4,284 IR Blaster remotes (43%) whose meaning is not known. That was 4,310 keys mapped wrongly, the largest error the report showed, and it moved irblaster's keys mapped from 83.2% to 81.9% when it was fixed. The slash is now part of the spelling.
+- **`P. UP` is not a channel key.** `P+` and `P-` are `CHANNEL_UP` and `CHANNEL_DOWN`, and the first table also had `P UP` and `P DOWN`. In 555 remotes `P. UP` sits beside `UP`, `DOWN`, `LEFT`, `RIGHT` (97%) and `P+`, `P-` (95%), with `P. DOWN`, `P. LEFT`, `P. RIGHT` after it: a second pad, not a channel key. The duplicate check below is what showed it.
+- **The duplicate check.** For each id, how often two *different* spellings land on it in one remote. Most are right (`PREV` and `SKIP PREV.` in 794 remotes: two previous keys), and `CHANNEL_DOWN` with `PMINUS` and `PDOWN` in 597 was the finding above. After it, the worst left are `P-` beside `CH -` (194 remotes of 5,057 with `P-`: a second key, or `P-` meaning another thing there; accepted, `P+` is the channel key in the other 96%) and the transport pairs. Across the corpus **4,240 of 13,217 remotes have a canonical id on two or more keys** (`POWER` twice, `SKIP PREV.` and `PREV`), which a layout must expect: place one, show the rest under their own label.
+- **`PREVIOUS CHANNEL` is `CHANNEL_DOWN`, a judgement.** SmartIR's `previousChannel` and `nextChannel` (55 keys, the only way those TVs change channel) are channel down and up; LIRC's `Prev_ch` (12 keys) may be "last channel". Taken as the pair, which is also the sequence. `PRE-CH` (72 keys), the likelier "last channel", is left unmapped.
+- **Non-English labels: none qualify.** Of the 121,252 unmapped keys, 79 have a non-ASCII letter (70 of them Cyrillic, 9 Latin; 70 distinct spellings, one to three keys each: `Вниз`, `Вверх`, `Menü`, `Grün`). A search for about a hundred common German, Spanish, French, Italian, Portuguese and Dutch key words found none on more than seven keys (`PROGRAMM`, seven; `PAUSA`, five). A foreign label earns an entry only where it is frequent in the data, and none is, so the table has no entry that is not English or a glyph. The mechanism (NFKC, upper case, Unicode letters kept) would take one.
+- **Glyph labels are spellings.** ⏩ and ⏪ are `FAST_FORWARD` and `REWIND` (1,155 and 1,144 keys), `|⏪`, `I⏪` and `!⏪` are `PREVIOUS`, `⏩|`, `⏩I` and `⏩!` are `NEXT` (the bar is written as `|`, `I` or `!` in the data), and a glyph with the word that says the same (`REV ⏪`, `⏩/FWD`) is listed beside them. 24,589 labels in the data have no letter or digit in them, of which `??` is 9,853.
+
+### D86 — The coverage report, and the numbers
+
+`rl keys report [--json]` prints, to standard output and deterministically: the keys mapped and the remotes with at least 90, 75 and 50 percent of their keys mapped, per source and overall; the same for remotes with at least 10 keys (one key mapped is a remote of 100 percent, and 7% of the remotes, 893, have fewer than ten); the 50 most frequent unmapped names with their keys and remotes; and the 20 remotes with the lowest coverage among those with ten keys. It reads `remotes/` and the vocabulary and nothing else, writes nothing, takes about 2 s (`ordered_map`, D81: 2.1 s wall and 5.3 s of CPU on the 64-core machine, 8 workers) and gives the same bytes at one worker and at three (tested). A percentage is **rounded down** to a tenth, so 89.97 is never printed as 90.0. `--json` is the same data with sorted keys (D20) and the percentages as numbers.
+
+The number that matters is the per-remote one, because an unmapped key is shown in the "More" group and a remote with half its keys there is a poor Simple layout. The final numbers, which `test_design_quotes_the_numbers_the_report_prints` compares with a fresh run, so that this block cannot go stale (R14):
+
+```
+All remotes:
+
+source     remotes     keys      keys mapped  >=90% of keys  >=75% of keys   >=50% of keys
+---------  -------  -------  ---------------  -------------  -------------  --------------
+irblaster   10,013  411,265  81.9% (337,172)  44.8% (4,491)  69.9% (7,008)   93.1% (9,323)
+lirc         3,138  112,789   58.3% (65,819)    18.8% (593)  49.6% (1,557)   79.9% (2,508)
+smartir         62      914      81.7% (747)     54.8% (34)     67.7% (42)      79.0% (49)
+authored         4      116       81.0% (94)      50.0% (2)      75.0% (3)       75.0% (3)
+all         13,217  525,084  76.9% (403,832)  38.7% (5,120)  65.1% (8,610)  89.9% (11,883)
+
+Remotes with at least 10 keys:
+
+source     remotes     keys      keys mapped  >=90% of keys  >=75% of keys   >=50% of keys
+---------  -------  -------  ---------------  -------------  -------------  --------------
+irblaster    9,415  408,466  82.0% (335,226)  44.8% (4,224)  70.6% (6,653)   94.2% (8,877)
+lirc         2,867  111,431   58.2% (64,915)    17.3% (496)  49.3% (1,415)   80.9% (2,320)
+smartir         39      786      84.3% (663)     58.9% (23)     76.9% (30)      94.8% (37)
+authored         3      108       79.6% (86)      33.3% (1)      66.6% (2)       66.6% (2)
+all         12,324  520,791  76.9% (400,890)  38.4% (4,744)  65.7% (8,100)  91.1% (11,236)
+```
+
+(The `authored` row is the Meridian MSR, Samsung BN59-01199F, Sony RMT-B118P and Topping RC-15A: 94 of 116 keys; the 22 left are the Meridian's tape and VCR sources, the Topping's DAC settings and `KEY_SEN`.)
+
+Read it as: **9 in 10 remotes have at least half their keys mapped, 2 in 3 at least three quarters, and 2 in 5 at least nine tenths.** The numbers went *down* while the table improved: the first pass, with 113 keys, mapped 77.0% of the keys and put 40.3% of the remotes at 90 percent, and 4,310 of those keys were `P/C` read as `PC` and 1,215 were `P. UP` and `P. DOWN` read as channel keys (D85). Coverage counts only as far as precision is held.
+
+Two things bound it, and neither is the vocabulary. **Keys with no label cost about 7 points.** Setting aside the keys whose text is `??`, `?`, empty or only separators or `/`, a bare number or a hex-like name (14,662 keys, 2.8%) and recounting with a throwaway script, 52.0% of the IR Blaster remotes are at 90 percent instead of 44.8%; 3,608 of its 10,013 remotes (36%) have at least one such key. **LIRC is the other limit,** 18.8% at 90 percent, because much of its 3,138 files is universal remotes that hold several devices (D84), raw dumps keyed by number (`remotes/lirc/rc-5/RC-5.json` has 2,048 keys and maps none; the IR Blaster has several 256-key dumps, `KEY_000` to `KEY_255`) and keyboard-style key sets (`KEY_A` to `KEY_Z`).
+
+### D87 — What is left, and where the next point would come from
+
+The 15 most frequent unmapped names, all on purpose (`rl keys report` prints 50):
+
+| keys | remotes | name | why it is not mapped |
+|---|---|---|---|
+| 9,853 | 2,497 | `??` | the source's own "unknown label": nothing to map |
+| 4,314 | 4,284 | `P/C` | meaning not known; on 43% of IR Blaster remotes; not `PC` (D85) |
+| 1,995 | 1,012 | `\/` and `/\` | arrows that are the cursor on one remote and a channel or volume key on another |
+| 1,139 | 1,123 | `►` | the right arrow or Play |
+| 1,116 | 1,111 | `◄` | the left arrow or reverse |
+| 661 | 659 | `MODE` | a different function on every device |
+| 658 | 658 | `KEY_AGAIN` | a Linux input code with no common meaning on a remote |
+| 650 | 650 | `P. DOWN` | a second pad, not channel down (D85) |
+| 565 | 565 | `P. UP` | the same |
+| 541 | 541 | `TIME` | elapsed time or the clock |
+| 514 | 512 | `VIDEO` | an input on one remote, a mode on another |
+| 510 | 510 | `PROGRAM` | a channel, or a CD's memory |
+| 501 | 500 | `PROG` | the same |
+| 470 | 470 | `P. RIGHT` | the second pad |
+| 469 | 469 | `P. LEFT` | the second pad |
+
+The remaining ranks of the 50 are the same kinds of thing: the ambiguous words of D84, device-qualified keys (`CD_PLAY`, `CD_STOP`, `tv_vcr`), and keys named after a Linux code with no common meaning (`KEY_102ND`, `KEY_10CHANNELSUP`, `KEY_KPPLUS`, `KEY_POWER2`, `KEY_C`). **Where the next gain is, not done because it is not a per-key mapping:**
+
+- **The arrow pad, with the remote as context.** 895 IR Blaster remotes have all four of `/\`, `\/`, `◄`, `►`, and in 788 of them (88%) no `UP`, `DOWN`, `LEFT` or `RIGHT` key is mapped anywhere else: the four are the cursor pad. A function over a whole remote (`canonical_ids(keys)`) could map them there and nowhere else; it would add 3,167 keys and, since the pad is what a Simple layout is built around, matters for more than the percentage. It is a second entry point beside `canonical_id` and would need its own tests, so it is left for the change that builds the layout.
+- **Device-qualified keys,** by reading the device from the prefix and handing the layout one remote per device. The same follow-up.
+- **The owner's review of the vocabulary and of the 330 most frequent mapped spellings** (99.2% of the 403,832 mapped keys; reviewed by eye for this section, not by anyone who owns a remote).
+
+### What is not proven
+
+- **The mapping's precision.** Recall is measured (D86); precision has no ground truth, since no labelled set exists. What was done is reading the 330 most frequent mapped spellings, which are 99.2% of the mapped keys, the duplicate statistics of D85 and the label-or-name comparison of D84, and the corrections those led to. A spelling that is wrong on a few remotes and right on the rest (`P+`, `FORWARD`, `PREVIOUS CHANNEL`) is accepted and named above.
+- **That every icon is the right icon,** or that a client can draw it: 82 names exist in the icon set (a tool, not a test), and none was rendered.
+- **That a layout can be built from it.** No client has read the files, and the reading of `icon`, `glyph` and `color` in D83 is a recommendation.
+- **Hardware.** A mapping says what a key is called, not that its code works; D50 is still that question.

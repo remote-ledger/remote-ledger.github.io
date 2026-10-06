@@ -92,6 +92,16 @@ remote, or a person's own rearrangement) is described separately from the
 code, using CSS's own `grid-template-areas` syntax rather than a bespoke
 coordinate system.
 
+What a key *means* is kept apart from how a source spells it. A versioned
+**canonical key vocabulary** (about 150 keys in a dozen groups, each with a
+display name, a standard Material Symbols icon, a glyph, a colour and whether
+holding it repeats it) and a table of aliases live in
+`src/remote_ledger/vocabulary/`;
+`keys.canonical_id(key_name, label)` maps `KEY_VOLUMEUP`, `VOL+` and `Vol +` to
+`VOLUME_UP`, or to nothing when it is not sure, so an app can show a generated
+layout with standard icons for any remote. `rl keys report` says how much of
+the corpus it maps, per remote (DESIGN.md §22).
+
 ## Try it
 
 ```console
@@ -102,6 +112,7 @@ $ rl encode --protocol NEC1 --device 0x88 --subdevice 0x77 \
 
 $ pytest
 $ rl lookup "DX3 Pro"      # offline lookup, R20's three states
+$ rl keys report           # how much of the corpus the key vocabulary maps, per source and remote
 $ rl build --check         # the CI gate: drift and orphans (-j N or RL_JOBS sets the workers)
 $ rl build && open site/index.html
 ```
@@ -112,6 +123,6 @@ $ rl build && open site/index.html
 notation, Pronto Hex, LIRC, IRDB, SmartIR, the IR Blaster database), the data
 model, layout, compiling and cross-validation, and the resolved decisions.
 
-**[DESIGN.md](DESIGN.md)** — how it is built: decisions D1 to D73, the
-Pronto contract to the byte, the seven-phase plan, the three imports, and what
-is not yet proven.
+**[DESIGN.md](DESIGN.md)** — how it is built: decisions D1 to D87, the
+Pronto contract to the byte, the seven-phase plan, the three imports, the key
+vocabulary, and what is not yet proven.
