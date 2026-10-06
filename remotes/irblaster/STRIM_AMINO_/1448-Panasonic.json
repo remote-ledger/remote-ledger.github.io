@@ -1,0 +1,85 @@
+{
+  "manufacturer": "STRIM(AMINO)",
+  "model": "IR Blaster DB 1448 (Panasonic)",
+  "aliases": [],
+  "controls": [
+    "STRIM(AMINO) | STRIM(PANASONIC lcd)"
+  ],
+  "protocol": {
+    "name": "Panasonic",
+    "carrierHz": 37000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x00",
+          "function": "0x32",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1448, 'MUTE' 400401004C4D REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_POWER_TV": {
+      "label": "POWER TV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x00",
+          "function": "0x3D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1448, 'POWER TV' 40040100BCBD REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_TV_SLASH_AV": {
+      "label": "TV/AV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x00",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1448, 'TV/AV' 40040100A0A1 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x00",
+          "function": "0x21",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1448, 'VOL-' 400401008485 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x00",
+          "function": "0x20",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1448, 'VOL+' 400401000405 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    }
+  }
+}

@@ -84,6 +84,11 @@ class IrSignal:
                 f"sequence at {MAX_DURATIONS_PER_SEQUENCE}"
             )
         for i, d in enumerate(seq):
+            # The common case -- a plain int inside the bounds -- is settled
+            # without building the error text for a check that passes; every
+            # other value takes the original checks, with their messages.
+            if d.__class__ is int and RAW_DURATION_US_MIN <= d <= SIGNAL_DURATION_US_MAX:
+                continue
             if not isinstance(d, int) or isinstance(d, bool):
                 raise ValidationError(
                     f"IrSignal.{name}[{i}] is {d!r}; durations are integer "

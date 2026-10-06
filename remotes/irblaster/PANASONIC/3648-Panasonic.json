@@ -1,0 +1,196 @@
+{
+  "manufacturer": "PANASONIC",
+  "model": "IR Blaster DB 3648 (Panasonic)",
+  "aliases": [],
+  "controls": [
+    "BRAVO | A 401",
+    "BRAVO | A 402",
+    "BRAVO | A 403",
+    "BRAVO | A 766",
+    "PANASONIC | N2QAYC 000043",
+    "PANASONIC | N2QAYC 000083",
+    "PANASONIC | N2QAYC 000098",
+    "PANASONIC | N2QAYC 000102",
+    "PANASONIC | N2QAYC 000103",
+    "PANASONIC | N2QAYC 000115",
+    "PANASONIC | N2QAYC 000123",
+    "PANASONIC | N2QAYC 000126",
+    "PANASONIC | SC - HTB 170",
+    "PANASONIC | SC - HTB 18 EG - K",
+    "PANASONIC | SC - HTB 200",
+    "PANASONIC | SC - HTB 250",
+    "PANASONIC | SC - HTB 254",
+    "PANASONIC | SC - HTB 385",
+    "PANASONIC | SC - HTB 485",
+    "PANASONIC | SC - HTB 488",
+    "PANASONIC | SC - HTB 520",
+    "PANASONIC | SC - HTB 580 EG - K",
+    "PANASONIC | SC - HTB 685",
+    "PANASONIC | SC - HTB 688",
+    "PANASONIC | SC - HTB 690",
+    "PANASONIC | SC - HTB 8",
+    "PANASONIC | SC - HTB 885",
+    "PANASONIC | SC - HTE 80"
+  ],
+  "protocol": {
+    "name": "Panasonic",
+    "carrierHz": 37000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_BLUETOOTH_PAIRING": {
+      "label": "BLUETOOTH PAIRING",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x1C",
+          "function": "0xA0",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3648, 'BLUETOOTH PAIRING' 400405380538 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_DOWN": {
+      "label": "DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x1C",
+          "function": "0xFD",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3648, 'DOWN' 40040538BF82 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_INPUT": {
+      "label": "INPUT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0x86",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3648, 'INPUT' 400405006164 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0x32",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3648, 'MUTE' 400405004C49 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_OK": {
+      "label": "OK",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x1C",
+          "function": "0xFB",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3648, 'OK' 40040538DFE2 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0x3D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3648, 'POWER' 40040500BCB9 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_SETUP": {
+      "label": "SETUP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x1C",
+          "function": "0xB5",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3648, 'SETUP' 40040538AD90 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_SOUND": {
+      "label": "SOUND",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x14",
+          "function": "0xB0",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3648, 'SOUND' 400405280D20 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_UP": {
+      "label": "UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x1C",
+          "function": "0xFC",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3648, 'UP' 400405383F02 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0x21",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3648, 'VOL-' 400405008481 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0x20",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3648, 'VOL+' 400405000401 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    }
+  }
+}

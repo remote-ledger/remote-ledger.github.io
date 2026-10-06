@@ -15,9 +15,7 @@ distinct hazards, handled separately:
 from __future__ import annotations
 
 import decimal
-from contextlib import contextmanager
 from decimal import Decimal
-from typing import Iterator
 
 from .errors import BoundsError
 
@@ -77,8 +75,15 @@ def _fresh_context() -> decimal.Context:
     )
 
 
-@contextmanager
-def decimal_context() -> Iterator[decimal.Context]:
+#: The constructed context ``decimal_context`` hands to ``localcontext``. It is
+#: never made the current context itself -- ``localcontext`` installs a *copy*
+#: and restores the previous one on exit -- so its flags stay clear and it can
+#: be built once instead of on all of the ~8 million entries a full build makes
+#: (a build spent a third of its time constructing identical Contexts).
+_PINNED = _fresh_context()
+
+
+class decimal_context:  # noqa: N801 - used as a function, kept lower-case
     """Pin the whole context locally for the duration of a calculation.
 
     D28. Never use ``decimal.getcontext()`` directly -- its state is global
@@ -86,9 +91,19 @@ def decimal_context() -> Iterator[decimal.Context]:
     bare ``localcontext()`` *copies* the ambient context and resetting only
     ``prec`` and ``rounding`` leaves its traps in place, so an ambient
     ``Inexact`` trap would make correct encoding raise.
+
+    A class rather than a ``@contextmanager`` generator: same ``with
+    decimal_context() as ctx:`` use, without a generator frame per entry.
     """
-    with decimal.localcontext(_fresh_context()) as ctx:
-        yield ctx
+
+    __slots__ = ("_manager",)
+
+    def __enter__(self) -> decimal.Context:
+        self._manager = decimal.localcontext(_PINNED)
+        return self._manager.__enter__()
+
+    def __exit__(self, *exc_info) -> None:
+        self._manager.__exit__(*exc_info)
 
 
 def round_half_up(value: Decimal) -> int:

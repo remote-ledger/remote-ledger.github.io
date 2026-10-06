@@ -1,0 +1,114 @@
+{
+  "manufacturer": "TECHNICS",
+  "model": "IR Blaster DB 330 (Panasonic)",
+  "aliases": [],
+  "controls": [
+    "TECHNICS | RAK SA 011 XH",
+    "TECHNICS | SA GX 130 D"
+  ],
+  "protocol": {
+    "name": "Panasonic",
+    "carrierHz": 37000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_CD_10_PLUS": {
+      "label": "CD 10+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x0A",
+          "function": "0x8D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 330, 'CD 10+' 40040550B1E4 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_DISC": {
+      "label": "DISC",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x0A",
+          "function": "0xA4",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 330, 'DISC' 400405502570 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_I_SLASH_SKIP_CD_400405505207": {
+      "label": "⏩I/SKIP CD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x0A",
+          "function": "0x4A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 330, '⏩I/SKIP CD' 400405505207 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_I_SLASH_SKIP_CD_4004055092C7": {
+      "label": "I⏪/SKIP CD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x0A",
+          "function": "0x49",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 330, 'I⏪/SKIP CD' 4004055092C7 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_PLAY_CD": {
+      "label": "PLAY CD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x0A",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 330, 'PLAY CD' 400405505005 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_PROGRAM_MODE": {
+      "label": "PROGRAM MODE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x0A",
+          "function": "0x8A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 330, 'PROGRAM MODE' 400405505104 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    },
+    "KEY_STOP_CD": {
+      "label": "STOP CD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x0A",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 330, 'STOP CD' 400405500055 REC80: 48 wire bits, bytes bit-reversed as Panasonic"
+        }
+      ]
+    }
+  }
+}

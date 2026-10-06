@@ -1,0 +1,74 @@
+{
+  "manufacturer": "SONY",
+  "model": "IR Blaster DB 8511 (Sony20)",
+  "aliases": [],
+  "controls": [
+    "SONY | HT-CT380",
+    "SONY | HT-CT381",
+    "SONY | HT-CT780",
+    "SONY | RMT-AH101U"
+  ],
+  "protocol": {
+    "name": "Sony20",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_BACK": {
+      "label": "BACK",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x08",
+          "function": "0x7D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8511, 'BACK' BE110 SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_BT_PAIRING": {
+      "label": "BT PAIRING",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x28",
+          "function": "0x77",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8511, 'BT PAIRING' EE114 SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_CLEAR_AUDIO_PLUS": {
+      "label": "CLEAR AUDIO+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x68",
+          "function": "0x2F",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8511, 'CLEAR AUDIO+' F4116 SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_VOICE": {
+      "label": "VOICE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x28",
+          "function": "0x39",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8511, 'VOICE' 9C114 SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    }
+  }
+}

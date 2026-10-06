@@ -1,0 +1,80 @@
+{
+  "manufacturer": "STRIM(AMINO)",
+  "model": "IR Blaster DB 9097 (Sharp)",
+  "aliases": [],
+  "controls": [
+    "STRIM(AMINO) | STRIM(SHARP lcd)"
+  ],
+  "protocol": {
+    "name": "Sharp",
+    "carrierHz": 38000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x17",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9097, 'MUTE' 8744 Sharp: 15 wire bits, pad bit 0 as Sharp"
+        }
+      ]
+    },
+    "KEY_POWER_TV": {
+      "label": "POWER TV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9097, 'POWER TV' 8344 Sharp: 15 wire bits, pad bit 0 as Sharp"
+        }
+      ]
+    },
+    "KEY_TV_SLASH_AV": {
+      "label": "TV/AV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9097, 'TV/AV' 8644 Sharp: 15 wire bits, pad bit 0 as Sharp"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9097, 'VOL-' 8544 Sharp: 15 wire bits, pad bit 0 as Sharp"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9097, 'VOL+' 8144 Sharp: 15 wire bits, pad bit 0 as Sharp"
+        }
+      ]
+    }
+  }
+}

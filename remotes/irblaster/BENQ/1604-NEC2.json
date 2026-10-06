@@ -1,0 +1,34 @@
+{
+  "manufacturer": "BENQ",
+  "model": "IR Blaster DB 1604 (NEC2)",
+  "aliases": [],
+  "controls": [
+    "BENQ | PB6100",
+    "BENQ | PB6200",
+    "BENQ | PB6200-DLP",
+    "BENQ | PB8260",
+    "LG | RD-JT20",
+    "LG | RD-JT21"
+  ],
+  "protocol": {
+    "name": "NEC2",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0xCF",
+          "function": "0x18",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1604, 'POWER' 0CF318E7 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    }
+  }
+}

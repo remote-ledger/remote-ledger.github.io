@@ -1,0 +1,29 @@
+{
+  "manufacturer": "SAMSUNG",
+  "model": "IR Blaster DB 4432 (NECx2)",
+  "aliases": [],
+  "controls": [
+    "SAMSUNG | AK59-00084T"
+  ],
+  "protocol": {
+    "name": "NECx2",
+    "carrierHz": 38000,
+    "minSends": 2
+  },
+  "keys": {
+    "KEY_POWER_TV": {
+      "label": "POWER TV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "subdevice": "0x07",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4432, 'POWER TV' E0E040BF NECx2: 32 wire bits, bytes bit-reversed as NECx2"
+        }
+      ]
+    }
+  }
+}

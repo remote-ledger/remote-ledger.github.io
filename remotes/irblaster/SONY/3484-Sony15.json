@@ -1,0 +1,81 @@
+{
+  "manufacturer": "SONY",
+  "model": "IR Blaster DB 3484 (Sony15)",
+  "aliases": [],
+  "controls": [
+    "SONY | A 1184601 A",
+    "SONY | A 1237275 A",
+    "SONY | A 1544869 A",
+    "SONY | CMT - BX 30 R",
+    "SONY | CMT - BX 5 BT",
+    "SONY | CMT - EH 25",
+    "SONY | CMT - EH 26",
+    "SONY | CMT - FX 200",
+    "SONY | CMT - FX 205",
+    "SONY | CMT - HX 3",
+    "SONY | CMT - HX 3 R",
+    "SONY | CMT - HX 5 BT",
+    "SONY | CMT - HX 9 DAB",
+    "SONY | CMT - U 1",
+    "SONY | CMT - U 1 BT",
+    "SONY | HCD - CBX 5",
+    "SONY | HCD - EH 25",
+    "SONY | HCD - EX 600",
+    "SONY | HCD - FX 205",
+    "SONY | HCD - HX 5",
+    "SONY | HCD - U 1 BT",
+    "SONY | HDC - FX 205",
+    "SONY | MHC - EX 600",
+    "SONY | MHC - EX 700",
+    "SONY | MHC - EX 900",
+    "SONY | RM - SCU 35",
+    "SONY | RM - SCU 37 B",
+    "SONY | RM - SCU 37 B AUDIO SYSTEM"
+  ],
+  "protocol": {
+    "name": "Sony15",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_EQ": {
+      "label": "EQ",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x90",
+          "function": "0x63",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3484, 'EQ' C612 SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    },
+    "KEY_FUNCTION": {
+      "label": "FUNCTION",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x90",
+          "function": "0x69",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3484, 'FUNCTION' 9612 SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    },
+    "KEY_USB": {
+      "label": "USB",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x90",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3484, 'USB' 5812 SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    }
+  }
+}

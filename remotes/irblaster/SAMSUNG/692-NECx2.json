@@ -1,0 +1,99 @@
+{
+  "manufacturer": "SAMSUNG",
+  "model": "IR Blaster DB 692 (NECx2)",
+  "aliases": [],
+  "controls": [
+    "SAMSUNG | 3F14-00038-170 + VIDEO"
+  ],
+  "protocol": {
+    "name": "NECx2",
+    "carrierHz": 38000,
+    "minSends": 2
+  },
+  "keys": {
+    "KEY_PAUSE_VCR": {
+      "label": "PAUSE VCR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0x05",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 692, 'PAUSE VCR' A0A06897 NECx2: 32 wire bits, bytes bit-reversed as NECx2"
+        }
+      ]
+    },
+    "KEY_PLAY_VCR": {
+      "label": "PLAY VCR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0x05",
+          "function": "0x19",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 692, 'PLAY VCR' A0A09867 NECx2: 32 wire bits, bytes bit-reversed as NECx2"
+        }
+      ]
+    },
+    "KEY_POWER_VCR": {
+      "label": "POWER VCR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0x05",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 692, 'POWER VCR' A0A040BF NECx2: 32 wire bits, bytes bit-reversed as NECx2"
+        }
+      ]
+    },
+    "KEY_STOP_VCR": {
+      "label": "STOP VCR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0x05",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 692, 'STOP VCR' A0A0A857 NECx2: 32 wire bits, bytes bit-reversed as NECx2"
+        }
+      ]
+    },
+    "KEY_VCR_A0A018E7": {
+      "label": "⏪ VCR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0x05",
+          "function": "0x18",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 692, '⏪ VCR' A0A018E7 NECx2: 32 wire bits, bytes bit-reversed as NECx2"
+        }
+      ]
+    },
+    "KEY_VCR_A0A058A7": {
+      "label": "⏩ VCR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0x05",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 692, '⏩ VCR' A0A058A7 NECx2: 32 wire bits, bytes bit-reversed as NECx2"
+        }
+      ]
+    }
+  }
+}

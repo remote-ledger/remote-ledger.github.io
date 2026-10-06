@@ -1,0 +1,71 @@
+{
+  "manufacturer": "SAMSUNG",
+  "model": "IR Blaster DB 70 (NECx2)",
+  "aliases": [],
+  "controls": [
+    "SAMSUNG | 3F14-00038-311"
+  ],
+  "protocol": {
+    "name": "NECx2",
+    "carrierHz": 38000,
+    "minSends": 2
+  },
+  "keys": {
+    "KEY_CH_PLUS": {
+      "label": "ch+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "subdevice": "0x07",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 70, 'ch+' E0E048B7 NECx2: 32 wire bits, bytes bit-reversed as NECx2"
+        }
+      ]
+    },
+    "KEY_SLASH": {
+      "label": "\\/",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "subdevice": "0x07",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 70, '\\/' E0E008F7 NECx2: 32 wire bits, bytes bit-reversed as NECx2"
+        }
+      ]
+    },
+    "KEY__E0E0D02F": {
+      "label": "◄",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "subdevice": "0x07",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 70, '◄' E0E0D02F NECx2: 32 wire bits, bytes bit-reversed as NECx2"
+        }
+      ]
+    },
+    "KEY__E0E0E01F": {
+      "label": "►",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "subdevice": "0x07",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 70, '►' E0E0E01F NECx2: 32 wire bits, bytes bit-reversed as NECx2"
+        }
+      ]
+    }
+  }
+}

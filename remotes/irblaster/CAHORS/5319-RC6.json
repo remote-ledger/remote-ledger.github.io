@@ -1,0 +1,68 @@
+{
+  "manufacturer": "CAHORS",
+  "model": "IR Blaster DB 5319 (RC6)",
+  "aliases": [],
+  "controls": [
+    "CAHORS | PHILIPS 1 TVT 300 YUV/32 PHH 4309(CUST...",
+    "CAHORS | PHILIPS1_TVT300YUV (CUSTOM KEYB.)"
+  ],
+  "protocol": {
+    "name": "RC6",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 5319, 'MUTE' 000D RC6: 16 bits, mode 0 as RC6"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 5319, 'POWER' 000C RC6: 16 bits, mode 0 as RC6"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 5319, 'VOL-' 0011 RC6: 16 bits, mode 0 as RC6"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 5319, 'VOL+' 0010 RC6: 16 bits, mode 0 as RC6"
+        }
+      ]
+    }
+  }
+}

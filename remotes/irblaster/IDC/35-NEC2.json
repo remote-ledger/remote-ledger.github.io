@@ -1,0 +1,29 @@
+{
+  "manufacturer": "IDC",
+  "model": "IR Blaster DB 35 (NEC2)",
+  "aliases": [],
+  "controls": [
+    "IDC | DVB-C SD"
+  ],
+  "protocol": {
+    "name": "NEC2",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_TEXT": {
+      "label": "text",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x48",
+          "subdevice": "0x77",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 35, 'text' 12EE609F NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    }
+  }
+}

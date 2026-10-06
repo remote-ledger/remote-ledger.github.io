@@ -1,0 +1,28 @@
+{
+  "manufacturer": "PHILIPS",
+  "model": "IR Blaster DB 8028 (RC5)",
+  "aliases": [],
+  "controls": [
+    "PHILIPS | RC 2062_01"
+  ],
+  "protocol": {
+    "name": "RC5",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_UNLABELED": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x29",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8028, '??' 829 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    }
+  }
+}

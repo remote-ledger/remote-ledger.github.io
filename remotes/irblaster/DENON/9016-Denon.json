@@ -1,0 +1,484 @@
+{
+  "manufacturer": "DENON",
+  "model": "IR Blaster DB 9016 (Denon)",
+  "aliases": [],
+  "controls": [
+    "DENON | AVR1610",
+    "DENON | RC-1120"
+  ],
+  "protocol": {
+    "name": "Denon",
+    "carrierHz": 38000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_BAND": {
+      "label": "BAND",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xD7",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9016, 'BAND' 3758 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_CHANNEL_MINUS": {
+      "label": "CHANNEL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xDA",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9016, 'CHANNEL-' 32D8 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_CHANNEL_PLUS": {
+      "label": "CHANNEL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xD9",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9016, 'CHANNEL+' 34D8 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_CH_LEVEL": {
+      "label": "CH. LEVEL",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xAF",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9016, 'CH. LEVEL' 37A8 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_CINEMA": {
+      "label": "CINEMA",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "function": "0x95",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9016, 'CINEMA' 2548 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_DIMMER": {
+      "label": "DIMMER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xDF",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9016, 'DIMMER' 37D8 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_DOWN": {
+      "label": "DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xA4",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9016, 'DOWN' 3128 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_DVD": {
+      "label": "DVD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xE3",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9016, 'DVD' 4638 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_DVR": {
+      "label": "DVR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xCE",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9016, 'DVR' 4398 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_ENTER": {
+      "label": "ENTER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xE0",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9016, 'ENTER' 4038 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_HDP": {
+      "label": "HDP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xCA",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9016, 'HDP' 4298 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_INPUT_MODE": {
+      "label": "INPUT MODE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xB6",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9016, 'INPUT MODE' 3368 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_LEFT": {
+      "label": "LEFT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0x7F",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9016, 'LEFT' 37F0 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_MEMORY": {
+      "label": "MEMORY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xCC",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9016, 'MEMORY' 3198 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_MODE": {
+      "label": "MODE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xD8",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9016, 'MODE' 30D8 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_MULT_MINUS_EQ": {
+      "label": "MULT.-EQ.",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "function": "0x9D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9016, 'MULT.-EQ.' 25C8 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xF0",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9016, 'MUTE' 4078 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_OFF": {
+      "label": "OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xE2",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9016, 'OFF' 4238 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_ON_SLASH_SOURCE": {
+      "label": "ON / SOURCE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xE1",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9016, 'ON / SOURCE' 4438 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_PRESET_NEXT": {
+      "label": "PRESET NEXT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xD6",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9016, 'PRESET NEXT' 3358 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_PRESET_PREV": {
+      "label": "PRESET PREV.",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xD5",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9016, 'PRESET PREV.' 3558 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_RIGHT": {
+      "label": "RIGHT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xDD",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9016, 'RIGHT' 45D8 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_SAT_SLASH_CBL": {
+      "label": "SAT / CBL",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xC8",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9016, 'SAT / CBL' 4098 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_SETUP": {
+      "label": "SETUP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xA0",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9016, 'SETUP' 3028 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_SHIFT": {
+      "label": "SHIFT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xCD",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9016, 'SHIFT' 3598 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_SIMU": {
+      "label": "SIMU.",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xE6",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9016, 'SIMU.' 4338 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_STATUS": {
+      "label": "STATUS",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xDE",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9016, 'STATUS' 43D8 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_STD": {
+      "label": "STD.",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xE4",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9016, 'STD.' 4138 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_TUNER": {
+      "label": "TUNER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xC5",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9016, 'TUNER' 4518 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_TV": {
+      "label": "TV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xC9",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9016, 'TV' 4498 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_UP": {
+      "label": "UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xA3",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9016, 'UP' 3628 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_VCR": {
+      "label": "VCR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xCD",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9016, 'VCR' 4598 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xF2",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9016, 'VOL-' 4278 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xF1",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9016, 'VOL+' 4478 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_V_AUX": {
+      "label": "V.AUX",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xCC",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9016, 'V.AUX' 4198 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    },
+    "KEY_V_SEL": {
+      "label": "V. SEL.",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xD8",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9016, 'V. SEL.' 40D8 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    }
+  }
+}

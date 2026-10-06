@@ -1,0 +1,81 @@
+{
+  "manufacturer": "CAHORS",
+  "model": "IR Blaster DB 5306 (RC6)",
+  "aliases": [],
+  "controls": [
+    "CAHORS | PHILIPS 1 AV(LIGHT)",
+    "CAHORS | PHILIPS 1(CUSTOM KEYB.)"
+  ],
+  "protocol": {
+    "name": "RC6",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 5306, 'MUTE' 000D RC6: 16 bits, mode 0 as RC6"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 5306, 'POWER' 000C RC6: 16 bits, mode 0 as RC6"
+        }
+      ]
+    },
+    "KEY_SOURCE": {
+      "label": "SOURCE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x38",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 5306, 'SOURCE' 0038 RC6: 16 bits, mode 0 as RC6"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 5306, 'VOL-' 0011 RC6: 16 bits, mode 0 as RC6"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 5306, 'VOL+' 0010 RC6: 16 bits, mode 0 as RC6"
+        }
+      ]
+    }
+  }
+}

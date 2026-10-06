@@ -1,0 +1,67 @@
+{
+  "manufacturer": "GRUNDIG",
+  "model": "IR Blaster DB 3447 (Blaupunkt)",
+  "aliases": [],
+  "controls": [
+    "GRUNDIG | 81 D"
+  ],
+  "protocol": {
+    "name": "Blaupunkt",
+    "carrierHz": 30300,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3447, 'MUTE' 3FC RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_TV": {
+      "label": "TV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3447, 'TV' 53C RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_TV_MINUS_G": {
+      "label": "TV-G",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3447, 'TV-G' 6FC RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    },
+    "KEY_TV_TEXT": {
+      "label": "TV TEXT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x30",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3447, 'TV TEXT' 79C RCC0082: 9 biphase bits as Blaupunkt"
+        }
+      ]
+    }
+  }
+}

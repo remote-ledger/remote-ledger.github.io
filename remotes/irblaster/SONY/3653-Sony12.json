@@ -1,0 +1,33 @@
+{
+  "manufacturer": "SONY",
+  "model": "IR Blaster DB 3653 (Sony12)",
+  "aliases": [],
+  "controls": [
+    "SONY | 148014411",
+    "SONY | DAV - IS 10",
+    "SONY | DAV - X 10",
+    "SONY | HCD - IS 10",
+    "SONY | RM - ADP 011",
+    "SONY | RM - ADP 018"
+  ],
+  "protocol": {
+    "name": "Sony12",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_TV_INPUT": {
+      "label": "TV INPUT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x25",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3653, 'TV INPUT' A50 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    }
+  }
+}

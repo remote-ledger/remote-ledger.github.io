@@ -1,0 +1,174 @@
+{
+  "manufacturer": "SONY",
+  "model": "IR Blaster DB 2654 (Sony12)",
+  "aliases": [],
+  "controls": [
+    "SONY | 1 - 480 - 170 - 11",
+    "SONY | 1 - 480 - 289 - 11",
+    "SONY | 1 - 480 - 526 - 11",
+    "SONY | 1 - 480 - 700 - 11",
+    "SONY | 1 - 480 - 701 - 11",
+    "SONY | 1 - 487 - 288 - 11",
+    "SONY | 1-480-289-11",
+    "SONY | 1-480-526-11",
+    "SONY | 1-480-700-11",
+    "SONY | J 6090203 A",
+    "SONY | RDR - DC 100",
+    "SONY | RDR - DC 105",
+    "SONY | RDR - DC 200",
+    "SONY | RDR - DC 205",
+    "SONY | RDR - GX 350",
+    "SONY | RDR - HDC 100",
+    "SONY | RDR - HDC 300",
+    "SONY | RDR - HDC 500",
+    "SONY | RDR - HX 27",
+    "SONY | RDR - HX 650 (2  VERS.)",
+    "SONY | RDR - HX 750",
+    "SONY | RDR - HX 785",
+    "SONY | RDR - HX 890",
+    "SONY | RDR - HX 950",
+    "SONY | RDR - HX 980",
+    "SONY | RDR - HX 990",
+    "SONY | RDR - HXD 1090",
+    "SONY | RDR - HXD 1095",
+    "SONY | RDR - HXD 795",
+    "SONY | RDR - HXD 970",
+    "SONY | RDR - HXD 990",
+    "SONY | RDR - HXD 995",
+    "SONY | RDR - VX 450",
+    "SONY | RDR - VX 450 E",
+    "SONY | RDR-AT100",
+    "SONY | RDR-AT105",
+    "SONY | RDR-AT200",
+    "SONY | RDR-HDC100",
+    "SONY | RDR-HDC300",
+    "SONY | RDR-HDC500",
+    "SONY | RDR-HX890",
+    "SONY | RDR-HX990",
+    "SONY | RMT - D 242 P",
+    "SONY | RMT - D 245 P",
+    "SONY | RMT - D 246 P",
+    "SONY | RMT - D 247 P",
+    "SONY | RMT - D 2480",
+    "SONY | RMT - D 249 P",
+    "SONY | RMT - D 2510",
+    "SONY | RMT - D 258 P",
+    "SONY | RMT - D 2580",
+    "SONY | RMT - D231P",
+    "SONY | RMT-D2480",
+    "SONY | RMT-D2510",
+    "SONY | RMT-D2580",
+    "ZAPP | 2507"
+  ],
+  "protocol": {
+    "name": "Sony12",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_AV_TV": {
+      "label": "AV TV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x25",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2654, 'AV TV' A50 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_NEXT": {
+      "label": "NEXT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2654, 'NEXT' 090 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_POWER_TV": {
+      "label": "POWER TV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2654, 'POWER TV' A90 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_PREV": {
+      "label": "PREV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2654, 'PREV' 890 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_PR_MINUS_TV": {
+      "label": "PR- TV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2654, 'PR- TV' 890 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_PR_PLUS_TV": {
+      "label": "PR+ TV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2654, 'PR+ TV' 090 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS_TV": {
+      "label": "VOL- TV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2654, 'VOL- TV' C90 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS_TV": {
+      "label": "VOL+ TV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2654, 'VOL+ TV' 490 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "manufacturer": "DOOP",
+  "model": "IR Blaster DB 8122 (Pioneer-2Part)",
+  "aliases": [],
+  "controls": [
+    "DOOP | MPEG4"
+  ],
+  "protocol": {
+    "name": "Pioneer-2Part",
+    "carrierHz": 40000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_2": {
+      "label": "2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x202",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8122, '2' 00400040 Pioneer: wire-order bytes, bit-reversed as Pioneer-2Part"
+        }
+      ]
+    }
+  }
+}

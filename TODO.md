@@ -1,15 +1,17 @@
 # TODO
 
-Project status as of 2026-09-26, master at `43f8b7c` (PR #21).
+Project status as of 2026-10-06.
 
-**Where things stand.** v1 (DESIGN §8 Phases 0–6) is complete. Two
+**Where things stand.** v1 (DESIGN §8 Phases 0–6) is complete. Three
 databases have been imported under SPEC R19:
 
-- **LIRC**: 3,139 remotes, 112,846 keys (DESIGN §14).
+- **LIRC**: 3,138 remotes, 112,789 keys (DESIGN §14).
 - **SmartIR**: `media_player` and `fan` only, 62 remotes, 914 keys
   (DESIGN §15).
+- **IR Blaster**, as shipped in SwiftRemote: 10,013 remote files, 411,265
+  keys, GPL-3.0 by inheritance only (DESIGN §17, §18).
 
-SPEC v0.10 makes growing coverage from every source whose licence permits
+SPEC v0.11 makes growing coverage from every source whose licence permits
 it the standing goal, with no fixed list of sources (DESIGN §8, Phase 8).
 
 ---
@@ -28,10 +30,10 @@ Land it in two PRs, code and then data.
 - [ ] **Re-check the excluded sources periodically**: IRDB, Global Caché
       and Remote Central (SPEC §4). They are excluded by their licences
       alone, so a licence change would admit them.
-- [ ] **Factor out a common importer skeleton** once a third importer
+- [ ] **Factor out a common importer skeleton** now that a third importer
       exists. `import_common.py` already holds the probe, compile gate and
-      authored-name helpers. The two `Report` classes and the
-      `write_import` loops are the obvious next candidates.
+      authored-name helpers. The SmartIR and IR Blaster `Report` classes
+      and their `write_import` loops are the obvious next candidates.
 
 ## 2. SmartIR follow-ups
 
@@ -87,8 +89,9 @@ deliberate skips, each reported with its reason.
 
 ## 5. Backlog (blocked on D18's three-part gate, none scheduled)
 
-- [ ] Protocols `NEC2`, `NEC` (`S` = `~D`), `Sony12`, `Sony15`, `RC5` and
-      `RC6`. Each needs an independently cited golden vector.
+- [ ] Protocol `NEC` (`S` = `~D`). It needs an independently cited golden
+      vector. `NEC2`, `Sony12`, `Sony15`, `RC5` and `RC6` have since landed
+      (DESIGN §16, §18).
 
 ## Not planned
 

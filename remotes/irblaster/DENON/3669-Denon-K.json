@@ -1,0 +1,356 @@
+{
+  "manufacturer": "DENON",
+  "model": "IR Blaster DB 3669 (Denon-K)",
+  "aliases": [],
+  "controls": [
+    "DENON | RC - 1089",
+    "DENON | RC-1089",
+    "DENON | S - 32",
+    "DENON | S - 52",
+    "DENON | S32",
+    "DENON | S52"
+  ],
+  "protocol": {
+    "name": "Denon-K",
+    "carrierHz": 37000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_DIMMER": {
+      "label": "DIMMER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0x08",
+          "function": "0x33",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3669, 'DIMMER' 2A4C0A1CC0D6 REC80: 48 wire bits, bytes bit-reversed as Denon-K"
+        }
+      ]
+    },
+    "KEY_DISPLAY": {
+      "label": "DISPLAY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0x08",
+          "function": "0x32",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3669, 'DISPLAY' 2A4C0A14C0DE REC80: 48 wire bits, bytes bit-reversed as Denon-K"
+        }
+      ]
+    },
+    "KEY_DOWN": {
+      "label": "DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0x08",
+          "function": "0x21",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3669, 'DOWN' 2A4C0A184052 REC80: 48 wire bits, bytes bit-reversed as Denon-K"
+        }
+      ]
+    },
+    "KEY_ENTER": {
+      "label": "ENTER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0x08",
+          "function": "0x24",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3669, 'ENTER' 2A4C0A124058 REC80: 48 wire bits, bytes bit-reversed as Denon-K"
+        }
+      ]
+    },
+    "KEY_FAVORITE": {
+      "label": "FAVORITE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0x08",
+          "function": "0x3C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3669, 'FAVORITE' 2A4C0A13C0D9 REC80: 48 wire bits, bytes bit-reversed as Denon-K"
+        }
+      ]
+    },
+    "KEY_MINUS_SLASH": {
+      "label": "- / |⏪",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0x08",
+          "function": "0x42",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3669, '- / |⏪' 2A4C0A14203E REC80: 48 wire bits, bytes bit-reversed as Denon-K"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0x08",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3669, 'MUTE' 2A4C0A16001C REC80: 48 wire bits, bytes bit-reversed as Denon-K"
+        }
+      ]
+    },
+    "KEY_PLAY_MODE": {
+      "label": "PLAY MODE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0x08",
+          "function": "0x35",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3669, 'PLAY MODE' 2A4C0A1AC0D0 REC80: 48 wire bits, bytes bit-reversed as Denon-K"
+        }
+      ]
+    },
+    "KEY_PLAY_SLASH_PAUSE": {
+      "label": "PLAY/PAUSE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0x08",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3669, 'PLAY/PAUSE' 2A4C0A15001F REC80: 48 wire bits, bytes bit-reversed as Denon-K"
+        }
+      ]
+    },
+    "KEY_PLUS_SLASH": {
+      "label": "+ / ⏩|",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0x08",
+          "function": "0x41",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3669, '+ / ⏩|' 2A4C0A182032 REC80: 48 wire bits, bytes bit-reversed as Denon-K"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0x08",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3669, 'POWER' 2A4C0A1C0016 REC80: 48 wire bits, bytes bit-reversed as Denon-K"
+        }
+      ]
+    },
+    "KEY_PRESET_FM_SLASH_AM": {
+      "label": "PRESET FM/AM",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0x08",
+          "function": "0x40",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3669, 'PRESET FM/AM' 2A4C0A10203A REC80: 48 wire bits, bytes bit-reversed as Denon-K"
+        }
+      ]
+    },
+    "KEY_RETURN": {
+      "label": "RETURN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0x08",
+          "function": "0x25",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3669, 'RETURN' 2A4C0A1A4050 REC80: 48 wire bits, bytes bit-reversed as Denon-K"
+        }
+      ]
+    },
+    "KEY_SLEEP": {
+      "label": "SLEEP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0x08",
+          "function": "0x31",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3669, 'SLEEP' 2A4C0A18C0D2 REC80: 48 wire bits, bytes bit-reversed as Denon-K"
+        }
+      ]
+    },
+    "KEY_SOURCE_AUX": {
+      "label": "SOURCE AUX",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0x08",
+          "function": "0x59",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3669, 'SOURCE AUX' 2A4C0A19A0B3 REC80: 48 wire bits, bytes bit-reversed as Denon-K"
+        }
+      ]
+    },
+    "KEY_SOURCE_FM_SLASH_AM": {
+      "label": "SOURCE FM/AM",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0x08",
+          "function": "0x53",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3669, 'SOURCE FM/AM' 2A4C0A1CA0B6 REC80: 48 wire bits, bytes bit-reversed as Denon-K"
+        }
+      ]
+    },
+    "KEY_SOURCE_INTERNET_RADIO": {
+      "label": "SOURCE INTERNET RADIO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0x08",
+          "function": "0x63",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3669, 'SOURCE INTERNET RADIO' 2A4C0A1C6076 REC80: 48 wire bits, bytes bit-reversed as Denon-K"
+        }
+      ]
+    },
+    "KEY_SOURCE_IPOD": {
+      "label": "SOURCE iPod",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0x08",
+          "function": "0x57",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3669, 'SOURCE iPod' 2A4C0A1EA0B4 REC80: 48 wire bits, bytes bit-reversed as Denon-K"
+        }
+      ]
+    },
+    "KEY_SOURCE_PC_MUSIC": {
+      "label": "SOURCE PC MUSIC",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0x08",
+          "function": "0x64",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3669, 'SOURCE PC MUSIC' 2A4C0A126078 REC80: 48 wire bits, bytes bit-reversed as Denon-K"
+        }
+      ]
+    },
+    "KEY_UP": {
+      "label": "UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0x08",
+          "function": "0x20",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3669, 'UP' 2A4C0A10405A REC80: 48 wire bits, bytes bit-reversed as Denon-K"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0x08",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3669, 'VOL-' 2A4C0A1A0010 REC80: 48 wire bits, bytes bit-reversed as Denon-K"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0x08",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3669, 'VOL+' 2A4C0A120018 REC80: 48 wire bits, bytes bit-reversed as Denon-K"
+        }
+      ]
+    },
+    "KEY__2A4C0A14203E": {
+      "label": "|⏪",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0x08",
+          "function": "0x42",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3669, '|⏪' 2A4C0A14203E REC80: 48 wire bits, bytes bit-reversed as Denon-K"
+        }
+      ]
+    },
+    "KEY__2A4C0A182032": {
+      "label": "⏩|",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0x08",
+          "function": "0x41",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3669, '⏩|' 2A4C0A182032 REC80: 48 wire bits, bytes bit-reversed as Denon-K"
+        }
+      ]
+    }
+  }
+}

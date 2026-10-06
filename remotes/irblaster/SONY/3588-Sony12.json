@@ -1,0 +1,99 @@
+{
+  "manufacturer": "SONY",
+  "model": "IR Blaster DB 3588 (Sony12)",
+  "aliases": [],
+  "controls": [
+    "BRAVO | D 836",
+    "SONY | 1 - 492 - 678 - 21",
+    "SONY | 1 - 492 - 681 - 21",
+    "SONY | 1 - 492 - 832 - 11",
+    "SONY | 1 - 492 - 901 - 21",
+    "SONY | 1 - 492 - 955 - 11",
+    "SONY | 1 - 492 - 956 - 11",
+    "SONY | 1 - 492 - 957 - 11",
+    "SONY | 1 - 493 - 104 - 11",
+    "SONY | 1 - 493 - 282 - 11",
+    "SONY | 1 - 493 - 507 - 11",
+    "SONY | 149267811",
+    "SONY | 149268111",
+    "SONY | 149268121",
+    "SONY | 149268821",
+    "SONY | 149295721",
+    "SONY | BDP - BX 120",
+    "SONY | BDP - BX 150",
+    "SONY | BDP - BX 320",
+    "SONY | BDP - BX 350",
+    "SONY | BDP - BX 520",
+    "SONY | BDP - BX 550",
+    "SONY | BDP - BX 620",
+    "SONY | BDP - BX 650",
+    "SONY | BDP - BX 670",
+    "SONY | BDP - S 1200",
+    "SONY | BDP - S 1500",
+    "SONY | BDP - S 1700",
+    "SONY | BDP - S 1700 B",
+    "SONY | BDP - S 1700 ES",
+    "SONY | BDP - S 2500",
+    "SONY | BDP - S 3200",
+    "SONY | BDP - S 3500",
+    "SONY | BDP - S 4200",
+    "SONY | BDP - S 5200",
+    "SONY | BDP - S 6200",
+    "SONY | BDP - S 6500",
+    "SONY | BDP - S 6700",
+    "SONY | BDP - S 6700 B",
+    "SONY | BDP - S 7200",
+    "SONY | BDP-S3700",
+    "SONY | BDP-S4500",
+    "SONY | BDP-S5500",
+    "SONY | RMT - B 126 A",
+    "SONY | RMT - B 127 P",
+    "SONY | RMT - B 128 P",
+    "SONY | RMT - VB 100 I",
+    "SONY | RMT - VB 200 D",
+    "SONY | RMT - VB 201 U",
+    "SONY | RMT - VB 310 E",
+    "SONY | RMT - VB 500 E",
+    "SONY | UBP - UX 70",
+    "SONY | UBP - UX 80",
+    "SONY | UBP - X 1000 ES",
+    "SONY | UBP - X 1100 ES",
+    "SONY | UBP - X 500",
+    "SONY | UBP - X 800",
+    "SONY | UBPX 700 M",
+    "SONY | UBPX 800"
+  ],
+  "protocol": {
+    "name": "Sony12",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3588, 'VOL-' C90 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3588, 'VOL+' 490 SONY12: wire-order bits, first is MSB as Sony12"
+        }
+      ]
+    }
+  }
+}

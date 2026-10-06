@@ -1,0 +1,41 @@
+{
+  "manufacturer": "PHILIPS",
+  "model": "IR Blaster DB 8598 (RC5)",
+  "aliases": [],
+  "controls": [
+    "PHILIPS | 313AS25870052"
+  ],
+  "protocol": {
+    "name": "RC5",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_VOL_TV_MINUS": {
+      "label": "VOL TV-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8598, 'VOL TV-' 811 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_VOL_TV_PLUS": {
+      "label": "VOL TV+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8598, 'VOL TV+' 810 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    }
+  }
+}

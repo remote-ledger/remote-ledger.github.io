@@ -1,0 +1,41 @@
+{
+  "manufacturer": "REACT",
+  "model": "IR Blaster DB 7999 (Pioneer-2Part)",
+  "aliases": [],
+  "controls": [
+    "REACT | AV-320"
+  ],
+  "protocol": {
+    "name": "Pioneer-2Part",
+    "carrierHz": 40000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_LEFT": {
+      "label": "LEFT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6060",
+          "function": "0x5050",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7999, 'LEFT' 060A060A Pioneer: wire-order bytes, bit-reversed as Pioneer-2Part"
+        }
+      ]
+    },
+    "KEY_TREBEL_MINUS": {
+      "label": "TREBEL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6060",
+          "function": "0xF0F",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7999, 'TREBEL-' 06F006F0 Pioneer: wire-order bytes, bit-reversed as Pioneer-2Part"
+        }
+      ]
+    }
+  }
+}

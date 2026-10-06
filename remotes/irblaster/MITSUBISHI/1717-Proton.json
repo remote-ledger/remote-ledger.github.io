@@ -1,0 +1,402 @@
+{
+  "manufacturer": "MITSUBISHI",
+  "model": "IR Blaster DB 1717 (Proton)",
+  "aliases": [],
+  "controls": [
+    "MITSUBISHI | HC3800",
+    "MITSUBISHI | HC4900",
+    "MITSUBISHI | HC5000",
+    "MITSUBISHI | HC5500",
+    "MITSUBISHI | HC6000",
+    "MITSUBISHI | HC6500",
+    "MITSUBISHI | HC6800",
+    "MITSUBISHI | HC7000",
+    "MITSUBISHI | HC7800D",
+    "MITSUBISHI | HC7800DW",
+    "MITSUBISHI | HC7900DW"
+  ],
+  "protocol": {
+    "name": "Proton",
+    "carrierHz": 38500,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_ASPECT": {
+      "label": "ASPECT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF0",
+          "function": "0xE2",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1717, 'ASPECT' 0F47 Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_AUTO_IRIS_SLASH_IRIS": {
+      "label": "AUTO IRIS / IRIS",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF0",
+          "function": "0x54",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1717, 'AUTO IRIS / IRIS' 0F2A Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_AUTO_POSITION_SLASH_A_P": {
+      "label": "AUTO POSITION / A.P.",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF0",
+          "function": "0xA2",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1717, 'AUTO POSITION / A.P.' 0F45 Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_AV_MEMORY_1": {
+      "label": "AV MEMORY 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF0",
+          "function": "0xE4",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1717, 'AV MEMORY 1' 0F27 Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_AV_MEMORY_2": {
+      "label": "AV MEMORY 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF0",
+          "function": "0xE5",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1717, 'AV MEMORY 2' 0FA7 Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_AV_MEMORY_3": {
+      "label": "AV MEMORY 3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF0",
+          "function": "0xE6",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1717, 'AV MEMORY 3' 0F67 Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_BRIGHTNESS": {
+      "label": "BRIGHTNESS",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF0",
+          "function": "0xD1",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1717, 'BRIGHTNESS' 0F8B Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_COLOR": {
+      "label": "COLOR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF0",
+          "function": "0xD2",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1717, 'COLOR' 0F4B Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_COLOR_TEMP_SLASH_C_T": {
+      "label": "COLOR TEMP. / C.T.",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF0",
+          "function": "0xD4",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1717, 'COLOR TEMP. / C.T.' 0F2B Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_COMPONENT_SLASH_COMP": {
+      "label": "COMPONENT / COMP.",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF0",
+          "function": "0x64",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1717, 'COMPONENT / COMP.' 0F26 Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_COMPUTER_SLASH_PC": {
+      "label": "COMPUTER / PC",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF0",
+          "function": "0x60",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1717, 'COMPUTER / PC' 0F06 Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_CONTRAST_SLASH_CNT": {
+      "label": "CONTRAST / CNT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF0",
+          "function": "0xD0",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1717, 'CONTRAST / CNT' 0F0B Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_DOWN": {
+      "label": "DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF0",
+          "function": "0x83",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1717, 'DOWN' 0FC1 Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_ENTER": {
+      "label": "ENTER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF0",
+          "function": "0x87",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1717, 'ENTER' 0FE1 Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_GAMMA": {
+      "label": "GAMMA",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF0",
+          "function": "0xD5",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1717, 'GAMMA' 0FAB Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_HDMI_1": {
+      "label": "HDMI 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF0",
+          "function": "0x72",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1717, 'HDMI 1' 0F4E Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_HDMI_2": {
+      "label": "HDMI 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF0",
+          "function": "0x73",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1717, 'HDMI 2' 0FCE Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_LEFT": {
+      "label": "LEFT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF0",
+          "function": "0x80",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1717, 'LEFT' 0F01 Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_LENS_SHIFT_SLASH_LS": {
+      "label": "LENS SHIFT / LS",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF0",
+          "function": "0x47",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1717, 'LENS SHIFT / LS' 0FE2 Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_MENU": {
+      "label": "MENU",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF0",
+          "function": "0x86",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1717, 'MENU' 0F61 Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_NOISE_RED_SLASH_N_R": {
+      "label": "NOISE RED. / N R",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF0",
+          "function": "0xF7",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1717, 'NOISE RED. / N R' 0FEF Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF0",
+          "function": "0x41",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1717, 'POWER' 0F82 Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_POWER_OFF": {
+      "label": "POWER OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF0",
+          "function": "0x42",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1717, 'POWER OFF' 0F42 Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_RIGHT": {
+      "label": "RIGHT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF0",
+          "function": "0x81",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1717, 'RIGHT' 0F81 Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_SHARPNESS_SLASH_SHARP": {
+      "label": "SHARPNESS / SHARP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF0",
+          "function": "0xD6",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1717, 'SHARPNESS / SHARP' 0F6B Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_S_VIDEO": {
+      "label": "S. VIDEO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF0",
+          "function": "0x66",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1717, 'S. VIDEO' 0F66 Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_UP": {
+      "label": "UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF0",
+          "function": "0x82",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1717, 'UP' 0F41 Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_VIDEO": {
+      "label": "VIDEO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF0",
+          "function": "0x65",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1717, 'VIDEO' 0FA6 Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    },
+    "KEY_ZOOM_FOCUS_SLASH_Z_SLASH_F": {
+      "label": "ZOOM FOCUS / Z/F",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF0",
+          "function": "0x46",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1717, 'ZOOM FOCUS / Z/F' 0F62 Proton: wire-order bytes, bit-reversed as Proton"
+        }
+      ]
+    }
+  }
+}

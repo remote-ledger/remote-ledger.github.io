@@ -1,0 +1,29 @@
+{
+  "manufacturer": "VIEWSONIC",
+  "model": "IR Blaster DB 1791 (NEC1)",
+  "aliases": [],
+  "controls": [
+    "VIEWSONIC | PRO9000"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0xF4",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1791, 'MUTE' C12F28D7 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    }
+  }
+}

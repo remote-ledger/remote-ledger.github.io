@@ -1,0 +1,67 @@
+{
+  "manufacturer": "SONY",
+  "model": "IR Blaster DB 4084 (Sony15)",
+  "aliases": [],
+  "controls": [
+    "SONY | RM-821"
+  ],
+  "protocol": {
+    "name": "Sony15",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_DEMO": {
+      "label": "DEMO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA4",
+          "function": "0x71",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4084, 'DEMO' 8E4A SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    },
+    "KEY_INITIAL_SET": {
+      "label": "INITIAL SET",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA4",
+          "function": "0x6C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4084, 'INITIAL SET' 364A SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    },
+    "KEY_PIP_PROGRINDEX": {
+      "label": "PiP ProgrINDEX",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA4",
+          "function": "0x74",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4084, 'PiP ProgrINDEX' 2E4A SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    },
+    "KEY_REC_OUT_FIX": {
+      "label": "REC OUT FIX",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA4",
+          "function": "0x60",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 4084, 'REC OUT FIX' 064A SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    }
+  }
+}

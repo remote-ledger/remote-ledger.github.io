@@ -1,0 +1,45 @@
+{
+  "manufacturer": "CAMBRIDGE AUDIO",
+  "model": "IR Blaster DB 7944 (RC5)",
+  "aliases": [],
+  "controls": [
+    "CAMBRIDGE AUDIO | A500",
+    "CAMBRIDGE AUDIO | C500",
+    "CAMBRIDGE AUDIO | D500SE",
+    "CAMBRIDGE AUDIO | SRC-01",
+    "CAMBRIDGE AUDIO | T500"
+  ],
+  "protocol": {
+    "name": "RC5",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7944, 'VOL-' C11 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7944, 'VOL+' C10 RC5: 12 bits, start bit inverted into F as RC5"
+        }
+      ]
+    }
+  }
+}

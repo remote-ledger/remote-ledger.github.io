@@ -1,0 +1,263 @@
+{
+  "manufacturer": "VOLVO",
+  "model": "IR Blaster DB 3450 (JVC)",
+  "aliases": [],
+  "controls": [
+    "VOLVO | S80 DVD",
+    "VOLVO | XC90 DVD"
+  ],
+  "protocol": {
+    "name": "JVC",
+    "carrierHz": 37900,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_AUDIO": {
+      "label": "AUDIO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x43",
+          "function": "0xDD",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3450, 'AUDIO' C2BB JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_DOWN": {
+      "label": "DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x43",
+          "function": "0xCF",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3450, 'DOWN' C2F3 JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_DVD_MENU": {
+      "label": "DVD MENU",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x43",
+          "function": "0xCE",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3450, 'DVD MENU' C273 JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_EJECT": {
+      "label": "EJECT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x43",
+          "function": "0xEF",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3450, 'EJECT' C2F7 JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_ENTER": {
+      "label": "ENTER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x43",
+          "function": "0x42",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3450, 'ENTER' C242 JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_FF": {
+      "label": "FF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x43",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3450, 'FF' C260 JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_LEFT": {
+      "label": "LEFT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x43",
+          "function": "0x40",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3450, 'LEFT' C202 JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_MEDIA": {
+      "label": "MEDIA",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x43",
+          "function": "0x38",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3450, 'MEDIA' C21C JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_MENU": {
+      "label": "MENU",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x43",
+          "function": "0x17",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3450, 'MENU' C2E8 JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x43",
+          "function": "0x0E",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3450, 'MUTE' C270 JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_PAUSE": {
+      "label": "PAUSE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x43",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3450, 'PAUSE' C2B0 JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_PLAY": {
+      "label": "PLAY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x43",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3450, 'PLAY' C230 JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x43",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3450, 'POWER' C2D0 JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_REV": {
+      "label": "REV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x43",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3450, 'REV' C2E0 JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_RIGHT": {
+      "label": "RIGHT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x43",
+          "function": "0x41",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3450, 'RIGHT' C282 JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_STOP": {
+      "label": "STOP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x43",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3450, 'STOP' C2C0 JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_UP": {
+      "label": "UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x43",
+          "function": "0x31",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3450, 'UP' C28C JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x43",
+          "function": "0x51",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3450, 'VOL-' C28A JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x43",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3450, 'VOL+' C20A JVC: wire-order bytes, bit-reversed as JVC"
+        }
+      ]
+    }
+  }
+}

@@ -132,6 +132,8 @@ def format_document(path: Path, *, refresh: bool = False,
                 out[k] = v
             canonical.append(order_keys("form", out))
         spec["forms"] = canonical
+    for key, spec in (doc.get("keys") or {}).items():
+        doc["keys"][key] = order_keys("key", spec)
     if isinstance(doc.get("protocol"), dict):
         doc["protocol"] = order_keys("protocol", doc["protocol"])
     for name, variant in (doc.get("variants") or {}).items():

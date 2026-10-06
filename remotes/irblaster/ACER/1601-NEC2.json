@@ -1,0 +1,88 @@
+{
+  "manufacturer": "ACER",
+  "model": "IR Blaster DB 1601 (NEC2)",
+  "aliases": [],
+  "controls": [
+    "ACER | A-16041",
+    "ACER | H110P",
+    "ACER | H5350",
+    "ACER | H5351",
+    "ACER | H5360",
+    "ACER | VZ.JBU00.001",
+    "ACER | X110",
+    "ACER | X110P",
+    "ACER | X112",
+    "ACER | X112H",
+    "ACER | X1161N",
+    "ACER | X1161P",
+    "ACER | X1161PA",
+    "ACER | X1161PN",
+    "ACER | X1261P",
+    "ACER | X1261PN",
+    "EMACHINES | V100",
+    "EMACHINES | V700"
+  ],
+  "protocol": {
+    "name": "NEC2",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_DOWN_SLASH_KEYST_DOWN": {
+      "label": "DOWN / KEYST. DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0x13",
+          "function": "0x85",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1601, 'DOWN / KEYST. DOWN' 10C8A15E NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_LEFT": {
+      "label": "LEFT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0x13",
+          "function": "0x83",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1601, 'LEFT' 10C8C13E NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_RIGHT": {
+      "label": "RIGHT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0x13",
+          "function": "0x81",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1601, 'RIGHT' 10C8817E NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    },
+    "KEY_UP_SLASH_KEYSTONE_UP": {
+      "label": "UP / KEYSTONE UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0x13",
+          "function": "0x82",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1601, 'UP / KEYSTONE UP' 10C841BE NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    }
+  }
+}

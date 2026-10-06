@@ -1,0 +1,57 @@
+{
+  "manufacturer": "TEUFEL",
+  "model": "IR Blaster DB 9180 (F12_relaxed)",
+  "aliases": [],
+  "controls": [
+    "TEUFEL | SOME MODELS"
+  ],
+  "protocol": {
+    "name": "F12_relaxed",
+    "carrierHz": 37900,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0x00",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9180, 'MUTE' 90 F12_relaxed: 12-bit number, fields bit-reversed as F12_relaxed"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0x01",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9180, 'VOL-' 110 F12_relaxed: 12-bit number, fields bit-reversed as F12_relaxed"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0x01",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9180, 'VOL+' 120 F12_relaxed: 12-bit number, fields bit-reversed as F12_relaxed"
+        }
+      ]
+    }
+  }
+}

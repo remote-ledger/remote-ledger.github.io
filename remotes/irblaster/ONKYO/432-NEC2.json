@@ -1,0 +1,30 @@
+{
+  "manufacturer": "ONKYO",
+  "model": "IR Blaster DB 432 (NEC2)",
+  "aliases": [],
+  "controls": [
+    "ONKYO | C 7030",
+    "ONKYO | RC - 822 C"
+  ],
+  "protocol": {
+    "name": "NEC2",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_SEARCH": {
+      "label": "SEARCH",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x2C",
+          "function": "0x94",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 432, 'SEARCH' 4B3429D6 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    }
+  }
+}

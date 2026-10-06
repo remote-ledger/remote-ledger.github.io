@@ -1,0 +1,39 @@
+{
+  "manufacturer": "UNITED",
+  "model": "IR Blaster DB 2244 (NEC2)",
+  "aliases": [],
+  "controls": [
+    "BOMAN | TV 310",
+    "BRIGMTON | BMT 104 TDT",
+    "BRONDI | TV10 PLUX DVB - T",
+    "CM REMOTES | 90 08 64 10",
+    "DENVER | DVBT 805",
+    "DICRA | TVP 770 DT - LCD 7",
+    "SHARK | DR 101 C - AUTO",
+    "UNITED | DTV 7058 H",
+    "UNITED | DVT 7098 H",
+    "WATT RADIO | TVC 218",
+    "WATT RADIO | TVC 218 TX"
+  ],
+  "protocol": {
+    "name": "NEC2",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_PAUSE": {
+      "label": "PAUSE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x1F",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 2244, 'PAUSE' 00FFF807 NEC2: 32 wire bits, bytes bit-reversed as NEC2"
+        }
+      ]
+    }
+  }
+}

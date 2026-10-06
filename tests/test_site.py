@@ -6,6 +6,7 @@ from pathlib import Path
 
 import pytest
 
+from page_driver import HAVE_NODE, run_page
 from remote_ledger import paths
 from remote_ledger.site import build_site, payload, remote_script, render_html
 from remote_ledger.validate import corpus_files
@@ -44,8 +45,12 @@ def test_the_site_is_one_page_an_index_and_a_script_per_remote(scripts):
     """D15 and D40: no framework, no build step, no server. Since D40 each
     remote's detail is its own small script, so no file grows with the
     corpus."""
+    # `index/` (D69) exists exactly when the index advertises a shard, and so
+    # does `app/` (D74): the app API is a function of the imported database that
+    # the shard is the index of, and is the `app` stage's directory, not the page's.
+    advertised = json.loads((ROOT / "site" / "index.json").read_text()).get("shards")
     assert sorted(p.name for p in (ROOT / "site").iterdir()) == \
-        ["index.html", "index.json", "r"]
+        sorted(["index.html", "index.json", "r", *(["index", "app"] if advertised else [])])
     expected = {paths.site_script(paths.rel(ROOT, p)) for p in corpus_files(ROOT)}
     assert set(scripts) == expected
 
@@ -77,14 +82,20 @@ def test_site_index_json_is_byte_identical_to_the_build_one():
 
 
 def test_no_external_resources_are_loaded(html):
-    """No framework means none: no CDN, no font host, no fetch."""
-    assert "<script src=" not in html
-    assert "http://" not in html.split('id="ledger"')[0]
-    assert "cdn" not in html.lower()
+    """No framework means none: no CDN, no font host, no fetch.
+
+    The page is checked without its data island: the data is brand and model
+    names, and imported ones contain "cdn" as a substring of other words
+    (``ORION G 20 LCDN``)."""
+    page = ISLAND.sub("", html)
+    assert len(page) < 200_000, "the island was not cut out"
+    assert "<script src=" not in page
+    assert "http://" not in page.split('id="ledger"')[0]
+    assert "cdn" not in page.lower()
 
 
 def test_the_island_parses_and_carries_the_ledger(island):
-    assert sorted(island) == ["imports", "remotes", "unresolved"]
+    assert sorted(island) == ["imports", "remotes", "shards", "unresolved"]
     assert island["remotes"] and island["unresolved"]
     assert island["imports"] == paths.IMPORTS
 
@@ -188,3 +199,34 @@ def test_the_page_normalises_queries_as_lookup_does(html):
     """The site's norm() is lookup.normalise in JavaScript; both must strip
     the same characters, or the page and `rl lookup` disagree on a match."""
     assert "replace(/[^\\p{L}\\p{N}]+/gu, '')" in html
+
+
+@pytest.mark.skipif(not HAVE_NODE, reason="node is not installed")
+def test_the_page_finds_a_device_whether_its_controls_entry_has_a_pipe(tmp_path):
+    """The IR Blaster import writes ``<BRAND> | <MODEL>`` (D56b). The page's
+    own ``hit`` must find 'SONY | KD - 49 X 8088' for what a person types, and
+    find the plain spelling the same way."""
+    doc = json.loads((ROOT / "remotes" / "topping" / "RC-15A.json").read_text())
+    (tmp_path / "remotes" / "t").mkdir(parents=True)
+    (tmp_path / "remotes" / "t" / "a.json").write_text(json.dumps(doc))
+    build_site(tmp_path, tmp_path)
+
+    def remote(entry):
+        return {"manufacturer": "SONY", "model": "IR Blaster DB 1 (NEC1)",
+                "aliases": [], "controls": [entry]}
+
+    queries = ["sony kd 49x8088", "SONY KD-49X8088", "kd - 49 x 8088", "49x8088",
+               "sony | kd - 49 x 8088", "sony|kd|49x8088", "KD 49 X 8088 sony"]
+    cases = [[remote(entry), q] for entry in ("SONY | KD - 49 X 8088", "SONY KD - 49 X 8088")
+             for q in queries]
+    cases.append([remote("SONY | KD - 49 X 8088"), "sony | "])      # punctuation is no query
+    # `hit` is now `matcher(query)` applied to `haystack(remote)` (D57's cached form).
+    expr = (f"JSON.stringify({json.dumps(cases)}"
+            ".map(([r, q]) => matcher(q.trim().toLowerCase())(haystack(r))))")
+    value = json.loads(run_page(tmp_path, tmp_path, expr)["value"])
+    assert value[:-1] == [True] * (2 * len(queries))
+    # `matches` treats an empty needle as "show everything" (the empty box), as before
+    assert value[-1] is True
+    assert json.loads(run_page(
+        tmp_path, tmp_path, "JSON.stringify(norm('SONY | KD - 49 X 8088') === norm('SONY KD - 49 X 8088'))"
+    )["value"]) is True

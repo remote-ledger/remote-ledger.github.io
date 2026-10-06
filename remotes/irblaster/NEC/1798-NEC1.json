@@ -1,0 +1,54 @@
+{
+  "manufacturer": "NEC",
+  "model": "IR Blaster DB 1798 (NEC1)",
+  "aliases": [],
+  "controls": [
+    "NEC | 79TD5521",
+    "NEC | 7N900791",
+    "NEC | NP4000",
+    "NEC | NP4001",
+    "NEC | NP4100",
+    "NEC | NP4100-06FL",
+    "NEC | NP4100-07ZL",
+    "NEC | NP4100W",
+    "NEC | NP4100W-08ZL",
+    "NEC | NP4100W-09ZL",
+    "NEC | NP4100W-10ZL",
+    "NEC | RD-432E"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0xE9",
+          "function": "0x49",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1798, 'VOL-' 1897926D NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0xE9",
+          "function": "0x48",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1798, 'VOL+' 189712ED NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    }
+  }
+}

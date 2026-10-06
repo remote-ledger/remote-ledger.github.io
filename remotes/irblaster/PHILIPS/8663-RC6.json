@@ -1,0 +1,54 @@
+{
+  "manufacturer": "PHILIPS",
+  "model": "IR Blaster DB 8663 (RC6)",
+  "aliases": [],
+  "controls": [
+    "PHILIPS | AZ783"
+  ],
+  "protocol": {
+    "name": "RC6",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_REPEAT": {
+      "label": "REPEAT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x15",
+          "function": "0x1D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8663, 'REPEAT' 151D RC6: 16 bits, mode 0 as RC6"
+        }
+      ]
+    },
+    "KEY_SHUFFLE": {
+      "label": "SHUFFLE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x15",
+          "function": "0x1C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8663, 'SHUFFLE' 151C RC6: 16 bits, mode 0 as RC6"
+        }
+      ]
+    },
+    "KEY_USB": {
+      "label": "USB",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x15",
+          "function": "0x8A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8663, 'USB' 158A RC6: 16 bits, mode 0 as RC6"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,128 @@
+{
+  "manufacturer": "SONY",
+  "model": "IR Blaster DB 7463 (Sony20)",
+  "aliases": [],
+  "controls": [
+    "SONY | CMT-CPX1",
+    "SONY | RM-SMR1"
+  ],
+  "protocol": {
+    "name": "Sony20",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_CLEAR": {
+      "label": "CLEAR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0x39",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7463, 'CLEAR' F0B9C SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_ENTER": {
+      "label": "ENTER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0x39",
+          "function": "0x7C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7463, 'ENTER' 3EB9C SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_PLAY_MODE_SLASH_TUNING_MODE": {
+      "label": "PLAY MODE / TUNING MODE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0x39",
+          "function": "0x28",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7463, 'PLAY MODE / TUNING MODE' 14B9C SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY_REPEAT": {
+      "label": "REPEAT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0x39",
+          "function": "0x2C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7463, 'REPEAT' 34B9C SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY__0CB9C": {
+      "label": "|⏪",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0x39",
+          "function": "0x30",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7463, '|⏪' 0CB9C SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY__2CB9C": {
+      "label": "⏩",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0x39",
+          "function": "0x34",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7463, '⏩' 2CB9C SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY__8CB9C": {
+      "label": "⏩|",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0x39",
+          "function": "0x31",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7463, '⏩|' 8CB9C SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    },
+    "KEY__CCB9C": {
+      "label": "⏪",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0x39",
+          "function": "0x33",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7463, '⏪' CCB9C SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    }
+  }
+}

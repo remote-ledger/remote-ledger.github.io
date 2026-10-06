@@ -1,0 +1,39 @@
+{
+  "manufacturer": "DENON",
+  "model": "IR Blaster DB 9156 (Denon)",
+  "aliases": [],
+  "controls": [
+    "DENON | AVR-1612",
+    "DENON | AVR-1712",
+    "DENON | AVR-1912",
+    "DENON | AVR-2112",
+    "DENON | AVR-2112CI",
+    "DENON | AVR-2312",
+    "DENON | AVR-2312CI",
+    "DENON | AVR-3312",
+    "DENON | AVR-3312CI",
+    "DENON | DN-500AV",
+    "DENON | RC-1156",
+    "DENON | RC-1157"
+  ],
+  "protocol": {
+    "name": "Denon",
+    "carrierHz": 38000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_MULTI_EQ": {
+      "label": "MULTI EQ",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "function": "0x9D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 9156, 'MULTI EQ' 25C8 Denon: 13 wire bits, 3 unused as Denon"
+        }
+      ]
+    }
+  }
+}

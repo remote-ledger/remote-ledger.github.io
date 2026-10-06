@@ -1,0 +1,56 @@
+{
+  "manufacturer": "ONKYO",
+  "model": "IR Blaster DB 7032 (NEC1)",
+  "aliases": [],
+  "controls": [
+    "ONKYO | RC - 911 R",
+    "ONKYO | RC-911R",
+    "ONKYO | RC-934R",
+    "ONKYO | TX - NR 676",
+    "ONKYO | TX - RZ 720",
+    "ONKYO | TX-L20D",
+    "ONKYO | TX-NR555",
+    "ONKYO | TX-NR575E",
+    "ONKYO | TX-NR656",
+    "ONKYO | TX-NR676E",
+    "ONKYO | TX-NR757",
+    "ONKYO | TX-RZ620",
+    "ONKYO | TX-RZ820",
+    "ONKYO | TX-RZ920"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_INPUT_TUNER": {
+      "label": "INPUT TUNER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7032, 'INPUT TUNER' 4BB6D02F NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7032, 'MUTE' 4BB6A05F NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    }
+  }
+}

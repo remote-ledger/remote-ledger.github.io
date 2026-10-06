@@ -1,0 +1,71 @@
+{
+  "manufacturer": "SAMSUNG",
+  "model": "IR Blaster DB 7414 (Aiwa)",
+  "aliases": [],
+  "controls": [
+    "SAMSUNG | BN59-00357B"
+  ],
+  "protocol": {
+    "name": "Aiwa",
+    "carrierHz": 38123,
+    "minSends": 2
+  },
+  "keys": {
+    "KEY_FF": {
+      "label": "FF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x66",
+          "subdevice": "0x00",
+          "function": "0xA1",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7414, 'FF' 6604CFE15E8 RCC2026: 42 wire bits left-aligned in 44 as Aiwa"
+        }
+      ]
+    },
+    "KEY_PLAY_SLASH_PAUSE": {
+      "label": "PLAY/PAUSE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x66",
+          "subdevice": "0x00",
+          "function": "0xA0",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7414, 'PLAY/PAUSE' 6604CFC17E8 RCC2026: 42 wire bits left-aligned in 44 as Aiwa"
+        }
+      ]
+    },
+    "KEY_REW": {
+      "label": "REW",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x66",
+          "subdevice": "0x00",
+          "function": "0x9F",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7414, 'REW' 6604CFFE418 RCC2026: 42 wire bits left-aligned in 44 as Aiwa"
+        }
+      ]
+    },
+    "KEY_STOP": {
+      "label": "STOP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x66",
+          "subdevice": "0x00",
+          "function": "0xA2",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7414, 'STOP' 6604CFD16E8 RCC2026: 42 wire bits left-aligned in 44 as Aiwa"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "manufacturer": "SCHNEIDER",
+  "model": "IR Blaster DB 934 (NEC1)",
+  "aliases": [],
+  "controls": [
+    "ALTEK | AEA 42 HD",
+    "BELSON | BSV - 1584",
+    "BELSON | BSV-1984",
+    "BELSON | BSV-2284",
+    "BRAVO | B 160",
+    "BRAVO | T 522",
+    "CLASSIC | IRC 81700",
+    "CME | IR 3646",
+    "I-JOY | I-DISPLAY9016",
+    "KEYMAT | KELC 4251(TV)",
+    "KEYMAT | RC 902(TV)",
+    "SCHNEIDER | 15 M 301 SCREENLAND(TV)",
+    "SCHNEIDER | 20 M 301 SCREENLAND(TV)",
+    "SCHNEIDER | 23 M 901 SCREENLAND(TV)",
+    "SCHNEIDER | 257 825 80",
+    "SCHNEIDER | 30 M 901(TV)",
+    "SCHNEIDER | 3139 228 62691",
+    "SCHNEIDER | 3139 228 86931",
+    "SCHNEIDER | 358 814 80",
+    "SCHNEIDER | RC 86509",
+    "SCHNEIDER | RC 86515/00",
+    "SCHNEIDER | RC 901",
+    "SCHNEIDER | RC 902 (TV)",
+    "SCHNEIDER | SCINEMA 32 M 011(TV)",
+    "SCHNEIDER | SCINEMA 32 M 111(TV)",
+    "SCHNEIDER | SCREENLAND 23 M 901(TV)",
+    "SCHNEIDER | SCREENLAND 30 M 901(TV)",
+    "SLIDING | 3139 228 62691(TV)",
+    "SLIDING | RC 86515/00(TV)",
+    "SLIDING | RC 902(TV)",
+    "SLIDING | SL 20 SC(TV)",
+    "TELESYSTEM | RC 902(TV)",
+    "TELESYSTEM | TS 15 LS(TV)",
+    "TELESYSTEM | TS 20 LS(TV)",
+    "TELESYSTEM | TS 23 LS(TV)",
+    "TELESYSTEM | TS 30 LS(TV)"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0xDF",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 934, 'VOL+' 04FB906F NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    }
+  }
+}

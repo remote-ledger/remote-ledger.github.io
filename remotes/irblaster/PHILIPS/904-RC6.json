@@ -1,0 +1,28 @@
+{
+  "manufacturer": "PHILIPS",
+  "model": "IR Blaster DB 904 (RC6)",
+  "aliases": [],
+  "controls": [
+    "PHILIPS | PRC501-18(TUNER)"
+  ],
+  "protocol": {
+    "name": "RC6",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_EJECT": {
+      "label": "EJECT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "function": "0x42",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 904, 'EJECT' 0442 RC6: 16 bits, mode 0 as RC6"
+        }
+      ]
+    }
+  }
+}

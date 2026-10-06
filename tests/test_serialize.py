@@ -81,7 +81,7 @@ def test_order_keys_is_deterministic_for_several_unknown_keys():
 
 def test_declared_orders_cover_the_documented_object_kinds():
     assert set(SOURCE_KEY_ORDER) == {
-        "remote", "protocol", "form", "variant", "layout"
+        "remote", "protocol", "key", "form", "variant", "layout"
     }
 
 

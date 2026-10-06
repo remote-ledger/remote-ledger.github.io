@@ -1,0 +1,113 @@
+{
+  "manufacturer": "TOSHIBA",
+  "model": "IR Blaster DB 3654 (NEC1)",
+  "aliases": [],
+  "controls": [
+    "TOSHIBA | SB 3950 E 1"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_DTS": {
+      "label": "DTS",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x45",
+          "subdevice": "0xBD",
+          "function": "0x1C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3654, 'DTS' A2BD38C7 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_LINE_IN": {
+      "label": "LINE IN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x45",
+          "subdevice": "0xBD",
+          "function": "0xE6",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3654, 'LINE IN' A2BD6798 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x45",
+          "subdevice": "0xBD",
+          "function": "0xBD",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3654, 'MUTE' A2BDBD42 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_OPTICAL": {
+      "label": "OPTICAL",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x45",
+          "subdevice": "0xBD",
+          "function": "0xE3",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3654, 'OPTICAL' A2BDC738 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x45",
+          "subdevice": "0xBD",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3654, 'POWER' A2BD48B7 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x45",
+          "subdevice": "0xBD",
+          "function": "0x61",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3654, 'VOL-' A2BD8679 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x45",
+          "subdevice": "0xBD",
+          "function": "0x60",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3654, 'VOL+' A2BD06F9 NEC: 32 wire bits, bytes bit-reversed as NEC1"
+        }
+      ]
+    }
+  }
+}

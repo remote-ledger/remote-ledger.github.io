@@ -1,0 +1,147 @@
+{
+  "manufacturer": "SONY",
+  "model": "IR Blaster DB 3475 (Sony15)",
+  "aliases": [],
+  "controls": [
+    "SONY | 141829921",
+    "SONY | 141860211",
+    "SONY | 147723911",
+    "SONY | CMT - CP 1",
+    "SONY | CMT - CP 100",
+    "SONY | CMT - CP 101",
+    "SONY | CMT - CP 11",
+    "SONY | CMT - CP 2 W",
+    "SONY | CMT - CP 2 WA",
+    "SONY | CMT-CP11",
+    "SONY | CMT-ED2",
+    "SONY | CMT-ED2U",
+    "SONY | FH - B 7 CD",
+    "SONY | HCD - CP 2",
+    "SONY | HCD - M 70",
+    "SONY | HCD-CP100",
+    "SONY | HCD-CP11",
+    "SONY | HCD-ED2",
+    "SONY | HDC - CP 1",
+    "SONY | HDC - M 70",
+    "SONY | MHC 2500",
+    "SONY | RM - S 100 SYSTEM AUDIO",
+    "SONY | RM - S 171",
+    "SONY | RM - SCP 1 AUDIO SYSTEM",
+    "SONY | RM - SCP 100",
+    "SONY | RM - SCP 2",
+    "SONY | RM - SED 2",
+    "SONY | RM-SCP1",
+    "SONY | RX88"
+  ],
+  "protocol": {
+    "name": "Sony15",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_AUDIO": {
+      "label": "AUDIO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xFF",
+          "function": "0x21",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3475, 'AUDIO' 85FE SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    },
+    "KEY_AV_SLASH_SOURCE": {
+      "label": "AV/SOURCE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xFF",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3475, 'AV/SOURCE' 69FE SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    },
+    "KEY_SLEEP_SLASH_TIMER": {
+      "label": "SLEEP/TIMER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xFF",
+          "function": "0x6C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3475, 'SLEEP/TIMER' 37FE SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    },
+    "KEY_SUBTITLE": {
+      "label": "SUBTITLE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xFF",
+          "function": "0x17",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3475, 'SUBTITLE' E9FE SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    },
+    "KEY_TEXT": {
+      "label": "TEXT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xFF",
+          "function": "0x2C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3475, 'TEXT' 35FE SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    },
+    "KEY_UNLABELED_4DFE": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xFF",
+          "function": "0x32",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3475, '??' 4DFE SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    },
+    "KEY_UNLABELED_F1FE": {
+      "label": "??",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xFF",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3475, '??' F1FE SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    },
+    "KEY_UP": {
+      "label": "UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xFF",
+          "function": "0x0E",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3475, 'UP' 71FE SONY15: wire-order bits, first is MSB, pad bit 0 as Sony15"
+        }
+      ]
+    }
+  }
+}

@@ -20,6 +20,7 @@ from jsonschema import Draft202012Validator
 
 from . import protocols
 from .errors import LedgerError, ValidationError
+from .parallel import ordered_map
 from .serialize import load
 
 #: Package data, not a repo-relative path: a non-editable ``pip install .``
@@ -45,7 +46,53 @@ def _validator(name: str) -> Draft202012Validator:
     return Draft202012Validator(schema)
 
 
+#: Keywords that only annotate, so a ``$ref`` carrying nothing else is the same
+#: constraint as its target.
+_ANNOTATIONS = frozenset({"description", "title", "$comment", "examples", "default"})
+
+
+def _inline_refs(node: Any, defs: dict[str, Any], active: tuple[str, ...] = ()) -> Any:
+    """``node`` with every plain ``#/$defs/<name>`` reference replaced by its target.
+
+    Resolving a reference costs about a fifth of a validation (a registry
+    lookup and a fresh validator per hop, ~185,000 of them per 500 files);
+    this does it once. A reference that is anything but a plain pointer to a
+    definition, or that would recurse, is left for jsonschema to resolve.
+    """
+    if isinstance(node, list):
+        return [_inline_refs(v, defs, active) for v in node]
+    if not isinstance(node, dict):
+        return node
+    ref = node.get("$ref")
+    if isinstance(ref, str) and ref.startswith("#/$defs/"):
+        name = ref[len("#/$defs/"):]
+        if name in defs and name not in active and set(node) - {"$ref"} <= _ANNOTATIONS:
+            return _inline_refs(defs[name], defs, active + (name,))
+    return {k: _inline_refs(v, defs, active) for k, v in node.items()}
+
+
+@lru_cache(maxsize=None)
+def _accepting_validator(name: str) -> Draft202012Validator:
+    """The same schema with its references inlined: quick to say *valid*.
+
+    It accepts exactly the documents :func:`_validator` accepts, and is used
+    only to say so. A document it does not accept goes to :func:`_validator`
+    all the same, because the errors a person reads -- their text, and the
+    order they are sorted into, which follows the text of each error's schema
+    -- are those of the schema as written. So inlining can make a valid
+    document cheaper and cannot change a word said about an invalid one.
+    """
+    schema = json.loads((SCHEMA_DIR / name).read_text(encoding="utf-8"))
+    defs = schema.get("$defs", {})
+    inlined = {
+        k: (v if k == "$defs" else _inline_refs(v, defs)) for k, v in schema.items()
+    }
+    return Draft202012Validator(inlined)
+
+
 def schema_problems(doc: Any, schema_name: str, where: str) -> Iterator[Problem]:
+    if _accepting_validator(schema_name).is_valid(doc):
+        return
     for err in sorted(_validator(schema_name).iter_errors(doc), key=str):
         loc = "".join(f"[{p!r}]" for p in err.absolute_path)
         yield Problem(f"{where}{loc}", err.message)
@@ -241,6 +288,16 @@ def validate_file(path: Path) -> list[Problem]:
     problems += list(layout_problems(doc, where))
     problems += list(structural_problems(path, where))
     return problems
+
+
+def validate_files(targets: list[Path]) -> list[Problem]:
+    """:func:`validate_file` over every target, problems in target order.
+
+    The files are independent, so the loop runs across the worker processes
+    (see ``parallel``); the order of the problems is the order of ``targets``
+    whatever the worker count, and every rule still runs on every file.
+    """
+    return [p for batch in ordered_map(validate_file, targets) for p in batch]
 
 
 def corpus_files(root: Path) -> list[Path]:

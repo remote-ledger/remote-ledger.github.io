@@ -1,0 +1,57 @@
+{
+  "manufacturer": "ACOUSTIC SOLUTIONS",
+  "model": "IR Blaster DB 6788 (Aiwa)",
+  "aliases": [],
+  "controls": [
+    "ACOUSTIC SOLUTIONS | SOME MODELS"
+  ],
+  "protocol": {
+    "name": "Aiwa",
+    "carrierHz": 38123,
+    "minSends": 2
+  },
+  "keys": {
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x01",
+          "function": "0x1E",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 6788, 'MUTE' 0487DBDE21C RCC2026: 42 wire bits left-aligned in 44 as Aiwa"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x01",
+          "function": "0x1E",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 6788, 'VOL-' 0487DBDE21C RCC2026: 42 wire bits left-aligned in 44 as Aiwa"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x01",
+          "function": "0x1F",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 6788, 'VOL+' 0487DBFE01C RCC2026: 42 wire bits left-aligned in 44 as Aiwa"
+        }
+      ]
+    }
+  }
+}

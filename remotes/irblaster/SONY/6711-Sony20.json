@@ -1,0 +1,48 @@
+{
+  "manufacturer": "SONY",
+  "model": "IR Blaster DB 6711 (Sony20)",
+  "aliases": [],
+  "controls": [
+    "SONY | CDP-CX200",
+    "SONY | CDP-CX210",
+    "SONY | CDP-CX220",
+    "SONY | CDP-CX230",
+    "SONY | CDP-CX235",
+    "SONY | CDP-CX250",
+    "SONY | CDP-CX255",
+    "SONY | CDP-CX300",
+    "SONY | CDP-CX335",
+    "SONY | CDP-CX355",
+    "SONY | CDP-CX400",
+    "SONY | CDP-CX555ES",
+    "SONY | CDP-CX57",
+    "SONY | CDP-M333ES",
+    "SONY | CDP-X300",
+    "SONY | RM-DX220",
+    "SONY | RM-DX250",
+    "SONY | RM-DX300",
+    "SONY | RM-DX400",
+    "SONY | RM-DX57"
+  ],
+  "protocol": {
+    "name": "Sony20",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_ARTIST_MODE": {
+      "label": "ARTIST MODE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0x99",
+          "function": "0x48",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 6711, 'ARTIST MODE' 12B99 SONY20: wire-order bits, first is MSB as Sony20"
+        }
+      ]
+    }
+  }
+}
