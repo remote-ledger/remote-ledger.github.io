@@ -1,9 +1,9 @@
 """The bundle over the real ledger (D90 to D92, D95): the numbers the design quotes, and that
 the selected profile is within the size the owner asked for.
 
-One reading of the tree and one build of the selected bundle serve every test here (about 15
-seconds in all). What ``rl bundle --verify`` checks against a written bundle takes longer and is
-run by hand; D95 has its numbers."""
+One reading of the tree and one build of the selected bundle (``tests/conftest.py``) serve every
+test here and the tests of the search over it, about 15 seconds in all. What ``rl bundle --verify``
+checks against a written bundle takes longer and is run by hand; D95 has its numbers."""
 
 from __future__ import annotations
 
@@ -14,9 +14,8 @@ from pathlib import Path
 import pytest
 
 from remote_ledger import parallel
-from remote_ledger.bundle import catalog, corpus, notices, select, writer
+from remote_ledger.bundle import build, catalog, select
 from remote_ledger.bundle.textnorm import search_norm
-from remote_ledger.keys import load_vocabulary
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -30,24 +29,19 @@ def _clean_parallel_state(monkeypatch):
 
 
 @pytest.fixture(scope="module")
-def real():
-    records, problems = corpus.read_corpus(ROOT)
-    assert problems == []
-    return records, catalog.collect(records)
+def real(real_records):
+    return real_records, catalog.collect(real_records)
 
 
 @pytest.fixture(scope="module")
-def selection(real):
-    return select.choose(real[1], "selected")
+def selection(real_selected):
+    return real_selected[0].selection
 
 
 @pytest.fixture(scope="module")
-def selected(real, selection):
-    records, collected = real
-    assembled = catalog.assemble(collected, selection.chosen, "selected",
-                                 notices.build_sources(ROOT, records))
-    data, _ = writer.write_database(assembled, load_vocabulary().version, selection.rule)
-    return assembled, data
+def selected(real_selected):
+    built = real_selected[0]
+    return built.assembled, built.files[build.BUNDLE_FILE]
 
 
 def test_the_dedupe_numbers_the_design_quotes(real):

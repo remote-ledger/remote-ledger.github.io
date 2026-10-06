@@ -387,6 +387,21 @@ confidence tier, or a citation.
   out is recorded in the file. The bundle is a **build artifact**: it is
   never committed, never written under `build/` or `site/`, and `rl build
   --check` does not see it (DESIGN §23).
+- **R24 — A query is matched to the catalog by a few written rules, and the
+  rate at which that finds the right remote is measured and reported as what it
+  is.** Whether a person types `samsung un50nu6900` or a service hands over what
+  a provider read off a photo (a brand, a model, some lines of text), the same
+  rules turn it into at most five catalog entries with the remotes that control
+  them: keys that ignore case, accents and separators; a distance in integers
+  (so a port gets the same order), a boost for a dropped suffix and a cheaper
+  edit for a look-alike letter and digit; a threshold below which a model does
+  not count, so a model nobody has gives nothing; and the brand's models when
+  only the brand matched. The rules are documented in full, a small catalog
+  with queries and answers is published as test vectors for a port, and a
+  harness scores the matcher over a bundle on generated queries of eight kinds
+  and on hand-written queries of real people. **A generated query is friendlier
+  than a real one, and the report says so**: its rates are an upper bound, and
+  the hand-written queries are the measurement (DESIGN §24).
 
 **Known limit, named rather than glossed over:** CSS requires a named
 area's cells to form one rectangle, so a single key can't have an L-shaped
