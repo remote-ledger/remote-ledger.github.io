@@ -18,6 +18,7 @@ from .errors import LedgerError, ValidationError
 from .generators import PIPELINE, diff_tree, owned_paths, registered
 from .check import check_remote
 from .fmt import format_document
+from .keys import vocabulary_problems
 from .pronto import encode as pronto_encode
 from .remote import load_remote
 from .serialize import dumps
@@ -79,6 +80,10 @@ def _resolve_targets(raw: str | None) -> list[Path]:
 def cmd_validate(args: argparse.Namespace) -> int:
     targets = _resolve_targets(args.path)
     problems = validate_files(targets)
+    # The canonical key vocabulary (D83) is part of what a corpus-wide run checks;
+    # a run on one path is about that path's remotes.
+    if args.path is None:
+        problems += vocabulary_problems()
     for p in problems:
         print(f"ERROR {p}", file=sys.stderr)
     print(f"{len(targets)} file(s) checked, {len(problems)} error(s)")
@@ -293,6 +298,7 @@ def cmd_build(args: argparse.Namespace) -> int:
             return EXIT_ERROR
 
     problems = [str(p) for p in validate_files(corpus_files(root))]
+    problems += [str(p) for p in vocabulary_problems()]   # D83: ledger data, no stage owns it
     if problems:
         for problem in problems:
             print(f"ERROR {problem}", file=sys.stderr)
@@ -421,6 +427,18 @@ def cmd_app(args: argparse.Namespace) -> int:
         finally:
             shutil.rmtree(out, ignore_errors=True)
     write_result(built, root)
+    return EXIT_OK
+
+
+def cmd_keys_report(args: argparse.Namespace) -> int:
+    """D86: how much of the corpus the canonical key vocabulary reaches.
+
+    Read-only and corpus-wide: it writes nothing, so it cannot disturb D19's tree.
+    """
+    from .keys_report import build_report, read_corpus, render_json, render_text
+
+    report = build_report(read_corpus(_repo_root()))
+    sys.stdout.write((render_json if args.json else render_text)(report))
     return EXIT_OK
 
 
@@ -632,6 +650,17 @@ def build_parser() -> argparse.ArgumentParser:
         parents=[common])
     ap.add_argument("--check", action="store_true", help="diff instead of write")
     ap.set_defaults(func=cmd_app)
+
+    ky = sub.add_parser(
+        "keys", help="the canonical key vocabulary (D83)", parents=[common]
+    )
+    ky_sub = ky.add_subparsers(dest="keys_command", required=True)
+    kr = ky_sub.add_parser(
+        "report", parents=[common],
+        help="how much of the corpus the vocabulary maps, per source (D86)",
+    )
+    kr.add_argument("--json", action="store_true", help="print the report as JSON")
+    kr.set_defaults(func=cmd_keys_report)
 
     return p
 

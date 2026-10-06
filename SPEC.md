@@ -352,6 +352,22 @@ confidence tier, or a citation.
   of the format itself, not something the validator separately enforces.
   The validator's only remaining job is confirming every area name refers
   to a real key in `keys`.
+- **R22 — What a key means is a vocabulary kept beside the ledger, not a
+  field of a remote.** A source spells a key as it likes (`KEY_VOLUMEUP`,
+  `VOL+`, `Vol +`), and the ledger keeps the spelling and never rewrites it.
+  Beside the remotes sits one versioned vocabulary of canonical keys (about
+  150: for each a group, a display name, a standard icon, a short text glyph,
+  a colour and whether holding it repeats it) and one table of the spellings
+  that mean each, so that a client showing a generated layout with standard
+  icons, a macro, or a comparison between two remotes reads a meaning and not
+  a spelling. Both are hand-written data with a schema and a validator that
+  runs with the rest (R21); neither is generated, and none of `build/`,
+  `site/` or the app API carries them yet. A function maps a key's name and
+  label to a canonical id or to none, and it is **conservative**: a spelling
+  two keys could claim, a key qualified by a device, and a key with two
+  functions are none, because a wrong icon on a key that sends another signal
+  is worse than no icon. `rl keys report` measures how far the mapping
+  reaches, per remote and not only per key (DESIGN §22).
 
 **Known limit, named rather than glossed over:** CSS requires a named
 area's cells to form one rectangle, so a single key can't have an L-shaped
