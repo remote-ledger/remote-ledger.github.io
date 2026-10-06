@@ -430,6 +430,131 @@ def cmd_app(args: argparse.Namespace) -> int:
     return EXIT_OK
 
 
+def cmd_bundle(args: argparse.Namespace) -> int:
+    """D88. The catalog bundle: a build artifact an app ships, written under ``--out``
+    and never under ``build/`` or ``site/``. ``rl bundle sign``, ``verify-signature``
+    and ``vectors`` are its other commands."""
+    import time
+
+    from .bundle import build as bb
+
+    root = _repo_root()
+    sub = getattr(args, "bundle_command", None)
+    if sub == "sign":
+        from .bundle.sign import sign_directory
+
+        identifier = sign_directory(Path(args.directory), Path(args.key))
+        print(f"signed {args.directory}/{bb.MANIFEST_FILE} with the key {identifier}: "
+              f"{args.directory}/{bb.SIGNATURE_FILE}")
+        return EXIT_OK
+    if sub == "verify-signature":
+        from .bundle.sign import verify_signature
+
+        problems = verify_signature(Path(args.directory), Path(args.pub))
+        for message in problems:
+            print(f"ERROR {message}", file=sys.stderr)
+        if not problems:
+            print(f"{args.directory}: the signature is valid and the bundle and notices are "
+                  "the bytes the manifest lists")
+        return EXIT_ERROR if problems else EXIT_OK
+    if sub == "vectors":
+        return _bundle_vectors(root, args)
+
+    if args.verify:
+        from .bundle.verify import verify_directory
+
+        started = time.perf_counter()
+        problems, facts = verify_directory(root, Path(args.verify))
+        for message in problems[:50]:
+            print(f"ERROR {message}", file=sys.stderr)
+        if len(problems) > 50:
+            print(f"ERROR ... and {len(problems) - 50} more", file=sys.stderr)
+        if not problems:
+            print(f"{args.verify}: verified against the tree: {facts['remotes']:,} remotes, "
+                  f"{facts['decodedSignals']:,} signals decoded and encoded back, "
+                  f"{facts['sampledRemotes']} remotes compiled again, "
+                  f"dataVersion {facts['dataVersion']} "
+                  f"({time.perf_counter() - started:.1f} s)")
+        return EXIT_ERROR if problems else EXIT_OK
+
+    started = time.perf_counter()
+    built = bb.build_bundle(root, args.profile, max_bytes=args.max_bytes)
+    if built.problems:
+        for message in built.problems:
+            print(f"ERROR {message}", file=sys.stderr)
+        return EXIT_ERROR
+    stats, selection = built.stats, built.selection
+    if selection is not None and selection.profile == "selected":
+        for name in selection.unresolved:
+            print(f"note: {name!r} is on selected_brands.txt and matches no brand of the "
+                  "catalog", file=sys.stderr)
+    print(
+        f"{stats['profile']}: {stats['bytes']:,} bytes: {stats['brands']:,} brands, "
+        f"{stats['models']:,} models, {stats['remotes']:,} remotes, {stats['keys']:,} keys, "
+        f"{stats['signals']:,} signals; dataVersion {stats['dataVersion']} "
+        f"({time.perf_counter() - started:.1f} s)"
+    )
+    print(
+        f"left out: {stats['excludedBrands']:,} brands ({stats['unreachableBrands']:,} of them "
+        f"in no shard of the app API), {stats['leftOutRemotes']:,} remotes and "
+        f"{stats['leftOutKeys']:,} keys ({stats['leftOutNotInApi']:,} remotes of a source the "
+        "app API does not serve)"
+    )
+    if selection is not None and selection.chosen is not None:
+        print(f"selection: {selection.rule}")
+        if selection.skipped:
+            print(f"on the list, not carried (over the budget): {len(selection.skipped)} brands: "
+                  + ", ".join(selection.skipped[:40]) + (" ..." if len(selection.skipped) > 40 else ""))
+    out = _bundle_out(root, args)
+    if args.check:
+        drift = bb.check_bundle(built, out)
+        for message in drift:
+            print(f"ERROR {message}", file=sys.stderr)
+        return EXIT_ERROR if drift else EXIT_OK
+    bb.write_bundle(built, out, root)
+    print(f"written to {out}")
+    return EXIT_OK
+
+
+def _bundle_out(root: Path, args: argparse.Namespace) -> Path:
+    from .bundle.build import DEFAULT_OUT
+
+    return Path(args.out) if args.out else root / DEFAULT_OUT / args.profile
+
+
+def _bundle_vectors(root: Path, args: argparse.Namespace) -> int:
+    """``rl bundle vectors``: the cross-language vectors of a bundle (D91)."""
+    import tempfile
+
+    from .bundle import build as bb
+    from .bundle.vectors import build_vectors
+
+    if args.source:
+        document = build_vectors(Path(args.source) / bb.BUNDLE_FILE)
+    else:
+        built = bb.build_bundle(root, "full")
+        if built.problems:
+            for message in built.problems:
+                print(f"ERROR {message}", file=sys.stderr)
+            return EXIT_ERROR
+        with tempfile.TemporaryDirectory(prefix="rl-vectors-") as tmp:
+            (Path(tmp) / bb.BUNDLE_FILE).write_bytes(built.files[bb.BUNDLE_FILE])
+            document = build_vectors(Path(tmp) / bb.BUNDLE_FILE)
+    text = dumps(document)
+    target = Path(args.file)
+    if args.check:
+        current = target.read_text(encoding="utf-8") if target.is_file() else None
+        if current != text:
+            print(f"ERROR {target} {'differs from' if current else 'is missing; expected'} "
+                  "the vectors this tree gives", file=sys.stderr)
+            return EXIT_ERROR
+        return EXIT_OK
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(text, encoding="utf-8", newline="\n")
+    print(f"{target}: {len(document['vectors'])} vectors over {len(document['protocols'])} protocols")
+    return EXIT_OK
+
+
 def cmd_keys_report(args: argparse.Namespace) -> int:
     """D86: how much of the corpus the canonical key vocabulary reaches.
 
@@ -650,6 +775,43 @@ def build_parser() -> argparse.ArgumentParser:
         parents=[common])
     ap.add_argument("--check", action="store_true", help="diff instead of write")
     ap.set_defaults(func=cmd_app)
+
+    bu = sub.add_parser(
+        "bundle", parents=[common],
+        help="build the catalog bundle an app ships: a SQLite file, notices and a manifest (D88)")
+    bu.add_argument("--profile", choices=["selected", "full"], default="selected",
+                    help="selected: a subset for an app to ship (at most about 20 MB); "
+                         "full: every brand (D92)")
+    bu.add_argument("--out", metavar="DIR",
+                    help="where to write (default: bundle-out/<profile>, which is ignored by "
+                         "version control); never inside build/ or site/")
+    bu.add_argument("--check", action="store_true",
+                    help="compare a fresh build with the files in --out instead of writing")
+    bu.add_argument("--verify", metavar="DIR",
+                    help="check the bundle in DIR against the tree and decode every signal")
+    bu.add_argument("--max-bytes", type=int, metavar="N",
+                    help="fail when the bundle is larger (the selected profile's default is "
+                         "20,000,000)")
+    bu.set_defaults(func=cmd_bundle)
+    bu_sub = bu.add_subparsers(dest="bundle_command")
+    bs = bu_sub.add_parser("sign", parents=[common],
+                           help="sign manifest.json of DIR with an ECDSA P-256 key (D93)")
+    bs.add_argument("--key", required=True, metavar="KEY.pem",
+                    help="the private key (never committed)")
+    bs.add_argument("directory", metavar="DIR")
+    bs.set_defaults(func=cmd_bundle)
+    bv = bu_sub.add_parser("verify-signature", parents=[common],
+                           help="check manifest.sig of DIR and the files the manifest lists")
+    bv.add_argument("--pub", required=True, metavar="PUB.pem", help="the public key")
+    bv.add_argument("directory", metavar="DIR")
+    bv.set_defaults(func=cmd_bundle)
+    bx = bu_sub.add_parser("vectors", parents=[common],
+                           help="write the cross-language vectors of the signal table (D91)")
+    bx.add_argument("--from", dest="source", metavar="DIR",
+                    help="a bundle directory to take them from (default: build the full bundle)")
+    bx.add_argument("--file", required=True, metavar="FILE", help="where to write them")
+    bx.add_argument("--check", action="store_true", help="compare instead of writing")
+    bx.set_defaults(func=cmd_bundle)
 
     ky = sub.add_parser(
         "keys", help="the canonical key vocabulary (D83)", parents=[common]

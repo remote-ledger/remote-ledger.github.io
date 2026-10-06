@@ -1,0 +1,141 @@
+# Brands the `selected` bundle carries, in priority order (DESIGN.md D92).
+#
+# One brand per line, as the catalog spells it or any spelling with the same
+# search key (case, spaces and punctuation do not matter: `Harman-Kardon` is
+# `HARMAN KARDON`). Text after a `#` is a comment: the categories a brand is on
+# the list for.
+#
+# THE ORDER IS THE PRIORITY. The bundle takes the brands from the top and
+# carries each whole (all its models, remotes and signals) when what it adds
+# still fits the size budget of `bundle/select.py`; a brand that does not fit is
+# skipped, the next one is tried, and `rl bundle --profile selected` says which
+# brands of this list were left out. So the owner changes what ships by moving a
+# line, or by adding one, and the budget does the rest.
+#
+# This list is the owner's to review and edit. The ledger has no popularity data:
+# it is a judgement of which consumer-electronics brands a person with a TV, AV
+# receiver, set-top box, streaming box, projector, soundbar or disc player is most
+# likely to own, checked against what the catalog holds. Air conditioners are out
+# of scope. Every line that matches no brand of the catalog is printed, so a typo
+# or a brand the catalog does not have shows up.
+#
+# Not in the catalog today, so not listed (a line for them would match nothing):
+# Amazon (Fire TV), Google (Chromecast), Dish, Virgin Media, Polk, Nintendo.
+
+# --- tier 1: brands nearly every household has something from
+Samsung        # tv, soundbar, disc player, projector
+LG             # tv, soundbar, disc player, projector
+Sony           # tv, AV receiver, disc player, projector, soundbar
+Panasonic      # tv, disc player, projector
+Philips        # tv, disc player, soundbar
+Sharp          # tv, projector
+Toshiba        # tv, disc player
+Hisense        # tv
+TCL            # tv
+Vizio          # tv, soundbar
+Roku           # streaming box
+Apple          # streaming box
+Yamaha         # AV receiver, soundbar
+Denon          # AV receiver, disc player
+Marantz        # AV receiver, disc player
+Onkyo          # AV receiver
+Pioneer        # AV receiver, disc player
+Bose           # soundbar
+JBL            # soundbar
+Insignia       # tv
+Xiaomi         # tv, streaming box
+Sky            # set-top box
+Epson          # projector
+BenQ           # projector
+Optoma         # projector
+NVIDIA         # streaming box
+Western Digital # streaming box
+Oppo           # disc player
+
+# --- tier 2: major regional television, hi-fi, set-top-box and projector brands
+Hitachi        # tv, projector
+JVC            # tv, AV receiver, disc player
+Sanyo          # tv, projector
+Mitsubishi     # tv, projector
+Grundig        # tv, set-top box
+Thomson        # tv, set-top box
+Telefunken     # tv
+Metz           # tv
+Loewe          # tv
+Loewe Opta     # tv
+Beko           # tv
+Vestel         # tv
+Haier          # tv
+Skyworth       # tv
+Changhong      # tv
+Westinghouse   # tv
+RCA            # tv
+Emerson        # tv
+Magnavox       # tv, disc player
+Funai          # tv, disc player
+Kenwood        # AV receiver
+Harman Kardon  # AV receiver, soundbar
+Cambridge Audio # AV receiver, disc player
+NAD            # AV receiver
+Rotel          # AV receiver
+Arcam          # AV receiver
+Integra        # AV receiver
+Technics       # AV receiver
+Edifier        # soundbar
+Creative       # soundbar
+TiVo           # set-top box
+Arris          # set-top box
+Motorola       # set-top box
+Comcast        # set-top box
+DirecTV        # set-top box
+Humax          # set-top box
+EchoStar       # set-top box
+Pace           # set-top box
+ADB            # set-top box
+TechniSat      # set-top box
+Kathrein       # set-top box
+Topfield       # set-top box
+InFocus        # projector
+Acer           # projector
+NEC            # projector
+Vivitek        # projector
+ViewSonic      # projector, tv
+Canon          # projector
+Casio          # projector
+Cyberhome      # disc player
+
+# --- tier 3: the rest of the television and set-top-box brands people still own
+Orion          # tv
+Finlux         # tv
+Bush           # tv
+Alba           # tv
+Daewoo         # tv
+Hyundai        # tv
+Tesla          # tv
+Medion         # tv
+Silvercrest    # tv
+Blaupunkt      # tv
+Nordmende      # tv
+Schneider      # tv
+Saba           # tv
+Oceanic        # tv
+Strong         # tv, set-top box
+Nokia          # tv, set-top box
+Polaroid       # tv
+Akai           # tv
+Philco         # tv
+Seiki          # tv
+Hannspree      # tv
+AOC            # tv
+Techwood       # tv
+Sherwood       # AV receiver
+Teac/Teak      # AV receiver
+Teac           # AV receiver
+Amiko          # set-top box
+Telestar       # set-top box
+Xoro           # set-top box
+Edision        # set-top box
+Opticum        # set-top box
+GigaBlue       # set-top box
+Dreambox       # set-top box
+Octagon        # set-top box

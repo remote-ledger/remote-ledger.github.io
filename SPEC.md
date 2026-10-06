@@ -368,6 +368,25 @@ confidence tier, or a citation.
   functions are none, because a wrong icon on a key that sends another signal
   is worse than no icon. `rl keys report` measures how far the mapping
   reaches, per remote and not only per key (DESIGN §22).
+- **R23 — A client that ships the catalog gets it as one prebuilt SQLite
+  file, built by public code from the ledger and nothing else.** `rl bundle`
+  writes a file an app can ship as an asset and open directly: brands, models
+  and the remotes that control them, each remote's keys by canonical key
+  (R22) with the original text only where the canonical key does not say it,
+  and the compiled signals once each, as binary Pronto words, so that a client
+  needs a Pronto player and no encoder for any protocol. It uses nothing newer
+  than the SQLite of Android 11 and no extension, so a search is ordinary
+  columns and a table of three-character grams. The file is **deterministic**
+  (two builds of one tree are the same bytes), **compact** (the whole ledger is
+  50 MB, 12.7 MB gzipped), and comes with a manifest that names its version,
+  size and SHA-256, a detached signature of the manifest (ECDSA P-256 with
+  SHA-256, made and checked with `openssl`), and a notices file that gives each
+  source's licence text and link, saying so where a licence holds only by
+  inheritance. Two profiles: `full`, every brand, and `selected`, the brands a
+  list that a person reviews puts first, at most 20 MB; what the subset leaves
+  out is recorded in the file. The bundle is a **build artifact**: it is
+  never committed, never written under `build/` or `site/`, and `rl build
+  --check` does not see it (DESIGN §23).
 
 **Known limit, named rather than glossed over:** CSS requires a named
 area's cells to form one rectangle, so a single key can't have an L-shaped

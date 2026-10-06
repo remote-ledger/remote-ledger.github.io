@@ -26,3 +26,14 @@ build/*
 
 # Claude Code agent worktrees: separate checkouts, never content.
 .claude/worktrees/
+
+# The catalog bundle (DESIGN.md D88) is a build ARTIFACT an app ships, not a tree
+# this repository commits, so it is neither under build/ nor under site/ and no
+# stage owns it: `rl bundle` writes here when it is not given --out. `rl build
+# --check` never looks at it.
+bundle-out/
+
+# A signing key is never committed (D93): a private key must not be here at all,
+# and this is the net under that rule. A public key is named *.pub.pem.
+*.pem
+!*.pub.pem

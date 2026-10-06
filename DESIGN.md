@@ -14,7 +14,7 @@ appear — D16–D20 came out of the v0.1 review, D21–D26 out of the v0.2
 review, D27–D29 out of the v0.3 review, and D30–D33 out of the v0.4 review,
 each sitting wherever it belongs topically. D34–D45 came with the LIRC and
 SmartIR imports (§14, §15), D46–D56 with the IR Blaster importer (§17) and
-D57–D68 with the protocols it needed (§18), D69–D71 for the index (§19), D72–D73 for the build driver (§20), D74–D82 for the app API (§21) and D83–D87 for the canonical key vocabulary (§22).
+D57–D68 with the protocols it needed (§18), D69–D71 for the index (§19), D72–D73 for the build driver (§20), D74–D82 for the app API (§21), D83–D87 for the canonical key vocabulary (§22) and D88–D95 for the catalog bundle (§23).
 §11 lists what changed.
 
 ---
@@ -1354,6 +1354,8 @@ remote-ledger/
 │   ├── site.py        R17                                 D15
 │   ├── keys.py        canonical_id, the vocabulary loader  R22 D83-D85
 │   ├── keys_report.py `rl keys report`                    D86
+│   ├── bundle/        the catalog bundle: corpus, catalog, select,
+│   │                  writer, sign, verify, vectors, notices  R23 D88-D95
 │   └── cli.py         `rl`
 ├── tests/vectors/ + CITATIONS.md                          D10
 └── .github/workflows/ci.yml                               D11
@@ -1435,6 +1437,10 @@ clean-tree requirement (D11).
 | `rl site [--check]` | R17 | Generate `site/` |
 | `rl app [--check]` | D74 | Generate `site/app/v1/`, the app API (§21) |
 | `rl keys report [--json]` | R22, D86 | How much of the corpus the canonical key vocabulary maps, per source and per remote; read-only (§22) |
+| `rl bundle [--profile selected\|full] [--out DIR] [--check]` | R23, D88 | Build the catalog bundle an app ships: `catalog.sqlite`, `notices.json`, `manifest.json`. An artifact, not a stage: never under `build/` or `site/`, never committed, not covered by `rl build --check` (§23) |
+| `rl bundle --verify DIR` | D88, D95 | Check a written bundle against the tree; decode every signal |
+| `rl bundle sign --key KEY.pem DIR`, `rl bundle verify-signature --pub PUB.pem DIR` | D93 | ECDSA P-256 / SHA-256 detached signature of the manifest, with `openssl` |
+| `rl bundle vectors --file FILE [--from DIR] [--check]` | D91 | The cross-language vectors of the signal table |
 | **`rl build [--check]`** | **D19** | **The whole pipeline — validate → check → compile → index → site → app — whole-tree; `--check` is the CI gate for drift *and* orphans** |
 | `rl lookup "Sony BDP-BX510"` | R16 | Matching files, candidates, tiers, citations. Offline |
 | `rl fmt [--refresh] [--expand] [--sort]` | D9, D17, D20 | Canonicalize field order, hex spelling, and decimal form; refresh `derived` forms; expand `variants` longhand; `--sort` canonically orders *set-like* arrays only, never semantic ones (D20) |
@@ -2030,7 +2036,7 @@ note rather than a live contract.
 
 ## 12. Implementation status
 
-Phases 0-6 are implemented: 2834 tests, `jsonschema` the only runtime
+Phases 0-6 are implemented: 2991 tests, `jsonschema` the only runtime
 dependency. Phase 2 landed its nine SPEC edits *before* its code, per §9 --
 the spec change is what authorises the implementation. (That count is asserted by the suite itself -- see
 `test_documented_test_count_is_current` -- so it cannot drift the way the
@@ -5297,3 +5303,148 @@ The remaining ranks of the 50 are the same kinds of thing: the ambiguous words o
 - **That every icon is the right icon,** or that a client can draw it: 82 names exist in the icon set (a tool, not a test), and none was rendered.
 - **That a layout can be built from it.** No client has read the files, and the reading of `icon`, `glyph` and `color` in D83 is a recommendation.
 - **Hardware.** A mapping says what a key is called, not that its code works; D50 is still that question.
+
+---
+
+## 23. The catalog bundle
+
+An app that has to work offline needs the catalog on the phone, and the app API (§21) is too big to ship (57 MB, 9,817 files, one brand at a time, and only the IR Blaster import). This section defines **bundle format v1**: one prebuilt SQLite file that an app can ship as an asset and open directly, the exporter that writes it (`rl bundle`), the two profiles it comes in (`full`, and `selected`, a subset for an app to ship), a manifest with a detached signature, and the notices of the sources it holds. It changes nothing that exists: no remote file, no importer, and not one byte of `build/`, `site/` or `site/app/v1/` (`rl build --check` reports 0 differences, as before, and a test builds a bundle between two checks and compares both trees). The code is `src/remote_ledger/bundle/`, the data it reads is `remotes/`, `src/remote_ledger/vocabulary/` (§22) and one plain-text list (`bundle/data/selected_brands.txt`). SPEC R23 states the requirement.
+
+### D88 — The bundle is an artifact, not a stage: `rl bundle`
+
+A stage is a tree the repository commits and `rl build --check` diffs (D19). A bundle is 19 to 50 MB of binary that changes with every remote, and nobody reads it in a pull request, so it is **not committed, owns no path of D19's table and is registered in no `generators.PIPELINE`**. The pipeline is still `check, compile, index, site, app`; `owned_paths()` is what it was (tested). It is written like the `app` stage in every other way: a function of the committed tree and of the code (`bundle.build.build_bundle(root, profile)` makes every file in memory, `write_bundle` writes them), workers through `parallel.ordered_map` (D81, so the bytes do not depend on the worker count), and a `--check`.
+
+| Command | Does |
+|---|---|
+| `rl bundle [--profile selected\|full] [--out DIR] [--max-bytes N]` | Build and write `catalog.sqlite`, `notices.json`, `manifest.json` under `DIR` (default `bundle-out/<profile>`, which `.gitignore` lists) |
+| `rl bundle ... --check` | Build in memory and compare with the files in `--out`; a signed manifest is compared without its `signature`. Writes nothing |
+| `rl bundle --verify DIR` | Check the written bundle against the tree (D95 lists what) |
+| `rl bundle sign --key KEY.pem DIR` and `rl bundle verify-signature --pub PUB.pem DIR` | D93 |
+| `rl bundle vectors --file FILE [--from DIR] [--check]` | The cross-language vectors of the signal table (D91) |
+
+**It is never written under `build/` or `site/`**: the writer refuses (`refuse_owned_path`), and with it the case D11 guards against, a command that writes into a tree a `--check` then compares. **Where its input is read from.** `remotes/` only: each remote is loaded and compiled by the very functions the `compile` stage uses (`load_remote`, `Remote.compile_group`, the selection of D7), not read from `build/pronto/`, so a bundle cannot be stale against the files it is built from, and the signals are the ledger's **wire readings** (D55): the 44,789 keys of the ten protocols whose second reading differs (D77) are in the bundle as the wire has them. The whole corpus compiles in about 4 s on eight workers. A key whose remote has several candidate groups (D16) is carried as its `primary` group; no remote of the corpus has another (`otherCandidates` in the report is 0), and the report counts them so that one appearing is not silent.
+
+### D89 — Format v1: the file and its tables
+
+**The file.** SQLite 3, UTF-8, `page_size` 4096, `auto_vacuum` none, rollback journal (header bytes 18 and 19 are 1: a bundle opens read-only from an asset and never needs the journal), `application_id` `0x524C4231` (`RLB1`), `user_version` 1, no free page. **Only what Android 11's SQLite 3.28 reads**: no `STRICT` table (3.37), no generated column (3.31), no `RETURNING`, no module, no trigger, no view; the schema is plain tables, two plain indexes and `WITHOUT ROWID` (3.8.2). A test reads `sqlite_master` for each of those words.
+
+**Deterministic.** The inserts of each table are sorted by its key and made in one transaction, the pragmas are fixed, a final `VACUUM` rewrites the file densely in the order of the schema, and nothing is read from the clock, the machine, the environment or the temporary directory the file is built in. Two builds are the same bytes (tested in one process at 1 and 3 workers, and in three processes with three `PYTHONHASHSEED`s), and `rl bundle --check` is that test run against a directory. **What is not fixed is the SQLite library**: its version number is in the header (offset 96) and a different library may lay pages out differently, so two machines with different libraries may write different bytes for one tree. `dataVersion` (D93) is the digest of the *rows*, so it is the same on both; the SHA-256 of the file is not, and the manifest names the file it signed. A publisher builds once, on one machine, and publishes that.
+
+**The tables.** Ids are integers; a table with a ``rowid`` has it as `id`.
+
+| Table | Columns | Holds |
+|---|---|---|
+| `meta` | `key`, `value` (text) | `schemaVersion` (1), `dataVersion`, `vocabularyVersion`, `profile`, `selection` (the rule that chose the brands), `tiers` (`confirmed,verified,plausible,untested`: the index is the number stored in `tier` and `confidence`), `gramLength` (3), `normalisation`, `sqliteMinVersion` (3.28.0), `count.*` of each table, `playRule.ledger` and `playRule.full-signal` (D78 in a sentence each) |
+| `sources` | `id`, `name`, `spdx`, `licence_kind`, `licence_notes`, `licence_text`, `upstream_url`, `upstream_commit`, `remote_count`, `key_count` | D94: one row per source, 1 authored, 2 LIRC, 3 SmartIR, 4 IR Blaster (a literal that only grows, like `app_api.PROTOCOLS`) |
+| `vocab_groups`, `vocab_keys` | `id`, `key`, `grp`, `ord`, `name`, `icon`, `glyph`, `color`, `repeat` | The canonical key vocabulary (D83), 156 keys in 14 groups, `id` its position in reading order. The bundle is self-contained: `keys.canon` joins here. `vocabularyVersion` is its `version` |
+| `brands` | `id`, `name`, `norm`, `first_model`, `model_count` | D90. A brand's models are the rows `first_model` to `first_model + model_count - 1` of `models` |
+| `models` | `id`, `brand_id`, `name`, `kind` | D90. `kind` 0 is a product a person owns, 1 a remote's own part number |
+| `controls` | `model_id`, `remote_id` | The device model to the remotes that control it; `WITHOUT ROWID`, so the table is its own index by model. No index by remote: "which models does this remote control" is a scan of 120,000 to 307,000 small rows and the app rarely asks |
+| `remotes` | `id`, `ref`, `brand_id`, `model`, `source`, `tier`, `key_count`, `protocol`, `carrier_hz`, `repeat_passes`, `helper_repeat_passes`, `intro_empty`, `rule` | One row per remote file of the ledger (13,217), see below |
+| `keys` | `remote_id`, `n`, `canon`, `label`, `signal_id`, `confidence` | One row per key (525,084), primary key `(remote_id, n)`, `WITHOUT ROWID` |
+| `signals` | `id`, `words` | D91 |
+| `ngram` | `gram`, `ids` | D90 |
+| `excluded_brands` | `name`, `norm`, `api_key` | D92: the brands that are not in this bundle |
+
+**A remote** is a remote file of the ledger, which is one protocol (R3). An IR Blaster database id with several protocols is several remotes (573 of its ids are), and a model points at each of them.
+
+- `id` is the file's position in the path order of the **whole ledger**, from 1, **in every profile**: the full and the selected bundle of one tree number a remote alike, so the remote ids that a matcher over the full catalog returns are the ids on the phone. `ref` is its path under `remotes/` without `.json` (`irblaster/ACER/1103-NEC1`, `lirc/sony/839`, `topping/RC-15A`) and **is its name across ledger versions**: the `id` of a remote moves when a file is added before it, its `ref` does not move unless the file does. Brand, model, signal and vocabulary ids are numbered inside one bundle.
+- `brand_id` is the brand of the file's `manufacturer`, NULL when the remote is in the bundle for another brand it controls and its own maker is not (391 remotes in the selected bundle). `model` is the file's own `model` where it is a name (LIRC's, the authored remotes') and **NULL where it is a placeholder the importer made** (`IR Blaster DB 1103 (NEC1)`, `SmartIR media_player 7`, D43, D46).
+- `source` is a row of `sources`. `tier` is the **weakest** tier of the remote's keys (`index.rolled_up_confidence`: a remote is as trustworthy as the key you happen to press); `key_count` is the number of its `keys` rows; `protocol` is the ledger's protocol name, NULL for a capture the ledger did not identify (D24; 3,062 LIRC remotes), `carrier_hz` the file's carrier.
+- **The play fields are D78's, per remote.** `helper_repeat_passes` is what `_remoteLedgerSends` plays for a ledger remote: the repeat sequence `minSends` times when the intro is empty, `minSends - 1` times after it otherwise. `repeat_passes` is that, raised to one for a remote whose keys are all of a database protocol the oracle plays as the whole signal (`app_api.FULL_SIGNAL_PROTOCOLS`: Sharp, Denon); `rule` is `ledger` or `full-signal` accordingly, and `intro_empty` says whether word 2 of every one of its signals is 0. D78 stated these per database protocol and checked that a protocol's signals agree; here they are per file and the exporter **stops** if a file's signals disagree about the intro (none does, in 13,217 files) or its keys are played by two rules. The same arithmetic as `app_api._play`, over a file instead of a protocol; for the IR Blaster files it gives D78's table (tested, `PLAY` in `tests/test_bundle.py`). For a LIRC, SmartIR or authored remote there is no database protocol, so the rule is `ledger`.
+
+**A key** has its position `n` in the file (the order of the key names), `canon` the vocabulary id of its canonical key (`canonical_id(name, label)`, D84) or NULL, `signal_id`, and `confidence`, the tier of the form that compiled to the signal (0 confirmed to 3 untested: 524,996 keys are plausible and 88, those of the three authored remotes that cite a second source, verified; none is confirmed). **`label` is the key's own text where the bundle has nothing better, and NULL where the canonical key says it already.** The text is the source's `label` if the key has one, else its name (`KEY_AGAIN`). It is stored when the key has no canonical id (it is then the only name the key has), or when its text is not a spelling of the canonical key's id or display name (`VOL+` on `VOLUME_UP`; spellings compared by `keys.squash`, so `Volume Up`, `VOLUME_UP` and `volumeup` are the key's name and `STANDBY` on `POWER` is not). 220,000 of 525,084 keys store one, 1.5 MB. A key that stores none draws as its canonical key's icon and display name; a canonical id that two keys of a remote share (4,240 remotes have one, D85) has no label to tell them apart and a layout places one and lists the rest.
+
+### D90 — Search: the search key, `brands`, `models` and `ngram`
+
+FTS5 is not in every Android SQLite, so the search is ordinary columns and one posting table. The bundle holds the structures; a reader's algorithm is the reader's. What is fixed here is what is stored and how to read it.
+
+**The search key** of a text (`bundle/textnorm.search_norm`): Unicode **NFKD**, **lower case** (`lower()`, not `casefold()`: Kotlin's `lowercase()` agrees with it and `ß` stays), then **keep only the code points whose general category is a letter or a number** (`L*`, `N*`). Every space, punctuation mark, symbol and combining mark is dropped and nothing replaces it: `UN50NU6900F`, `un 50 nu-6900 f` and `UN50-NU6900/F` are `un50nu6900f`; `Ünï` is `uni`; `Ｓony ①` is `sony1`. Python's `str.isalnum` is exactly "category L or N" (checked over all of Unicode 15.0), so the filter is `re.sub(r"[\W_]+", "", ...)`. It deliberately does no more: no letter is turned into a digit, no brand word dropped and no suffix cut. Those are for the matcher, and are done to the query and never to what is stored.
+
+**`brands`**: one row per brand **search key**. `ORION`, `Orion` and `orion` (the IR Blaster import, the authored remotes and LIRC) are one brand; 5,028 brands for 5,496 spellings. `name` is the spelling the **whole ledger** writes most often, the first in code point order among equals (`ORION`; LIRC's lower-case `2wire` where no other source has it). `norm` is the key, with an index. A brand's models are a **contiguous range** of `models`, `first_model` and `model_count`: the models are written sorted by brand, so the range replaces an index of 276,000 rows (3 MB) and costs nothing to read (`WHERE id BETWEEN first_model AND first_model + model_count - 1`).
+
+**`models`**: one row per `(brand, search key of the name)`, so `ACME | TV-1`, `ACME | tv-1` and a LIRC remote named `TV-1` are one model; 276,247 models for 279,447 import pairs and the other sources' names. `name` is its commonest spelling. A model **is** the thing a person types, and where it comes from depends on the source:
+
+- the IR Blaster import files each remote under a list of `<BRAND> | <MODEL>` products with brand and model kept apart (D56b): each is a device, `kind` 0;
+- SmartIR, LIRC and the authored remotes keep `controls` as free text, so each entry is a device of the remote's manufacturer, `kind` 0;
+- a remote's own `model` and its `aliases` are **part numbers** (what a person reads on the back of a remote, `BN59-01199F`), `kind` 1, except where the model is a placeholder (D89). A model that is both a device and a part number is `kind` 0.
+
+**`controls`** links a model to every remote that lists it, across sources; each model has at least one.
+
+**`ngram`** is the candidate generator for a typo. A model's **grams** are every three characters of `^` + search key + `$` (`un5` gives `^un`, `un5`, `n5$`); `^` and `$` cannot occur in a key, a gram that starts with `^` is the start of a key, one that ends in `$` its end, and a key of one or two characters still has a gram. For each gram the table holds the ids of the models that have it, ascending, as the **differences between neighbours** (the first from 0), each an unsigned **LEB128 varint**: seven bits a byte, low group first, the high bit set on every byte but the last (`[1, 2, 300]` is `01 01 AA 02`). A query is turned into its grams, their postings are read and merged, and the models that share the most grams are the candidates, which the reader then ranks by its own distance; a model name's key is computed for those few and never stored, which keeps the bundle 4 MB smaller and costs a reader a few hundred keys per query. 35,763 grams hold 3.3 MB of postings for 276,247 models. Chosen over a table of `(gram, model_id)` rows, which is 10 bytes a row and about 25 MB for the full catalog, and over a deletion table (the same size).
+
+### D91 — Signals: shared, binary, sorted
+
+**The data-size reasoning.** The IR Blaster data has **411,265 keys but only 57,709 distinct compiled signals** (14%): the whole ledger has 525,084 keys and 155,964 (30%); LIRC alone shares little (112,789 keys, 97,775 signals, the raw captures). A key row is 20 bytes and a signal is 129 on average (the longest, a LIRC capture, 628 words), so storing each signal once is what makes the catalog small: the signals are 20.1 MB of blobs for 155,964, where one blob per key would be 72.9 MB. The key rows are the other half, and the reason `keys` has no text where the canonical key says it (D89).
+
+**The blob** is `signals.words`: a big-endian `uint16` **count of words**, then the words, each a big-endian `uint16`. The words are exactly those of the Pronto Hex string the ledger compiled the key to (`pronto.encode`): word 0 is `0000`, word 1 the frequency word, word 2 the number of burst pairs of the intro and word 3 of the repeat sequence, then the durations in carrier cycles, a mark then a space, first the intro and then the repeat (D6, D25, D78). The count is redundant with the length of the blob and with words 2 and 3 (`count = 4 + 2 x (n1 + n2)`); it is there so that a reader can reject a damaged blob without trusting anything else. One SQLite row per signal, `id` from 1 in the **sorted order of the blobs** as bytes: the length prefix makes that order by length first, then by content, so signals of one protocol and of one remote's family sit together, which is what compresses (D95). **Microseconds** are `round_half_up(cycles x period)` with `period = word1 x 0.241246 us` (D25: lossy in this direction by under half a cycle); the **carrier** is the catalog's (`remotes.carrier_hz`, what the file declared, `38000`) and the frequency word says another number (`006D` is 38,029 Hz): which an output transmits is its own decision, and both are in the vectors.
+
+**Test vectors**, `tests/vectors/bundle_vectors.json` (`rl bundle vectors --file tests/vectors/bundle_vectors.json`): 151 keys, chosen by a hash of `(remote, n)`, 4 for each source and protocol of the full bundle (29 protocol families, with the raw captures as `(unnamed)`) and the extremes (the shortest and the longest signal, each rule and each intro, the most passes). Each vector carries the `blobHex`, `frequencyWord`, `frequencyHz`, `catalogCarrierHz`, `introUs`, `repeatUs` computed by **the ledger's own decoder run on the blob** (`pronto.decode`), and `play`: the remote's four D78 fields and `pressUs`, the intro once and then the repeat sequence `repeatPasses` times, which is what one press transmits. A Kotlin reader is right when it makes those from the blob and the carrier. `tests/test_bundle_vectors.py` holds the file to the decoder, to a second computation that shares no code with it (Decimal arithmetic on the words) and to D78's numbers. The vectors are self-contained, so they do not have to follow the catalog; they are regenerated when the decoder or the format changes.
+
+### D92 — Profiles: `full` and `selected`
+
+**`full`** is every brand and remote: what a backend serves and what `selected` is cut from. **`selected`** is the subset an app ships in its install, **at most 20,000,000 bytes** (the owner's target: an app that ships it keeps its whole install near 30 MB). A build over the cap fails (`--max-bytes N` overrides). The ledger has no popularity data, so the rule is a proxy plus a list a person reviews, and every number of it is a constant of `bundle/select.py` or a line of `bundle/data/selected_brands.txt`:
+
+1. **The curated list**, `selected_brands.txt`: 112 well-known brands in the categories the owner named (television, AV receiver, set-top box, streaming box, projector, soundbar, disc player; air conditioners are out of scope), a brand per line, `#` to comment, matched by search key. **The order is the priority**: the bundle takes the brands from the top and carries each **whole** (all its models, remotes and signals) when what it adds still fits the budget of 19,000,000 bytes, by an estimate that is within 2.5% of the file; one that does not fit is skipped, the next is tried, and the command names the brands it skipped. The owner changes what ships by moving or adding a line.
+2. **The proxy fill**: the other brands, ranked by **models per byte** (the number of models a brand is listed with, over what its remotes and signals would add), among those with at least 40 models and 60% of their keys mapped to a canonical key, are added in that order while they fit what the list left of the budget. Models per brand is the one popularity signal the catalog has; dividing by the cost keeps out the makers of generic replacement remotes (`BRAVO`: 2,945 models, 2,275 remotes, 112,034 keys). Of the three proxies the owner named, **models per brand ranks the brands, and remotes per brand count as the cost** (with their keys and signals); **the third, the share of keys with signals, is 100% for every brand** (every key the ledger holds has a compiled signal), so it carries no information and the share of keys that map to a canonical key stands in for it.
+
+A remote is carried when **any** of its brands is chosen (its maker or a brand of a model it controls); a model when its brand is. A remote that is in for one brand keeps all its keys and signals, and the models it controls under brands that were not chosen are not in the bundle.
+
+**Everything not in the subset is recorded**: `excluded_brands` holds each left-out brand (`name`, `norm`) and `api_key`, the ten hex digits (SHA-1 of the exact name, D76) of the shard of the app API (§21) that has its remotes, comma-separated when the import spells it two ways; **NULL where the app API has none**, because the API serves the IR Blaster import only. 4,992 brands are left out of the selected bundle, 228 of them with no shard, and **1,793 remotes of LIRC and SmartIR that it leaves out are in no static file of the ledger at all** until the full bundle (or a catalog service built from it) is published. That is a finding for the owner, not a decision of this change: it is the reason `full` exists.
+
+**What the numbers say** (D95): at the 20 MB cap the list does not fit. Samsung, LG, Sony, Panasonic and Philips, the first five lines, are 11.6 MB of the 19 by the estimate (Sony alone has 1,061 remotes, and most of the bytes of a brand with old equipment are LIRC raw captures: 5.0 MB of signals for 1,375 of the 4,394 remotes); the bundle carries **35 brands of the list and one by the proxy**, and **77 brands of the list are left out for lack of room** (the first are JVC, Grundig, Thomson, Telefunken, Loewe Opta, Beko, Vestel...). Levers the owner has, none taken here: reorder the list so the brands that matter most come first (the cheap ones are taken wherever the budget allows), shorten it, raise the cap, or drop what is bulkiest per remote (the LIRC raw captures, about 6 MB of the 19). **The owner signs off on the list**; until then it is a proposal.
+
+### D93 — The manifest, `dataVersion` and the signature
+
+`manifest.json` (compact JSON, sorted keys, the format of D76) lists: `schemaVersion` (1), `dataVersion`, `vocabularyVersion`, `profile`, `bundle` and `notices` (`file`, `bytes`, `sha256`; the bundle also `gzipBytes`, `gzip -9` with no clock in its header), `counts` (brands, models, remotes, keys, signals) and `brands` (`included`, `excluded`). `rl bundle sign` adds `signature` (`algorithm`, `file`, `format`, `keyId`) and writes `manifest.sig`.
+
+**`dataVersion`** is twelve hex digits of the SHA-256 of **every row of every table but `meta`**, each table in key order, as JSON with ASCII escapes and blobs as hex (`writer.content_digest`). A file cannot hold the hash of its own bytes, and the version has to be inside the file (an app that ships the asset has no manifest to read), so it is the version of the *content*; the manifest repeats it and adds the SHA-256 of the whole file, which a signature covers. It does not depend on the SQLite library that laid out the pages (tested: the same rows in a file with another page size give the same version), and changing any row changes it.
+
+**The scheme.** ECDSA over P-256 with SHA-256, the signature DER encoded, detached: `manifest.sig` is the signature of the bytes of `manifest.json`. One signature covers the bundle and the notices through the hashes the manifest lists, and the manifest's own fields. Chosen because every Android version has it (`Signature.getInstance("SHA256withECDSA")`; Ed25519 is only on newer ones) and because `openssl` makes and checks it, so no cryptography is written here: the commands run `openssl dgst -sha256 -sign` and `-verify` as a subprocess, name `openssl` in the error when it is missing, and accept nothing but a P-256 key. **To verify, as an app does:**
+
+```kotlin
+val key = KeyFactory.getInstance("EC").generatePublic(X509EncodedKeySpec(publicKeyDer))  // SubjectPublicKeyInfo
+val sig = Signature.getInstance("SHA256withECDSA")
+sig.initVerify(key)
+sig.update(manifestJsonBytes)
+check(sig.verify(manifestSigDer))          // then: sha256(catalog.sqlite) == manifest.bundle.sha256
+```
+
+(`openssl pkey -pubin -in release.pub.pem -outform DER` gives the DER of the public key to ship in the app.)
+
+**Key id, custody, rotation.** The key id is the first sixteen hex digits of the SHA-256 of the public key's DER SubjectPublicKeyInfo, written into the manifest before it is signed (`signature.keyId`), so the signature covers the claim of who signed; `verify-signature` fails if the manifest names another key than the one given. The private key is generated once (`openssl ecparam -name prime256v1 -genkey -noout -out release.pem`), lives only where the publishing job runs (a secret of the CI that publishes, or an offline machine), **is never in this repository, a bundle or a test** (`.gitignore` keeps `*.pem` out as a net, `!*.pub.pem` lets a public key in, and a test asks `git grep` for a private key header and `git ls-files` for a key file), and is separate from any app-store signing key. An app holds the public keys it trusts, by id. **Rotation** is a new key with a new id: the app that trusts both ships first, the first bundle signed with the new key after, the old key dropped in a later app release. A compromised key is replaced the same way and cannot be revoked faster than an app update; that is the cost of an offline-verifiable scheme and is stated here and not hidden.
+
+### D94 — Notices
+
+`notices.json` (and the `sources` table, from the same data) lists, per source, what an app shows on a screen of open-source notices: `name`, `spdx`, `licenceKind`, `licenceNotes`, `licenceText` (the full text), `upstreamUrl`, `upstreamCommit`, and `contributed`: the ledger's remotes and keys of that source and the bundle's. **Nothing is inferred**: the SPDX id is `paths.IMPORTS`' (`GPL-2.0-or-later`, `MIT`, `GPL-3.0-only`); the text is the import directory's own `COPYING` or `LICENSE`, byte for byte, read at build time (a missing file stops the build); the commit is the one `IMPORT.md` names; and **`licenceNotes` are sentences of the import directory's README, quoted word for word**, which the exporter looks up in the README on every build and the tests again, so a README that stops saying it stops the build rather than leave a notice that says it. Where the repository says a licence holds **by inheritance only**, the notice says it in the repository's words and its `licenceKind` is `inherited`: *"Licence: GPL-3.0-only, by inheritance and nothing more."* and *"nobody in the chain states a licence for the data itself, because nobody in the chain says where the data came from. This is not a grant from the data's authors, and it is not a reading of one, as LIRC's is."* (LIRC's is `reading`: *"This is a reading of the licence, not a grant."*; SmartIR's is `stated`.) The IR Blaster entry also lists the lineage the README gives. **The authored remotes have no licence entry** (`spdx` and `licenceText` null, `licenceKind` `none`): the repository has no licence file for them and states none, and the notice says that; a test fails if a licence file appears at the root, so that the notice is revisited. Which licence the authored remotes should carry is the owner's to say.
+
+### D95 — Numbers, and what is not proven
+
+Measured on the 64-core development machine (eight workers), `gzip -9` as the command, SQLite 3.45 as Python links it. **Both profiles**, same tree:
+
+| | `full` | `selected` |
+|---|---|---|
+| file | 50,311,168 B | 19,443,712 B |
+| `gzip -9` | 12,720,486 B | 4,477,480 B |
+| brands | 5,028 | 36 |
+| models | 276,247 | 105,233 |
+| remotes | 13,217 | 4,394 |
+| keys | 525,084 | 165,646 |
+| signals | 155,964 | 65,691 |
+| left out | none | 4,992 brands, 8,823 remotes, 359,438 keys |
+| `rl bundle` (read, build, write) | 23.8 s, 0.8 GB peak | 12.7 s, 0.55 GB peak |
+| `rl bundle --verify` | 21 s | 12 s |
+
+Where the bytes are, `full` (selected is the same shape): signals 22.4 MB (44.5%), keys 10.8 (21.5%), models 6.9 (13.8%), ngram 5.2 (10.2%), controls 3.4 (6.7%), remotes 1.3 (2.7%). For the app API (§21) the same catalog was 57 MB and 9,817 files, and 12.9 MB gzipped; the whole ledger's compiled corpus is 358 MB. The IR Blaster signals alone are 8,793,390 bytes as blobs (8.8 MB of binary words) and 280,511 bytes gzipped on their own (all 155,964: 20.1 MB, 892,095 gzipped, 23 times smaller). Sorted, the signals compress far better than the rest of the file (the other 28 MB gzip to about 11.8 MB), so **on the wire the catalog is its rows and not its signals**.
+
+**What `--verify` checks** (21 s on `full`, no check repaired): the manifest's sizes and hashes; `application_id`, `user_version`, `page_size`, `quick_check`; every count against `meta` and the manifest; `dataVersion` recomputed from the rows; every reference between tables; a brand's models are its range; the grams recomputed from the models' names; every remote is a file of the tree and that remote (id in path order, carrier, protocol, tier, play numbers, and every key's canonical id, text, confidence and blob); the full profile has every remote of the tree and the selected one every remote of a brand it carries; 150 remotes (chosen by hash) compiled again from `build/pronto/` where it has them, the compile stage's own output, and their Pronto strings compared with the blobs; a sample of models and remotes linked both ways; and **every `(signal, carrier)` decoded by the ledger's decoder and encoded back to the same words** (155,964 of them on `full`). `tests/test_bundle_verify.py` breaks a good bundle in 24 ways at the row level and in several at the file level (a changed byte, a wrong size, a missing file, a stale tree, a stale compile artifact) and requires each to be reported.
+
+**Not proven.**
+
+- **No Android has opened it.** The schema is written for SQLite 3.28 and a test refuses the newer features by name, but no bundle was read on a phone or by a SQLite older than 3.45, and no Kotlin reader exists: the vectors are the oracle for one, not a test of one. Room's `createFromAsset` validates a schema against its entities, and `WITHOUT ROWID` tables have not been tried with it; reading with `SQLiteDatabase` needs none of that.
+- **Search quality.** The structures are what a matcher needs; how well a query finds its remote is not measured here.
+- **The selection is a proposal.** It is a judgement of popularity on a list nobody but its author has read. The owner signs off on it; 77 of its brands do not fit in 20 MB.
+- **The 4.5 MB gzip of the selected bundle is the transfer size; the install size depends on how the app stores the asset** (compressed in the package, or not: SQLite needs it uncompressed on disk to open it read-only).
+- **Hardware**, as everywhere: a bundle says what the ledger says, and D50 is still the question whether a signal moves a device.
+- **The signature is not tested with a real publishing key or an app.** The commands and the format are; where the key lives is the owner's.
+- **Reproducibility across SQLite versions** is not claimed (D89).

@@ -102,6 +102,16 @@ holding it repeats it) and a table of aliases live in
 layout with standard icons for any remote. `rl keys report` says how much of
 the corpus it maps, per remote (DESIGN.md §22).
 
+**The catalog bundle.** `rl bundle` turns the ledger into one prebuilt SQLite
+file an app can ship as an asset and open directly: brands, models, remotes,
+each remote's keys by canonical key, and the compiled signals once each as
+binary Pronto words. It needs nothing newer than Android 11's SQLite, is
+byte-for-byte the same for the same tree, comes with a manifest, a detached
+ECDSA P-256 signature and a notices file with every source's licence text, and
+has two profiles: `full` (50 MB, 12.7 MB gzipped) and `selected`, at most 20 MB.
+It is a build artifact: never committed, never under `build/` or `site/`
+(DESIGN.md §23).
+
 ## Try it
 
 ```console
@@ -113,6 +123,8 @@ $ rl encode --protocol NEC1 --device 0x88 --subdevice 0x77 \
 $ pytest
 $ rl lookup "DX3 Pro"      # offline lookup, R20's three states
 $ rl keys report           # how much of the corpus the key vocabulary maps, per source and remote
+$ rl bundle --profile selected --out bundle-out/selected   # the app's catalog file, manifest and notices
+$ rl bundle --verify bundle-out/selected                     # check it against the tree
 $ rl build --check         # the CI gate: drift and orphans (-j N or RL_JOBS sets the workers)
 $ rl build && open site/index.html
 ```
@@ -123,6 +135,6 @@ $ rl build && open site/index.html
 notation, Pronto Hex, LIRC, IRDB, SmartIR, the IR Blaster database), the data
 model, layout, compiling and cross-validation, and the resolved decisions.
 
-**[DESIGN.md](DESIGN.md)** — how it is built: decisions D1 to D87, the
+**[DESIGN.md](DESIGN.md)** — how it is built: decisions D1 to D95, the
 Pronto contract to the byte, the seven-phase plan, the three imports, the key
-vocabulary, and what is not yet proven.
+vocabulary, the catalog bundle, and what is not yet proven.
