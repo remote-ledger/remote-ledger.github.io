@@ -14,7 +14,7 @@ appear — D16–D20 came out of the v0.1 review, D21–D26 out of the v0.2
 review, D27–D29 out of the v0.3 review, and D30–D33 out of the v0.4 review,
 each sitting wherever it belongs topically. D34–D45 came with the LIRC and
 SmartIR imports (§14, §15), D46–D56 with the IR Blaster importer (§17) and
-D57–D68 with the protocols it needed (§18), D69–D71 for the index (§19), D72–D73 for the build driver (§20), D74–D82 for the app API (§21), D83–D87 for the canonical key vocabulary (§22) and D88–D95 for the catalog bundle (§23).
+D57–D68 with the protocols it needed (§18), D69–D71 for the index (§19), D72–D73 for the build driver (§20), D74–D82 for the app API (§21), D83–D87 for the canonical key vocabulary (§22) and D88–D95 for the catalog bundle (§23) and D96–D99 for finding a device in it (§24).
 §11 lists what changed.
 
 ---
@@ -1356,6 +1356,8 @@ remote-ledger/
 │   ├── keys_report.py `rl keys report`                    D86
 │   ├── bundle/        the catalog bundle: corpus, catalog, select,
 │   │                  writer, sign, verify, vectors, notices  R23 D88-D95
+│   │                  search_eval, matching_vectors            R24 D97 D98
+│   ├── matching.py    the matcher over a bundle's search structures  R24 D96
 │   └── cli.py         `rl`
 ├── tests/vectors/ + CITATIONS.md                          D10
 └── .github/workflows/ci.yml                               D11
@@ -1441,6 +1443,8 @@ clean-tree requirement (D11).
 | `rl bundle --verify DIR` | D88, D95 | Check a written bundle against the tree; decode every signal |
 | `rl bundle sign --key KEY.pem DIR`, `rl bundle verify-signature --pub PUB.pem DIR` | D93 | ECDSA P-256 / SHA-256 detached signature of the manifest, with `openssl` |
 | `rl bundle vectors --file FILE [--from DIR] [--check]` | D91 | The cross-language vectors of the signal table |
+| `rl bundle matching-vectors --file FILE [--check]` | D97 | The cross-language vectors of the matcher |
+| `rl bundle search-eval [--bundle DIR] [--queries FILE] [--timing]` | R24, D98 | Hit rates of the matcher over a bundle, on generated and hand-written queries, as a Markdown report (§24) |
 | **`rl build [--check]`** | **D19** | **The whole pipeline — validate → check → compile → index → site → app — whole-tree; `--check` is the CI gate for drift *and* orphans** |
 | `rl lookup "Sony BDP-BX510"` | R16 | Matching files, candidates, tiers, citations. Offline |
 | `rl fmt [--refresh] [--expand] [--sort]` | D9, D17, D20 | Canonicalize field order, hex spelling, and decimal form; refresh `derived` forms; expand `variants` longhand; `--sort` canonically orders *set-like* arrays only, never semantic ones (D20) |
@@ -2036,7 +2040,7 @@ note rather than a live contract.
 
 ## 12. Implementation status
 
-Phases 0-6 are implemented: 2991 tests, `jsonschema` the only runtime
+Phases 0-6 are implemented: 3077 tests, `jsonschema` the only runtime
 dependency. Phase 2 landed its nine SPEC edits *before* its code, per §9 --
 the spec change is what authorises the implementation. (That count is asserted by the suite itself -- see
 `test_documented_test_count_is_current` -- so it cannot drift the way the
@@ -5357,7 +5361,7 @@ A stage is a tree the repository commits and `rl build --check` diffs (D19). A b
 
 ### D90 — Search: the search key, `brands`, `models` and `ngram`
 
-FTS5 is not in every Android SQLite, so the search is ordinary columns and one posting table. The bundle holds the structures; a reader's algorithm is the reader's. What is fixed here is what is stored and how to read it.
+FTS5 is not in every Android SQLite, so the search is ordinary columns and one posting table. The bundle holds the structures; a reader's algorithm is the reader's (§24 has one). What is fixed here is what is stored and how to read it.
 
 **The search key** of a text (`bundle/textnorm.search_norm`): Unicode **NFKD**, **lower case** (`lower()`, not `casefold()`: Kotlin's `lowercase()` agrees with it and `ß` stays), then **keep only the code points whose general category is a letter or a number** (`L*`, `N*`). Every space, punctuation mark, symbol and combining mark is dropped and nothing replaces it: `UN50NU6900F`, `un 50 nu-6900 f` and `UN50-NU6900/F` are `un50nu6900f`; `Ünï` is `uni`; `Ｓony ①` is `sony1`. Python's `str.isalnum` is exactly "category L or N" (checked over all of Unicode 15.0), so the filter is `re.sub(r"[\W_]+", "", ...)`. It deliberately does no more: no letter is turned into a digit, no brand word dropped and no suffix cut. Those are for the matcher, and are done to the query and never to what is stored.
 
@@ -5442,9 +5446,72 @@ Where the bytes are, `full` (selected is the same shape): signals 22.4 MB (44.5%
 **Not proven.**
 
 - **No Android has opened it.** The schema is written for SQLite 3.28 and a test refuses the newer features by name, but no bundle was read on a phone or by a SQLite older than 3.45, and no Kotlin reader exists: the vectors are the oracle for one, not a test of one. Room's `createFromAsset` validates a schema against its entities, and `WITHOUT ROWID` tables have not been tried with it; reading with `SQLiteDatabase` needs none of that.
-- **Search quality.** The structures are what a matcher needs; how well a query finds its remote is not measured here.
+- **Search quality.** The structures are what a matcher needs; how well a query finds its remote is measured in §24 (D99), and only on generated queries.
 - **The selection is a proposal.** It is a judgement of popularity on a list nobody but its author has read. The owner signs off on it; 77 of its brands do not fit in 20 MB.
 - **The 4.5 MB gzip of the selected bundle is the transfer size; the install size depends on how the app stores the asset** (compressed in the package, or not: SQLite needs it uncompressed on disk to open it read-only).
 - **Hardware**, as everywhere: a bundle says what the ledger says, and D50 is still the question whether a signal moves a device.
 - **The signature is not tested with a real publishing key or an app.** The commands and the format are; where the key lives is the owner's.
 - **Reproducibility across SQLite versions** is not claimed (D89).
+
+---
+
+## 24. Finding a device in the catalog
+
+The bundle (§23) holds the search structures; this section is the **matcher** that reads them (`src/remote_ledger/matching.py`), the vectors a port is held to, and a **test set and harness** that measure how often it finds the right remote (`bundle/search_eval.py`, `rl bundle search-eval`). The matcher has two users and one set of rules: a search on a phone, where a person types a brand and a model or a part number, and a service that turns what a provider read off a photo (a brand, a model and some visible lines of text) into catalog entries. It changes nothing that exists (no stage, no generated file; `rl build --check` reports 0 differences). SPEC R24 states the requirement.
+
+### D96 — The matcher: simple rules, integers, no model
+
+`match(brand, model, texts) -> [Candidate(brand, model, remote_ids, score, evidence)]` (`MatchIndex.match`, or `matching.match(index, ...)`), five candidates at most, best first, over a bundle opened read-only (`MatchIndex.open(path)`) or a small catalog (`MatchIndex.from_entries`). A candidate with no model is a brand: `models` then lists its models. The **rules are in the module's docstring** and are the specification; in short:
+
+1. **Keys and tokens.** The key of a text is the bundle's search key (D90); its tokens are the runs of letters and digits of the same NFKD lower-case text, marks dropped, so the tokens joined are the key (`UN50-NU 6900/F` is `un50nu6900f`, tokens `un50 nu 6900 f`).
+2. **Similarity of two keys**, an integer of thousandths: equal is 1000; **edit** is `1000 - 1000 x d / longer key` (rounded down) with `d` the optimal-string-alignment distance, a swap of two neighbours one edit and a substitution between the look-alikes `o/0 i/1 l/1 s/5 b/8 z/2` half an edit; **prefix**, when the shorter key has at least five characters and starts the longer, is `800 + 200 x shorter / longer`. The larger counts, and only from **800**, which is 20% of the longer key: a key of four characters must be exact, five to nine may differ by one edit, ten to fourteen by two. Look-alikes are cheaper, never free, so two different keys are never equal, and a brand is never read through them.
+3. **Brands.** A given brand is found by its key (1000), or by the same similarity among the brands that share grams with it (`Samsung Electronics` is `samsung` at 878, `Phillips` is `philips` at 875). Runs of it that are a brand's key score 900. A run of any text that is exactly a brand's key, of two characters or more (`LG`), scores 800: a **hint**, since a text holds incidental words (`DVD`, `PLUS` and `COLOR` are brands).
+4. **Model keys.** A run is one to eight adjacent tokens of a line. The key of the whole `model` and each of its runs weigh 1000; the runs of each text weigh 900, among all models when they have 4 to 24 characters and a digit (a model number has one) and among the models of the named brands alone when they have none (`roku ultra`), never when the run is itself a brand's key. Sixty keys at most, **longest first**; a run inside a longer run that gave a candidate by exact or edit at 900 or more is not tried (`bdp-s360` is `bdps360` and not also another brand's `s360`).
+5. **Candidates.** From the grams of a key (D90) the models sharing at least 40% of them, the forty sharing most; and the same inside each named brand's models.
+6. **Score** = similarity (at 800 or more) x the key's weight x a **brand factor**: 1000 if the candidate's brand is a named one, 600 if a brand was *given* and it is not that one, else 950. Under 650 is dropped. **A model counts only if it matches a real entry**, so an invented model number gives nothing; and **when no model matches but a brand is named the answer is the brand and its models** (most remotes first, fifty at most).
+7. **Order**: score, similarity, the longer catalog key, then names.
+
+**Why these.** Integers because a port in another language must get the same order, and a float's last bit is not the same in two languages. The look-alike half-edit is the "letters for digits only where safe" the owner asked for: an OCR's `O` for `0` is close, not equal. The brand factor 600 and the floor 650 are how a model an LLM made up, or a real model of the wrong brand, is dropped when the provider named a brand. **What the first version got wrong, found by running it on the catalog** (D99): a two-letter brand (`LG`) was never named, because a brand needed three characters; a brand named by a stray word of a text (`DVD` in a model's own name) took every model of another brand away, so the penalty became the *given* brand's alone; a long run that matched a short model by its start (`PANASONIC` under another brand) hid the exact match inside it, so a prefix match does not hide; and a model of six tokens (`32 LC 2 RB - ZJ(DVD)`) was never tried, so a run may be eight.
+
+**Speed.** A query takes **about 3 ms at the median, 11 ms at the 95th percentile and 28 ms at worst** over the full catalog (320 generated queries, one thread, a 64-core machine, SQLite 3.45, caches cold at the start; runs differ by a millisecond or two); about 1.6, 5.5 and 11 ms over the selected bundle. Opening the index reads the brands (5,028) and nothing else; a model's key, its remotes and a gram's posting list are read when a query needs them, with small caches (`rl bundle search-eval --timing` reports it). Two things keep it there: the distance stops as soon as it is certainly above what could reach 800, and the posting lists of a key are counted once for all the brands it is asked in.
+
+### D97 — The vectors a port is held to: `tests/vectors/matching_vectors.json`
+
+Written by `rl bundle matching-vectors --file tests/vectors/matching_vectors.json` (`--check` compares). **Self-contained and independent of the data**: a small catalog of 42 entries written in `bundle/matching_vectors.py` (a pair of models one character apart, one that starts another, a part of a longer model under another brand, one model under two brands, brands written with spaces, hyphens and accents, a brand with models to list, a model with no digit), and 41 queries, each with a note on the rule it shows, and the matcher's answer: for each candidate the brand, model, remote ids, integer score, evidence and, for a brand, its models. The file also holds the constants, the tokens and keys of 12 texts and the similarity of 23 pairs of keys. Because it does not follow the repository's data it can be held to the code exactly, and a test does (`test_the_committed_vectors_are_what_the_matcher_gives`); it changes when the rules do. A port builds the small catalog, asks the queries and compares integers. The similarity vectors are checked in the suite against a textbook matrix implementation written there, and the answers against the rules by hand (`tests/test_matching.py`).
+
+### D98 — The search test set and its harness
+
+`rl bundle search-eval [--bundle DIR] [--queries FILE] [--seed N] [--per-class N] [--out FILE] [--timing]` reads a written bundle, generates queries from it, runs each as **typed text** through the matcher over the bundle's own tables, and prints a Markdown report: a table of top-1 and top-5 per class and overall, the hand-written queries in a table of their own, the generated queries that missed, and with `--timing` the time each took. Same bundle and seed, same report.
+
+**The generator** takes devices from the bundle (a `kind` 0 model whose search key has six characters or more and a digit, a name of at most 40 characters, at most two of a brand in a class, so that no big brand is the test set), ranked by a hash of the seed and the device, and applies **eight classes**, 40 devices each, 320 queries: `exact` (`SAMSUNG UN50NU6900F`), `case` (lower, upper or title), `punctuation` (separators stripped, or a space at every letter-digit boundary, or one hyphen), `dropped-suffix` (`UN50NU6900`, for a model with trailing letters), `typo` (one character dropped or two neighbours swapped, never the first), `brand-partial` (the brand and the first 60% of the model), `model-only` and `reversed` (`UN50NU6900F SAMSUNG`). **Expected** are the remote ids the bundle's `controls` give the device; **a hit** is an answer that is a model, not a brand, whose remote ids contain all of them. Top-1 is the first answer, top-5 any of the five.
+
+**Honesty.** The queries are the catalog's own names changed by mechanical rules. They never misspell a brand, never name a device the catalog does not have, never use a nickname or a model written from memory, and the exact class is a lookup. Real people type worse. **The rates are an upper bound on search quality, not an estimate of it**, and the report says so in its own text. The classes were written once and not changed after a result was seen. What was changed after seeing results is the matcher (the four corrections in D96), and, once, how the devices of a class are sampled (for speed; the sample it gave was kept); the numbers below are those of the last version.
+
+**Real queries.** `src/remote_ledger/bundle/data/real_queries.json` is the place, read by default (`--queries FILE` reads another) and reported in a table of its own. Format: `{"format": 1, "queries": [{"query": "samsung un50nu6900", "expect": {"brand": "SAMSUNG", "model": "UN50NU6900F"}, "note": "who typed it, where"}, ...]}`. `expect` names a device as the catalog spells it (case, spaces and punctuation do not matter) and the remotes that control it are what the answer must contain; `null` means the query names nothing the catalog has and is right when the answer holds no model (an invented model, a phrase). A device that the bundle being scored does not have is counted and left out of the rates, and the report says how many. The file ships empty, with its own description and one unscored example; **the owner's hand-written queries are the number that matters for the 95% target**, and none have been written.
+
+### D99 — What was measured, and what is not proven
+
+Seed 1, 40 devices a class. **Selected bundle** (36 brands, 105,233 models) and **full bundle** (5,028 brands, 276,247 models):
+
+| class | selected top-1 | selected top-5 | full top-1 | full top-5 |
+|---|---|---|---|---|
+| exact | 40 (100.0%) | 40 (100.0%) | 39 (97.5%) | 40 (100.0%) |
+| case | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) |
+| punctuation | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) |
+| dropped-suffix | 36 (90.0%) | 40 (100.0%) | 36 (90.0%) | 40 (100.0%) |
+| typo | 36 (90.0%) | 40 (100.0%) | 32 (80.0%) | 39 (97.5%) |
+| brand-partial | 26 (65.0%) | 35 (87.5%) | 24 (60.0%) | 34 (85.0%) |
+| model-only | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) |
+| reversed | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) |
+| **all (320)** | **298 (93.1%)** | **315 (98.4%)** | **291 (90.9%)** | **313 (97.8%)** |
+
+**Read it as the upper bound it is** (D98). **A partial name is ambiguous**: `LG 42 LC 45` is the whole model `42 LC 45` and the start of `42 LC 45 - ZA`, and the device asked for was the second; `PHILIPS 24 CE 75` starts forty models. All five misses of the selected bundle, and six of the seven of the full one, are partial names (a person typing half a model number has to be shown a list, which the answer is: five candidates, and the brand's models when none matches). The seventh is a typo test on a name with two spaces in it (`UTV 21  70`). The 95% target is not established by this: it needs real queries.
+
+**Not proven.**
+
+- **Real typing.** Nobody has typed a query into this. The owner's queries are the measurement, and the file for them is empty.
+- **Photo text.** The matcher is written for a provider's brand, model and lines, and tested on the lines of the small catalog and on generated text. No provider's output has been run through it; how often the right model is among a photo's lines is the evaluation of the providers, not of this.
+- **Words with no digit.** A model without a digit (`Ultra`, `Streaming Stick`) is found only when its brand is named (D96, rule 4): `ultra` alone finds nothing. A model of two or three characters is found only when it is given as the model, and exact. A typed query that a brand names wrongly by a stray word takes nothing away (D96), but may add a candidate.
+- **Brand-only text is hinted at, not given**: `Samsung` in a text scores 800 and as the brand 1000, so the same word is a weaker answer typed than read.
+- **Kotlin.** No port exists; the vectors are what one is held to. Python's `str.lower()` and `unicodedata` are Unicode 15.0; a platform with an older table may differ for a character newer than its table, which no catalog name has.
+- **Full-catalog speed on a phone.** The timings are of one machine; a phone is slower by a factor nobody has measured, and the index here is Python reading SQLite, not an app's.

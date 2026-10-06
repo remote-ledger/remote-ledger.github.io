@@ -52,6 +52,8 @@ class Bundle:
     problems: list[str] = field(default_factory=list)
     stats: dict[str, Any] = field(default_factory=dict)
     selection: select.Selection | None = None
+    #: The rows the file was written from, for a report or a test to look at.
+    assembled: catalog.Assembled | None = None
 
 
 def build_manifest(bundle: bytes, notices_json: bytes, assembled: catalog.Assembled,
@@ -83,18 +85,20 @@ def build_manifest(bundle: bytes, notices_json: bytes, assembled: catalog.Assemb
     })
 
 
-def build_bundle(root: Path, profile: str = "selected", *,
-                 max_bytes: int | None = None) -> Bundle:
-    """The whole bundle for the tree under ``root``, in memory."""
+def build_bundle(root: Path, profile: str = "selected", *, max_bytes: int | None = None,
+                 records: list[corpus.RemoteRecord] | None = None) -> Bundle:
+    """The whole bundle for the tree under ``root``, in memory. ``records`` are the tree's
+    remotes when the caller has read them already (``corpus.read_corpus``)."""
     result = Bundle()
     if profile not in select.PROFILES:
         result.problems.append(f"unknown profile {profile!r}; choose one of "
                                f"{', '.join(select.PROFILES)}")
         return result
-    records, problems = corpus.read_corpus(root)
-    if problems:
-        result.problems = problems
-        return result
+    if records is None:
+        records, problems = corpus.read_corpus(root)
+        if problems:
+            result.problems = problems
+            return result
     if not records:
         result.problems.append("no remote under remotes/, so there is nothing to export")
         return result
@@ -107,6 +111,7 @@ def build_bundle(root: Path, profile: str = "selected", *,
         result.problems.append(str(exc))
         return result
     assembled = catalog.assemble(collected, selection.chosen, profile, sources)
+    result.assembled = assembled
     vocabulary_version = load_vocabulary().version
     bundle, data_version = writer.write_database(assembled, vocabulary_version, selection.rule)
     cap = select.SELECTED_MAX_BYTES if (profile == "selected" and max_bytes is None) else max_bytes

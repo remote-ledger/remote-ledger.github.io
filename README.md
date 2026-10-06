@@ -112,6 +112,13 @@ has two profiles: `full` (50 MB, 12.7 MB gzipped) and `selected`, at most 20 MB.
 It is a build artifact: never committed, never under `build/` or `site/`
 (DESIGN.md §23).
 
+**Finding a device.** `matching.py` matches a typed query, or what a photo's
+text says, to the catalog (brand, model, part number; typo-tolerant, in
+integers so a port gets the same order) and `rl bundle search-eval` measures
+how often it offers the right remote, on generated queries and on hand-written
+ones. The generated queries are friendlier than real typing and the report
+says so (DESIGN.md §24).
+
 ## Try it
 
 ```console
@@ -125,6 +132,7 @@ $ rl lookup "DX3 Pro"      # offline lookup, R20's three states
 $ rl keys report           # how much of the corpus the key vocabulary maps, per source and remote
 $ rl bundle --profile selected --out bundle-out/selected   # the app's catalog file, manifest and notices
 $ rl bundle --verify bundle-out/selected                     # check it against the tree
+$ rl bundle search-eval --bundle bundle-out/selected             # how often a typed device finds its remote
 $ rl build --check         # the CI gate: drift and orphans (-j N or RL_JOBS sets the workers)
 $ rl build && open site/index.html
 ```
@@ -135,6 +143,6 @@ $ rl build && open site/index.html
 notation, Pronto Hex, LIRC, IRDB, SmartIR, the IR Blaster database), the data
 model, layout, compiling and cross-validation, and the resolved decisions.
 
-**[DESIGN.md](DESIGN.md)** — how it is built: decisions D1 to D95, the
+**[DESIGN.md](DESIGN.md)** — how it is built: decisions D1 to D99, the
 Pronto contract to the byte, the seven-phase plan, the three imports, the key
 vocabulary, the catalog bundle, and what is not yet proven.

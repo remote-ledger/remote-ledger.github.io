@@ -1,0 +1,13 @@
+{
+  "about": "Hand-written queries of real people, scored by `rl bundle search-eval` next to the generated ones (DESIGN.md D98). Each entry is {\"query\": what was typed, \"expect\": {\"brand\": the catalog's brand, \"model\": the catalog's model} or null, \"note\": who and where}. `expect` names a device the way the catalog spells it (case, spaces and punctuation do not matter): the remotes that control it are what the answer must contain. null means the query names nothing the catalog has, and is right when the answer holds no model. A device that is not in the bundle being scored is counted as not in it and left out of the rates.",
+  "example": {
+    "expect": {
+      "brand": "SAMSUNG",
+      "model": "UN50NU6900F"
+    },
+    "note": "an example of the format; it is not scored",
+    "query": "samsung un50nu6900"
+  },
+  "format": 1,
+  "queries": []
+}

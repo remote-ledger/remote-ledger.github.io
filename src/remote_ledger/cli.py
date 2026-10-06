@@ -459,6 +459,10 @@ def cmd_bundle(args: argparse.Namespace) -> int:
         return EXIT_ERROR if problems else EXIT_OK
     if sub == "vectors":
         return _bundle_vectors(root, args)
+    if sub == "matching-vectors":
+        return _matching_vectors(args)
+    if sub == "search-eval":
+        return _search_eval(root, args)
 
     if args.verify:
         from .bundle.verify import verify_directory
@@ -520,6 +524,43 @@ def _bundle_out(root: Path, args: argparse.Namespace) -> Path:
     from .bundle.build import DEFAULT_OUT
 
     return Path(args.out) if args.out else root / DEFAULT_OUT / args.profile
+
+
+def _matching_vectors(args: argparse.Namespace) -> int:
+    """``rl bundle matching-vectors``: the matcher's cross-language vectors (D97)."""
+    from .bundle.matching_vectors import build
+
+    text = dumps(build())
+    target = Path(args.file)
+    if args.check:
+        current = target.read_text(encoding="utf-8") if target.is_file() else None
+        if current != text:
+            print(f"ERROR {target} {'differs from' if current else 'is missing; expected'} "
+                  "the vectors the matcher gives", file=sys.stderr)
+            return EXIT_ERROR
+        return EXIT_OK
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(text, encoding="utf-8", newline="\n")
+    print(f"{target}: written")
+    return EXIT_OK
+
+
+def _search_eval(root: Path, args: argparse.Namespace) -> int:
+    """``rl bundle search-eval``: hit rates of the matcher over a bundle (D98)."""
+    from .bundle import build as bb
+    from .bundle.search_eval import report
+
+    directory = Path(args.bundle) if args.bundle else root / bb.DEFAULT_OUT / "selected"
+    if not (directory / bb.BUNDLE_FILE).is_file():
+        print(f"ERROR {directory / bb.BUNDLE_FILE}: no bundle there; build one with `rl bundle`",
+              file=sys.stderr)
+        return EXIT_ERROR
+    text = report(directory, queries=Path(args.queries) if args.queries else None,
+                  seed=args.seed, per_class=args.per_class, timing=args.timing)
+    sys.stdout.write(text)
+    if args.out:
+        Path(args.out).write_text(text, encoding="utf-8", newline="\n")
+    return EXIT_OK
 
 
 def _bundle_vectors(root: Path, args: argparse.Namespace) -> int:
@@ -812,6 +853,24 @@ def build_parser() -> argparse.ArgumentParser:
     bx.add_argument("--file", required=True, metavar="FILE", help="where to write them")
     bx.add_argument("--check", action="store_true", help="compare instead of writing")
     bx.set_defaults(func=cmd_bundle)
+    bm = bu_sub.add_parser("matching-vectors", parents=[common],
+                           help="write the cross-language vectors of the matcher (D97)")
+    bm.add_argument("--file", required=True, metavar="FILE", help="where to write them")
+    bm.add_argument("--check", action="store_true", help="compare instead of writing")
+    bm.set_defaults(func=cmd_bundle)
+    be = bu_sub.add_parser(
+        "search-eval", parents=[common],
+        help="score the matcher on generated and hand-written queries over a bundle (D98)")
+    be.add_argument("--bundle", metavar="DIR",
+                    help="a bundle directory (default: bundle-out/selected)")
+    be.add_argument("--queries", metavar="FILE",
+                    help="hand-written real queries (default: bundle/data/real_queries.json)")
+    be.add_argument("--seed", type=int, default=1, help="seed of the generated queries")
+    be.add_argument("--per-class", type=int, default=40, metavar="N",
+                    help="devices for each of the eight classes of generated query")
+    be.add_argument("--out", metavar="FILE", help="also write the report here")
+    be.add_argument("--timing", action="store_true", help="add the time each query took")
+    be.set_defaults(func=cmd_bundle)
 
     ky = sub.add_parser(
         "keys", help="the canonical key vocabulary (D83)", parents=[common]
