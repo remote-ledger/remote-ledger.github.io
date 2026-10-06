@@ -45,6 +45,11 @@ the upstream file and line, or the profile, or the remote id (SPEC R19).
 Authored remotes stay the four above, each checked against independent
 sources.
 
+**More sources are coming.** Coverage grows from any database whose
+licence permits republishing it. Each one gets its own `remotes/<source>/`
+directory and must meet R19's five conditions. LIRC, SmartIR and the IR
+Blaster database are the first three.
+
 ## Why
 
 Existing remote-code databases (LIRC's `lircd.conf` collection, IRDB,
