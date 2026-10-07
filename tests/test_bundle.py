@@ -26,6 +26,7 @@ import pytest
 
 from bundle_corpus import make_corpus
 from remote_ledger import app_api, cli, generators, parallel, pronto
+from remote_ledger.bundle import aliases as brand_aliases
 from remote_ledger.bundle import build as bb
 from remote_ledger.bundle import catalog, corpus, select, writer
 from remote_ledger.bundle.signals import blob_to_pronto, blob_words
@@ -35,6 +36,13 @@ from remote_ledger.keys import load_vocabulary, squash
 from remote_ledger.remote import load_remote
 
 ROOT = Path(__file__).resolve().parent.parent
+
+#: The brand aliases the synthetic ledger is built with: not the shipped list, so that a count here
+#: does not move when the list grows. ``Nobody`` is a brand of no tree (D101: reported, not an error).
+ALIASES = (
+    brand_aliases.make("Sony", "索尼"), brand_aliases.make("SONY", "新力"),
+    brand_aliases.make("Topping", "拓品"), brand_aliases.make("Nobody", "无名"),
+)
 
 
 @pytest.fixture(autouse=True)
@@ -52,14 +60,14 @@ def ledger(tmp_path_factory):
 
 @pytest.fixture(scope="module")
 def full(ledger):
-    built = bb.build_bundle(ledger, "full")
+    built = bb.build_bundle(ledger, "full", aliases=ALIASES)
     assert built.problems == []
     return built
 
 
 @pytest.fixture(scope="module")
 def selected(ledger):
-    built = bb.build_bundle(ledger, "selected")
+    built = bb.build_bundle(ledger, "selected", aliases=ALIASES)
     assert built.problems == []
     return built
 
@@ -165,8 +173,8 @@ def test_the_counts_are_the_trees(ledger, full):
     assert rows(full, "SELECT COUNT(*) FROM remotes") == [(28,)]
     assert rows(full, "SELECT COUNT(*) FROM keys") == [(61,)]
     manifest = json.loads(full.files[bb.MANIFEST_FILE])
-    assert manifest["counts"] == {"brands": 15, "models": 29, "remotes": 28, "keys": 61,
-                                  "signals": stats["signals"]}
+    assert manifest["counts"] == {"brands": 15, "brandAliases": 3, "models": 29, "remotes": 28,
+                                  "keys": 61, "signals": stats["signals"]}
 
 
 def test_signals_are_shared_between_keys_and_remotes(ledger, full):
@@ -408,15 +416,15 @@ def test_the_schema_needs_nothing_newer_than_sqlite_3_28(full):
         assert not FORBIDDEN.search(sql), (name, sql)
     assert writer.SQLITE_MIN_VERSION == "3.28.0"
     assert sorted(n for t, n, _ in schema if t == "table") == sorted([
-        "meta", "sources", "vocab_groups", "vocab_keys", "brands", "models", "controls",
-        "remotes", "keys", "signals", "ngram", "excluded_brands"])
+        "meta", "sources", "vocab_groups", "vocab_keys", "brands", "brand_aliases", "models",
+        "controls", "remotes", "keys", "signals", "ngram", "excluded_brands"])
     assert {n for t, n, _ in schema if t == "index"} == {"brands_norm", "remotes_ref"}
 
 
 def test_two_builds_of_one_tree_are_the_same_bytes_whatever_the_worker_count(ledger, full):
     for jobs in (1, 3):
         parallel.configure(jobs)
-        again = bb.build_bundle(ledger, "full")
+        again = bb.build_bundle(ledger, "full", aliases=ALIASES)
         assert again.files == full.files, f"differs with {jobs} workers"
 
 

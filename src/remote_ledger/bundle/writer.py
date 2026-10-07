@@ -84,6 +84,13 @@ CREATE TABLE brands (
 );
 CREATE INDEX brands_norm ON brands (norm);
 
+CREATE TABLE brand_aliases (
+  alias    TEXT NOT NULL,
+  norm     TEXT NOT NULL,
+  brand_id INTEGER NOT NULL,
+  PRIMARY KEY (norm, brand_id)
+) WITHOUT ROWID;
+
 CREATE TABLE models (
   id       INTEGER PRIMARY KEY,
   brand_id INTEGER NOT NULL,
@@ -145,7 +152,7 @@ CREATE TABLE excluded_brands (
 #: its primary key, the order they were written in.
 DIGEST_TABLES: tuple[tuple[str, str], ...] = (
     ("sources", "id"), ("vocab_groups", "id"), ("vocab_keys", "id"), ("brands", "id"),
-    ("models", "id"), ("controls", "model_id, remote_id"), ("remotes", "id"),
+    ("brand_aliases", "norm, brand_id"), ("models", "id"), ("controls", "model_id, remote_id"), ("remotes", "id"),
     ("keys", "remote_id, n"), ("signals", "id"), ("ngram", "gram"),
     ("excluded_brands", "name"),
 )
@@ -192,6 +199,7 @@ def _meta(assembled: Assembled, vocabulary_version: int, selection: str) -> dict
         "normalisation": "NFKD, lower case, keep letters and digits",
         "sqliteMinVersion": SQLITE_MIN_VERSION,
         "count.brands": str(len(assembled.brands)),
+        "count.brandAliases": str(len(assembled.brand_aliases)),
         "count.models": str(len(assembled.models)),
         "count.controls": str(len(assembled.controls)),
         "count.remotes": str(len(assembled.remotes)),
@@ -246,6 +254,7 @@ def _insert(conn: sqlite3.Connection, a: Assembled) -> None:
     put("vocab_groups", a.vocab_groups, 4)
     put("vocab_keys", a.vocab_keys, 9)
     put("brands", a.brands, 5)
+    put("brand_aliases", a.brand_aliases, 3)
     put("models", a.models, 4)
     put("controls", a.controls, 2)
     put("remotes", a.remotes, 13)

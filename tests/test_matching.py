@@ -30,7 +30,7 @@ VECTORS = ROOT / "tests" / "vectors" / "matching_vectors.json"
 
 @pytest.fixture(scope="module")
 def index():
-    return MatchIndex.from_entries(matching_vectors.CATALOG)
+    return MatchIndex.from_entries(matching_vectors.CATALOG, matching_vectors.ALIASES)
 
 
 def ask(index, brand=None, model=None, texts=(), limit=5):
@@ -48,6 +48,17 @@ def ask(index, brand=None, model=None, texts=(), limit=5):
     ("O'Brien", ["o", "brien"]),
     ("??", []),
     ("", []),
+    # Han ideographs are cut from the letters and digits next to them (D102), and from nothing else
+    ("海信55E7", ["海信", "55e7"]),
+    ("Sony索尼KD-49", ["sony", "索尼", "kd", "49"]),
+    ("海信 55E7", ["海信", "55e7"]),
+    ("創維電視", ["創維電視"]),
+    ("日本語テレ", ["日本語", "テレ"]),                # kana is another letter: a cut, as for Latin
+    ("𠀀a1", ["𠀀", "a1"]),                          # Extension B, outside the BMP
+    ("café海", ["cafe", "海"]),                      # a mark is dropped and joins nothing
+    ("海e\u0301信", ["海", "e", "信"]),
+    ("ｓｏｎｙ索尼", ["sony", "索尼"]),                # full-width Latin is Latin after NFKD
+    ("四2五", ["四", "2", "五"]),
 ])
 def test_tokens(text, words):
     assert tokens(text) == words
@@ -55,7 +66,7 @@ def test_tokens(text, words):
 
 def test_the_tokens_of_a_text_are_its_search_key_in_pieces():
     rng = random.Random(11)
-    pool = [chr(c) for c in range(0x20, 0x250)] + list("☃⏩–—‑·∕/\\|[](){}~`'\"")
+    pool = [chr(c) for c in range(0x20, 0x250)] + list("☃⏩–—‑·∕/\\|[](){}~`'\"海信𠀀テ\U0002a6e0\u9fff")
     for _ in range(500):
         text = "".join(rng.choice(pool) for _ in range(rng.randint(0, 16)))
         assert "".join(tokens(text)) == search_norm(text), repr(text)
@@ -362,8 +373,8 @@ def test_the_similarity_vectors_agree_with_the_textbook_reference(vectors):
 
 
 def test_the_query_vectors_are_the_catalog_answered_and_in_order(vectors):
-    index = MatchIndex.from_entries(vectors["catalog"])
-    assert vectors["catalog"] == matching_vectors.CATALOG
+    index = MatchIndex.from_entries(vectors["catalog"], vectors["aliases"])
+    assert vectors["catalog"] == matching_vectors.CATALOG and vectors["aliases"] == matching_vectors.ALIASES
     assert len(vectors["queries"]) >= 30
     for q in vectors["queries"]:
         got = index.match(q["brand"], q["model"], q["texts"])

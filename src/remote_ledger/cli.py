@@ -461,6 +461,8 @@ def cmd_bundle(args: argparse.Namespace) -> int:
         return _bundle_vectors(root, args)
     if sub == "matching-vectors":
         return _matching_vectors(args)
+    if sub == "suggest-vectors":
+        return _matching_vectors(args, suggest=True)
     if sub == "search-eval":
         return _search_eval(root, args)
 
@@ -488,6 +490,8 @@ def cmd_bundle(args: argparse.Namespace) -> int:
             print(f"ERROR {message}", file=sys.stderr)
         return EXIT_ERROR
     stats, selection = built.stats, built.selection
+    for message in built.notes:
+        print(f"note: {message}", file=sys.stderr)
     if selection is not None and selection.profile == "selected":
         for name in selection.unresolved:
             print(f"note: {name!r} is on selected_brands.txt and matches no brand of the "
@@ -497,6 +501,11 @@ def cmd_bundle(args: argparse.Namespace) -> int:
         f"{stats['models']:,} models, {stats['remotes']:,} remotes, {stats['keys']:,} keys, "
         f"{stats['signals']:,} signals; dataVersion {stats['dataVersion']} "
         f"({time.perf_counter() - started:.1f} s)"
+    )
+    print(
+        f"brand aliases: {stats['brandAliases']:,} of the {stats['aliasesListed']:,} listed; not in "
+        f"it: {stats['aliasesLeftOut']:,} of brands this profile leaves out, "
+        f"{stats['aliasesMissing']:,} of brands the catalog lacks"
     )
     print(
         f"left out: {stats['excludedBrands']:,} brands ({stats['unreachableBrands']:,} of them "
@@ -526,9 +535,13 @@ def _bundle_out(root: Path, args: argparse.Namespace) -> Path:
     return Path(args.out) if args.out else root / DEFAULT_OUT / args.profile
 
 
-def _matching_vectors(args: argparse.Namespace) -> int:
-    """``rl bundle matching-vectors``: the matcher's cross-language vectors (D97)."""
-    from .bundle.matching_vectors import build
+def _matching_vectors(args: argparse.Namespace, suggest: bool = False) -> int:
+    """``rl bundle matching-vectors``: the matcher's cross-language vectors (D97); with
+    ``suggest``, ``rl bundle suggest-vectors``: those of ``suggest`` (D100)."""
+    if suggest:
+        from .bundle.suggest_vectors import build
+    else:
+        from .bundle.matching_vectors import build
 
     text = dumps(build())
     target = Path(args.file)
@@ -858,6 +871,11 @@ def build_parser() -> argparse.ArgumentParser:
     bm.add_argument("--file", required=True, metavar="FILE", help="where to write them")
     bm.add_argument("--check", action="store_true", help="compare instead of writing")
     bm.set_defaults(func=cmd_bundle)
+    bg = bu_sub.add_parser("suggest-vectors", parents=[common],
+                           help="write the cross-language vectors of suggest (D100)")
+    bg.add_argument("--file", required=True, metavar="FILE", help="where to write them")
+    bg.add_argument("--check", action="store_true", help="compare instead of writing")
+    bg.set_defaults(func=cmd_bundle)
     be = bu_sub.add_parser(
         "search-eval", parents=[common],
         help="score the matcher on generated and hand-written queries over a bundle (D98)")

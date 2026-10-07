@@ -20,9 +20,11 @@ from __future__ import annotations
 
 from collections import Counter, defaultdict
 from dataclasses import dataclass, field
+from typing import Iterable
 
 from ..app_api import brand_key
 from ..keys import load_vocabulary, squash
+from .aliases import Alias, rows_for
 from .corpus import SOURCE_ID, RemoteRecord, is_synthetic_model, play
 from .textnorm import search_norm
 
@@ -183,6 +185,7 @@ class Assembled:
     ngram: list[tuple]             # (gram, blob)
     excluded: list[tuple]          # (norm, name, api_key)
     stats: dict = field(default_factory=dict)
+    brand_aliases: list[tuple] = field(default_factory=list)   # (alias, norm, brand_id) (D101)
 
 
 def label_needed(text: str, canon: str | None, spellings: dict[str, set[str]]) -> bool:
@@ -195,8 +198,10 @@ def label_needed(text: str, canon: str | None, spellings: dict[str, set[str]]) -
 
 
 def assemble(collected: Collected, chosen: frozenset[str] | None, profile: str,
-             sources: list[dict]) -> Assembled:
-    """The rows for the brands in ``chosen`` (every brand when ``None``)."""
+             sources: list[dict], aliases: Iterable[Alias] = ()) -> Assembled:
+    """The rows for the brands in ``chosen`` (every brand when ``None``). ``aliases`` are the
+    brand aliases (D101): those of a brand the bundle carries become rows of ``brand_aliases``."""
+    aliases = tuple(aliases)
     records = collected.records
     vocab = load_vocabulary()
 
@@ -306,6 +311,8 @@ def assemble(collected: Collected, chosen: frozenset[str] | None, profile: str,
         api = ",".join(sorted(brand_key(n) for n in entry.api_names)) or None
         excluded.append((norm, entry.name, api))
 
+    # -- the brand aliases: those of a brand this bundle carries ------------------------------
+    alias_rows = rows_for(aliases, brand_id)
     for source in sources:
         count = per_source.get(source["key"], [0, 0])
         source["bundleRemotes"], source["bundleKeys"] = count
@@ -313,5 +320,12 @@ def assemble(collected: Collected, chosen: frozenset[str] | None, profile: str,
         profile=profile, sources=sources, vocab_groups=vocab_groups, vocab_keys=vocab_keys,
         brands=brands, models=models, controls=controls, remotes=remotes, keys=keys,
         signals=signals, ngram=ngram, excluded=excluded,
-        stats={"ledgerRemotes": len(records), "ledgerBrands": len(collected.brands)},
+        stats={"ledgerRemotes": len(records), "ledgerBrands": len(collected.brands),
+               "aliasesListed": len(aliases),
+               # a brand the list names that the whole ledger does not have, and one it has and
+               # this bundle does not carry
+               "aliasBrandsMissing": sorted({a.brand for a in aliases if a.brand_key not in collected.brands}),
+               "aliasesLeftOut": sum(1 for a in aliases
+                                     if a.brand_key in collected.brands and a.brand_key not in brand_id)},
+        brand_aliases=alias_rows,
     )

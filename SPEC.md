@@ -410,6 +410,32 @@ confidence tier, or a citation.
   and on hand-written queries of real people. **A generated query is friendlier
   than a real one, and the report says so**: its rates are an upper bound, and
   the hand-written queries are the measurement (DESIGN §24).
+- **R25 — What a person has typed so far is completed by the same rules, in
+  an order that does not depend on what was asked before.** `suggest` offers
+  the brands and the models that go on from a partial query: the brand whose
+  key is the query, then those that start with it, then those a word of it
+  names, then those the matcher would read it as; and the models of the brand
+  it names that start with the rest, the exact one first and then the ones
+  with most remotes, or, when it names none, the models the matcher finds for
+  it. It is written in integers and ties, a port is held to the answers of
+  the implementation it came from over real bundles (tens of thousands of
+  queries, none different) and to published vectors that need no bundle, and
+  a smaller limit is always the start of a larger one (DESIGN §25, D100).
+- **R26 — A brand can be typed by other names, in any script, and a Latin
+  search is never read through one.** A list of aliases that a person reviews
+  (`bundle/data/brand_aliases.json`, with a schema and a validator) gives
+  each brand the names it is also typed as, each script and regional form
+  written out, so that `海信`, `创维` and `創維`, or `索尼` and `新力`, find the
+  brand and its models as its own name does; nothing converts one script to
+  another when a person searches, and a Chinese name followed by a model
+  number needs no space. The exporter writes the list into the bundle as one
+  more table, **without raising the format's version**, because a reader that
+  does not know it never reads it; an alias holds no letter or digit of ASCII,
+  so a search typed in Latin letters gives exactly what it gave before. A name
+  of the list whose brand the catalog lacks is reported and left out; a name
+  that is a brand's own is refused; a name two brands share (one company the
+  catalog spells two ways) must be declared as shared, and then names both
+  (DESIGN §25, D101, D102).
 
 **Known limit, named rather than glossed over:** CSS requires a named
 area's cells to form one rectangle, so a single key can't have an L-shaped
