@@ -113,7 +113,7 @@ names a person types for them), models, remotes, each remote's keys by
 canonical key, and the compiled signals once each as binary Pronto words. It needs nothing newer than Android 11's SQLite, is
 byte-for-byte the same for the same tree, comes with a manifest, a detached
 ECDSA P-256 signature and a notices file with every source's licence text, and
-has two profiles: `full` (50 MB, 12.7 MB gzipped) and `selected`, at most 20 MB.
+has two profiles: `full` (51 MB, 12.9 MB gzipped) and `selected`, at most 20 MB.
 It is a build artifact: never committed, never under `build/` or `site/`
 (DESIGN.md §23).
 
@@ -128,6 +128,15 @@ stable order) and knows other names for a brand, written out in each script, so
 that 海信, 创维 and 創維 find Hisense and Skyworth and their models as the Latin
 names do (`bundle/data/brand_aliases.json`, a seed list a person reviews;
 DESIGN.md §25).
+
+**One remote for a device the import split.** The IR Blaster import files a
+remote per protocol, and a fragment with no key a person could be asked to try
+(Power, Volume up, Mute) is a row nobody can test. The exporter folds such a
+fragment into a sibling of the same device that has one and plays the same
+way, and never folds two fragments that both can be tried; the remote files do
+not change, and `remote_refs` still maps every ref of the ledger to the remote
+that carries its keys (315 of the 1,225 fragments of split devices in the full
+bundle; DESIGN.md §26).
 
 ## Try it
 
@@ -154,6 +163,6 @@ $ rl build && open site/index.html
 notation, Pronto Hex, LIRC, IRDB, SmartIR, the IR Blaster database), the data
 model, layout, compiling and cross-validation, and the resolved decisions.
 
-**[DESIGN.md](DESIGN.md)** — how it is built: decisions D1 to D99, the
+**[DESIGN.md](DESIGN.md)** — how it is built: decisions D1 to D105, the
 Pronto contract to the byte, the seven-phase plan, the three imports, the key
 vocabulary, the catalog bundle, and what is not yet proven.

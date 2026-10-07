@@ -33,7 +33,7 @@ from ..app_api import compact
 from ..errors import ValidationError
 from ..keys import load_vocabulary
 from . import aliases as brand_aliases
-from . import catalog, corpus, notices, select, writer
+from . import catalog, corpus, merge, notices, select, writer
 
 BUNDLE_FILE = "catalog.sqlite"
 NOTICES_FILE = "notices.json"
@@ -80,8 +80,8 @@ def build_manifest(bundle: bytes, notices_json: bytes, assembled: catalog.Assemb
         "counts": {
             "brands": len(assembled.brands), "brandAliases": len(assembled.brand_aliases),
             "models": len(assembled.models),
-            "remotes": len(assembled.remotes), "keys": len(assembled.keys),
-            "signals": len(assembled.signals),
+            "remotes": len(assembled.remotes), "remoteRefs": len(assembled.remote_refs),
+            "keys": len(assembled.keys), "signals": len(assembled.signals),
         },
         "brands": {
             "included": len(assembled.brands), "excluded": len(assembled.excluded),
@@ -149,8 +149,8 @@ def build_bundle(root: Path, profile: str = "selected", *, max_bytes: int | None
         MANIFEST_FILE: build_manifest(bundle, notices_json, assembled, data_version,
                                       vocabulary_version),
     }
-    carried = {row[0] for row in assembled.remotes}
-    left_out = [r for i, r in enumerate(records) if i + 1 not in carried]
+    carried = {row[0] for row in assembled.remote_refs}
+    left_out = [r for r in records if merge.ref_of(r) not in carried]
     result.stats = {
         "profile": profile, "bytes": len(bundle), "dataVersion": data_version,
         "leftOutRemotes": len(left_out), "leftOutKeys": sum(len(r.keys) for r in left_out),
@@ -162,7 +162,9 @@ def build_bundle(root: Path, profile: str = "selected", *, max_bytes: int | None
         "aliasesListed": assembled.stats["aliasesListed"],
         "aliasesLeftOut": assembled.stats["aliasesLeftOut"],
         "aliasesMissing": sum(1 for a in aliases if a.brand in assembled.stats["aliasBrandsMissing"]),
-        "remotes": len(assembled.remotes), "keys": len(assembled.keys),
+        "remotes": len(assembled.remotes), "remoteRefs": len(assembled.remote_refs),
+        "foldedFragments": assembled.stats["foldedFragments"],
+        "mergedRemotes": assembled.stats["mergedRemotes"], "keys": len(assembled.keys),
         "signals": len(assembled.signals), "excludedBrands": len(assembled.excluded),
         "unreachableBrands": sum(1 for e in assembled.excluded if e[2] is None),
         "ledgerKeys": sum(len(r.keys) for r in records),
