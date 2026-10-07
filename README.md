@@ -108,9 +108,9 @@ layout with standard icons for any remote. `rl keys report` says how much of
 the corpus it maps, per remote (DESIGN.md §22).
 
 **The catalog bundle.** `rl bundle` turns the ledger into one prebuilt SQLite
-file an app can ship as an asset and open directly: brands, models, remotes,
-each remote's keys by canonical key, and the compiled signals once each as
-binary Pronto words. It needs nothing newer than Android 11's SQLite, is
+file an app can ship as an asset and open directly: brands (with the other
+names a person types for them), models, remotes, each remote's keys by
+canonical key, and the compiled signals once each as binary Pronto words. It needs nothing newer than Android 11's SQLite, is
 byte-for-byte the same for the same tree, comes with a manifest, a detached
 ECDSA P-256 signature and a notices file with every source's licence text, and
 has two profiles: `full` (50 MB, 12.7 MB gzipped) and `selected`, at most 20 MB.
@@ -122,7 +122,12 @@ text says, to the catalog (brand, model, part number; typo-tolerant, in
 integers so a port gets the same order) and `rl bundle search-eval` measures
 how often it offers the right remote, on generated queries and on hand-written
 ones. The generated queries are friendlier than real typing and the report
-says so (DESIGN.md §24).
+says so (DESIGN.md §24). It also completes what a person has typed so far
+(`MatchIndex.suggest`: the brands and the models that go on from it, in a
+stable order) and knows other names for a brand, written out in each script, so
+that 海信, 创维 and 創維 find Hisense and Skyworth and their models as the Latin
+names do (`bundle/data/brand_aliases.json`, a seed list a person reviews;
+DESIGN.md §25).
 
 ## Try it
 
@@ -138,6 +143,7 @@ $ rl keys report           # how much of the corpus the key vocabulary maps, per
 $ rl bundle --profile selected --out bundle-out/selected   # the app's catalog file, manifest and notices
 $ rl bundle --verify bundle-out/selected                     # check it against the tree
 $ rl bundle search-eval --bundle bundle-out/selected             # how often a typed device finds its remote
+$ rl bundle suggest-vectors --file tests/vectors/suggest_vectors.json --check   # the vectors a port of suggest is held to
 $ rl build --check         # the CI gate: drift and orphans (-j N or RL_JOBS sets the workers)
 $ rl build && open site/index.html
 ```

@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/remote-ledger/schema/brand_aliases.schema.json",
+  "title": "Brand aliases",
+  "description": "Other names a person types for a brand of the catalog, each written out as it is typed (D101). `brands` lists a brand, as the catalog spells it (compared by search key, so case and spacing do not matter), with the aliases that name it. Every script and regional form is an entry of its own: nothing converts Traditional to Simplified characters at search time. `header.intentional_shared_aliases` names the aliases that two brands of the catalog share on purpose (one company spelled two ways); an alias under two brands that it does not name is an error. Fields other than the ones a search or the exporter reads (`brand`, `aliases`, `name`, and the header's `status` and `intentional_shared_aliases`) are information for the person who reviews the list (`script`, `region` and `confidence` of a name, how many `models` and `remotes` a brand has, a `method`, a `date`) and are allowed and ignored. Which names are valid in relation to each other and to the catalog (none empty, none a brand's own name, none shared undeclared) is the validator's (`bundle/aliases.py`), not the schema's.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["header", "brands"],
+  "properties": {
+    "header": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "status": {
+          "description": "Where the list stands, in words: `seed` for a first list nobody has reviewed, a draft for review, reviewed.",
+          "type": "string",
+          "minLength": 1
+        },
+        "intentional_shared_aliases": {
+          "description": "An alias that two or more brands of the catalog share on purpose, to the brands (as the catalog spells them) that have it: a query for it names all of them.",
+          "type": "object",
+          "propertyNames": { "minLength": 1, "maxLength": 48 },
+          "additionalProperties": {
+            "type": "array",
+            "x-order": "set",
+            "uniqueItems": true,
+            "minItems": 2,
+            "items": { "type": "string", "minLength": 1, "maxLength": 64 }
+          }
+        }
+      }
+    },
+    "brands": {
+      "type": "array",
+      "x-order": "set",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["brand", "aliases"],
+        "properties": {
+          "brand": { "type": "string", "minLength": 1, "maxLength": 64 },
+          "aliases": {
+            "type": "array",
+            "x-order": "set",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": ["name"],
+              "properties": {
+                "name": { "type": "string", "minLength": 1, "maxLength": 48 },
+                "script": {
+                  "description": "`hans` Simplified Chinese characters, `hant` Traditional, `both` a name written the same in both.",
+                  "enum": ["hans", "hant", "both"]
+                },
+                "region": {
+                  "description": "Where the form is established: CN mainland China, TW Taiwan, HK Hong Kong, SG Singapore, any every market that uses the script.",
+                  "enum": ["CN", "TW", "HK", "SG", "any"]
+                },
+                "confidence": { "enum": ["certain", "likely"] }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

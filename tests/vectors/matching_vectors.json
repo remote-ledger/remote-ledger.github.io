@@ -1,5 +1,51 @@
 {
   "about": "Cross-language vectors of the matcher (DESIGN.md D97): a port gives these tokens, keys, similarities and answers. Scores are integers in thousandths.",
+  "aliases": [
+    {
+      "alias": "索尼",
+      "brand": "SONY"
+    },
+    {
+      "alias": "新力",
+      "brand": "SONY"
+    },
+    {
+      "alias": "三星",
+      "brand": "SAMSUNG"
+    },
+    {
+      "alias": "松下",
+      "brand": "PANASONIC"
+    },
+    {
+      "alias": "國際牌",
+      "brand": "PANASONIC"
+    },
+    {
+      "alias": "飞利浦",
+      "brand": "PHILIPS"
+    },
+    {
+      "alias": "飛利浦",
+      "brand": "PHILIPS"
+    },
+    {
+      "alias": "西部数据",
+      "brand": "WESTERN DIGITAL"
+    },
+    {
+      "alias": "西部数据",
+      "brand": "WD"
+    },
+    {
+      "alias": "西部數據",
+      "brand": "WESTERN DIGITAL"
+    },
+    {
+      "alias": "西部數據",
+      "brand": "WD"
+    }
+  ],
   "catalog": [
     {
       "brand": "SAMSUNG",
@@ -213,6 +259,21 @@
       "brand": "SAT",
       "model": "SAT1",
       "remotes": [1503]
+    },
+    {
+      "brand": "ACME",
+      "model": "索尼 TV 55",
+      "remotes": [1601]
+    },
+    {
+      "brand": "WESTERN DIGITAL",
+      "model": "WDTV LIVE",
+      "remotes": [1701, 1702]
+    },
+    {
+      "brand": "WD",
+      "model": "WDTV HUB",
+      "remotes": [1703]
     }
   ],
   "constants": {
@@ -227,6 +288,24 @@
     "FACTOR_NONE": 950,
     "FACTOR_OTHER": 600,
     "GRAM": 3,
+    "HAN_RANGES": [
+      [
+        "0x3400",
+        "0x4dbf"
+      ],
+      [
+        "0x4e00",
+        "0x9fff"
+      ],
+      [
+        "0xf900",
+        "0xfaff"
+      ],
+      [
+        "0x20000",
+        "0x323af"
+      ]
+    ],
     "LIMIT": 5,
     "LOOKALIKES": [
       "0o",
@@ -1438,6 +1517,563 @@
       "model": "CI 500 TWN(SAT 1)",
       "note": "a brand that was given does",
       "texts": []
+    },
+    {
+      "answer": [
+        {
+          "brand": "SONY",
+          "evidence": [
+            "brand",
+            "brand:text"
+          ],
+          "model": null,
+          "models": [
+            "BDP - S 360",
+            "KD - 49 X 8088",
+            "BDP - S 300",
+            "KD - 49 X 7055",
+            "KDL-40EX720",
+            "RM-ED011"
+          ],
+          "permille": 800,
+          "remoteIds": []
+        }
+      ],
+      "brand": null,
+      "model": null,
+      "note": "an alias typed alone: the brand and its models, as its own name gives them",
+      "texts": [
+        "索尼"
+      ]
+    },
+    {
+      "answer": [
+        {
+          "brand": "SONY",
+          "evidence": [
+            "brand",
+            "brand:given"
+          ],
+          "model": null,
+          "models": [
+            "BDP - S 360",
+            "KD - 49 X 8088",
+            "BDP - S 300",
+            "KD - 49 X 7055",
+            "KDL-40EX720",
+            "RM-ED011"
+          ],
+          "permille": 1000,
+          "remoteIds": []
+        }
+      ],
+      "brand": "索尼",
+      "model": null,
+      "note": "an alias given as the brand: the brand at 1000",
+      "texts": []
+    },
+    {
+      "answer": [
+        {
+          "brand": "SONY",
+          "evidence": [
+            "brand",
+            "brand:text"
+          ],
+          "model": null,
+          "models": [
+            "BDP - S 360",
+            "KD - 49 X 8088",
+            "BDP - S 300",
+            "KD - 49 X 7055",
+            "KDL-40EX720",
+            "RM-ED011"
+          ],
+          "permille": 800,
+          "remoteIds": []
+        }
+      ],
+      "brand": null,
+      "model": null,
+      "note": "another alias of the same brand, a regional form",
+      "texts": [
+        "新力"
+      ]
+    },
+    {
+      "answer": [
+        {
+          "brand": "PHILIPS",
+          "evidence": [
+            "model:exact",
+            "via:text",
+            "brand:text"
+          ],
+          "model": "42PF9966",
+          "models": [],
+          "permille": 900,
+          "remoteIds": [501]
+        }
+      ],
+      "brand": null,
+      "model": null,
+      "note": "an alias in Simplified characters and a model number",
+      "texts": [
+        "飞利浦 42PF9966"
+      ]
+    },
+    {
+      "answer": [
+        {
+          "brand": "PHILIPS",
+          "evidence": [
+            "model:exact",
+            "via:text",
+            "brand:text"
+          ],
+          "model": "42PF9966",
+          "models": [],
+          "permille": 900,
+          "remoteIds": [501]
+        }
+      ],
+      "brand": null,
+      "model": null,
+      "note": "the same brand in Traditional characters",
+      "texts": [
+        "飛利浦 42PF9966"
+      ]
+    },
+    {
+      "answer": [
+        {
+          "brand": "PHILIPS",
+          "evidence": [
+            "model:exact",
+            "via:text",
+            "brand:text"
+          ],
+          "model": "42PF9966",
+          "models": [],
+          "permille": 900,
+          "remoteIds": [501]
+        }
+      ],
+      "brand": null,
+      "model": null,
+      "note": "no space between the Chinese name and the number: a token ends where Han characters do",
+      "texts": [
+        "飞利浦42pf9966"
+      ]
+    },
+    {
+      "answer": [
+        {
+          "brand": "PANASONIC",
+          "evidence": [
+            "model:exact",
+            "via:model",
+            "brand:given"
+          ],
+          "model": "NV - FS 200",
+          "models": [],
+          "permille": 1000,
+          "remoteIds": [1401]
+        }
+      ],
+      "brand": "松下",
+      "model": "NV - FS 200",
+      "note": "an alias as the given brand, with a model",
+      "texts": []
+    },
+    {
+      "answer": [
+        {
+          "brand": "PANASONIC",
+          "evidence": [
+            "model:exact",
+            "via:text",
+            "brand:text"
+          ],
+          "model": "NV - FS 200",
+          "models": [],
+          "permille": 900,
+          "remoteIds": [1401]
+        }
+      ],
+      "brand": null,
+      "model": null,
+      "note": "a regional form with a model written another way",
+      "texts": [
+        "國際牌 NV-FS200"
+      ]
+    },
+    {
+      "answer": [
+        {
+          "brand": "SAMSUNG",
+          "evidence": [
+            "model:exact",
+            "via:model",
+            "brand:given"
+          ],
+          "model": "UN50NU6900F",
+          "models": [],
+          "permille": 1000,
+          "remoteIds": [101]
+        },
+        {
+          "brand": "SAMSUNG",
+          "evidence": [
+            "model:edit",
+            "via:model",
+            "brand:given"
+          ],
+          "model": "UN50NU6800F",
+          "models": [],
+          "permille": 909,
+          "remoteIds": [102]
+        },
+        {
+          "brand": "SAMSUNG",
+          "evidence": [
+            "model:edit",
+            "via:model",
+            "brand:given"
+          ],
+          "model": "UN55NU6900F",
+          "models": [],
+          "permille": 909,
+          "remoteIds": [103]
+        }
+      ],
+      "brand": "三星",
+      "model": "UN50NU6900F",
+      "note": "an alias as the given brand: a model of that brand at 1000",
+      "texts": []
+    },
+    {
+      "answer": [
+        {
+          "brand": "SAMSUNG",
+          "evidence": [
+            "brand",
+            "brand:given"
+          ],
+          "model": null,
+          "models": [
+            "LE32R73BD LCD TV",
+            "BN59-01199F",
+            "UE 50 HU 6900",
+            "UN50NU6800F",
+            "UN50NU6900F",
+            "UN55NU6900F"
+          ],
+          "permille": 1000,
+          "remoteIds": []
+        }
+      ],
+      "brand": "三星",
+      "model": "KD-49X8088",
+      "note": "a model of another brand does not count for the brand an alias names",
+      "texts": []
+    },
+    {
+      "answer": [
+        {
+          "brand": "SAMSUNG",
+          "evidence": [
+            "brand",
+            "brand:text"
+          ],
+          "model": null,
+          "models": [
+            "LE32R73BD LCD TV",
+            "BN59-01199F",
+            "UE 50 HU 6900",
+            "UN50NU6800F",
+            "UN50NU6900F",
+            "UN55NU6900F"
+          ],
+          "permille": 800,
+          "remoteIds": []
+        },
+        {
+          "brand": "SONY",
+          "evidence": [
+            "brand",
+            "brand:text"
+          ],
+          "model": null,
+          "models": [
+            "BDP - S 360",
+            "KD - 49 X 8088",
+            "BDP - S 300",
+            "KD - 49 X 7055",
+            "KDL-40EX720",
+            "RM-ED011"
+          ],
+          "permille": 800,
+          "remoteIds": []
+        }
+      ],
+      "brand": null,
+      "model": null,
+      "note": "two aliases name two brands",
+      "texts": [
+        "三星 索尼"
+      ]
+    },
+    {
+      "answer": [
+        {
+          "brand": "SAMSUNG",
+          "evidence": [
+            "brand",
+            "brand:text"
+          ],
+          "model": null,
+          "models": [
+            "LE32R73BD LCD TV",
+            "BN59-01199F",
+            "UE 50 HU 6900",
+            "UN50NU6800F",
+            "UN50NU6900F",
+            "UN55NU6900F"
+          ],
+          "permille": 800,
+          "remoteIds": []
+        },
+        {
+          "brand": "SONY",
+          "evidence": [
+            "brand",
+            "brand:text"
+          ],
+          "model": null,
+          "models": [
+            "BDP - S 360",
+            "KD - 49 X 8088",
+            "BDP - S 300",
+            "KD - 49 X 7055",
+            "KDL-40EX720",
+            "RM-ED011"
+          ],
+          "permille": 800,
+          "remoteIds": []
+        }
+      ],
+      "brand": null,
+      "model": null,
+      "note": "an alias and a brand's own name together",
+      "texts": [
+        "三星 sony"
+      ]
+    },
+    {
+      "answer": [
+        {
+          "brand": "ACME",
+          "evidence": [
+            "model:exact",
+            "via:text",
+            "brand:none"
+          ],
+          "model": "索尼 TV 55",
+          "models": [],
+          "permille": 855,
+          "remoteIds": [1601]
+        }
+      ],
+      "brand": null,
+      "model": null,
+      "note": "an alias that is also part of a model name: the model that holds it is found too",
+      "texts": [
+        "索尼 TV 55"
+      ]
+    },
+    {
+      "answer": [],
+      "brand": null,
+      "model": null,
+      "note": "words that are no alias name nothing",
+      "texts": [
+        "日本 电视"
+      ]
+    },
+    {
+      "answer": [],
+      "brand": null,
+      "model": null,
+      "note": "a name that only starts with an alias is not that alias",
+      "texts": [
+        "三星电视"
+      ]
+    },
+    {
+      "answer": [],
+      "brand": null,
+      "model": null,
+      "note": "one character is too short to name a brand",
+      "texts": [
+        "索"
+      ]
+    },
+    {
+      "answer": [
+        {
+          "brand": "SAMSUNG",
+          "evidence": [
+            "brand",
+            "brand:given"
+          ],
+          "model": null,
+          "models": [
+            "LE32R73BD LCD TV",
+            "BN59-01199F",
+            "UE 50 HU 6900",
+            "UN50NU6800F",
+            "UN50NU6900F",
+            "UN55NU6900F"
+          ],
+          "permille": 900,
+          "remoteIds": []
+        },
+        {
+          "brand": "SONY",
+          "evidence": [
+            "brand",
+            "brand:given"
+          ],
+          "model": null,
+          "models": [
+            "BDP - S 360",
+            "KD - 49 X 8088",
+            "BDP - S 300",
+            "KD - 49 X 7055",
+            "KDL-40EX720",
+            "RM-ED011"
+          ],
+          "permille": 900,
+          "remoteIds": []
+        }
+      ],
+      "brand": "索尼 Samsung",
+      "model": null,
+      "note": "a given brand of two names: each run counts at 900",
+      "texts": []
+    },
+    {
+      "answer": [
+        {
+          "brand": "WD",
+          "evidence": [
+            "brand",
+            "brand:text"
+          ],
+          "model": null,
+          "models": [
+            "WDTV HUB"
+          ],
+          "permille": 800,
+          "remoteIds": []
+        },
+        {
+          "brand": "WESTERN DIGITAL",
+          "evidence": [
+            "brand",
+            "brand:text"
+          ],
+          "model": null,
+          "models": [
+            "WDTV LIVE"
+          ],
+          "permille": 800,
+          "remoteIds": []
+        }
+      ],
+      "brand": null,
+      "model": null,
+      "note": "an alias two brands share: both are named, each answers with its own models, WD (the lower id) first",
+      "texts": [
+        "西部数据"
+      ]
+    },
+    {
+      "answer": [
+        {
+          "brand": "WD",
+          "evidence": [
+            "brand",
+            "brand:given"
+          ],
+          "model": null,
+          "models": [
+            "WDTV HUB"
+          ],
+          "permille": 1000,
+          "remoteIds": []
+        },
+        {
+          "brand": "WESTERN DIGITAL",
+          "evidence": [
+            "brand",
+            "brand:given"
+          ],
+          "model": null,
+          "models": [
+            "WDTV LIVE"
+          ],
+          "permille": 1000,
+          "remoteIds": []
+        }
+      ],
+      "brand": "西部數據",
+      "model": null,
+      "note": "the same given as the brand: both at 1000",
+      "texts": []
+    },
+    {
+      "answer": [
+        {
+          "brand": "WESTERN DIGITAL",
+          "evidence": [
+            "model:exact",
+            "via:text",
+            "brand:text"
+          ],
+          "model": "WDTV LIVE",
+          "models": [],
+          "permille": 900,
+          "remoteIds": [1701, 1702]
+        }
+      ],
+      "brand": null,
+      "model": null,
+      "note": "a shared alias and a model of one of its brands: that model, from the brand it belongs to",
+      "texts": [
+        "西部数据 WDTV LIVE"
+      ]
+    },
+    {
+      "answer": [
+        {
+          "brand": "WD",
+          "evidence": [
+            "model:exact",
+            "via:model",
+            "brand:given"
+          ],
+          "model": "WDTV HUB",
+          "models": [],
+          "permille": 1000,
+          "remoteIds": [1703]
+        }
+      ],
+      "brand": "西部数据",
+      "model": "WDTV HUB",
+      "note": "a shared alias given with a model: the model of the brand that has it, the other brand's models not",
+      "texts": []
     }
   ],
   "similarity": [
@@ -1653,6 +2289,66 @@
       "text": "42LB5800",
       "tokens": [
         "42lb5800"
+      ]
+    },
+    {
+      "key": "海信55e7",
+      "text": "海信 55E7",
+      "tokens": [
+        "海信",
+        "55e7"
+      ]
+    },
+    {
+      "key": "海信55e7",
+      "text": "海信55E7",
+      "tokens": [
+        "海信",
+        "55e7"
+      ]
+    },
+    {
+      "key": "sony索尼kd49",
+      "text": "Sony索尼KD-49",
+      "tokens": [
+        "sony",
+        "索尼",
+        "kd",
+        "49"
+      ]
+    },
+    {
+      "key": "創維電視55寸",
+      "text": "創維電視 55 寸",
+      "tokens": [
+        "創維電視",
+        "55",
+        "寸"
+      ]
+    },
+    {
+      "key": "飞利浦飛利浦",
+      "text": "飞利浦,飛利浦",
+      "tokens": [
+        "飞利浦",
+        "飛利浦"
+      ]
+    },
+    {
+      "key": "三星un50nu",
+      "text": "三星UN50-NU",
+      "tokens": [
+        "三星",
+        "un50",
+        "nu"
+      ]
+    },
+    {
+      "key": "𠀀a",
+      "text": "𠀀a",
+      "tokens": [
+        "𠀀",
+        "a"
       ]
     }
   ]

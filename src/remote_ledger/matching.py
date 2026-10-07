@@ -17,7 +17,10 @@ a float. ``Candidate.score`` is that integer over 1000.
    D90: NFKD, lower case, letters and digits only). Its **tokens** are the runs of letters
    and digits of the same NFKD lower-case text, combining marks dropped, so the key of a
    text is its tokens joined. ``UN50-NU 6900/F`` has the key ``un50nu6900f`` and the tokens
-   ``un``, ``50``, ``nu``, ``6900``, ``f``.
+   ``un``, ``50``, ``nu``, ``6900``, ``f``. A run of **Han ideographs** is a token of its own, cut
+   from any letter or digit next to it (D102): ``海信55E7`` has the tokens ``海信`` and ``55e7``, so
+   a Chinese name needs no space before a model number. Nothing else changes, and the tokens of a
+   text with no ideograph are what they were.
 2. *Similarity of two keys* (``similarity``), in thousandths, between a query key ``q`` and
    a catalog key ``m``:
 
@@ -41,14 +44,21 @@ a float. ``Candidate.score`` is that integer over 1000.
    exactly a brand's key score 900. A run of any text that is exactly a brand's key, of 2
    characters or more, scores 800. The brands found are the **named brands**; those that
    ``brand`` gave are the **given** ones, and a brand named only by a text is a hint, because a
-   text holds incidental words (``DVD`` is a brand).
+   text holds incidental words (``DVD`` is a brand). A brand has **aliases** too (D101), other
+   names the bundle writes out in its ``brand_aliases`` table (``海信``, ``創維``, ``新力``, each
+   script and form of its own): a key that is exactly an alias's names its brand, and so does a
+   run of tokens, **everywhere a brand's own key does and at the same weights** (1000 as
+   ``brand``, 900 a run of it, 800 a run of a text), and the brand then answers as any brand does.
+   An alias that two brands share (one company the catalog spells two ways) names both. Aliases
+   are exact: no similarity and no look-alikes; and a bundle that has no such table has none. An alias's key holds no letter or digit of ASCII, so a search typed in Latin letters
+   is never read through one and is what it was before aliases.
 4. *The model keys.* A **run** is one to eight adjacent tokens of one line, its key the tokens
    joined. The key of all of ``model`` weighs 1000, and so does each of its runs (a model
    written with spaces, or after its brand). Of every text the runs weigh 900, but only
    those of 4 to 24 characters, and of those only the ones that contain a digit (a model
    number has one; ``model`` does not) are tried among all the models; one without a digit
-   is tried only among the models of the named brands, and never when it is itself a brand's
-   key (so ``roku ultra`` finds Roku's Ultra, and ``samsung`` is not a model). The first 60
+   is tried only among the models of the named brands, and never when it is itself a key of a brand
+   or of an alias (so ``roku ultra`` finds Roku's Ultra, and ``samsung`` is not a model). The first 60
    keys are kept, in the order of the lines and then of the runs, and tried **longest first**;
    a run that lies inside a longer run that gave a candidate by the exact or the edit rule at a
    similarity of 900 or more (rule 6) is not tried, so ``bdp-s360`` is the model ``bdps360`` and
@@ -73,8 +83,33 @@ The evidence is a few words: ``model:exact``, ``model:prefix`` or ``model:edit``
 ``via:model`` or ``via:text``; ``brand:given``, ``brand:text``, ``brand:none`` or
 ``brand:other`` (the factor 600); ``kind:remote`` for a part number; ``brand`` alone for a brand-only answer.
 
+**Suggesting, as a person types** (``suggest``, D100; the rules above are ``match``'s).
+``suggest(query, limit=8)`` gives ``Suggestions(brands, models)``: brands and models, each at most
+``limit``, in an order that is the same whatever was asked before; a query with no letter or digit,
+or a limit of 0 or less, gives nothing. It reads the bundle as ``match`` does, and an alias
+(rule 3) is a name of its brand wherever a brand's key is looked at.
+
+S1. *The brands*, in this order, each once: the brand whose key (or an alias's key) is the query's
+    key; those whose key (or an alias's) starts with it, most models first, then by name in code point
+    order, then by id; those the query **names by a run** (S2), the longest run first, then by id;
+    then, if there is still room, those the matcher would read the query as (``Samsung Electronics``,
+    ``Phillips``: rule 3's similarity of 800 or more, best first). A one-character query gives the
+    first two groups: a run has two characters at least.
+S2. *Named by a run*: a run of the first twelve tokens (rule 4's runs) of two characters or more
+    that is exactly a key of a brand or of an alias.
+S3. *Models, when a brand is named*: the **rest** of the query is its tokens that are not in a run
+    of a named brand, joined (all of them, and a run counts once, at its first place, so ``lg lg 42``
+    leaves ``lg42``); for each named brand in S1's order, until ``limit`` models, S4 over the rest.
+S4. *The models of one brand* (``suggest_models(brand_id, query)``): those whose key starts with the
+    key of the query, the model whose key it is first, then most remotes first, then by name in code
+    point order, then by id; an empty key gives all of the brand's models, most remotes first. A typo
+    is not forgiven: that is ``match``'s work once the person has typed it all.
+S5. *Models, when no brand is named*: those of ``match`` over the query as one text, in its order,
+    brand-only answers left out; so a model needs the five characters of the prefix rule and a typo
+    is forgiven as ``match`` forgives it.
+
 ``matching_vectors.json`` (D97) holds the normalisation, the similarity and a small catalog
-with queries and their answers, for a port.
+with queries and their answers, for a port; ``suggest_vectors.json`` (D100) the answers of ``suggest``.
 """
 
 from __future__ import annotations
@@ -129,8 +164,19 @@ MIN_OVERLAP_PERCENT = 40
 BRAND_CANDIDATES = 5
 BRAND_MODELS = 50
 LIMIT = 5
+#: What ``suggest`` offers at most of brands, and of models, by default.
+SUGGEST_LIMIT = 8
+#: Listings of whole brands kept (a big brand has thousands of models).
+BRAND_LISTINGS = 16
+
+#: Han ideographs, as the ranges of CJK Unified Ideographs (Extension A, the main block and the
+#: compatibility block, then Extensions B to H): a token never holds one next to another script.
+HAN_RANGES = ((0x3400, 0x4DBF), (0x4E00, 0x9FFF), (0xF900, 0xFAFF), (0x20000, 0x323AF))
+HAN = "".join(f"{chr(first)}-{chr(last)}" for first, last in HAN_RANGES)
 
 _TOKEN = re.compile(r"[^\W_]+")
+_HAN_RUNS = re.compile(rf"[{HAN}]+|[^{HAN}]+")
+_HAS_HAN = re.compile(rf"[{HAN}]")
 
 
 # --- normalisation -------------------------------------------------------------------------
@@ -138,10 +184,18 @@ _TOKEN = re.compile(r"[^\W_]+")
 
 def tokens(text: str) -> list[str]:
     """The runs of letters and digits of ``text``: NFKD, lower case, combining marks
-    dropped. ``"".join(tokens(t)) == search_norm(t)`` for every text."""
+    dropped, and a run that holds Han ideographs and anything else cut where they meet
+    (``海信55E7`` is ``海信`` and ``55e7``: a person typing Chinese does not put a space
+    between a name and a number). ``"".join(tokens(t)) == search_norm(t)`` for every text."""
     decomposed = unicodedata.normalize("NFKD", text).lower()
     plain = "".join(c for c in decomposed if not unicodedata.category(c).startswith("M"))
-    return _TOKEN.findall(plain)
+    out: list[str] = []
+    for word in _TOKEN.findall(plain):
+        if _HAS_HAN.search(word):
+            out.extend(_HAN_RUNS.findall(word))
+        else:
+            out.append(word)
+    return out
 
 
 @dataclass(frozen=True)
@@ -245,6 +299,41 @@ class Candidate:
         return round(self.score * 1000)
 
 
+@dataclass(frozen=True)
+class BrandSuggestion:
+    """A brand offered while a person types (``MatchIndex.suggest``)."""
+
+    brand_id: int
+    name: str
+    model_count: int
+
+
+@dataclass(frozen=True)
+class ModelSuggestion:
+    """A model offered while a person types: its brand's name and the remotes that control it.
+    ``part_number`` is a model of ``kind`` 1, a remote's own part number."""
+
+    model_id: int
+    brand_id: int
+    brand: str
+    model: str
+    remote_ids: tuple[int, ...]
+    part_number: bool
+
+
+@dataclass(frozen=True)
+class Suggestions:
+    """The answer of ``MatchIndex.suggest``: brands and models, each at most ``limit``, each in
+    a stable order."""
+
+    brands: tuple[BrandSuggestion, ...]
+    models: tuple[ModelSuggestion, ...]
+
+    @property
+    def is_empty(self) -> bool:
+        return not self.brands and not self.models
+
+
 def kind(match_similarity: int, query: str, entry: str) -> str:
     """``exact``, ``prefix`` or ``edit``: which rule gave a similarity."""
     if match_similarity == 1000:
@@ -257,6 +346,23 @@ def kind(match_similarity: int, query: str, entry: str) -> str:
 
 
 # --- the index -----------------------------------------------------------------------------------
+
+
+class BrandModels:
+    """A brand's models, ``(model id, name)``, most remotes first, then by name, then by id;
+    their search keys are made when a suggestion first asks for them."""
+
+    __slots__ = ("entries", "_keys")
+
+    def __init__(self, entries: tuple[tuple[int, str], ...]) -> None:
+        self.entries = entries
+        self._keys: tuple[str, ...] | None = None
+
+    @property
+    def keys(self) -> tuple[str, ...]:
+        if self._keys is None:
+            self._keys = tuple(search_norm(name) for _, name in self.entries)
+        return self._keys
 
 
 class MatchIndex:
@@ -278,10 +384,30 @@ class MatchIndex:
                 self.brand_by_key.setdefault(norm, brand_id)
                 for gram in sorted(grams(norm)):
                     self.brand_grams.setdefault(gram, []).append(brand_id)
+        # the brand aliases (D101): a bundle written before the table existed has none. An alias
+        # that two brands share (one company the catalog spells two ways) names both.
+        self.alias_by_key: dict[str, tuple[int, ...]] = {}
+        self.aliases: dict[int, tuple[str, ...]] = {}               # brand id -> aliases as written
+        if conn.execute("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'brand_aliases'").fetchone():
+            written: dict[int, list[str]] = {}
+            for alias, norm, brand_id in conn.execute(
+                    "SELECT alias, norm, brand_id FROM brand_aliases ORDER BY norm, brand_id"):
+                if norm and brand_id in self.brands and norm not in self.brand_by_key:
+                    if brand_id not in self.alias_by_key.get(norm, ()):
+                        self.alias_by_key[norm] = (*self.alias_by_key.get(norm, ()), brand_id)
+                        written.setdefault(brand_id, []).append(alias)
+            self.aliases = {b: tuple(a) for b, a in written.items()}
+        #: Every key that names brands: a brand's own and its aliases', to the brand ids in order.
+        #: A brand's key wins a clash.
+        self.name_by_key: dict[str, tuple[int, ...]] = {
+            **self.alias_by_key, **{key: (brand_id,) for key, brand_id in self.brand_by_key.items()}}
+        #: ``(key, brand id)`` of every one of them, sorted: what a typed start is looked up in.
+        self._keys = sorted((key, brand_id) for key, ids in self.name_by_key.items() for brand_id in ids)
         self._postings = lru_cache(maxsize=2048)(self._read_postings)
         self._model = lru_cache(maxsize=4096)(self._read_model)
         self._remotes = lru_cache(maxsize=4096)(self._read_remotes)
         self._listing = lru_cache(maxsize=64)(self._read_listing)
+        self._brand_models = lru_cache(maxsize=BRAND_LISTINGS)(self._read_brand_models)
 
     @classmethod
     def open(cls, bundle: str | Path) -> "MatchIndex":
@@ -291,9 +417,10 @@ class MatchIndex:
                                    check_same_thread=False))
 
     @classmethod
-    def from_entries(cls, entries: Iterable[dict]) -> "MatchIndex":
+    def from_entries(cls, entries: Iterable[dict], aliases: Iterable[dict] = ()) -> "MatchIndex":
         """A small index from ``{"brand", "model", "remotes": [ids]}`` entries, built with
-        the bundle's own functions for ids and grams (what the vectors of D97 use)."""
+        the bundle's own functions for ids and grams (what the vectors of D97 use), and
+        ``{"brand", "alias"}`` brand aliases (D101): the brand is one of the entries'."""
         conn = sqlite3.connect(":memory:", check_same_thread=False)
         conn.executescript("""
             CREATE TABLE brands (id INTEGER PRIMARY KEY, name TEXT, norm TEXT,
@@ -328,6 +455,17 @@ class MatchIndex:
                          (brand_id, names[norm], norm, first, model_id - first + 1))
         conn.executemany("INSERT INTO ngram VALUES (?,?)",
                          [(g, varints(ids)) for g, ids in sorted(gram_ids.items())])
+        brand_ids = {norm: i for i, norm in enumerate(sorted(by_brand), 1)}
+        rows = []
+        for item in aliases:
+            owner = brand_ids.get(search_norm(item["brand"]))
+            if owner is None:
+                raise ValueError(f"the alias {item['alias']!r} is of {item['brand']!r}, which no entry has")
+            rows.append((item["alias"], search_norm(item["alias"]), owner))
+        if rows:
+            conn.execute("CREATE TABLE brand_aliases (alias TEXT, norm TEXT, brand_id INTEGER, "
+                         "PRIMARY KEY (norm, brand_id)) WITHOUT ROWID")
+            conn.executemany("INSERT OR IGNORE INTO brand_aliases VALUES (?,?,?)", rows)
         return cls(conn)
 
     # -- reading ----------------------------------------------------------------------------
@@ -344,18 +482,23 @@ class MatchIndex:
         return tuple(r for (r,) in self.conn.execute(
             "SELECT remote_id FROM controls WHERE model_id = ? ORDER BY remote_id", (model_id,)))
 
-    def _read_listing(self, brand_id: int) -> tuple[str, ...]:
-        """A brand's models, most remotes first, then by name."""
+    def _read_brand_models(self, brand_id: int) -> "BrandModels":
+        """All of a brand's models, most remotes first, then by name, then by id."""
         _, _, first, count = self.brands[brand_id]
         if not count:
-            return ()
+            return BrandModels(())
         last = first + count - 1
         remotes = Counter(m for (m,) in self.conn.execute(
             "SELECT model_id FROM controls WHERE model_id BETWEEN ? AND ?", (first, last)))
         names = dict(self.conn.execute(
             "SELECT id, name FROM models WHERE id BETWEEN ? AND ?", (first, last)))
         top = sorted(names, key=lambda i: (-remotes[i], names[i], i))
-        return tuple(names[i] for i in top[:BRAND_MODELS])
+        return BrandModels(tuple((i, names[i]) for i in top))
+
+    def _read_listing(self, brand_id: int) -> tuple[str, ...]:
+        """The names of a brand's first ``BRAND_MODELS`` models, most remotes first: what a
+        brand-only answer lists."""
+        return tuple(name for _, name in self._brand_models(brand_id).entries[:BRAND_MODELS])
 
     # -- brands -------------------------------------------------------------------------------
 
@@ -385,18 +528,21 @@ class MatchIndex:
 
         if brand and brand.strip():
             key = search_norm(brand)
-            if key in self.brand_by_key:
-                add(self.brand_by_key[key], BRAND_GIVEN, "brand:given")
+            if key in self.name_by_key:
+                for brand_id in self.name_by_key[key]:
+                    add(brand_id, BRAND_GIVEN, "brand:given")
             else:
                 for brand_id, score in self._fuzzy_brands(key):
                     add(brand_id, min(score, BRAND_GIVEN), "brand:given")
             for part in runs(tokens(brand)[:MAX_RUN]):
-                if len(part.key) >= BRAND_MIN_KEY and part.key in self.brand_by_key:
-                    add(self.brand_by_key[part.key], BRAND_GIVEN_PART, "brand:given")
+                if len(part.key) >= BRAND_MIN_KEY and part.key in self.name_by_key:
+                    for brand_id in self.name_by_key[part.key]:
+                        add(brand_id, BRAND_GIVEN_PART, "brand:given")
         for text in texts:
             for part in runs(tokens(text)[:MAX_TOKENS]):
-                if len(part.key) >= BRAND_MIN_KEY and part.key in self.brand_by_key:
-                    add(self.brand_by_key[part.key], BRAND_TEXT, "brand:text")
+                if len(part.key) >= BRAND_MIN_KEY and part.key in self.name_by_key:
+                    for brand_id in self.name_by_key[part.key]:
+                        add(brand_id, BRAND_TEXT, "brand:text")
         return found
 
     # -- models ---------------------------------------------------------------------------------
@@ -445,7 +591,7 @@ class MatchIndex:
                     continue
                 if any(c.isdigit() for c in run.key):
                     add(run, WEIGHT_TEXT, "via:text")
-                elif run.key not in self.brand_by_key:
+                elif run.key not in self.name_by_key:
                     add(run, WEIGHT_TEXT, "via:text", True)
         return out
 
@@ -454,6 +600,25 @@ class MatchIndex:
     def match(self, brand: str | None = None, model: str | None = None,
               texts: Sequence[str] = (), limit: int = LIMIT) -> list[Candidate]:
         """The candidates for a query (the rules in the module's docstring)."""
+        ranked, named = self._rank(brand, model, texts)
+        out = []
+        for model_id, (total, score, _, rule, via, why) in ranked[:limit]:
+            brand_id, name, flag = self._model(model_id)
+            evidence = (f"model:{rule}", via, why) + (("kind:remote",) if flag == 1 else ())
+            out.append(Candidate(self.brands[brand_id][0], name, self._remotes(model_id),
+                                 total / 1000, evidence))
+        if out or not named:
+            return out
+        ordered = sorted(named.items(), key=lambda kv: (-kv[1][0], kv[0]))
+        return [Candidate(self.brands[b][0], None, (), weight / 1000, ("brand", why),
+                          self._listing(b))
+                for b, (weight, why) in ordered[:limit]]
+
+    def _rank(self, brand: str | None, model: str | None, texts: Sequence[str]) -> tuple[
+            list[tuple[int, tuple[int, int, int, str, str, str]]], dict[int, tuple[int, str]]]:
+        """The models that scored, best first (rule 7's order) as ``(model id, (score, similarity,
+        key length, rule, via, why))``, and the named brands: all of ``match`` before it shapes
+        the answer."""
         named = self.named_brands(brand, texts)
         given = any(why == "brand:given" for _, why in named.values())
         keyed = self.model_keys(model, texts)
@@ -504,21 +669,117 @@ class MatchIndex:
         ranked = sorted(found.items(), key=lambda kv: (
             -kv[1][0], -kv[1][1], -kv[1][2], self.brands[self._model(kv[0])[0]][0],
             self._model(kv[0])[1], kv[0]))
-        out = []
-        for model_id, (total, score, _, rule, via, why) in ranked[:limit]:
-            brand_id, name, flag = self._model(model_id)
-            evidence = (f"model:{rule}", via, why) + (("kind:remote",) if flag == 1 else ())
-            out.append(Candidate(self.brands[brand_id][0], name, self._remotes(model_id),
-                                 total / 1000, evidence))
-        if out or not named:
-            return out
-        ordered = sorted(named.items(), key=lambda kv: (-kv[1][0], kv[0]))
-        return [Candidate(self.brands[b][0], None, (), weight / 1000, ("brand", why),
-                          self._listing(b))
-                for b, (weight, why) in ordered[:limit]]
+        return ranked, named
+
+    # -- as you type ---------------------------------------------------------------------------
+
+    def suggest(self, query: str, limit: int = SUGGEST_LIMIT) -> "Suggestions":
+        """What to offer a person who is still typing ``query``, in a stable order: brands and
+        models, each at most ``limit`` (the rules in the module's docstring, S1 to S5)."""
+        key = search_norm(query)
+        if not key or limit <= 0:
+            return Suggestions((), ())
+        words = tokens(query)
+        named = self._named_by_runs(words)
+        models: list[ModelSuggestion] = []
+        if named:
+            rest = self._rest_of_query(words, named)
+            for brand_id in named:
+                if len(models) >= limit:
+                    break
+                models.extend(self._models_of(brand_id, rest, limit - len(models)))
+        else:
+            ranked, _ = self._rank(None, None, [query])
+            models = [self._suggestion(model_id) for model_id, _ in ranked[:limit]]
+        return Suggestions(tuple(self._brands_for(key, named, limit)), tuple(models))
+
+    def suggest_brands(self, query: str, limit: int = SUGGEST_LIMIT) -> list["BrandSuggestion"]:
+        """The brands of ``suggest`` alone, ``limit`` at most."""
+        key = search_norm(query)
+        if not key or limit <= 0:
+            return []
+        return self._brands_for(key, self._named_by_runs(tokens(query)), limit)
+
+    def suggest_models(self, brand_id: int, query: str, limit: int = SUGGEST_LIMIT) -> list["ModelSuggestion"]:
+        """The models of one brand to offer for what has been typed of a model (S4): those
+        whose key starts with the key of ``query``, the exact one first and then most remotes
+        first, then by name and id, ``limit`` at most. An empty query gives the brand's models,
+        most remotes first. A typo is not forgiven here (the models are a prefix match, which is
+        what a person typing wants); it is ``match``'s work, once the person has typed it all."""
+        return [] if limit <= 0 else self._models_of(brand_id, search_norm(query), limit)
+
+    def _named_by_runs(self, words: Sequence[str]) -> dict[int, int]:
+        """The brands a query names by a run of its tokens that is exactly a key of a brand
+        or of an alias (two characters or more): brand id to the length of its longest run,
+        longest first, then by id."""
+        longest: dict[int, int] = {}
+        for run in runs(words[:MAX_TOKENS]):
+            if len(run.key) >= BRAND_MIN_KEY:
+                for brand_id in self.name_by_key.get(run.key, ()):
+                    longest[brand_id] = max(longest.get(brand_id, 0), len(run.key))
+        return dict(sorted(longest.items(), key=lambda kv: (-kv[1], kv[0])))
+
+    def _rest_of_query(self, words: Sequence[str], named: dict[int, int]) -> str:
+        """What is left of a query's words when the words of the brands it names are taken
+        out, joined: the model typed so far."""
+        taken = [False] * len(words)
+        for run in runs(words[:MAX_TOKENS]):
+            if len(run.key) >= BRAND_MIN_KEY and any(b in named for b in self.name_by_key.get(run.key, ())):
+                for t in range(run.start, run.end):
+                    taken[t] = True
+        return "".join(word for word, gone in zip(words, taken) if not gone)
+
+    def _brands_for(self, key: str, named: dict[int, int], limit: int) -> list["BrandSuggestion"]:
+        """The brands to offer for a query of search key ``key`` (S1): the brand whose key, or
+        whose alias's key, is ``key``; then those whose key starts with it, most models first,
+        then by name and id; then the brands the query names by a run; then, if there is room,
+        the brands the matcher would read it as (``_fuzzy_brands``)."""
+        starting: dict[int, bool] = {}          # brand id -> one of its keys is exactly ``key``
+        at = bisect_left(self._keys, (key,))
+        while at < len(self._keys) and self._keys[at][0].startswith(key):
+            other, brand_id = self._keys[at]
+            starting[brand_id] = starting.get(brand_id, False) or other == key
+            at += 1
+        ordered = sorted(starting, key=lambda b: (
+            not starting[b], -self.brands[b][3], self.brands[b][0], b))
+        out = dict.fromkeys(ordered)
+        for brand_id in named:
+            out.setdefault(brand_id)
+        if len(out) < limit:
+            for brand_id, _ in self._fuzzy_brands(key):
+                out.setdefault(brand_id)
+        return [BrandSuggestion(b, self.brands[b][0], self.brands[b][3]) for b in list(out)[:limit]]
+
+    def _models_of(self, brand_id: int, key: str, limit: int) -> list["ModelSuggestion"]:
+        """The models of one brand whose key starts with ``key``, the exact one first and then
+        most remotes first; all of them, most remotes first, for an empty ``key``."""
+        if brand_id not in self.brands:
+            return []
+        listing = self._brand_models(brand_id)
+        if not key:
+            picked = [model_id for model_id, _ in listing.entries[:limit]]
+        else:
+            exact, goes_on = [], []
+            for (model_id, _), model_key in zip(listing.entries, listing.keys):
+                if model_key == key:
+                    exact.append(model_id)
+                elif model_key.startswith(key):
+                    goes_on.append(model_id)
+            picked = (exact + goes_on)[:limit]
+        return [self._suggestion(model_id) for model_id in picked]
+
+    def _suggestion(self, model_id: int) -> "ModelSuggestion":
+        brand_id, name, flag = self._model(model_id)
+        return ModelSuggestion(model_id, brand_id, self.brands[brand_id][0], name,
+                               self._remotes(model_id), flag == 1)
 
 
 def match(index: MatchIndex, brand: str | None = None, model: str | None = None,
           texts: Sequence[str] = (), limit: int = LIMIT) -> list[Candidate]:
     """``index.match`` as a function: the candidates for a brand, a model and some texts."""
     return index.match(brand, model, texts, limit)
+
+
+def suggest(index: MatchIndex, query: str, limit: int = SUGGEST_LIMIT) -> "Suggestions":
+    """``index.suggest`` as a function: the brands and models to offer for a query being typed."""
+    return index.suggest(query, limit)

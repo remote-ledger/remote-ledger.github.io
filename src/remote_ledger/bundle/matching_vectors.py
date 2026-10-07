@@ -2,8 +2,8 @@
 
 A port of ``matching.py`` (a Kotlin search on a phone, or a service in another language) is
 right when it gives these. The file is **self-contained and independent of the data**: the
-catalog is a small one written below, and every expected answer is what ``matching.py`` gives
-over it, so the file changes only when the rules do and it is checked for drift (``rl bundle
+catalog is a small one written below (with the brand aliases of D101), and every expected answer
+is what ``matching.py`` gives over it, so the file changes only when the rules do and it is checked for drift (``rl bundle
 matching-vectors --check``, and a test).
 
 It holds, in order: the constants of the rules; the normalisation of texts into tokens and
@@ -69,12 +69,29 @@ CATALOG: list[dict[str, Any]] = [
     {"brand": "ORBITECH", "model": "CI 500 TWN(SAT 1)", "remotes": [1501]},
     {"brand": "TELESTAR", "model": "CI 500 TWN(SAT 1)", "remotes": [1502]},
     {"brand": "SAT", "model": "SAT1", "remotes": [1503]},
+    # a model of another brand whose name holds a brand alias (D101)
+    {"brand": "ACME", "model": "索尼 TV 55", "remotes": [1601]},
+    # one company the catalog spells two ways, with Chinese names that both spellings share (D101)
+    {"brand": "WESTERN DIGITAL", "model": "WDTV LIVE", "remotes": [1701, 1702]},
+    {"brand": "WD", "model": "WDTV HUB", "remotes": [1703]},
+]
+
+#: Brand aliases (D101): ``brand`` is a brand of the catalog above, ``alias`` another name a
+#: person types for it, each script and regional form written out.
+ALIASES: list[dict[str, str]] = [
+    {"brand": "SONY", "alias": "索尼"}, {"brand": "SONY", "alias": "新力"},
+    {"brand": "SAMSUNG", "alias": "三星"},
+    {"brand": "PANASONIC", "alias": "松下"}, {"brand": "PANASONIC", "alias": "國際牌"},
+    {"brand": "PHILIPS", "alias": "飞利浦"}, {"brand": "PHILIPS", "alias": "飛利浦"},
+    {"brand": "WESTERN DIGITAL", "alias": "西部数据"}, {"brand": "WD", "alias": "西部数据"},
+    {"brand": "WESTERN DIGITAL", "alias": "西部數據"}, {"brand": "WD", "alias": "西部數據"},
 ]
 
 #: Texts for the normalisation vectors.
 TOKEN_TEXTS = [
     "UN50-NU 6900/F", "Ünï-Test 50/60Hz", "Ｓony ① KD-49X8088", "O'Brien & Sons", "", "??  --", "cafés",
     "ß straße", "Вниз ВВЕРХ", "RM-ED011", "a_b.c,d", "42LB5800",
+    "海信 55E7", "海信55E7", "Sony索尼KD-49", "創維電視 55 寸", "飞利浦,飛利浦", "三星UN50-NU", "𠀀a",
 ]
 
 #: Pairs of keys (query, catalog entry) for the similarity vectors.
@@ -90,7 +107,7 @@ SIMILARITY_PAIRS = [
 
 def build() -> dict[str, Any]:
     """The vectors, from ``matching.py``."""
-    index = matching.MatchIndex.from_entries(CATALOG)
+    index = matching.MatchIndex.from_entries(CATALOG, ALIASES)
     queries: list[dict[str, Any]] = []
 
     def ask(brand: str | None, model: str | None, texts: list[str], note: str) -> None:
@@ -145,6 +162,29 @@ def build() -> dict[str, Any]:
     ask(None, None, ["PANASONIC NV - FS 200"], "a long run that only starts like a model does not hide the exact one")
     ask(None, None, ["CI 500 TWN(SAT 1)"], "a brand named only by a text does not take a model from the others")
     ask("DVD", "CI 500 TWN(SAT 1)", [], "a brand that was given does")
+    # brand aliases (D101): Chinese names, each script and form written out in the data
+    ask(None, None, ["索尼"], "an alias typed alone: the brand and its models, as its own name gives them")
+    ask("索尼", None, [], "an alias given as the brand: the brand at 1000")
+    ask(None, None, ["新力"], "another alias of the same brand, a regional form")
+    ask(None, None, ["飞利浦 42PF9966"], "an alias in Simplified characters and a model number")
+    ask(None, None, ["飛利浦 42PF9966"], "the same brand in Traditional characters")
+    ask(None, None, ["飞利浦42pf9966"], "no space between the Chinese name and the number: a token ends where Han characters do")
+    ask("松下", "NV - FS 200", [], "an alias as the given brand, with a model")
+    ask(None, None, ["國際牌 NV-FS200"], "a regional form with a model written another way")
+    ask("三星", "UN50NU6900F", [], "an alias as the given brand: a model of that brand at 1000")
+    ask("三星", "KD-49X8088", [], "a model of another brand does not count for the brand an alias names")
+    ask(None, None, ["三星 索尼"], "two aliases name two brands")
+    ask(None, None, ["三星 sony"], "an alias and a brand's own name together")
+    ask(None, None, ["索尼 TV 55"], "an alias that is also part of a model name: the model that holds it is found too")
+    ask(None, None, ["日本 电视"], "words that are no alias name nothing")
+    ask(None, None, ["三星电视"], "a name that only starts with an alias is not that alias")
+    ask(None, None, ["索"], "one character is too short to name a brand")
+    ask("索尼 Samsung", None, [], "a given brand of two names: each run counts at 900")
+    # an alias that two brands share on purpose names both, in the order of their ids
+    ask(None, None, ["西部数据"], "an alias two brands share: both are named, each answers with its own models, WD (the lower id) first")
+    ask("西部數據", None, [], "the same given as the brand: both at 1000")
+    ask(None, None, ["西部数据 WDTV LIVE"], "a shared alias and a model of one of its brands: that model, from the brand it belongs to")
+    ask("西部数据", "WDTV HUB", [], "a shared alias given with a model: the model of the brand that has it, the other brand's models not")
     return {
         "format": FORMAT,
         "about": "Cross-language vectors of the matcher (DESIGN.md D97): a port gives these "
@@ -165,10 +205,12 @@ def build() -> dict[str, Any]:
             "PER_KEY": matching.PER_KEY, "MIN_OVERLAP_PERCENT": matching.MIN_OVERLAP_PERCENT,
             "BRAND_CANDIDATES": matching.BRAND_CANDIDATES, "BRAND_MODELS": matching.BRAND_MODELS,
             "LIMIT": matching.LIMIT, "GRAM": matching.GRAM,
+            "HAN_RANGES": [[hex(first), hex(last)] for first, last in matching.HAN_RANGES],
         },
         "tokens": [{"text": t, "tokens": matching.tokens(t), "key": search_norm(t)} for t in TOKEN_TEXTS],
         "similarity": [{"query": q, "entry": e, "permille": matching.similarity(q, e)}
                        for q, e in SIMILARITY_PAIRS],
         "catalog": CATALOG,
+        "aliases": ALIASES,
         "queries": queries,
     }

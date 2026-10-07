@@ -35,6 +35,7 @@ from ..keys import load_vocabulary, squash
 from ..parallel import ordered_map
 from ..pronto import encode
 from ..serialize import load
+from . import aliases as brand_aliases
 from . import catalog, corpus, writer
 from .build import BUNDLE_FILE, MANIFEST_FILE, NOTICES_FILE
 from .catalog import GRAM, unvarints
@@ -75,8 +76,10 @@ def _one(conn: sqlite3.Connection, sql: str, *args: Any) -> Any:
 
 
 def verify_directory(root: Path, directory: Path, *, sample_remotes: int = SAMPLE_REMOTES,
-                     sample_models: int = SAMPLE_MODELS) -> tuple[list[str], dict[str, Any]]:
-    """``(problems, facts)`` of the bundle in ``directory`` against the tree under ``root``."""
+                     sample_models: int = SAMPLE_MODELS,
+                     aliases: tuple[brand_aliases.Alias, ...] | None = None) -> tuple[list[str], dict[str, Any]]:
+    """``(problems, facts)`` of the bundle in ``directory`` against the tree under ``root`` and
+    the brand aliases (the shipped list unless ``aliases`` is given)."""
     problems: list[str] = []
     facts: dict[str, Any] = {}
     manifest_path = directory / MANIFEST_FILE
@@ -103,7 +106,7 @@ def verify_directory(root: Path, directory: Path, *, sample_remotes: int = SAMPL
         if problems:
             return problems, facts
         problems += _verify_against_tree(conn, root, manifest, facts, sample_remotes,
-                                         sample_models)
+                                         sample_models, aliases)
     finally:
         conn.close()
     return problems, facts
@@ -128,8 +131,11 @@ def _verify_file(conn: sqlite3.Connection, manifest: dict[str, Any],
                        ("profile", manifest["profile"])):
         if meta.get(key) != str(value):
             problems.append(f"meta {key} is {meta.get(key)!r}, the manifest says {value!r}")
-    tables = {"brands": "brands", "models": "models", "controls": "controls",
-              "remotes": "remotes", "keys": "keys", "signals": "signals",
+    if not conn.execute("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'brand_aliases'").fetchone():
+        return problems + ["the bundle has no brand_aliases table: it was written before the brand "
+                           "aliases of D101; build it again"]
+    tables = {"brands": "brands", "brandAliases": "brand_aliases", "models": "models",
+              "controls": "controls", "remotes": "remotes", "keys": "keys", "signals": "signals",
               "excludedBrands": "excluded_brands"}
     for name, table in tables.items():
         n = _one(conn, f"SELECT COUNT(*) FROM {table}")
@@ -161,6 +167,10 @@ def _verify_file(conn: sqlite3.Connection, manifest: dict[str, Any],
                              "(SELECT COUNT(*) FROM keys k WHERE k.remote_id = r.id)",
         "excluded brands that are in": "SELECT COUNT(*) FROM excluded_brands e JOIN brands b "
                                        "ON b.norm = e.norm AND e.norm != ''",
+        "brand_aliases.brand_id": "SELECT COUNT(*) FROM brand_aliases WHERE brand_id NOT IN "
+                                  "(SELECT id FROM brands)",
+        "aliases that are a brand's own name": "SELECT COUNT(*) FROM brand_aliases a JOIN brands b "
+                                               "ON b.norm = a.norm",
     }
     for what, sql in dangling.items():
         n = _one(conn, sql)
@@ -188,13 +198,16 @@ def _verify_file(conn: sqlite3.Connection, manifest: dict[str, Any],
     for brand_id, name, norm in conn.execute("SELECT id, name, norm FROM brands"):
         if norm != search_norm(name):
             problems.append(f"brand {brand_id} {name!r} has the search key {norm!r}")
+    for alias, norm in conn.execute("SELECT alias, norm FROM brand_aliases"):
+        if norm != search_norm(alias):
+            problems.append(f"the alias {alias!r} has the search key {norm!r}")
     facts["gramLength"] = GRAM
     return problems
 
 
 def _verify_against_tree(conn: sqlite3.Connection, root: Path, manifest: dict[str, Any],
-                         facts: dict[str, Any], sample_remotes: int,
-                         sample_models: int) -> list[str]:
+                         facts: dict[str, Any], sample_remotes: int, sample_models: int,
+                         aliases: tuple[brand_aliases.Alias, ...] | None) -> list[str]:
     problems: list[str] = []
     records, read_problems = corpus.read_corpus(root)
     if read_problems:
@@ -273,6 +286,15 @@ def _verify_against_tree(conn: sqlite3.Connection, root: Path, manifest: dict[st
         excluded = {n for (n,) in conn.execute("SELECT norm FROM excluded_brands")}
         if every - included_brands - excluded - {n for n in every if n.startswith("\0")}:
             problems.append("some brands of the tree are neither carried nor in excluded_brands")
+
+    # the brand aliases: the list that ships, for the brands this bundle carries
+    brand_ids = {norm: i for i, norm in conn.execute("SELECT id, norm FROM brands")}
+    wanted = brand_aliases.rows_for(brand_aliases.shipped_aliases() if aliases is None else aliases, brand_ids)
+    stored = list(conn.execute("SELECT alias, norm, brand_id FROM brand_aliases ORDER BY norm"))
+    if stored != wanted:
+        problems.append(f"brand_aliases has {len(stored):,} rows and is not the list that ships "
+                        f"for these brands ({len(wanted):,} rows)")
+    facts["brandAliases"] = len(stored)
 
     # the sample, compiled again by the compile stage's own code or its committed output
     for ref in ranked(sorted(seen_refs & set(by_ref)), sample_remotes, "remotes"):

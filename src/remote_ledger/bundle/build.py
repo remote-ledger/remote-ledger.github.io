@@ -32,6 +32,7 @@ from typing import Any
 from ..app_api import compact
 from ..errors import ValidationError
 from ..keys import load_vocabulary
+from . import aliases as brand_aliases
 from . import catalog, corpus, notices, select, writer
 
 BUNDLE_FILE = "catalog.sqlite"
@@ -54,6 +55,8 @@ class Bundle:
     selection: select.Selection | None = None
     #: The rows the file was written from, for a report or a test to look at.
     assembled: catalog.Assembled | None = None
+    #: What the exporter says and goes on (a brand of the alias list that the catalog lacks).
+    notes: list[str] = field(default_factory=list)
 
 
 def build_manifest(bundle: bytes, notices_json: bytes, assembled: catalog.Assembled,
@@ -75,7 +78,8 @@ def build_manifest(bundle: bytes, notices_json: bytes, assembled: catalog.Assemb
             "sha256": hashlib.sha256(notices_json).hexdigest(),
         },
         "counts": {
-            "brands": len(assembled.brands), "models": len(assembled.models),
+            "brands": len(assembled.brands), "brandAliases": len(assembled.brand_aliases),
+            "models": len(assembled.models),
             "remotes": len(assembled.remotes), "keys": len(assembled.keys),
             "signals": len(assembled.signals),
         },
@@ -86,9 +90,11 @@ def build_manifest(bundle: bytes, notices_json: bytes, assembled: catalog.Assemb
 
 
 def build_bundle(root: Path, profile: str = "selected", *, max_bytes: int | None = None,
-                 records: list[corpus.RemoteRecord] | None = None) -> Bundle:
+                 records: list[corpus.RemoteRecord] | None = None,
+                 aliases: tuple[brand_aliases.Alias, ...] | None = None) -> Bundle:
     """The whole bundle for the tree under ``root``, in memory. ``records`` are the tree's
-    remotes when the caller has read them already (``corpus.read_corpus``)."""
+    remotes when the caller has read them already (``corpus.read_corpus``); ``aliases`` the
+    brand aliases (D101) when they are not the shipped list."""
     result = Bundle()
     if profile not in select.PROFILES:
         result.problems.append(f"unknown profile {profile!r}; choose one of "
@@ -110,8 +116,23 @@ def build_bundle(root: Path, profile: str = "selected", *, max_bytes: int | None
     except ValidationError as exc:
         result.problems.append(str(exc))
         return result
-    assembled = catalog.assemble(collected, selection.chosen, profile, sources)
+    if aliases is None:
+        try:
+            aliases = brand_aliases.shipped_aliases()
+        except ValidationError as exc:
+            result.problems.append(str(exc))
+            return result
+    clashes = brand_aliases.catalog_problems(aliases, collected.brands)
+    if clashes:
+        result.problems += [str(p) for p in clashes]
+        return result
+    assembled = catalog.assemble(collected, selection.chosen, profile, sources, aliases)
     result.assembled = assembled
+    for name in assembled.stats["aliasBrandsMissing"]:
+        n = sum(1 for a in aliases if a.brand == name)
+        result.notes.append(
+            f"the brand {name!r} of brand_aliases.json is not in the catalog, so its aliases ({n}) "
+            "are not in the bundle")
     vocabulary_version = load_vocabulary().version
     bundle, data_version = writer.write_database(assembled, vocabulary_version, selection.rule)
     cap = select.SELECTED_MAX_BYTES if (profile == "selected" and max_bytes is None) else max_bytes
@@ -137,6 +158,10 @@ def build_bundle(root: Path, profile: str = "selected", *, max_bytes: int | None
         # source that the bundle leaves out is in no static file of the ledger yet
         "leftOutNotInApi": sum(1 for r in left_out if r.source != "irblaster"),
         "brands": len(assembled.brands), "models": len(assembled.models),
+        "brandAliases": len(assembled.brand_aliases),
+        "aliasesListed": assembled.stats["aliasesListed"],
+        "aliasesLeftOut": assembled.stats["aliasesLeftOut"],
+        "aliasesMissing": sum(1 for a in aliases if a.brand in assembled.stats["aliasBrandsMissing"]),
         "remotes": len(assembled.remotes), "keys": len(assembled.keys),
         "signals": len(assembled.signals), "excludedBrands": len(assembled.excluded),
         "unreachableBrands": sum(1 for e in assembled.excluded if e[2] is None),

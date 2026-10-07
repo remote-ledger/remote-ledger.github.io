@@ -18,9 +18,15 @@ import pytest
 
 from bundle_corpus import make_corpus
 from remote_ledger import app_api, parallel
+from remote_ledger.bundle import aliases as brand_aliases
 from remote_ledger.bundle import build as bb
 from remote_ledger.bundle import writer
 from remote_ledger.bundle.verify import ranked, verify_directory
+
+#: The aliases the good bundles are built and verified with (D101).
+ALIASES = (brand_aliases.make("Sony", "索尼"), brand_aliases.make("Sony", "新力"),
+           brand_aliases.make("Sony", "共享名"), brand_aliases.make("Topping", "共享名"),     # one alias, two brands
+           brand_aliases.make("Nobody", "无名"))
 
 
 @pytest.fixture(autouse=True)
@@ -41,7 +47,7 @@ def written(ledger, tmp_path_factory):
     """One good bundle of each profile, written once."""
     out = {}
     for profile in ("full", "selected"):
-        built = bb.build_bundle(ledger, profile)
+        built = bb.build_bundle(ledger, profile, aliases=ALIASES)
         assert built.problems == []
         directory = tmp_path_factory.mktemp(f"good-{profile}")
         bb.write_bundle(built, directory, ledger)
@@ -54,8 +60,9 @@ def refresh(directory: Path) -> None:
     rows."""
     path = directory / bb.BUNDLE_FILE
     conn = sqlite3.connect(path, isolation_level=None)
-    tables = {"brands": "brands", "models": "models", "controls": "controls", "remotes": "remotes",
-              "keys": "keys", "signals": "signals", "excludedBrands": "excluded_brands"}
+    tables = {"brands": "brands", "brandAliases": "brand_aliases", "models": "models",
+              "controls": "controls", "remotes": "remotes", "keys": "keys", "signals": "signals",
+              "excludedBrands": "excluded_brands"}
     counts = {name: conn.execute(f"SELECT COUNT(*) FROM {table}").fetchone()[0]
               for name, table in tables.items()}
     for name, n in counts.items():
@@ -67,7 +74,8 @@ def refresh(directory: Path) -> None:
     data = path.read_bytes()
     manifest["dataVersion"] = version
     manifest["bundle"].update(bytes=len(data), sha256=hashlib.sha256(data).hexdigest())
-    manifest["counts"] = {n: counts[n] for n in ("brands", "models", "remotes", "keys", "signals")}
+    manifest["counts"] = {n: counts[n] for n in ("brands", "brandAliases", "models", "remotes", "keys",
+                                                 "signals")}
     manifest["brands"] = {"included": counts["brands"], "excluded": counts["excludedBrands"]}
     (directory / bb.MANIFEST_FILE).write_bytes(app_api.compact(manifest))
 
@@ -85,12 +93,12 @@ def damaged(written, tmp_path, profile, *statements, update=True):
 
 
 def problems_of(ledger, directory) -> list[str]:
-    return verify_directory(ledger, directory)[0]
+    return verify_directory(ledger, directory, aliases=ALIASES)[0]
 
 
 def test_a_good_bundle_of_either_profile_verifies(ledger, written):
     for profile, remotes in (("full", 28), ("selected", 14)):
-        problems, facts = verify_directory(ledger, written[profile])
+        problems, facts = verify_directory(ledger, written[profile], aliases=ALIASES)
         assert problems == []
         assert facts["remotes"] == remotes and facts["decodedSignals"] >= remotes
         assert facts["sampledRemotes"] == remotes             # fewer than the sample size
@@ -227,6 +235,21 @@ MUTATIONS = [
      "INSERT INTO keys VALUES (777, 0, NULL, 'x', 1, 2)", "full", ["rows of keys.remote_id"]),
     ("a canonical id that is not the vocabulary's",
      "UPDATE keys SET canon = 999 WHERE remote_id = 25 AND n = 1", "full", ["rows of keys.canon"]),
+    ("an alias of a brand the bundle does not have",
+     "INSERT INTO brand_aliases VALUES ('无名', '无名', 999)", "full", ["rows of brand_aliases.brand_id"]),
+    ("an alias that is a brand's own name",
+     "INSERT INTO brand_aliases VALUES ('SONY', 'sony', 10)", "full", ["rows of aliases that are a brand's own name"]),
+    ("an alias whose key is not its text's",
+     "UPDATE brand_aliases SET norm = 'zzz' WHERE norm = '索尼'", "full", ["the alias '索尼' has the search key 'zzz'"]),
+    ("an alias missing", "DELETE FROM brand_aliases WHERE norm = '新力'", "full",
+     ["brand_aliases has 3 rows and is not the list that ships for these brands (4 rows)"]),
+    ("a shared alias with one of its brands missing",
+     "DELETE FROM brand_aliases WHERE norm = '共享名' AND brand_id = (SELECT id FROM brands WHERE norm = 'topping')",
+     "full", ["is not the list that ships"]),
+    ("an alias of another brand", "UPDATE brand_aliases SET brand_id = 1 WHERE norm = '索尼'", "full",
+     ["is not the list that ships"]),
+    ("an alias of a brand the profile leaves out",
+     "INSERT INTO brand_aliases VALUES ('拓品', '拓品', 1)", "selected", ["is not the list that ships"]),
     ("a brand both carried and left out",
      "INSERT INTO excluded_brands VALUES ('SONY', 'sony', NULL)", "selected",
      ["rows of excluded brands that are in"]),
@@ -245,6 +268,33 @@ def test_each_way_a_bundle_can_be_wrong_is_found(ledger, written, tmp_path, what
     got = "\n".join(problems_of(ledger, directory))
     assert got, f"{what}: nothing was reported"
     assert any(m in got for m in messages), f"{what}: {messages} not in\n{got}"
+
+
+def test_a_bundle_written_before_the_aliases_is_told_to_be_built_again(ledger, written, tmp_path):
+    directory = damaged(written, tmp_path, "full", "DROP TABLE brand_aliases", update=False)
+    got = problems_of(ledger, directory)
+    assert any("the bundle has no brand_aliases table: it was written before the brand aliases of D101; "
+               "build it again" in p for p in got)
+
+
+def test_the_count_of_aliases_must_agree_in_the_table_meta_and_the_manifest(ledger, written, tmp_path):
+    directory = damaged(written, tmp_path, "full", "UPDATE meta SET value = '99' WHERE key = 'count.brandAliases'",
+                        update=False)
+    assert any("brand_aliases has 4 rows, meta count.brandAliases says 99" in p for p in problems_of(ledger, directory))
+    directory = tmp_path / "2" / "b"
+    shutil.copytree(written["full"], directory)
+    manifest = json.loads((directory / "manifest.json").read_bytes())
+    manifest["counts"]["brandAliases"] = 7
+    (directory / "manifest.json").write_bytes(app_api.compact(manifest))
+    assert any("brand_aliases has 4 rows, the manifest says 7" in p for p in problems_of(ledger, directory))
+
+
+def test_the_aliases_are_checked_against_the_list_the_bundle_was_built_with(ledger, written):
+    assert problems_of(ledger, written["full"]) == []
+    other = (brand_aliases.make("Sony", "索尼"),)
+    got = verify_directory(ledger, written["full"], aliases=other)[0]
+    assert any("brand_aliases has 4 rows and is not the list that ships for these brands (1 rows)" in p for p in got)
+    assert verify_directory(ledger, written["full"], aliases=ALIASES)[1]["brandAliases"] == 4
 
 
 def test_a_remote_of_a_left_out_brand_in_the_selected_bundle_is_found(ledger, written, tmp_path):
