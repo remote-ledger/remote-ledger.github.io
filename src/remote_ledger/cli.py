@@ -476,7 +476,8 @@ def cmd_bundle(args: argparse.Namespace) -> int:
         if len(problems) > 50:
             print(f"ERROR ... and {len(problems) - 50} more", file=sys.stderr)
         if not problems:
-            print(f"{args.verify}: verified against the tree: {facts['remotes']:,} remotes, "
+            print(f"{args.verify}: verified against the tree: {facts['remotes']:,} remotes "
+                  f"({facts['remoteRefs']:,} refs), "
                   f"{facts['decodedSignals']:,} signals decoded and encoded back, "
                   f"{facts['sampledRemotes']} remotes compiled again, "
                   f"dataVersion {facts['dataVersion']} "
@@ -501,6 +502,10 @@ def cmd_bundle(args: argparse.Namespace) -> int:
         f"{stats['models']:,} models, {stats['remotes']:,} remotes, {stats['keys']:,} keys, "
         f"{stats['signals']:,} signals; dataVersion {stats['dataVersion']} "
         f"({time.perf_counter() - started:.1f} s)"
+    )
+    print(
+        f"fragments: {stats['foldedFragments']:,} protocol fragments with no test key are folded into "
+        f"{stats['mergedRemotes']:,} remotes; remote_refs: {stats['remoteRefs']:,} refs"
     )
     print(
         f"brand aliases: {stats['brandAliases']:,} of the {stats['aliasesListed']:,} listed; not in "
@@ -537,7 +542,7 @@ def _bundle_out(root: Path, args: argparse.Namespace) -> Path:
 
 def _matching_vectors(args: argparse.Namespace, suggest: bool = False) -> int:
     """``rl bundle matching-vectors``: the matcher's cross-language vectors (D97); with
-    ``suggest``, ``rl bundle suggest-vectors``: those of ``suggest`` (D100)."""
+    ``suggest``, ``rl bundle suggest-vectors``: those of ``suggest`` (D100, with a hint D106)."""
     if suggest:
         from .bundle.suggest_vectors import build
     else:
@@ -872,7 +877,7 @@ def build_parser() -> argparse.ArgumentParser:
     bm.add_argument("--check", action="store_true", help="compare instead of writing")
     bm.set_defaults(func=cmd_bundle)
     bg = bu_sub.add_parser("suggest-vectors", parents=[common],
-                           help="write the cross-language vectors of suggest (D100)")
+                           help="write the cross-language vectors of suggest (D100, D106)")
     bg.add_argument("--file", required=True, metavar="FILE", help="where to write them")
     bg.add_argument("--check", action="store_true", help="compare instead of writing")
     bg.set_defaults(func=cmd_bundle)

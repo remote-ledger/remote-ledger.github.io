@@ -11,6 +11,9 @@ is what is left of them). These tests hold the Python to its own rules without t
 * properties that must hold whatever the catalog is: a smaller limit is the start of a larger one,
   the same query gives the same answer on a cold and a warm index, what is typed is never lost;
 * the committed vectors, held to the code exactly, and to the notes that describe them.
+
+The hint (``prefer``, S6, D106) and ``warm`` (D107) are in ``test_suggest_prefer.py``; what is here is what
+``suggest`` gave before them, which they must leave as it was.
 """
 
 from __future__ import annotations

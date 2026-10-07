@@ -14,7 +14,7 @@ from pathlib import Path
 import pytest
 
 from remote_ledger import parallel
-from remote_ledger.bundle import build, catalog, select
+from remote_ledger.bundle import build, catalog, merge, select
 from remote_ledger.bundle.textnorm import search_norm
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -99,13 +99,14 @@ def test_the_selected_bundle_has_every_model_of_the_brands_it_carries_and_no_oth
     conn.deserialize(data)
     assert conn.execute("SELECT COUNT(*) FROM models WHERE brand_id NOT IN (SELECT id FROM brands)"
                         ).fetchone() == (0,)
-    # a remote is carried when any of its brands is, and keeps all its keys
-    kept = {row[0] for row in assembled.remotes}
+    # a remote file is carried when any of its brands is (by the remote that carries it, when it is
+    # folded into a sibling's, D103), and keeps all its keys
+    kept = {row[0] for row in assembled.remote_refs}
     for i, record in enumerate(records):
         maker, rows = collected.pairs[i]
         touches = maker in carried or any(r[0] in carried for r in rows)
-        assert touches == (i + 1 in kept), record.where
-    assert sum(len(r.keys) for i, r in enumerate(records) if i + 1 in kept) == len(assembled.keys)
+        assert touches == (merge.ref_of(record) in kept), record.where
+    assert sum(len(r.keys) for r in records if merge.ref_of(r) in kept) == len(assembled.keys)
 
 
 def test_what_the_selected_bundle_leaves_out_is_recorded_with_where_to_find_it(real, selected):
@@ -128,11 +129,13 @@ def test_design_quotes_the_numbers_of_the_real_build(real, selected, selection):
     assembled, data = selected
     keys = sum(len(r.keys) for r in records)
     models = sum(len(b.models) for b in collected.brands.values())
-    left_out = [r for i, r in enumerate(records) if i + 1 not in {row[0] for row in assembled.remotes}]
+    kept = {row[0] for row in assembled.remote_refs}
+    left_out = [r for r in records if merge.ref_of(r) not in kept]
     quoted = [
         f"{len(collected.brands):,} | {len(assembled.brands)}",            # the table's brands row
         f"{models:,} | {len(assembled.models):,}",
-        f"{len(records):,} | {len(assembled.remotes):,}",
+        f"{len(records):,} | {len(kept):,}",                                  # the remote files
+        f"{len(records) - collected.folded.folded:,} | {len(assembled.remotes):,}",   # the remotes, D103
         f"{keys:,} | {len(assembled.keys):,}",
         f"155,964 | {len(assembled.signals):,}",
         f"{len(assembled.excluded):,} brands, {len(left_out):,} remotes, "

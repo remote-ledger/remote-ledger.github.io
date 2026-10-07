@@ -17,6 +17,13 @@ which is the numbering a tie that goes to the lower id depends on.
 The cases are chosen so that each rule of the module's docstring (S1 to S5) and each tie-break is
 the only thing that could give the answer: the notes say which. Typing a few queries one
 character at a time (``typing``) shows the order a person sees change as they go.
+
+The hint (S6, D106) has its own section, ``prefer``: the same questions with brand names that go first
+where the rules do not tell entries apart, asked of this catalog and of a second small one made of ties
+(``TIES``: brands that start alike with as many models as each other, one model under four brands, an
+alias that two brands share), because the first has few ties for a hint to break. A case there says which
+catalog it asks (``main`` is the one above, ``ties`` the other, which the section holds), and the section
+leaves everything above it as it was: a port that does not implement the hint ignores it.
 """
 
 from __future__ import annotations
@@ -74,6 +81,37 @@ CATALOG: list[dict[str, Any]] = matching_vectors.CATALOG + EXTRA
 ALIASES: list[dict[str, str]] = matching_vectors.ALIASES + [
     {"brand": "HISENSE", "alias": "海信"},
     {"brand": "SKYWORTH", "alias": "创维"}, {"brand": "SKYWORTH", "alias": "創維"},
+]
+
+
+def _tied(brand: str, models: list[str], start: int) -> list[dict[str, Any]]:
+    """The entries of one brand of ``TIES``: every second model has two remotes (so that "most remotes
+    first" has something to order), and the ids of the remotes are numbered from ``start``."""
+    return [{"brand": brand, "model": model, "remotes": [start + 10 * i + j for j in range(1 + i % 2)]}
+            for i, model in enumerate(models)]
+
+
+#: A catalog made of ties, for the hint (S6): ``AL`` is a key that others start; ALPINE and ALTEC have
+#: five models each, so only the name tells them apart; ALPHA has two, ALPS one; ACID and ACME are two
+#: brands a query can name by runs of the same length; KORAX and KOREX are each a character from
+#: ``korix``; four brands have the model ``TX1000`` and one of them also ``TX10001``, a worse match of it;
+#: ZEBRA has nine models, none a tie.
+TIES: list[dict[str, Any]] = [
+    *_tied("AL", ["A1"], 1000), *_tied("AC", ["Z1"], 1100),
+    *_tied("ALPINE", ["P1", "P2", "P3", "P4", "P5"], 1200), *_tied("ALTEC", ["T1", "T2", "T3", "T4", "T5"], 1300),
+    *_tied("ALPHA", ["H1", "H2"], 1400), *_tied("ALPS", ["S1"], 1500),
+    *_tied("ACID", ["X100", "X101"], 1600), *_tied("ACME", ["X100", "X102", "X103"], 1700),
+    *_tied("KORAX", ["K1"], 1800), *_tied("KOREX", ["K2"], 1900),
+    *_tied("EAST", ["TX1000"], 2000), *_tied("NORTH", ["TX1000"], 2100),
+    *_tied("SOUTH", ["TX1000"], 2200), *_tied("WEST", ["TX1000"], 2300),
+    *_tied("SOUTH", ["TX10001"], 2400),
+    *_tied("ZEBRA", [f"ZZ{n}" for n in range(9)], 2500),
+]
+
+#: Chinese names for ``TIES``: one each for NORTH and SOUTH, and one that EAST and WEST share.
+TIE_ALIASES: list[dict[str, str]] = [
+    {"brand": "NORTH", "alias": "北方"}, {"brand": "SOUTH", "alias": "南方"},
+    {"brand": "EAST", "alias": "方向"}, {"brand": "WEST", "alias": "方向"},
 ]
 
 
@@ -330,6 +368,170 @@ def build() -> dict[str, Any]:
         },
         "catalog": CATALOG,
         "aliases": ALIASES,
+        "prefer": _prefer(index),
         "suggest": suggestions,
         "suggestModels": in_brand,
+    }
+
+
+# -- the hint (S6, D106) -----------------------------------------------------------------------------
+
+
+def _prefer(main: matching.MatchIndex) -> dict[str, Any]:
+    """The ``prefer`` section: ``suggest`` with a hint, over the catalog above (``main``) and ``TIES``."""
+    indexes = {"main": main, "ties": matching.MatchIndex.from_entries(TIES, TIE_ALIASES)}
+    cases: list[dict[str, Any]] = []
+
+    def ask(catalog: str, query: str, names: list[str], note: str, limit: int | None = None) -> None:
+        index = indexes[catalog]
+        used = matching.SUGGEST_LIMIT if limit is None else limit
+        answer = index.suggest(query, used, names)
+        cases.append({
+            "note": note, "catalog": catalog, "query": query, "limit": used, "prefer": names,
+            "brands": _brands(answer.brands), "models": _models(answer.models)})
+
+    def typing(catalog: str, text: str, names: list[str], note: str) -> None:
+        for n in range(1, len(text) + 1):
+            ask(catalog, text[:n], names, f"typing: {note}, {n} of {len(text)} characters")
+
+    # -- brands that start with the query: the hint goes before most models, name and id ---------------
+    ask("main", "s", [], "no hint: SAMSUNG and SONY tie on 6 models and go by name, then SKYWORTH 3, SANYO 2, SAT 1 and SONNY 1")
+    ask("main", "s", ["SONY"], "a hinted brand goes first among the brands that start with the query: SONY before SAMSUNG, which the name would put first")
+    ask("main", "s", ["SAT"], "the hint replaces most models: SAT has one model and goes before SAMSUNG with six; the others keep their order")
+    ask("main", "s", ["SAT", "SONY"], "two hinted brands keep the order they have without the hint: SONY (6 models) before SAT (1), then the rest")
+    ask("main", "s", ["SONY", "SAT"], "the order of the names means nothing: the same answer as SAT, SONY")
+    ask("main", "s", ["SONY", "SAT", "sony", "Sat "], "a name given twice, in other case and with a space, is the same brand: the same answer")
+    ask("main", "s", ["SAT"], "the limit cuts after the hinted order: SAT takes the first place, SAMSUNG the second", 2)
+    ask("main", "s", ["SAT"], "a limit of 1 keeps the hinted brand", 1)
+    ask("main", "s", ["SAT", "SONY"], "a limit of 3: the two hinted, then the first of the rest", 3)
+    ask("main", "s", ["SAMSUNG"], "a hint for the brand that was first anyway changes nothing")
+    ask("main", "sa", ["SAT"], "two characters: SAT goes before SAMSUNG and SANYO")
+    ask("main", "t", ["TELESTAR"], "TVCO has 7 models, Topping 3, TELESTAR 1: the hinted TELESTAR goes first")
+    ask("main", "t", ["TELESTAR", "Topping"], "two hinted brands: Topping (3 models) before TELESTAR (1), then TVCO")
+    ask("main", "s", ["索尼"], "an alias of a brand stands for the brand: SONY first")
+    ask("main", "s", ["Nobody"], "a name that is no brand is ignored: the answer without a hint")
+    ask("main", "s", ["Nobody", "SAT"], "an unknown name beside a known one: the known one counts")
+    ask("main", "s", ["Sonn", "Samsun"], "no similarity: a misspelt name is no brand, and the answer is the one without a hint")
+    ask("main", "s", ["Sony Electronics"], "a name that is no brand's key, though it starts with one: ignored")
+    ask("main", "s", ["S.O.N.Y"], "names are compared by their search key: separators do not matter")
+    ask("main", "s", ["ｓｏｎｙ"], "full-width letters are the same key")
+    ask("main", "s", [" "], "a blank name is no brand")
+    ask("main", "x", ["SONY"], "a hint for a brand that does not start with the query adds nothing: no brand starts with x")
+    ask("main", "o", ["SONY", "SAT"], "a hinted brand the query does not match is never added: ORBITECH alone")
+    # -- the brand whose key is the query --------------------------------------------------------------
+    ask("main", "q", [], "no hint: the exact key Q first, then the brand whose key starts with it, QR, then QRSTU")
+    ask("main", "q", ["QRSTU"], "the brand whose key is the query stays first however the others are hinted: Q, then the hinted QRSTU, then QR")
+    ask("main", "q", ["QRSTU"], "the limit keeps the exact key first, then the hinted brand", 2)
+    ask("main", "q", ["QRSTU"], "a limit of 1 is the exact key", 1)
+    ask("main", "q", ["Q"], "a hint for the exact key changes nothing")
+    ask("main", "qr", ["QRSTU"], "the exact key QR first, QRSTU after it, the only brand that starts with it")
+    ask("main", "西部数据", [], "no hint: an alias that two brands share is the exact key of both: by models (one each), then name: WD before WESTERN DIGITAL, and their models in the order of the brands")
+    ask("main", "西部数据", ["WESTERN DIGITAL"], "a shared alias is an exact key of both brands, which tie: the hinted one goes first, and so do its models")
+    ask("main", "西部数据", ["WESTERN DIGITAL"], "the limit of models falls between the two brands: the hinted brand's model", 1)
+    ask("main", "西部数据", ["西部数据"], "a name that two brands share stands for both: nothing moves")
+    ask("main", "西部", ["WESTERN DIGITAL"], "the start of a shared alias offers both brands, the hinted one first")
+    ask("main", "西部数据 wdtv l", ["WESTERN DIGITAL"], "a shared alias and the start of a model: WESTERN DIGITAL's model, as without a hint")
+    # -- brands named by a run of the query: equal runs tie, a longer run is better ------------------------
+    ask("main", "sony roku", [], "no hint: ROKU and SONY are named by runs of 4 characters each and go by id, ROKU first, and so do their models")
+    ask("main", "sony roku", ["SONY"], "runs of the same length tie: the hinted brand goes before the id, and its models first")
+    ask("main", "sony roku", ["SONY"], "the limit of models is filled from the hinted brand first: the first three models of SONY", 3)
+    ask("main", "sony roku", ["SONY"], "a limit of 7: SONY's six models and the first of ROKU's", 7)
+    ask("main", "sony roku", ["ROKU"], "a hint for the brand that was first by id changes nothing")
+    ask("main", "sony samsung", ["SONY"], "a brand named by a shorter run is not lifted above one named by a longer run: SAMSUNG (7) stays first")
+    ask("main", "lg sony philips x", ["LG"], "three runs of three lengths: the hint for the shortest changes nothing")
+    ask("main", "lg sony philips x", ["LG", "SONY", "PHILIPS"], "all three hinted: the same order, the runs differ in length")
+    ask("main", "索尼 三星", ["索尼"], "two aliases named by runs of the same length: the hinted brand's before the id: SONY before SAMSUNG")
+    ask("main", "索尼 三星", ["SONY"], "the brand's own name hints the same brand")
+    ask("main", "索尼 三星 kd", ["SONY"], "a rest that only SONY has: its models, with or without the hint")
+    # -- brands the matcher only reads the query as ----------------------------------------------------------
+    ask("main", "sony", [], "no hint: the exact key, then SONNY, which the matcher reads sony as (one insertion in five)")
+    ask("main", "sony", ["SONNY"], "a brand that is only the matcher's reading is never moved, and never above the exact key")
+    ask("main", "sonyy", [], "no hint: SONNY and SONY are each a character from sonyy, best first by id: SONNY, SONY")
+    ask("main", "sonyy", ["SONY"], "brands the matcher reads the query as are never moved, whatever is hinted")
+    ask("main", "qr stv", ["QRSTU"], "QR is named by its word, QRSTU is what the matcher reads qrstv as: the named brand stays first")
+    ask("main", "qr stv", ["QRSTU"], "a limit of 1 keeps the named brand", 1)
+    ask("main", "phillips", ["PHILIPS"], "a brand that only the matcher's reading offers: the same answer")
+    # -- models, when no brand is named -------------------------------------------------------------------------
+    ask("main", "ci500twnsat1", [], "no hint: two brands have the model 'CI 500 TWN(SAT 1)', an equal match: by brand name, ORBITECH before TELESTAR")
+    ask("main", "ci500twnsat1", ["TELESTAR"], "models of an equal score, similarity and key length: the hinted brand's first")
+    ask("main", "ci500twnsat1", ["TELESTAR"], "the limit of models keeps the hinted brand's", 1)
+    ask("main", "ci500twnsat1", ["ORBITECH"], "a hint for the brand that was first by name changes nothing")
+    ask("main", "ci500twnsat1", ["SONY"], "a hint for a brand with no such model adds nothing")
+    ask("main", "un50nu6900f", ["SONY", "SAMSUNG"], "only SAMSUNG has models like it: the exact match first and the near ones after it, as without a hint")
+
+    # -- the catalog of ties ---------------------------------------------------------------------------------------
+    ask("ties", "al", [], "no hint: AL is the key, then by models: ALPINE and ALTEC have five and go by name, ALPHA 2, ALPS 1")
+    ask("ties", "al", ["ALPS"], "the hinted ALPS goes before the models and the names of the brands that start with al, and not above AL, the exact key")
+    ask("ties", "al", ["ALPS"], "the limit lets the hinted brand in place of an equal: ALPS takes the place of ALPINE", 2)
+    ask("ties", "al", ["ALPS"], "a limit of 1: the first place is the exact key's", 1)
+    ask("ties", "al", ["ALPS"], "a limit of 3", 3)
+    ask("ties", "al", ["ALPS"], "a limit of 5 is the whole list: AL, ALPS, then the others as before", 5)
+    ask("ties", "al", ["ALTEC"], "the hint goes before the name: ALTEC before ALPINE, which have five models each")
+    ask("ties", "al", ["ALPS", "ALPHA"], "two hinted brands in their own order (ALPHA has more models): ALPHA, ALPS")
+    ask("ties", "al", ["ALPHA", "ALPS"], "the same hint in another order: the same answer")
+    ask("ties", "al", ["ALPS", "ALPHA", "ALTEC", "ALPINE"], "every brand that starts with it hinted: nothing moves")
+    ask("ties", "al", ["AL"], "a hint for the exact key changes nothing")
+    ask("ties", "al", ["ZEBRA"], "a brand that does not start with the query is never added")
+    ask("ties", "alp", ["ALPS"], "ALPS first among ALPINE, ALPHA, ALPS")
+    ask("ties", "alp", ["ALPHA"], "ALPHA first, ALPINE and ALPS in their order")
+    ask("ties", "alp", ["ALPS", "ZEBRA", "EAST", "ACME"], "names of brands the query does not offer are no use: ALPS only")
+    ask("ties", "alp", ["ALPS"], "the limit cuts the hinted whole: ALPS, ALPINE", 2)
+    ask("ties", "alp", ["ALPS"], "a limit of 1", 1)
+    ask("ties", "alp", ["alps"], "a name in lower case")
+    ask("ties", "alp", ["A-L-P-S"], "a name with separators")
+    ask("ties", "alp", ["ALP"], "a name that is the start of a brand's is no brand's")
+    ask("ties", "a", [], "no hint: a one-character query lists the brands that start with it, most models first")
+    ask("ties", "a", ["ALPS", "AC"], "two hinted brands with one model each: by name, AC before ALPS, then the rest in their order")
+    ask("ties", "ac", [], "no hint: AC is the key, then ACID (2 models) and ACME (3): ACME, ACID")
+    ask("ties", "ac", ["ACID"], "the exact key stays first: AC, ACID, ACME")
+    ask("ties", "acid acme", [], "no hint: ACID and ACME are named by runs of 4 characters each: by id, ACID first, and their models")
+    ask("ties", "acid acme", ["ACME"], "equal runs: the hinted brand and its models first, each brand's models in their own order")
+    ask("ties", "acid acme", ["ACME"], "the limit is filled from the hinted brand's models first", 3)
+    ask("ties", "acid acme", ["ACME"], "a limit of 1", 1)
+    ask("ties", "acid acme", ["ACID"], "a hint for the brand that was first by id changes nothing")
+    ask("ties", "alpine ac", [], "no hint: ALPINE is named by a run of 6, AC by one of 2")
+    ask("ties", "alpine ac", ["AC"], "a brand named by a shorter run is not lifted above one named by a longer one, and neither are its models")
+    ask("ties", "korix", [], "no hint: KORAX and KOREX are both a character from korix: by id")
+    ask("ties", "korix", ["KOREX"], "brands that the matcher only reads the query as are never moved")
+    ask("ties", "korix", ["KOREX", "KORAX"], "all of them hinted: nothing moves")
+    ask("ties", "korix", ["KOREX"], "and a limit of 1 does not let the hinted one in", 1)
+    ask("ties", "kor", ["KOREX"], "the same two brands as brands that start with the query are moved: KOREX first")
+    ask("ties", "tx1000", [], "no hint: the model TX1000 of four brands, an equal match: by brand name; SOUTH's TX10001 is only the start of a longer model and last")
+    ask("ties", "tx1000", ["WEST"], "models of an equal score, similarity and key length: WEST's first, and the worse match stays last")
+    ask("ties", "tx1000", ["SOUTH"], "SOUTH's TX1000 first, and its TX10001 stays after every TX1000, hinted or not")
+    ask("ties", "tx1000", ["SOUTH", "WEST"], "two hinted brands: their models in the order they had, then the others")
+    ask("ties", "tx1000", ["WEST", "SOUTH"], "the order of the names means nothing")
+    ask("ties", "tx1000", ["WEST", "NORTH", "SOUTH", "EAST"], "every brand that has the model hinted: nothing moves, and the worse match stays last")
+    ask("ties", "tx1000", ["SOUTH"], "the limit keeps the hinted model in the place of an equal one", 1)
+    ask("ties", "tx1000", ["WEST"], "SOUTH's TX1000 is pushed out by WEST's", 3)
+    ask("ties", "tx1000", ["SOUTH"], "four equal matches fill the limit of four: the worse one is not let in, hinted or not", 4)
+    ask("ties", "tx1000", ["SOUTH"], "a limit of 5 is the whole list", 5)
+    ask("ties", "tx1000", ["ZEBRA", "ALPS"], "brands with no such model add nothing")
+    ask("ties", "tx1000", ["南方"], "a Chinese name of a brand stands for the brand: SOUTH's first")
+    ask("ties", "tx1000", ["北方", "南方"], "two Chinese names: NORTH's and SOUTH's, in their order")
+    ask("ties", "tx1000", ["方向"], "a name that two brands share stands for both: EAST's and WEST's first")
+    ask("ties", "tx1000", ["方向", "南方"], "a shared name and another: EAST, SOUTH, WEST in their order, then NORTH")
+    ask("ties", "tx", ["WEST"], "four characters are too few for the matcher's models: no model, no change")
+    ask("ties", "tx100", ["WEST"], "five characters: TX1000 under four brands, a prefix match of equal weight, WEST first")
+    ask("ties", "方向", [], "no hint: a name that EAST and WEST share is the key of both, and names both: EAST, WEST and their models")
+    ask("ties", "方向", ["WEST"], "the exact key of two brands that tie: the hinted one first, and its model first")
+    ask("ties", "方向", ["WEST"], "the limit of models keeps the hinted brand's", 1)
+    ask("ties", "方向", ["南方"], "a brand the query does not name is not added")
+    ask("ties", "方向 tx", ["WEST"], "a shared name and the start of a model: both brands' TX1000, the hinted one's first")
+    ask("ties", "北方 南方", ["南方"], "two Chinese names of runs of the same length: SOUTH before NORTH, and its models")
+    ask("ties", "zebra", ["ZEBRA"], "the models of one brand are never reordered by a hint")
+    ask("ties", "alpine p", ["ALPINE", "ZEBRA"], "the same inside a brand with a start of a model")
+    ask("ties", "alpine", ["ALPINE"], "most remotes first, then by name, as without a hint")
+    ask("ties", "alpine", ["ALPS"], "a hint for another brand changes nothing inside a brand")
+    typing("ties", "alp", ["ALPS"], "brands that start with the query")
+    typing("ties", "acid acme", ["ACME"], "two named brands")
+
+    return {
+        "about": "suggest with a hint (DESIGN.md D106): the brands named in prefer go first where the rules "
+                 "do not tell entries apart, and nowhere else. A case asks `main`, the catalog and aliases "
+                 "above, or `ties`, the catalog and aliases of this section, which has more ties for a hint "
+                 "to break; ids number brands and models as for the catalog above. A port that gives the "
+                 "answers of `suggest` need not read this section.",
+        "ties": {"catalog": TIES, "aliases": TIE_ALIASES},
+        "cases": cases,
     }

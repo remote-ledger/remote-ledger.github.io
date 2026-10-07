@@ -619,7 +619,7 @@ def test_a_reader_of_version_1_that_reads_only_the_five_tables_works_on_a_bundle
         assert conn.execute(sql).fetchall() is not None
     assert [r[0] for r in conn.execute("SELECT name FROM sqlite_master WHERE type = 'table' ORDER BY name")] == sorted([
         "meta", "sources", "vocab_groups", "vocab_keys", "brands", "brand_aliases", "models", "controls", "remotes",
-        "keys", "signals", "ngram", "excluded_brands"])
+        "remote_refs", "keys", "signals", "ngram", "excluded_brands"])
     assert dict(conn.execute("SELECT key, value FROM meta"))["schemaVersion"] == "1"
 
 
