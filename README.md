@@ -126,8 +126,8 @@ says so (DESIGN.md §24). It also completes what a person has typed so far
 (`MatchIndex.suggest`: the brands and the models that go on from it, in a
 stable order) and knows other names for a brand, written out in each script, so
 that 海信, 创维 and 創維 find Hisense and Skyworth and their models as the Latin
-names do (`bundle/data/brand_aliases.json`, a seed list a person reviews;
-DESIGN.md §25).
+names do (`bundle/data/brand_aliases.json`, a reviewed list of 133 brands;
+DESIGN.md §25, D108).
 
 ## Try it
 

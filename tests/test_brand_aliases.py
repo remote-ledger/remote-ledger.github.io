@@ -1,7 +1,7 @@
 """Brand aliases (D101, D102): the data, its validator, the table of the bundle and the matcher.
 
-* The **data** is the seed list the owner reviews: it conforms to its schema, passes every rule of
-  the validator, names the brands and the aliases the owner listed, in both scripts.
+* The **data** is the reviewed list (D108): it conforms to its schema, passes every rule of the
+  validator, keeps the twenty brands of the seed it grew from, and names a brand in both scripts.
 * The **validator** refuses what it says it refuses. Each rule has a test that breaks exactly that
   rule in a copy of the file and asks for the message.
 * The **exporter** writes the table, leaves a brand the catalog lacks out with a note and stops on a
@@ -59,43 +59,68 @@ def names_of(doc):
 # --- the data ---------------------------------------------------------------------------------------------
 
 
-def test_the_shipped_list_is_valid_and_says_it_is_a_seed():
+def test_the_shipped_list_is_valid_and_says_it_is_reviewed():
     doc, problems = problems_of()
     assert [str(p) for p in problems] == []
-    assert sorted(doc) == ["brands", "header"] and doc["header"]["status"] == "seed"
-    assert "SEED" in doc["header"]["about"] and "reviewed" in doc["header"]["about"]
-    assert doc["header"]["intentional_shared_aliases"] == {}
+    assert sorted(doc) == ["brands", "header"] and doc["header"]["status"] == "reviewed"
+    assert doc["header"]["date"] == "2026-10-07" and "accepted it as it stands" in doc["header"]["about"]
+    assert "SEED" not in doc["header"]["about"]
     assert (validate.SCHEMA_DIR / brand_aliases.SCHEMA).is_file()
+    assert len(doc["brands"]) == 133 and sum(len(e["aliases"]) for e in doc["brands"]) == 226
 
 
-def test_the_seed_names_the_brands_and_the_aliases_the_owner_listed_in_both_scripts():
-    assert names_of(DOC) == {
-        "Hisense": ["海信"], "Xiaomi": ["小米"], "Skyworth": ["创维", "創維"], "Changhong": ["长虹", "長虹"],
-        "Haier": ["海尔", "海爾"], "Midea": ["美的"], "Gree": ["格力"], "Konka": ["康佳"], "Samsung": ["三星"],
-        "Sony": ["索尼", "新力"], "Panasonic": ["松下", "國際牌"], "Sharp": ["夏普"], "Toshiba": ["东芝", "東芝"],
-        "Philips": ["飞利浦", "飛利浦"], "Apple": ["苹果", "蘋果"], "Huawei": ["华为", "華為"],
-        "Yamaha": ["雅马哈", "雅馬哈"], "Pioneer": ["先锋", "先鋒"], "Denon": ["天龙", "天龍"], "Onkyo": ["安桥", "安橋"]}
+def test_the_one_company_the_catalog_spells_twice_shares_its_names_on_purpose():
+    western = ["WESTERN DIGITAL", "wd"]
+    assert DOC["header"]["intentional_shared_aliases"] == {"西部数据": western, "西部數據": western, "威騰": western}
+    names = names_of(DOC)
+    for brand in western:
+        assert names[brand] == ["西部数据", "西部數據", "威騰"]
+
+
+SEED = {
+    "Hisense": ["海信"], "Xiaomi": ["小米"], "Skyworth": ["创维", "創維"], "Changhong": ["长虹", "長虹"],
+    "Haier": ["海尔", "海爾"], "Midea": ["美的"], "Gree": ["格力"], "Konka": ["康佳"], "Samsung": ["三星"],
+    "Sony": ["索尼", "新力"], "Panasonic": ["松下", "國際牌"], "Sharp": ["夏普"], "Toshiba": ["东芝", "東芝"],
+    "Philips": ["飞利浦", "飛利浦"], "Apple": ["苹果", "蘋果"], "Huawei": ["华为", "華為"],
+    "Yamaha": ["雅马哈", "雅馬哈"], "Pioneer": ["先锋", "先鋒"], "Denon": ["天龙", "天龍"], "Onkyo": ["安桥", "安橋"]}
+
+
+def test_the_list_keeps_what_the_seed_had_and_names_a_brand_in_both_scripts():
+    got = {search_norm(brand): set(names) for brand, names in names_of(DOC).items()}
+    for brand, names in SEED.items():
+        assert set(names) <= got[search_norm(brand)], brand      # a name of the seed may be joined by others, never lost
+    assert got[search_norm("SONY")] == {"索尼", "新力"} and got[search_norm("PANASONIC")] == {"松下", "國際牌", "樂聲牌"}
+    assert got[search_norm("YAMAHA")] == {"雅马哈", "雅馬哈", "山葉"} and got[search_norm("HISENSE")] == {"海信"}
     tags = {a["name"]: (a["script"], a["region"]) for e in DOC["brands"] for a in e["aliases"]}
     assert tags["创维"] == ("hans", "CN") and tags["創維"] == ("hant", "any") and tags["海信"] == ("both", "any")
-    assert tags["新力"] == ("both", "TW") and tags["國際牌"] == ("hant", "TW")
+    assert tags["新力"] == ("both", "TW") and tags["國際牌"] == ("hant", "TW") and tags["樂聲牌"] == ("hant", "HK")
+    assert tags["山葉"] == ("hant", "TW") and tags["英伟达"] == ("hans", "CN") and tags["輝達"] == ("hant", "TW")
+
+
+def test_a_name_that_is_written_two_ways_is_listed_in_each_way_and_a_regional_name_is_its_own_entry():
+    names = {k: v for k, v in ((search_norm(b), n) for b, n in names_of(DOC).items())}
+    assert names[search_norm("PHILIPS")] == ["飞利浦", "飛利浦"]             # Simplified and Traditional, both written out
+    assert names[search_norm("BRAUN")] == ["博朗", "百靈"] and names[search_norm("AMWAY")] == ["安利", "安麗"]
+    assert names[search_norm("ACER")] == ["宏碁", "宏基"]                    # two names in one script
 
 
 def test_every_alias_is_a_key_of_two_characters_or_more_with_no_ascii_letter_or_digit():
     loaded = load_aliases()
-    assert len(loaded) == 33
+    assert len(loaded) == 226
     for a in loaded:
         assert len(a.key) >= matching.BRAND_MIN_KEY, a
         assert not any(c.isascii() and c.isalnum() for c in a.key), a
         assert a.key == search_norm(a.alias) and a.brand_key == search_norm(a.brand)
-    assert len({a.key for a in loaded}) == len(loaded)
+    assert len({(a.key, a.brand_key) for a in loaded}) == len(loaded)
+    assert len({a.key for a in loaded}) == len(loaded) - 3        # the three names of the company the catalog spells twice
     assert {a.alias for a in loaded} >= {"海信", "创维", "創維", "索尼", "新力", "松下", "國際牌", "苹果", "蘋果"}
 
 
 def test_loading_gives_the_aliases_in_the_files_order_and_the_loader_is_cached():
     loaded = load_aliases()
     assert aliases_from(DOC) == loaded
-    assert loaded[0] == Alias("Hisense", "hisense", "海信", "海信", "both", "any", "certain")
-    assert [a.alias for a in loaded if a.brand == "Sony"] == ["索尼", "新力"]
+    assert loaded[0] == Alias("SONY", "sony", "索尼", "索尼", "both", "any", "certain")
+    assert [a.alias for a in loaded if a.brand == "SONY"] == ["索尼", "新力"]
     assert brand_aliases.shipped_aliases() is brand_aliases.shipped_aliases()
     assert make("Sony", "索尼", "both") == Alias("Sony", "sony", "索尼", "索尼", "both", None, None)
 
@@ -189,7 +214,7 @@ def write(tmp_path, doc, name="aliases.json"):
 
 
 def sony(doc):
-    return next(e for e in doc["brands"] if e["brand"] == "Sony")
+    return next(e for e in doc["brands"] if e["brand"] == "SONY")
 
 
 @pytest.mark.parametrize("change, fragment", [
@@ -422,10 +447,10 @@ def test_the_command_writes_the_table_and_says_what_it_left_out(ledger, tmp_path
     assert done.returncode == 0, done.stderr
     assert "note: the brand 'Gree' of brand_aliases.json is not in the catalog, so its aliases (1) are not in the bundle" \
         in done.stderr
-    assert "brand aliases: 2 of the 33 listed; not in it: 0 of brands this profile leaves out, 31 of brands the catalog lacks" \
+    assert "brand aliases: 3 of the 226 listed; not in it: 0 of brands this profile leaves out, 223 of brands the catalog lacks" \
         in done.stdout
     conn = sqlite3.connect(tmp_path / "out" / "catalog.sqlite")
-    assert conn.execute("SELECT alias FROM brand_aliases ORDER BY norm").fetchall() == [("新力",), ("索尼",)]
+    assert conn.execute("SELECT alias FROM brand_aliases ORDER BY norm").fetchall() == [("拓品",), ("新力",), ("索尼",)]
 
 
 # --- the matcher ---------------------------------------------------------------------------------------------------------
