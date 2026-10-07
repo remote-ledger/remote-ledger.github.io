@@ -127,7 +127,12 @@ says so (DESIGN.md §24). It also completes what a person has typed so far
 stable order) and knows other names for a brand, written out in each script, so
 that 海信, 创维 and 創維 find Hisense and Skyworth and their models as the Latin
 names do (`bundle/data/brand_aliases.json`, a seed list a person reviews;
-DESIGN.md §25).
+DESIGN.md §25). `suggest(query, limit, prefer=["Sony", ...])` takes the brands a
+person already uses and puts them first only where the rules cannot tell two
+entries apart (the hint never lifts a worse match: D106), and
+`MatchIndex.warm()` reads the biggest brands' model lists once at start and keeps
+them, so that the first keystroke inside a big brand is as quick as the next
+(D107).
 
 **One remote for a device the import split.** The IR Blaster import files a
 remote per protocol, and a fragment with no key a person could be asked to try
@@ -152,7 +157,7 @@ $ rl keys report           # how much of the corpus the key vocabulary maps, per
 $ rl bundle --profile selected --out bundle-out/selected   # the app's catalog file, manifest and notices
 $ rl bundle --verify bundle-out/selected                     # check it against the tree
 $ rl bundle search-eval --bundle bundle-out/selected             # how often a typed device finds its remote
-$ rl bundle suggest-vectors --file tests/vectors/suggest_vectors.json --check   # the vectors a port of suggest is held to
+$ rl bundle suggest-vectors --file tests/vectors/suggest_vectors.json --check   # the vectors a port of suggest is held to, with and without a hint
 $ rl build --check         # the CI gate: drift and orphans (-j N or RL_JOBS sets the workers)
 $ rl build && open site/index.html
 ```
@@ -163,6 +168,6 @@ $ rl build && open site/index.html
 notation, Pronto Hex, LIRC, IRDB, SmartIR, the IR Blaster database), the data
 model, layout, compiling and cross-validation, and the resolved decisions.
 
-**[DESIGN.md](DESIGN.md)** — how it is built: decisions D1 to D105, the
+**[DESIGN.md](DESIGN.md)** — how it is built: decisions D1 to D107, the
 Pronto contract to the byte, the seven-phase plan, the three imports, the key
 vocabulary, the catalog bundle, and what is not yet proven.

@@ -452,6 +452,25 @@ confidence tier, or a citation.
   remote that carries the ref's keys and where they start), added **without
   raising the format's version**. The rule, its measurements on both profiles,
   what it leaves and how to widen it are DESIGN §26 (D103 to D105).
+- **R28 — A caller can say which brands a person already uses, and they go
+  first only where the rules cannot tell two entries apart; and a service can
+  have the biggest brands ready before anyone types.** `suggest` and
+  `suggest_brands` take `prefer`, a list of brand names: a name is a brand's by
+  its search key (an alias names its brand, a name two brands share names both,
+  a name that is no brand's is ignored, with no similarity), and the names are
+  a set. The hint replaces **only the last tie-break** of the order, between
+  entries that the rules before it treat as equal (the brands whose key is, or
+  starts with, what was typed; brands named by runs of the same length and their
+  models; models of the same score), and never removes an entry, adds one, or
+  lifts one above a better match; the matcher's reading of a misspelling and the
+  models of one brand are never moved. The limit cuts the hinted order, so a
+  hinted entry may take the place of an equal one inside the limit and of
+  nothing else, and a smaller limit is still the start of a larger one. With no
+  hint, or one that names no brand, the answer is exactly what it was. The
+  cross-language vectors carry the hint in a section a port may ignore. `warm`
+  reads the model lists of the brands with the most models once and keeps them
+  outside the cache that other brands' traffic empties, and changes no answer
+  (DESIGN §25, D106, D107).
 
 **Known limit, named rather than glossed over:** CSS requires a named
 area's cells to form one rectangle, so a single key can't have an L-shaped

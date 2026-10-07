@@ -84,10 +84,11 @@ The evidence is a few words: ``model:exact``, ``model:prefix`` or ``model:edit``
 ``brand:other`` (the factor 600); ``kind:remote`` for a part number; ``brand`` alone for a brand-only answer.
 
 **Suggesting, as a person types** (``suggest``, D100; the rules above are ``match``'s).
-``suggest(query, limit=8)`` gives ``Suggestions(brands, models)``: brands and models, each at most
-``limit``, in an order that is the same whatever was asked before; a query with no letter or digit,
-or a limit of 0 or less, gives nothing. It reads the bundle as ``match`` does, and an alias
-(rule 3) is a name of its brand wherever a brand's key is looked at.
+``suggest(query, limit=8, prefer=())`` gives ``Suggestions(brands, models)``: brands and models, each
+at most ``limit``, in an order that is the same whatever was asked before; a query with no letter or
+digit, or a limit of 0 or less, gives nothing. It reads the bundle as ``match`` does, and an alias
+(rule 3) is a name of its brand wherever a brand's key is looked at. S1 to S5 are the answer when
+nothing is preferred, and S6 says what ``prefer`` changes.
 
 S1. *The brands*, in this order, each once: the brand whose key (or an alias's key) is the query's
     key; those whose key (or an alias's) starts with it, most models first, then by name in code point
@@ -107,9 +108,43 @@ S4. *The models of one brand* (``suggest_models(brand_id, query)``): those whose
 S5. *Models, when no brand is named*: those of ``match`` over the query as one text, in its order,
     brand-only answers left out; so a model needs the five characters of the prefix rule and a typo
     is forgiven as ``match`` forgives it.
+S6. *A hint* (D106): ``prefer`` is the names of brands, which a caller keeps for a person (the brands
+    they have used before), and ``suggest`` and ``suggest_brands`` put those brands **first where
+    S1 to S5 do not tell two entries apart**, and nowhere else. A name is a brand's by its search key,
+    as a given brand is (rule 3): case, spaces, accents and punctuation do not matter, an alias names
+    its brand and a name two brands share names both, and a name that is no brand's key stands for
+    nothing (there is no similarity). The names are a set: their order, their number and a name
+    given twice mean nothing (``brand_ids`` says which brands they stand for). The hint replaces only the
+    **last tie-break**, and only between entries that the rules before it treat as equal: inside each run
+    of such entries the hinted ones come first and the others follow, each group in the order it had
+    without the hint. The runs are:
+
+    * S1, the brands whose key (or an alias's) is the query's key: the tie-break was most models,
+      then name, then id;
+    * S1, the brands whose key (or an alias's) starts with it: the same;
+    * S1, the brands the query names by a run of the same length (S2): the tie-break was id;
+    * S1, the brands the matcher reads the query as: never moved (they tie by similarity, and what
+      was typed is not their name);
+    * S3, the named brands that a run of the same length names: their models come in the order of
+      the brands, so the hinted brand's models come first (each brand's own order, S4, kept);
+    * S5, the models of ``match`` with the same score, similarity and key length: the tie-break was
+      brand name, then model name, then id.
+
+    A hint never removes an entry, adds one, or lifts one above a better match: the brand whose key
+    is the query stays before every other, a model that matches worse stays after every one that
+    matches better, and a brand named by a shorter run stays after one named by a longer. The limit cuts a list after
+    its order, so a hint can change **which** entries are inside it, among entries of one run and
+    nowhere else: the first ``limit`` entries of the hinted order, where every entry before the run
+    that holds the cut is the same entry in the same place, and inside that run the hinted entries
+    take the places first. A smaller limit is still the start of a larger one. With ``prefer`` empty,
+    or naming no brand, the answer is S1 to S5's exactly.
+
+``warm`` (D107) is not a rule: it reads the model lists of the biggest brands once and keeps them,
+which changes how long the first answer inside a big brand takes and nothing in any answer.
 
 ``matching_vectors.json`` (D97) holds the normalisation, the similarity and a small catalog
-with queries and their answers, for a port; ``suggest_vectors.json`` (D100) the answers of ``suggest``.
+with queries and their answers, for a port; ``suggest_vectors.json`` (D100, D106) the answers of
+``suggest``, with and without a hint.
 """
 
 from __future__ import annotations
@@ -122,6 +157,7 @@ from bisect import bisect_left, bisect_right
 from collections import Counter
 from dataclasses import dataclass
 from functools import lru_cache
+from itertools import groupby
 from pathlib import Path
 from typing import Iterable, Sequence
 
@@ -166,8 +202,10 @@ BRAND_MODELS = 50
 LIMIT = 5
 #: What ``suggest`` offers at most of brands, and of models, by default.
 SUGGEST_LIMIT = 8
-#: Listings of whole brands kept (a big brand has thousands of models).
+#: Listings of whole brands kept (a big brand has thousands of models), least recently used out.
 BRAND_LISTINGS = 16
+#: The brands ``warm`` keeps by default: the ones with the most models, never evicted (D107).
+WARM_BRANDS = 16
 
 #: Han ideographs, as the ranges of CJK Unified Ideographs (Extension A, the main block and the
 #: compatibility block, then Extensions B to H): a token never holds one next to another script.
@@ -408,6 +446,8 @@ class MatchIndex:
         self._remotes = lru_cache(maxsize=4096)(self._read_remotes)
         self._listing = lru_cache(maxsize=64)(self._read_listing)
         self._brand_models = lru_cache(maxsize=BRAND_LISTINGS)(self._read_brand_models)
+        #: The lists ``warm`` keeps, outside the cache above (D107): brand id to its ``BrandModels``.
+        self._kept: dict[int, BrandModels] = {}
 
     @classmethod
     def open(cls, bundle: str | Path) -> "MatchIndex":
@@ -498,7 +538,12 @@ class MatchIndex:
     def _read_listing(self, brand_id: int) -> tuple[str, ...]:
         """The names of a brand's first ``BRAND_MODELS`` models, most remotes first: what a
         brand-only answer lists."""
-        return tuple(name for _, name in self._brand_models(brand_id).entries[:BRAND_MODELS])
+        return tuple(name for _, name in self._brand_list(brand_id).entries[:BRAND_MODELS])
+
+    def _brand_list(self, brand_id: int) -> "BrandModels":
+        """A brand's whole model list: the one ``warm`` kept, or else the cache's (read on the first ask)."""
+        kept = self._kept.get(brand_id)
+        return kept if kept is not None else self._brand_models(brand_id)
 
     # -- brands -------------------------------------------------------------------------------
 
@@ -673,14 +718,17 @@ class MatchIndex:
 
     # -- as you type ---------------------------------------------------------------------------
 
-    def suggest(self, query: str, limit: int = SUGGEST_LIMIT) -> "Suggestions":
+    def suggest(self, query: str, limit: int = SUGGEST_LIMIT, prefer: Iterable[str] = ()) -> "Suggestions":
         """What to offer a person who is still typing ``query``, in a stable order: brands and
-        models, each at most ``limit`` (the rules in the module's docstring, S1 to S5)."""
+        models, each at most ``limit`` (the rules in the module's docstring, S1 to S5), with the
+        brands that the names ``prefer`` stand for first where those rules do not tell entries
+        apart (S6; ``prefer`` empty, or naming no brand, changes nothing)."""
+        preferred = self.brand_ids(prefer)
         key = search_norm(query)
         if not key or limit <= 0:
             return Suggestions((), ())
         words = tokens(query)
-        named = self._named_by_runs(words)
+        named = self._named_by_runs(words, preferred)
         models: list[ModelSuggestion] = []
         if named:
             rest = self._rest_of_query(words, named)
@@ -690,34 +738,66 @@ class MatchIndex:
                 models.extend(self._models_of(brand_id, rest, limit - len(models)))
         else:
             ranked, _ = self._rank(None, None, [query])
+            if preferred:
+                ranked = self._hinted(ranked, preferred)
             models = [self._suggestion(model_id) for model_id, _ in ranked[:limit]]
-        return Suggestions(tuple(self._brands_for(key, named, limit)), tuple(models))
+        return Suggestions(tuple(self._brands_for(key, named, limit, preferred)), tuple(models))
 
-    def suggest_brands(self, query: str, limit: int = SUGGEST_LIMIT) -> list["BrandSuggestion"]:
-        """The brands of ``suggest`` alone, ``limit`` at most."""
+    def suggest_brands(self, query: str, limit: int = SUGGEST_LIMIT, prefer: Iterable[str] = ()) -> list["BrandSuggestion"]:
+        """The brands of ``suggest`` alone, ``limit`` at most, hinted by ``prefer`` as it is."""
+        preferred = self.brand_ids(prefer)
         key = search_norm(query)
         if not key or limit <= 0:
             return []
-        return self._brands_for(key, self._named_by_runs(tokens(query)), limit)
+        return self._brands_for(key, self._named_by_runs(tokens(query), preferred), limit, preferred)
 
     def suggest_models(self, brand_id: int, query: str, limit: int = SUGGEST_LIMIT) -> list["ModelSuggestion"]:
         """The models of one brand to offer for what has been typed of a model (S4): those
         whose key starts with the key of ``query``, the exact one first and then most remotes
         first, then by name and id, ``limit`` at most. An empty query gives the brand's models,
         most remotes first. A typo is not forgiven here (the models are a prefix match, which is
-        what a person typing wants); it is ``match``'s work, once the person has typed it all."""
+        what a person typing wants); it is ``match``'s work, once the person has typed it all.
+        There is no hint here: the models of one brand are never reordered (S6)."""
         return [] if limit <= 0 else self._models_of(brand_id, search_norm(query), limit)
 
-    def _named_by_runs(self, words: Sequence[str]) -> dict[int, int]:
+    def brand_ids(self, names: Iterable[str]) -> frozenset[int]:
+        """The ids of the brands that ``names`` stand for (S6): a name is the brand whose search key it
+        has, or each brand that has it as an alias; a name that is no brand's is ignored. A single
+        string is a mistake for a list of names and is refused (``TypeError``), not read letter by letter."""
+        if isinstance(names, str):
+            raise TypeError("prefer is a sequence of brand names, not a string")
+        return frozenset(brand_id for name in names for brand_id in self.name_by_key.get(search_norm(name), ()))
+
+    def warm(self, count: int = WARM_BRANDS) -> int:
+        """Read the whole model lists of the ``count`` brands with the most models (ties to the lower
+        id) now, make their search keys, and keep them for the life of the index (D107). The first
+        suggestion inside a big brand otherwise reads its list from the bundle (35 ms for 21,512 models,
+        a hundred and more for a cold start) and the cache keeps ``BRAND_LISTINGS`` lists, which that many
+        questions about other brands push out. What ``warm`` keeps is outside that cache: other brands
+        never evict it and it takes none of the cache's places. Calling it again replaces what was kept
+        (``warm(0)`` forgets it). It changes no answer, only how long one takes. Returns the number of
+        brands kept (a brand with no model is not one). Like the rest of the index it is not for two
+        threads at once: call it once at start, before the index is shared."""
+        biggest = sorted((b for b, brand in self.brands.items() if brand[3]),
+                         key=lambda b: (-self.brands[b][3], b))[:max(count, 0)]
+        kept: dict[int, BrandModels] = {}
+        for brand_id in biggest:
+            listing = self._read_brand_models(brand_id)
+            listing.keys                                    # made now, which the first typed start of a model would
+            kept[brand_id] = listing
+        self._kept = kept
+        return len(kept)
+
+    def _named_by_runs(self, words: Sequence[str], preferred: frozenset[int] = frozenset()) -> dict[int, int]:
         """The brands a query names by a run of its tokens that is exactly a key of a brand
         or of an alias (two characters or more): brand id to the length of its longest run,
-        longest first, then by id."""
+        longest first, then the ``preferred`` ones (S6), then by id."""
         longest: dict[int, int] = {}
         for run in runs(words[:MAX_TOKENS]):
             if len(run.key) >= BRAND_MIN_KEY:
                 for brand_id in self.name_by_key.get(run.key, ()):
                     longest[brand_id] = max(longest.get(brand_id, 0), len(run.key))
-        return dict(sorted(longest.items(), key=lambda kv: (-kv[1], kv[0])))
+        return dict(sorted(longest.items(), key=lambda kv: (-kv[1], kv[0] not in preferred, kv[0])))
 
     def _rest_of_query(self, words: Sequence[str], named: dict[int, int]) -> str:
         """What is left of a query's words when the words of the brands it names are taken
@@ -729,11 +809,14 @@ class MatchIndex:
                     taken[t] = True
         return "".join(word for word, gone in zip(words, taken) if not gone)
 
-    def _brands_for(self, key: str, named: dict[int, int], limit: int) -> list["BrandSuggestion"]:
+    def _brands_for(self, key: str, named: dict[int, int], limit: int,
+                    preferred: frozenset[int] = frozenset()) -> list["BrandSuggestion"]:
         """The brands to offer for a query of search key ``key`` (S1): the brand whose key, or
         whose alias's key, is ``key``; then those whose key starts with it, most models first,
-        then by name and id; then the brands the query names by a run; then, if there is room,
-        the brands the matcher would read it as (``_fuzzy_brands``)."""
+        then by name and id; then the brands the query names by a run (``named``, in S2's order);
+        then, if there is room, the brands the matcher would read it as (``_fuzzy_brands``). The
+        ``preferred`` brands (S6) go first inside the first two groups, where most models, name
+        and id were the tie-break; the last group is never moved."""
         starting: dict[int, bool] = {}          # brand id -> one of its keys is exactly ``key``
         at = bisect_left(self._keys, (key,))
         while at < len(self._keys) and self._keys[at][0].startswith(key):
@@ -741,7 +824,7 @@ class MatchIndex:
             starting[brand_id] = starting.get(brand_id, False) or other == key
             at += 1
         ordered = sorted(starting, key=lambda b: (
-            not starting[b], -self.brands[b][3], self.brands[b][0], b))
+            not starting[b], b not in preferred, -self.brands[b][3], self.brands[b][0], b))
         out = dict.fromkeys(ordered)
         for brand_id in named:
             out.setdefault(brand_id)
@@ -750,12 +833,22 @@ class MatchIndex:
                 out.setdefault(brand_id)
         return [BrandSuggestion(b, self.brands[b][0], self.brands[b][3]) for b in list(out)[:limit]]
 
+    def _hinted(self, ranked: list, preferred: frozenset[int]) -> list:
+        """``_rank``'s models with, inside each run of the same score, similarity and key length (what
+        rule 7 sorts by before it falls to names and ids), those of the ``preferred`` brands first (S6)."""
+        out: list = []
+        for _, run in groupby(ranked, key=lambda item: item[1][:3]):
+            group = list(run)
+            out += [item for item in group if self._model(item[0])[0] in preferred]
+            out += [item for item in group if self._model(item[0])[0] not in preferred]
+        return out
+
     def _models_of(self, brand_id: int, key: str, limit: int) -> list["ModelSuggestion"]:
         """The models of one brand whose key starts with ``key``, the exact one first and then
         most remotes first; all of them, most remotes first, for an empty ``key``."""
         if brand_id not in self.brands:
             return []
-        listing = self._brand_models(brand_id)
+        listing = self._brand_list(brand_id)
         if not key:
             picked = [model_id for model_id, _ in listing.entries[:limit]]
         else:
@@ -780,6 +873,6 @@ def match(index: MatchIndex, brand: str | None = None, model: str | None = None,
     return index.match(brand, model, texts, limit)
 
 
-def suggest(index: MatchIndex, query: str, limit: int = SUGGEST_LIMIT) -> "Suggestions":
+def suggest(index: MatchIndex, query: str, limit: int = SUGGEST_LIMIT, prefer: Iterable[str] = ()) -> "Suggestions":
     """``index.suggest`` as a function: the brands and models to offer for a query being typed."""
-    return index.suggest(query, limit)
+    return index.suggest(query, limit, prefer)

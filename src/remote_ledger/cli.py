@@ -542,7 +542,7 @@ def _bundle_out(root: Path, args: argparse.Namespace) -> Path:
 
 def _matching_vectors(args: argparse.Namespace, suggest: bool = False) -> int:
     """``rl bundle matching-vectors``: the matcher's cross-language vectors (D97); with
-    ``suggest``, ``rl bundle suggest-vectors``: those of ``suggest`` (D100)."""
+    ``suggest``, ``rl bundle suggest-vectors``: those of ``suggest`` (D100, with a hint D106)."""
     if suggest:
         from .bundle.suggest_vectors import build
     else:
@@ -877,7 +877,7 @@ def build_parser() -> argparse.ArgumentParser:
     bm.add_argument("--check", action="store_true", help="compare instead of writing")
     bm.set_defaults(func=cmd_bundle)
     bg = bu_sub.add_parser("suggest-vectors", parents=[common],
-                           help="write the cross-language vectors of suggest (D100)")
+                           help="write the cross-language vectors of suggest (D100, D106)")
     bg.add_argument("--file", required=True, metavar="FILE", help="where to write them")
     bg.add_argument("--check", action="store_true", help="compare instead of writing")
     bg.set_defaults(func=cmd_bundle)
