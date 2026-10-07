@@ -121,6 +121,13 @@ CREATE TABLE remotes (
 );
 CREATE UNIQUE INDEX remotes_ref ON remotes (ref);
 
+CREATE TABLE remote_refs (
+  ref       TEXT PRIMARY KEY,
+  remote_id INTEGER NOT NULL,
+  first_n   INTEGER NOT NULL,
+  key_count INTEGER NOT NULL
+) WITHOUT ROWID;
+
 CREATE TABLE keys (
   remote_id  INTEGER NOT NULL,
   n          INTEGER NOT NULL,
@@ -153,7 +160,7 @@ CREATE TABLE excluded_brands (
 DIGEST_TABLES: tuple[tuple[str, str], ...] = (
     ("sources", "id"), ("vocab_groups", "id"), ("vocab_keys", "id"), ("brands", "id"),
     ("brand_aliases", "norm, brand_id"), ("models", "id"), ("controls", "model_id, remote_id"), ("remotes", "id"),
-    ("keys", "remote_id, n"), ("signals", "id"), ("ngram", "gram"),
+    ("remote_refs", "ref"), ("keys", "remote_id, n"), ("signals", "id"), ("ngram", "gram"),
     ("excluded_brands", "name"),
 )
 
@@ -163,6 +170,13 @@ PLAY_RULE_TEXT = {
     "full-signal": ("press = intro once, then the repeat sequence repeatPasses times, "
                     "at least once: the protocol's second frame is in the repeat sequence"),
 }
+
+
+MERGE_RULE_TEXT = (
+    "a protocol fragment of a device with no test key (POWER, POWER_OFF, POWER_ON, VOLUME_UP, "
+    "MUTE) is folded into a sibling fragment that has one and the same carrier and play rule; "
+    "its keys follow the sibling's, and remote_refs maps every ledger ref to the remote that "
+    "carries its keys")
 
 
 def _hexed(row: tuple) -> list[Any]:
@@ -203,12 +217,14 @@ def _meta(assembled: Assembled, vocabulary_version: int, selection: str) -> dict
         "count.models": str(len(assembled.models)),
         "count.controls": str(len(assembled.controls)),
         "count.remotes": str(len(assembled.remotes)),
+        "count.remoteRefs": str(len(assembled.remote_refs)),
         "count.keys": str(len(assembled.keys)),
         "count.signals": str(len(assembled.signals)),
         "count.excludedBrands": str(len(assembled.excluded)),
     }
     for rule in RULES:
         rows[f"playRule.{rule}"] = PLAY_RULE_TEXT[rule]
+    rows["mergeRule"] = MERGE_RULE_TEXT
     return rows
 
 
@@ -258,6 +274,7 @@ def _insert(conn: sqlite3.Connection, a: Assembled) -> None:
     put("models", a.models, 4)
     put("controls", a.controls, 2)
     put("remotes", a.remotes, 13)
+    put("remote_refs", a.remote_refs, 4)
     put("keys", a.keys, 6)
     put("signals", a.signals, 2)
     put("ngram", a.ngram, 2)

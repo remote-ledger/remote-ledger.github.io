@@ -174,7 +174,7 @@ def test_the_counts_are_the_trees(ledger, full):
     assert rows(full, "SELECT COUNT(*) FROM keys") == [(61,)]
     manifest = json.loads(full.files[bb.MANIFEST_FILE])
     assert manifest["counts"] == {"brands": 15, "brandAliases": 3, "models": 29, "remotes": 28,
-                                  "keys": 61, "signals": stats["signals"]}
+                                  "remoteRefs": 28, "keys": 61, "signals": stats["signals"]}
 
 
 def test_signals_are_shared_between_keys_and_remotes(ledger, full):
@@ -417,7 +417,7 @@ def test_the_schema_needs_nothing_newer_than_sqlite_3_28(full):
     assert writer.SQLITE_MIN_VERSION == "3.28.0"
     assert sorted(n for t, n, _ in schema if t == "table") == sorted([
         "meta", "sources", "vocab_groups", "vocab_keys", "brands", "brand_aliases", "models",
-        "controls", "remotes", "keys", "signals", "ngram", "excluded_brands"])
+        "controls", "remotes", "remote_refs", "keys", "signals", "ngram", "excluded_brands"])
     assert {n for t, n, _ in schema if t == "index"} == {"brands_norm", "remotes_ref"}
 
 

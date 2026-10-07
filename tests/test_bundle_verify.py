@@ -61,8 +61,8 @@ def refresh(directory: Path) -> None:
     path = directory / bb.BUNDLE_FILE
     conn = sqlite3.connect(path, isolation_level=None)
     tables = {"brands": "brands", "brandAliases": "brand_aliases", "models": "models",
-              "controls": "controls", "remotes": "remotes", "keys": "keys", "signals": "signals",
-              "excludedBrands": "excluded_brands"}
+              "controls": "controls", "remotes": "remotes", "remoteRefs": "remote_refs", "keys": "keys",
+              "signals": "signals", "excludedBrands": "excluded_brands"}
     counts = {name: conn.execute(f"SELECT COUNT(*) FROM {table}").fetchone()[0]
               for name, table in tables.items()}
     for name, n in counts.items():
@@ -74,8 +74,8 @@ def refresh(directory: Path) -> None:
     data = path.read_bytes()
     manifest["dataVersion"] = version
     manifest["bundle"].update(bytes=len(data), sha256=hashlib.sha256(data).hexdigest())
-    manifest["counts"] = {n: counts[n] for n in ("brands", "brandAliases", "models", "remotes", "keys",
-                                                 "signals")}
+    manifest["counts"] = {n: counts[n] for n in ("brands", "brandAliases", "models", "remotes", "remoteRefs",
+                                                 "keys", "signals")}
     manifest["brands"] = {"included": counts["brands"], "excluded": counts["excludedBrands"]}
     (directory / bb.MANIFEST_FILE).write_bytes(app_api.compact(manifest))
 
@@ -213,10 +213,12 @@ MUTATIONS = [
      ["model 'IR Blaster DB 1' is not the file's"]),
     ("an id out of path order",
      "UPDATE remotes SET id = 100 WHERE ref = 'topping/RC-15A'; UPDATE keys SET remote_id = 100 "
-     "WHERE remote_id = 28; UPDATE controls SET remote_id = 100 WHERE remote_id = 28",
+     "WHERE remote_id = 28; UPDATE controls SET remote_id = 100 WHERE remote_id = 28; "
+     "UPDATE remote_refs SET remote_id = 100 WHERE remote_id = 28",
      "full", ["id 100, the tree's order gives 28"]),
     ("a remote the tree does not have",
-     "INSERT INTO remotes VALUES (99, 'lirc/ghost/none', NULL, NULL, 2, 2, 0, NULL, 38000, 0, 0, 0, 'ledger')",
+     "INSERT INTO remotes VALUES (99, 'lirc/ghost/none', NULL, NULL, 2, 2, 1, NULL, 38000, 0, 0, 0, 'ledger'); "
+     "INSERT INTO keys VALUES (99, 0, NULL, 'x', 1, 2); INSERT INTO remote_refs VALUES ('lirc/ghost/none', 99, 0, 1)",
      "full", ["remote 99 lirc/ghost/none: no such file in the tree"]),
     ("a remote of the full profile missing",
      "DELETE FROM controls WHERE remote_id = 28", "full", ["lists 'Topping' / 'DX3 Pro', which is not linked to it"]),
@@ -255,7 +257,7 @@ MUTATIONS = [
      ["rows of excluded brands that are in"]),
     ("a remote the selection should carry, missing",
      "DELETE FROM keys WHERE remote_id = 15; DELETE FROM remotes WHERE id = 15; "
-     "DELETE FROM controls WHERE remote_id = 15; "
+     "DELETE FROM controls WHERE remote_id = 15; DELETE FROM remote_refs WHERE remote_id = 15; "
      "DELETE FROM signals WHERE id NOT IN (SELECT signal_id FROM keys)",
      "selected", ["not in the bundle although a brand of it is carried"]),
 ]
@@ -315,6 +317,7 @@ def test_a_remote_of_a_left_out_brand_in_the_selected_bundle_is_found(ledger, wr
         mapped[sid] = top
         conn.execute("INSERT INTO signals VALUES (?, ?)", (top, blob))
     conn.execute("INSERT INTO remotes VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)", (*row[:2], None, *row[3:]))
+    conn.execute("INSERT INTO remote_refs VALUES (?, ?, 0, ?)", (row[1], row[0], len(keys)))
     for remote_id, n, canon, label, signal_id, confidence in keys:
         conn.execute("INSERT INTO keys VALUES (?,?,?,?,?,?)",
                      (remote_id, n, canon, label, mapped[signal_id], confidence))

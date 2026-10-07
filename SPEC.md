@@ -386,7 +386,7 @@ confidence tier, or a citation.
   than the SQLite of Android 11 and no extension, so a search is ordinary
   columns and a table of three-character grams. The file is **deterministic**
   (two builds of one tree are the same bytes), **compact** (the whole ledger is
-  50 MB, 12.7 MB gzipped), and comes with a manifest that names its version,
+  51 MB, 12.9 MB gzipped), and comes with a manifest that names its version,
   size and SHA-256, a detached signature of the manifest (ECDSA P-256 with
   SHA-256, made and checked with `openssl`), and a notices file that gives each
   source's licence text and link, saying so where a licence holds only by
@@ -436,6 +436,22 @@ confidence tier, or a citation.
   that is a brand's own is refused; a name two brands share (one company the
   catalog spells two ways) must be declared as shared, and then names both
   (DESIGN §25, D101, D102).
+- **R27 — A device's protocol fragments are carried by one remote where that
+  loses nothing a person could try, and no ref goes missing.** The IR Blaster
+  import files one remote per protocol, and a fragment of a device that has
+  none of the keys a person is asked to send to try a remote (Power, Power
+  off, Power on, Volume up, Mute) is a row nobody can test. The bundle
+  exporter folds such a fragment into a sibling fragment of the same device
+  that has a test key and the same carrier and play rule (the better test key
+  first, then the lowest remote id), and **never folds two fragments that each
+  have a test key**, because they may be two encodings of one key and the
+  device may answer to only one of them. The remote files are not changed: the
+  merge exists only in the bundle, the merged remote keeps the sibling's ref,
+  id, test key and signals, and every key of the ledger is still there. Every
+  ref of the ledger stays reachable through one more table (`remote_refs`: the
+  remote that carries the ref's keys and where they start), added **without
+  raising the format's version**. The rule, its measurements on both profiles,
+  what it leaves and how to widen it are DESIGN §26 (D103 to D105).
 
 **Known limit, named rather than glossed over:** CSS requires a named
 area's cells to form one rectangle, so a single key can't have an L-shaped
