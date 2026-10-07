@@ -63,7 +63,14 @@ holds for each lookup:
   error, the commonest NEC transcription mistake. The capture holds 12
   codes, not 8. All 13 keys, including OK from a second capture, are now
   Verified against two Flipper-IRDB files that record the address as `88`
-  in a different encoding.
+  in a different encoding. Topping's own code list, which two users relayed
+  from Topping (irplus-codes issues #379 and #540, unattributed on the
+  forum), gives 12 of the 13 functions with user code `0X8877` and agrees on
+  every one. It names no protocol or bit order. It is not a published table:
+  toppingaudio.com has none. The MX5's remote, the RC-16A, is a second Topping
+  remote in the ledger, at device 0x5A and subdevice 0xA5. Its one source is a
+  forum post whose low bytes are the RC-15A's with the prefix changed, so its
+  12 keys are Plausible. DESIGN.md §13 has the detail.
 - **`samsung/BN59-01199F.json`** holds as claimed: Plausible, NECx2 from
   IRDB's shared `7,7` Samsung TV address.
 

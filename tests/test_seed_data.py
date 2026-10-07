@@ -268,3 +268,31 @@ def test_the_sony_is_verified_at_226_and_its_other_modes_are_plausible():
             assert alt.confidence == "plausible", (key, mode)
             assert alt.verified_by is None, (key, mode)
             assert (alt.device, alt.subdevice, alt.function) == (26, subdevice, form.function)
+
+
+def test_the_rc16a_is_one_capture_read_lsb_first_and_stays_plausible():
+    """The MX5's RC-16A has one source for its codes: a forum post whose low
+    bytes are the RC-15A's with the prefix changed from 11EE to 5AA5, so a copy
+    cannot be ruled out and the tier is `plausible`. Each form is re-derived
+    from the value its own citation quotes, as the RC-15A's are, and each low
+    byte must be a function the RC-15A holds Verified, which is what pins the
+    post's bit order."""
+    import re
+
+    rc15 = load_remote(ROOT / "remotes" / "topping" / "RC-15A.json")
+    verified = {f.function for forms in rc15.keys.values() for f in forms
+                if f.confidence == "verified"}
+    path = ROOT / "remotes" / "topping" / "RC-16A.json"
+    assert json.loads(path.read_text())["controls"] == ["MX5"]
+    remote = load_remote(path)
+    assert len(remote.keys) == 12
+    for key, forms in remote.keys.items():
+        (form,) = forms
+        assert form.confidence == "plausible", key
+        m = re.search(r"'[^']+: ([0-9A-F]{8})' in a C\+\+ comment", form.source or "")
+        assert m, f"{key}: cites no value it can be re-derived from"
+        quoted = [int(m[1][i:i + 2], 16) for i in (0, 2, 4, 6)]
+        d, s, f, nf = (_reverse_bits(b) for b in quoted)
+        assert (form.device, form.subdevice, form.function) == (d, s, f), key
+        assert (d, s) == (0x5A, 0xA5) and d ^ s == f ^ nf == 0xFF, key
+        assert f in verified, key
