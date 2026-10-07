@@ -66,9 +66,10 @@ SMARTIR = {
 }
 
 
-def make_corpus(root: Path) -> Path:
-    """Write the corpus under ``root`` and return it."""
-    make_import(root)
+def make_corpus(root: Path, irblaster: dict[int, dict] | None = None) -> Path:
+    """Write the corpus under ``root`` and return it. ``irblaster`` replaces the database the
+    IR Blaster part is imported from (``tests/app_corpus.py``'s ``REMOTES`` where it is None)."""
+    make_import(root) if irblaster is None else make_import(root, irblaster)
     for source, licence in (("lirc", "COPYING"), ("smartir", "LICENSE"), ("irblaster", "LICENSE")):
         directory = root / "remotes" / source
         directory.mkdir(parents=True, exist_ok=True)

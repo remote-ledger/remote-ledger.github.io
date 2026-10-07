@@ -113,7 +113,7 @@ names a person types for them), models, remotes, each remote's keys by
 canonical key, and the compiled signals once each as binary Pronto words. It needs nothing newer than Android 11's SQLite, is
 byte-for-byte the same for the same tree, comes with a manifest, a detached
 ECDSA P-256 signature and a notices file with every source's licence text, and
-has two profiles: `full` (50 MB, 12.7 MB gzipped) and `selected`, at most 20 MB.
+has two profiles: `full` (51 MB, 12.9 MB gzipped) and `selected`, at most 20 MB.
 It is a build artifact: never committed, never under `build/` or `site/`
 (DESIGN.md §23).
 
@@ -133,6 +133,15 @@ entries apart (the hint never lifts a worse match: D106), and
 `MatchIndex.warm()` reads the biggest brands' model lists once at start and keeps
 them, so that the first keystroke inside a big brand is as quick as the next
 (D107).
+
+**One remote for a device the import split.** The IR Blaster import files a
+remote per protocol, and a fragment with no key a person could be asked to try
+(Power, Volume up, Mute) is a row nobody can test. The exporter folds such a
+fragment into a sibling of the same device that has one and plays the same
+way, and never folds two fragments that both can be tried; the remote files do
+not change, and `remote_refs` still maps every ref of the ledger to the remote
+that carries its keys (315 of the 1,225 fragments of split devices in the full
+bundle; DESIGN.md §26).
 
 ## Try it
 

@@ -476,7 +476,8 @@ def cmd_bundle(args: argparse.Namespace) -> int:
         if len(problems) > 50:
             print(f"ERROR ... and {len(problems) - 50} more", file=sys.stderr)
         if not problems:
-            print(f"{args.verify}: verified against the tree: {facts['remotes']:,} remotes, "
+            print(f"{args.verify}: verified against the tree: {facts['remotes']:,} remotes "
+                  f"({facts['remoteRefs']:,} refs), "
                   f"{facts['decodedSignals']:,} signals decoded and encoded back, "
                   f"{facts['sampledRemotes']} remotes compiled again, "
                   f"dataVersion {facts['dataVersion']} "
@@ -501,6 +502,10 @@ def cmd_bundle(args: argparse.Namespace) -> int:
         f"{stats['models']:,} models, {stats['remotes']:,} remotes, {stats['keys']:,} keys, "
         f"{stats['signals']:,} signals; dataVersion {stats['dataVersion']} "
         f"({time.perf_counter() - started:.1f} s)"
+    )
+    print(
+        f"fragments: {stats['foldedFragments']:,} protocol fragments with no test key are folded into "
+        f"{stats['mergedRemotes']:,} remotes; remote_refs: {stats['remoteRefs']:,} refs"
     )
     print(
         f"brand aliases: {stats['brandAliases']:,} of the {stats['aliasesListed']:,} listed; not in "

@@ -8,12 +8,14 @@ A pure function of the records ``corpus.read_corpus`` reads. It has two passes:
 2. :func:`assemble` takes the brands a profile chose and builds the rows of every
    table for them and nothing else.
 
-Identity. A **remote** has one id for the whole ledger (its position in path
-order, from 1), so the full bundle and the selected one number a remote alike
-and an id the backend's matcher returns means the same remote in either; ``ref``
-(its path under ``remotes/`` without ``.json``) is its name across ledger
-versions. Brand, model, signal and vocabulary ids are numbered inside one
-bundle, from 1, in the order the rows are inserted, which is a sort.
+Identity. A **remote** has one id for the whole ledger (the position in path
+order, from 1, of the file that carries it), so the full bundle and the selected one
+number a remote alike and an id the backend's matcher returns means the same remote in
+either; ``ref`` (its path under ``remotes/`` without ``.json``) is its name across ledger
+versions. A protocol fragment with no test key is folded into a sibling (``merge``, D103):
+it has no remote row of its own, the sibling's id stands for it, and ``remote_refs`` maps
+the fragment's ref to that remote (D105). Brand, model, signal and vocabulary ids are
+numbered inside one bundle, from 1, in the order the rows are inserted, which is a sort.
 """
 
 from __future__ import annotations
@@ -26,6 +28,7 @@ from ..app_api import brand_key
 from ..keys import load_vocabulary, squash
 from .aliases import Alias, rows_for
 from .corpus import SOURCE_ID, RemoteRecord, is_synthetic_model, play
+from .merge import Folded, fold, ref_of
 from .textnorm import search_norm
 
 #: ``models.kind``: a product a person owns, and a remote's own part number.
@@ -130,10 +133,14 @@ class BrandStats:
 
 @dataclass
 class Collected:
+    #: One record per remote **file** of the ledger, in path order (the remote id is the
+    #: position + 1), whether or not it is folded into a sibling's remote (D103).
     records: list[RemoteRecord]
     #: ``(brand norm of the manufacturer, [(brand norm, brand, model, kind)])`` per record.
     pairs: list[tuple[str, list[tuple[str, str, str, int]]]]
     brands: dict[str, BrandStats]
+    #: Which file's remote carries each file's keys (D103).
+    folded: Folded
 
 
 def collect(records: list[RemoteRecord]) -> Collected:
@@ -165,7 +172,7 @@ def collect(records: list[RemoteRecord]) -> Collected:
             entry.remotes += 1
             entry.keys += len(record.keys)
             entry.mapped_keys += mapped
-    return Collected(records, pairs, brands)
+    return Collected(records, pairs, brands, fold(records))
 
 
 @dataclass
@@ -186,6 +193,7 @@ class Assembled:
     excluded: list[tuple]          # (norm, name, api_key)
     stats: dict = field(default_factory=dict)
     brand_aliases: list[tuple] = field(default_factory=list)   # (alias, norm, brand_id) (D101)
+    remote_refs: list[tuple] = field(default_factory=list)     # (ref, remote_id, first_n, key_count) (D105)
 
 
 def label_needed(text: str, canon: str | None, spellings: dict[str, set[str]]) -> bool:
@@ -216,7 +224,11 @@ def assemble(collected: Collected, chosen: frozenset[str] | None, profile: str,
                            key.name, key.icon, key.glyph, key.color, int(key.repeat)))
     spellings = {k.id: {squash(k.id), squash(k.name)} for k in vocab.keys}
 
-    # -- which remotes -----------------------------------------------------------------
+    # -- which files, and which remote carries each (D103) ------------------------------
+    # ``included`` are the files of the profile. A file folded into a sibling has no remote of
+    # its own: the sibling's id stands for it wherever a remote id is written, and the brands and
+    # models are counted over the files as they always were, so that no name moves.
+    folded = collected.folded
     included: list[int] = []
     for i, (maker, rows) in enumerate(collected.pairs):
         if chosen is None or maker in chosen or any(r[0] in chosen for r in rows):
@@ -239,7 +251,7 @@ def assemble(collected: Collected, chosen: frozenset[str] | None, profile: str,
             brand_spell[norm][brand] += 1
             model_spell[key][model] += 1
             model_kind[key] = min(kind, model_kind.get(key, kind))
-            model_remotes[key].add(i + 1)
+            model_remotes[key].add(folded.carrier[i] + 1)
     for norm in maker_brands:
         brand_spell.setdefault(norm, Counter({collected.brands[norm].name: 1}))
 
@@ -280,15 +292,19 @@ def assemble(collected: Collected, chosen: frozenset[str] | None, profile: str,
     signal_id = {blob: n + 1 for n, blob in enumerate(ordered)}
     signals = [(n + 1, blob) for n, blob in enumerate(ordered)]
 
-    remotes, keys = [], []
+    remotes, keys, remote_refs = [], [], []
     per_source: dict[str, list[int]] = defaultdict(lambda: [0, 0])
     for i in included:
-        record = records[i]
+        remote_refs.append((ref_of(records[i]), folded.carrier[i] + 1,
+                            folded.first_key(records, i), len(records[i].keys)))
+        if folded.carrier[i] != i:
+            continue
+        record = folded.remote(records, i)
         rid = i + 1
         repeat, helper, empty, rule = play(record)
         maker = collected.pairs[i][0]
         remotes.append((
-            rid, record.where[len("remotes/"):-len(".json")],
+            rid, ref_of(record),
             brand_id.get(maker),
             None if is_synthetic_model(record.source) else record.model,
             SOURCE_ID[record.source], record.tier, len(record.keys), record.protocol,
@@ -301,6 +317,7 @@ def assemble(collected: Collected, chosen: frozenset[str] | None, profile: str,
             stored = text if label_needed(text, canon, spellings) else None
             keys.append((rid, n, canon_ids[canon] if canon else None, stored,
                          signal_id[blob], conf))
+    remote_refs.sort()
 
     # -- the brands left out ---------------------------------------------------------------
     excluded = []
@@ -319,8 +336,11 @@ def assemble(collected: Collected, chosen: frozenset[str] | None, profile: str,
     return Assembled(
         profile=profile, sources=sources, vocab_groups=vocab_groups, vocab_keys=vocab_keys,
         brands=brands, models=models, controls=controls, remotes=remotes, keys=keys,
-        signals=signals, ngram=ngram, excluded=excluded,
+        signals=signals, ngram=ngram, excluded=excluded, remote_refs=remote_refs,
         stats={"ledgerRemotes": len(records), "ledgerBrands": len(collected.brands),
+               # the files folded into a sibling's remote, and the remotes that carry some (D103)
+               "foldedFragments": len(remote_refs) - len(remotes),
+               "mergedRemotes": sum(1 for r in remotes if r[0] - 1 in folded.parts),
                "aliasesListed": len(aliases),
                # a brand the list names that the whole ledger does not have, and one it has and
                # this bundle does not carry
