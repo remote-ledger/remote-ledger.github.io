@@ -10,6 +10,24 @@
     "carrierHz": 40000,
     "minSends": 3
   },
+  "variants": {
+    "mode2": {
+      "label": "Command mode 2 (subdevice 234)",
+      "confidence": "plausible",
+      "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists",
+      "override": {
+        "subdevice": "0xEA"
+      }
+    },
+    "mode3": {
+      "label": "Command mode 3 (subdevice 242)",
+      "confidence": "plausible",
+      "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists",
+      "override": {
+        "subdevice": "0xF2"
+      }
+    }
+  },
   "keys": {
     "KEY_0": {
       "forms": [
@@ -21,7 +39,7 @@
           "function": "0x09",
           "confidence": "verified",
           "verifiedBy": "sony20-cross-source-check",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 9 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('0') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 9 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('0') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 9 as '0, 10' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       ]
     },
@@ -35,7 +53,7 @@
           "function": "0x00",
           "confidence": "verified",
           "verifiedBy": "sony20-cross-source-check",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 0 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('1') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 0 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('1') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 0 as '1' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       ]
     },
@@ -49,7 +67,7 @@
           "function": "0x01",
           "confidence": "verified",
           "verifiedBy": "sony20-cross-source-check",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 1 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('2') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 1 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('2') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 1 as '2' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       ]
     },
@@ -63,7 +81,7 @@
           "function": "0x02",
           "confidence": "verified",
           "verifiedBy": "sony20-cross-source-check",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 2 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('3') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 2 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('3') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 2 as '3' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       ]
     },
@@ -77,7 +95,7 @@
           "function": "0x03",
           "confidence": "verified",
           "verifiedBy": "sony20-cross-source-check",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 3 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('4') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 3 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('4') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 3 as '4' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       ]
     },
@@ -91,7 +109,7 @@
           "function": "0x04",
           "confidence": "verified",
           "verifiedBy": "sony20-cross-source-check",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 4 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('5') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 4 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('5') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 4 as '5' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       ]
     },
@@ -105,7 +123,7 @@
           "function": "0x05",
           "confidence": "verified",
           "verifiedBy": "sony20-cross-source-check",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 5 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('6') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 5 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('6') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 5 as '6' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       ]
     },
@@ -119,7 +137,7 @@
           "function": "0x06",
           "confidence": "verified",
           "verifiedBy": "sony20-cross-source-check",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 6 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('7') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 6 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('7') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 6 as '7' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       ]
     },
@@ -133,7 +151,7 @@
           "function": "0x07",
           "confidence": "verified",
           "verifiedBy": "sony20-cross-source-check",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 7 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('8') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 7 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('8') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 7 as '8' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       ]
     },
@@ -147,7 +165,7 @@
           "function": "0x08",
           "confidence": "verified",
           "verifiedBy": "sony20-cross-source-check",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 8 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('9') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 8 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('9') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 8 as '9' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       ]
     },
@@ -161,7 +179,7 @@
           "function": "0x64",
           "confidence": "verified",
           "verifiedBy": "sony20-cross-source-check",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 100 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('audio') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 100 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('audio') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 100 as 'Audio' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       ]
     },
@@ -175,7 +193,7 @@
           "function": "0x43",
           "confidence": "verified",
           "verifiedBy": "sony20-cross-source-check",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 67 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('return') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 67 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('return') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 67 as 'Return' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       ]
     },
@@ -189,7 +207,7 @@
           "function": "0x66",
           "confidence": "verified",
           "verifiedBy": "sony20-cross-source-check",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 102 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('blue') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 102 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('blue') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 102 as 'Blue' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       ]
     },
@@ -201,8 +219,9 @@
           "device": "0x1A",
           "subdevice": "0xE2",
           "function": "0x29",
-          "confidence": "plausible",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 41. Single source: no corresponding row in probonopd/irdb codes/Sony/Bluray player/26,226.csv to cross-check against"
+          "confidence": "verified",
+          "verifiedBy": "sony20-cross-source-check",
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 41; cross-checked against hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 41 as 'Blu-ray Menu, Pop Up/Menu' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       ]
     },
@@ -214,8 +233,9 @@
           "device": "0x1A",
           "subdevice": "0xE2",
           "function": "0x41",
-          "confidence": "plausible",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 65. Single source: no corresponding row in probonopd/irdb codes/Sony/Bluray player/26,226.csv to cross-check against"
+          "confidence": "verified",
+          "verifiedBy": "sony20-cross-source-check",
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 65; cross-checked against hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 65 as 'Display' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       ]
     },
@@ -227,8 +247,9 @@
           "device": "0x1A",
           "subdevice": "0xE2",
           "function": "0x3A",
-          "confidence": "plausible",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 58. Single source: no corresponding row in probonopd/irdb codes/Sony/Bluray player/26,226.csv to cross-check against"
+          "confidence": "verified",
+          "verifiedBy": "sony20-cross-source-check",
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 58; cross-checked against hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 58 as 'Down' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       ]
     },
@@ -240,8 +261,9 @@
           "device": "0x1A",
           "subdevice": "0xE2",
           "function": "0x5E",
-          "confidence": "plausible",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 94. Single source: no corresponding row in probonopd/irdb codes/Sony/Bluray player/26,226.csv to cross-check against"
+          "confidence": "verified",
+          "verifiedBy": "sony20-cross-source-check",
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 94; cross-checked against hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 94 as 'Favorite(s)' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       ]
     },
@@ -253,8 +275,9 @@
           "device": "0x1A",
           "subdevice": "0xE2",
           "function": "0x1C",
-          "confidence": "plausible",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 28. Single source: no corresponding row in probonopd/irdb codes/Sony/Bluray player/26,226.csv to cross-check against"
+          "confidence": "verified",
+          "verifiedBy": "sony20-cross-source-check",
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 28; cross-checked against hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 28 as 'Scan Forward' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       ]
     },
@@ -268,7 +291,7 @@
           "function": "0x68",
           "confidence": "verified",
           "verifiedBy": "sony20-cross-source-check",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 104 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('green') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 104 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('green') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 104 as 'Green' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       ]
     },
@@ -282,7 +305,7 @@
           "function": "0x42",
           "confidence": "verified",
           "verifiedBy": "sony20-cross-source-check",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 66 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('home') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 66 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('home') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 66 as 'System Menu, Home' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       ]
     },
@@ -294,8 +317,9 @@
           "device": "0x1A",
           "subdevice": "0xE2",
           "function": "0x3B",
-          "confidence": "plausible",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 59. Single source: no corresponding row in probonopd/irdb codes/Sony/Bluray player/26,226.csv to cross-check against"
+          "confidence": "verified",
+          "verifiedBy": "sony20-cross-source-check",
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 59; cross-checked against hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 59 as 'Left' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       ]
     },
@@ -307,8 +331,9 @@
           "device": "0x1A",
           "subdevice": "0xE2",
           "function": "0x2C",
-          "confidence": "plausible",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 44. Single source: no corresponding row in probonopd/irdb codes/Sony/Bluray player/26,226.csv to cross-check against"
+          "confidence": "verified",
+          "verifiedBy": "sony20-cross-source-check",
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 44; cross-checked against hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 44 as 'Top Menu' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       ]
     },
@@ -322,7 +347,7 @@
           "function": "0x56",
           "confidence": "verified",
           "verifiedBy": "sony20-cross-source-check",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 86 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('next') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 86 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('next') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 86 as 'Next' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       ]
     },
@@ -334,8 +359,9 @@
           "device": "0x1A",
           "subdevice": "0xE2",
           "function": "0x3D",
-          "confidence": "plausible",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 61. Single source: no corresponding row in probonopd/irdb codes/Sony/Bluray player/26,226.csv to cross-check against"
+          "confidence": "verified",
+          "verifiedBy": "sony20-cross-source-check",
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 61; cross-checked against hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 61 as 'Select' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       ]
     },
@@ -349,7 +375,7 @@
           "function": "0x3F",
           "confidence": "verified",
           "verifiedBy": "sony20-cross-source-check",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 63 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('options') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 63 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('options') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 63 as 'Options' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       ]
     },
@@ -363,7 +389,7 @@
           "function": "0x19",
           "confidence": "verified",
           "verifiedBy": "sony20-cross-source-check",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 25 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('pause') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 25 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('pause') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 25 as 'Pause' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       ]
     },
@@ -377,7 +403,7 @@
           "function": "0x1A",
           "confidence": "verified",
           "verifiedBy": "sony20-cross-source-check",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 26 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('play') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 26 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('play') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 26 as 'Play' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       ]
     },
@@ -391,7 +417,7 @@
           "function": "0x15",
           "confidence": "verified",
           "verifiedBy": "sony20-cross-source-check",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 21 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('power') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 21 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('power') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 21 as 'Power' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       ]
     },
@@ -405,7 +431,7 @@
           "function": "0x57",
           "confidence": "verified",
           "verifiedBy": "sony20-cross-source-check",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 87 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('previous') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 87 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('previous') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 87 as 'Previous' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       ]
     },
@@ -419,7 +445,7 @@
           "function": "0x67",
           "confidence": "verified",
           "verifiedBy": "sony20-cross-source-check",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 103 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('red') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 103 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('red') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 103 as 'Red' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       ]
     },
@@ -433,7 +459,7 @@
           "function": "0x1B",
           "confidence": "verified",
           "verifiedBy": "sony20-cross-source-check",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 27 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('rewind') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 27 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('rewind') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 27 as 'Scan Reverse' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       ]
     },
@@ -445,8 +471,9 @@
           "device": "0x1A",
           "subdevice": "0xE2",
           "function": "0x3C",
-          "confidence": "plausible",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 60. Single source: no corresponding row in probonopd/irdb codes/Sony/Bluray player/26,226.csv to cross-check against"
+          "confidence": "verified",
+          "verifiedBy": "sony20-cross-source-check",
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 60; cross-checked against hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 60 as 'Right' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       ]
     },
@@ -460,7 +487,7 @@
           "function": "0x18",
           "confidence": "verified",
           "verifiedBy": "sony20-cross-source-check",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 24 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('stop') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 24 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('stop') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 24 as 'Stop' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       ]
     },
@@ -474,7 +501,7 @@
           "function": "0x63",
           "confidence": "verified",
           "verifiedBy": "sony20-cross-source-check",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 99 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('subtitle') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 99 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('subtitle') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 99 as 'Subtitle' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       ]
     },
@@ -486,8 +513,9 @@
           "device": "0x1A",
           "subdevice": "0xE2",
           "function": "0x39",
-          "confidence": "plausible",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 57. Single source: no corresponding row in probonopd/irdb codes/Sony/Bluray player/26,226.csv to cross-check against"
+          "confidence": "verified",
+          "verifiedBy": "sony20-cross-source-check",
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 57; cross-checked against hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 57 as 'Up' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       ]
     },
@@ -501,7 +529,7 @@
           "function": "0x69",
           "confidence": "verified",
           "verifiedBy": "sony20-cross-source-check",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 105 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('yellow') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 105 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('yellow') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 105 as 'Yellow' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       ]
     },
@@ -515,7 +543,7 @@
           "function": "0x16",
           "confidence": "verified",
           "verifiedBy": "sony20-cross-source-check",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 22 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('open / close') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 22 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('open / close') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 22 as 'Open/Close' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       ]
     },
@@ -527,8 +555,9 @@
           "device": "0x1A",
           "subdevice": "0xE2",
           "function": "0x4C",
-          "confidence": "plausible",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 76. Single source: no corresponding row in probonopd/irdb codes/Sony/Bluray player/26,226.csv to cross-check against"
+          "confidence": "verified",
+          "verifiedBy": "sony20-cross-source-check",
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 76; cross-checked against hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 76 as 'SEN, Qriocity' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       ]
     }

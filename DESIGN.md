@@ -2022,7 +2022,7 @@ note rather than a live contract.
 
 ## 12. Implementation status
 
-Phases 0-6 are implemented: 2557 tests, `jsonschema` the only runtime
+Phases 0-6 are implemented: 2558 tests, `jsonschema` the only runtime
 dependency. Phase 2 landed its nine SPEC edits *before* its code, per §9 --
 the spec change is what authorises the implementation. (That count is asserted by the suite itself -- see
 `test_documented_test_count_is_current` -- so it cannot drift the way the
@@ -2149,11 +2149,46 @@ all, so §1's "alternate subdevice 234 / 242" fallbacks have no corroboration
 either.
 
 §1 cites hifi-remote.com's official Sony BD command table for the 218
-figure, and that table could not be retrieved. So this is a contradiction
-between sources rather than a settled error, and the BX510 stays in
-`unresolved.json` until one source settles it. What is *not* in doubt is the protocol and the function codes:
+figure, and that table could not be retrieved. So this was a contradiction
+between sources rather than a settled error. What was *not* in doubt was the protocol and the function codes:
 27 of 38 functions cross-check between the capture and IRDB with zero
 mismatches, which is the methodology §1 itself describes.
+
+**The table, retrieved (2026-10-07).** It is at
+`http://www.hifi-remote.com/sony/Sony_bluray.htm`, under "Rhm5757's Sony Code
+Page" (`/sony/`, a page per device type, "Last Updated 1/27/2026" on its
+index). The lookup that §1 records called it "Sony BD". `Sony_bd.htm` is a
+404, as were the wiki pages an earlier session tried. The page is
+titled "Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)" and
+says the first three are "the usual 3 Blu-ray modes". Three findings:
+
+1. **All 38 of RMT-B118P's function codes match the page's command table**,
+   including the 11 that only the capture recorded (Forward 28, Pop Up/Menu 41,
+   Top Menu 44, the D-pad 57 to 61, Display 65, SEN 76, Favorites 94). Those
+   11 are now Verified, with the page as the second source. The code page's
+   index says most of its data comes from Pronto and One For All remotes, so
+   it is independent of the capture and of IRDB, but it is a hobbyist
+   compilation, not a Sony publication. Each key's citation says so, and
+   the 27 keys that were already Verified now carry it as a third source.
+2. **218 is not a Blu-ray mode.** The page lists no 218 among the Blu-ray
+   codes, and `Sony_ps2.htm` is titled "Sony PS2 (26.218)", so the page agrees
+   with IRDB's `26,218.csv`. §1's 218 claim has no support left. The "official
+   table" it cited names 226.
+3. **234 and 242 are real, as the other two modes of the same table.**
+   RMT-B118P now declares them as variants `mode2` and `mode3` (D17), each
+   Plausible on that one page. Nothing says this remote can be set to send
+   them, and the page's other three Blu-ray codes (26.151 for the UHP-H1 and
+   its RMT-VB210, 26.135 for the BDP-SX portables and their RMT-B113, 26.164
+   for the HES-V1000 and its RMT-HS001A) carry no list of which keys those
+   remotes have, so no remote is authored for them.
+
+**The BX510 stays in `unresolved.json`.** Search results for retailer
+listings (Full Compass, manuals.plus) and for Sony Canada's BX510 support page
+give the BX510's remote as RMT-B119A. Those pages refused automated fetches,
+so that rests on the search summaries. The RMT-B118P's service manual (Sony,
+August 2011) covers the BDP-BX18, S185 and S186, not the BX510. So the file
+the BX510 would need is an RMT-B119A with its own key list, and no code
+source names that remote.
 
 The irony is worth stating plainly. §1's BX510 row is what motivated
 candidate groups (D16) — competing subdevices that must coexist without

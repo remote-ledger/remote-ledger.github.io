@@ -13,8 +13,8 @@ orphans.
 
 28 protocols (NEC1, NECx2, RC5 and Sony20, then 24 more added to read the
 IR Blaster database, DESIGN.md §18) and **all three seed remotes
-authored** — the Sony with 27 of 38 functions cross-checked across two
-independent sources, zero mismatches. Every protocol's timings are
+authored** — the Sony with all 38 functions cross-checked across independent
+sources, zero mismatches. Every protocol's timings are
 verified against another encoder's Pronto output: six against published
 vectors, and 22 against a pinned IrpTransmogrifier release because no
 published vector exists. For those 22 that checks our encoder against the same

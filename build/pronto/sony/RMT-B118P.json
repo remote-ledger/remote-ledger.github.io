@@ -2,343 +2,799 @@
   "keys": {
     "KEY_0": {
       "candidates": {
+        "mode2": {
+          "confidence": "plausible",
+          "label": "Command mode 2 (subdevice 234)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0018 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 01F6",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "mode3": {
+          "confidence": "plausible",
+          "label": "Command mode 3 (subdevice 242)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0018 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 01F6",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
         "primary": {
           "confidence": "verified",
           "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0018 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 020E",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 9 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('0') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 9 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('0') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 9 as '0, 10' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       }
     },
     "KEY_1": {
       "candidates": {
+        "mode2": {
+          "confidence": "plausible",
+          "label": "Command mode 2 (subdevice 234)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 0226",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "mode3": {
+          "confidence": "plausible",
+          "label": "Command mode 3 (subdevice 242)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 0226",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
         "primary": {
           "confidence": "verified",
           "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 023E",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 0 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('1') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 0 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('1') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 0 as '1' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       }
     },
     "KEY_2": {
       "candidates": {
+        "mode2": {
+          "confidence": "plausible",
+          "label": "Command mode 2 (subdevice 234)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 020E",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "mode3": {
+          "confidence": "plausible",
+          "label": "Command mode 3 (subdevice 242)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 020E",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
         "primary": {
           "confidence": "verified",
           "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0226",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 1 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('2') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 1 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('2') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 1 as '2' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       }
     },
     "KEY_3": {
       "candidates": {
+        "mode2": {
+          "confidence": "plausible",
+          "label": "Command mode 2 (subdevice 234)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 020E",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "mode3": {
+          "confidence": "plausible",
+          "label": "Command mode 3 (subdevice 242)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 020E",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
         "primary": {
           "confidence": "verified",
           "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0226",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 2 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('3') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 2 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('3') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 2 as '3' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       }
     },
     "KEY_4": {
       "candidates": {
+        "mode2": {
+          "confidence": "plausible",
+          "label": "Command mode 2 (subdevice 234)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0030 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 01F6",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "mode3": {
+          "confidence": "plausible",
+          "label": "Command mode 3 (subdevice 242)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0030 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 01F6",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
         "primary": {
           "confidence": "verified",
           "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0030 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 020E",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 3 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('4') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 3 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('4') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 3 as '4' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       }
     },
     "KEY_5": {
       "candidates": {
+        "mode2": {
+          "confidence": "plausible",
+          "label": "Command mode 2 (subdevice 234)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 020E",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "mode3": {
+          "confidence": "plausible",
+          "label": "Command mode 3 (subdevice 242)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 020E",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
         "primary": {
           "confidence": "verified",
           "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0226",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 4 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('5') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 4 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('5') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 4 as '5' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       }
     },
     "KEY_6": {
       "candidates": {
+        "mode2": {
+          "confidence": "plausible",
+          "label": "Command mode 2 (subdevice 234)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 01F6",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "mode3": {
+          "confidence": "plausible",
+          "label": "Command mode 3 (subdevice 242)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 01F6",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
         "primary": {
           "confidence": "verified",
           "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 020E",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 5 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('6') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 5 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('6') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 5 as '6' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       }
     },
     "KEY_7": {
       "candidates": {
+        "mode2": {
+          "confidence": "plausible",
+          "label": "Command mode 2 (subdevice 234)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0030 0018 0030 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 01F6",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "mode3": {
+          "confidence": "plausible",
+          "label": "Command mode 3 (subdevice 242)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0030 0018 0030 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 01F6",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
         "primary": {
           "confidence": "verified",
           "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0030 0018 0030 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 020E",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 6 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('7') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 6 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('7') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 6 as '7' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       }
     },
     "KEY_8": {
       "candidates": {
+        "mode2": {
+          "confidence": "plausible",
+          "label": "Command mode 2 (subdevice 234)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0030 0018 0030 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 01DE",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "mode3": {
+          "confidence": "plausible",
+          "label": "Command mode 3 (subdevice 242)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0030 0018 0030 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 01DE",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
         "primary": {
           "confidence": "verified",
           "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0030 0018 0030 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 01F6",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 7 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('8') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 7 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('8') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 7 as '8' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       }
     },
     "KEY_9": {
       "candidates": {
+        "mode2": {
+          "confidence": "plausible",
+          "label": "Command mode 2 (subdevice 234)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 020E",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "mode3": {
+          "confidence": "plausible",
+          "label": "Command mode 3 (subdevice 242)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 020E",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
         "primary": {
           "confidence": "verified",
           "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0226",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 8 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('9') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 8 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('9') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 8 as '9' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       }
     },
     "KEY_AUDIO": {
       "candidates": {
+        "mode2": {
+          "confidence": "plausible",
+          "label": "Command mode 2 (subdevice 234)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 01DE",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "mode3": {
+          "confidence": "plausible",
+          "label": "Command mode 3 (subdevice 242)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 01DE",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
         "primary": {
           "confidence": "verified",
           "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 01F6",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 100 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('audio') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 100 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('audio') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 100 as 'Audio' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       }
     },
     "KEY_BACK": {
       "candidates": {
+        "mode2": {
+          "confidence": "plausible",
+          "label": "Command mode 2 (subdevice 234)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0030 0018 0018 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 01DE",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "mode3": {
+          "confidence": "plausible",
+          "label": "Command mode 3 (subdevice 242)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0030 0018 0018 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 01DE",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
         "primary": {
           "confidence": "verified",
           "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0030 0018 0018 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 01F6",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 67 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('return') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 67 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('return') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 67 as 'Return' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       }
     },
     "KEY_BLUE": {
       "candidates": {
+        "mode2": {
+          "confidence": "plausible",
+          "label": "Command mode 2 (subdevice 234)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0030 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 01C6",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "mode3": {
+          "confidence": "plausible",
+          "label": "Command mode 3 (subdevice 242)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0030 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 01C6",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
         "primary": {
           "confidence": "verified",
           "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0030 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 01DE",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 102 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('blue') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 102 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('blue') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 102 as 'Blue' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       }
     },
     "KEY_CONTEXT_MENU": {
       "candidates": {
-        "primary": {
+        "mode2": {
           "confidence": "plausible",
+          "label": "Command mode 2 (subdevice 234)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 01DE",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "mode3": {
+          "confidence": "plausible",
+          "label": "Command mode 3 (subdevice 242)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 01DE",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "primary": {
+          "confidence": "verified",
           "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 01F6",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 41. Single source: no corresponding row in probonopd/irdb codes/Sony/Bluray player/26,226.csv to cross-check against"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 41; cross-checked against hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 41 as 'Blu-ray Menu, Pop Up/Menu' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       }
     },
     "KEY_DISPLAYTOGGLE": {
       "candidates": {
-        "primary": {
+        "mode2": {
           "confidence": "plausible",
+          "label": "Command mode 2 (subdevice 234)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 01F6",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "mode3": {
+          "confidence": "plausible",
+          "label": "Command mode 3 (subdevice 242)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 01F6",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "primary": {
+          "confidence": "verified",
           "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 020E",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 65. Single source: no corresponding row in probonopd/irdb codes/Sony/Bluray player/26,226.csv to cross-check against"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 65; cross-checked against hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 65 as 'Display' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       }
     },
     "KEY_DOWN": {
       "candidates": {
-        "primary": {
+        "mode2": {
           "confidence": "plausible",
+          "label": "Command mode 2 (subdevice 234)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 01C6",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "mode3": {
+          "confidence": "plausible",
+          "label": "Command mode 3 (subdevice 242)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 01C6",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "primary": {
+          "confidence": "verified",
           "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 01DE",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 58. Single source: no corresponding row in probonopd/irdb codes/Sony/Bluray player/26,226.csv to cross-check against"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 58; cross-checked against hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 58 as 'Down' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       }
     },
     "KEY_EJECT": {
       "candidates": {
+        "mode2": {
+          "confidence": "plausible",
+          "label": "Command mode 2 (subdevice 234)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 01DE",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "mode3": {
+          "confidence": "plausible",
+          "label": "Command mode 3 (subdevice 242)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 01DE",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
         "primary": {
           "confidence": "verified",
           "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 01F6",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 22 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('open / close') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 22 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('open / close') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 22 as 'Open/Close' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       }
     },
     "KEY_FAVORITES": {
       "candidates": {
-        "primary": {
+        "mode2": {
           "confidence": "plausible",
+          "label": "Command mode 2 (subdevice 234)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 01AE",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "mode3": {
+          "confidence": "plausible",
+          "label": "Command mode 3 (subdevice 242)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 01AE",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "primary": {
+          "confidence": "verified",
           "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 01C6",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 94. Single source: no corresponding row in probonopd/irdb codes/Sony/Bluray player/26,226.csv to cross-check against"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 94; cross-checked against hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 94 as 'Favorite(s)' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       }
     },
     "KEY_FORWARD": {
       "candidates": {
-        "primary": {
+        "mode2": {
           "confidence": "plausible",
+          "label": "Command mode 2 (subdevice 234)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 01DE",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "mode3": {
+          "confidence": "plausible",
+          "label": "Command mode 3 (subdevice 242)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 01DE",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "primary": {
+          "confidence": "verified",
           "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 01F6",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 28. Single source: no corresponding row in probonopd/irdb codes/Sony/Bluray player/26,226.csv to cross-check against"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 28; cross-checked against hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 28 as 'Scan Forward' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       }
     },
     "KEY_GREEN": {
       "candidates": {
+        "mode2": {
+          "confidence": "plausible",
+          "label": "Command mode 2 (subdevice 234)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 01DE",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "mode3": {
+          "confidence": "plausible",
+          "label": "Command mode 3 (subdevice 242)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 01DE",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
         "primary": {
           "confidence": "verified",
           "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 01F6",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 104 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('green') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 104 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('green') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 104 as 'Green' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       }
     },
     "KEY_HOME": {
       "candidates": {
+        "mode2": {
+          "confidence": "plausible",
+          "label": "Command mode 2 (subdevice 234)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 01F6",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "mode3": {
+          "confidence": "plausible",
+          "label": "Command mode 3 (subdevice 242)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 01F6",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
         "primary": {
           "confidence": "verified",
           "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 020E",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 66 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('home') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 66 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('home') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 66 as 'System Menu, Home' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       }
     },
     "KEY_LEFT": {
       "candidates": {
-        "primary": {
+        "mode2": {
           "confidence": "plausible",
+          "label": "Command mode 2 (subdevice 234)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 01AE",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "mode3": {
+          "confidence": "plausible",
+          "label": "Command mode 3 (subdevice 242)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 01AE",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "primary": {
+          "confidence": "verified",
           "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 01C6",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 59. Single source: no corresponding row in probonopd/irdb codes/Sony/Bluray player/26,226.csv to cross-check against"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 59; cross-checked against hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 59 as 'Left' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       }
     },
     "KEY_MENU": {
       "candidates": {
-        "primary": {
+        "mode2": {
           "confidence": "plausible",
+          "label": "Command mode 2 (subdevice 234)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 01DE",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "mode3": {
+          "confidence": "plausible",
+          "label": "Command mode 3 (subdevice 242)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 01DE",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "primary": {
+          "confidence": "verified",
           "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 01F6",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 44. Single source: no corresponding row in probonopd/irdb codes/Sony/Bluray player/26,226.csv to cross-check against"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 44; cross-checked against hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 44 as 'Top Menu' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       }
     },
     "KEY_NEXT": {
       "candidates": {
+        "mode2": {
+          "confidence": "plausible",
+          "label": "Command mode 2 (subdevice 234)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 01C6",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "mode3": {
+          "confidence": "plausible",
+          "label": "Command mode 3 (subdevice 242)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 01C6",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
         "primary": {
           "confidence": "verified",
           "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 01DE",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 86 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('next') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 86 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('next') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 86 as 'Next' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       }
     },
     "KEY_OK": {
       "candidates": {
-        "primary": {
+        "mode2": {
           "confidence": "plausible",
+          "label": "Command mode 2 (subdevice 234)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 01AE",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "mode3": {
+          "confidence": "plausible",
+          "label": "Command mode 3 (subdevice 242)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 01AE",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "primary": {
+          "confidence": "verified",
           "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 01C6",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 61. Single source: no corresponding row in probonopd/irdb codes/Sony/Bluray player/26,226.csv to cross-check against"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 61; cross-checked against hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 61 as 'Select' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       }
     },
     "KEY_OPTION": {
       "candidates": {
+        "mode2": {
+          "confidence": "plausible",
+          "label": "Command mode 2 (subdevice 234)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0030 0018 0030 0018 0030 0018 0030 0018 0030 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 0197",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "mode3": {
+          "confidence": "plausible",
+          "label": "Command mode 3 (subdevice 242)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0030 0018 0030 0018 0030 0018 0030 0018 0030 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 0197",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
         "primary": {
           "confidence": "verified",
           "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0030 0018 0030 0018 0030 0018 0030 0018 0030 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 01AE",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 63 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('options') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 63 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('options') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 63 as 'Options' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       }
     },
     "KEY_PAUSE": {
       "candidates": {
+        "mode2": {
+          "confidence": "plausible",
+          "label": "Command mode 2 (subdevice 234)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 01DE",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "mode3": {
+          "confidence": "plausible",
+          "label": "Command mode 3 (subdevice 242)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 01DE",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
         "primary": {
           "confidence": "verified",
           "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 01F6",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 25 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('pause') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 25 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('pause') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 25 as 'Pause' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       }
     },
     "KEY_PLAY": {
       "candidates": {
+        "mode2": {
+          "confidence": "plausible",
+          "label": "Command mode 2 (subdevice 234)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 01DE",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "mode3": {
+          "confidence": "plausible",
+          "label": "Command mode 3 (subdevice 242)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 01DE",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
         "primary": {
           "confidence": "verified",
           "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 01F6",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 26 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('play') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 26 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('play') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 26 as 'Play' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       }
     },
     "KEY_POWER": {
       "candidates": {
+        "mode2": {
+          "confidence": "plausible",
+          "label": "Command mode 2 (subdevice 234)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 01DE",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "mode3": {
+          "confidence": "plausible",
+          "label": "Command mode 3 (subdevice 242)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 01DE",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
         "primary": {
           "confidence": "verified",
           "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 01F6",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 21 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('power') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 21 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('power') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 21 as 'Power' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       }
     },
     "KEY_PREVIOUS": {
       "candidates": {
+        "mode2": {
+          "confidence": "plausible",
+          "label": "Command mode 2 (subdevice 234)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 01AE",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "mode3": {
+          "confidence": "plausible",
+          "label": "Command mode 3 (subdevice 242)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 01AE",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
         "primary": {
           "confidence": "verified",
           "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 01C6",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 87 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('previous') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 87 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('previous') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 87 as 'Previous' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       }
     },
     "KEY_RED": {
       "candidates": {
+        "mode2": {
+          "confidence": "plausible",
+          "label": "Command mode 2 (subdevice 234)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0030 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 01AE",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "mode3": {
+          "confidence": "plausible",
+          "label": "Command mode 3 (subdevice 242)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0030 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 01AE",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
         "primary": {
           "confidence": "verified",
           "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0030 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 01C6",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 103 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('red') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 103 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('red') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 103 as 'Red' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       }
     },
     "KEY_REWIND": {
       "candidates": {
+        "mode2": {
+          "confidence": "plausible",
+          "label": "Command mode 2 (subdevice 234)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 01C6",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "mode3": {
+          "confidence": "plausible",
+          "label": "Command mode 3 (subdevice 242)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 01C6",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
         "primary": {
           "confidence": "verified",
           "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 01DE",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 27 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('rewind') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 27 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('rewind') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 27 as 'Scan Reverse' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       }
     },
     "KEY_RIGHT": {
       "candidates": {
-        "primary": {
+        "mode2": {
           "confidence": "plausible",
+          "label": "Command mode 2 (subdevice 234)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 01C6",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "mode3": {
+          "confidence": "plausible",
+          "label": "Command mode 3 (subdevice 242)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 01C6",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "primary": {
+          "confidence": "verified",
           "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 01DE",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 60. Single source: no corresponding row in probonopd/irdb codes/Sony/Bluray player/26,226.csv to cross-check against"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 60; cross-checked against hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 60 as 'Right' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       }
     },
     "KEY_SEN": {
       "candidates": {
-        "primary": {
+        "mode2": {
           "confidence": "plausible",
+          "label": "Command mode 2 (subdevice 234)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0018 0018 0030 0018 0030 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 01DE",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "mode3": {
+          "confidence": "plausible",
+          "label": "Command mode 3 (subdevice 242)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0018 0018 0030 0018 0030 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 01DE",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "primary": {
+          "confidence": "verified",
           "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0018 0018 0030 0018 0030 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 01F6",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 76. Single source: no corresponding row in probonopd/irdb codes/Sony/Bluray player/26,226.csv to cross-check against"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 76; cross-checked against hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 76 as 'SEN, Qriocity' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       }
     },
     "KEY_STOP": {
       "candidates": {
+        "mode2": {
+          "confidence": "plausible",
+          "label": "Command mode 2 (subdevice 234)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0018 0018 0018 0018 0030 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 01F6",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "mode3": {
+          "confidence": "plausible",
+          "label": "Command mode 3 (subdevice 242)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0018 0018 0018 0018 0030 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 01F6",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
         "primary": {
           "confidence": "verified",
           "prontoHex": "0000 0068 0000 0015 0060 0018 0018 0018 0018 0018 0018 0018 0030 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 020E",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 24 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('stop') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 24 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('stop') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 24 as 'Stop' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       }
     },
     "KEY_SUBTITLE": {
       "candidates": {
+        "mode2": {
+          "confidence": "plausible",
+          "label": "Command mode 2 (subdevice 234)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 01C6",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "mode3": {
+          "confidence": "plausible",
+          "label": "Command mode 3 (subdevice 242)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 01C6",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
         "primary": {
           "confidence": "verified",
           "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 01DE",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 99 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('subtitle') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 99 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('subtitle') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 99 as 'Subtitle' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       }
     },
     "KEY_UP": {
       "candidates": {
-        "primary": {
+        "mode2": {
           "confidence": "plausible",
+          "label": "Command mode 2 (subdevice 234)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 01C6",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "mode3": {
+          "confidence": "plausible",
+          "label": "Command mode 3 (subdevice 242)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 01C6",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "primary": {
+          "confidence": "verified",
           "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 01DE",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 57. Single source: no corresponding row in probonopd/irdb codes/Sony/Bluray player/26,226.csv to cross-check against"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 57; cross-checked against hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 57 as 'Up' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       }
     },
     "KEY_YELLOW": {
       "candidates": {
+        "mode2": {
+          "confidence": "plausible",
+          "label": "Command mode 2 (subdevice 234)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0030 01C6",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
+        "mode3": {
+          "confidence": "plausible",
+          "label": "Command mode 3 (subdevice 242)",
+          "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 0018 0030 01C6",
+          "source": "hifi-remote.com/sony/Sony_bluray.htm (Rob's Sony code page, retrieved 2026-10-07) is titled 'Sony Blu-ray (26.226; 26.234; 26.242; 26.151; 26.135; 26.164)' and says it 'includes the usual 3 Blu-ray modes'. 26.226 is the address the RMT-B118P capture decodes to; 26.234 and 26.242 are the other two modes of the same command table. One source, a hobbyist compilation and not a Sony publication; nothing says this remote can send this mode, and no capture or hardware test exists"
+        },
         "primary": {
           "confidence": "verified",
           "prontoHex": "0000 0068 0000 0015 0060 0018 0030 0018 0018 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0030 0018 0030 0018 0018 0018 0030 0018 0018 0018 0018 0018 0018 0018 0030 0018 0030 0018 0030 01DE",
-          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 105 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('yellow') -- agrees"
+          "source": "jose1711/lirc_remotes sony/RMT-B118P.lirc.conf -- a hardware capture by Jose Riha (lirc-0.9.0-pre1, 2015-07-07) of the RMT-B118P shipped with the Sony BDP-S185. bits 12 + post_data_bits 8 with post_data 0x47 decodes as Sony20 F:7,D:5,S:8 giving device 26, subdevice 226; function 105 cross-checked against probonopd/irdb codes/Sony/Bluray player/26,226.csv ('yellow') -- agrees; also hifi-remote.com/sony/Sony_bluray.htm (retrieved 2026-10-07) lists command 105 as 'Yellow' for 26.226 -- agrees; that page is a hobbyist compilation, not a Sony publication, independent of the capture and of IRDB"
         }
       }
     }

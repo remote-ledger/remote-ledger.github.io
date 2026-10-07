@@ -40,13 +40,19 @@ holds for each lookup:
 - **`sony/RMT-B118P.json` uses subdevice 226, not 218.** A 2015 hardware
   capture of the remote and IRDB's Sony Blu-ray entry agree on 226, and
   IRDB's `26,218` is a PlayStation button set. 27 of the 38 keys agree across
-  the two sources with zero mismatches and are Verified. The other 11 rest on
-  the capture alone and are Plausible, so the file as a whole is Plausible.
-  The hifi-remote table cited for 218 was never retrieved. No source mentions
-  234 or 242. The capture names the BDP-S185, not the BX510, as the player
-  the remote shipped with. The BX510 therefore stays in `unresolved.json`
-  (R20) as a contradiction between sources, not as a settled error.
-  DESIGN.md §13 has the detail.
+  the two sources with zero mismatches. The other 11 rested on the capture
+  alone until hifi-remote.com's Sony Blu-ray table was retrieved (2026-10-07,
+  at `/sony/Sony_bluray.htm`; the name §1's lookup gave it does not resolve).
+  That table lists all 38 functions as the capture has them, so all 38 keys are
+  Verified and so is the file. It lists 26.226, 26.234 and 26.242 as the three
+  Blu-ray command modes, has no 218, and its PS2 page gives 26.218 to the
+  PlayStation 2. It is one person's compilation from Pronto and One For All
+  data, not a Sony publication, which is why §1's "official" was a claim. 234
+  and 242 are in the file as Plausible variants, on that one table. The
+  capture names the BDP-S185, not the BX510, as the player the remote shipped
+  with, and retailer listings give the BX510's own remote as RMT-B119A, which
+  no source has a code table for. The BX510 therefore stays in
+  `unresolved.json` (R20). DESIGN.md §13 has the detail.
 - **`topping/RC-15A.json` uses device 0x88, subdevice 0x77, not 0x11/0xEE.**
   The cited capture is IRremoteESP8266 output, and that library prints NEC
   MSB-first. Read as NEC1's LSB-first fields, `0x11EE18E7` is `88 77 18 E7`.
