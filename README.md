@@ -126,8 +126,8 @@ says so (DESIGN.md §24). It also completes what a person has typed so far
 (`MatchIndex.suggest`: the brands and the models that go on from it, in a
 stable order) and knows other names for a brand, written out in each script, so
 that 海信, 创维 and 創維 find Hisense and Skyworth and their models as the Latin
-names do (`bundle/data/brand_aliases.json`, a seed list a person reviews;
-DESIGN.md §25). `suggest(query, limit, prefer=["Sony", ...])` takes the brands a
+names do (`bundle/data/brand_aliases.json`, a reviewed list of 133 brands;
+DESIGN.md §25, D108). `suggest(query, limit, prefer=["Sony", ...])` takes the brands a
 person already uses and puts them first only where the rules cannot tell two
 entries apart (the hint never lifts a worse match: D106), and
 `MatchIndex.warm()` reads the biggest brands' model lists once at start and keeps
@@ -168,6 +168,6 @@ $ rl build && open site/index.html
 notation, Pronto Hex, LIRC, IRDB, SmartIR, the IR Blaster database), the data
 model, layout, compiling and cross-validation, and the resolved decisions.
 
-**[DESIGN.md](DESIGN.md)** — how it is built: decisions D1 to D107, the
+**[DESIGN.md](DESIGN.md)** — how it is built: decisions D1 to D108, the
 Pronto contract to the byte, the seven-phase plan, the three imports, the key
 vocabulary, the catalog bundle, and what is not yet proven.
