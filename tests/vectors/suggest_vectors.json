@@ -467,6 +467,5649 @@
     "SUGGEST_LIMIT": 8
   },
   "format": 1,
+  "prefer": {
+    "about": "suggest with a hint (DESIGN.md D106): the brands named in prefer go first where the rules do not tell entries apart, and nowhere else. A case asks `main`, the catalog and aliases above, or `ties`, the catalog and aliases of this section, which has more ties for a hint to break; ids number brands and models as for the catalog above. A port that gives the answers of `suggest` need not read this section.",
+    "cases": [
+      {
+        "brands": [
+          {
+            "brandId": 17,
+            "modelCount": 6,
+            "name": "SAMSUNG"
+          },
+          {
+            "brandId": 22,
+            "modelCount": 6,
+            "name": "SONY"
+          },
+          {
+            "brandId": 20,
+            "modelCount": 3,
+            "name": "SKYWORTH"
+          },
+          {
+            "brandId": 18,
+            "modelCount": 2,
+            "name": "SANYO"
+          },
+          {
+            "brandId": 19,
+            "modelCount": 1,
+            "name": "SAT"
+          },
+          {
+            "brandId": 21,
+            "modelCount": 1,
+            "name": "SONNY"
+          }
+        ],
+        "catalog": "main",
+        "limit": 8,
+        "models": [],
+        "note": "no hint: SAMSUNG and SONY tie on 6 models and go by name, then SKYWORTH 3, SANYO 2, SAT 1 and SONNY 1",
+        "prefer": [],
+        "query": "s"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 22,
+            "modelCount": 6,
+            "name": "SONY"
+          },
+          {
+            "brandId": 17,
+            "modelCount": 6,
+            "name": "SAMSUNG"
+          },
+          {
+            "brandId": 20,
+            "modelCount": 3,
+            "name": "SKYWORTH"
+          },
+          {
+            "brandId": 18,
+            "modelCount": 2,
+            "name": "SANYO"
+          },
+          {
+            "brandId": 19,
+            "modelCount": 1,
+            "name": "SAT"
+          },
+          {
+            "brandId": 21,
+            "modelCount": 1,
+            "name": "SONNY"
+          }
+        ],
+        "catalog": "main",
+        "limit": 8,
+        "models": [],
+        "note": "a hinted brand goes first among the brands that start with the query: SONY before SAMSUNG, which the name would put first",
+        "prefer": [
+          "SONY"
+        ],
+        "query": "s"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 19,
+            "modelCount": 1,
+            "name": "SAT"
+          },
+          {
+            "brandId": 17,
+            "modelCount": 6,
+            "name": "SAMSUNG"
+          },
+          {
+            "brandId": 22,
+            "modelCount": 6,
+            "name": "SONY"
+          },
+          {
+            "brandId": 20,
+            "modelCount": 3,
+            "name": "SKYWORTH"
+          },
+          {
+            "brandId": 18,
+            "modelCount": 2,
+            "name": "SANYO"
+          },
+          {
+            "brandId": 21,
+            "modelCount": 1,
+            "name": "SONNY"
+          }
+        ],
+        "catalog": "main",
+        "limit": 8,
+        "models": [],
+        "note": "the hint replaces most models: SAT has one model and goes before SAMSUNG with six; the others keep their order",
+        "prefer": [
+          "SAT"
+        ],
+        "query": "s"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 22,
+            "modelCount": 6,
+            "name": "SONY"
+          },
+          {
+            "brandId": 19,
+            "modelCount": 1,
+            "name": "SAT"
+          },
+          {
+            "brandId": 17,
+            "modelCount": 6,
+            "name": "SAMSUNG"
+          },
+          {
+            "brandId": 20,
+            "modelCount": 3,
+            "name": "SKYWORTH"
+          },
+          {
+            "brandId": 18,
+            "modelCount": 2,
+            "name": "SANYO"
+          },
+          {
+            "brandId": 21,
+            "modelCount": 1,
+            "name": "SONNY"
+          }
+        ],
+        "catalog": "main",
+        "limit": 8,
+        "models": [],
+        "note": "two hinted brands keep the order they have without the hint: SONY (6 models) before SAT (1), then the rest",
+        "prefer": [
+          "SAT",
+          "SONY"
+        ],
+        "query": "s"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 22,
+            "modelCount": 6,
+            "name": "SONY"
+          },
+          {
+            "brandId": 19,
+            "modelCount": 1,
+            "name": "SAT"
+          },
+          {
+            "brandId": 17,
+            "modelCount": 6,
+            "name": "SAMSUNG"
+          },
+          {
+            "brandId": 20,
+            "modelCount": 3,
+            "name": "SKYWORTH"
+          },
+          {
+            "brandId": 18,
+            "modelCount": 2,
+            "name": "SANYO"
+          },
+          {
+            "brandId": 21,
+            "modelCount": 1,
+            "name": "SONNY"
+          }
+        ],
+        "catalog": "main",
+        "limit": 8,
+        "models": [],
+        "note": "the order of the names means nothing: the same answer as SAT, SONY",
+        "prefer": [
+          "SONY",
+          "SAT"
+        ],
+        "query": "s"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 22,
+            "modelCount": 6,
+            "name": "SONY"
+          },
+          {
+            "brandId": 19,
+            "modelCount": 1,
+            "name": "SAT"
+          },
+          {
+            "brandId": 17,
+            "modelCount": 6,
+            "name": "SAMSUNG"
+          },
+          {
+            "brandId": 20,
+            "modelCount": 3,
+            "name": "SKYWORTH"
+          },
+          {
+            "brandId": 18,
+            "modelCount": 2,
+            "name": "SANYO"
+          },
+          {
+            "brandId": 21,
+            "modelCount": 1,
+            "name": "SONNY"
+          }
+        ],
+        "catalog": "main",
+        "limit": 8,
+        "models": [],
+        "note": "a name given twice, in other case and with a space, is the same brand: the same answer",
+        "prefer": [
+          "SONY",
+          "SAT",
+          "sony",
+          "Sat "
+        ],
+        "query": "s"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 19,
+            "modelCount": 1,
+            "name": "SAT"
+          },
+          {
+            "brandId": 17,
+            "modelCount": 6,
+            "name": "SAMSUNG"
+          }
+        ],
+        "catalog": "main",
+        "limit": 2,
+        "models": [],
+        "note": "the limit cuts after the hinted order: SAT takes the first place, SAMSUNG the second",
+        "prefer": [
+          "SAT"
+        ],
+        "query": "s"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 19,
+            "modelCount": 1,
+            "name": "SAT"
+          }
+        ],
+        "catalog": "main",
+        "limit": 1,
+        "models": [],
+        "note": "a limit of 1 keeps the hinted brand",
+        "prefer": [
+          "SAT"
+        ],
+        "query": "s"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 22,
+            "modelCount": 6,
+            "name": "SONY"
+          },
+          {
+            "brandId": 19,
+            "modelCount": 1,
+            "name": "SAT"
+          },
+          {
+            "brandId": 17,
+            "modelCount": 6,
+            "name": "SAMSUNG"
+          }
+        ],
+        "catalog": "main",
+        "limit": 3,
+        "models": [],
+        "note": "a limit of 3: the two hinted, then the first of the rest",
+        "prefer": [
+          "SAT",
+          "SONY"
+        ],
+        "query": "s"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 17,
+            "modelCount": 6,
+            "name": "SAMSUNG"
+          },
+          {
+            "brandId": 22,
+            "modelCount": 6,
+            "name": "SONY"
+          },
+          {
+            "brandId": 20,
+            "modelCount": 3,
+            "name": "SKYWORTH"
+          },
+          {
+            "brandId": 18,
+            "modelCount": 2,
+            "name": "SANYO"
+          },
+          {
+            "brandId": 19,
+            "modelCount": 1,
+            "name": "SAT"
+          },
+          {
+            "brandId": 21,
+            "modelCount": 1,
+            "name": "SONNY"
+          }
+        ],
+        "catalog": "main",
+        "limit": 8,
+        "models": [],
+        "note": "a hint for the brand that was first anyway changes nothing",
+        "prefer": [
+          "SAMSUNG"
+        ],
+        "query": "s"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 19,
+            "modelCount": 1,
+            "name": "SAT"
+          },
+          {
+            "brandId": 17,
+            "modelCount": 6,
+            "name": "SAMSUNG"
+          },
+          {
+            "brandId": 18,
+            "modelCount": 2,
+            "name": "SANYO"
+          }
+        ],
+        "catalog": "main",
+        "limit": 8,
+        "models": [],
+        "note": "two characters: SAT goes before SAMSUNG and SANYO",
+        "prefer": [
+          "SAT"
+        ],
+        "query": "sa"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 23,
+            "modelCount": 1,
+            "name": "TELESTAR"
+          },
+          {
+            "brandId": 25,
+            "modelCount": 7,
+            "name": "TVCO"
+          },
+          {
+            "brandId": 24,
+            "modelCount": 3,
+            "name": "Topping"
+          }
+        ],
+        "catalog": "main",
+        "limit": 8,
+        "models": [],
+        "note": "TVCO has 7 models, Topping 3, TELESTAR 1: the hinted TELESTAR goes first",
+        "prefer": [
+          "TELESTAR"
+        ],
+        "query": "t"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 24,
+            "modelCount": 3,
+            "name": "Topping"
+          },
+          {
+            "brandId": 23,
+            "modelCount": 1,
+            "name": "TELESTAR"
+          },
+          {
+            "brandId": 25,
+            "modelCount": 7,
+            "name": "TVCO"
+          }
+        ],
+        "catalog": "main",
+        "limit": 8,
+        "models": [],
+        "note": "two hinted brands: Topping (3 models) before TELESTAR (1), then TVCO",
+        "prefer": [
+          "TELESTAR",
+          "Topping"
+        ],
+        "query": "t"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 22,
+            "modelCount": 6,
+            "name": "SONY"
+          },
+          {
+            "brandId": 17,
+            "modelCount": 6,
+            "name": "SAMSUNG"
+          },
+          {
+            "brandId": 20,
+            "modelCount": 3,
+            "name": "SKYWORTH"
+          },
+          {
+            "brandId": 18,
+            "modelCount": 2,
+            "name": "SANYO"
+          },
+          {
+            "brandId": 19,
+            "modelCount": 1,
+            "name": "SAT"
+          },
+          {
+            "brandId": 21,
+            "modelCount": 1,
+            "name": "SONNY"
+          }
+        ],
+        "catalog": "main",
+        "limit": 8,
+        "models": [],
+        "note": "an alias of a brand stands for the brand: SONY first",
+        "prefer": [
+          "索尼"
+        ],
+        "query": "s"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 17,
+            "modelCount": 6,
+            "name": "SAMSUNG"
+          },
+          {
+            "brandId": 22,
+            "modelCount": 6,
+            "name": "SONY"
+          },
+          {
+            "brandId": 20,
+            "modelCount": 3,
+            "name": "SKYWORTH"
+          },
+          {
+            "brandId": 18,
+            "modelCount": 2,
+            "name": "SANYO"
+          },
+          {
+            "brandId": 19,
+            "modelCount": 1,
+            "name": "SAT"
+          },
+          {
+            "brandId": 21,
+            "modelCount": 1,
+            "name": "SONNY"
+          }
+        ],
+        "catalog": "main",
+        "limit": 8,
+        "models": [],
+        "note": "a name that is no brand is ignored: the answer without a hint",
+        "prefer": [
+          "Nobody"
+        ],
+        "query": "s"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 19,
+            "modelCount": 1,
+            "name": "SAT"
+          },
+          {
+            "brandId": 17,
+            "modelCount": 6,
+            "name": "SAMSUNG"
+          },
+          {
+            "brandId": 22,
+            "modelCount": 6,
+            "name": "SONY"
+          },
+          {
+            "brandId": 20,
+            "modelCount": 3,
+            "name": "SKYWORTH"
+          },
+          {
+            "brandId": 18,
+            "modelCount": 2,
+            "name": "SANYO"
+          },
+          {
+            "brandId": 21,
+            "modelCount": 1,
+            "name": "SONNY"
+          }
+        ],
+        "catalog": "main",
+        "limit": 8,
+        "models": [],
+        "note": "an unknown name beside a known one: the known one counts",
+        "prefer": [
+          "Nobody",
+          "SAT"
+        ],
+        "query": "s"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 17,
+            "modelCount": 6,
+            "name": "SAMSUNG"
+          },
+          {
+            "brandId": 22,
+            "modelCount": 6,
+            "name": "SONY"
+          },
+          {
+            "brandId": 20,
+            "modelCount": 3,
+            "name": "SKYWORTH"
+          },
+          {
+            "brandId": 18,
+            "modelCount": 2,
+            "name": "SANYO"
+          },
+          {
+            "brandId": 19,
+            "modelCount": 1,
+            "name": "SAT"
+          },
+          {
+            "brandId": 21,
+            "modelCount": 1,
+            "name": "SONNY"
+          }
+        ],
+        "catalog": "main",
+        "limit": 8,
+        "models": [],
+        "note": "no similarity: a misspelt name is no brand, and the answer is the one without a hint",
+        "prefer": [
+          "Sonn",
+          "Samsun"
+        ],
+        "query": "s"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 17,
+            "modelCount": 6,
+            "name": "SAMSUNG"
+          },
+          {
+            "brandId": 22,
+            "modelCount": 6,
+            "name": "SONY"
+          },
+          {
+            "brandId": 20,
+            "modelCount": 3,
+            "name": "SKYWORTH"
+          },
+          {
+            "brandId": 18,
+            "modelCount": 2,
+            "name": "SANYO"
+          },
+          {
+            "brandId": 19,
+            "modelCount": 1,
+            "name": "SAT"
+          },
+          {
+            "brandId": 21,
+            "modelCount": 1,
+            "name": "SONNY"
+          }
+        ],
+        "catalog": "main",
+        "limit": 8,
+        "models": [],
+        "note": "a name that is no brand's key, though it starts with one: ignored",
+        "prefer": [
+          "Sony Electronics"
+        ],
+        "query": "s"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 22,
+            "modelCount": 6,
+            "name": "SONY"
+          },
+          {
+            "brandId": 17,
+            "modelCount": 6,
+            "name": "SAMSUNG"
+          },
+          {
+            "brandId": 20,
+            "modelCount": 3,
+            "name": "SKYWORTH"
+          },
+          {
+            "brandId": 18,
+            "modelCount": 2,
+            "name": "SANYO"
+          },
+          {
+            "brandId": 19,
+            "modelCount": 1,
+            "name": "SAT"
+          },
+          {
+            "brandId": 21,
+            "modelCount": 1,
+            "name": "SONNY"
+          }
+        ],
+        "catalog": "main",
+        "limit": 8,
+        "models": [],
+        "note": "names are compared by their search key: separators do not matter",
+        "prefer": [
+          "S.O.N.Y"
+        ],
+        "query": "s"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 22,
+            "modelCount": 6,
+            "name": "SONY"
+          },
+          {
+            "brandId": 17,
+            "modelCount": 6,
+            "name": "SAMSUNG"
+          },
+          {
+            "brandId": 20,
+            "modelCount": 3,
+            "name": "SKYWORTH"
+          },
+          {
+            "brandId": 18,
+            "modelCount": 2,
+            "name": "SANYO"
+          },
+          {
+            "brandId": 19,
+            "modelCount": 1,
+            "name": "SAT"
+          },
+          {
+            "brandId": 21,
+            "modelCount": 1,
+            "name": "SONNY"
+          }
+        ],
+        "catalog": "main",
+        "limit": 8,
+        "models": [],
+        "note": "full-width letters are the same key",
+        "prefer": [
+          "ｓｏｎｙ"
+        ],
+        "query": "s"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 17,
+            "modelCount": 6,
+            "name": "SAMSUNG"
+          },
+          {
+            "brandId": 22,
+            "modelCount": 6,
+            "name": "SONY"
+          },
+          {
+            "brandId": 20,
+            "modelCount": 3,
+            "name": "SKYWORTH"
+          },
+          {
+            "brandId": 18,
+            "modelCount": 2,
+            "name": "SANYO"
+          },
+          {
+            "brandId": 19,
+            "modelCount": 1,
+            "name": "SAT"
+          },
+          {
+            "brandId": 21,
+            "modelCount": 1,
+            "name": "SONNY"
+          }
+        ],
+        "catalog": "main",
+        "limit": 8,
+        "models": [],
+        "note": "a blank name is no brand",
+        "prefer": [
+          " "
+        ],
+        "query": "s"
+      },
+      {
+        "brands": [],
+        "catalog": "main",
+        "limit": 8,
+        "models": [],
+        "note": "a hint for a brand that does not start with the query adds nothing: no brand starts with x",
+        "prefer": [
+          "SONY"
+        ],
+        "query": "x"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 10,
+            "modelCount": 1,
+            "name": "ORBITECH"
+          }
+        ],
+        "catalog": "main",
+        "limit": 8,
+        "models": [],
+        "note": "a hinted brand the query does not match is never added: ORBITECH alone",
+        "prefer": [
+          "SONY",
+          "SAT"
+        ],
+        "query": "o"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 13,
+            "modelCount": 1,
+            "name": "Q"
+          },
+          {
+            "brandId": 14,
+            "modelCount": 1,
+            "name": "QR"
+          },
+          {
+            "brandId": 15,
+            "modelCount": 1,
+            "name": "QRSTU"
+          }
+        ],
+        "catalog": "main",
+        "limit": 8,
+        "models": [],
+        "note": "no hint: the exact key Q first, then the brand whose key starts with it, QR, then QRSTU",
+        "prefer": [],
+        "query": "q"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 13,
+            "modelCount": 1,
+            "name": "Q"
+          },
+          {
+            "brandId": 15,
+            "modelCount": 1,
+            "name": "QRSTU"
+          },
+          {
+            "brandId": 14,
+            "modelCount": 1,
+            "name": "QR"
+          }
+        ],
+        "catalog": "main",
+        "limit": 8,
+        "models": [],
+        "note": "the brand whose key is the query stays first however the others are hinted: Q, then the hinted QRSTU, then QR",
+        "prefer": [
+          "QRSTU"
+        ],
+        "query": "q"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 13,
+            "modelCount": 1,
+            "name": "Q"
+          },
+          {
+            "brandId": 15,
+            "modelCount": 1,
+            "name": "QRSTU"
+          }
+        ],
+        "catalog": "main",
+        "limit": 2,
+        "models": [],
+        "note": "the limit keeps the exact key first, then the hinted brand",
+        "prefer": [
+          "QRSTU"
+        ],
+        "query": "q"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 13,
+            "modelCount": 1,
+            "name": "Q"
+          }
+        ],
+        "catalog": "main",
+        "limit": 1,
+        "models": [],
+        "note": "a limit of 1 is the exact key",
+        "prefer": [
+          "QRSTU"
+        ],
+        "query": "q"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 13,
+            "modelCount": 1,
+            "name": "Q"
+          },
+          {
+            "brandId": 14,
+            "modelCount": 1,
+            "name": "QR"
+          },
+          {
+            "brandId": 15,
+            "modelCount": 1,
+            "name": "QRSTU"
+          }
+        ],
+        "catalog": "main",
+        "limit": 8,
+        "models": [],
+        "note": "a hint for the exact key changes nothing",
+        "prefer": [
+          "Q"
+        ],
+        "query": "q"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 14,
+            "modelCount": 1,
+            "name": "QR"
+          },
+          {
+            "brandId": 15,
+            "modelCount": 1,
+            "name": "QRSTU"
+          }
+        ],
+        "catalog": "main",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "QR",
+            "brandId": 14,
+            "model": "QR 200",
+            "modelId": 36,
+            "partNumber": false,
+            "remoteIds": [2302]
+          }
+        ],
+        "note": "the exact key QR first, QRSTU after it, the only brand that starts with it",
+        "prefer": [
+          "QRSTU"
+        ],
+        "query": "qr"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 28,
+            "modelCount": 1,
+            "name": "WD"
+          },
+          {
+            "brandId": 29,
+            "modelCount": 1,
+            "name": "WESTERN DIGITAL"
+          }
+        ],
+        "catalog": "main",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "WD",
+            "brandId": 28,
+            "model": "WDTV HUB",
+            "modelId": 74,
+            "partNumber": false,
+            "remoteIds": [1703]
+          },
+          {
+            "brand": "WESTERN DIGITAL",
+            "brandId": 29,
+            "model": "WDTV LIVE",
+            "modelId": 75,
+            "partNumber": false,
+            "remoteIds": [1701, 1702]
+          }
+        ],
+        "note": "no hint: an alias that two brands share is the exact key of both: by models (one each), then name: WD before WESTERN DIGITAL, and their models in the order of the brands",
+        "prefer": [],
+        "query": "西部数据"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 29,
+            "modelCount": 1,
+            "name": "WESTERN DIGITAL"
+          },
+          {
+            "brandId": 28,
+            "modelCount": 1,
+            "name": "WD"
+          }
+        ],
+        "catalog": "main",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "WESTERN DIGITAL",
+            "brandId": 29,
+            "model": "WDTV LIVE",
+            "modelId": 75,
+            "partNumber": false,
+            "remoteIds": [1701, 1702]
+          },
+          {
+            "brand": "WD",
+            "brandId": 28,
+            "model": "WDTV HUB",
+            "modelId": 74,
+            "partNumber": false,
+            "remoteIds": [1703]
+          }
+        ],
+        "note": "a shared alias is an exact key of both brands, which tie: the hinted one goes first, and so do its models",
+        "prefer": [
+          "WESTERN DIGITAL"
+        ],
+        "query": "西部数据"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 29,
+            "modelCount": 1,
+            "name": "WESTERN DIGITAL"
+          }
+        ],
+        "catalog": "main",
+        "limit": 1,
+        "models": [
+          {
+            "brand": "WESTERN DIGITAL",
+            "brandId": 29,
+            "model": "WDTV LIVE",
+            "modelId": 75,
+            "partNumber": false,
+            "remoteIds": [1701, 1702]
+          }
+        ],
+        "note": "the limit of models falls between the two brands: the hinted brand's model",
+        "prefer": [
+          "WESTERN DIGITAL"
+        ],
+        "query": "西部数据"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 28,
+            "modelCount": 1,
+            "name": "WD"
+          },
+          {
+            "brandId": 29,
+            "modelCount": 1,
+            "name": "WESTERN DIGITAL"
+          }
+        ],
+        "catalog": "main",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "WD",
+            "brandId": 28,
+            "model": "WDTV HUB",
+            "modelId": 74,
+            "partNumber": false,
+            "remoteIds": [1703]
+          },
+          {
+            "brand": "WESTERN DIGITAL",
+            "brandId": 29,
+            "model": "WDTV LIVE",
+            "modelId": 75,
+            "partNumber": false,
+            "remoteIds": [1701, 1702]
+          }
+        ],
+        "note": "a name that two brands share stands for both: nothing moves",
+        "prefer": [
+          "西部数据"
+        ],
+        "query": "西部数据"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 29,
+            "modelCount": 1,
+            "name": "WESTERN DIGITAL"
+          },
+          {
+            "brandId": 28,
+            "modelCount": 1,
+            "name": "WD"
+          }
+        ],
+        "catalog": "main",
+        "limit": 8,
+        "models": [],
+        "note": "the start of a shared alias offers both brands, the hinted one first",
+        "prefer": [
+          "WESTERN DIGITAL"
+        ],
+        "query": "西部"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 29,
+            "modelCount": 1,
+            "name": "WESTERN DIGITAL"
+          },
+          {
+            "brandId": 28,
+            "modelCount": 1,
+            "name": "WD"
+          }
+        ],
+        "catalog": "main",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "WESTERN DIGITAL",
+            "brandId": 29,
+            "model": "WDTV LIVE",
+            "modelId": 75,
+            "partNumber": false,
+            "remoteIds": [1701, 1702]
+          }
+        ],
+        "note": "a shared alias and the start of a model: WESTERN DIGITAL's model, as without a hint",
+        "prefer": [
+          "WESTERN DIGITAL"
+        ],
+        "query": "西部数据 wdtv l"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 16,
+            "modelCount": 2,
+            "name": "ROKU"
+          },
+          {
+            "brandId": 22,
+            "modelCount": 6,
+            "name": "SONY"
+          }
+        ],
+        "catalog": "main",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "ROKU",
+            "brandId": 16,
+            "model": "Streaming Stick",
+            "modelId": 38,
+            "partNumber": false,
+            "remoteIds": [1202]
+          },
+          {
+            "brand": "ROKU",
+            "brandId": 16,
+            "model": "ULTRA",
+            "modelId": 39,
+            "partNumber": false,
+            "remoteIds": [1201]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "BDP - S 360",
+            "modelId": 54,
+            "partNumber": false,
+            "remoteIds": [204, 205, 206]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "KD - 49 X 8088",
+            "modelId": 56,
+            "partNumber": false,
+            "remoteIds": [201, 202]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "BDP - S 300",
+            "modelId": 53,
+            "partNumber": false,
+            "remoteIds": [205]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "KD - 49 X 7055",
+            "modelId": 55,
+            "partNumber": false,
+            "remoteIds": [203]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "KDL-40EX720",
+            "modelId": 57,
+            "partNumber": false,
+            "remoteIds": [208]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "RM-ED011",
+            "modelId": 58,
+            "partNumber": true,
+            "remoteIds": [207]
+          }
+        ],
+        "note": "no hint: ROKU and SONY are named by runs of 4 characters each and go by id, ROKU first, and so do their models",
+        "prefer": [],
+        "query": "sony roku"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 22,
+            "modelCount": 6,
+            "name": "SONY"
+          },
+          {
+            "brandId": 16,
+            "modelCount": 2,
+            "name": "ROKU"
+          }
+        ],
+        "catalog": "main",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "BDP - S 360",
+            "modelId": 54,
+            "partNumber": false,
+            "remoteIds": [204, 205, 206]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "KD - 49 X 8088",
+            "modelId": 56,
+            "partNumber": false,
+            "remoteIds": [201, 202]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "BDP - S 300",
+            "modelId": 53,
+            "partNumber": false,
+            "remoteIds": [205]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "KD - 49 X 7055",
+            "modelId": 55,
+            "partNumber": false,
+            "remoteIds": [203]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "KDL-40EX720",
+            "modelId": 57,
+            "partNumber": false,
+            "remoteIds": [208]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "RM-ED011",
+            "modelId": 58,
+            "partNumber": true,
+            "remoteIds": [207]
+          },
+          {
+            "brand": "ROKU",
+            "brandId": 16,
+            "model": "Streaming Stick",
+            "modelId": 38,
+            "partNumber": false,
+            "remoteIds": [1202]
+          },
+          {
+            "brand": "ROKU",
+            "brandId": 16,
+            "model": "ULTRA",
+            "modelId": 39,
+            "partNumber": false,
+            "remoteIds": [1201]
+          }
+        ],
+        "note": "runs of the same length tie: the hinted brand goes before the id, and its models first",
+        "prefer": [
+          "SONY"
+        ],
+        "query": "sony roku"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 22,
+            "modelCount": 6,
+            "name": "SONY"
+          },
+          {
+            "brandId": 16,
+            "modelCount": 2,
+            "name": "ROKU"
+          }
+        ],
+        "catalog": "main",
+        "limit": 3,
+        "models": [
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "BDP - S 360",
+            "modelId": 54,
+            "partNumber": false,
+            "remoteIds": [204, 205, 206]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "KD - 49 X 8088",
+            "modelId": 56,
+            "partNumber": false,
+            "remoteIds": [201, 202]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "BDP - S 300",
+            "modelId": 53,
+            "partNumber": false,
+            "remoteIds": [205]
+          }
+        ],
+        "note": "the limit of models is filled from the hinted brand first: the first three models of SONY",
+        "prefer": [
+          "SONY"
+        ],
+        "query": "sony roku"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 22,
+            "modelCount": 6,
+            "name": "SONY"
+          },
+          {
+            "brandId": 16,
+            "modelCount": 2,
+            "name": "ROKU"
+          }
+        ],
+        "catalog": "main",
+        "limit": 7,
+        "models": [
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "BDP - S 360",
+            "modelId": 54,
+            "partNumber": false,
+            "remoteIds": [204, 205, 206]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "KD - 49 X 8088",
+            "modelId": 56,
+            "partNumber": false,
+            "remoteIds": [201, 202]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "BDP - S 300",
+            "modelId": 53,
+            "partNumber": false,
+            "remoteIds": [205]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "KD - 49 X 7055",
+            "modelId": 55,
+            "partNumber": false,
+            "remoteIds": [203]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "KDL-40EX720",
+            "modelId": 57,
+            "partNumber": false,
+            "remoteIds": [208]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "RM-ED011",
+            "modelId": 58,
+            "partNumber": true,
+            "remoteIds": [207]
+          },
+          {
+            "brand": "ROKU",
+            "brandId": 16,
+            "model": "Streaming Stick",
+            "modelId": 38,
+            "partNumber": false,
+            "remoteIds": [1202]
+          }
+        ],
+        "note": "a limit of 7: SONY's six models and the first of ROKU's",
+        "prefer": [
+          "SONY"
+        ],
+        "query": "sony roku"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 16,
+            "modelCount": 2,
+            "name": "ROKU"
+          },
+          {
+            "brandId": 22,
+            "modelCount": 6,
+            "name": "SONY"
+          }
+        ],
+        "catalog": "main",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "ROKU",
+            "brandId": 16,
+            "model": "Streaming Stick",
+            "modelId": 38,
+            "partNumber": false,
+            "remoteIds": [1202]
+          },
+          {
+            "brand": "ROKU",
+            "brandId": 16,
+            "model": "ULTRA",
+            "modelId": 39,
+            "partNumber": false,
+            "remoteIds": [1201]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "BDP - S 360",
+            "modelId": 54,
+            "partNumber": false,
+            "remoteIds": [204, 205, 206]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "KD - 49 X 8088",
+            "modelId": 56,
+            "partNumber": false,
+            "remoteIds": [201, 202]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "BDP - S 300",
+            "modelId": 53,
+            "partNumber": false,
+            "remoteIds": [205]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "KD - 49 X 7055",
+            "modelId": 55,
+            "partNumber": false,
+            "remoteIds": [203]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "KDL-40EX720",
+            "modelId": 57,
+            "partNumber": false,
+            "remoteIds": [208]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "RM-ED011",
+            "modelId": 58,
+            "partNumber": true,
+            "remoteIds": [207]
+          }
+        ],
+        "note": "a hint for the brand that was first by id changes nothing",
+        "prefer": [
+          "ROKU"
+        ],
+        "query": "sony roku"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 17,
+            "modelCount": 6,
+            "name": "SAMSUNG"
+          },
+          {
+            "brandId": 22,
+            "modelCount": 6,
+            "name": "SONY"
+          }
+        ],
+        "catalog": "main",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "SAMSUNG",
+            "brandId": 17,
+            "model": "LE32R73BD LCD TV",
+            "modelId": 41,
+            "partNumber": false,
+            "remoteIds": [106, 107]
+          },
+          {
+            "brand": "SAMSUNG",
+            "brandId": 17,
+            "model": "BN59-01199F",
+            "modelId": 40,
+            "partNumber": true,
+            "remoteIds": [105]
+          },
+          {
+            "brand": "SAMSUNG",
+            "brandId": 17,
+            "model": "UE 50 HU 6900",
+            "modelId": 42,
+            "partNumber": false,
+            "remoteIds": [104]
+          },
+          {
+            "brand": "SAMSUNG",
+            "brandId": 17,
+            "model": "UN50NU6800F",
+            "modelId": 43,
+            "partNumber": false,
+            "remoteIds": [102]
+          },
+          {
+            "brand": "SAMSUNG",
+            "brandId": 17,
+            "model": "UN50NU6900F",
+            "modelId": 44,
+            "partNumber": false,
+            "remoteIds": [101]
+          },
+          {
+            "brand": "SAMSUNG",
+            "brandId": 17,
+            "model": "UN55NU6900F",
+            "modelId": 45,
+            "partNumber": false,
+            "remoteIds": [103]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "BDP - S 360",
+            "modelId": 54,
+            "partNumber": false,
+            "remoteIds": [204, 205, 206]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "KD - 49 X 8088",
+            "modelId": 56,
+            "partNumber": false,
+            "remoteIds": [201, 202]
+          }
+        ],
+        "note": "a brand named by a shorter run is not lifted above one named by a longer run: SAMSUNG (7) stays first",
+        "prefer": [
+          "SONY"
+        ],
+        "query": "sony samsung"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 12,
+            "modelCount": 3,
+            "name": "PHILIPS"
+          },
+          {
+            "brandId": 22,
+            "modelCount": 6,
+            "name": "SONY"
+          },
+          {
+            "brandId": 9,
+            "modelCount": 5,
+            "name": "LG"
+          }
+        ],
+        "catalog": "main",
+        "limit": 8,
+        "models": [],
+        "note": "three runs of three lengths: the hint for the shortest changes nothing",
+        "prefer": [
+          "LG"
+        ],
+        "query": "lg sony philips x"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 12,
+            "modelCount": 3,
+            "name": "PHILIPS"
+          },
+          {
+            "brandId": 22,
+            "modelCount": 6,
+            "name": "SONY"
+          },
+          {
+            "brandId": 9,
+            "modelCount": 5,
+            "name": "LG"
+          }
+        ],
+        "catalog": "main",
+        "limit": 8,
+        "models": [],
+        "note": "all three hinted: the same order, the runs differ in length",
+        "prefer": [
+          "LG",
+          "SONY",
+          "PHILIPS"
+        ],
+        "query": "lg sony philips x"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 22,
+            "modelCount": 6,
+            "name": "SONY"
+          },
+          {
+            "brandId": 17,
+            "modelCount": 6,
+            "name": "SAMSUNG"
+          }
+        ],
+        "catalog": "main",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "BDP - S 360",
+            "modelId": 54,
+            "partNumber": false,
+            "remoteIds": [204, 205, 206]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "KD - 49 X 8088",
+            "modelId": 56,
+            "partNumber": false,
+            "remoteIds": [201, 202]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "BDP - S 300",
+            "modelId": 53,
+            "partNumber": false,
+            "remoteIds": [205]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "KD - 49 X 7055",
+            "modelId": 55,
+            "partNumber": false,
+            "remoteIds": [203]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "KDL-40EX720",
+            "modelId": 57,
+            "partNumber": false,
+            "remoteIds": [208]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "RM-ED011",
+            "modelId": 58,
+            "partNumber": true,
+            "remoteIds": [207]
+          },
+          {
+            "brand": "SAMSUNG",
+            "brandId": 17,
+            "model": "LE32R73BD LCD TV",
+            "modelId": 41,
+            "partNumber": false,
+            "remoteIds": [106, 107]
+          },
+          {
+            "brand": "SAMSUNG",
+            "brandId": 17,
+            "model": "BN59-01199F",
+            "modelId": 40,
+            "partNumber": true,
+            "remoteIds": [105]
+          }
+        ],
+        "note": "two aliases named by runs of the same length: the hinted brand's before the id: SONY before SAMSUNG",
+        "prefer": [
+          "索尼"
+        ],
+        "query": "索尼 三星"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 22,
+            "modelCount": 6,
+            "name": "SONY"
+          },
+          {
+            "brandId": 17,
+            "modelCount": 6,
+            "name": "SAMSUNG"
+          }
+        ],
+        "catalog": "main",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "BDP - S 360",
+            "modelId": 54,
+            "partNumber": false,
+            "remoteIds": [204, 205, 206]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "KD - 49 X 8088",
+            "modelId": 56,
+            "partNumber": false,
+            "remoteIds": [201, 202]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "BDP - S 300",
+            "modelId": 53,
+            "partNumber": false,
+            "remoteIds": [205]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "KD - 49 X 7055",
+            "modelId": 55,
+            "partNumber": false,
+            "remoteIds": [203]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "KDL-40EX720",
+            "modelId": 57,
+            "partNumber": false,
+            "remoteIds": [208]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "RM-ED011",
+            "modelId": 58,
+            "partNumber": true,
+            "remoteIds": [207]
+          },
+          {
+            "brand": "SAMSUNG",
+            "brandId": 17,
+            "model": "LE32R73BD LCD TV",
+            "modelId": 41,
+            "partNumber": false,
+            "remoteIds": [106, 107]
+          },
+          {
+            "brand": "SAMSUNG",
+            "brandId": 17,
+            "model": "BN59-01199F",
+            "modelId": 40,
+            "partNumber": true,
+            "remoteIds": [105]
+          }
+        ],
+        "note": "the brand's own name hints the same brand",
+        "prefer": [
+          "SONY"
+        ],
+        "query": "索尼 三星"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 22,
+            "modelCount": 6,
+            "name": "SONY"
+          },
+          {
+            "brandId": 17,
+            "modelCount": 6,
+            "name": "SAMSUNG"
+          }
+        ],
+        "catalog": "main",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "KD - 49 X 8088",
+            "modelId": 56,
+            "partNumber": false,
+            "remoteIds": [201, 202]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "KD - 49 X 7055",
+            "modelId": 55,
+            "partNumber": false,
+            "remoteIds": [203]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "KDL-40EX720",
+            "modelId": 57,
+            "partNumber": false,
+            "remoteIds": [208]
+          }
+        ],
+        "note": "a rest that only SONY has: its models, with or without the hint",
+        "prefer": [
+          "SONY"
+        ],
+        "query": "索尼 三星 kd"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 22,
+            "modelCount": 6,
+            "name": "SONY"
+          },
+          {
+            "brandId": 21,
+            "modelCount": 1,
+            "name": "SONNY"
+          }
+        ],
+        "catalog": "main",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "BDP - S 360",
+            "modelId": 54,
+            "partNumber": false,
+            "remoteIds": [204, 205, 206]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "KD - 49 X 8088",
+            "modelId": 56,
+            "partNumber": false,
+            "remoteIds": [201, 202]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "BDP - S 300",
+            "modelId": 53,
+            "partNumber": false,
+            "remoteIds": [205]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "KD - 49 X 7055",
+            "modelId": 55,
+            "partNumber": false,
+            "remoteIds": [203]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "KDL-40EX720",
+            "modelId": 57,
+            "partNumber": false,
+            "remoteIds": [208]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "RM-ED011",
+            "modelId": 58,
+            "partNumber": true,
+            "remoteIds": [207]
+          }
+        ],
+        "note": "no hint: the exact key, then SONNY, which the matcher reads sony as (one insertion in five)",
+        "prefer": [],
+        "query": "sony"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 22,
+            "modelCount": 6,
+            "name": "SONY"
+          },
+          {
+            "brandId": 21,
+            "modelCount": 1,
+            "name": "SONNY"
+          }
+        ],
+        "catalog": "main",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "BDP - S 360",
+            "modelId": 54,
+            "partNumber": false,
+            "remoteIds": [204, 205, 206]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "KD - 49 X 8088",
+            "modelId": 56,
+            "partNumber": false,
+            "remoteIds": [201, 202]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "BDP - S 300",
+            "modelId": 53,
+            "partNumber": false,
+            "remoteIds": [205]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "KD - 49 X 7055",
+            "modelId": 55,
+            "partNumber": false,
+            "remoteIds": [203]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "KDL-40EX720",
+            "modelId": 57,
+            "partNumber": false,
+            "remoteIds": [208]
+          },
+          {
+            "brand": "SONY",
+            "brandId": 22,
+            "model": "RM-ED011",
+            "modelId": 58,
+            "partNumber": true,
+            "remoteIds": [207]
+          }
+        ],
+        "note": "a brand that is only the matcher's reading is never moved, and never above the exact key",
+        "prefer": [
+          "SONNY"
+        ],
+        "query": "sony"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 21,
+            "modelCount": 1,
+            "name": "SONNY"
+          },
+          {
+            "brandId": 22,
+            "modelCount": 6,
+            "name": "SONY"
+          }
+        ],
+        "catalog": "main",
+        "limit": 8,
+        "models": [],
+        "note": "no hint: SONNY and SONY are each a character from sonyy, best first by id: SONNY, SONY",
+        "prefer": [],
+        "query": "sonyy"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 21,
+            "modelCount": 1,
+            "name": "SONNY"
+          },
+          {
+            "brandId": 22,
+            "modelCount": 6,
+            "name": "SONY"
+          }
+        ],
+        "catalog": "main",
+        "limit": 8,
+        "models": [],
+        "note": "brands the matcher reads the query as are never moved, whatever is hinted",
+        "prefer": [
+          "SONY"
+        ],
+        "query": "sonyy"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 14,
+            "modelCount": 1,
+            "name": "QR"
+          },
+          {
+            "brandId": 15,
+            "modelCount": 1,
+            "name": "QRSTU"
+          }
+        ],
+        "catalog": "main",
+        "limit": 8,
+        "models": [],
+        "note": "QR is named by its word, QRSTU is what the matcher reads qrstv as: the named brand stays first",
+        "prefer": [
+          "QRSTU"
+        ],
+        "query": "qr stv"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 14,
+            "modelCount": 1,
+            "name": "QR"
+          }
+        ],
+        "catalog": "main",
+        "limit": 1,
+        "models": [],
+        "note": "a limit of 1 keeps the named brand",
+        "prefer": [
+          "QRSTU"
+        ],
+        "query": "qr stv"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 12,
+            "modelCount": 3,
+            "name": "PHILIPS"
+          }
+        ],
+        "catalog": "main",
+        "limit": 8,
+        "models": [],
+        "note": "a brand that only the matcher's reading offers: the same answer",
+        "prefer": [
+          "PHILIPS"
+        ],
+        "query": "phillips"
+      },
+      {
+        "brands": [],
+        "catalog": "main",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "ORBITECH",
+            "brandId": 10,
+            "model": "CI 500 TWN(SAT 1)",
+            "modelId": 29,
+            "partNumber": false,
+            "remoteIds": [1501]
+          },
+          {
+            "brand": "TELESTAR",
+            "brandId": 23,
+            "model": "CI 500 TWN(SAT 1)",
+            "modelId": 59,
+            "partNumber": false,
+            "remoteIds": [1502]
+          }
+        ],
+        "note": "no hint: two brands have the model 'CI 500 TWN(SAT 1)', an equal match: by brand name, ORBITECH before TELESTAR",
+        "prefer": [],
+        "query": "ci500twnsat1"
+      },
+      {
+        "brands": [],
+        "catalog": "main",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "TELESTAR",
+            "brandId": 23,
+            "model": "CI 500 TWN(SAT 1)",
+            "modelId": 59,
+            "partNumber": false,
+            "remoteIds": [1502]
+          },
+          {
+            "brand": "ORBITECH",
+            "brandId": 10,
+            "model": "CI 500 TWN(SAT 1)",
+            "modelId": 29,
+            "partNumber": false,
+            "remoteIds": [1501]
+          }
+        ],
+        "note": "models of an equal score, similarity and key length: the hinted brand's first",
+        "prefer": [
+          "TELESTAR"
+        ],
+        "query": "ci500twnsat1"
+      },
+      {
+        "brands": [],
+        "catalog": "main",
+        "limit": 1,
+        "models": [
+          {
+            "brand": "TELESTAR",
+            "brandId": 23,
+            "model": "CI 500 TWN(SAT 1)",
+            "modelId": 59,
+            "partNumber": false,
+            "remoteIds": [1502]
+          }
+        ],
+        "note": "the limit of models keeps the hinted brand's",
+        "prefer": [
+          "TELESTAR"
+        ],
+        "query": "ci500twnsat1"
+      },
+      {
+        "brands": [],
+        "catalog": "main",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "ORBITECH",
+            "brandId": 10,
+            "model": "CI 500 TWN(SAT 1)",
+            "modelId": 29,
+            "partNumber": false,
+            "remoteIds": [1501]
+          },
+          {
+            "brand": "TELESTAR",
+            "brandId": 23,
+            "model": "CI 500 TWN(SAT 1)",
+            "modelId": 59,
+            "partNumber": false,
+            "remoteIds": [1502]
+          }
+        ],
+        "note": "a hint for the brand that was first by name changes nothing",
+        "prefer": [
+          "ORBITECH"
+        ],
+        "query": "ci500twnsat1"
+      },
+      {
+        "brands": [],
+        "catalog": "main",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "ORBITECH",
+            "brandId": 10,
+            "model": "CI 500 TWN(SAT 1)",
+            "modelId": 29,
+            "partNumber": false,
+            "remoteIds": [1501]
+          },
+          {
+            "brand": "TELESTAR",
+            "brandId": 23,
+            "model": "CI 500 TWN(SAT 1)",
+            "modelId": 59,
+            "partNumber": false,
+            "remoteIds": [1502]
+          }
+        ],
+        "note": "a hint for a brand with no such model adds nothing",
+        "prefer": [
+          "SONY"
+        ],
+        "query": "ci500twnsat1"
+      },
+      {
+        "brands": [],
+        "catalog": "main",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "SAMSUNG",
+            "brandId": 17,
+            "model": "UN50NU6900F",
+            "modelId": 44,
+            "partNumber": false,
+            "remoteIds": [101]
+          },
+          {
+            "brand": "SAMSUNG",
+            "brandId": 17,
+            "model": "UN50NU6800F",
+            "modelId": 43,
+            "partNumber": false,
+            "remoteIds": [102]
+          },
+          {
+            "brand": "SAMSUNG",
+            "brandId": 17,
+            "model": "UN55NU6900F",
+            "modelId": 45,
+            "partNumber": false,
+            "remoteIds": [103]
+          }
+        ],
+        "note": "only SAMSUNG has models like it: the exact match first and the near ones after it, as without a hint",
+        "prefer": [
+          "SONY",
+          "SAMSUNG"
+        ],
+        "query": "un50nu6900f"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 4,
+            "modelCount": 1,
+            "name": "AL"
+          },
+          {
+            "brandId": 6,
+            "modelCount": 5,
+            "name": "ALPINE"
+          },
+          {
+            "brandId": 8,
+            "modelCount": 5,
+            "name": "ALTEC"
+          },
+          {
+            "brandId": 5,
+            "modelCount": 2,
+            "name": "ALPHA"
+          },
+          {
+            "brandId": 7,
+            "modelCount": 1,
+            "name": "ALPS"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "AL",
+            "brandId": 4,
+            "model": "A1",
+            "modelId": 7,
+            "partNumber": false,
+            "remoteIds": [1000]
+          }
+        ],
+        "note": "no hint: AL is the key, then by models: ALPINE and ALTEC have five and go by name, ALPHA 2, ALPS 1",
+        "prefer": [],
+        "query": "al"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 4,
+            "modelCount": 1,
+            "name": "AL"
+          },
+          {
+            "brandId": 7,
+            "modelCount": 1,
+            "name": "ALPS"
+          },
+          {
+            "brandId": 6,
+            "modelCount": 5,
+            "name": "ALPINE"
+          },
+          {
+            "brandId": 8,
+            "modelCount": 5,
+            "name": "ALTEC"
+          },
+          {
+            "brandId": 5,
+            "modelCount": 2,
+            "name": "ALPHA"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "AL",
+            "brandId": 4,
+            "model": "A1",
+            "modelId": 7,
+            "partNumber": false,
+            "remoteIds": [1000]
+          }
+        ],
+        "note": "the hinted ALPS goes before the models and the names of the brands that start with al, and not above AL, the exact key",
+        "prefer": [
+          "ALPS"
+        ],
+        "query": "al"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 4,
+            "modelCount": 1,
+            "name": "AL"
+          },
+          {
+            "brandId": 7,
+            "modelCount": 1,
+            "name": "ALPS"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 2,
+        "models": [
+          {
+            "brand": "AL",
+            "brandId": 4,
+            "model": "A1",
+            "modelId": 7,
+            "partNumber": false,
+            "remoteIds": [1000]
+          }
+        ],
+        "note": "the limit lets the hinted brand in place of an equal: ALPS takes the place of ALPINE",
+        "prefer": [
+          "ALPS"
+        ],
+        "query": "al"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 4,
+            "modelCount": 1,
+            "name": "AL"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 1,
+        "models": [
+          {
+            "brand": "AL",
+            "brandId": 4,
+            "model": "A1",
+            "modelId": 7,
+            "partNumber": false,
+            "remoteIds": [1000]
+          }
+        ],
+        "note": "a limit of 1: the first place is the exact key's",
+        "prefer": [
+          "ALPS"
+        ],
+        "query": "al"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 4,
+            "modelCount": 1,
+            "name": "AL"
+          },
+          {
+            "brandId": 7,
+            "modelCount": 1,
+            "name": "ALPS"
+          },
+          {
+            "brandId": 6,
+            "modelCount": 5,
+            "name": "ALPINE"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 3,
+        "models": [
+          {
+            "brand": "AL",
+            "brandId": 4,
+            "model": "A1",
+            "modelId": 7,
+            "partNumber": false,
+            "remoteIds": [1000]
+          }
+        ],
+        "note": "a limit of 3",
+        "prefer": [
+          "ALPS"
+        ],
+        "query": "al"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 4,
+            "modelCount": 1,
+            "name": "AL"
+          },
+          {
+            "brandId": 7,
+            "modelCount": 1,
+            "name": "ALPS"
+          },
+          {
+            "brandId": 6,
+            "modelCount": 5,
+            "name": "ALPINE"
+          },
+          {
+            "brandId": 8,
+            "modelCount": 5,
+            "name": "ALTEC"
+          },
+          {
+            "brandId": 5,
+            "modelCount": 2,
+            "name": "ALPHA"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 5,
+        "models": [
+          {
+            "brand": "AL",
+            "brandId": 4,
+            "model": "A1",
+            "modelId": 7,
+            "partNumber": false,
+            "remoteIds": [1000]
+          }
+        ],
+        "note": "a limit of 5 is the whole list: AL, ALPS, then the others as before",
+        "prefer": [
+          "ALPS"
+        ],
+        "query": "al"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 4,
+            "modelCount": 1,
+            "name": "AL"
+          },
+          {
+            "brandId": 8,
+            "modelCount": 5,
+            "name": "ALTEC"
+          },
+          {
+            "brandId": 6,
+            "modelCount": 5,
+            "name": "ALPINE"
+          },
+          {
+            "brandId": 5,
+            "modelCount": 2,
+            "name": "ALPHA"
+          },
+          {
+            "brandId": 7,
+            "modelCount": 1,
+            "name": "ALPS"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "AL",
+            "brandId": 4,
+            "model": "A1",
+            "modelId": 7,
+            "partNumber": false,
+            "remoteIds": [1000]
+          }
+        ],
+        "note": "the hint goes before the name: ALTEC before ALPINE, which have five models each",
+        "prefer": [
+          "ALTEC"
+        ],
+        "query": "al"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 4,
+            "modelCount": 1,
+            "name": "AL"
+          },
+          {
+            "brandId": 5,
+            "modelCount": 2,
+            "name": "ALPHA"
+          },
+          {
+            "brandId": 7,
+            "modelCount": 1,
+            "name": "ALPS"
+          },
+          {
+            "brandId": 6,
+            "modelCount": 5,
+            "name": "ALPINE"
+          },
+          {
+            "brandId": 8,
+            "modelCount": 5,
+            "name": "ALTEC"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "AL",
+            "brandId": 4,
+            "model": "A1",
+            "modelId": 7,
+            "partNumber": false,
+            "remoteIds": [1000]
+          }
+        ],
+        "note": "two hinted brands in their own order (ALPHA has more models): ALPHA, ALPS",
+        "prefer": [
+          "ALPS",
+          "ALPHA"
+        ],
+        "query": "al"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 4,
+            "modelCount": 1,
+            "name": "AL"
+          },
+          {
+            "brandId": 5,
+            "modelCount": 2,
+            "name": "ALPHA"
+          },
+          {
+            "brandId": 7,
+            "modelCount": 1,
+            "name": "ALPS"
+          },
+          {
+            "brandId": 6,
+            "modelCount": 5,
+            "name": "ALPINE"
+          },
+          {
+            "brandId": 8,
+            "modelCount": 5,
+            "name": "ALTEC"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "AL",
+            "brandId": 4,
+            "model": "A1",
+            "modelId": 7,
+            "partNumber": false,
+            "remoteIds": [1000]
+          }
+        ],
+        "note": "the same hint in another order: the same answer",
+        "prefer": [
+          "ALPHA",
+          "ALPS"
+        ],
+        "query": "al"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 4,
+            "modelCount": 1,
+            "name": "AL"
+          },
+          {
+            "brandId": 6,
+            "modelCount": 5,
+            "name": "ALPINE"
+          },
+          {
+            "brandId": 8,
+            "modelCount": 5,
+            "name": "ALTEC"
+          },
+          {
+            "brandId": 5,
+            "modelCount": 2,
+            "name": "ALPHA"
+          },
+          {
+            "brandId": 7,
+            "modelCount": 1,
+            "name": "ALPS"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "AL",
+            "brandId": 4,
+            "model": "A1",
+            "modelId": 7,
+            "partNumber": false,
+            "remoteIds": [1000]
+          }
+        ],
+        "note": "every brand that starts with it hinted: nothing moves",
+        "prefer": [
+          "ALPS",
+          "ALPHA",
+          "ALTEC",
+          "ALPINE"
+        ],
+        "query": "al"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 4,
+            "modelCount": 1,
+            "name": "AL"
+          },
+          {
+            "brandId": 6,
+            "modelCount": 5,
+            "name": "ALPINE"
+          },
+          {
+            "brandId": 8,
+            "modelCount": 5,
+            "name": "ALTEC"
+          },
+          {
+            "brandId": 5,
+            "modelCount": 2,
+            "name": "ALPHA"
+          },
+          {
+            "brandId": 7,
+            "modelCount": 1,
+            "name": "ALPS"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "AL",
+            "brandId": 4,
+            "model": "A1",
+            "modelId": 7,
+            "partNumber": false,
+            "remoteIds": [1000]
+          }
+        ],
+        "note": "a hint for the exact key changes nothing",
+        "prefer": [
+          "AL"
+        ],
+        "query": "al"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 4,
+            "modelCount": 1,
+            "name": "AL"
+          },
+          {
+            "brandId": 6,
+            "modelCount": 5,
+            "name": "ALPINE"
+          },
+          {
+            "brandId": 8,
+            "modelCount": 5,
+            "name": "ALTEC"
+          },
+          {
+            "brandId": 5,
+            "modelCount": 2,
+            "name": "ALPHA"
+          },
+          {
+            "brandId": 7,
+            "modelCount": 1,
+            "name": "ALPS"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "AL",
+            "brandId": 4,
+            "model": "A1",
+            "modelId": 7,
+            "partNumber": false,
+            "remoteIds": [1000]
+          }
+        ],
+        "note": "a brand that does not start with the query is never added",
+        "prefer": [
+          "ZEBRA"
+        ],
+        "query": "al"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 7,
+            "modelCount": 1,
+            "name": "ALPS"
+          },
+          {
+            "brandId": 6,
+            "modelCount": 5,
+            "name": "ALPINE"
+          },
+          {
+            "brandId": 5,
+            "modelCount": 2,
+            "name": "ALPHA"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [],
+        "note": "ALPS first among ALPINE, ALPHA, ALPS",
+        "prefer": [
+          "ALPS"
+        ],
+        "query": "alp"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 5,
+            "modelCount": 2,
+            "name": "ALPHA"
+          },
+          {
+            "brandId": 6,
+            "modelCount": 5,
+            "name": "ALPINE"
+          },
+          {
+            "brandId": 7,
+            "modelCount": 1,
+            "name": "ALPS"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [],
+        "note": "ALPHA first, ALPINE and ALPS in their order",
+        "prefer": [
+          "ALPHA"
+        ],
+        "query": "alp"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 7,
+            "modelCount": 1,
+            "name": "ALPS"
+          },
+          {
+            "brandId": 6,
+            "modelCount": 5,
+            "name": "ALPINE"
+          },
+          {
+            "brandId": 5,
+            "modelCount": 2,
+            "name": "ALPHA"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [],
+        "note": "names of brands the query does not offer are no use: ALPS only",
+        "prefer": [
+          "ALPS",
+          "ZEBRA",
+          "EAST",
+          "ACME"
+        ],
+        "query": "alp"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 7,
+            "modelCount": 1,
+            "name": "ALPS"
+          },
+          {
+            "brandId": 6,
+            "modelCount": 5,
+            "name": "ALPINE"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 2,
+        "models": [],
+        "note": "the limit cuts the hinted whole: ALPS, ALPINE",
+        "prefer": [
+          "ALPS"
+        ],
+        "query": "alp"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 7,
+            "modelCount": 1,
+            "name": "ALPS"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 1,
+        "models": [],
+        "note": "a limit of 1",
+        "prefer": [
+          "ALPS"
+        ],
+        "query": "alp"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 7,
+            "modelCount": 1,
+            "name": "ALPS"
+          },
+          {
+            "brandId": 6,
+            "modelCount": 5,
+            "name": "ALPINE"
+          },
+          {
+            "brandId": 5,
+            "modelCount": 2,
+            "name": "ALPHA"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [],
+        "note": "a name in lower case",
+        "prefer": [
+          "alps"
+        ],
+        "query": "alp"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 7,
+            "modelCount": 1,
+            "name": "ALPS"
+          },
+          {
+            "brandId": 6,
+            "modelCount": 5,
+            "name": "ALPINE"
+          },
+          {
+            "brandId": 5,
+            "modelCount": 2,
+            "name": "ALPHA"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [],
+        "note": "a name with separators",
+        "prefer": [
+          "A-L-P-S"
+        ],
+        "query": "alp"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 6,
+            "modelCount": 5,
+            "name": "ALPINE"
+          },
+          {
+            "brandId": 5,
+            "modelCount": 2,
+            "name": "ALPHA"
+          },
+          {
+            "brandId": 7,
+            "modelCount": 1,
+            "name": "ALPS"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [],
+        "note": "a name that is the start of a brand's is no brand's",
+        "prefer": [
+          "ALP"
+        ],
+        "query": "alp"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 6,
+            "modelCount": 5,
+            "name": "ALPINE"
+          },
+          {
+            "brandId": 8,
+            "modelCount": 5,
+            "name": "ALTEC"
+          },
+          {
+            "brandId": 3,
+            "modelCount": 3,
+            "name": "ACME"
+          },
+          {
+            "brandId": 2,
+            "modelCount": 2,
+            "name": "ACID"
+          },
+          {
+            "brandId": 5,
+            "modelCount": 2,
+            "name": "ALPHA"
+          },
+          {
+            "brandId": 1,
+            "modelCount": 1,
+            "name": "AC"
+          },
+          {
+            "brandId": 4,
+            "modelCount": 1,
+            "name": "AL"
+          },
+          {
+            "brandId": 7,
+            "modelCount": 1,
+            "name": "ALPS"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [],
+        "note": "no hint: a one-character query lists the brands that start with it, most models first",
+        "prefer": [],
+        "query": "a"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 1,
+            "modelCount": 1,
+            "name": "AC"
+          },
+          {
+            "brandId": 7,
+            "modelCount": 1,
+            "name": "ALPS"
+          },
+          {
+            "brandId": 6,
+            "modelCount": 5,
+            "name": "ALPINE"
+          },
+          {
+            "brandId": 8,
+            "modelCount": 5,
+            "name": "ALTEC"
+          },
+          {
+            "brandId": 3,
+            "modelCount": 3,
+            "name": "ACME"
+          },
+          {
+            "brandId": 2,
+            "modelCount": 2,
+            "name": "ACID"
+          },
+          {
+            "brandId": 5,
+            "modelCount": 2,
+            "name": "ALPHA"
+          },
+          {
+            "brandId": 4,
+            "modelCount": 1,
+            "name": "AL"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [],
+        "note": "two hinted brands with one model each: by name, AC before ALPS, then the rest in their order",
+        "prefer": [
+          "ALPS",
+          "AC"
+        ],
+        "query": "a"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 1,
+            "modelCount": 1,
+            "name": "AC"
+          },
+          {
+            "brandId": 3,
+            "modelCount": 3,
+            "name": "ACME"
+          },
+          {
+            "brandId": 2,
+            "modelCount": 2,
+            "name": "ACID"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "AC",
+            "brandId": 1,
+            "model": "Z1",
+            "modelId": 1,
+            "partNumber": false,
+            "remoteIds": [1100]
+          }
+        ],
+        "note": "no hint: AC is the key, then ACID (2 models) and ACME (3): ACME, ACID",
+        "prefer": [],
+        "query": "ac"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 1,
+            "modelCount": 1,
+            "name": "AC"
+          },
+          {
+            "brandId": 2,
+            "modelCount": 2,
+            "name": "ACID"
+          },
+          {
+            "brandId": 3,
+            "modelCount": 3,
+            "name": "ACME"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "AC",
+            "brandId": 1,
+            "model": "Z1",
+            "modelId": 1,
+            "partNumber": false,
+            "remoteIds": [1100]
+          }
+        ],
+        "note": "the exact key stays first: AC, ACID, ACME",
+        "prefer": [
+          "ACID"
+        ],
+        "query": "ac"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 2,
+            "modelCount": 2,
+            "name": "ACID"
+          },
+          {
+            "brandId": 3,
+            "modelCount": 3,
+            "name": "ACME"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "ACID",
+            "brandId": 2,
+            "model": "X101",
+            "modelId": 3,
+            "partNumber": false,
+            "remoteIds": [1610, 1611]
+          },
+          {
+            "brand": "ACID",
+            "brandId": 2,
+            "model": "X100",
+            "modelId": 2,
+            "partNumber": false,
+            "remoteIds": [1600]
+          },
+          {
+            "brand": "ACME",
+            "brandId": 3,
+            "model": "X102",
+            "modelId": 5,
+            "partNumber": false,
+            "remoteIds": [1710, 1711]
+          },
+          {
+            "brand": "ACME",
+            "brandId": 3,
+            "model": "X100",
+            "modelId": 4,
+            "partNumber": false,
+            "remoteIds": [1700]
+          },
+          {
+            "brand": "ACME",
+            "brandId": 3,
+            "model": "X103",
+            "modelId": 6,
+            "partNumber": false,
+            "remoteIds": [1720]
+          }
+        ],
+        "note": "no hint: ACID and ACME are named by runs of 4 characters each: by id, ACID first, and their models",
+        "prefer": [],
+        "query": "acid acme"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 3,
+            "modelCount": 3,
+            "name": "ACME"
+          },
+          {
+            "brandId": 2,
+            "modelCount": 2,
+            "name": "ACID"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "ACME",
+            "brandId": 3,
+            "model": "X102",
+            "modelId": 5,
+            "partNumber": false,
+            "remoteIds": [1710, 1711]
+          },
+          {
+            "brand": "ACME",
+            "brandId": 3,
+            "model": "X100",
+            "modelId": 4,
+            "partNumber": false,
+            "remoteIds": [1700]
+          },
+          {
+            "brand": "ACME",
+            "brandId": 3,
+            "model": "X103",
+            "modelId": 6,
+            "partNumber": false,
+            "remoteIds": [1720]
+          },
+          {
+            "brand": "ACID",
+            "brandId": 2,
+            "model": "X101",
+            "modelId": 3,
+            "partNumber": false,
+            "remoteIds": [1610, 1611]
+          },
+          {
+            "brand": "ACID",
+            "brandId": 2,
+            "model": "X100",
+            "modelId": 2,
+            "partNumber": false,
+            "remoteIds": [1600]
+          }
+        ],
+        "note": "equal runs: the hinted brand and its models first, each brand's models in their own order",
+        "prefer": [
+          "ACME"
+        ],
+        "query": "acid acme"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 3,
+            "modelCount": 3,
+            "name": "ACME"
+          },
+          {
+            "brandId": 2,
+            "modelCount": 2,
+            "name": "ACID"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 3,
+        "models": [
+          {
+            "brand": "ACME",
+            "brandId": 3,
+            "model": "X102",
+            "modelId": 5,
+            "partNumber": false,
+            "remoteIds": [1710, 1711]
+          },
+          {
+            "brand": "ACME",
+            "brandId": 3,
+            "model": "X100",
+            "modelId": 4,
+            "partNumber": false,
+            "remoteIds": [1700]
+          },
+          {
+            "brand": "ACME",
+            "brandId": 3,
+            "model": "X103",
+            "modelId": 6,
+            "partNumber": false,
+            "remoteIds": [1720]
+          }
+        ],
+        "note": "the limit is filled from the hinted brand's models first",
+        "prefer": [
+          "ACME"
+        ],
+        "query": "acid acme"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 3,
+            "modelCount": 3,
+            "name": "ACME"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 1,
+        "models": [
+          {
+            "brand": "ACME",
+            "brandId": 3,
+            "model": "X102",
+            "modelId": 5,
+            "partNumber": false,
+            "remoteIds": [1710, 1711]
+          }
+        ],
+        "note": "a limit of 1",
+        "prefer": [
+          "ACME"
+        ],
+        "query": "acid acme"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 2,
+            "modelCount": 2,
+            "name": "ACID"
+          },
+          {
+            "brandId": 3,
+            "modelCount": 3,
+            "name": "ACME"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "ACID",
+            "brandId": 2,
+            "model": "X101",
+            "modelId": 3,
+            "partNumber": false,
+            "remoteIds": [1610, 1611]
+          },
+          {
+            "brand": "ACID",
+            "brandId": 2,
+            "model": "X100",
+            "modelId": 2,
+            "partNumber": false,
+            "remoteIds": [1600]
+          },
+          {
+            "brand": "ACME",
+            "brandId": 3,
+            "model": "X102",
+            "modelId": 5,
+            "partNumber": false,
+            "remoteIds": [1710, 1711]
+          },
+          {
+            "brand": "ACME",
+            "brandId": 3,
+            "model": "X100",
+            "modelId": 4,
+            "partNumber": false,
+            "remoteIds": [1700]
+          },
+          {
+            "brand": "ACME",
+            "brandId": 3,
+            "model": "X103",
+            "modelId": 6,
+            "partNumber": false,
+            "remoteIds": [1720]
+          }
+        ],
+        "note": "a hint for the brand that was first by id changes nothing",
+        "prefer": [
+          "ACID"
+        ],
+        "query": "acid acme"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 6,
+            "modelCount": 5,
+            "name": "ALPINE"
+          },
+          {
+            "brandId": 1,
+            "modelCount": 1,
+            "name": "AC"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "ALPINE",
+            "brandId": 6,
+            "model": "P2",
+            "modelId": 11,
+            "partNumber": false,
+            "remoteIds": [1210, 1211]
+          },
+          {
+            "brand": "ALPINE",
+            "brandId": 6,
+            "model": "P4",
+            "modelId": 13,
+            "partNumber": false,
+            "remoteIds": [1230, 1231]
+          },
+          {
+            "brand": "ALPINE",
+            "brandId": 6,
+            "model": "P1",
+            "modelId": 10,
+            "partNumber": false,
+            "remoteIds": [1200]
+          },
+          {
+            "brand": "ALPINE",
+            "brandId": 6,
+            "model": "P3",
+            "modelId": 12,
+            "partNumber": false,
+            "remoteIds": [1220]
+          },
+          {
+            "brand": "ALPINE",
+            "brandId": 6,
+            "model": "P5",
+            "modelId": 14,
+            "partNumber": false,
+            "remoteIds": [1240]
+          },
+          {
+            "brand": "AC",
+            "brandId": 1,
+            "model": "Z1",
+            "modelId": 1,
+            "partNumber": false,
+            "remoteIds": [1100]
+          }
+        ],
+        "note": "no hint: ALPINE is named by a run of 6, AC by one of 2",
+        "prefer": [],
+        "query": "alpine ac"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 6,
+            "modelCount": 5,
+            "name": "ALPINE"
+          },
+          {
+            "brandId": 1,
+            "modelCount": 1,
+            "name": "AC"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "ALPINE",
+            "brandId": 6,
+            "model": "P2",
+            "modelId": 11,
+            "partNumber": false,
+            "remoteIds": [1210, 1211]
+          },
+          {
+            "brand": "ALPINE",
+            "brandId": 6,
+            "model": "P4",
+            "modelId": 13,
+            "partNumber": false,
+            "remoteIds": [1230, 1231]
+          },
+          {
+            "brand": "ALPINE",
+            "brandId": 6,
+            "model": "P1",
+            "modelId": 10,
+            "partNumber": false,
+            "remoteIds": [1200]
+          },
+          {
+            "brand": "ALPINE",
+            "brandId": 6,
+            "model": "P3",
+            "modelId": 12,
+            "partNumber": false,
+            "remoteIds": [1220]
+          },
+          {
+            "brand": "ALPINE",
+            "brandId": 6,
+            "model": "P5",
+            "modelId": 14,
+            "partNumber": false,
+            "remoteIds": [1240]
+          },
+          {
+            "brand": "AC",
+            "brandId": 1,
+            "model": "Z1",
+            "modelId": 1,
+            "partNumber": false,
+            "remoteIds": [1100]
+          }
+        ],
+        "note": "a brand named by a shorter run is not lifted above one named by a longer one, and neither are its models",
+        "prefer": [
+          "AC"
+        ],
+        "query": "alpine ac"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 10,
+            "modelCount": 1,
+            "name": "KORAX"
+          },
+          {
+            "brandId": 11,
+            "modelCount": 1,
+            "name": "KOREX"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [],
+        "note": "no hint: KORAX and KOREX are both a character from korix: by id",
+        "prefer": [],
+        "query": "korix"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 10,
+            "modelCount": 1,
+            "name": "KORAX"
+          },
+          {
+            "brandId": 11,
+            "modelCount": 1,
+            "name": "KOREX"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [],
+        "note": "brands that the matcher only reads the query as are never moved",
+        "prefer": [
+          "KOREX"
+        ],
+        "query": "korix"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 10,
+            "modelCount": 1,
+            "name": "KORAX"
+          },
+          {
+            "brandId": 11,
+            "modelCount": 1,
+            "name": "KOREX"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [],
+        "note": "all of them hinted: nothing moves",
+        "prefer": [
+          "KOREX",
+          "KORAX"
+        ],
+        "query": "korix"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 10,
+            "modelCount": 1,
+            "name": "KORAX"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 1,
+        "models": [],
+        "note": "and a limit of 1 does not let the hinted one in",
+        "prefer": [
+          "KOREX"
+        ],
+        "query": "korix"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 11,
+            "modelCount": 1,
+            "name": "KOREX"
+          },
+          {
+            "brandId": 10,
+            "modelCount": 1,
+            "name": "KORAX"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [],
+        "note": "the same two brands as brands that start with the query are moved: KOREX first",
+        "prefer": [
+          "KOREX"
+        ],
+        "query": "kor"
+      },
+      {
+        "brands": [],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "EAST",
+            "brandId": 9,
+            "model": "TX1000",
+            "modelId": 21,
+            "partNumber": false,
+            "remoteIds": [2000]
+          },
+          {
+            "brand": "NORTH",
+            "brandId": 12,
+            "model": "TX1000",
+            "modelId": 24,
+            "partNumber": false,
+            "remoteIds": [2100]
+          },
+          {
+            "brand": "SOUTH",
+            "brandId": 13,
+            "model": "TX1000",
+            "modelId": 25,
+            "partNumber": false,
+            "remoteIds": [2200]
+          },
+          {
+            "brand": "WEST",
+            "brandId": 14,
+            "model": "TX1000",
+            "modelId": 27,
+            "partNumber": false,
+            "remoteIds": [2300]
+          },
+          {
+            "brand": "SOUTH",
+            "brandId": 13,
+            "model": "TX10001",
+            "modelId": 26,
+            "partNumber": false,
+            "remoteIds": [2400]
+          }
+        ],
+        "note": "no hint: the model TX1000 of four brands, an equal match: by brand name; SOUTH's TX10001 is only the start of a longer model and last",
+        "prefer": [],
+        "query": "tx1000"
+      },
+      {
+        "brands": [],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "WEST",
+            "brandId": 14,
+            "model": "TX1000",
+            "modelId": 27,
+            "partNumber": false,
+            "remoteIds": [2300]
+          },
+          {
+            "brand": "EAST",
+            "brandId": 9,
+            "model": "TX1000",
+            "modelId": 21,
+            "partNumber": false,
+            "remoteIds": [2000]
+          },
+          {
+            "brand": "NORTH",
+            "brandId": 12,
+            "model": "TX1000",
+            "modelId": 24,
+            "partNumber": false,
+            "remoteIds": [2100]
+          },
+          {
+            "brand": "SOUTH",
+            "brandId": 13,
+            "model": "TX1000",
+            "modelId": 25,
+            "partNumber": false,
+            "remoteIds": [2200]
+          },
+          {
+            "brand": "SOUTH",
+            "brandId": 13,
+            "model": "TX10001",
+            "modelId": 26,
+            "partNumber": false,
+            "remoteIds": [2400]
+          }
+        ],
+        "note": "models of an equal score, similarity and key length: WEST's first, and the worse match stays last",
+        "prefer": [
+          "WEST"
+        ],
+        "query": "tx1000"
+      },
+      {
+        "brands": [],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "SOUTH",
+            "brandId": 13,
+            "model": "TX1000",
+            "modelId": 25,
+            "partNumber": false,
+            "remoteIds": [2200]
+          },
+          {
+            "brand": "EAST",
+            "brandId": 9,
+            "model": "TX1000",
+            "modelId": 21,
+            "partNumber": false,
+            "remoteIds": [2000]
+          },
+          {
+            "brand": "NORTH",
+            "brandId": 12,
+            "model": "TX1000",
+            "modelId": 24,
+            "partNumber": false,
+            "remoteIds": [2100]
+          },
+          {
+            "brand": "WEST",
+            "brandId": 14,
+            "model": "TX1000",
+            "modelId": 27,
+            "partNumber": false,
+            "remoteIds": [2300]
+          },
+          {
+            "brand": "SOUTH",
+            "brandId": 13,
+            "model": "TX10001",
+            "modelId": 26,
+            "partNumber": false,
+            "remoteIds": [2400]
+          }
+        ],
+        "note": "SOUTH's TX1000 first, and its TX10001 stays after every TX1000, hinted or not",
+        "prefer": [
+          "SOUTH"
+        ],
+        "query": "tx1000"
+      },
+      {
+        "brands": [],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "SOUTH",
+            "brandId": 13,
+            "model": "TX1000",
+            "modelId": 25,
+            "partNumber": false,
+            "remoteIds": [2200]
+          },
+          {
+            "brand": "WEST",
+            "brandId": 14,
+            "model": "TX1000",
+            "modelId": 27,
+            "partNumber": false,
+            "remoteIds": [2300]
+          },
+          {
+            "brand": "EAST",
+            "brandId": 9,
+            "model": "TX1000",
+            "modelId": 21,
+            "partNumber": false,
+            "remoteIds": [2000]
+          },
+          {
+            "brand": "NORTH",
+            "brandId": 12,
+            "model": "TX1000",
+            "modelId": 24,
+            "partNumber": false,
+            "remoteIds": [2100]
+          },
+          {
+            "brand": "SOUTH",
+            "brandId": 13,
+            "model": "TX10001",
+            "modelId": 26,
+            "partNumber": false,
+            "remoteIds": [2400]
+          }
+        ],
+        "note": "two hinted brands: their models in the order they had, then the others",
+        "prefer": [
+          "SOUTH",
+          "WEST"
+        ],
+        "query": "tx1000"
+      },
+      {
+        "brands": [],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "SOUTH",
+            "brandId": 13,
+            "model": "TX1000",
+            "modelId": 25,
+            "partNumber": false,
+            "remoteIds": [2200]
+          },
+          {
+            "brand": "WEST",
+            "brandId": 14,
+            "model": "TX1000",
+            "modelId": 27,
+            "partNumber": false,
+            "remoteIds": [2300]
+          },
+          {
+            "brand": "EAST",
+            "brandId": 9,
+            "model": "TX1000",
+            "modelId": 21,
+            "partNumber": false,
+            "remoteIds": [2000]
+          },
+          {
+            "brand": "NORTH",
+            "brandId": 12,
+            "model": "TX1000",
+            "modelId": 24,
+            "partNumber": false,
+            "remoteIds": [2100]
+          },
+          {
+            "brand": "SOUTH",
+            "brandId": 13,
+            "model": "TX10001",
+            "modelId": 26,
+            "partNumber": false,
+            "remoteIds": [2400]
+          }
+        ],
+        "note": "the order of the names means nothing",
+        "prefer": [
+          "WEST",
+          "SOUTH"
+        ],
+        "query": "tx1000"
+      },
+      {
+        "brands": [],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "EAST",
+            "brandId": 9,
+            "model": "TX1000",
+            "modelId": 21,
+            "partNumber": false,
+            "remoteIds": [2000]
+          },
+          {
+            "brand": "NORTH",
+            "brandId": 12,
+            "model": "TX1000",
+            "modelId": 24,
+            "partNumber": false,
+            "remoteIds": [2100]
+          },
+          {
+            "brand": "SOUTH",
+            "brandId": 13,
+            "model": "TX1000",
+            "modelId": 25,
+            "partNumber": false,
+            "remoteIds": [2200]
+          },
+          {
+            "brand": "WEST",
+            "brandId": 14,
+            "model": "TX1000",
+            "modelId": 27,
+            "partNumber": false,
+            "remoteIds": [2300]
+          },
+          {
+            "brand": "SOUTH",
+            "brandId": 13,
+            "model": "TX10001",
+            "modelId": 26,
+            "partNumber": false,
+            "remoteIds": [2400]
+          }
+        ],
+        "note": "every brand that has the model hinted: nothing moves, and the worse match stays last",
+        "prefer": [
+          "WEST",
+          "NORTH",
+          "SOUTH",
+          "EAST"
+        ],
+        "query": "tx1000"
+      },
+      {
+        "brands": [],
+        "catalog": "ties",
+        "limit": 1,
+        "models": [
+          {
+            "brand": "SOUTH",
+            "brandId": 13,
+            "model": "TX1000",
+            "modelId": 25,
+            "partNumber": false,
+            "remoteIds": [2200]
+          }
+        ],
+        "note": "the limit keeps the hinted model in the place of an equal one",
+        "prefer": [
+          "SOUTH"
+        ],
+        "query": "tx1000"
+      },
+      {
+        "brands": [],
+        "catalog": "ties",
+        "limit": 3,
+        "models": [
+          {
+            "brand": "WEST",
+            "brandId": 14,
+            "model": "TX1000",
+            "modelId": 27,
+            "partNumber": false,
+            "remoteIds": [2300]
+          },
+          {
+            "brand": "EAST",
+            "brandId": 9,
+            "model": "TX1000",
+            "modelId": 21,
+            "partNumber": false,
+            "remoteIds": [2000]
+          },
+          {
+            "brand": "NORTH",
+            "brandId": 12,
+            "model": "TX1000",
+            "modelId": 24,
+            "partNumber": false,
+            "remoteIds": [2100]
+          }
+        ],
+        "note": "SOUTH's TX1000 is pushed out by WEST's",
+        "prefer": [
+          "WEST"
+        ],
+        "query": "tx1000"
+      },
+      {
+        "brands": [],
+        "catalog": "ties",
+        "limit": 4,
+        "models": [
+          {
+            "brand": "SOUTH",
+            "brandId": 13,
+            "model": "TX1000",
+            "modelId": 25,
+            "partNumber": false,
+            "remoteIds": [2200]
+          },
+          {
+            "brand": "EAST",
+            "brandId": 9,
+            "model": "TX1000",
+            "modelId": 21,
+            "partNumber": false,
+            "remoteIds": [2000]
+          },
+          {
+            "brand": "NORTH",
+            "brandId": 12,
+            "model": "TX1000",
+            "modelId": 24,
+            "partNumber": false,
+            "remoteIds": [2100]
+          },
+          {
+            "brand": "WEST",
+            "brandId": 14,
+            "model": "TX1000",
+            "modelId": 27,
+            "partNumber": false,
+            "remoteIds": [2300]
+          }
+        ],
+        "note": "four equal matches fill the limit of four: the worse one is not let in, hinted or not",
+        "prefer": [
+          "SOUTH"
+        ],
+        "query": "tx1000"
+      },
+      {
+        "brands": [],
+        "catalog": "ties",
+        "limit": 5,
+        "models": [
+          {
+            "brand": "SOUTH",
+            "brandId": 13,
+            "model": "TX1000",
+            "modelId": 25,
+            "partNumber": false,
+            "remoteIds": [2200]
+          },
+          {
+            "brand": "EAST",
+            "brandId": 9,
+            "model": "TX1000",
+            "modelId": 21,
+            "partNumber": false,
+            "remoteIds": [2000]
+          },
+          {
+            "brand": "NORTH",
+            "brandId": 12,
+            "model": "TX1000",
+            "modelId": 24,
+            "partNumber": false,
+            "remoteIds": [2100]
+          },
+          {
+            "brand": "WEST",
+            "brandId": 14,
+            "model": "TX1000",
+            "modelId": 27,
+            "partNumber": false,
+            "remoteIds": [2300]
+          },
+          {
+            "brand": "SOUTH",
+            "brandId": 13,
+            "model": "TX10001",
+            "modelId": 26,
+            "partNumber": false,
+            "remoteIds": [2400]
+          }
+        ],
+        "note": "a limit of 5 is the whole list",
+        "prefer": [
+          "SOUTH"
+        ],
+        "query": "tx1000"
+      },
+      {
+        "brands": [],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "EAST",
+            "brandId": 9,
+            "model": "TX1000",
+            "modelId": 21,
+            "partNumber": false,
+            "remoteIds": [2000]
+          },
+          {
+            "brand": "NORTH",
+            "brandId": 12,
+            "model": "TX1000",
+            "modelId": 24,
+            "partNumber": false,
+            "remoteIds": [2100]
+          },
+          {
+            "brand": "SOUTH",
+            "brandId": 13,
+            "model": "TX1000",
+            "modelId": 25,
+            "partNumber": false,
+            "remoteIds": [2200]
+          },
+          {
+            "brand": "WEST",
+            "brandId": 14,
+            "model": "TX1000",
+            "modelId": 27,
+            "partNumber": false,
+            "remoteIds": [2300]
+          },
+          {
+            "brand": "SOUTH",
+            "brandId": 13,
+            "model": "TX10001",
+            "modelId": 26,
+            "partNumber": false,
+            "remoteIds": [2400]
+          }
+        ],
+        "note": "brands with no such model add nothing",
+        "prefer": [
+          "ZEBRA",
+          "ALPS"
+        ],
+        "query": "tx1000"
+      },
+      {
+        "brands": [],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "SOUTH",
+            "brandId": 13,
+            "model": "TX1000",
+            "modelId": 25,
+            "partNumber": false,
+            "remoteIds": [2200]
+          },
+          {
+            "brand": "EAST",
+            "brandId": 9,
+            "model": "TX1000",
+            "modelId": 21,
+            "partNumber": false,
+            "remoteIds": [2000]
+          },
+          {
+            "brand": "NORTH",
+            "brandId": 12,
+            "model": "TX1000",
+            "modelId": 24,
+            "partNumber": false,
+            "remoteIds": [2100]
+          },
+          {
+            "brand": "WEST",
+            "brandId": 14,
+            "model": "TX1000",
+            "modelId": 27,
+            "partNumber": false,
+            "remoteIds": [2300]
+          },
+          {
+            "brand": "SOUTH",
+            "brandId": 13,
+            "model": "TX10001",
+            "modelId": 26,
+            "partNumber": false,
+            "remoteIds": [2400]
+          }
+        ],
+        "note": "a Chinese name of a brand stands for the brand: SOUTH's first",
+        "prefer": [
+          "南方"
+        ],
+        "query": "tx1000"
+      },
+      {
+        "brands": [],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "NORTH",
+            "brandId": 12,
+            "model": "TX1000",
+            "modelId": 24,
+            "partNumber": false,
+            "remoteIds": [2100]
+          },
+          {
+            "brand": "SOUTH",
+            "brandId": 13,
+            "model": "TX1000",
+            "modelId": 25,
+            "partNumber": false,
+            "remoteIds": [2200]
+          },
+          {
+            "brand": "EAST",
+            "brandId": 9,
+            "model": "TX1000",
+            "modelId": 21,
+            "partNumber": false,
+            "remoteIds": [2000]
+          },
+          {
+            "brand": "WEST",
+            "brandId": 14,
+            "model": "TX1000",
+            "modelId": 27,
+            "partNumber": false,
+            "remoteIds": [2300]
+          },
+          {
+            "brand": "SOUTH",
+            "brandId": 13,
+            "model": "TX10001",
+            "modelId": 26,
+            "partNumber": false,
+            "remoteIds": [2400]
+          }
+        ],
+        "note": "two Chinese names: NORTH's and SOUTH's, in their order",
+        "prefer": [
+          "北方",
+          "南方"
+        ],
+        "query": "tx1000"
+      },
+      {
+        "brands": [],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "EAST",
+            "brandId": 9,
+            "model": "TX1000",
+            "modelId": 21,
+            "partNumber": false,
+            "remoteIds": [2000]
+          },
+          {
+            "brand": "WEST",
+            "brandId": 14,
+            "model": "TX1000",
+            "modelId": 27,
+            "partNumber": false,
+            "remoteIds": [2300]
+          },
+          {
+            "brand": "NORTH",
+            "brandId": 12,
+            "model": "TX1000",
+            "modelId": 24,
+            "partNumber": false,
+            "remoteIds": [2100]
+          },
+          {
+            "brand": "SOUTH",
+            "brandId": 13,
+            "model": "TX1000",
+            "modelId": 25,
+            "partNumber": false,
+            "remoteIds": [2200]
+          },
+          {
+            "brand": "SOUTH",
+            "brandId": 13,
+            "model": "TX10001",
+            "modelId": 26,
+            "partNumber": false,
+            "remoteIds": [2400]
+          }
+        ],
+        "note": "a name that two brands share stands for both: EAST's and WEST's first",
+        "prefer": [
+          "方向"
+        ],
+        "query": "tx1000"
+      },
+      {
+        "brands": [],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "EAST",
+            "brandId": 9,
+            "model": "TX1000",
+            "modelId": 21,
+            "partNumber": false,
+            "remoteIds": [2000]
+          },
+          {
+            "brand": "SOUTH",
+            "brandId": 13,
+            "model": "TX1000",
+            "modelId": 25,
+            "partNumber": false,
+            "remoteIds": [2200]
+          },
+          {
+            "brand": "WEST",
+            "brandId": 14,
+            "model": "TX1000",
+            "modelId": 27,
+            "partNumber": false,
+            "remoteIds": [2300]
+          },
+          {
+            "brand": "NORTH",
+            "brandId": 12,
+            "model": "TX1000",
+            "modelId": 24,
+            "partNumber": false,
+            "remoteIds": [2100]
+          },
+          {
+            "brand": "SOUTH",
+            "brandId": 13,
+            "model": "TX10001",
+            "modelId": 26,
+            "partNumber": false,
+            "remoteIds": [2400]
+          }
+        ],
+        "note": "a shared name and another: EAST, SOUTH, WEST in their order, then NORTH",
+        "prefer": [
+          "方向",
+          "南方"
+        ],
+        "query": "tx1000"
+      },
+      {
+        "brands": [],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [],
+        "note": "four characters are too few for the matcher's models: no model, no change",
+        "prefer": [
+          "WEST"
+        ],
+        "query": "tx"
+      },
+      {
+        "brands": [],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "WEST",
+            "brandId": 14,
+            "model": "TX1000",
+            "modelId": 27,
+            "partNumber": false,
+            "remoteIds": [2300]
+          },
+          {
+            "brand": "EAST",
+            "brandId": 9,
+            "model": "TX1000",
+            "modelId": 21,
+            "partNumber": false,
+            "remoteIds": [2000]
+          },
+          {
+            "brand": "NORTH",
+            "brandId": 12,
+            "model": "TX1000",
+            "modelId": 24,
+            "partNumber": false,
+            "remoteIds": [2100]
+          },
+          {
+            "brand": "SOUTH",
+            "brandId": 13,
+            "model": "TX1000",
+            "modelId": 25,
+            "partNumber": false,
+            "remoteIds": [2200]
+          },
+          {
+            "brand": "SOUTH",
+            "brandId": 13,
+            "model": "TX10001",
+            "modelId": 26,
+            "partNumber": false,
+            "remoteIds": [2400]
+          },
+          {
+            "brand": "ACID",
+            "brandId": 2,
+            "model": "X100",
+            "modelId": 2,
+            "partNumber": false,
+            "remoteIds": [1600]
+          },
+          {
+            "brand": "ACME",
+            "brandId": 3,
+            "model": "X100",
+            "modelId": 4,
+            "partNumber": false,
+            "remoteIds": [1700]
+          }
+        ],
+        "note": "five characters: TX1000 under four brands, a prefix match of equal weight, WEST first",
+        "prefer": [
+          "WEST"
+        ],
+        "query": "tx100"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 9,
+            "modelCount": 1,
+            "name": "EAST"
+          },
+          {
+            "brandId": 14,
+            "modelCount": 1,
+            "name": "WEST"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "EAST",
+            "brandId": 9,
+            "model": "TX1000",
+            "modelId": 21,
+            "partNumber": false,
+            "remoteIds": [2000]
+          },
+          {
+            "brand": "WEST",
+            "brandId": 14,
+            "model": "TX1000",
+            "modelId": 27,
+            "partNumber": false,
+            "remoteIds": [2300]
+          }
+        ],
+        "note": "no hint: a name that EAST and WEST share is the key of both, and names both: EAST, WEST and their models",
+        "prefer": [],
+        "query": "方向"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 14,
+            "modelCount": 1,
+            "name": "WEST"
+          },
+          {
+            "brandId": 9,
+            "modelCount": 1,
+            "name": "EAST"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "WEST",
+            "brandId": 14,
+            "model": "TX1000",
+            "modelId": 27,
+            "partNumber": false,
+            "remoteIds": [2300]
+          },
+          {
+            "brand": "EAST",
+            "brandId": 9,
+            "model": "TX1000",
+            "modelId": 21,
+            "partNumber": false,
+            "remoteIds": [2000]
+          }
+        ],
+        "note": "the exact key of two brands that tie: the hinted one first, and its model first",
+        "prefer": [
+          "WEST"
+        ],
+        "query": "方向"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 14,
+            "modelCount": 1,
+            "name": "WEST"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 1,
+        "models": [
+          {
+            "brand": "WEST",
+            "brandId": 14,
+            "model": "TX1000",
+            "modelId": 27,
+            "partNumber": false,
+            "remoteIds": [2300]
+          }
+        ],
+        "note": "the limit of models keeps the hinted brand's",
+        "prefer": [
+          "WEST"
+        ],
+        "query": "方向"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 9,
+            "modelCount": 1,
+            "name": "EAST"
+          },
+          {
+            "brandId": 14,
+            "modelCount": 1,
+            "name": "WEST"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "EAST",
+            "brandId": 9,
+            "model": "TX1000",
+            "modelId": 21,
+            "partNumber": false,
+            "remoteIds": [2000]
+          },
+          {
+            "brand": "WEST",
+            "brandId": 14,
+            "model": "TX1000",
+            "modelId": 27,
+            "partNumber": false,
+            "remoteIds": [2300]
+          }
+        ],
+        "note": "a brand the query does not name is not added",
+        "prefer": [
+          "南方"
+        ],
+        "query": "方向"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 14,
+            "modelCount": 1,
+            "name": "WEST"
+          },
+          {
+            "brandId": 9,
+            "modelCount": 1,
+            "name": "EAST"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "WEST",
+            "brandId": 14,
+            "model": "TX1000",
+            "modelId": 27,
+            "partNumber": false,
+            "remoteIds": [2300]
+          },
+          {
+            "brand": "EAST",
+            "brandId": 9,
+            "model": "TX1000",
+            "modelId": 21,
+            "partNumber": false,
+            "remoteIds": [2000]
+          }
+        ],
+        "note": "a shared name and the start of a model: both brands' TX1000, the hinted one's first",
+        "prefer": [
+          "WEST"
+        ],
+        "query": "方向 tx"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 13,
+            "modelCount": 2,
+            "name": "SOUTH"
+          },
+          {
+            "brandId": 12,
+            "modelCount": 1,
+            "name": "NORTH"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "SOUTH",
+            "brandId": 13,
+            "model": "TX1000",
+            "modelId": 25,
+            "partNumber": false,
+            "remoteIds": [2200]
+          },
+          {
+            "brand": "SOUTH",
+            "brandId": 13,
+            "model": "TX10001",
+            "modelId": 26,
+            "partNumber": false,
+            "remoteIds": [2400]
+          },
+          {
+            "brand": "NORTH",
+            "brandId": 12,
+            "model": "TX1000",
+            "modelId": 24,
+            "partNumber": false,
+            "remoteIds": [2100]
+          }
+        ],
+        "note": "two Chinese names of runs of the same length: SOUTH before NORTH, and its models",
+        "prefer": [
+          "南方"
+        ],
+        "query": "北方 南方"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 15,
+            "modelCount": 9,
+            "name": "ZEBRA"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "ZEBRA",
+            "brandId": 15,
+            "model": "ZZ1",
+            "modelId": 29,
+            "partNumber": false,
+            "remoteIds": [2510, 2511]
+          },
+          {
+            "brand": "ZEBRA",
+            "brandId": 15,
+            "model": "ZZ3",
+            "modelId": 31,
+            "partNumber": false,
+            "remoteIds": [2530, 2531]
+          },
+          {
+            "brand": "ZEBRA",
+            "brandId": 15,
+            "model": "ZZ5",
+            "modelId": 33,
+            "partNumber": false,
+            "remoteIds": [2550, 2551]
+          },
+          {
+            "brand": "ZEBRA",
+            "brandId": 15,
+            "model": "ZZ7",
+            "modelId": 35,
+            "partNumber": false,
+            "remoteIds": [2570, 2571]
+          },
+          {
+            "brand": "ZEBRA",
+            "brandId": 15,
+            "model": "ZZ0",
+            "modelId": 28,
+            "partNumber": false,
+            "remoteIds": [2500]
+          },
+          {
+            "brand": "ZEBRA",
+            "brandId": 15,
+            "model": "ZZ2",
+            "modelId": 30,
+            "partNumber": false,
+            "remoteIds": [2520]
+          },
+          {
+            "brand": "ZEBRA",
+            "brandId": 15,
+            "model": "ZZ4",
+            "modelId": 32,
+            "partNumber": false,
+            "remoteIds": [2540]
+          },
+          {
+            "brand": "ZEBRA",
+            "brandId": 15,
+            "model": "ZZ6",
+            "modelId": 34,
+            "partNumber": false,
+            "remoteIds": [2560]
+          }
+        ],
+        "note": "the models of one brand are never reordered by a hint",
+        "prefer": [
+          "ZEBRA"
+        ],
+        "query": "zebra"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 6,
+            "modelCount": 5,
+            "name": "ALPINE"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "ALPINE",
+            "brandId": 6,
+            "model": "P2",
+            "modelId": 11,
+            "partNumber": false,
+            "remoteIds": [1210, 1211]
+          },
+          {
+            "brand": "ALPINE",
+            "brandId": 6,
+            "model": "P4",
+            "modelId": 13,
+            "partNumber": false,
+            "remoteIds": [1230, 1231]
+          },
+          {
+            "brand": "ALPINE",
+            "brandId": 6,
+            "model": "P1",
+            "modelId": 10,
+            "partNumber": false,
+            "remoteIds": [1200]
+          },
+          {
+            "brand": "ALPINE",
+            "brandId": 6,
+            "model": "P3",
+            "modelId": 12,
+            "partNumber": false,
+            "remoteIds": [1220]
+          },
+          {
+            "brand": "ALPINE",
+            "brandId": 6,
+            "model": "P5",
+            "modelId": 14,
+            "partNumber": false,
+            "remoteIds": [1240]
+          }
+        ],
+        "note": "the same inside a brand with a start of a model",
+        "prefer": [
+          "ALPINE",
+          "ZEBRA"
+        ],
+        "query": "alpine p"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 6,
+            "modelCount": 5,
+            "name": "ALPINE"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "ALPINE",
+            "brandId": 6,
+            "model": "P2",
+            "modelId": 11,
+            "partNumber": false,
+            "remoteIds": [1210, 1211]
+          },
+          {
+            "brand": "ALPINE",
+            "brandId": 6,
+            "model": "P4",
+            "modelId": 13,
+            "partNumber": false,
+            "remoteIds": [1230, 1231]
+          },
+          {
+            "brand": "ALPINE",
+            "brandId": 6,
+            "model": "P1",
+            "modelId": 10,
+            "partNumber": false,
+            "remoteIds": [1200]
+          },
+          {
+            "brand": "ALPINE",
+            "brandId": 6,
+            "model": "P3",
+            "modelId": 12,
+            "partNumber": false,
+            "remoteIds": [1220]
+          },
+          {
+            "brand": "ALPINE",
+            "brandId": 6,
+            "model": "P5",
+            "modelId": 14,
+            "partNumber": false,
+            "remoteIds": [1240]
+          }
+        ],
+        "note": "most remotes first, then by name, as without a hint",
+        "prefer": [
+          "ALPINE"
+        ],
+        "query": "alpine"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 6,
+            "modelCount": 5,
+            "name": "ALPINE"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "ALPINE",
+            "brandId": 6,
+            "model": "P2",
+            "modelId": 11,
+            "partNumber": false,
+            "remoteIds": [1210, 1211]
+          },
+          {
+            "brand": "ALPINE",
+            "brandId": 6,
+            "model": "P4",
+            "modelId": 13,
+            "partNumber": false,
+            "remoteIds": [1230, 1231]
+          },
+          {
+            "brand": "ALPINE",
+            "brandId": 6,
+            "model": "P1",
+            "modelId": 10,
+            "partNumber": false,
+            "remoteIds": [1200]
+          },
+          {
+            "brand": "ALPINE",
+            "brandId": 6,
+            "model": "P3",
+            "modelId": 12,
+            "partNumber": false,
+            "remoteIds": [1220]
+          },
+          {
+            "brand": "ALPINE",
+            "brandId": 6,
+            "model": "P5",
+            "modelId": 14,
+            "partNumber": false,
+            "remoteIds": [1240]
+          }
+        ],
+        "note": "a hint for another brand changes nothing inside a brand",
+        "prefer": [
+          "ALPS"
+        ],
+        "query": "alpine"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 7,
+            "modelCount": 1,
+            "name": "ALPS"
+          },
+          {
+            "brandId": 6,
+            "modelCount": 5,
+            "name": "ALPINE"
+          },
+          {
+            "brandId": 8,
+            "modelCount": 5,
+            "name": "ALTEC"
+          },
+          {
+            "brandId": 3,
+            "modelCount": 3,
+            "name": "ACME"
+          },
+          {
+            "brandId": 2,
+            "modelCount": 2,
+            "name": "ACID"
+          },
+          {
+            "brandId": 5,
+            "modelCount": 2,
+            "name": "ALPHA"
+          },
+          {
+            "brandId": 1,
+            "modelCount": 1,
+            "name": "AC"
+          },
+          {
+            "brandId": 4,
+            "modelCount": 1,
+            "name": "AL"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [],
+        "note": "typing: brands that start with the query, 1 of 3 characters",
+        "prefer": [
+          "ALPS"
+        ],
+        "query": "a"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 4,
+            "modelCount": 1,
+            "name": "AL"
+          },
+          {
+            "brandId": 7,
+            "modelCount": 1,
+            "name": "ALPS"
+          },
+          {
+            "brandId": 6,
+            "modelCount": 5,
+            "name": "ALPINE"
+          },
+          {
+            "brandId": 8,
+            "modelCount": 5,
+            "name": "ALTEC"
+          },
+          {
+            "brandId": 5,
+            "modelCount": 2,
+            "name": "ALPHA"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "AL",
+            "brandId": 4,
+            "model": "A1",
+            "modelId": 7,
+            "partNumber": false,
+            "remoteIds": [1000]
+          }
+        ],
+        "note": "typing: brands that start with the query, 2 of 3 characters",
+        "prefer": [
+          "ALPS"
+        ],
+        "query": "al"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 7,
+            "modelCount": 1,
+            "name": "ALPS"
+          },
+          {
+            "brandId": 6,
+            "modelCount": 5,
+            "name": "ALPINE"
+          },
+          {
+            "brandId": 5,
+            "modelCount": 2,
+            "name": "ALPHA"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [],
+        "note": "typing: brands that start with the query, 3 of 3 characters",
+        "prefer": [
+          "ALPS"
+        ],
+        "query": "alp"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 3,
+            "modelCount": 3,
+            "name": "ACME"
+          },
+          {
+            "brandId": 6,
+            "modelCount": 5,
+            "name": "ALPINE"
+          },
+          {
+            "brandId": 8,
+            "modelCount": 5,
+            "name": "ALTEC"
+          },
+          {
+            "brandId": 2,
+            "modelCount": 2,
+            "name": "ACID"
+          },
+          {
+            "brandId": 5,
+            "modelCount": 2,
+            "name": "ALPHA"
+          },
+          {
+            "brandId": 1,
+            "modelCount": 1,
+            "name": "AC"
+          },
+          {
+            "brandId": 4,
+            "modelCount": 1,
+            "name": "AL"
+          },
+          {
+            "brandId": 7,
+            "modelCount": 1,
+            "name": "ALPS"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [],
+        "note": "typing: two named brands, 1 of 9 characters",
+        "prefer": [
+          "ACME"
+        ],
+        "query": "a"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 1,
+            "modelCount": 1,
+            "name": "AC"
+          },
+          {
+            "brandId": 3,
+            "modelCount": 3,
+            "name": "ACME"
+          },
+          {
+            "brandId": 2,
+            "modelCount": 2,
+            "name": "ACID"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "AC",
+            "brandId": 1,
+            "model": "Z1",
+            "modelId": 1,
+            "partNumber": false,
+            "remoteIds": [1100]
+          }
+        ],
+        "note": "typing: two named brands, 2 of 9 characters",
+        "prefer": [
+          "ACME"
+        ],
+        "query": "ac"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 2,
+            "modelCount": 2,
+            "name": "ACID"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [],
+        "note": "typing: two named brands, 3 of 9 characters",
+        "prefer": [
+          "ACME"
+        ],
+        "query": "aci"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 2,
+            "modelCount": 2,
+            "name": "ACID"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "ACID",
+            "brandId": 2,
+            "model": "X101",
+            "modelId": 3,
+            "partNumber": false,
+            "remoteIds": [1610, 1611]
+          },
+          {
+            "brand": "ACID",
+            "brandId": 2,
+            "model": "X100",
+            "modelId": 2,
+            "partNumber": false,
+            "remoteIds": [1600]
+          }
+        ],
+        "note": "typing: two named brands, 4 of 9 characters",
+        "prefer": [
+          "ACME"
+        ],
+        "query": "acid"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 2,
+            "modelCount": 2,
+            "name": "ACID"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "ACID",
+            "brandId": 2,
+            "model": "X101",
+            "modelId": 3,
+            "partNumber": false,
+            "remoteIds": [1610, 1611]
+          },
+          {
+            "brand": "ACID",
+            "brandId": 2,
+            "model": "X100",
+            "modelId": 2,
+            "partNumber": false,
+            "remoteIds": [1600]
+          }
+        ],
+        "note": "typing: two named brands, 5 of 9 characters",
+        "prefer": [
+          "ACME"
+        ],
+        "query": "acid "
+      },
+      {
+        "brands": [
+          {
+            "brandId": 2,
+            "modelCount": 2,
+            "name": "ACID"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [],
+        "note": "typing: two named brands, 6 of 9 characters",
+        "prefer": [
+          "ACME"
+        ],
+        "query": "acid a"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 2,
+            "modelCount": 2,
+            "name": "ACID"
+          },
+          {
+            "brandId": 1,
+            "modelCount": 1,
+            "name": "AC"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "ACID",
+            "brandId": 2,
+            "model": "X101",
+            "modelId": 3,
+            "partNumber": false,
+            "remoteIds": [1610, 1611]
+          },
+          {
+            "brand": "ACID",
+            "brandId": 2,
+            "model": "X100",
+            "modelId": 2,
+            "partNumber": false,
+            "remoteIds": [1600]
+          },
+          {
+            "brand": "AC",
+            "brandId": 1,
+            "model": "Z1",
+            "modelId": 1,
+            "partNumber": false,
+            "remoteIds": [1100]
+          }
+        ],
+        "note": "typing: two named brands, 7 of 9 characters",
+        "prefer": [
+          "ACME"
+        ],
+        "query": "acid ac"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 2,
+            "modelCount": 2,
+            "name": "ACID"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [],
+        "note": "typing: two named brands, 8 of 9 characters",
+        "prefer": [
+          "ACME"
+        ],
+        "query": "acid acm"
+      },
+      {
+        "brands": [
+          {
+            "brandId": 3,
+            "modelCount": 3,
+            "name": "ACME"
+          },
+          {
+            "brandId": 2,
+            "modelCount": 2,
+            "name": "ACID"
+          }
+        ],
+        "catalog": "ties",
+        "limit": 8,
+        "models": [
+          {
+            "brand": "ACME",
+            "brandId": 3,
+            "model": "X102",
+            "modelId": 5,
+            "partNumber": false,
+            "remoteIds": [1710, 1711]
+          },
+          {
+            "brand": "ACME",
+            "brandId": 3,
+            "model": "X100",
+            "modelId": 4,
+            "partNumber": false,
+            "remoteIds": [1700]
+          },
+          {
+            "brand": "ACME",
+            "brandId": 3,
+            "model": "X103",
+            "modelId": 6,
+            "partNumber": false,
+            "remoteIds": [1720]
+          },
+          {
+            "brand": "ACID",
+            "brandId": 2,
+            "model": "X101",
+            "modelId": 3,
+            "partNumber": false,
+            "remoteIds": [1610, 1611]
+          },
+          {
+            "brand": "ACID",
+            "brandId": 2,
+            "model": "X100",
+            "modelId": 2,
+            "partNumber": false,
+            "remoteIds": [1600]
+          }
+        ],
+        "note": "typing: two named brands, 9 of 9 characters",
+        "prefer": [
+          "ACME"
+        ],
+        "query": "acid acme"
+      }
+    ],
+    "ties": {
+      "aliases": [
+        {
+          "alias": "北方",
+          "brand": "NORTH"
+        },
+        {
+          "alias": "南方",
+          "brand": "SOUTH"
+        },
+        {
+          "alias": "方向",
+          "brand": "EAST"
+        },
+        {
+          "alias": "方向",
+          "brand": "WEST"
+        }
+      ],
+      "catalog": [
+        {
+          "brand": "AL",
+          "model": "A1",
+          "remotes": [1000]
+        },
+        {
+          "brand": "AC",
+          "model": "Z1",
+          "remotes": [1100]
+        },
+        {
+          "brand": "ALPINE",
+          "model": "P1",
+          "remotes": [1200]
+        },
+        {
+          "brand": "ALPINE",
+          "model": "P2",
+          "remotes": [1210, 1211]
+        },
+        {
+          "brand": "ALPINE",
+          "model": "P3",
+          "remotes": [1220]
+        },
+        {
+          "brand": "ALPINE",
+          "model": "P4",
+          "remotes": [1230, 1231]
+        },
+        {
+          "brand": "ALPINE",
+          "model": "P5",
+          "remotes": [1240]
+        },
+        {
+          "brand": "ALTEC",
+          "model": "T1",
+          "remotes": [1300]
+        },
+        {
+          "brand": "ALTEC",
+          "model": "T2",
+          "remotes": [1310, 1311]
+        },
+        {
+          "brand": "ALTEC",
+          "model": "T3",
+          "remotes": [1320]
+        },
+        {
+          "brand": "ALTEC",
+          "model": "T4",
+          "remotes": [1330, 1331]
+        },
+        {
+          "brand": "ALTEC",
+          "model": "T5",
+          "remotes": [1340]
+        },
+        {
+          "brand": "ALPHA",
+          "model": "H1",
+          "remotes": [1400]
+        },
+        {
+          "brand": "ALPHA",
+          "model": "H2",
+          "remotes": [1410, 1411]
+        },
+        {
+          "brand": "ALPS",
+          "model": "S1",
+          "remotes": [1500]
+        },
+        {
+          "brand": "ACID",
+          "model": "X100",
+          "remotes": [1600]
+        },
+        {
+          "brand": "ACID",
+          "model": "X101",
+          "remotes": [1610, 1611]
+        },
+        {
+          "brand": "ACME",
+          "model": "X100",
+          "remotes": [1700]
+        },
+        {
+          "brand": "ACME",
+          "model": "X102",
+          "remotes": [1710, 1711]
+        },
+        {
+          "brand": "ACME",
+          "model": "X103",
+          "remotes": [1720]
+        },
+        {
+          "brand": "KORAX",
+          "model": "K1",
+          "remotes": [1800]
+        },
+        {
+          "brand": "KOREX",
+          "model": "K2",
+          "remotes": [1900]
+        },
+        {
+          "brand": "EAST",
+          "model": "TX1000",
+          "remotes": [2000]
+        },
+        {
+          "brand": "NORTH",
+          "model": "TX1000",
+          "remotes": [2100]
+        },
+        {
+          "brand": "SOUTH",
+          "model": "TX1000",
+          "remotes": [2200]
+        },
+        {
+          "brand": "WEST",
+          "model": "TX1000",
+          "remotes": [2300]
+        },
+        {
+          "brand": "SOUTH",
+          "model": "TX10001",
+          "remotes": [2400]
+        },
+        {
+          "brand": "ZEBRA",
+          "model": "ZZ0",
+          "remotes": [2500]
+        },
+        {
+          "brand": "ZEBRA",
+          "model": "ZZ1",
+          "remotes": [2510, 2511]
+        },
+        {
+          "brand": "ZEBRA",
+          "model": "ZZ2",
+          "remotes": [2520]
+        },
+        {
+          "brand": "ZEBRA",
+          "model": "ZZ3",
+          "remotes": [2530, 2531]
+        },
+        {
+          "brand": "ZEBRA",
+          "model": "ZZ4",
+          "remotes": [2540]
+        },
+        {
+          "brand": "ZEBRA",
+          "model": "ZZ5",
+          "remotes": [2550, 2551]
+        },
+        {
+          "brand": "ZEBRA",
+          "model": "ZZ6",
+          "remotes": [2560]
+        },
+        {
+          "brand": "ZEBRA",
+          "model": "ZZ7",
+          "remotes": [2570, 2571]
+        },
+        {
+          "brand": "ZEBRA",
+          "model": "ZZ8",
+          "remotes": [2580]
+        }
+      ]
+    }
+  },
   "suggest": [
     {
       "brands": [],
