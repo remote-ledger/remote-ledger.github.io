@@ -28,7 +28,7 @@ from pathlib import Path
 
 import pytest
 
-from bundle_corpus import make_corpus
+from bundle_corpus import floor_of_the_small_ledgers, make_corpus
 from remote_ledger import cli, parallel
 from remote_ledger.bundle import build as bb
 from remote_ledger.bundle import catalog, corpus, merge, writer
@@ -360,7 +360,8 @@ def full(ledger):
 
 @pytest.fixture(scope="module")
 def selected(ledger):
-    built = bb.build_bundle(ledger, "selected", aliases=())
+    with floor_of_the_small_ledgers():
+        built = bb.build_bundle(ledger, "selected", aliases=())
     assert built.problems == []
     return built
 
@@ -635,7 +636,8 @@ def test_the_matcher_and_suggest_answer_with_the_remote_that_carries_a_fragment(
 def written(ledger, tmp_path_factory):
     out = {}
     for profile in ("full", "selected"):
-        built = bb.build_bundle(ledger, profile, aliases=())
+        with floor_of_the_small_ledgers():
+            built = bb.build_bundle(ledger, profile, aliases=())
         directory = tmp_path_factory.mktemp(f"merge-{profile}")
         bb.write_bundle(built, directory, ledger)
         out[profile] = directory
@@ -905,7 +907,7 @@ def real_selected_unfolded(real_records):
     try:
         # never shipped, only compared with: it is 20,287,488 bytes, over the cap, because folding the
         # fragments (D103) is what gives the real one room (D116)
-        built = bb.build_bundle(ROOT, "selected", records=real_records, max_bytes=25_000_000)
+        built = bb.build_bundle(ROOT, "selected", records=real_records, max_bytes=10**9)
     finally:
         patch.undo()
     assert built.problems == []
@@ -926,7 +928,7 @@ def test_over_the_real_selected_bundle_the_matcher_answers_as_before_with_the_ca
     for ref, remote_id, _, _ in index.conn.execute("SELECT f.ref, r.ref, f.first_n, f.key_count FROM remote_refs f "
                                                    "JOIN remotes r ON r.id = f.remote_id"):
         carrier[refs[ref]] = ids[remote_id]
-    assert sum(1 for a, b in carrier.items() if a != b) == 298
+    assert sum(1 for a, b in carrier.items() if a != b) == 315
     queries = search_eval.generate(plain.conn, per_class=15)
     assert len(queries) >= 100
     for q in queries:
@@ -946,10 +948,13 @@ def test_over_the_real_selected_bundle_the_matcher_answers_as_before_with_the_ca
 def test_the_selected_bundle_still_carries_the_selection_and_fits(real_selected, real_selected_unfolded):
     built, _ = real_selected
     assert built.selection.chosen == real_selected_unfolded.selection.chosen
-    assert built.stats["bytes"] <= bb.select.SELECTED_MAX_BYTES == 20_250_000
-    assert built.stats["remoteRefs"] == real_selected_unfolded.stats["remotes"] == 4_545
-    assert built.stats["remotes"] == 4_247 and built.stats["foldedFragments"] == 298
-    assert built.stats["keys"] == real_selected_unfolded.stats["keys"] == 172_418
+    # no cap, no budget and every brand (D117): it is the whole ledger, and folding is what makes it
+    # 160 KB smaller than the unfolded one (51,478,528 bytes)
+    assert bb.select.SELECTED_MAX_BYTES is None and built.stats["bytes"] > 51_000_000
+    assert built.stats["bytes"] < real_selected_unfolded.stats["bytes"]
+    assert built.stats["remoteRefs"] == real_selected_unfolded.stats["remotes"] == 13_369
+    assert built.stats["remotes"] == 13_054 and built.stats["foldedFragments"] == 315
+    assert built.stats["keys"] == real_selected_unfolded.stats["keys"] == 531_868
 
 
 def test_design_quotes_the_numbers_of_the_measurement(real_records, real):

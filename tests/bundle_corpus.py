@@ -11,7 +11,10 @@ from __future__ import annotations
 
 import json
 import shutil
+from contextlib import contextmanager
 from pathlib import Path
+
+import pytest
 
 from app_corpus import make_import
 
@@ -64,6 +67,20 @@ SMARTIR = {
         "keys": {"KEY_POWER": raw_key([], FRAME), "KEY_OFF": raw_key([], FRAME2)},
     },
 }
+
+
+@contextmanager
+def floor_of_the_small_ledgers():
+    """The proxy fill's floor as it was before D117 (40 models, 60% of keys mapped). The shipped
+    ``selected`` profile carries every brand now; a test over a small made-up ledger builds with
+    the floor so that it still has a brand left out to look at. ``conftest.py`` does the same for
+    a test function, and this is for the fixtures that build a bundle once for a module."""
+    from remote_ledger.bundle import select
+
+    with pytest.MonkeyPatch.context() as patch:
+        patch.setattr(select, "MIN_MODELS", 40)
+        patch.setattr(select, "MIN_MAPPED_SHARE", 0.60)
+        yield
 
 
 def make_corpus(root: Path, irblaster: dict[int, dict] | None = None) -> Path:

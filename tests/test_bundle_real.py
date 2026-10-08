@@ -66,15 +66,22 @@ def test_no_remote_has_a_second_candidate_group(real):
     assert sum(r.other_candidates for r in real[0]) == 0
 
 
-def test_the_selected_profile_carries_what_it_carried_before_the_import(selection):
-    """D116: hifi-remote.com's Sony pages cost the selected profile 609,400 estimated bytes, and
-    under the old budget that moved Sanyo, Loewe, Haier, Integra and the proxy's brand out. The
-    budget and the cap were raised until the selection was the one made before the import, so
-    these are in, and the estimate sits just under the budget as it did then."""
-    assert {"SANYO", "loewe", "HAIER", "INTEGRA"} <= set(selection.curated)
-    assert len(selection.curated) == 35 and selection.proxy_added == ["SOMMIGE MERKEN"]
-    assert {"SKYWORTH", "westinghouse"} <= set(selection.skipped)
-    assert select.BUDGET_BYTES - 1_000 <= selection.estimated_bytes <= select.BUDGET_BYTES
+def test_the_selected_profile_carries_every_brand_and_has_neither_a_budget_nor_a_cap(real, selected, selection):
+    """D117: the owner asked for all the data and for size not to be a factor. So the profile has
+    no budget, no cap and no floor, takes the whole curated list and then every other brand, and
+    leaves nothing out; what D95 and D116 brought back by raising a budget is in because nothing
+    keeps it out: Sanyo, Loewe, Haier, Integra, Skyworth, Westinghouse, and Topping, which the
+    floor of 40 models would have kept out."""
+    assert select.BUDGET_BYTES is None and select.SELECTED_MAX_BYTES is None
+    assert select.MIN_MODELS == 0 and select.MIN_MAPPED_SHARE == 0.0
+    assembled, data = selected
+    carried = {row[2] for row in assembled.brands}
+    assert carried == set(real[1].brands) and len(carried) == 5_028 and assembled.excluded == []
+    assert len(selection.curated) == 112 and selection.skipped == [] and selection.unresolved == []
+    assert len(selection.proxy_added) == 4_916
+    assert {"sanyo", "loewe", "haier", "integra", "skyworth", "westinghouse", "topping"} <= carried
+    kept = {row[0] for row in assembled.remote_refs}
+    assert kept == {merge.ref_of(r) for r in real[0]}
 
 
 def test_every_name_of_the_curated_list_is_a_brand_of_the_catalog(real, selection):
@@ -84,17 +91,16 @@ def test_every_name_of_the_curated_list_is_a_brand_of_the_catalog(real, selectio
     assert len(selection.curated) + len(selection.skipped) == len(names)
 
 
-def test_the_selection_uses_its_budget_and_starts_with_the_head_of_the_list(selection):
-    assert 0.97 * select.BUDGET_BYTES < selection.estimated_bytes <= select.BUDGET_BYTES
+def test_the_selection_starts_with_the_head_of_the_list(selection):
     assert selection.curated[:10] == ["SAMSUNG", "LG", "SONY", "PANASONIC", "PHILIPS", "SHARP",
                                       "TOSHIBA", "HISENSE", "TCL", "VIZIO"]
-    assert set(selection.curated).isdisjoint(selection.skipped)
-    assert selection.skipped, "the list is longer than the budget: some brands are over it (D95)"
+    assert set(selection.curated).isdisjoint(selection.proxy_added)
 
 
-def test_the_selected_bundle_is_within_the_size_an_app_can_ship(real, selected, selection):
+def test_the_selected_bundle_is_the_size_of_the_data_and_the_estimate_is_within_a_few_percent(
+        real, selected, selection):
     assembled, data = selected
-    assert len(data) <= select.SELECTED_MAX_BYTES == 20_250_000
+    assert len(data) > 51_000_000       # all the data: the size of the full bundle (D117)
     # the estimate the rule works by is within a few percent of the file it predicts
     assert abs(len(data) - selection.estimated_bytes) / len(data) < 0.04
     assert len(assembled.brands) == len(selection.curated) + len(selection.proxy_added)
@@ -143,7 +149,7 @@ def test_design_quotes_the_numbers_of_the_real_build(real, selected, selection):
     kept = {row[0] for row in assembled.remote_refs}
     left_out = [r for r in records if merge.ref_of(r) not in kept]
     quoted = [
-        f"{len(collected.brands):,} | {len(assembled.brands)}",            # the table's brands row
+        f"{len(collected.brands):,} | {len(assembled.brands):,}",          # the table's brands row
         f"{models:,} | {len(assembled.models):,}",
         f"{len(records):,} | {len(kept):,}",                                  # the remote files
         f"{len(records) - collected.folded.folded:,} | {len(assembled.remotes):,}",   # the remotes, D103
@@ -151,12 +157,11 @@ def test_design_quotes_the_numbers_of_the_real_build(real, selected, selection):
         f"160,606 | {len(assembled.signals):,}",
         f"{len(assembled.excluded):,} brands, {len(left_out):,} remotes, "
         f"{sum(len(r.keys) for r in left_out):,} keys",
-        f"{len(selection.curated)} brands of the list and one by the proxy",
-        f"{len(selection.skipped)} brands of the list are left out for lack of room",
+        f"{len(selection.curated)} brands of the list and {len(selection.proxy_added):,} by the proxy",
+        f"{len(selection.skipped)} brands of the list are left out",
         f"{sum(1 for r in left_out if r.source != 'irblaster'):,} remotes of LIRC and SmartIR",
         f"{len(select.read_curated(select.CURATED_FILE.read_text(encoding='utf-8')))} well-known brands",
         "411,265 keys but only 57,709 distinct compiled signals",
     ]
     for fact in quoted:
         assert fact in section, f"DESIGN section 23 no longer says {fact!r}"
-    assert len(selection.proxy_added) == 1

@@ -4,15 +4,19 @@ Two profiles:
 
 * ``full``: every brand, every remote. It is what a backend serves, and what the
   other profile is cut from.
-* ``selected``: a subset sized for an app to ship as an asset, at most
-  :data:`SELECTED_MAX_BYTES` of SQLite. Every number in the rule is a constant of
-  this file, and the brands it prefers are a plain-text file the owner edits
-  (``data/selected_brands.txt``). The rule, in order:
+* ``selected``: the profile an app ships as an asset. Since D117 it has no
+  budget and no floor, so it carries every brand, and the rule below only says in
+  which order they are taken; a budget (:data:`BUDGET_BYTES`) and a floor
+  (:data:`MIN_MODELS`, :data:`MIN_MAPPED_SHARE`) are still honoured when set, which
+  is how the tests and a future owner narrow it again (D92 to D95 describe the
+  profile as it was: at most 20 MB, 36 brands). Every number in the rule is a
+  constant of this file, and the brands it prefers are a plain-text file the owner
+  edits (``data/selected_brands.txt``). The rule, in order:
 
   1. **The curated list**, in the file's order, which is the priority. Each brand
      is carried whole (all its models, remotes and signals) if what it adds still
-     fits the budget :data:`BUDGET_BYTES`; one that does not fit is skipped and the
-     next is tried (the report names every skipped line).
+     fits the budget :data:`BUDGET_BYTES` (none, now); one that does not fit is
+     skipped and the next is tried (the report names every skipped line).
   2. **The proxy fill.** The ledger has no popularity data, so the brands that are
      not on the list are ranked by the best proxy it does have: the number of
      **models** a brand is listed with, per kilobyte the brand costs (a brand with
@@ -46,20 +50,24 @@ from .textnorm import search_norm
 
 PROFILES = ("selected", "full")
 
-#: The size the owner asked of the ``selected`` profile: the app's whole install is
-#: to stay near 30 MB. A build over it fails (``rl bundle --max-bytes`` overrides).
-#: 20,000,000 until D116, which raised it by the 250,000 the Sony pages of
-#: hifi-remote.com need (D109): the file is 20,148,224 bytes.
-SELECTED_MAX_BYTES = 20_250_000
-#: What the estimate below may add up to. Under the cap, because the estimate
-#: leaves out the small tables (the notices' licence texts, the vocabulary, the list
-#: of brands left out: about 0.3 MB) and is within 3% of the file, not exact.
-#: 19,000,000 until D116. The rule is greedy and skips what does not fit, so a
-#: budget is not worth what it adds: only 19,608,400 to 19,609,999 give the
-#: brands chosen before the Sony import, and 19,609,000 is in that window.
-BUDGET_BYTES = 19_609_000
-MIN_MODELS = 40
-MIN_MAPPED_SHARE = 0.60
+#: The most bytes the ``selected`` profile may be: ``None``, no limit (D117). The
+#: owner asked for all the data and for the size not to be a factor, so a build
+#: does not fail for its size. It was 20,000,000 (the app's whole install near 30 MB,
+#: D92), then 20,250,000 (D116). ``rl bundle --max-bytes N`` still sets one.
+SELECTED_MAX_BYTES: int | None = None
+#: What the estimate below may add up to: ``None``, no budget (D117), so every brand
+#: of the list fits and the proxy fill takes every other brand. It was 19,000,000, then
+#: 19,609,000 (D116). The estimate leaves out the small tables (the notices' licence
+#: texts, the vocabulary, the list of brands left out: about 0.3 MB) and is within 3%
+#: of the file, not exact. A budget makes the rule greedy: it skips what does not fit,
+#: and a bigger one is not worth what it adds (D116 has the scan).
+BUDGET_BYTES: int | None = None
+#: The floor a brand outside the list needs to be taken by the proxy fill: at least
+#: this many models, and this share of its keys mapped to a canonical key. 40 and 0.60
+#: until D117, which took the floor away, because it left out 4,427 brands, 2,460
+#: remotes and 91,992 keys (17%), among them Topping.
+MIN_MODELS = 0
+MIN_MAPPED_SHARE = 0.0
 
 #: What a row costs, in bytes of the SQLite file, measured on the full bundle
 #: (D95): a key row, a remote row with its ``ref``, and a model with its
@@ -145,7 +153,7 @@ def choose(collected: Collected, profile: str, curated_text: str | None = None) 
     def take(norm: str) -> bool:
         nonlocal used, included, signals
         cost, remotes, blobs = marginal(norm, included, signals)
-        if used + cost > BUDGET_BYTES:
+        if BUDGET_BYTES is not None and used + cost > BUDGET_BYTES:
             return False
         used += cost
         included |= remotes
@@ -181,9 +189,10 @@ def choose(collected: Collected, profile: str, curated_text: str | None = None) 
 
     selection.chosen = frozenset(chosen)
     selection.estimated_bytes = used
+    budget = "no budget" if BUDGET_BYTES is None else f"{BUDGET_BYTES:,} bytes"
     selection.rule = (
         f"{len(selection.curated)} brands of the curated list, then {len(selection.proxy_added)} "
         f"by models per byte (at least {MIN_MODELS} models, {MIN_MAPPED_SHARE:.0%} of keys mapped), "
-        f"estimated {used:,} of {BUDGET_BYTES:,} bytes"
+        f"estimated {used:,} bytes of {budget}"
     )
     return selection
