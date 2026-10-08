@@ -1,0 +1,715 @@
+{
+  "manufacturer": "NEC",
+  "model": "DS8000U VCR",
+  "aliases": [],
+  "controls": [
+    "NEC DS8000U VCR"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_CH_PLUS": {
+      "label": "Ch+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 0 'Ch+' (OBC FF; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 0; the upgrade's note: 'OK'"
+        }
+      ]
+    },
+    "KEY_CH_MINUS": {
+      "label": "Ch-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 1 'Ch-' (OBC 7F; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 1; the upgrade's note: 'OK'"
+        }
+      ]
+    },
+    "KEY_SLOW_PLUS": {
+      "label": "Slow +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 2 'Slow +' (OBC BF; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 2; the upgrade's note: 'from other file - no function'"
+        }
+      ]
+    },
+    "KEY_SLOW_MINUS": {
+      "label": "Slow -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 3 'Slow -' (OBC 3F; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 3; the upgrade's note: 'from other file - toggles Play 1/3 and Play'"
+        }
+      ]
+    },
+    "KEY_STOP": {
+      "label": "Stop",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 4 'Stop' (OBC DF; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 4; the upgrade's note: 'OK'"
+        }
+      ]
+    },
+    "KEY_PLAY": {
+      "label": "Play",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 5 'Play' (OBC 5F; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 5; the upgrade's note: 'OK'"
+        }
+      ]
+    },
+    "KEY_RECORD": {
+      "label": "Record",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 6 'Record' (OBC 9F; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 6"
+        }
+      ]
+    },
+    "KEY_SR_RCRD_END": {
+      "label": "SR (Rcrd End)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 7 'SR (Rcrd End)' (OBC 1F; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 7"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "Power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 8 'Power' (OBC EF; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 8; the upgrade's note: 'Toggle'"
+        }
+      ]
+    },
+    "KEY_COUNTER_RESET": {
+      "label": "Counter Reset",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 9 'Counter Reset' (OBC 6F; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 9; the upgrade's note: 'OK'"
+        }
+      ]
+    },
+    "KEY_VCR_SLASH_TV": {
+      "label": "VCR/TV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 10 'VCR/TV' (OBC AF; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 10; the upgrade's note: 'learn'"
+        }
+      ]
+    },
+    "KEY_COUNTER_MEMORY": {
+      "label": "Counter Memory",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 11 'Counter Memory' (OBC 2F; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 11; the upgrade's note: 'learn'"
+        }
+      ]
+    },
+    "KEY_FASTFWD": {
+      "label": "FastFwd",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 12 'FastFwd' (OBC CF; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 12; the upgrade's note: 'OK'"
+        }
+      ]
+    },
+    "KEY_REWIND": {
+      "label": "Rewind",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 13 'Rewind' (OBC 4F; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 13; the upgrade's note: 'OK'"
+        }
+      ]
+    },
+    "KEY_PAUSE": {
+      "label": "Pause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x0E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 14 'Pause' (OBC 8F; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 14; the upgrade's note: 'OK'"
+        }
+      ]
+    },
+    "KEY_EJECT": {
+      "label": "Eject",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 15 'Eject' (OBC 0F; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 15; the upgrade's note: 'learn'"
+        }
+      ]
+    },
+    "KEY_1": {
+      "label": "1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 16 '1' (OBC F7; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 16; the upgrade's note: 'OK'"
+        }
+      ]
+    },
+    "KEY_2": {
+      "label": "2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 17 '2' (OBC 77; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 17; the upgrade's note: 'OK'"
+        }
+      ]
+    },
+    "KEY_3": {
+      "label": "3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 18 '3' (OBC B7; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 18; the upgrade's note: 'OK'"
+        }
+      ]
+    },
+    "KEY_4": {
+      "label": "4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 19 '4' (OBC 37; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 19; the upgrade's note: 'OK'"
+        }
+      ]
+    },
+    "KEY_5": {
+      "label": "5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 20 '5' (OBC D7; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 20; the upgrade's note: 'OK'"
+        }
+      ]
+    },
+    "KEY_6": {
+      "label": "6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 21 '6' (OBC 57; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 21; the upgrade's note: 'OK'"
+        }
+      ]
+    },
+    "KEY_7": {
+      "label": "7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 22 '7' (OBC 97; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 22; the upgrade's note: 'OK'"
+        }
+      ]
+    },
+    "KEY_8": {
+      "label": "8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x17",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 23 '8' (OBC 17; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 23; the upgrade's note: 'OK'"
+        }
+      ]
+    },
+    "KEY_9": {
+      "label": "9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x18",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 24 '9' (OBC E7; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 24; the upgrade's note: 'OK'"
+        }
+      ]
+    },
+    "KEY_INPUT_SELECT": {
+      "label": "Input Select",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x19",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 25 'Input Select' (OBC 67; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 25; the upgrade's note: 'from other file'"
+        }
+      ]
+    },
+    "KEY_0": {
+      "label": "0",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 26 '0' (OBC A7; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 26; the upgrade's note: 'OK'"
+        }
+      ]
+    },
+    "KEY_SP_SLASH_EP": {
+      "label": "SP/EP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x1B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 27 'SP/EP' (OBC 27; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 27"
+        }
+      ]
+    },
+    "KEY_STEREO_SLASH_SAP": {
+      "label": "Stereo/SAP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x1D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 28 'Stereo/SAP' (OBC 47; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 29; the upgrade's note: 'learn'"
+        }
+      ]
+    },
+    "KEY_SHUTTLE_FWD": {
+      "label": "Shuttle Fwd",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x60",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 29 'Shuttle Fwd' (OBC F9; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 96; the upgrade's note: 'OK'"
+        }
+      ]
+    },
+    "KEY_SHUTTLE_REV": {
+      "label": "Shuttle Rev",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x61",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 30 'Shuttle Rev' (OBC 79; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 97; the upgrade's note: 'OK'"
+        }
+      ]
+    },
+    "KEY_TRACKING_PLUS": {
+      "label": "Tracking +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x63",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 31 'Tracking +' (OBC 39; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 99; the upgrade's note: 'OK'"
+        }
+      ]
+    },
+    "KEY_TRACKING_MINUS": {
+      "label": "Tracking -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x64",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 32 'Tracking -' (OBC D9; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 100; the upgrade's note: 'OK'"
+        }
+      ]
+    },
+    "KEY_COUNTER_REAL_SLASH_NORM": {
+      "label": "Counter Real/Norm",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x65",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 33 'Counter Real/Norm' (OBC 59; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 101; the upgrade's note: 'OK'"
+        }
+      ]
+    },
+    "KEY_NAT_SLOW_SLASH_NORM_SLOW": {
+      "label": "Nat Slow/Norm Slow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x68",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 34 'Nat Slow/Norm Slow' (OBC E9; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 104; the upgrade's note: 'Natural Slow/Normal Slow (for SP playback)'"
+        }
+      ]
+    },
+    "KEY_CHAN_MONITOR": {
+      "label": "Chan Monitor",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x6F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 35 'Chan Monitor' (OBC 09; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 111; the upgrade's note: 'from other file'"
+        }
+      ]
+    },
+    "KEY_MENU": {
+      "label": "Menu",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x82",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 36 'Menu' (OBC BE; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 130; the upgrade's note: 'from other file - shows Program Menu'"
+        }
+      ]
+    },
+    "KEY_ON_MINUS_SCREEN_DISPLAY": {
+      "label": "On-Screen Display",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x84",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 37 'On-Screen Display' (OBC DE; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 132; the upgrade's note: 'OK'"
+        }
+      ]
+    },
+    "KEY_30_SEC_SKIP": {
+      "label": "30 Sec Skip",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x86",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 38 '30 Sec Skip' (OBC 9E; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 134; the upgrade's note: 'from other file'"
+        }
+      ]
+    },
+    "KEY_DIGITAL_MEMORY": {
+      "label": "Digital Memory",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x90",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 39 'Digital Memory' (OBC F6; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 144; the upgrade's note: 'learn'"
+        }
+      ]
+    },
+    "KEY_STEREO_SLASH_L_SLASH_R": {
+      "label": "Stereo/L/R",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x91",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 40 'Stereo/L/R' (OBC 76; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 145; the upgrade's note: 'OK'"
+        }
+      ]
+    },
+    "KEY_HIFI_SLASH_NORMAL": {
+      "label": "HiFi/Normal",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x92",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 41 'HiFi/Normal' (OBC B6; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 146; the upgrade's note: 'OK'"
+        }
+      ]
+    },
+    "KEY_STROBE": {
+      "label": "Strobe",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x9A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 42 'Strobe' (OBC A6; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 154; the upgrade's note: 'OK'"
+        }
+      ]
+    },
+    "KEY_DIGITAL_NR": {
+      "label": "Digital NR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x9C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 43 'Digital NR' (OBC C6; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 156; the upgrade's note: 'OK'"
+        }
+      ]
+    },
+    "KEY_REAL_SEARCH": {
+      "label": "Real Search",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x9D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 44 'Real Search' (OBC 46; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 157; the upgrade's note: 'learn'"
+        }
+      ]
+    },
+    "KEY_D_S_R": {
+      "label": "D.S.R.",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x9E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 45 'D.S.R.' (OBC 86; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 158; the upgrade's note: 'Delayed Segment Recording'"
+        }
+      ]
+    },
+    "KEY_X2_PLAY": {
+      "label": "x2 Play",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0x9F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 46 'x2 Play' (OBC 06; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 159; the upgrade's note: 'from other file - no function'"
+        }
+      ]
+    },
+    "KEY_SLOW": {
+      "label": "Slow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0xC5",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 47 'Slow' (OBC 5C; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 197; the upgrade's note: 'from other file - no function'"
+        }
+      ]
+    },
+    "KEY_CH_ADD_SLASH_ERASE": {
+      "label": "Ch Add/Erase",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0xC6",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 48 'Ch Add/Erase' (OBC 9C; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 198; the upgrade's note: 'from other file'"
+        }
+      ]
+    },
+    "KEY_CHANNEL_SEARCH": {
+      "label": "Channel Search",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "subdevice": "0xE6",
+          "function": "0xC8",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 VCR/NEC DS8000U VCR.rmdu function 49 'Channel Search' (OBC EC; NEC1, parms 25 230 null 0 0): NEC1 device 25 subdevice 230 function 200; the upgrade's note: 'from other file'"
+        }
+      ]
+    }
+  }
+}

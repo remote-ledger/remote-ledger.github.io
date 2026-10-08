@@ -38,6 +38,11 @@ IMPORTS: dict[str, dict[str, str]] = {
         "licence": "none: a table of reference codes",
         "readme": "remotes/hifi-remote/README.md",
     },
+    "remotes/jp1/": {
+        "name": "JP1 device upgrades of hifi-remote.com's forum",
+        "licence": "none: a table of reference codes",
+        "readme": "remotes/jp1/README.md",
+    },
 }
 
 

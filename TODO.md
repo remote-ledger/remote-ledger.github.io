@@ -12,6 +12,8 @@ sources have been imported under SPEC R19:
   keys, GPL-3.0 by inheritance only (DESIGN §17, §18).
 - **hifi-remote.com's Sony code pages**: 151 files, 6,772 keys, a table of
   reference codes with no licence recorded (DESIGN §27).
+- **The JP1 device upgrades** of its forum: 1,789 files, 67,417 keys, read for
+  seven executors (DESIGN §28).
 
 SPEC v0.11 makes growing coverage from every source whose licence permits
 it the standing goal, with no fixed list of sources (DESIGN §8, Phase 8).
@@ -34,8 +36,14 @@ Land it in two PRs, code and then data.
       owner's decision of 2026-10-08 (D110) is that a table of reference
       remote codes needs no licence. That reasoning bears on all three; none
       has been changed.
-- [ ] **Other hifi-remote.com material**: its JP1 files and the One For All
-      code lists are not imported; only the Sony pages are (DESIGN §27).
+- [ ] **The rest of the JP1 upgrades** (DESIGN D120): 1,462 upgrades of other
+      executors (RC-5 and its combos, MCE and RC-6, Sony Combo, Panasonic
+      Combo, NEC1 Combo, Nokia32, JVC, Aiwa, Denon, Pioneer...) and 2,073
+      KeymapMaster files. Each executor needs its translator found and checked
+      against the ledger's codes first. The forum's file section holds about
+      2,000 more upgrades than the GitHub copy, behind a free login.
+- [ ] **The One For All code lists** of hifi-remote.com are setup codes, not IR
+      codes, and are not imported.
 - [ ] **Factor out a common importer skeleton** now that a third importer
       exists. `import_common.py` already holds the probe, compile gate and
       authored-name helpers. The SmartIR and IR Blaster `Report` classes

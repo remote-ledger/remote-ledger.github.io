@@ -38,8 +38,10 @@ files and 411,265 keys under `remotes/irblaster/`, republished under GPL-3.0
 by inheritance and nothing more, since nobody in its lineage says where the
 codes came from (DESIGN.md §17); and hifi-remote.com's Sony code pages, 151
 files and 6,772 keys under `remotes/hifi-remote/`, which are a table of
-reference codes and so carry no licence (DESIGN.md §27). That makes 13,369
-remote files with the five authored ones. The IR Blaster database stores each code as a hexcode, and for
+reference codes and so carry no licence (DESIGN.md §27); and the JP1 device
+upgrades of hifi-remote.com's forum, 1,789 files and 67,417 keys under
+`remotes/jp1/`, likewise (DESIGN.md §28). That makes 15,158 remote files with
+the five authored ones. The IR Blaster database stores each code as a hexcode, and for
 ten of its protocols the ledger reads the code as the real remotes send it,
 which is not what SwiftRemote itself transmits for 44,789 of its keys
 (§18). Every imported key is Plausible and cites where it came from, down to
@@ -50,7 +52,8 @@ sources, except the Topping RC-16A, which has one.
 **More sources are coming.** Coverage grows from any database whose
 licence permits republishing it. Each one gets its own `remotes/<source>/`
 directory and must meet R19's five conditions. LIRC, SmartIR, the IR
-Blaster database and hifi-remote.com's Sony pages are the first four.
+Blaster database, hifi-remote.com's Sony pages and its forum's JP1 upgrades
+are the first five.
 
 ## Why
 

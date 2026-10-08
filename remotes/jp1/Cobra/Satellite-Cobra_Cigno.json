@@ -1,0 +1,589 @@
+{
+  "manufacturer": "Cobra",
+  "model": "Cigno",
+  "aliases": [],
+  "controls": [
+    "Cobra Cigno"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER": {
+      "label": "Power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/Cobra Cigno.rmdu function 0 'Power' (OBC FF; NEC1, parms 1 null 0 0 0): NEC1 device 1 subdevice 254 function 0"
+        }
+      ]
+    },
+    "KEY_EPG": {
+      "label": "EPG",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/Cobra Cigno.rmdu function 1 'EPG' (OBC 2F; NEC1, parms 1 null 0 0 0): NEC1 device 1 subdevice 254 function 11"
+        }
+      ]
+    },
+    "KEY_MENU": {
+      "label": "Menu",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/Cobra Cigno.rmdu function 2 'Menu' (OBC 0F; NEC1, parms 1 null 0 0 0): NEC1 device 1 subdevice 254 function 15"
+        }
+      ]
+    },
+    "KEY_INFO": {
+      "label": "Info",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/Cobra Cigno.rmdu function 3 'Info' (OBC 5F; NEC1, parms 1 null 0 0 0): NEC1 device 1 subdevice 254 function 5"
+        }
+      ]
+    },
+    "KEY_EXIT": {
+      "label": "Exit",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/Cobra Cigno.rmdu function 4 'Exit' (OBC 3F; NEC1, parms 1 null 0 0 0): NEC1 device 1 subdevice 254 function 3"
+        }
+      ]
+    },
+    "KEY_VOLUME_UP": {
+      "label": "Volume Up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x57",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/Cobra Cigno.rmdu function 5 'Volume Up' (OBC 15; NEC1, parms 1 null 0 0 0): NEC1 device 1 subdevice 254 function 87"
+        }
+      ]
+    },
+    "KEY_MENU_UP": {
+      "label": "Menu Up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x44",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/Cobra Cigno.rmdu function 6 'Menu Up' (OBC DD; NEC1, parms 1 null 0 0 0): NEC1 device 1 subdevice 254 function 68"
+        }
+      ]
+    },
+    "KEY_CHANNEL_UP": {
+      "label": "Channel Up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x5B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/Cobra Cigno.rmdu function 7 'Channel Up' (OBC 25; NEC1, parms 1 null 0 0 0): NEC1 device 1 subdevice 254 function 91"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "Mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/Cobra Cigno.rmdu function 8 'Mute' (OBC CF; NEC1, parms 1 null 0 0 0): NEC1 device 1 subdevice 254 function 12"
+        }
+      ]
+    },
+    "KEY_MENU_LEFT": {
+      "label": "Menu Left",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x4C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/Cobra Cigno.rmdu function 9 'Menu Left' (OBC CD; NEC1, parms 1 null 0 0 0): NEC1 device 1 subdevice 254 function 76"
+        }
+      ]
+    },
+    "KEY_OK": {
+      "label": "OK",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/Cobra Cigno.rmdu function 10 'OK' (OBC 9F; NEC1, parms 1 null 0 0 0): NEC1 device 1 subdevice 254 function 6"
+        }
+      ]
+    },
+    "KEY_MENU_RIGHT": {
+      "label": "Menu Right",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x40",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/Cobra Cigno.rmdu function 11 'Menu Right' (OBC FD; NEC1, parms 1 null 0 0 0): NEC1 device 1 subdevice 254 function 64"
+        }
+      ]
+    },
+    "KEY_RECALL": {
+      "label": "Recall",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x43",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/Cobra Cigno.rmdu function 12 'Recall' (OBC 3D; NEC1, parms 1 null 0 0 0): NEC1 device 1 subdevice 254 function 67"
+        }
+      ]
+    },
+    "KEY_VOLUME_DOWN": {
+      "label": "Volume Down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/Cobra Cigno.rmdu function 13 'Volume Down' (OBC F7; NEC1, parms 1 null 0 0 0): NEC1 device 1 subdevice 254 function 16"
+        }
+      ]
+    },
+    "KEY_MENU_DOWN": {
+      "label": "Menu Down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x48",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/Cobra Cigno.rmdu function 14 'Menu Down' (OBC ED; NEC1, parms 1 null 0 0 0): NEC1 device 1 subdevice 254 function 72"
+        }
+      ]
+    },
+    "KEY_CHANNEL_DOWN": {
+      "label": "Channel Down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x1C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/Cobra Cigno.rmdu function 15 'Channel Down' (OBC C7; NEC1, parms 1 null 0 0 0): NEC1 device 1 subdevice 254 function 28"
+        }
+      ]
+    },
+    "KEY_FASTEXT_RED": {
+      "label": "Fastext Red",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x52",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/Cobra Cigno.rmdu function 16 'Fastext Red' (OBC B5; NEC1, parms 1 null 0 0 0): NEC1 device 1 subdevice 254 function 82"
+        }
+      ]
+    },
+    "KEY_FASTEXT_GREEN": {
+      "label": "Fastext Green",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x56",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/Cobra Cigno.rmdu function 17 'Fastext Green' (OBC 95; NEC1, parms 1 null 0 0 0): NEC1 device 1 subdevice 254 function 86"
+        }
+      ]
+    },
+    "KEY_FASTEXT_YELLOW": {
+      "label": "Fastext Yellow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x5A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/Cobra Cigno.rmdu function 18 'Fastext Yellow' (OBC A5; NEC1, parms 1 null 0 0 0): NEC1 device 1 subdevice 254 function 90"
+        }
+      ]
+    },
+    "KEY_FASTEXT_BLUE": {
+      "label": "Fastext Blue",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x5E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/Cobra Cigno.rmdu function 19 'Fastext Blue' (OBC 85; NEC1, parms 1 null 0 0 0): NEC1 device 1 subdevice 254 function 94"
+        }
+      ]
+    },
+    "KEY_SKIP_REVERSE": {
+      "label": "Skip Reverse",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/Cobra Cigno.rmdu function 20 'Skip Reverse' (OBC D7; NEC1, parms 1 null 0 0 0): NEC1 device 1 subdevice 254 function 20"
+        }
+      ]
+    },
+    "KEY_PLAY": {
+      "label": "Play",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/Cobra Cigno.rmdu function 21 'Play' (OBC F5; NEC1, parms 1 null 0 0 0): NEC1 device 1 subdevice 254 function 80"
+        }
+      ]
+    },
+    "KEY_SKIP_FORWARD": {
+      "label": "Skip Forward",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x18",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/Cobra Cigno.rmdu function 22 'Skip Forward' (OBC E7; NEC1, parms 1 null 0 0 0): NEC1 device 1 subdevice 254 function 24"
+        }
+      ]
+    },
+    "KEY_SEARCH_REVERSE": {
+      "label": "Search Reverse",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x5F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/Cobra Cigno.rmdu function 23 'Search Reverse' (OBC 05; NEC1, parms 1 null 0 0 0): NEC1 device 1 subdevice 254 function 95"
+        }
+      ]
+    },
+    "KEY_PAUSE": {
+      "label": "Pause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x54",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/Cobra Cigno.rmdu function 24 'Pause' (OBC D5; NEC1, parms 1 null 0 0 0): NEC1 device 1 subdevice 254 function 84"
+        }
+      ]
+    },
+    "KEY_SEARCH_FORWARD": {
+      "label": "Search Forward",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/Cobra Cigno.rmdu function 25 'Search Forward' (OBC AF; NEC1, parms 1 null 0 0 0): NEC1 device 1 subdevice 254 function 10"
+        }
+      ]
+    },
+    "KEY_LIST": {
+      "label": "List",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x42",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/Cobra Cigno.rmdu function 26 'List' (OBC BD; NEC1, parms 1 null 0 0 0): NEC1 device 1 subdevice 254 function 66"
+        }
+      ]
+    },
+    "KEY_STOP": {
+      "label": "Stop",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x58",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/Cobra Cigno.rmdu function 27 'Stop' (OBC E5; NEC1, parms 1 null 0 0 0): NEC1 device 1 subdevice 254 function 88"
+        }
+      ]
+    },
+    "KEY_RECORD": {
+      "label": "Record",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x51",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/Cobra Cigno.rmdu function 28 'Record' (OBC 75; NEC1, parms 1 null 0 0 0): NEC1 device 1 subdevice 254 function 81"
+        }
+      ]
+    },
+    "KEY_1": {
+      "label": "1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x4F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/Cobra Cigno.rmdu function 29 '1' (OBC 0D; NEC1, parms 1 null 0 0 0): NEC1 device 1 subdevice 254 function 79"
+        }
+      ]
+    },
+    "KEY_2": {
+      "label": "2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x4B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/Cobra Cigno.rmdu function 30 '2' (OBC 2D; NEC1, parms 1 null 0 0 0): NEC1 device 1 subdevice 254 function 75"
+        }
+      ]
+    },
+    "KEY_3": {
+      "label": "3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x47",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/Cobra Cigno.rmdu function 31 '3' (OBC 1D; NEC1, parms 1 null 0 0 0): NEC1 device 1 subdevice 254 function 71"
+        }
+      ]
+    },
+    "KEY_4": {
+      "label": "4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x4E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/Cobra Cigno.rmdu function 32 '4' (OBC 8D; NEC1, parms 1 null 0 0 0): NEC1 device 1 subdevice 254 function 78"
+        }
+      ]
+    },
+    "KEY_5": {
+      "label": "5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x4A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/Cobra Cigno.rmdu function 33 '5' (OBC AD; NEC1, parms 1 null 0 0 0): NEC1 device 1 subdevice 254 function 74"
+        }
+      ]
+    },
+    "KEY_6": {
+      "label": "6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x46",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/Cobra Cigno.rmdu function 34 '6' (OBC 9D; NEC1, parms 1 null 0 0 0): NEC1 device 1 subdevice 254 function 70"
+        }
+      ]
+    },
+    "KEY_7": {
+      "label": "7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x4D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/Cobra Cigno.rmdu function 35 '7' (OBC 4D; NEC1, parms 1 null 0 0 0): NEC1 device 1 subdevice 254 function 77"
+        }
+      ]
+    },
+    "KEY_8": {
+      "label": "8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x49",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/Cobra Cigno.rmdu function 36 '8' (OBC 6D; NEC1, parms 1 null 0 0 0): NEC1 device 1 subdevice 254 function 73"
+        }
+      ]
+    },
+    "KEY_9": {
+      "label": "9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x45",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/Cobra Cigno.rmdu function 37 '9' (OBC 5D; NEC1, parms 1 null 0 0 0): NEC1 device 1 subdevice 254 function 69"
+        }
+      ]
+    },
+    "KEY_0": {
+      "label": "0",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x41",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/Cobra Cigno.rmdu function 38 '0' (OBC 7D; NEC1, parms 1 null 0 0 0): NEC1 device 1 subdevice 254 function 65"
+        }
+      ]
+    },
+    "KEY_TV_SLASH_RADIO": {
+      "label": "TV/Radio",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x59",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/Cobra Cigno.rmdu function 39 'TV/Radio' (OBC 65; NEC1, parms 1 null 0 0 0): NEC1 device 1 subdevice 254 function 89"
+        }
+      ]
+    },
+    "KEY_FAVORITE": {
+      "label": "Favorite",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/Cobra Cigno.rmdu function 40 'Favorite' (OBC 4F; NEC1, parms 1 null 0 0 0): NEC1 device 1 subdevice 254 function 13"
+        }
+      ]
+    }
+  }
+}

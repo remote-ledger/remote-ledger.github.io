@@ -1,0 +1,645 @@
+{
+  "manufacturer": "Shuttletec",
+  "model": "Satella S2",
+  "aliases": [],
+  "controls": [
+    "Shuttletec Satella S2"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER": {
+      "label": "power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xFF",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/s2 as hkbn.rmdu function 0 'power' (OBC AF; NEC1, parms 35 255 null): NEC1 device 35 subdevice 255 function 10"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xFF",
+          "function": "0x1E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/s2 as hkbn.rmdu function 1 'mute' (OBC 87; NEC1, parms 35 255 null): NEC1 device 35 subdevice 255 function 30"
+        }
+      ]
+    },
+    "KEY_REC": {
+      "label": "rec",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xFF",
+          "function": "0x47",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/s2 as hkbn.rmdu function 2 'rec' (OBC 1D; NEC1, parms 35 255 null): NEC1 device 35 subdevice 255 function 71"
+        }
+      ]
+    },
+    "KEY_LOCK": {
+      "label": "lock",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xFF",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/s2 as hkbn.rmdu function 3 'lock' (OBC F5; NEC1, parms 35 255 null): NEC1 device 35 subdevice 255 function 80"
+        }
+      ]
+    },
+    "KEY_GROUP_CH_PLUS": {
+      "label": "group ch+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xFF",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/s2 as hkbn.rmdu function 4 'group ch+' (OBC 0F; NEC1, parms 35 255 null): NEC1 device 35 subdevice 255 function 15"
+        }
+      ]
+    },
+    "KEY_GROUP_CH_MINUS": {
+      "label": "group ch-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xFF",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/s2 as hkbn.rmdu function 5 'group ch-' (OBC 57; NEC1, parms 35 255 null): NEC1 device 35 subdevice 255 function 21"
+        }
+      ]
+    },
+    "KEY_SAP": {
+      "label": "sap",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xFF",
+          "function": "0x1B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/s2 as hkbn.rmdu function 6 'sap' (OBC 27; NEC1, parms 35 255 null): NEC1 device 35 subdevice 255 function 27"
+        }
+      ]
+    },
+    "KEY_SUB": {
+      "label": "sub",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xFF",
+          "function": "0x5A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/s2 as hkbn.rmdu function 7 'sub' (OBC A5; NEC1, parms 35 255 null): NEC1 device 35 subdevice 255 function 90"
+        }
+      ]
+    },
+    "KEY_NETWORK": {
+      "label": "network",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xFF",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/s2 as hkbn.rmdu function 8 'network' (OBC D7; NEC1, parms 35 255 null): NEC1 device 35 subdevice 255 function 20"
+        }
+      ]
+    },
+    "KEY_ANTENNA": {
+      "label": "antenna",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xFF",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/s2 as hkbn.rmdu function 9 'antenna' (OBC A7; NEC1, parms 35 255 null): NEC1 device 35 subdevice 255 function 26"
+        }
+      ]
+    },
+    "KEY_MENU": {
+      "label": "menu",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xFF",
+          "function": "0x1C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/s2 as hkbn.rmdu function 10 'menu' (OBC C7; NEC1, parms 35 255 null): NEC1 device 35 subdevice 255 function 28"
+        }
+      ]
+    },
+    "KEY_HDD_SETTING": {
+      "label": "hdd setting",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xFF",
+          "function": "0x19",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/s2 as hkbn.rmdu function 11 'hdd setting' (OBC 67; NEC1, parms 35 255 null): NEC1 device 35 subdevice 255 function 25"
+        }
+      ]
+    },
+    "KEY_TIMER": {
+      "label": "timer",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xFF",
+          "function": "0x5B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/s2 as hkbn.rmdu function 12 'timer' (OBC 25; NEC1, parms 35 255 null): NEC1 device 35 subdevice 255 function 91"
+        }
+      ]
+    },
+    "KEY_GENRE_UP": {
+      "label": "genre up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xFF",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/s2 as hkbn.rmdu function 13 'genre up' (OBC B7; NEC1, parms 35 255 null): NEC1 device 35 subdevice 255 function 18"
+        }
+      ]
+    },
+    "KEY_SEARCH": {
+      "label": "search",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xFF",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/s2 as hkbn.rmdu function 14 'search' (OBC 4F; NEC1, parms 35 255 null): NEC1 device 35 subdevice 255 function 13"
+        }
+      ]
+    },
+    "KEY_VIEW": {
+      "label": "view",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xFF",
+          "function": "0x20",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/s2 as hkbn.rmdu function 15 'view' (OBC FB; NEC1, parms 35 255 null): NEC1 device 35 subdevice 255 function 32"
+        }
+      ]
+    },
+    "KEY_GENRE_DOWN": {
+      "label": "genre down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xFF",
+          "function": "0x1D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/s2 as hkbn.rmdu function 16 'genre down' (OBC 47; NEC1, parms 35 255 null): NEC1 device 35 subdevice 255 function 29"
+        }
+      ]
+    },
+    "KEY_SCHEDULE": {
+      "label": "schedule",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xFF",
+          "function": "0x55",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/s2 as hkbn.rmdu function 17 'schedule' (OBC 55; NEC1, parms 35 255 null): NEC1 device 35 subdevice 255 function 85"
+        }
+      ]
+    },
+    "KEY_SCHEDULE_LIST": {
+      "label": "schedule list",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xFF",
+          "function": "0x57",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/s2 as hkbn.rmdu function 18 'schedule list' (OBC 15; NEC1, parms 35 255 null): NEC1 device 35 subdevice 255 function 87"
+        }
+      ]
+    },
+    "KEY_UP": {
+      "label": "up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xFF",
+          "function": "0x4B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/s2 as hkbn.rmdu function 19 'up' (OBC 2D; NEC1, parms 35 255 null): NEC1 device 35 subdevice 255 function 75"
+        }
+      ]
+    },
+    "KEY_DOWN": {
+      "label": "down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xFF",
+          "function": "0x4C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/s2 as hkbn.rmdu function 20 'down' (OBC CD; NEC1, parms 35 255 null): NEC1 device 35 subdevice 255 function 76"
+        }
+      ]
+    },
+    "KEY_LEFT": {
+      "label": "left",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xFF",
+          "function": "0x4D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/s2 as hkbn.rmdu function 21 'left' (OBC 4D; NEC1, parms 35 255 null): NEC1 device 35 subdevice 255 function 77"
+        }
+      ]
+    },
+    "KEY_RIGHT": {
+      "label": "right",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xFF",
+          "function": "0x4E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/s2 as hkbn.rmdu function 22 'right' (OBC 8D; NEC1, parms 35 255 null): NEC1 device 35 subdevice 255 function 78"
+        }
+      ]
+    },
+    "KEY_OK": {
+      "label": "ok",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xFF",
+          "function": "0x4A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/s2 as hkbn.rmdu function 23 'ok' (OBC AD; NEC1, parms 35 255 null): NEC1 device 35 subdevice 255 function 74"
+        }
+      ]
+    },
+    "KEY_EXIT": {
+      "label": "exit",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xFF",
+          "function": "0x51",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/s2 as hkbn.rmdu function 24 'exit' (OBC 75; NEC1, parms 35 255 null): NEC1 device 35 subdevice 255 function 81"
+        }
+      ]
+    },
+    "KEY_EPG": {
+      "label": "epg",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xFF",
+          "function": "0x53",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/s2 as hkbn.rmdu function 25 'epg' (OBC 35; NEC1, parms 35 255 null): NEC1 device 35 subdevice 255 function 83"
+        }
+      ]
+    },
+    "KEY_NAS_SLASH_USB": {
+      "label": "nas/usb",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xFF",
+          "function": "0x56",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/s2 as hkbn.rmdu function 26 'nas/usb' (OBC 95; NEC1, parms 35 255 null): NEC1 device 35 subdevice 255 function 86"
+        }
+      ]
+    },
+    "KEY_IPTV": {
+      "label": "iptv",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xFF",
+          "function": "0x54",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/s2 as hkbn.rmdu function 27 'iptv' (OBC D5; NEC1, parms 35 255 null): NEC1 device 35 subdevice 255 function 84"
+        }
+      ]
+    },
+    "KEY_SATELLITE_TV": {
+      "label": "satellite tv",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xFF",
+          "function": "0x52",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/s2 as hkbn.rmdu function 28 'satellite tv' (OBC B5; NEC1, parms 35 255 null): NEC1 device 35 subdevice 255 function 82"
+        }
+      ]
+    },
+    "KEY_RED": {
+      "label": "red",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xFF",
+          "function": "0x18",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/s2 as hkbn.rmdu function 29 'red' (OBC E7; NEC1, parms 35 255 null): NEC1 device 35 subdevice 255 function 24"
+        }
+      ]
+    },
+    "KEY_GREEN": {
+      "label": "green",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xFF",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/s2 as hkbn.rmdu function 30 'green' (OBC 97; NEC1, parms 35 255 null): NEC1 device 35 subdevice 255 function 22"
+        }
+      ]
+    },
+    "KEY_YELLOW": {
+      "label": "yellow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xFF",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/s2 as hkbn.rmdu function 31 'yellow' (OBC F7; NEC1, parms 35 255 null): NEC1 device 35 subdevice 255 function 16"
+        }
+      ]
+    },
+    "KEY_BLUE": {
+      "label": "blue",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xFF",
+          "function": "0x45",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/s2 as hkbn.rmdu function 32 'blue' (OBC 5D; NEC1, parms 35 255 null): NEC1 device 35 subdevice 255 function 69"
+        }
+      ]
+    },
+    "KEY_1": {
+      "label": "1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xFF",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/s2 as hkbn.rmdu function 33 '1' (OBC 7F; NEC1, parms 35 255 null): NEC1 device 35 subdevice 255 function 1"
+        }
+      ]
+    },
+    "KEY_2": {
+      "label": "2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xFF",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/s2 as hkbn.rmdu function 34 '2' (OBC BF; NEC1, parms 35 255 null): NEC1 device 35 subdevice 255 function 2"
+        }
+      ]
+    },
+    "KEY_3": {
+      "label": "3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xFF",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/s2 as hkbn.rmdu function 35 '3' (OBC 3F; NEC1, parms 35 255 null): NEC1 device 35 subdevice 255 function 3"
+        }
+      ]
+    },
+    "KEY_4": {
+      "label": "4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xFF",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/s2 as hkbn.rmdu function 36 '4' (OBC DF; NEC1, parms 35 255 null): NEC1 device 35 subdevice 255 function 4"
+        }
+      ]
+    },
+    "KEY_5": {
+      "label": "5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xFF",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/s2 as hkbn.rmdu function 37 '5' (OBC 5F; NEC1, parms 35 255 null): NEC1 device 35 subdevice 255 function 5"
+        }
+      ]
+    },
+    "KEY_6": {
+      "label": "6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xFF",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/s2 as hkbn.rmdu function 38 '6' (OBC 9F; NEC1, parms 35 255 null): NEC1 device 35 subdevice 255 function 6"
+        }
+      ]
+    },
+    "KEY_7": {
+      "label": "7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xFF",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/s2 as hkbn.rmdu function 39 '7' (OBC 1F; NEC1, parms 35 255 null): NEC1 device 35 subdevice 255 function 7"
+        }
+      ]
+    },
+    "KEY_8": {
+      "label": "8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xFF",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/s2 as hkbn.rmdu function 40 '8' (OBC EF; NEC1, parms 35 255 null): NEC1 device 35 subdevice 255 function 8"
+        }
+      ]
+    },
+    "KEY_9": {
+      "label": "9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xFF",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/s2 as hkbn.rmdu function 41 '9' (OBC 6F; NEC1, parms 35 255 null): NEC1 device 35 subdevice 255 function 9"
+        }
+      ]
+    },
+    "KEY_0": {
+      "label": "0",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xFF",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/s2 as hkbn.rmdu function 42 '0' (OBC FF; NEC1, parms 35 255 null): NEC1 device 35 subdevice 255 function 0"
+        }
+      ]
+    },
+    "KEY_MUSIC": {
+      "label": "music",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xFF",
+          "function": "0x48",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/s2 as hkbn.rmdu function 43 'music' (OBC ED; NEC1, parms 35 255 null): NEC1 device 35 subdevice 255 function 72"
+        }
+      ]
+    },
+    "KEY_KEYBOARD": {
+      "label": "keyboard",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xFF",
+          "function": "0x58",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Satellite/s2 as hkbn.rmdu function 44 'keyboard' (OBC E5; NEC1, parms 35 255 null): NEC1 device 35 subdevice 255 function 88"
+        }
+      ]
+    }
+  }
+}

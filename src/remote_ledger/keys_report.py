@@ -30,7 +30,7 @@ from .validate import corpus_files
 
 #: Sources in the order the report lists them. ``authored`` is everything outside
 #: an import root (``paths.IMPORTS``).
-SOURCES = ("irblaster", "lirc", "smartir", "hifi-remote", "authored")
+SOURCES = ("irblaster", "lirc", "smartir", "hifi-remote", "jp1", "authored")
 #: The shares of mapped keys a remote is counted at (percent).
 THRESHOLDS = (90, 75, 50)
 #: A remote with fewer keys than this says little about coverage: one key mapped
@@ -51,7 +51,7 @@ class RemoteKeys:
 
 
 def source_of(where: str) -> str:
-    """``irblaster``, ``lirc``, ``smartir``, ``hifi-remote``, or ``authored``, from a repo-relative path."""
+    """``irblaster``, ``lirc``, ``smartir``, ``hifi-remote``, ``jp1``, or ``authored``, from a repo-relative path."""
     root = paths.imported_from(where)
     return root.split("/")[1] if root else "authored"
 

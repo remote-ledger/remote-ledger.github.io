@@ -1,0 +1,85 @@
+{
+  "manufacturer": "Niles",
+  "model": "RVL-6",
+  "aliases": [],
+  "controls": [
+    "Niles RVL-6"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_VOL_UP": {
+      "label": "vol up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x5D",
+          "function": "0xD7",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Niles RVL-6.rmdu function 0 'vol up' (OBC 14; NEC1, parms 128 93 null): NEC1 device 128 subdevice 93 function 215"
+        }
+      ]
+    },
+    "KEY_VOL_DOWN": {
+      "label": "vol down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x5D",
+          "function": "0xCB",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Niles RVL-6.rmdu function 1 'vol down' (OBC 2C; NEC1, parms 128 93 null): NEC1 device 128 subdevice 93 function 203"
+        }
+      ]
+    },
+    "KEY_ALL_ON": {
+      "label": "all on",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x5D",
+          "function": "0xDF",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Niles RVL-6.rmdu function 2 'all on' (OBC 04; NEC1, parms 128 93 null): NEC1 device 128 subdevice 93 function 223"
+        }
+      ]
+    },
+    "KEY_ALL_OFF": {
+      "label": "all off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x5D",
+          "function": "0xD3",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Niles RVL-6.rmdu function 3 'all off' (OBC 34; NEC1, parms 128 93 null): NEC1 device 128 subdevice 93 function 211"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x5D",
+          "function": "0xC7",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Niles RVL-6.rmdu function 4 'power' (OBC 1C; NEC1, parms 128 93 null): NEC1 device 128 subdevice 93 function 199"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,589 @@
+{
+  "manufacturer": "BuzzTV",
+  "model": "XPL 3000 (BuzzTV XPL 3000_URC-10820B00)",
+  "aliases": [],
+  "controls": [
+    "BuzzTV XPL 3000"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER": {
+      "label": "Power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xBD",
+          "function": "0x45",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/BuzzTV XPL 3000_URC-10820B00.rmdu function 0 'Power' (OBC 5D; NEC1, parms 2 189 0 0 0): NEC1 device 2 subdevice 189 function 69"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "Mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xBD",
+          "function": "0x80",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/BuzzTV XPL 3000_URC-10820B00.rmdu function 1 'Mute' (OBC FE; NEC1, parms 2 189 0 0 0): NEC1 device 2 subdevice 189 function 128"
+        }
+      ]
+    },
+    "KEY_REWIND": {
+      "label": "Rewind",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xBD",
+          "function": "0xDA",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/BuzzTV XPL 3000_URC-10820B00.rmdu function 2 'Rewind' (OBC A4; NEC1, parms 2 189 0 0 0): NEC1 device 2 subdevice 189 function 218"
+        }
+      ]
+    },
+    "KEY_PLAY_SLASH_PAUSE": {
+      "label": "Play / Pause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xBD",
+          "function": "0x62",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/BuzzTV XPL 3000_URC-10820B00.rmdu function 3 'Play / Pause' (OBC B9; NEC1, parms 2 189 0 0 0): NEC1 device 2 subdevice 189 function 98"
+        }
+      ]
+    },
+    "KEY_FAST_FORWARD": {
+      "label": "Fast Forward",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xBD",
+          "function": "0x84",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/BuzzTV XPL 3000_URC-10820B00.rmdu function 4 'Fast Forward' (OBC DE; NEC1, parms 2 189 0 0 0): NEC1 device 2 subdevice 189 function 132"
+        }
+      ]
+    },
+    "KEY_STOP": {
+      "label": "Stop",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xBD",
+          "function": "0xD4",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/BuzzTV XPL 3000_URC-10820B00.rmdu function 5 'Stop' (OBC D4; NEC1, parms 2 189 0 0 0): NEC1 device 2 subdevice 189 function 212"
+        }
+      ]
+    },
+    "KEY_RED": {
+      "label": "Red",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xBD",
+          "function": "0x46",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/BuzzTV XPL 3000_URC-10820B00.rmdu function 6 'Red' (OBC 9D; NEC1, parms 2 189 0 0 0): NEC1 device 2 subdevice 189 function 70"
+        }
+      ]
+    },
+    "KEY_GREEN": {
+      "label": "Green",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xBD",
+          "function": "0x47",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/BuzzTV XPL 3000_URC-10820B00.rmdu function 7 'Green' (OBC 1D; NEC1, parms 2 189 0 0 0): NEC1 device 2 subdevice 189 function 71"
+        }
+      ]
+    },
+    "KEY_YELLOW": {
+      "label": "Yellow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xBD",
+          "function": "0x48",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/BuzzTV XPL 3000_URC-10820B00.rmdu function 8 'Yellow' (OBC ED; NEC1, parms 2 189 0 0 0): NEC1 device 2 subdevice 189 function 72"
+        }
+      ]
+    },
+    "KEY_BLUE": {
+      "label": "Blue",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xBD",
+          "function": "0x49",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/BuzzTV XPL 3000_URC-10820B00.rmdu function 9 'Blue' (OBC 6D; NEC1, parms 2 189 0 0 0): NEC1 device 2 subdevice 189 function 73"
+        }
+      ]
+    },
+    "KEY_MENU": {
+      "label": "Menu",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xBD",
+          "function": "0xD6",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/BuzzTV XPL 3000_URC-10820B00.rmdu function 10 'Menu' (OBC 94; NEC1, parms 2 189 0 0 0): NEC1 device 2 subdevice 189 function 214"
+        }
+      ]
+    },
+    "KEY_MOUSE": {
+      "label": "Mouse",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xBD",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/BuzzTV XPL 3000_URC-10820B00.rmdu function 11 'Mouse' (OBC F5; NEC1, parms 2 189 0 0 0): NEC1 device 2 subdevice 189 function 80"
+        }
+      ]
+    },
+    "KEY_RETURN": {
+      "label": "Return",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xBD",
+          "function": "0xD0",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/BuzzTV XPL 3000_URC-10820B00.rmdu function 12 'Return' (OBC F4; NEC1, parms 2 189 0 0 0): NEC1 device 2 subdevice 189 function 208"
+        }
+      ]
+    },
+    "KEY_UP": {
+      "label": "Up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xBD",
+          "function": "0xCA",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/BuzzTV XPL 3000_URC-10820B00.rmdu function 13 'Up' (OBC AC; NEC1, parms 2 189 0 0 0): NEC1 device 2 subdevice 189 function 202"
+        }
+      ]
+    },
+    "KEY_DOWN": {
+      "label": "Down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xBD",
+          "function": "0xD2",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/BuzzTV XPL 3000_URC-10820B00.rmdu function 14 'Down' (OBC B4; NEC1, parms 2 189 0 0 0): NEC1 device 2 subdevice 189 function 210"
+        }
+      ]
+    },
+    "KEY_LEFT": {
+      "label": "Left",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xBD",
+          "function": "0x99",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/BuzzTV XPL 3000_URC-10820B00.rmdu function 15 'Left' (OBC 66; NEC1, parms 2 189 0 0 0): NEC1 device 2 subdevice 189 function 153"
+        }
+      ]
+    },
+    "KEY_RIGHT": {
+      "label": "Right",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xBD",
+          "function": "0xC1",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/BuzzTV XPL 3000_URC-10820B00.rmdu function 16 'Right' (OBC 7C; NEC1, parms 2 189 0 0 0): NEC1 device 2 subdevice 189 function 193"
+        }
+      ]
+    },
+    "KEY_OK_SLASH_SELECT": {
+      "label": "OK / Select",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xBD",
+          "function": "0xCE",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/BuzzTV XPL 3000_URC-10820B00.rmdu function 17 'OK / Select' (OBC 8C; NEC1, parms 2 189 0 0 0): NEC1 device 2 subdevice 189 function 206"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xBD",
+          "function": "0xDD",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/BuzzTV XPL 3000_URC-10820B00.rmdu function 18 'VOL+' (OBC 44; NEC1, parms 2 189 0 0 0): NEC1 device 2 subdevice 189 function 221"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xBD",
+          "function": "0x8C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/BuzzTV XPL 3000_URC-10820B00.rmdu function 19 'VOL-' (OBC CE; NEC1, parms 2 189 0 0 0): NEC1 device 2 subdevice 189 function 140"
+        }
+      ]
+    },
+    "KEY_HOME": {
+      "label": "Home",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xBD",
+          "function": "0x95",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/BuzzTV XPL 3000_URC-10820B00.rmdu function 20 'Home' (OBC 56; NEC1, parms 2 189 0 0 0): NEC1 device 2 subdevice 189 function 149"
+        }
+      ]
+    },
+    "KEY_CH_PLUS": {
+      "label": "CH+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xBD",
+          "function": "0x9A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/BuzzTV XPL 3000_URC-10820B00.rmdu function 21 'CH+' (OBC A6; NEC1, parms 2 189 0 0 0): NEC1 device 2 subdevice 189 function 154"
+        }
+      ]
+    },
+    "KEY_CH_MINUS": {
+      "label": "CH-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xBD",
+          "function": "0xCD",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/BuzzTV XPL 3000_URC-10820B00.rmdu function 22 'CH-' (OBC 4C; NEC1, parms 2 189 0 0 0): NEC1 device 2 subdevice 189 function 205"
+        }
+      ]
+    },
+    "KEY_LIVE_TV": {
+      "label": "Live TV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xBD",
+          "function": "0x9C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/BuzzTV XPL 3000_URC-10820B00.rmdu function 23 'Live TV' (OBC C6; NEC1, parms 2 189 0 0 0): NEC1 device 2 subdevice 189 function 156"
+        }
+      ]
+    },
+    "KEY_VOD": {
+      "label": "VOD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xBD",
+          "function": "0x89",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/BuzzTV XPL 3000_URC-10820B00.rmdu function 24 'VOD' (OBC 6E; NEC1, parms 2 189 0 0 0): NEC1 device 2 subdevice 189 function 137"
+        }
+      ]
+    },
+    "KEY_EPG": {
+      "label": "EPG",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xBD",
+          "function": "0xC5",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/BuzzTV XPL 3000_URC-10820B00.rmdu function 25 'EPG' (OBC 5C; NEC1, parms 2 189 0 0 0): NEC1 device 2 subdevice 189 function 197"
+        }
+      ]
+    },
+    "KEY_KODI": {
+      "label": "Kodi",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xBD",
+          "function": "0x5C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/BuzzTV XPL 3000_URC-10820B00.rmdu function 26 'Kodi' (OBC C5; NEC1, parms 2 189 0 0 0): NEC1 device 2 subdevice 189 function 92"
+        }
+      ]
+    },
+    "KEY_RECALL_CHANNEL": {
+      "label": "Recall Channel",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xBD",
+          "function": "0x51",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/BuzzTV XPL 3000_URC-10820B00.rmdu function 27 'Recall Channel' (OBC 75; NEC1, parms 2 189 0 0 0): NEC1 device 2 subdevice 189 function 81"
+        }
+      ]
+    },
+    "KEY_INFO": {
+      "label": "Info",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xBD",
+          "function": "0xD8",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/BuzzTV XPL 3000_URC-10820B00.rmdu function 28 'Info' (OBC E4; NEC1, parms 2 189 0 0 0): NEC1 device 2 subdevice 189 function 216"
+        }
+      ]
+    },
+    "KEY_0": {
+      "label": "0",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xBD",
+          "function": "0x87",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/BuzzTV XPL 3000_URC-10820B00.rmdu function 29 '0' (OBC 1E; NEC1, parms 2 189 0 0 0): NEC1 device 2 subdevice 189 function 135"
+        }
+      ]
+    },
+    "KEY_1": {
+      "label": "1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xBD",
+          "function": "0x92",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/BuzzTV XPL 3000_URC-10820B00.rmdu function 30 '1' (OBC B6; NEC1, parms 2 189 0 0 0): NEC1 device 2 subdevice 189 function 146"
+        }
+      ]
+    },
+    "KEY_2": {
+      "label": "2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xBD",
+          "function": "0x93",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/BuzzTV XPL 3000_URC-10820B00.rmdu function 31 '2' (OBC 36; NEC1, parms 2 189 0 0 0): NEC1 device 2 subdevice 189 function 147"
+        }
+      ]
+    },
+    "KEY_3": {
+      "label": "3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xBD",
+          "function": "0xCC",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/BuzzTV XPL 3000_URC-10820B00.rmdu function 32 '3' (OBC CC; NEC1, parms 2 189 0 0 0): NEC1 device 2 subdevice 189 function 204"
+        }
+      ]
+    },
+    "KEY_4": {
+      "label": "4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xBD",
+          "function": "0x8E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/BuzzTV XPL 3000_URC-10820B00.rmdu function 33 '4' (OBC 8E; NEC1, parms 2 189 0 0 0): NEC1 device 2 subdevice 189 function 142"
+        }
+      ]
+    },
+    "KEY_5": {
+      "label": "5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xBD",
+          "function": "0x8F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/BuzzTV XPL 3000_URC-10820B00.rmdu function 34 '5' (OBC 0E; NEC1, parms 2 189 0 0 0): NEC1 device 2 subdevice 189 function 143"
+        }
+      ]
+    },
+    "KEY_6": {
+      "label": "6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xBD",
+          "function": "0xC8",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/BuzzTV XPL 3000_URC-10820B00.rmdu function 35 '6' (OBC EC; NEC1, parms 2 189 0 0 0): NEC1 device 2 subdevice 189 function 200"
+        }
+      ]
+    },
+    "KEY_7": {
+      "label": "7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xBD",
+          "function": "0x8A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/BuzzTV XPL 3000_URC-10820B00.rmdu function 36 '7' (OBC AE; NEC1, parms 2 189 0 0 0): NEC1 device 2 subdevice 189 function 138"
+        }
+      ]
+    },
+    "KEY_8": {
+      "label": "8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xBD",
+          "function": "0x8B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/BuzzTV XPL 3000_URC-10820B00.rmdu function 37 '8' (OBC 2E; NEC1, parms 2 189 0 0 0): NEC1 device 2 subdevice 189 function 139"
+        }
+      ]
+    },
+    "KEY_9": {
+      "label": "9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xBD",
+          "function": "0xC4",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/BuzzTV XPL 3000_URC-10820B00.rmdu function 38 '9' (OBC DC; NEC1, parms 2 189 0 0 0): NEC1 device 2 subdevice 189 function 196"
+        }
+      ]
+    },
+    "KEY_PAGE_DOWN": {
+      "label": "Page Down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xBD",
+          "function": "0xD9",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/BuzzTV XPL 3000_URC-10820B00.rmdu function 39 'Page Down' (OBC 64; NEC1, parms 2 189 0 0 0): NEC1 device 2 subdevice 189 function 217"
+        }
+      ]
+    },
+    "KEY_PAGE_UP": {
+      "label": "Page Up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xBD",
+          "function": "0x82",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/BuzzTV XPL 3000_URC-10820B00.rmdu function 40 'Page Up' (OBC BE; NEC1, parms 2 189 0 0 0): NEC1 device 2 subdevice 189 function 130"
+        }
+      ]
+    }
+  }
+}

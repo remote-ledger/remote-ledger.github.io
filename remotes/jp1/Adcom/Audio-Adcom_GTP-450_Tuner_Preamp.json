@@ -1,0 +1,295 @@
+{
+  "manufacturer": "Adcom",
+  "model": "GTP-450 Tuner/Preamp",
+  "aliases": [],
+  "controls": [
+    "Adcom GTP-450 Tuner/Preamp"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER_TOGGLE": {
+      "label": "Power Toggle",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x80",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-450 Tuner_Preamp.rmdu function 0 'Power Toggle' (OBC FE; NEC1, parms 26 null null 0 0): NEC1 device 26 subdevice 229 function 128"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "Mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x82",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-450 Tuner_Preamp.rmdu function 1 'Mute' (OBC BE; NEC1, parms 26 null null 0 0): NEC1 device 26 subdevice 229 function 130"
+        }
+      ]
+    },
+    "KEY_VIDEO_SLASH_AUX": {
+      "label": "Video / Aux",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x84",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-450 Tuner_Preamp.rmdu function 2 'Video / Aux' (OBC DE; NEC1, parms 26 null null 0 0): NEC1 device 26 subdevice 229 function 132"
+        }
+      ]
+    },
+    "KEY_CD": {
+      "label": "CD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x88",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-450 Tuner_Preamp.rmdu function 3 'CD' (OBC EE; NEC1, parms 26 null null 0 0): NEC1 device 26 subdevice 229 function 136"
+        }
+      ]
+    },
+    "KEY_TUNER": {
+      "label": "Tuner",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x89",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-450 Tuner_Preamp.rmdu function 4 'Tuner' (OBC 6E; NEC1, parms 26 null null 0 0): NEC1 device 26 subdevice 229 function 137"
+        }
+      ]
+    },
+    "KEY_TAPE_1": {
+      "label": "Tape 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x8A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-450 Tuner_Preamp.rmdu function 5 'Tape 1' (OBC AE; NEC1, parms 26 null null 0 0): NEC1 device 26 subdevice 229 function 138"
+        }
+      ]
+    },
+    "KEY_TAPE_2": {
+      "label": "Tape 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x8B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-450 Tuner_Preamp.rmdu function 6 'Tape 2' (OBC 2E; NEC1, parms 26 null null 0 0): NEC1 device 26 subdevice 229 function 139"
+        }
+      ]
+    },
+    "KEY_TUNING_PLUS": {
+      "label": "Tuning +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x8C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-450 Tuner_Preamp.rmdu function 7 'Tuning +' (OBC CE; NEC1, parms 26 null null 0 0): NEC1 device 26 subdevice 229 function 140; the upgrade's note: 'Not on original remote, but functions'"
+        }
+      ]
+    },
+    "KEY_TUNING_MINUS": {
+      "label": "Tuning -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x8D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-450 Tuner_Preamp.rmdu function 8 'Tuning -' (OBC 4E; NEC1, parms 26 null null 0 0): NEC1 device 26 subdevice 229 function 141; the upgrade's note: 'Not on original remote, but functions'"
+        }
+      ]
+    },
+    "KEY_SHIFT_8_MINUS_14": {
+      "label": "Shift (8-14)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x8E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-450 Tuner_Preamp.rmdu function 9 'Shift (8-14)' (OBC 8E; NEC1, parms 26 null null 0 0): NEC1 device 26 subdevice 229 function 142"
+        }
+      ]
+    },
+    "KEY_AM_SLASH_FM": {
+      "label": "AM / FM",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x8F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-450 Tuner_Preamp.rmdu function 10 'AM / FM' (OBC 0E; NEC1, parms 26 null null 0 0): NEC1 device 26 subdevice 229 function 143"
+        }
+      ]
+    },
+    "KEY_1": {
+      "label": "1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x90",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-450 Tuner_Preamp.rmdu function 11 '1' (OBC F6; NEC1, parms 26 null null 0 0): NEC1 device 26 subdevice 229 function 144"
+        }
+      ]
+    },
+    "KEY_2": {
+      "label": "2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x91",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-450 Tuner_Preamp.rmdu function 12 '2' (OBC 76; NEC1, parms 26 null null 0 0): NEC1 device 26 subdevice 229 function 145"
+        }
+      ]
+    },
+    "KEY_3": {
+      "label": "3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x92",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-450 Tuner_Preamp.rmdu function 13 '3' (OBC B6; NEC1, parms 26 null null 0 0): NEC1 device 26 subdevice 229 function 146"
+        }
+      ]
+    },
+    "KEY_4": {
+      "label": "4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x93",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-450 Tuner_Preamp.rmdu function 14 '4' (OBC 36; NEC1, parms 26 null null 0 0): NEC1 device 26 subdevice 229 function 147"
+        }
+      ]
+    },
+    "KEY_5": {
+      "label": "5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x94",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-450 Tuner_Preamp.rmdu function 15 '5' (OBC D6; NEC1, parms 26 null null 0 0): NEC1 device 26 subdevice 229 function 148"
+        }
+      ]
+    },
+    "KEY_6": {
+      "label": "6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x95",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-450 Tuner_Preamp.rmdu function 16 '6' (OBC 56; NEC1, parms 26 null null 0 0): NEC1 device 26 subdevice 229 function 149"
+        }
+      ]
+    },
+    "KEY_7": {
+      "label": "7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x96",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-450 Tuner_Preamp.rmdu function 17 '7' (OBC 96; NEC1, parms 26 null null 0 0): NEC1 device 26 subdevice 229 function 150"
+        }
+      ]
+    },
+    "KEY_VOLUME_MINUS": {
+      "label": "Volume -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0xD1",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-450 Tuner_Preamp.rmdu function 18 'Volume -' (OBC 74; NEC1, parms 26 null null 0 0): NEC1 device 26 subdevice 229 function 209"
+        }
+      ]
+    },
+    "KEY_VOLUME_PLUS": {
+      "label": "Volume +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0xD5",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-450 Tuner_Preamp.rmdu function 19 'Volume +' (OBC 54; NEC1, parms 26 null null 0 0): NEC1 device 26 subdevice 229 function 213"
+        }
+      ]
+    }
+  }
+}

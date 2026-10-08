@@ -1,0 +1,575 @@
+{
+  "manufacturer": "KDLInks",
+  "model": "HD720",
+  "aliases": [],
+  "controls": [
+    "KDLinks HD720"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_STOP": {
+      "label": "Stop",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0x9F",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/KDLinks HD720 Media Streamer.rmdu function 0 'Stop' (OBC 37; NEC1, parms 0 159 0): NEC1 device 0 subdevice 159 function 19"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "Power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0x9F",
+          "function": "0x57",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/KDLinks HD720 Media Streamer.rmdu function 1 'Power' (OBC 15; NEC1, parms 0 159 0): NEC1 device 0 subdevice 159 function 87"
+        }
+      ]
+    },
+    "KEY_SUBTITLES": {
+      "label": "Subtitles",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0x9F",
+          "function": "0x44",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/KDLinks HD720 Media Streamer.rmdu function 2 'Subtitles' (OBC DD; NEC1, parms 0 159 0): NEC1 device 0 subdevice 159 function 68"
+        }
+      ]
+    },
+    "KEY_MENU": {
+      "label": "Menu",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0x9F",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/KDLinks HD720 Media Streamer.rmdu function 3 'Menu' (OBC 97; NEC1, parms 0 159 0): NEC1 device 0 subdevice 159 function 22"
+        }
+      ]
+    },
+    "KEY_INFO": {
+      "label": "Info",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0x9F",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/KDLinks HD720 Media Streamer.rmdu function 4 'Info' (OBC 4F; NEC1, parms 0 159 0): NEC1 device 0 subdevice 159 function 13"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "Vol +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0x9F",
+          "function": "0x17",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/KDLinks HD720 Media Streamer.rmdu function 5 'Vol +' (OBC 17; NEC1, parms 0 159 0): NEC1 device 0 subdevice 159 function 23"
+        }
+      ]
+    },
+    "KEY_DIRECT_UP": {
+      "label": "Direct Up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0x9F",
+          "function": "0x43",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/KDLinks HD720 Media Streamer.rmdu function 6 'Direct Up' (OBC 3D; NEC1, parms 0 159 0): NEC1 device 0 subdevice 159 function 67"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "Mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0x9F",
+          "function": "0x5B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/KDLinks HD720 Media Streamer.rmdu function 7 'Mute' (OBC 25; NEC1, parms 0 159 0): NEC1 device 0 subdevice 159 function 91"
+        }
+      ]
+    },
+    "KEY_DIRECTION_LEFT": {
+      "label": "Direction Left",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0x9F",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/KDLinks HD720 Media Streamer.rmdu function 8 'Direction Left' (OBC 9F; NEC1, parms 0 159 0): NEC1 device 0 subdevice 159 function 6"
+        }
+      ]
+    },
+    "KEY_OK": {
+      "label": "OK",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0x9F",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/KDLinks HD720 Media Streamer.rmdu function 9 'OK' (OBC BF; NEC1, parms 0 159 0): NEC1 device 0 subdevice 159 function 2"
+        }
+      ]
+    },
+    "KEY_DIRECTION_RIGHT": {
+      "label": "Direction Right",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0x9F",
+          "function": "0x0E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/KDLinks HD720 Media Streamer.rmdu function 10 'Direction Right' (OBC 8F; NEC1, parms 0 159 0): NEC1 device 0 subdevice 159 function 14"
+        }
+      ]
+    },
+    "KEY_BACK": {
+      "label": "Back",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0x9F",
+          "function": "0x4F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/KDLinks HD720 Media Streamer.rmdu function 11 'Back' (OBC 0D; NEC1, parms 0 159 0): NEC1 device 0 subdevice 159 function 79"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "Vol -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0x9F",
+          "function": "0x54",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/KDLinks HD720 Media Streamer.rmdu function 12 'Vol -' (OBC D5; NEC1, parms 0 159 0): NEC1 device 0 subdevice 159 function 84"
+        }
+      ]
+    },
+    "KEY_DIRECTION_DOWN": {
+      "label": "Direction Down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0x9F",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/KDLinks HD720 Media Streamer.rmdu function 13 'Direction Down' (OBC AF; NEC1, parms 0 159 0): NEC1 device 0 subdevice 159 function 10"
+        }
+      ]
+    },
+    "KEY_RED": {
+      "label": "Red",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0x9F",
+          "function": "0x55",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/KDLinks HD720 Media Streamer.rmdu function 14 'Red' (OBC 55; NEC1, parms 0 159 0): NEC1 device 0 subdevice 159 function 85"
+        }
+      ]
+    },
+    "KEY_GREEN": {
+      "label": "Green",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0x9F",
+          "function": "0x4E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/KDLinks HD720 Media Streamer.rmdu function 15 'Green' (OBC 8D; NEC1, parms 0 159 0): NEC1 device 0 subdevice 159 function 78"
+        }
+      ]
+    },
+    "KEY_YELLOW": {
+      "label": "Yellow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0x9F",
+          "function": "0x49",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/KDLinks HD720 Media Streamer.rmdu function 16 'Yellow' (OBC 6D; NEC1, parms 0 159 0): NEC1 device 0 subdevice 159 function 73"
+        }
+      ]
+    },
+    "KEY_BLUE": {
+      "label": "Blue",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0x9F",
+          "function": "0x48",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/KDLinks HD720 Media Streamer.rmdu function 17 'Blue' (OBC ED; NEC1, parms 0 159 0): NEC1 device 0 subdevice 159 function 72"
+        }
+      ]
+    },
+    "KEY_SKIPBACK": {
+      "label": "SkipBack",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0x9F",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/KDLinks HD720 Media Streamer.rmdu function 18 'SkipBack' (OBC 0F; NEC1, parms 0 159 0): NEC1 device 0 subdevice 159 function 15"
+        }
+      ]
+    },
+    "KEY_PLAY": {
+      "label": "Play",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0x9F",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/KDLinks HD720 Media Streamer.rmdu function 19 'Play' (OBC F5; NEC1, parms 0 159 0): NEC1 device 0 subdevice 159 function 80"
+        }
+      ]
+    },
+    "KEY_SKIPFWD": {
+      "label": "SkipFwd",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0x9F",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/KDLinks HD720 Media Streamer.rmdu function 20 'SkipFwd' (OBC 2F; NEC1, parms 0 159 0): NEC1 device 0 subdevice 159 function 11"
+        }
+      ]
+    },
+    "KEY_REWIND": {
+      "label": "Rewind",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0x9F",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/KDLinks HD720 Media Streamer.rmdu function 21 'Rewind' (OBC 1F; NEC1, parms 0 159 0): NEC1 device 0 subdevice 159 function 7"
+        }
+      ]
+    },
+    "KEY_FASTFORWARD": {
+      "label": "FastForward",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0x9F",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/KDLinks HD720 Media Streamer.rmdu function 22 'FastForward' (OBC 3F; NEC1, parms 0 159 0): NEC1 device 0 subdevice 159 function 3"
+        }
+      ]
+    },
+    "KEY_SETUP": {
+      "label": "Setup",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0x9F",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/KDLinks HD720 Media Streamer.rmdu function 23 'Setup' (OBC A7; NEC1, parms 0 159 0): NEC1 device 0 subdevice 159 function 26"
+        }
+      ]
+    },
+    "KEY_RECORD": {
+      "label": "Record",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0x9F",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/KDLinks HD720 Media Streamer.rmdu function 24 'Record' (OBC 37; NEC1, parms 0 159 0): NEC1 device 0 subdevice 159 function 19"
+        }
+      ]
+    },
+    "KEY_1": {
+      "label": "1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0x9F",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/KDLinks HD720 Media Streamer.rmdu function 25 '1' (OBC 5F; NEC1, parms 0 159 0): NEC1 device 0 subdevice 159 function 5"
+        }
+      ]
+    },
+    "KEY_2": {
+      "label": "2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0x9F",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/KDLinks HD720 Media Streamer.rmdu function 26 '2' (OBC 6F; NEC1, parms 0 159 0): NEC1 device 0 subdevice 159 function 9"
+        }
+      ]
+    },
+    "KEY_3": {
+      "label": "3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0x9F",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/KDLinks HD720 Media Streamer.rmdu function 27 '3' (OBC 57; NEC1, parms 0 159 0): NEC1 device 0 subdevice 159 function 21"
+        }
+      ]
+    },
+    "KEY_4": {
+      "label": "4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0x9F",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/KDLinks HD720 Media Streamer.rmdu function 28 '4' (OBC DF; NEC1, parms 0 159 0): NEC1 device 0 subdevice 159 function 4"
+        }
+      ]
+    },
+    "KEY_6_29": {
+      "label": "6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0x9F",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/KDLinks HD720 Media Streamer.rmdu function 29 '6' (OBC EF; NEC1, parms 0 159 0): NEC1 device 0 subdevice 159 function 8"
+        }
+      ]
+    },
+    "KEY_6_30": {
+      "label": "6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0x9F",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/KDLinks HD720 Media Streamer.rmdu function 30 '6' (OBC D7; NEC1, parms 0 159 0): NEC1 device 0 subdevice 159 function 20"
+        }
+      ]
+    },
+    "KEY_7": {
+      "label": "7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0x9F",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/KDLinks HD720 Media Streamer.rmdu function 31 '7' (OBC FF; NEC1, parms 0 159 0): NEC1 device 0 subdevice 159 function 0"
+        }
+      ]
+    },
+    "KEY_8": {
+      "label": "8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0x9F",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/KDLinks HD720 Media Streamer.rmdu function 32 '8' (OBC F7; NEC1, parms 0 159 0): NEC1 device 0 subdevice 159 function 16"
+        }
+      ]
+    },
+    "KEY_9": {
+      "label": "9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0x9F",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/KDLinks HD720 Media Streamer.rmdu function 33 '9' (OBC CF; NEC1, parms 0 159 0): NEC1 device 0 subdevice 159 function 12"
+        }
+      ]
+    },
+    "KEY_SHUTTLE": {
+      "label": "Shuttle",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0x9F",
+          "function": "0x5D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/KDLinks HD720 Media Streamer.rmdu function 34 'Shuttle' (OBC 45; NEC1, parms 0 159 0): NEC1 device 0 subdevice 159 function 93"
+        }
+      ]
+    },
+    "KEY_0": {
+      "label": "0",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0x9F",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/KDLinks HD720 Media Streamer.rmdu function 35 '0' (OBC 77; NEC1, parms 0 159 0): NEC1 device 0 subdevice 159 function 17"
+        }
+      ]
+    },
+    "KEY_REPEAT": {
+      "label": "Repeat",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0x9F",
+          "function": "0x58",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/KDLinks HD720 Media Streamer.rmdu function 36 'Repeat' (OBC E5; NEC1, parms 0 159 0): NEC1 device 0 subdevice 159 function 88"
+        }
+      ]
+    },
+    "KEY_HOME": {
+      "label": "HOME",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0x9F",
+          "function": "0x47",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/KDLinks HD720 Media Streamer.rmdu function 37 'HOME' (OBC 1D; NEC1, parms 0 159 0): NEC1 device 0 subdevice 159 function 71"
+        }
+      ]
+    },
+    "KEY_AUDIO": {
+      "label": "AUDIO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0x9F",
+          "function": "0x45",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/KDLinks HD720 Media Streamer.rmdu function 38 'AUDIO' (OBC 5D; NEC1, parms 0 159 0): NEC1 device 0 subdevice 159 function 69"
+        }
+      ]
+    },
+    "KEY_GO_MINUS_TO": {
+      "label": "GO-TO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0x9F",
+          "function": "0x59",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Media Players/KDLinks HD720 Media Streamer.rmdu function 39 'GO-TO' (OBC 65; NEC1, parms 0 159 0): NEC1 device 0 subdevice 159 function 89"
+        }
+      ]
+    }
+  }
+}

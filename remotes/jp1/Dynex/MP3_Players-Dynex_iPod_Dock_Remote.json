@@ -1,0 +1,85 @@
+{
+  "manufacturer": "Dynex",
+  "model": "iPod Dock Remote",
+  "aliases": [],
+  "controls": [
+    "Dynex iPod Dock Remote"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_NEXT_TRACK": {
+      "label": "Next Track",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x33",
+          "subdevice": "0xAA",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 MP3 Players/Dynex iPod Dock Remote.rmdu function 0 'Next Track' (OBC DF; NEC1, parms 51 170 null 0 0): NEC1 device 51 subdevice 170 function 4"
+        }
+      ]
+    },
+    "KEY_PREVIOUS_TRACK": {
+      "label": "Previous Track",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x33",
+          "subdevice": "0xAA",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 MP3 Players/Dynex iPod Dock Remote.rmdu function 1 'Previous Track' (OBC CF; NEC1, parms 51 170 null 0 0): NEC1 device 51 subdevice 170 function 12"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "Vol-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x33",
+          "subdevice": "0xAA",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 MP3 Players/Dynex iPod Dock Remote.rmdu function 2 'Vol-' (OBC FF; NEC1, parms 51 170 null 0 0): NEC1 device 51 subdevice 170 function 0"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "Vol+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x33",
+          "subdevice": "0xAA",
+          "function": "0x17",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 MP3 Players/Dynex iPod Dock Remote.rmdu function 3 'Vol+' (OBC 17; NEC1, parms 51 170 null 0 0): NEC1 device 51 subdevice 170 function 23"
+        }
+      ]
+    },
+    "KEY_PLAY_SLASH_PAUSE": {
+      "label": "Play/Pause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x33",
+          "subdevice": "0xAA",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 MP3 Players/Dynex iPod Dock Remote.rmdu function 4 'Play/Pause' (OBC EF; NEC1, parms 51 170 null 0 0): NEC1 device 51 subdevice 170 function 8"
+        }
+      ]
+    }
+  }
+}

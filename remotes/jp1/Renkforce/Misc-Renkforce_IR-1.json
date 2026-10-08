@@ -1,0 +1,505 @@
+{
+  "manufacturer": "Renkforce",
+  "model": "IR-1",
+  "aliases": [],
+  "controls": [
+    "Renkforce IR-1"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER": {
+      "label": "Power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0xB6",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Renkforce_IR-1.rmdu function 0 'Power' (OBC FF; NEC1, parms 131 182 null 0 0): NEC1 device 131 subdevice 182 function 0"
+        }
+      ]
+    },
+    "KEY_ALARM": {
+      "label": "Alarm",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0xB6",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Renkforce_IR-1.rmdu function 1 'Alarm' (OBC 7F; NEC1, parms 131 182 null 0 0): NEC1 device 131 subdevice 182 function 1"
+        }
+      ]
+    },
+    "KEY_SLEEP": {
+      "label": "Sleep",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0xB6",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Renkforce_IR-1.rmdu function 2 'Sleep' (OBC BF; NEC1, parms 131 182 null 0 0): NEC1 device 131 subdevice 182 function 2"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "Mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0xB6",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Renkforce_IR-1.rmdu function 3 'Mute' (OBC 3F; NEC1, parms 131 182 null 0 0): NEC1 device 131 subdevice 182 function 3"
+        }
+      ]
+    },
+    "KEY_WPS": {
+      "label": "WPS",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0xB6",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Renkforce_IR-1.rmdu function 4 'WPS' (OBC DF; NEC1, parms 131 182 null 0 0): NEC1 device 131 subdevice 182 function 4"
+        }
+      ]
+    },
+    "KEY_MENU": {
+      "label": "Menu",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0xB6",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Renkforce_IR-1.rmdu function 5 'Menu' (OBC 5F; NEC1, parms 131 182 null 0 0): NEC1 device 131 subdevice 182 function 5"
+        }
+      ]
+    },
+    "KEY_MODE": {
+      "label": "Mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0xB6",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Renkforce_IR-1.rmdu function 6 'Mode' (OBC 9F; NEC1, parms 131 182 null 0 0): NEC1 device 131 subdevice 182 function 6"
+        }
+      ]
+    },
+    "KEY_UPNP": {
+      "label": "UPNP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0xB6",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Renkforce_IR-1.rmdu function 7 'UPNP' (OBC 1F; NEC1, parms 131 182 null 0 0): NEC1 device 131 subdevice 182 function 7"
+        }
+      ]
+    },
+    "KEY_UP": {
+      "label": "Up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0xB6",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Renkforce_IR-1.rmdu function 8 'Up' (OBC EF; NEC1, parms 131 182 null 0 0): NEC1 device 131 subdevice 182 function 8"
+        }
+      ]
+    },
+    "KEY_DOWN": {
+      "label": "Down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0xB6",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Renkforce_IR-1.rmdu function 9 'Down' (OBC CF; NEC1, parms 131 182 null 0 0): NEC1 device 131 subdevice 182 function 12"
+        }
+      ]
+    },
+    "KEY_LEFT": {
+      "label": "Left",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0xB6",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Renkforce_IR-1.rmdu function 10 'Left' (OBC 6F; NEC1, parms 131 182 null 0 0): NEC1 device 131 subdevice 182 function 9"
+        }
+      ]
+    },
+    "KEY_RIGHT": {
+      "label": "Right",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0xB6",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Renkforce_IR-1.rmdu function 11 'Right' (OBC 2F; NEC1, parms 131 182 null 0 0): NEC1 device 131 subdevice 182 function 11"
+        }
+      ]
+    },
+    "KEY_ENTER": {
+      "label": "Enter",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0xB6",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Renkforce_IR-1.rmdu function 12 'Enter' (OBC AF; NEC1, parms 131 182 null 0 0): NEC1 device 131 subdevice 182 function 10"
+        }
+      ]
+    },
+    "KEY_V_MINUS": {
+      "label": "V-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0xB6",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Renkforce_IR-1.rmdu function 13 'V-' (OBC 4F; NEC1, parms 131 182 null 0 0): NEC1 device 131 subdevice 182 function 13"
+        }
+      ]
+    },
+    "KEY_V_PLUS": {
+      "label": "V+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0xB6",
+          "function": "0x0E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Renkforce_IR-1.rmdu function 14 'V+' (OBC 8F; NEC1, parms 131 182 null 0 0): NEC1 device 131 subdevice 182 function 14"
+        }
+      ]
+    },
+    "KEY_PREV": {
+      "label": "Prev",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0xB6",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Renkforce_IR-1.rmdu function 15 'Prev' (OBC 0F; NEC1, parms 131 182 null 0 0): NEC1 device 131 subdevice 182 function 15"
+        }
+      ]
+    },
+    "KEY_STOP": {
+      "label": "Stop",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0xB6",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Renkforce_IR-1.rmdu function 16 'Stop' (OBC F7; NEC1, parms 131 182 null 0 0): NEC1 device 131 subdevice 182 function 16"
+        }
+      ]
+    },
+    "KEY_PLAY_SLASH_PAUSE": {
+      "label": "Play / Pause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0xB6",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Renkforce_IR-1.rmdu function 17 'Play / Pause' (OBC 77; NEC1, parms 131 182 null 0 0): NEC1 device 131 subdevice 182 function 17"
+        }
+      ]
+    },
+    "KEY_NEXT": {
+      "label": "Next",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0xB6",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Renkforce_IR-1.rmdu function 18 'Next' (OBC B7; NEC1, parms 131 182 null 0 0): NEC1 device 131 subdevice 182 function 18"
+        }
+      ]
+    },
+    "KEY_LOCAL_RADIO": {
+      "label": "Local radio",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0xB6",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Renkforce_IR-1.rmdu function 19 'Local radio' (OBC 37; NEC1, parms 131 182 null 0 0): NEC1 device 131 subdevice 182 function 19"
+        }
+      ]
+    },
+    "KEY_SHUFFLE": {
+      "label": "Shuffle",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0xB6",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Renkforce_IR-1.rmdu function 20 'Shuffle' (OBC D7; NEC1, parms 131 182 null 0 0): NEC1 device 131 subdevice 182 function 20"
+        }
+      ]
+    },
+    "KEY_REPEAT": {
+      "label": "Repeat",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0xB6",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Renkforce_IR-1.rmdu function 21 'Repeat' (OBC 57; NEC1, parms 131 182 null 0 0): NEC1 device 131 subdevice 182 function 21"
+        }
+      ]
+    },
+    "KEY_EQ": {
+      "label": "EQ",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0xB6",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Renkforce_IR-1.rmdu function 22 'EQ' (OBC 97; NEC1, parms 131 182 null 0 0): NEC1 device 131 subdevice 182 function 22"
+        }
+      ]
+    },
+    "KEY_1": {
+      "label": "1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0xB6",
+          "function": "0x17",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Renkforce_IR-1.rmdu function 23 '1' (OBC 17; NEC1, parms 131 182 null 0 0): NEC1 device 131 subdevice 182 function 23; the upgrade's note: '.,?\\!@'"
+        }
+      ]
+    },
+    "KEY_2": {
+      "label": "2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0xB6",
+          "function": "0x18",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Renkforce_IR-1.rmdu function 24 '2' (OBC E7; NEC1, parms 131 182 null 0 0): NEC1 device 131 subdevice 182 function 24; the upgrade's note: 'ABC'"
+        }
+      ]
+    },
+    "KEY_3": {
+      "label": "3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0xB6",
+          "function": "0x19",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Renkforce_IR-1.rmdu function 25 '3' (OBC 67; NEC1, parms 131 182 null 0 0): NEC1 device 131 subdevice 182 function 25; the upgrade's note: 'DEF'"
+        }
+      ]
+    },
+    "KEY_4": {
+      "label": "4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0xB6",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Renkforce_IR-1.rmdu function 26 '4' (OBC A7; NEC1, parms 131 182 null 0 0): NEC1 device 131 subdevice 182 function 26; the upgrade's note: 'GHI'"
+        }
+      ]
+    },
+    "KEY_5": {
+      "label": "5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0xB6",
+          "function": "0x1B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Renkforce_IR-1.rmdu function 27 '5' (OBC 27; NEC1, parms 131 182 null 0 0): NEC1 device 131 subdevice 182 function 27; the upgrade's note: 'JKL'"
+        }
+      ]
+    },
+    "KEY_6": {
+      "label": "6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0xB6",
+          "function": "0x1C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Renkforce_IR-1.rmdu function 28 '6' (OBC C7; NEC1, parms 131 182 null 0 0): NEC1 device 131 subdevice 182 function 28; the upgrade's note: 'MNO'"
+        }
+      ]
+    },
+    "KEY_7": {
+      "label": "7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0xB6",
+          "function": "0x1D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Renkforce_IR-1.rmdu function 29 '7' (OBC 47; NEC1, parms 131 182 null 0 0): NEC1 device 131 subdevice 182 function 29; the upgrade's note: 'PQRS'"
+        }
+      ]
+    },
+    "KEY_8": {
+      "label": "8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0xB6",
+          "function": "0x1E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Renkforce_IR-1.rmdu function 30 '8' (OBC 87; NEC1, parms 131 182 null 0 0): NEC1 device 131 subdevice 182 function 30; the upgrade's note: 'TUV'"
+        }
+      ]
+    },
+    "KEY_9": {
+      "label": "9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0xB6",
+          "function": "0x1F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Renkforce_IR-1.rmdu function 31 '9' (OBC 07; NEC1, parms 131 182 null 0 0): NEC1 device 131 subdevice 182 function 31; the upgrade's note: 'WXYZ'"
+        }
+      ]
+    },
+    "KEY_0": {
+      "label": "0",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0xB6",
+          "function": "0x21",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Renkforce_IR-1.rmdu function 32 '0' (OBC 7B; NEC1, parms 131 182 null 0 0): NEC1 device 131 subdevice 182 function 33; the upgrade's note: '_'"
+        }
+      ]
+    },
+    "KEY_LANGUAGE": {
+      "label": "Language",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0xB6",
+          "function": "0x20",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Renkforce_IR-1.rmdu function 33 'Language' (OBC FB; NEC1, parms 131 182 null 0 0): NEC1 device 131 subdevice 182 function 32"
+        }
+      ]
+    },
+    "KEY_FAV_PLUS": {
+      "label": "Fav+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x83",
+          "subdevice": "0xB6",
+          "function": "0x22",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Renkforce_IR-1.rmdu function 34 'Fav+' (OBC BB; NEC1, parms 131 182 null 0 0): NEC1 device 131 subdevice 182 function 34"
+        }
+      ]
+    }
+  }
+}

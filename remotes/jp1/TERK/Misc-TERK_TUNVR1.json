@@ -1,0 +1,589 @@
+{
+  "manufacturer": "TERK",
+  "model": "TUNVR1 Video Recorder",
+  "aliases": [],
+  "controls": [
+    "TERK TUNVR1 Video Recorder"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER": {
+      "label": "power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x5A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/TERK_TUNVR1.rmdu function 0 'power' (OBC A5; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 90"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x19",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/TERK_TUNVR1.rmdu function 1 'mute' (OBC 67; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 25"
+        }
+      ]
+    },
+    "KEY_AUDIO": {
+      "label": "audio",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x4E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/TERK_TUNVR1.rmdu function 2 'audio' (OBC 8D; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 78"
+        }
+      ]
+    },
+    "KEY_FAV_SLASH_SCAN": {
+      "label": "fav/scan",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x0E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/TERK_TUNVR1.rmdu function 3 'fav/scan' (OBC 8F; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 14"
+        }
+      ]
+    },
+    "KEY_CC": {
+      "label": "cc",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/TERK_TUNVR1.rmdu function 4 'cc' (OBC 4F; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 13"
+        }
+      ]
+    },
+    "KEY_HDMI": {
+      "label": "hdmi",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x52",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/TERK_TUNVR1.rmdu function 5 'hdmi' (OBC B5; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 82"
+        }
+      ]
+    },
+    "KEY_GOTO": {
+      "label": "goto",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/TERK_TUNVR1.rmdu function 6 'goto' (OBC B7; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 18"
+        }
+      ]
+    },
+    "KEY_RECALL": {
+      "label": "recall",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/TERK_TUNVR1.rmdu function 7 'recall' (OBC 77; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 17"
+        }
+      ]
+    },
+    "KEY_MENU": {
+      "label": "menu",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x46",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/TERK_TUNVR1.rmdu function 8 'menu' (OBC 9D; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 70"
+        }
+      ]
+    },
+    "KEY_PROGRAM_GUIDE": {
+      "label": "program guide",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/TERK_TUNVR1.rmdu function 9 'program guide' (OBC 5F; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 5"
+        }
+      ]
+    },
+    "KEY_CHANNEL_UP": {
+      "label": "channel UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/TERK_TUNVR1.rmdu function 10 'channel UP' (OBC 9F; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 6"
+        }
+      ]
+    },
+    "KEY_VOL_DOWN_LFET": {
+      "label": "vol down LFET",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x5B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/TERK_TUNVR1.rmdu function 11 'vol down LFET' (OBC 25; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 91"
+        }
+      ]
+    },
+    "KEY_SELECT_OK": {
+      "label": "select OK",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/TERK_TUNVR1.rmdu function 12 'select OK' (OBC A7; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 26"
+        }
+      ]
+    },
+    "KEY_VOL_UP_RIGHT": {
+      "label": "vol up RIGHT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x1B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/TERK_TUNVR1.rmdu function 13 'vol up RIGHT' (OBC 27; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 27"
+        }
+      ]
+    },
+    "KEY_CHANNEL_DOWN": {
+      "label": "channel DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/TERK_TUNVR1.rmdu function 14 'channel DOWN' (OBC 97; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 22"
+        }
+      ]
+    },
+    "KEY_INFO": {
+      "label": "info",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x56",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/TERK_TUNVR1.rmdu function 15 'info' (OBC 95; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 86"
+        }
+      ]
+    },
+    "KEY_EXIT": {
+      "label": "exit",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/TERK_TUNVR1.rmdu function 16 'exit' (OBC 57; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 21"
+        }
+      ]
+    },
+    "KEY_1": {
+      "label": "1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x53",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/TERK_TUNVR1.rmdu function 17 '1' (OBC 35; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 83"
+        }
+      ]
+    },
+    "KEY_2": {
+      "label": "2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/TERK_TUNVR1.rmdu function 18 '2' (OBC F5; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 80"
+        }
+      ]
+    },
+    "KEY_3": {
+      "label": "3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/TERK_TUNVR1.rmdu function 19 '3' (OBC F7; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 16"
+        }
+      ]
+    },
+    "KEY_PVR": {
+      "label": "pvr",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/TERK_TUNVR1.rmdu function 20 'pvr' (OBC 37; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 19"
+        }
+      ]
+    },
+    "KEY_4": {
+      "label": "4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x57",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/TERK_TUNVR1.rmdu function 21 '4' (OBC 15; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 87"
+        }
+      ]
+    },
+    "KEY_5": {
+      "label": "5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x54",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/TERK_TUNVR1.rmdu function 22 '5' (OBC D5; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 84"
+        }
+      ]
+    },
+    "KEY_6": {
+      "label": "6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/TERK_TUNVR1.rmdu function 23 '6' (OBC D7; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 20"
+        }
+      ]
+    },
+    "KEY_DASH": {
+      "label": "dash",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x17",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/TERK_TUNVR1.rmdu function 24 'dash' (OBC 17; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 23"
+        }
+      ]
+    },
+    "KEY_7": {
+      "label": "7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x4F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/TERK_TUNVR1.rmdu function 25 '7' (OBC 0D; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 79"
+        }
+      ]
+    },
+    "KEY_8": {
+      "label": "8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x4C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/TERK_TUNVR1.rmdu function 26 '8' (OBC CD; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 76"
+        }
+      ]
+    },
+    "KEY_9": {
+      "label": "9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/TERK_TUNVR1.rmdu function 27 '9' (OBC CF; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 12"
+        }
+      ]
+    },
+    "KEY_0": {
+      "label": "0",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/TERK_TUNVR1.rmdu function 28 '0' (OBC 0F; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 15"
+        }
+      ]
+    },
+    "KEY_PLAY": {
+      "label": "play",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x4B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/TERK_TUNVR1.rmdu function 29 'play' (OBC 2D; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 75"
+        }
+      ]
+    },
+    "KEY_PAUSE": {
+      "label": "pause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x48",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/TERK_TUNVR1.rmdu function 30 'pause' (OBC ED; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 72"
+        }
+      ]
+    },
+    "KEY_STOP": {
+      "label": "stop",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/TERK_TUNVR1.rmdu function 31 'stop' (OBC EF; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 8"
+        }
+      ]
+    },
+    "KEY_RECORD": {
+      "label": "record",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/TERK_TUNVR1.rmdu function 32 'record' (OBC 2F; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 11"
+        }
+      ]
+    },
+    "KEY_REWIND": {
+      "label": "rewind",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x47",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/TERK_TUNVR1.rmdu function 33 'rewind' (OBC 1D; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 71"
+        }
+      ]
+    },
+    "KEY_FAST_FWD": {
+      "label": "fast fwd",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x44",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/TERK_TUNVR1.rmdu function 34 'fast fwd' (OBC DD; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 68"
+        }
+      ]
+    },
+    "KEY_PREV_TRACK": {
+      "label": "prev track",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/TERK_TUNVR1.rmdu function 35 'prev track' (OBC DF; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 4"
+        }
+      ]
+    },
+    "KEY_NEXT_TRACK": {
+      "label": "next track",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/TERK_TUNVR1.rmdu function 36 'next track' (OBC 1F; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 7"
+        }
+      ]
+    },
+    "KEY_HOLD": {
+      "label": "hold",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x43",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/TERK_TUNVR1.rmdu function 37 'hold' (OBC 3D; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 67"
+        }
+      ]
+    },
+    "KEY_REPEAT": {
+      "label": "repeat",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x40",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/TERK_TUNVR1.rmdu function 38 'repeat' (OBC FD; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 64"
+        }
+      ]
+    },
+    "KEY_PVRLIST": {
+      "label": "pvrlist",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/TERK_TUNVR1.rmdu function 39 'pvrlist' (OBC FF; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 0"
+        }
+      ]
+    },
+    "KEY_TIMER": {
+      "label": "timer",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/TERK_TUNVR1.rmdu function 40 'timer' (OBC 3F; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 3"
+        }
+      ]
+    }
+  }
+}

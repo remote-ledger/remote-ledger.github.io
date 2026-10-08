@@ -1,0 +1,113 @@
+{
+  "manufacturer": "R.W.Flame",
+  "model": "R.W. Flame electric fireplace",
+  "aliases": [],
+  "controls": [
+    "R.W. Flame electric fireplace"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_COLOR_B": {
+      "label": "Color B",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x0E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Fireplace.rmdu function 0 'Color B' (OBC 8F; NEC1, parms null null null 0 0): NEC1 device 0 subdevice 255 function 14"
+        }
+      ]
+    },
+    "KEY_COLOR_A": {
+      "label": "Color A",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Fireplace.rmdu function 1 'Color A' (OBC 4F; NEC1, parms null null null 0 0): NEC1 device 0 subdevice 255 function 13"
+        }
+      ]
+    },
+    "KEY_SPEED": {
+      "label": "Speed",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Fireplace.rmdu function 2 'Speed' (OBC 57; NEC1, parms null null null 0 0): NEC1 device 0 subdevice 255 function 21"
+        }
+      ]
+    },
+    "KEY_HEAT": {
+      "label": "Heat",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Fireplace.rmdu function 3 'Heat' (OBC D7; NEC1, parms null null null 0 0): NEC1 device 0 subdevice 255 function 20"
+        }
+      ]
+    },
+    "KEY_TIMER": {
+      "label": "Timer",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Fireplace.rmdu function 4 'Timer' (OBC 37; NEC1, parms null null null 0 0): NEC1 device 0 subdevice 255 function 19"
+        }
+      ]
+    },
+    "KEY_DIMMER": {
+      "label": "Dimmer",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Fireplace.rmdu function 5 'Dimmer' (OBC B7; NEC1, parms null null null 0 0): NEC1 device 0 subdevice 255 function 18"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "Power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Fireplace.rmdu function 6 'Power' (OBC 77; NEC1, parms null null null 0 0): NEC1 device 0 subdevice 255 function 17"
+        }
+      ]
+    }
+  }
+}

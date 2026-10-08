@@ -1,0 +1,85 @@
+{
+  "manufacturer": "Sunter",
+  "model": "SFC-2016 40-inch Tower Fan",
+  "aliases": [],
+  "controls": [
+    "Sunter SFC-2016 40-inch Tower Fan"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_FAN": {
+      "label": "Fan",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x44",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Fans/Sunter SFC-2016 40-inch Tower Fan.rmdu function 0 'Fan' (OBC DD; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 68; the upgrade's note: 'Fan speed selection'"
+        }
+      ]
+    },
+    "KEY_MODE": {
+      "label": "Mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x43",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Fans/Sunter SFC-2016 40-inch Tower Fan.rmdu function 1 'Mode' (OBC 3D; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 67; the upgrade's note: 'Wind selection'"
+        }
+      ]
+    },
+    "KEY_OSCILLATION": {
+      "label": "Oscillation",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x46",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Fans/Sunter SFC-2016 40-inch Tower Fan.rmdu function 2 'Oscillation' (OBC 9D; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 70; the upgrade's note: 'Oscillate on/off'"
+        }
+      ]
+    },
+    "KEY_TIMER": {
+      "label": "Timer",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Fans/Sunter SFC-2016 40-inch Tower Fan.rmdu function 3 'Timer' (OBC 57; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 21; the upgrade's note: 'Shutoff timer'"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "Power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x40",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Fans/Sunter SFC-2016 40-inch Tower Fan.rmdu function 4 'Power' (OBC FD; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 64; the upgrade's note: 'Power'"
+        }
+      ]
+    }
+  }
+}

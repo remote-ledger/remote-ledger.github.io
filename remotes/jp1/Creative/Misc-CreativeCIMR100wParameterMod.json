@@ -1,0 +1,351 @@
+{
+  "manufacturer": "Creative",
+  "model": "CIMR100 Credit Card remote (CreativeCIMR100wParameterMod)",
+  "aliases": [],
+  "controls": [
+    "Creative CIMR100 Credit Card remote"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER": {
+      "label": "power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x21",
+          "subdevice": "0xAC",
+          "function": "0xB4",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/CreativeCIMR100wParameterMod.rmdu function 13 'power' (OBC D2; NEC1, parms 33 172 34): NEC1 device 33 subdevice 172 function 180; the upgrade's note: 'Start Application \"shift power\" stops'"
+        }
+      ]
+    },
+    "KEY_SHIFT": {
+      "label": "shift",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x21",
+          "subdevice": "0xAC",
+          "function": "0x24",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/CreativeCIMR100wParameterMod.rmdu function 14 'shift' (OBC DB; NEC1, parms 33 172 34): NEC1 device 33 subdevice 172 function 36"
+        }
+      ]
+    },
+    "KEY_MOUSE_MODE_SELECT": {
+      "label": "mouse mode select",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x21",
+          "subdevice": "0xAC",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/CreativeCIMR100wParameterMod.rmdu function 15 'mouse mode select' (OBC D7; NEC1, parms 33 172 34): NEC1 device 33 subdevice 172 function 20"
+        }
+      ]
+    },
+    "KEY_VOL_UP": {
+      "label": "vol up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x21",
+          "subdevice": "0xAC",
+          "function": "0x34",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/CreativeCIMR100wParameterMod.rmdu function 16 'vol up' (OBC D3; NEC1, parms 33 172 34): NEC1 device 33 subdevice 172 function 52"
+        }
+      ]
+    },
+    "KEY_VOL_DOWN": {
+      "label": "vol down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x21",
+          "subdevice": "0xAC",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/CreativeCIMR100wParameterMod.rmdu function 17 'vol down' (OBC CF; NEC1, parms 33 172 34): NEC1 device 33 subdevice 172 function 12"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x21",
+          "subdevice": "0xAC",
+          "function": "0xF4",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/CreativeCIMR100wParameterMod.rmdu function 18 'mute' (OBC D0; NEC1, parms 33 172 34): NEC1 device 33 subdevice 172 function 244"
+        }
+      ]
+    },
+    "KEY_MENU": {
+      "label": "menu",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x21",
+          "subdevice": "0xAC",
+          "function": "0x84",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/CreativeCIMR100wParameterMod.rmdu function 19 'menu' (OBC DE; NEC1, parms 33 172 34): NEC1 device 33 subdevice 172 function 132; the upgrade's note: 'on original keypad 1'"
+        }
+      ]
+    },
+    "KEY_SUBTITLE": {
+      "label": "subtitle",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x21",
+          "subdevice": "0xAC",
+          "function": "0xC4",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/CreativeCIMR100wParameterMod.rmdu function 20 'subtitle' (OBC DC; NEC1, parms 33 172 34): NEC1 device 33 subdevice 172 function 196; the upgrade's note: 'on original keypad 3'"
+        }
+      ]
+    },
+    "KEY_UP_ARROW": {
+      "label": "up arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x21",
+          "subdevice": "0xAC",
+          "function": "0x44",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/CreativeCIMR100wParameterMod.rmdu function 21 'up arrow' (OBC DD; NEC1, parms 33 172 34): NEC1 device 33 subdevice 172 function 68; the upgrade's note: 'on original keypad 2'"
+        }
+      ]
+    },
+    "KEY_DOWN_ARROW": {
+      "label": "down arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x21",
+          "subdevice": "0xAC",
+          "function": "0x54",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/CreativeCIMR100wParameterMod.rmdu function 22 'down arrow' (OBC D5; NEC1, parms 33 172 34): NEC1 device 33 subdevice 172 function 84; the upgrade's note: 'on original keypad 8'"
+        }
+      ]
+    },
+    "KEY_LEFT_ARROW": {
+      "label": "left arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x21",
+          "subdevice": "0xAC",
+          "function": "0xA4",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/CreativeCIMR100wParameterMod.rmdu function 23 'left arrow' (OBC DA; NEC1, parms 33 172 34): NEC1 device 33 subdevice 172 function 164; the upgrade's note: 'on original keypad 4'"
+        }
+      ]
+    },
+    "KEY_RIGHT_ARROW": {
+      "label": "right arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x21",
+          "subdevice": "0xAC",
+          "function": "0xE4",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/CreativeCIMR100wParameterMod.rmdu function 24 'right arrow' (OBC D8; NEC1, parms 33 172 34): NEC1 device 33 subdevice 172 function 228; the upgrade's note: 'on original keypad 6'"
+        }
+      ]
+    },
+    "KEY_SELECT": {
+      "label": "select",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x21",
+          "subdevice": "0xAC",
+          "function": "0x64",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/CreativeCIMR100wParameterMod.rmdu function 25 'select' (OBC D9; NEC1, parms 33 172 34): NEC1 device 33 subdevice 172 function 100; the upgrade's note: 'on original keypad 5'"
+        }
+      ]
+    },
+    "KEY_CANCEL": {
+      "label": "cancel",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x21",
+          "subdevice": "0xAC",
+          "function": "0x74",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/CreativeCIMR100wParameterMod.rmdu function 26 'cancel' (OBC D1; NEC1, parms 33 172 34): NEC1 device 33 subdevice 172 function 116; the upgrade's note: 'on original keypad 0'"
+        }
+      ]
+    },
+    "KEY_LANGUAGE": {
+      "label": "language",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x21",
+          "subdevice": "0xAC",
+          "function": "0x94",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/CreativeCIMR100wParameterMod.rmdu function 27 'language' (OBC D6; NEC1, parms 33 172 34): NEC1 device 33 subdevice 172 function 148; the upgrade's note: 'on original keypad 7'"
+        }
+      ]
+    },
+    "KEY_ANGLE_TV_SLASH_MON": {
+      "label": "angle (TV/MON)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x21",
+          "subdevice": "0xAC",
+          "function": "0xD4",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/CreativeCIMR100wParameterMod.rmdu function 28 'angle (TV/MON)' (OBC D4; NEC1, parms 33 172 34): NEC1 device 33 subdevice 172 function 212; the upgrade's note: 'on original keypad 9'"
+        }
+      ]
+    },
+    "KEY_PLAY": {
+      "label": "play",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x21",
+          "subdevice": "0xAC",
+          "function": "0x98",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/CreativeCIMR100wParameterMod.rmdu function 29 'play' (OBC E6; NEC1, parms 33 172 34): NEC1 device 33 subdevice 172 function 152"
+        }
+      ]
+    },
+    "KEY_PAUSE": {
+      "label": "pause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x21",
+          "subdevice": "0xAC",
+          "function": "0xD8",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/CreativeCIMR100wParameterMod.rmdu function 30 'pause' (OBC E4; NEC1, parms 33 172 34): NEC1 device 33 subdevice 172 function 216"
+        }
+      ]
+    },
+    "KEY_REWIND": {
+      "label": "rewind",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x21",
+          "subdevice": "0xAC",
+          "function": "0x78",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/CreativeCIMR100wParameterMod.rmdu function 31 'rewind' (OBC E1; NEC1, parms 33 172 34): NEC1 device 33 subdevice 172 function 120"
+        }
+      ]
+    },
+    "KEY_FAST_FWD": {
+      "label": "fast fwd",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x21",
+          "subdevice": "0xAC",
+          "function": "0xF8",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/CreativeCIMR100wParameterMod.rmdu function 32 'fast fwd' (OBC E0; NEC1, parms 33 172 34): NEC1 device 33 subdevice 172 function 248"
+        }
+      ]
+    },
+    "KEY_STOP": {
+      "label": "stop",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x21",
+          "subdevice": "0xAC",
+          "function": "0x58",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/CreativeCIMR100wParameterMod.rmdu function 33 'stop' (OBC E5; NEC1, parms 33 172 34): NEC1 device 33 subdevice 172 function 88"
+        }
+      ]
+    },
+    "KEY_NEXT_TRACK": {
+      "label": "next track",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x21",
+          "subdevice": "0xAC",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/CreativeCIMR100wParameterMod.rmdu function 34 'next track' (OBC DF; NEC1, parms 33 172 34): NEC1 device 33 subdevice 172 function 4"
+        }
+      ]
+    },
+    "KEY_PREV_TRACK": {
+      "label": "prev track",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x21",
+          "subdevice": "0xAC",
+          "function": "0xB8",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/CreativeCIMR100wParameterMod.rmdu function 35 'prev track' (OBC E2; NEC1, parms 33 172 34): NEC1 device 33 subdevice 172 function 184"
+        }
+      ]
+    },
+    "KEY_EJECT": {
+      "label": "eject",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x21",
+          "subdevice": "0xAC",
+          "function": "0x38",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/CreativeCIMR100wParameterMod.rmdu function 36 'eject' (OBC E3; NEC1, parms 33 172 34): NEC1 device 33 subdevice 172 function 56"
+        }
+      ]
+    }
+  }
+}

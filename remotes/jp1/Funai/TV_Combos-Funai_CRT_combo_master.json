@@ -1,0 +1,631 @@
+{
+  "manufacturer": "Funai",
+  "model": "CRT Combo Master (flat)",
+  "aliases": [],
+  "controls": [
+    "Funai CRT Combo Master (flat)"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER": {
+      "label": "Power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x22",
+          "function": "0xE0",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV Combos/Funai CRT combo master.rmdu function 0 'Power' (OBC F8; NEC1, parms 135 34 null 0 0): NEC1 device 135 subdevice 34 function 224"
+        }
+      ]
+    },
+    "KEY_PIC_SLASH_SLEEP": {
+      "label": "Pic/Sleep",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x22",
+          "function": "0xC9",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV Combos/Funai CRT combo master.rmdu function 1 'Pic/Sleep' (OBC 6C; NEC1, parms 135 34 null 0 0): NEC1 device 135 subdevice 34 function 201"
+        }
+      ]
+    },
+    "KEY_TV_SLEEP": {
+      "label": "TV\\:Sleep",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x22",
+          "function": "0xCB",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV Combos/Funai CRT combo master.rmdu function 2 'TV\\:Sleep' (OBC 2C; NEC1, parms 135 34 null 0 0): NEC1 device 135 subdevice 34 function 203; the upgrade's note: 'Not on OEM remote'"
+        }
+      ]
+    },
+    "KEY_SELECT": {
+      "label": "Select",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x22",
+          "function": "0xCD",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV Combos/Funai CRT combo master.rmdu function 3 'Select' (OBC 4C; NEC1, parms 135 34 null 0 0): NEC1 device 135 subdevice 34 function 205"
+        }
+      ]
+    },
+    "KEY_DISPLAY": {
+      "label": "Display",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x22",
+          "function": "0xCF",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV Combos/Funai CRT combo master.rmdu function 4 'Display' (OBC 0C; NEC1, parms 135 34 null 0 0): NEC1 device 135 subdevice 34 function 207"
+        }
+      ]
+    },
+    "KEY_SETUP": {
+      "label": "Setup",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x22",
+          "function": "0xEF",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV Combos/Funai CRT combo master.rmdu function 5 'Setup' (OBC 08; NEC1, parms 135 34 null 0 0): NEC1 device 135 subdevice 34 function 239"
+        }
+      ]
+    },
+    "KEY_CH_PLUS": {
+      "label": "Ch+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x22",
+          "function": "0xD0",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV Combos/Funai CRT combo master.rmdu function 6 'Ch+' (OBC F4; NEC1, parms 135 34 null 0 0): NEC1 device 135 subdevice 34 function 208"
+        }
+      ]
+    },
+    "KEY_CH_MINUS": {
+      "label": "Ch-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x22",
+          "function": "0xC8",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV Combos/Funai CRT combo master.rmdu function 7 'Ch-' (OBC EC; NEC1, parms 135 34 null 0 0): NEC1 device 135 subdevice 34 function 200"
+        }
+      ]
+    },
+    "KEY_TV_CH_REVERT": {
+      "label": "TV\\:Ch Revert",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x22",
+          "function": "0xCE",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV Combos/Funai CRT combo master.rmdu function 8 'TV\\:Ch Revert' (OBC 8C; NEC1, parms 135 34 null 0 0): NEC1 device 135 subdevice 34 function 206; the upgrade's note: 'Not on OEM remote'"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "Vol+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x22",
+          "function": "0xF0",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV Combos/Funai CRT combo master.rmdu function 9 'Vol+' (OBC F0; NEC1, parms 135 34 null 0 0): NEC1 device 135 subdevice 34 function 240"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "Vol-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x22",
+          "function": "0xF1",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV Combos/Funai CRT combo master.rmdu function 10 'Vol-' (OBC 70; NEC1, parms 135 34 null 0 0): NEC1 device 135 subdevice 34 function 241"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "Mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x22",
+          "function": "0xF3",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV Combos/Funai CRT combo master.rmdu function 11 'Mute' (OBC 30; NEC1, parms 135 34 null 0 0): NEC1 device 135 subdevice 34 function 243"
+        }
+      ]
+    },
+    "KEY_TITLE": {
+      "label": "Title",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x22",
+          "function": "0x70",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV Combos/Funai CRT combo master.rmdu function 12 'Title' (OBC F1; NEC1, parms 135 34 null 0 0): NEC1 device 135 subdevice 34 function 112"
+        }
+      ]
+    },
+    "KEY_DISC_MENU": {
+      "label": "Disc Menu",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x22",
+          "function": "0x71",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV Combos/Funai CRT combo master.rmdu function 13 'Disc Menu' (OBC 71; NEC1, parms 135 34 null 0 0): NEC1 device 135 subdevice 34 function 113"
+        }
+      ]
+    },
+    "KEY_MODE": {
+      "label": "Mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x22",
+          "function": "0x5C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV Combos/Funai CRT combo master.rmdu function 14 'Mode' (OBC C5; NEC1, parms 135 34 null 0 0): NEC1 device 135 subdevice 34 function 92"
+        }
+      ]
+    },
+    "KEY_RETURN": {
+      "label": "Return",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x22",
+          "function": "0x73",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV Combos/Funai CRT combo master.rmdu function 15 'Return' (OBC 31; NEC1, parms 135 34 null 0 0): NEC1 device 135 subdevice 34 function 115"
+        }
+      ]
+    },
+    "KEY_MENU_UP": {
+      "label": "Menu Up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x22",
+          "function": "0xF6",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV Combos/Funai CRT combo master.rmdu function 16 'Menu Up' (OBC 90; NEC1, parms 135 34 null 0 0): NEC1 device 135 subdevice 34 function 246"
+        }
+      ]
+    },
+    "KEY_MENU_DN": {
+      "label": "Menu Dn",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x22",
+          "function": "0xF7",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV Combos/Funai CRT combo master.rmdu function 17 'Menu Dn' (OBC 10; NEC1, parms 135 34 null 0 0): NEC1 device 135 subdevice 34 function 247"
+        }
+      ]
+    },
+    "KEY_OK": {
+      "label": "OK",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x22",
+          "function": "0x72",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV Combos/Funai CRT combo master.rmdu function 18 'OK' (OBC B1; NEC1, parms 135 34 null 0 0): NEC1 device 135 subdevice 34 function 114"
+        }
+      ]
+    },
+    "KEY_MENU_LFT": {
+      "label": "Menu Lft",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x22",
+          "function": "0xC7",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV Combos/Funai CRT combo master.rmdu function 19 'Menu Lft' (OBC 1C; NEC1, parms 135 34 null 0 0): NEC1 device 135 subdevice 34 function 199"
+        }
+      ]
+    },
+    "KEY_MENU_RGT": {
+      "label": "Menu Rgt",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x22",
+          "function": "0xC6",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV Combos/Funai CRT combo master.rmdu function 20 'Menu Rgt' (OBC 9C; NEC1, parms 135 34 null 0 0): NEC1 device 135 subdevice 34 function 198"
+        }
+      ]
+    },
+    "KEY_PREV": {
+      "label": "Prev",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x22",
+          "function": "0x5D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV Combos/Funai CRT combo master.rmdu function 21 'Prev' (OBC 45; NEC1, parms 135 34 null 0 0): NEC1 device 135 subdevice 34 function 93; the upgrade's note: 'Only on combos lacking VCR'"
+        }
+      ]
+    },
+    "KEY_REW_SLOW": {
+      "label": "Rew [Slow]",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x22",
+          "function": "0x52",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV Combos/Funai CRT combo master.rmdu function 22 'Rew [Slow]' (OBC B5; NEC1, parms 135 34 null 0 0): NEC1 device 135 subdevice 34 function 82; the upgrade's note: 'Slow Rev in Pause mode'"
+        }
+      ]
+    },
+    "KEY_PAUSE_SLASH_STEP": {
+      "label": "Pause/Step",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x22",
+          "function": "0x5B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV Combos/Funai CRT combo master.rmdu function 23 'Pause/Step' (OBC 25; NEC1, parms 135 34 null 0 0): NEC1 device 135 subdevice 34 function 91"
+        }
+      ]
+    },
+    "KEY_PLAY": {
+      "label": "Play",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x22",
+          "function": "0x5E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV Combos/Funai CRT combo master.rmdu function 24 'Play' (OBC 85; NEC1, parms 135 34 null 0 0): NEC1 device 135 subdevice 34 function 94"
+        }
+      ]
+    },
+    "KEY_FFWD_SLOW": {
+      "label": "FFwd [Slow]",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x22",
+          "function": "0x53",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV Combos/Funai CRT combo master.rmdu function 25 'FFwd [Slow]' (OBC 35; NEC1, parms 135 34 null 0 0): NEC1 device 135 subdevice 34 function 83; the upgrade's note: 'Slow Fwd in Pause mode'"
+        }
+      ]
+    },
+    "KEY_NEXT": {
+      "label": "Next",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x22",
+          "function": "0x5F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV Combos/Funai CRT combo master.rmdu function 26 'Next' (OBC 05; NEC1, parms 135 34 null 0 0): NEC1 device 135 subdevice 34 function 95; the upgrade's note: 'Only on combos lacking VCR'"
+        }
+      ]
+    },
+    "KEY_STOP": {
+      "label": "Stop",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x22",
+          "function": "0x60",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV Combos/Funai CRT combo master.rmdu function 27 'Stop' (OBC F9; NEC1, parms 135 34 null 0 0): NEC1 device 135 subdevice 34 function 96"
+        }
+      ]
+    },
+    "KEY_OPEN_SLASH_CLOSE": {
+      "label": "Open/Close",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x22",
+          "function": "0x44",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV Combos/Funai CRT combo master.rmdu function 28 'Open/Close' (OBC DD; NEC1, parms 135 34 null 0 0): NEC1 device 135 subdevice 34 function 68; the upgrade's note: 'Only on combos lacking VCR'"
+        }
+      ]
+    },
+    "KEY_0": {
+      "label": "0",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x22",
+          "function": "0xE9",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV Combos/Funai CRT combo master.rmdu function 29 '0' (OBC 68; NEC1, parms 135 34 null 0 0): NEC1 device 135 subdevice 34 function 233"
+        }
+      ]
+    },
+    "KEY_1": {
+      "label": "1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x22",
+          "function": "0xDF",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV Combos/Funai CRT combo master.rmdu function 30 '1' (OBC 04; NEC1, parms 135 34 null 0 0): NEC1 device 135 subdevice 34 function 223"
+        }
+      ]
+    },
+    "KEY_2": {
+      "label": "2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x22",
+          "function": "0xE1",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV Combos/Funai CRT combo master.rmdu function 31 '2' (OBC 78; NEC1, parms 135 34 null 0 0): NEC1 device 135 subdevice 34 function 225"
+        }
+      ]
+    },
+    "KEY_3": {
+      "label": "3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x22",
+          "function": "0xE2",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV Combos/Funai CRT combo master.rmdu function 32 '3' (OBC B8; NEC1, parms 135 34 null 0 0): NEC1 device 135 subdevice 34 function 226"
+        }
+      ]
+    },
+    "KEY_4": {
+      "label": "4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x22",
+          "function": "0xE3",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV Combos/Funai CRT combo master.rmdu function 33 '4' (OBC 38; NEC1, parms 135 34 null 0 0): NEC1 device 135 subdevice 34 function 227"
+        }
+      ]
+    },
+    "KEY_5": {
+      "label": "5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x22",
+          "function": "0xE4",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV Combos/Funai CRT combo master.rmdu function 34 '5' (OBC D8; NEC1, parms 135 34 null 0 0): NEC1 device 135 subdevice 34 function 228"
+        }
+      ]
+    },
+    "KEY_6": {
+      "label": "6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x22",
+          "function": "0xE5",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV Combos/Funai CRT combo master.rmdu function 35 '6' (OBC 58; NEC1, parms 135 34 null 0 0): NEC1 device 135 subdevice 34 function 229"
+        }
+      ]
+    },
+    "KEY_7": {
+      "label": "7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x22",
+          "function": "0xE6",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV Combos/Funai CRT combo master.rmdu function 36 '7' (OBC 98; NEC1, parms 135 34 null 0 0): NEC1 device 135 subdevice 34 function 230"
+        }
+      ]
+    },
+    "KEY_8": {
+      "label": "8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x22",
+          "function": "0xE7",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV Combos/Funai CRT combo master.rmdu function 37 '8' (OBC 18; NEC1, parms 135 34 null 0 0): NEC1 device 135 subdevice 34 function 231"
+        }
+      ]
+    },
+    "KEY_9": {
+      "label": "9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x22",
+          "function": "0xE8",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV Combos/Funai CRT combo master.rmdu function 38 '9' (OBC E8; NEC1, parms 135 34 null 0 0): NEC1 device 135 subdevice 34 function 232"
+        }
+      ]
+    },
+    "KEY_PLUS_10_SEARCH": {
+      "label": "+10 Search",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x22",
+          "function": "0xEC",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV Combos/Funai CRT combo master.rmdu function 39 '+10 Search' (OBC C8; NEC1, parms 135 34 null 0 0): NEC1 device 135 subdevice 34 function 236"
+        }
+      ]
+    },
+    "KEY_CLEAR": {
+      "label": "Clear",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x22",
+          "function": "0x58",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV Combos/Funai CRT combo master.rmdu function 40 'Clear' (OBC E5; NEC1, parms 135 34 null 0 0): NEC1 device 135 subdevice 34 function 88"
+        }
+      ]
+    },
+    "KEY_TV_SLASH_VCR_AUDIO": {
+      "label": "TV/VCR Audio",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x22",
+          "function": "0xD9",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV Combos/Funai CRT combo master.rmdu function 41 'TV/VCR Audio' (OBC 64; NEC1, parms 135 34 null 0 0): NEC1 device 135 subdevice 34 function 217; the upgrade's note: 'Only on combos including VCR'"
+        }
+      ]
+    },
+    "KEY_RECORD": {
+      "label": "Record",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x22",
+          "function": "0xFA",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV Combos/Funai CRT combo master.rmdu function 42 'Record' (OBC A0; NEC1, parms 135 34 null 0 0): NEC1 device 135 subdevice 34 function 250; the upgrade's note: 'Only on combos including VCR'"
+        }
+      ]
+    },
+    "KEY_SPEED": {
+      "label": "Speed",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x22",
+          "function": "0xFB",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV Combos/Funai CRT combo master.rmdu function 43 'Speed' (OBC 20; NEC1, parms 135 34 null 0 0): NEC1 device 135 subdevice 34 function 251; the upgrade's note: 'Only on combos including VCR'"
+        }
+      ]
+    }
+  }
+}

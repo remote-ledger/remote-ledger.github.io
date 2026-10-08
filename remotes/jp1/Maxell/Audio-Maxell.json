@@ -1,0 +1,309 @@
+{
+  "manufacturer": "Maxell",
+  "model": "MXSP-SB3000 soundbase",
+  "aliases": [],
+  "controls": [
+    "Maxell MXSP-SB3000 soundbase"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER": {
+      "label": "Power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x86",
+          "subdevice": "0xFF",
+          "function": "0x71",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Maxell.rmdu function 0 'Power' (OBC 71; NEC1, parms 134 255 0 0 0): NEC1 device 134 subdevice 255 function 113"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "Vol+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x86",
+          "subdevice": "0xFF",
+          "function": "0x79",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Maxell.rmdu function 1 'Vol+' (OBC 61; NEC1, parms 134 255 0 0 0): NEC1 device 134 subdevice 255 function 121"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "Mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x86",
+          "subdevice": "0xFF",
+          "function": "0x7B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Maxell.rmdu function 2 'Mute' (OBC 21; NEC1, parms 134 255 0 0 0): NEC1 device 134 subdevice 255 function 123"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "Vol-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x86",
+          "subdevice": "0xFF",
+          "function": "0x7A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Maxell.rmdu function 3 'Vol-' (OBC A1; NEC1, parms 134 255 0 0 0): NEC1 device 134 subdevice 255 function 122"
+        }
+      ]
+    },
+    "KEY_REWIND": {
+      "label": "Rewind",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x86",
+          "subdevice": "0xFF",
+          "function": "0xB3",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Maxell.rmdu function 4 'Rewind' (OBC 32; NEC1, parms 134 255 0 0 0): NEC1 device 134 subdevice 255 function 179; the upgrade's note: 'Bluetooth rewind'"
+        }
+      ]
+    },
+    "KEY_PAUSE": {
+      "label": "Pause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x86",
+          "subdevice": "0xFF",
+          "function": "0x6F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Maxell.rmdu function 5 'Pause' (OBC 09; NEC1, parms 134 255 0 0 0): NEC1 device 134 subdevice 255 function 111; the upgrade's note: 'Bluetooth play/pause'"
+        }
+      ]
+    },
+    "KEY_FASTFWD": {
+      "label": "FastFwd",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x86",
+          "subdevice": "0xFF",
+          "function": "0xB2",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Maxell.rmdu function 6 'FastFwd' (OBC B2; NEC1, parms 134 255 0 0 0): NEC1 device 134 subdevice 255 function 178; the upgrade's note: 'Bluetooth forward'"
+        }
+      ]
+    },
+    "KEY_DIM": {
+      "label": "Dim",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x86",
+          "subdevice": "0xFF",
+          "function": "0x7F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Maxell.rmdu function 7 'Dim' (OBC 01; NEC1, parms 134 255 0 0 0): NEC1 device 134 subdevice 255 function 127"
+        }
+      ]
+    },
+    "KEY_HDMI_1": {
+      "label": "HDMI 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x86",
+          "subdevice": "0xFF",
+          "function": "0x75",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Maxell.rmdu function 8 'HDMI 1' (OBC 51; NEC1, parms 134 255 0 0 0): NEC1 device 134 subdevice 255 function 117"
+        }
+      ]
+    },
+    "KEY_HDMI_2": {
+      "label": "HDMI 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x86",
+          "subdevice": "0xFF",
+          "function": "0xAF",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Maxell.rmdu function 9 'HDMI 2' (OBC 0A; NEC1, parms 134 255 0 0 0): NEC1 device 134 subdevice 255 function 175"
+        }
+      ]
+    },
+    "KEY_HDMI_3": {
+      "label": "HDMI 3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x86",
+          "subdevice": "0xFF",
+          "function": "0xB0",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Maxell.rmdu function 10 'HDMI 3' (OBC F2; NEC1, parms 134 255 0 0 0): NEC1 device 134 subdevice 255 function 176"
+        }
+      ]
+    },
+    "KEY_ARC": {
+      "label": "ARC",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x86",
+          "subdevice": "0xFF",
+          "function": "0xB1",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Maxell.rmdu function 11 'ARC' (OBC 72; NEC1, parms 134 255 0 0 0): NEC1 device 134 subdevice 255 function 177; the upgrade's note: 'HDMI ARC'"
+        }
+      ]
+    },
+    "KEY_OPT": {
+      "label": "Opt",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x86",
+          "subdevice": "0xFF",
+          "function": "0x76",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Maxell.rmdu function 12 'Opt' (OBC 91; NEC1, parms 134 255 0 0 0): NEC1 device 134 subdevice 255 function 118; the upgrade's note: 'Digital optical'"
+        }
+      ]
+    },
+    "KEY_COAX": {
+      "label": "Coax",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x86",
+          "subdevice": "0xFF",
+          "function": "0x70",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Maxell.rmdu function 13 'Coax' (OBC F1; NEC1, parms 134 255 0 0 0): NEC1 device 134 subdevice 255 function 112; the upgrade's note: 'Digital coax'"
+        }
+      ]
+    },
+    "KEY_RCA": {
+      "label": "RCA",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x86",
+          "subdevice": "0xFF",
+          "function": "0x77",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Maxell.rmdu function 14 'RCA' (OBC 11; NEC1, parms 134 255 0 0 0): NEC1 device 134 subdevice 255 function 119"
+        }
+      ]
+    },
+    "KEY_LINE_IN": {
+      "label": "Line In",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x86",
+          "subdevice": "0xFF",
+          "function": "0xAE",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Maxell.rmdu function 15 'Line In' (OBC 8A; NEC1, parms 134 255 0 0 0): NEC1 device 134 subdevice 255 function 174; the upgrade's note: '3.5 mm'"
+        }
+      ]
+    },
+    "KEY_BT": {
+      "label": "BT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x86",
+          "subdevice": "0xFF",
+          "function": "0x78",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Maxell.rmdu function 16 'BT' (OBC E1; NEC1, parms 134 255 0 0 0): NEC1 device 134 subdevice 255 function 120; the upgrade's note: 'Bluetooth'"
+        }
+      ]
+    },
+    "KEY_PAIR": {
+      "label": "Pair",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x86",
+          "subdevice": "0xFF",
+          "function": "0x7E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Maxell.rmdu function 17 'Pair' (OBC 81; NEC1, parms 134 255 0 0 0): NEC1 device 134 subdevice 255 function 126; the upgrade's note: 'Bluetooth pairing'"
+        }
+      ]
+    },
+    "KEY_BASS": {
+      "label": "Bass",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x86",
+          "subdevice": "0xFF",
+          "function": "0x7C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Maxell.rmdu function 18 'Bass' (OBC C1; NEC1, parms 134 255 0 0 0): NEC1 device 134 subdevice 255 function 124"
+        }
+      ]
+    },
+    "KEY_SRS": {
+      "label": "SRS",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x86",
+          "subdevice": "0xFF",
+          "function": "0x7D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Maxell.rmdu function 19 'SRS' (OBC 41; NEC1, parms 134 255 0 0 0): NEC1 device 134 subdevice 255 function 125"
+        }
+      ]
+    },
+    "KEY_EQ": {
+      "label": "EQ",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x86",
+          "subdevice": "0xFF",
+          "function": "0x93",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Maxell.rmdu function 20 'EQ' (OBC 36; NEC1, parms 134 255 0 0 0): NEC1 device 134 subdevice 255 function 147"
+        }
+      ]
+    }
+  }
+}
