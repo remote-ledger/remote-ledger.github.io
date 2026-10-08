@@ -15,6 +15,7 @@ IMPORT_ROOT = ROOT / "remotes" / "lirc"
 IRBLASTER_ROOT = ROOT / "remotes" / "irblaster"
 HIFI_ROOT = ROOT / "remotes" / "hifi-remote"
 JP1_ROOT = ROOT / "remotes" / "jp1"
+OFFICIAL_ROOT = ROOT / "remotes" / "official"
 #: Authored files, tested one by one. Imported ones are thousands and are
 #: regenerated rather than written (D39): `rl build --check` validates every
 #: one of them in CI, and test_the_imported_tree_keeps_r19 below checks R19's
@@ -23,7 +24,8 @@ JP1_ROOT = ROOT / "remotes" / "jp1"
 #: one-minute suite into an hour, so it is scanned, like LIRC's, not enumerated.
 AUTHORED = [p for p in CORPUS
             if IMPORT_ROOT not in p.parents and IRBLASTER_ROOT not in p.parents
-            and HIFI_ROOT not in p.parents and JP1_ROOT not in p.parents]
+            and HIFI_ROOT not in p.parents and JP1_ROOT not in p.parents
+            and OFFICIAL_ROOT not in p.parents]
 IMPORTED = [p for p in CORPUS if IMPORT_ROOT in p.parents]
 IRBLASTER = [p for p in CORPUS if IRBLASTER_ROOT in p.parents]
 HIFI = [p for p in CORPUS if HIFI_ROOT in p.parents]

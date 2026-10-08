@@ -30,7 +30,7 @@ from ..validate import corpus_files
 
 #: The sources, in the order that fixes each one's id in ``sources`` and in
 #: ``remotes.source``. A literal that only grows, like ``app_api.PROTOCOLS``.
-SOURCES: tuple[str, ...] = ("authored", "lirc", "smartir", "irblaster", "hifi-remote", "jp1")
+SOURCES: tuple[str, ...] = ("authored", "lirc", "smartir", "irblaster", "hifi-remote", "jp1", "official")
 SOURCE_ID = {name: i + 1 for i, name in enumerate(SOURCES)}
 
 #: ``remotes.tier`` and ``keys.confidence``: ``forms.CONFIDENCE_RANK`` itself, so

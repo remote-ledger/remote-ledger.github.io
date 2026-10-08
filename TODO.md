@@ -1,8 +1,8 @@
 # TODO
 
-Project status as of 2026-10-06.
+Project status as of 2026-10-08.
 
-**Where things stand.** v1 (DESIGN §8 Phases 0–6) is complete. Four
+**Where things stand.** v1 (DESIGN §8 Phases 0–6) is complete. Six
 sources have been imported under SPEC R19:
 
 - **LIRC**: 3,138 remotes, 112,789 keys (DESIGN §14).
@@ -14,6 +14,8 @@ sources have been imported under SPEC R19:
   reference codes with no licence recorded (DESIGN §27).
 - **The JP1 device upgrades** of its forum: 1,789 files, 67,417 keys, read for
   seven executors (DESIGN §28).
+- **Manufacturers' own IR tables**: Marantz's AV receiver charts and Anthem's
+  IR hex sheet, 174 files, 11,980 keys (DESIGN §29).
 
 SPEC v0.11 makes growing coverage from every source whose licence permits
 it the standing goal, with no fixed list of sources (DESIGN §8, Phase 8).
@@ -42,6 +44,24 @@ Land it in two PRs, code and then data.
       KeymapMaster files. Each executor needs its translator found and checked
       against the ledger's codes first. The forum's file section holds about
       2,000 more upgrades than the GitHub copy, behind a free login.
+- [ ] **RemoteCentral's Hex Code Database** is the next source in the order
+      the owner chose (2,114 models, about 53,000 Pronto strings). The codes
+      are learned from remotes, so they import at the lowest tier.
+- [ ] **The other makers' tables**: Oppo (through the Wayback Machine),
+      Kaleidescape, Arcam, Cambridge Audio (Wayback), KEF, T+A and JVC. Each
+      is a document pinned by hash as D123 does it.
+- [ ] **Marantz's direct-access sheets** (DESIGN D126): volume level, preset
+      and channel commands are RC-5 with an extension byte, and so are 1,034
+      rows of the charts the import counts and does not use. They need an
+      RC-5x protocol, which needs D18's gate: an independently cited golden
+      vector.
+- [ ] **Receiver commands in the key vocabulary** (D84, owner's call): the
+      official import maps 16.9% of its keys, because tuner presets, surround
+      modes, Pure Direct, discrete mute on and off, and a source key per input
+      are not among its 156 keys (DESIGN §22).
+- [ ] **Anthem inputs 21 to 30** (DESIGN D125): the sheet's Pronto hex and its
+      data column disagree for 20 rows, and the 80 keys are Untested. Anthem,
+      or a receiver, would say which is right.
 - [ ] **The One For All code lists** of hifi-remote.com are setup codes, not IR
       codes, and are not imported.
 - [ ] **Factor out a common importer skeleton** now that a third importer

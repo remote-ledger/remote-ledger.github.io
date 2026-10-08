@@ -51,8 +51,8 @@ def by_key(doc):
 
 
 def test_there_is_one_notice_per_source_in_the_order_the_ids_say(doc):
-    assert [s["key"] for s in doc["sources"]] == ["authored", "lirc", "smartir", "irblaster", "hifi-remote", "jp1"]
-    assert [s["id"] for s in doc["sources"]] == [1, 2, 3, 4, 5, 6]
+    assert [s["key"] for s in doc["sources"]] == ["authored", "lirc", "smartir", "irblaster", "hifi-remote", "jp1", "official"]
+    assert [s["id"] for s in doc["sources"]] == [1, 2, 3, 4, 5, 6, 7]
     assert doc["schemaVersion"] == 1 and list(corpus.SOURCES) == [s["key"] for s in doc["sources"]]
 
 
@@ -76,7 +76,7 @@ def test_how_firmly_each_licence_holds_is_said_in_the_repositorys_words(doc):
     sources = by_key(doc)
     assert {k: sources[k]["licenceKind"] for k in sources} == {
         "authored": "none", "lirc": "reading", "smartir": "stated", "irblaster": "inherited",
-        "hifi-remote": "none", "jp1": "none"}
+        "hifi-remote": "none", "jp1": "none", "official": "none"}
     # IR Blaster: by inheritance and nothing more, verbatim
     notes = " ".join(sources["irblaster"]["licenceNotes"])
     assert "by inheritance and nothing more" in notes
@@ -106,6 +106,17 @@ def test_the_jp1_notice_records_no_licence_and_names_the_repository(doc):
     assert "records no licence" in " ".join(notice["licenceNotes"])
     readme = notices.collapse((ROOT / "remotes" / "jp1" / "README.md").read_text(encoding="utf-8"))
     assert notice["upstreamUrl"] in readme and notice["upstreamUrl"] == notices.FACTS["jp1"]["upstream_url"]
+
+
+def test_the_official_notice_records_no_licence_and_names_the_makers_pages(doc):
+    """Manufacturers' own tables are reference codes (DESIGN D110): no SPDX id and no text, a note that says
+    the repository records none, and a link the import's README carries."""
+    notice = by_key(doc)["official"]
+    assert notice["spdx"] is None and notice["licenceText"] is None and notice["licenceKind"] == "none"
+    assert notice["upstreamCommit"] is None and notice["name"] == paths.IMPORTS["remotes/official/"]["name"]
+    assert "records no licence" in " ".join(notice["licenceNotes"])
+    readme = notices.collapse((ROOT / "remotes" / "official" / "README.md").read_text(encoding="utf-8"))
+    assert notice["upstreamUrl"] in readme and notice["upstreamUrl"] == notices.FACTS["official"]["upstream_url"]
 
 
 @pytest.mark.parametrize("source", ["lirc", "smartir", "irblaster"])
