@@ -1,0 +1,67 @@
+{
+  "manufacturer": "Sony",
+  "model": "CD/Cass/Tuner 13",
+  "aliases": [],
+  "controls": [
+    "Sony CD/Cass/Tuner (device code 13)"
+  ],
+  "protocol": {
+    "name": "Sony12",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_TUNER_SLASH_BAND": {
+      "label": "Tuner/Band",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_cdcombo.htm@da5d476a (retrieved 2026-10-08) table 2, command 15 'Tuner/Band' under 'Sony:13': Sony12 device 13 function 15 (the frame is inferred from the size of the device code)"
+        }
+      ]
+    },
+    "KEY_PRESET_PLUS": {
+      "label": "Preset +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_cdcombo.htm@da5d476a (retrieved 2026-10-08) table 2, command 16 'Preset +' under 'Sony:13': Sony12 device 13 function 16 (the frame is inferred from the size of the device code)"
+        }
+      ]
+    },
+    "KEY_PRESET_MINUS": {
+      "label": "Preset -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_cdcombo.htm@da5d476a (retrieved 2026-10-08) table 2, command 17 'Preset –' under 'Sony:13': Sony12 device 13 function 17 (the frame is inferred from the size of the device code)"
+        }
+      ]
+    },
+    "KEY_FM_MODE": {
+      "label": "FM Mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x21",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_cdcombo.htm@da5d476a (retrieved 2026-10-08) table 2, command 33 'FM Mode' under 'Sony:13': Sony12 device 13 function 33 (the frame is inferred from the size of the device code)"
+        }
+      ]
+    }
+  }
+}

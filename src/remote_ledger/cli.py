@@ -657,9 +657,18 @@ def cmd_import(args: argparse.Namespace) -> int:
     The commit is read from the checkout itself, and must match ``--commit``
     when one is given, so every citation names the tree it was built from.
     """
+    from .hifiremote import importer as hifiremote_importer
     from .irblaster import importer as irblaster_importer
     from .lirc import importer as lirc_importer
     from .smartir import importer as smartir_importer
+
+    if args.source == "hifi-remote":
+        # Not a git repository: the pin is a snapshot directory (D111).
+        report = hifiremote_importer.write_import(_repo_root(), Path(args.checkout))
+        imported = sum(n for k, n in report.keys.items() if k.startswith("imported"))
+        print(f"{hifiremote_importer.IMPORT_ROOT}/: {report.remotes['imported']:,} remotes, "
+              f"{imported:,} keys; see {hifiremote_importer.IMPORT_ROOT}/{hifiremote_importer.REPORT}")
+        return EXIT_OK
 
     module = {
         "lirc": lirc_importer, "smartir": smartir_importer,
@@ -819,9 +828,10 @@ def build_parser() -> argparse.ArgumentParser:
     im = sub.add_parser(
         "import", help="import an upstream database under SPEC R19", parents=[common]
     )
-    im.add_argument("source", choices=["lirc", "smartir", "irblaster"],
+    im.add_argument("source", choices=["lirc", "smartir", "irblaster", "hifi-remote"],
                      help="a source meeting SPEC R19's five conditions")
-    im.add_argument("checkout", help="a git checkout of the upstream source")
+    im.add_argument("checkout", help="a git checkout of the upstream source "
+                                     "(for hifi-remote: its snapshot, sources/hifi-remote)")
     im.add_argument("--commit", help="refuse unless the checkout is at this commit")
     im.set_defaults(func=cmd_import)
 

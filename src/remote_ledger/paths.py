@@ -33,6 +33,11 @@ IMPORTS: dict[str, dict[str, str]] = {
         "licence": "GPL-3.0-only",
         "readme": "remotes/irblaster/README.md",
     },
+    "remotes/hifi-remote/": {
+        "name": "hifi-remote.com Sony code pages",
+        "licence": "none: a table of reference codes",
+        "readme": "remotes/hifi-remote/README.md",
+    },
 }
 
 

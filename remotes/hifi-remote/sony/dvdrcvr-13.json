@@ -1,0 +1,54 @@
+{
+  "manufacturer": "Sony",
+  "model": "DVD/Receiver Combo and HTIB systems 13",
+  "aliases": [],
+  "controls": [
+    "Sony DVD/Receiver Combo and HTIB systems (device code 13)"
+  ],
+  "protocol": {
+    "name": "Sony12",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_MEMORY": {
+      "label": "Memory",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x0E",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_dvdrcvr.htm@14f257d8 (retrieved 2026-10-08) table 6, command 14 'Memory' under 'Sony:13 (tuner only commands)': Sony12 device 13 function 14 (the frame is inferred from the size of the device code)"
+        }
+      ]
+    },
+    "KEY_BAND": {
+      "label": "Band",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_dvdrcvr.htm@14f257d8 (retrieved 2026-10-08) table 6, command 15 'Band' under 'Sony:13 (tuner only commands)': Sony12 device 13 function 15 (the frame is inferred from the size of the device code)"
+        }
+      ]
+    },
+    "KEY_STEREO_SLASH_MONO": {
+      "label": "Stereo/Mono",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x4D",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_dvdrcvr.htm@14f257d8 (retrieved 2026-10-08) table 6, command 77 'Stereo/Mono' under 'Sony:13 (tuner only commands)': Sony12 device 13 function 77 (the frame is inferred from the size of the device code)"
+        }
+      ]
+    }
+  }
+}

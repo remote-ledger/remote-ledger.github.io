@@ -1,0 +1,28 @@
+{
+  "manufacturer": "Sony",
+  "model": "System Off 4",
+  "aliases": [],
+  "controls": [
+    "Sony System Off (device code 4)"
+  ],
+  "protocol": {
+    "name": "Sony15",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_SYSTEM_OFF": {
+      "label": "System Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "function": "0x37",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_dev004.htm@49c542c5 (retrieved 2026-10-08) table 1, command 55 'System Off' under 'Sony15:4': Sony15 device 4 function 55"
+        }
+      ]
+    }
+  }
+}

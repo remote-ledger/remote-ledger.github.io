@@ -1,0 +1,71 @@
+{
+  "manufacturer": "Sony",
+  "model": "DVD/Receiver Combo and HTIB systems 26.83",
+  "aliases": [],
+  "controls": [
+    "Sony DVD/Receiver Combo and HTIB systems (device code 26.83)"
+  ],
+  "protocol": {
+    "name": "Sony20",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_RECORD": {
+      "label": "Record",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0x53",
+          "function": "0x1D",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_dvdrcvr.htm@14f257d8 (retrieved 2026-10-08) table 4, command 29 'Record' under 'Sony:26.83 (VCR only commands, from DVD/VCR combo code)': Sony20 device 26 subdevice 83 function 29"
+        }
+      ]
+    },
+    "KEY_TV_SLASH_VIDEO": {
+      "label": "TV/Video",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0x53",
+          "function": "0x2A",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_dvdrcvr.htm@14f257d8 (retrieved 2026-10-08) table 4, command 42 'TV/Video' under 'Sony:26.83 (VCR only commands, from DVD/VCR combo code)': Sony20 device 26 subdevice 83 function 42"
+        }
+      ]
+    },
+    "KEY_SP_SLASH_EP": {
+      "label": "SP/EP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0x53",
+          "function": "0x58",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_dvdrcvr.htm@14f257d8 (retrieved 2026-10-08) table 4, command 88 'SP/EP' under 'Sony:26.83 (VCR only commands, from DVD/VCR combo code)': Sony20 device 26 subdevice 83 function 88"
+        }
+      ]
+    },
+    "KEY_COMMERCIAL_SKIP": {
+      "label": "Commercial Skip",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0x53",
+          "function": "0x5D",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_dvdrcvr.htm@14f257d8 (retrieved 2026-10-08) table 4, command 93 'Commercial Skip' under 'Sony:26.83 (VCR only commands, from DVD/VCR combo code)': Sony20 device 26 subdevice 83 function 93"
+        }
+      ]
+    }
+  }
+}

@@ -58,6 +58,15 @@ FACTS: dict[str, dict[str, Any]] = {
             "so there is no reading involved.",
         ],
     },
+    "hifi-remote": {
+        "kind": "none",
+        "upstream_url": "https://www.hifi-remote.com/sony/",
+        "note": "hifi-remote.com's Sony code pages are a person's table of reference "
+                "remote codes: which command number a Sony device code answers to. "
+                "The repository records no licence for them, because it treats a table "
+                "of reference codes as facts (DESIGN D110). Every key cites the page, "
+                "its checksum and its row.",
+    },
     "irblaster": {
         "kind": "inherited",
         "licence_file": "LICENSE",
@@ -114,9 +123,17 @@ def build_sources(root: Path, records: list[RemoteRecord]) -> list[dict[str, Any
             "ledgerRemotes": ledger_remotes.get(name, 0), "ledgerKeys": ledger_keys.get(name, 0),
         }
         base = import_root(name)
-        if base is None:
-            entry.update(name=facts["name"], spdx=None, licenceText=None,
-                         licenceNotes=[facts["note"]], upstreamUrl=None, upstreamCommit=None)
+        if facts["kind"] == "none":
+            # No licence is recorded: the authored remotes, and an import of reference
+            # codes (D110). The import's README still has to name where it came from.
+            upstream = facts.get("upstream_url")
+            readme = root / base / "README.md" if base else None
+            if readme is not None and readme.is_file() and upstream and \
+                    upstream not in collapse(readme.read_text(encoding="utf-8")):
+                raise ValidationError(f"{base}README.md does not name {upstream}, the notice's link")
+            entry.update(name=paths.IMPORTS[base]["name"] if base else facts["name"],
+                         spdx=None, licenceText=None, licenceNotes=[facts["note"]],
+                         upstreamUrl=upstream, upstreamCommit=None)
         else:
             meta = paths.IMPORTS[base]
             directory = root / base

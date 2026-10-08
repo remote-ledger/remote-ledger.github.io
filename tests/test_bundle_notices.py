@@ -51,8 +51,8 @@ def by_key(doc):
 
 
 def test_there_is_one_notice_per_source_in_the_order_the_ids_say(doc):
-    assert [s["key"] for s in doc["sources"]] == ["authored", "lirc", "smartir", "irblaster"]
-    assert [s["id"] for s in doc["sources"]] == [1, 2, 3, 4]
+    assert [s["key"] for s in doc["sources"]] == ["authored", "lirc", "smartir", "irblaster", "hifi-remote"]
+    assert [s["id"] for s in doc["sources"]] == [1, 2, 3, 4, 5]
     assert doc["schemaVersion"] == 1 and list(corpus.SOURCES) == [s["key"] for s in doc["sources"]]
 
 
@@ -75,7 +75,8 @@ def test_the_licence_ids_and_texts_are_the_repositorys(doc):
 def test_how_firmly_each_licence_holds_is_said_in_the_repositorys_words(doc):
     sources = by_key(doc)
     assert {k: sources[k]["licenceKind"] for k in sources} == {
-        "authored": "none", "lirc": "reading", "smartir": "stated", "irblaster": "inherited"}
+        "authored": "none", "lirc": "reading", "smartir": "stated", "irblaster": "inherited",
+        "hifi-remote": "none"}
     # IR Blaster: by inheritance and nothing more, verbatim
     notes = " ".join(sources["irblaster"]["licenceNotes"])
     assert "by inheritance and nothing more" in notes
@@ -83,6 +84,18 @@ def test_how_firmly_each_licence_holds_is_said_in_the_repositorys_words(doc):
     assert "it is not a reading of one, as LIRC's is" in notes
     assert "This is a reading of the licence, not a grant." in sources["lirc"]["licenceNotes"]
     assert any("states its licence outright" in n for n in sources["smartir"]["licenceNotes"])
+
+
+def test_the_hifi_remote_notice_records_no_licence_and_names_where_the_pages_are(doc):
+    """An import of reference codes (DESIGN D110): no SPDX id, no text, a note that says the
+    repository records none, and a link the import's own README carries."""
+    notice = by_key(doc)["hifi-remote"]
+    assert notice["spdx"] is None and notice["licenceText"] is None
+    assert notice["licenceKind"] == "none" and notice["upstreamCommit"] is None
+    assert "records no licence" in " ".join(notice["licenceNotes"])
+    assert notice["name"] == "hifi-remote.com Sony code pages"
+    readme = notices.collapse((ROOT / "remotes" / "hifi-remote" / "README.md").read_text(encoding="utf-8"))
+    assert notice["upstreamUrl"] in readme and notice["upstreamUrl"] == notices.FACTS["hifi-remote"]["upstream_url"]
 
 
 @pytest.mark.parametrize("source", ["lirc", "smartir", "irblaster"])
