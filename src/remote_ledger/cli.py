@@ -849,7 +849,7 @@ def build_parser() -> argparse.ArgumentParser:
         "bundle", parents=[common],
         help="build the catalog bundle an app ships: a SQLite file, notices and a manifest (D88)")
     bu.add_argument("--profile", choices=["selected", "full"], default="selected",
-                    help="selected: a subset for an app to ship (at most about 20.25 MB); "
+                    help="selected: what an app ships, every brand since D117, no size limit; "
                          "full: every brand (D92)")
     bu.add_argument("--out", metavar="DIR",
                     help="where to write (default: bundle-out/<profile>, which is ignored by "
@@ -859,8 +859,7 @@ def build_parser() -> argparse.ArgumentParser:
     bu.add_argument("--verify", metavar="DIR",
                     help="check the bundle in DIR against the tree and decode every signal")
     bu.add_argument("--max-bytes", type=int, metavar="N",
-                    help="fail when the bundle is larger (the selected profile's default is "
-                         "20,250,000)")
+                    help="fail when the bundle is larger (no limit by default, D117)")
     bu.set_defaults(func=cmd_bundle)
     bu_sub = bu.add_subparsers(dest="bundle_command")
     bs = bu_sub.add_parser("sign", parents=[common],

@@ -5393,7 +5393,7 @@ authored           4      120       75.8% (91)      25.0% (1)      50.0% (2)    
 all           12,453  527,456  76.5% (403,803)  38.1% (4,749)  65.1% (8,119)  90.6% (11,290)
 ```
 
-(The `hifi-remote` row is the import of §27 (D109 to D116), added after the figures in D85 to D87's prose were measured; those figures are the corpus without it. Its keys map less than the others' because the pages describe commands of one kind of device: `Index Mark`, `Disc +`, `Scan Reverse`, and `Select`, which D84 does not map.)
+(The `hifi-remote` row is the import of §27 (D109 to D117), added after the figures in D85 to D87's prose were measured; those figures are the corpus without it. Its keys map less than the others' because the pages describe commands of one kind of device: `Index Mark`, `Disc +`, `Scan Reverse`, and `Select`, which D84 does not map.)
 
 (The `authored` row is the Meridian MSR, Samsung BN59-01199F, Sony RMT-B118P and Topping RC-15A: 94 of 116 keys; the 22 left are the Meridian's tape and VCR sources, the Topping's DAC settings and `KEY_SEN`.)
 
@@ -5517,16 +5517,16 @@ FTS5 is not in every Android SQLite, so the search is ordinary columns and one p
 
 ### D92 — Profiles: `full` and `selected`
 
-**`full`** is every brand and remote: what a backend serves and what `selected` is cut from. **`selected`** is the subset an app ships in its install, **at most 20,250,000 bytes** (the owner's target was 20,000,000, so that an app that ships it keeps its whole install near 30 MB; D116 raised it by 250,000). A build over the cap fails (`--max-bytes N` overrides). The ledger has no popularity data, so the rule is a proxy plus a list a person reviews, and every number of it is a constant of `bundle/select.py` or a line of `bundle/data/selected_brands.txt`:
+**`full`** is every brand and remote: what a backend serves and what `selected` is cut from. **`selected`** is what an app ships in its install: since D117 **every brand, with no budget and no cap**, because the owner asked for all the data and for size not to be a factor (it was at most 20,000,000 bytes so that an app that ships it keeps its whole install near 30 MB, then 20,250,000, D92 and D116). A build over a limit given with `--max-bytes N` still fails. The ledger has no popularity data, so the rule is a proxy plus a list a person reviews, and every number of it is a constant of `bundle/select.py` or a line of `bundle/data/selected_brands.txt` (since D117 the list says only in which order the brands are taken, because all of them are):
 
-1. **The curated list**, `selected_brands.txt`: 112 well-known brands in the categories the owner named (television, AV receiver, set-top box, streaming box, projector, soundbar, disc player; air conditioners are out of scope), a brand per line, `#` to comment, matched by search key. **The order is the priority**: the bundle takes the brands from the top and carries each **whole** (all its models, remotes and signals) when what it adds still fits the budget of 19,000,000 bytes, by an estimate that is within 2.5% of the file; one that does not fit is skipped, the next is tried, and the command names the brands it skipped. The owner changes what ships by moving or adding a line.
-2. **The proxy fill**: the other brands, ranked by **models per byte** (the number of models a brand is listed with, over what its remotes and signals would add), among those with at least 40 models and 60% of their keys mapped to a canonical key, are added in that order while they fit what the list left of the budget. Models per brand is the one popularity signal the catalog has; dividing by the cost keeps out the makers of generic replacement remotes (`BRAVO`: 2,945 models, 2,275 remotes, 112,034 keys). Of the three proxies the owner named, **models per brand ranks the brands, and remotes per brand count as the cost** (with their keys and signals); **the third, the share of keys with signals, is 100% for every brand** (every key the ledger holds has a compiled signal), so it carries no information and the share of keys that map to a canonical key stands in for it.
+1. **The curated list**, `selected_brands.txt`: 112 well-known brands in the categories the owner named (television, AV receiver, set-top box, streaming box, projector, soundbar, disc player; air conditioners are out of scope), a brand per line, `#` to comment, matched by search key. **The order is the priority**: the bundle takes the brands from the top and carries each **whole** (all its models, remotes and signals) when what it adds still fits the budget, by an estimate that is within 3% of the file (the budget was 19,000,000 bytes, then 19,609,000; since D117 there is none, so every brand of the list is carried and none is skipped); one that does not fit a budget that is set is skipped, the next is tried, and the command names the brands it skipped. The owner changes what ships by moving or adding a line.
+2. **The proxy fill**: the other brands, ranked by **models per byte** (the number of models a brand is listed with, over what its remotes and signals would add), among those with at least 40 models and 60% of their keys mapped to a canonical key, are added in that order while they fit what the list left of the budget (since D117 there is no floor and no budget, so every other brand is added, 4,916 of them: the order only matters when a budget is set). Models per brand is the one popularity signal the catalog has; dividing by the cost keeps out the makers of generic replacement remotes (`BRAVO`: 2,945 models, 2,275 remotes, 112,034 keys). Of the three proxies the owner named, **models per brand ranks the brands, and remotes per brand count as the cost** (with their keys and signals); **the third, the share of keys with signals, is 100% for every brand** (every key the ledger holds has a compiled signal), so it carries no information and the share of keys that map to a canonical key stands in for it.
 
 A remote is carried when **any** of its brands is chosen (its maker or a brand of a model it controls); a model when its brand is. A remote that is in for one brand keeps all its keys and signals, and the models it controls under brands that were not chosen are not in the bundle.
 
-**Everything not in the subset is recorded**: `excluded_brands` holds each left-out brand (`name`, `norm`) and `api_key`, the ten hex digits (SHA-1 of the exact name, D76) of the shard of the app API (§21) that has its remotes, comma-separated when the import spells it two ways; **NULL where the app API has none**, because the API serves the IR Blaster import only. 4,992 brands are left out of the selected bundle, 228 of them with no shard, and **1,794 remotes of LIRC and SmartIR (the authored ones counted with them) that it leaves out are in no static file of the ledger at all** until the full bundle (or a catalog service built from it) is published. That is a finding for the owner, not a decision of this change: it is the reason `full` exists.
+**Everything not in the subset is recorded**: `excluded_brands` holds each left-out brand (`name`, `norm`) and `api_key`, the ten hex digits (SHA-1 of the exact name, D76) of the shard of the app API (§21) that has its remotes, comma-separated when the import spells it two ways; **NULL where the app API has none**, because the API serves the IR Blaster import only. Since D117 nothing is left out of the selected bundle, so the table is empty and **0 brands, 0 remotes, 0 keys** are missing from it, and **0 remotes of LIRC and SmartIR** are in no static file of the ledger that the bundle does not hold. Before it, 4,992 brands were left out, 228 of them with no shard, and 1,794 remotes of LIRC and SmartIR (the authored ones counted with them) were in no static file of the ledger at all until the full bundle was published; that finding is why `full` exists, and the selected bundle no longer has it.
 
-**What the numbers say** (D95): at the 20 MB cap the list does not fit. Samsung, LG, Sony, Panasonic and Philips, the first five lines, are 11.6 MB of the 19 by the estimate (Sony alone has 1,061 remotes, and most of the bytes of a brand with old equipment are LIRC raw captures: 5.0 MB of signals for 1,375 of the 4,394 remotes); the bundle carries **35 brands of the list and one by the proxy**, and **77 brands of the list are left out for lack of room** (the first are JVC, Grundig, Thomson, Telefunken, Loewe Opta, Beko, Vestel...). Levers the owner has, none taken here: reorder the list so the brands that matter most come first (the cheap ones are taken wherever the budget allows), shorten it, raise the cap, or drop what is bulkiest per remote (the LIRC raw captures, about 6 MB of the 19). **The owner signs off on the list**; until then it is a proposal. *Since the hifi-remote.com import (§27, D116):* the figures of this paragraph are those of the tree without it, except that the selected profile now holds 4,545 remote files (Sony has 151 more) under a budget of 19,609,000 estimated bytes, which gives the same 35 brands and the proxy's brand.
+**What the numbers said** (D95, at a 20 MB cap; D117 removed the cap and these are history): the list did not fit. Samsung, LG, Sony, Panasonic and Philips, the first five lines, are 11.6 MB of the 19 by the estimate (Sony alone has 1,061 remotes, and most of the bytes of a brand with old equipment are LIRC raw captures: 5.0 MB of signals for 1,375 of the 4,394 remotes); the bundle carries **35 brands of the list and one by the proxy**, and **77 brands of the list are left out for lack of room** (the first are JVC, Grundig, Thomson, Telefunken, Loewe Opta, Beko, Vestel...). Levers the owner has, none taken here: reorder the list so the brands that matter most come first (the cheap ones are taken wherever the budget allows), shorten it, raise the cap, or drop what is bulkiest per remote (the LIRC raw captures, about 6 MB of the 19). **The owner signs off on the list**; until then it is a proposal. *Since D117:* nothing is skipped (0 brands of the list are left out) and nothing is left out of the bundle. The profile carries 112 brands of the list and 4,916 by the proxy, 5,028 in all, with 13,369 remote files, and its file is the size of `full`.
 
 ### D93 — The manifest, `dataVersion` and the signature
 
@@ -5558,17 +5558,17 @@ Measured on the 64-core development machine (eight workers), `gzip -9` as the co
 
 | | `full` | `selected` |
 |---|---|---|
-| file | 51,318,784 B | 20,148,224 B |
-| `gzip -9` | 12,899,093 B | 4,612,020 B |
-| brands | 5,028 | 36 |
-| models | 276,551 | 105,535 |
-| remote files | 13,369 | 4,545 |
-| remotes, the fragments of D103 folded | 13,054 | 4,247 |
-| keys | 531,868 | 172,418 |
-| signals | 160,606 | 70,342 |
-| left out | none | 4,992 brands, 8,824 remotes, 359,450 keys |
-| `rl bundle` (read, build, write) | 23.7 s, 0.8 GB peak | 12.8 s, 0.55 GB peak |
-| `rl bundle --verify` | 21 s | 12 s |
+| file | 51,318,784 B | 51,318,784 B |
+| `gzip -9` | 12,899,093 B | 12,899,777 B |
+| brands | 5,028 | 5,028 |
+| models | 276,551 | 276,551 |
+| remote files | 13,369 | 13,369 |
+| remotes, the fragments of D103 folded | 13,054 | 13,054 |
+| keys | 531,868 | 531,868 |
+| signals | 160,606 | 160,606 |
+| left out | none | none: 0 brands, 0 remotes, 0 keys |
+| `rl bundle` (read, build, write) | 23.5 s, 0.82 GB peak | 23.6 s, 0.82 GB peak |
+| `rl bundle --verify` | 22 s | 21 s |
 
 Where the bytes are, `full` (selected is the same shape): signals 22.4 MB (44.5%), keys 10.8 (21.5%), models 6.9 (13.8%), ngram 5.2 (10.2%), controls 3.4 (6.7%), remotes 1.3 (2.7%). For the app API (§21) the same catalog was 57 MB and 9,817 files, and 12.9 MB gzipped; the whole ledger's compiled corpus is 358 MB. The IR Blaster signals alone are 8,793,390 bytes as blobs (8.8 MB of binary words) and 280,511 bytes gzipped on their own (all 155,964: 20.1 MB, 892,095 gzipped, 23 times smaller). Sorted, the signals compress far better than the rest of the file (the other 28 MB gzip to about 11.8 MB), so **on the wire the catalog is its rows and not its signals**.
 
@@ -5578,7 +5578,7 @@ Where the bytes are, `full` (selected is the same shape): signals 22.4 MB (44.5%
 
 - **No Android has opened it.** The schema is written for SQLite 3.28 and a test refuses the newer features by name, but no bundle was read on a phone or by a SQLite older than 3.45, and no Kotlin reader exists: the vectors are the oracle for one, not a test of one. Room's `createFromAsset` validates a schema against its entities, and `WITHOUT ROWID` tables have not been tried with it; reading with `SQLiteDatabase` needs none of that.
 - **Search quality.** The structures are what a matcher needs; how well a query finds its remote is measured in §24 (D99), and only on generated queries.
-- **The selection is a proposal.** It is a judgement of popularity on a list nobody but its author has read. The owner signs off on it; 77 of its brands do not fit in 20 MB.
+- **The selection is a proposal.** It is a judgement of popularity on a list nobody but its author has read. The owner signs off on it; since D117 every one of them fits, because nothing limits the size.
 - **The 4.5 MB gzip of the selected bundle is the transfer size; the install size depends on how the app stores the asset** (compressed in the package, or not: SQLite needs it uncompressed on disk to open it read-only).
 - **Hardware**, as everywhere: a bundle says what the ledger says, and D50 is still the question whether a signal moves a device.
 - **The signature is not tested with a real publishing key or an app.** The commands and the format are; where the key lives is the owner's.
@@ -5622,19 +5622,19 @@ Written by `rl bundle matching-vectors --file tests/vectors/matching_vectors.jso
 
 ### D99 — What was measured, and what is not proven
 
-Seed 1, 40 devices a class. **Selected bundle** (36 brands, 105,535 models) and **full bundle** (5,028 brands, 276,551 models):
+Seed 1, 40 devices a class. **Selected bundle** (5,028 brands, 276,551 models: the same as the full one since D117) and **full bundle** (5,028 brands, 276,551 models):
 
 | class | selected top-1 | selected top-5 | full top-1 | full top-5 |
 |---|---|---|---|---|
-| exact | 40 (100.0%) | 40 (100.0%) | 39 (97.5%) | 40 (100.0%) |
+| exact | 39 (97.5%) | 40 (100.0%) | 39 (97.5%) | 40 (100.0%) |
 | case | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) |
 | punctuation | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) |
-| dropped-suffix | 38 (95.0%) | 40 (100.0%) | 37 (92.5%) | 40 (100.0%) |
-| typo | 35 (87.5%) | 40 (100.0%) | 33 (82.5%) | 40 (100.0%) |
-| brand-partial | 25 (62.5%) | 35 (87.5%) | 27 (67.5%) | 33 (82.5%) |
+| dropped-suffix | 37 (92.5%) | 40 (100.0%) | 37 (92.5%) | 40 (100.0%) |
+| typo | 33 (82.5%) | 40 (100.0%) | 33 (82.5%) | 40 (100.0%) |
+| brand-partial | 27 (67.5%) | 33 (82.5%) | 27 (67.5%) | 33 (82.5%) |
 | model-only | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) |
 | reversed | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) |
-| **all (320)** | **298 (93.1%)** | **315 (98.4%)** | **296 (92.5%)** | **313 (97.8%)** |
+| **all (320)** | **296 (92.5%)** | **313 (97.8%)** | **296 (92.5%)** | **313 (97.8%)** |
 
 **Read it as the upper bound it is** (D98). **A partial name is ambiguous**: `LG 42 LC 45` is the whole model `42 LC 45` and the start of `42 LC 45 - ZA`, and the device asked for was the second; `PHILIPS 24 CE 75` starts forty models. All five misses of the selected bundle, and six of the seven of the full one, are partial names (a person typing half a model number has to be shown a list, which the answer is: five candidates, and the brand's models when none matches). The seventh is a typo test on a name with two spaces in it (`UTV 21  70`). The 95% target is not established by this: it needs real queries.
 
@@ -5949,6 +5949,18 @@ The two numbers are the owner's (D92, D95): the cap of 20,000,000 bytes, and an 
 - **Keep the hifi-remote.com files out of the selected profile.** It would need a rule the bundle does not have: a brand is carried whole (D92), and the verifier, the folding of D103 and a dozen tests rest on that.
 
 D116 takes the second, with the window: **`BUDGET_BYTES` 19,000,000 to 19,609,000, and `SELECTED_MAX_BYTES` 20,000,000 to 20,250,000.** The estimate is 19,608,400 and the file 20,148,224 bytes (4,612,020 gzipped), 148,224 over the old cap and 101,776 under the new one. The selection is the one before the import, brand for brand (`test_the_selected_profile_carries_what_it_carried_before_the_import`), so the owner's reviewed list is the list that ships. What it costs is **0.15 MB of the install**, and a margin of 600 bytes where there were 1,000: the rule is as knife-edged as it was, and the next import into a carried brand moves the selection again until the budget is tuned again. Whether the install target allows 20.25 MB is the owner's to say; the alternative is the first choice above.
+
+### D117 — The selected profile has no budget, no cap and no floor
+
+The owner answered D116's question on 2026-10-08, the day it was asked: *I want all the data, I don't want budget to be a factor, increase it to whatever size necessary.* So the selected profile stops being a subset by size.
+
+**What changed**, all in `bundle/select.py`: `BUDGET_BYTES` and `SELECTED_MAX_BYTES` are `None` (they were 19,609,000 and 20,250,000; the budget code is still there, and a number puts it back), and so are **the proxy fill's floor of 40 models and 60% of keys mapped** (`MIN_MODELS` 0, `MIN_MAPPED_SHARE` 0.0). The floor is not a budget, but "all the data" is more than a bigger budget gives: with no budget and the floor left in, the selected profile still left out **4,427 brands, 2,460 remotes and 91,992 keys (17% of the ledger)**, the brands with fewer than 40 models or poorly mapped keys: 1,783 IR Blaster remotes, 656 LIRC, 18 SmartIR and three authored ones. Topping is among them: the RC-15A and RC-16A made it a brand of two models, so the app's bundle would have lacked the very remotes this section's lookups began with.
+
+**What it gives**: 5,028 brands, 112 from the list and 4,916 by the proxy, **none left out**; 13,369 remote files, 531,868 keys, 160,606 signals. The file is **51,318,784 bytes** (12,899,777 gzipped), the size of `full`, and `rl bundle --verify` passes (21 s). The two profiles now hold the same data, and differ in the profile name and the selection text of `meta` and in nothing a client reads: the search evaluation of D99 gives the same table for both. They are both kept, as the profile is how a budget would come back, and the owner can retire one.
+
+**What it costs**: the app that ships the selected bundle ships 51 MB and not 20, so its install is far over the 30 MB D92 aimed at. The owner decided that size is not the constraint. `rl bundle --max-bytes N` still fails a build over N, and no longer has a default.
+
+**What stays true of D116** is its finding about a budget and not its numbers: the greedy rule is not monotone in the budget, so setting one again will drop and take in brands in ways that need re-tuning. The tests that use a small made-up ledger to exercise the subset keep the floor of 40 models they were written against (`conftest.py` for a test function, `floor_of_the_small_ledgers` for a fixture that builds once), and the tests over the real tree check the shipped rule: `test_the_selected_profile_carries_every_brand_and_has_neither_a_budget_nor_a_cap`.
 
 **Not proven.**
 - *That any of it works on a device.* A table says what a device code answers to, as one person compiled it from other people's remotes; no row was sent to hardware. Where the authored RMT-B118P has a key, the table agrees (38 of 38); that is the only cross-check.

@@ -698,17 +698,21 @@ def test_the_real_bundle_resolves_the_seed_names_of_the_brands_it_carries(real_s
     assert [(a, k, b) for a, k, b in real.conn.execute("SELECT alias, norm, brand_id FROM brand_aliases ORDER BY norm")] == expected
     assert len(expected) >= 20
     for alias, key, brand_id in expected:
+        # a name two brands share (`威騰` is WD's and Western Digital's, both carried since D117)
+        # gives both, at the same score, and the one this row is for is among them
         top = real.match(None, None, [alias])
-        assert top and top[0].brand == real.brands[brand_id][0] and top[0].model is None, alias
-        assert top[0].permille == 800 and top[0].models
-        assert real.suggest(alias).brands[0].brand_id == brand_id, alias
+        mine = [t for t in top if t.brand == real.brands[brand_id][0]]
+        assert mine and mine[0].model is None and mine[0].permille == 800 and mine[0].models, alias
+        assert top[0].model is None and top[0].permille == 800
+        assert brand_id in [b.brand_id for b in real.suggest(alias).brands], alias
     assert {"sony", "samsung", "philips", "panasonic"} <= carried
     # a Chinese name and a model number, with the space and without
     for text in ("三星 UN50NU6900F", "三星UN50NU6900F"):
         got = real.match(None, None, [text])
         assert (got[0].brand, got[0].model, got[0].permille) == ("SAMSUNG", "UN50NU6900F", 900), text
-    # Skyworth is not in the selected bundle: its names are not either, in either script
-    assert real.match(None, None, ["创维"]) == [] and real.match(None, None, ["創維"]) == []
+    # Skyworth was left out by the budget until D117 and is carried now, with its names in both scripts
+    for name in ("创维", "創維"):
+        assert real.match(None, None, [name])[0].brand == "SKYWORTH", name
 
 
 def test_the_vectors_show_chinese_in_both_files():

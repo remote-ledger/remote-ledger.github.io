@@ -14,6 +14,20 @@ import pytest
 ROOT = Path(__file__).resolve().parent.parent
 
 
+@pytest.fixture(autouse=True)
+def _the_floor_the_small_ledgers_were_written_for(request, monkeypatch):
+    """D117 took the proxy fill's floor (40 models, 60% of keys mapped) away from the shipped
+    ``selected`` profile, which now carries every brand. The tests over a small made-up ledger
+    exist to exercise the subset mechanism (a brand left out, the order of a list, a proxy that
+    needs models), so they keep the floor they were written against; a test that reads the real
+    tree (a ``real_*`` fixture) runs the shipped rule."""
+    if not any(name.startswith("real") for name in request.fixturenames):
+        from remote_ledger.bundle import select
+
+        monkeypatch.setattr(select, "MIN_MODELS", 40)
+        monkeypatch.setattr(select, "MIN_MAPPED_SHARE", 0.60)
+
+
 @pytest.fixture(scope="session")
 def real_records():
     """Every remote of the committed tree, as ``bundle.corpus`` reads them."""

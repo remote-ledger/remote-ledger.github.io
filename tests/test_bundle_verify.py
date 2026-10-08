@@ -16,7 +16,7 @@ from pathlib import Path
 
 import pytest
 
-from bundle_corpus import make_corpus
+from bundle_corpus import floor_of_the_small_ledgers, make_corpus
 from remote_ledger import app_api, parallel
 from remote_ledger.bundle import aliases as brand_aliases
 from remote_ledger.bundle import build as bb
@@ -47,7 +47,8 @@ def written(ledger, tmp_path_factory):
     """One good bundle of each profile, written once."""
     out = {}
     for profile in ("full", "selected"):
-        built = bb.build_bundle(ledger, profile, aliases=ALIASES)
+        with floor_of_the_small_ledgers():
+            built = bb.build_bundle(ledger, profile, aliases=ALIASES)
         assert built.problems == []
         directory = tmp_path_factory.mktemp(f"good-{profile}")
         bb.write_bundle(built, directory, ledger)

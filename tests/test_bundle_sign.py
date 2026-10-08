@@ -17,7 +17,7 @@ from pathlib import Path
 
 import pytest
 
-from bundle_corpus import make_corpus
+from bundle_corpus import floor_of_the_small_ledgers, make_corpus
 from remote_ledger import app_api, cli, parallel
 from remote_ledger.bundle import build as bb
 from remote_ledger.bundle import sign
@@ -66,7 +66,8 @@ def keys(tmp_path_factory):
 @pytest.fixture(scope="module")
 def good(tmp_path_factory):
     root = make_corpus(tmp_path_factory.mktemp("sign") / "ledger")
-    built = bb.build_bundle(root, "selected")
+    with floor_of_the_small_ledgers():
+        built = bb.build_bundle(root, "selected")
     directory = tmp_path_factory.mktemp("signed-source")
     bb.write_bundle(built, directory, root)
     return directory

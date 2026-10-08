@@ -449,9 +449,10 @@ def test_suggestions_over_the_real_selected_bundle(real_selected):
     got = real.suggest("samsung un50", 8)
     assert names(got.brands) == ["SAMSUNG"] and got.models
     assert all(search_norm(m.model).startswith("un50") and m.brand == "SAMSUNG" for m in got.models)
-    assert names(real.suggest_brands("sam")) == ["SAMSUNG"]
+    # every brand is carried since D117, so a prefix has more than one answer; the first is the biggest
+    assert names(real.suggest_brands("sam"))[0] == "SAMSUNG"
     top = real.suggest("sony", 8)
-    assert names(top.brands) == ["SONY"] and len(top.models) == 8
+    assert names(top.brands)[0] == "SONY" and len(top.models) == 8     # SONYSAT and SHONY follow (D117)
     assert real.suggest("zq9x7wv5kk3").is_empty
     # Chinese names of the brands the bundle carries, in both scripts (D101)
     assert names(real.suggest("三星").brands) == ["SAMSUNG"]

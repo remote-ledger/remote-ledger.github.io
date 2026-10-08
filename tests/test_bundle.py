@@ -24,7 +24,7 @@ from pathlib import Path
 
 import pytest
 
-from bundle_corpus import make_corpus
+from bundle_corpus import floor_of_the_small_ledgers, make_corpus
 from remote_ledger import app_api, cli, generators, parallel, pronto
 from remote_ledger.bundle import aliases as brand_aliases
 from remote_ledger.bundle import build as bb
@@ -67,7 +67,8 @@ def full(ledger):
 
 @pytest.fixture(scope="module")
 def selected(ledger):
-    built = bb.build_bundle(ledger, "selected", aliases=ALIASES)
+    with floor_of_the_small_ledgers():
+        built = bb.build_bundle(ledger, "selected", aliases=ALIASES)
     assert built.problems == []
     return built
 

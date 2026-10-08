@@ -408,7 +408,7 @@ confidence tier, or a citation.
   SHA-256, made and checked with `openssl`), and a notices file that gives each
   source's licence text and link, saying so where a licence holds only by
   inheritance. Two profiles: `full`, every brand, and `selected`, the brands a
-  list that a person reviews puts first, at most 20.25 MB (20 MB before D116); what the subset leaves
+  list that a person reviews puts first and, since D117, every other brand too, with no size limit (it was 20 MB); what a subset leaves
   out is recorded in the file. The bundle is a **build artifact**: it is
   never committed, never written under `build/` or `site/`, and `rl build
   --check` does not see it (DESIGN §23).
