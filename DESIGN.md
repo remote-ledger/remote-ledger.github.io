@@ -2050,7 +2050,7 @@ note rather than a live contract.
 
 ## 12. Implementation status
 
-Phases 0-6 are implemented: 3351 tests, `jsonschema` the only runtime
+Phases 0-6 are implemented: 3411 tests, `jsonschema` the only runtime
 dependency. Phase 2 landed its nine SPEC edits *before* its code, per §9 --
 the spec change is what authorises the implementation. (That count is asserted by the suite itself -- see
 `test_documented_test_count_is_current` -- so it cannot drift the way the
@@ -5372,24 +5372,28 @@ The number that matters is the per-remote one, because an unmapped key is shown 
 ```
 All remotes:
 
-source     remotes     keys      keys mapped  >=90% of keys  >=75% of keys   >=50% of keys
----------  -------  -------  ---------------  -------------  -------------  --------------
-irblaster   10,013  411,265  81.9% (337,172)  44.8% (4,491)  69.9% (7,008)   93.1% (9,323)
-lirc         3,138  112,789   58.3% (65,819)    18.8% (593)  49.6% (1,557)   79.9% (2,508)
-smartir         62      914      81.7% (747)     54.8% (34)     67.7% (42)      79.0% (49)
-authored         5      128       77.3% (99)      40.0% (2)      60.0% (3)       60.0% (3)
-all         13,218  525,096  76.9% (403,837)  38.7% (5,120)  65.1% (8,610)  89.9% (11,883)
+source       remotes     keys      keys mapped  >=90% of keys  >=75% of keys   >=50% of keys
+-----------  -------  -------  ---------------  -------------  -------------  --------------
+irblaster     10,013  411,265  81.9% (337,172)  44.8% (4,491)  69.9% (7,008)   93.1% (9,323)
+lirc           3,138  112,789   58.3% (65,819)    18.8% (593)  49.6% (1,557)   79.9% (2,508)
+smartir           62      914      81.7% (747)     54.8% (34)     67.7% (42)      79.0% (49)
+hifi-remote      151    6,772    43.5% (2,951)       3.9% (6)     14.5% (22)      39.7% (60)
+authored           5      128       77.3% (99)      40.0% (2)      60.0% (3)       60.0% (3)
+all           13,369  531,868  76.4% (406,788)  38.3% (5,126)  64.5% (8,632)  89.3% (11,943)
 
 Remotes with at least 10 keys:
 
-source     remotes     keys      keys mapped  >=90% of keys  >=75% of keys   >=50% of keys
----------  -------  -------  ---------------  -------------  -------------  --------------
-irblaster    9,415  408,466  82.0% (335,226)  44.8% (4,224)  70.6% (6,653)   94.2% (8,877)
-lirc         2,867  111,431   58.2% (64,915)    17.3% (496)  49.3% (1,415)   80.9% (2,320)
-smartir         39      786      84.3% (663)     58.9% (23)     76.9% (30)      94.8% (37)
-authored         4      120       75.8% (91)      25.0% (1)      50.0% (2)       50.0% (2)
-all         12,325  520,803  76.9% (400,895)  38.4% (4,744)  65.7% (8,100)  91.1% (11,236)
+source       remotes     keys      keys mapped  >=90% of keys  >=75% of keys   >=50% of keys
+-----------  -------  -------  ---------------  -------------  -------------  --------------
+irblaster      9,415  408,466  82.0% (335,226)  44.8% (4,224)  70.6% (6,653)   94.2% (8,877)
+lirc           2,867  111,431   58.2% (64,915)    17.3% (496)  49.3% (1,415)   80.9% (2,320)
+smartir           39      786      84.3% (663)     58.9% (23)     76.9% (30)      94.8% (37)
+hifi-remote      128    6,653    43.7% (2,908)       3.9% (5)     14.8% (19)      42.1% (54)
+authored           4      120       75.8% (91)      25.0% (1)      50.0% (2)       50.0% (2)
+all           12,453  527,456  76.5% (403,803)  38.1% (4,749)  65.1% (8,119)  90.6% (11,290)
 ```
+
+(The `hifi-remote` row is the import of §27 (D109 to D115), added after the figures in D85 to D87's prose were measured; those figures are the corpus without it. Its keys map less than the others' because the pages describe commands of one kind of device: `Index Mark`, `Disc +`, `Scan Reverse`, and `Select`, which D84 does not map.)
 
 (The `authored` row is the Meridian MSR, Samsung BN59-01199F, Sony RMT-B118P and Topping RC-15A: 94 of 116 keys; the 22 left are the Meridian's tape and VCR sources, the Topping's DAC settings and `KEY_SEN`.)
 
@@ -5505,7 +5509,7 @@ FTS5 is not in every Android SQLite, so the search is ordinary columns and one p
 
 ### D91 — Signals: shared, binary, sorted
 
-**The data-size reasoning.** The IR Blaster data has **411,265 keys but only 57,709 distinct compiled signals** (14%): the whole ledger has 525,096 keys and 155,976 (30%); LIRC alone shares little (112,789 keys, 97,775 signals, the raw captures). A key row is 20 bytes and a signal is 129 on average (the longest, a LIRC capture, 628 words), so storing each signal once is what makes the catalog small: the signals are 20.1 MB of blobs for 155,964, where one blob per key would be 72.9 MB. The key rows are the other half, and the reason `keys` has no text where the canonical key says it (D89).
+**The data-size reasoning.** The IR Blaster data has **411,265 keys but only 57,709 distinct compiled signals** (14%): the whole ledger has 531,868 keys and 160,606 (30%); LIRC alone shares little (112,789 keys, 97,775 signals, the raw captures). A key row is 20 bytes and a signal is 129 on average (the longest, a LIRC capture, 628 words), so storing each signal once is what makes the catalog small: the signals are 20.1 MB of blobs for 155,964, where one blob per key would be 72.9 MB. The key rows are the other half, and the reason `keys` has no text where the canonical key says it (D89).
 
 **The blob** is `signals.words`: a big-endian `uint16` **count of words**, then the words, each a big-endian `uint16`. The words are exactly those of the Pronto Hex string the ledger compiled the key to (`pronto.encode`): word 0 is `0000`, word 1 the frequency word, word 2 the number of burst pairs of the intro and word 3 of the repeat sequence, then the durations in carrier cycles, a mark then a space, first the intro and then the repeat (D6, D25, D78). The count is redundant with the length of the blob and with words 2 and 3 (`count = 4 + 2 x (n1 + n2)`); it is there so that a reader can reject a damaged blob without trusting anything else. One SQLite row per signal, `id` from 1 in the **sorted order of the blobs** as bytes: the length prefix makes that order by length first, then by content, so signals of one protocol and of one remote's family sit together, which is what compresses (D95). **Microseconds** are `round_half_up(cycles x period)` with `period = word1 x 0.241246 us` (D25: lossy in this direction by under half a cycle); the **carrier** is the catalog's (`remotes.carrier_hz`, what the file declared, `38000`) and the frequency word says another number (`006D` is 38,029 Hz): which an output transmits is its own decision, and both are in the vectors.
 
@@ -5520,9 +5524,9 @@ FTS5 is not in every Android SQLite, so the search is ordinary columns and one p
 
 A remote is carried when **any** of its brands is chosen (its maker or a brand of a model it controls); a model when its brand is. A remote that is in for one brand keeps all its keys and signals, and the models it controls under brands that were not chosen are not in the bundle.
 
-**Everything not in the subset is recorded**: `excluded_brands` holds each left-out brand (`name`, `norm`) and `api_key`, the ten hex digits (SHA-1 of the exact name, D76) of the shard of the app API (§21) that has its remotes, comma-separated when the import spells it two ways; **NULL where the app API has none**, because the API serves the IR Blaster import only. 4,992 brands are left out of the selected bundle, 228 of them with no shard, and **1,794 remotes of LIRC and SmartIR (the authored ones counted with them) that it leaves out are in no static file of the ledger at all** until the full bundle (or a catalog service built from it) is published. That is a finding for the owner, not a decision of this change: it is the reason `full` exists.
+**Everything not in the subset is recorded**: `excluded_brands` holds each left-out brand (`name`, `norm`) and `api_key`, the ten hex digits (SHA-1 of the exact name, D76) of the shard of the app API (§21) that has its remotes, comma-separated when the import spells it two ways; **NULL where the app API has none**, because the API serves the IR Blaster import only. 4,992 brands are left out of the selected bundle, 228 of them with no shard, and **1,830 remotes of LIRC and SmartIR (the authored ones and hifi-remote.com's counted with them) that it leaves out are in no static file of the ledger at all** until the full bundle (or a catalog service built from it) is published. That is a finding for the owner, not a decision of this change: it is the reason `full` exists.
 
-**What the numbers say** (D95): at the 20 MB cap the list does not fit. Samsung, LG, Sony, Panasonic and Philips, the first five lines, are 11.6 MB of the 19 by the estimate (Sony alone has 1,061 remotes, and most of the bytes of a brand with old equipment are LIRC raw captures: 5.0 MB of signals for 1,375 of the 4,394 remotes); the bundle carries **35 brands of the list and one by the proxy**, and **77 brands of the list are left out for lack of room** (the first are JVC, Grundig, Thomson, Telefunken, Loewe Opta, Beko, Vestel...). Levers the owner has, none taken here: reorder the list so the brands that matter most come first (the cheap ones are taken wherever the budget allows), shorten it, raise the cap, or drop what is bulkiest per remote (the LIRC raw captures, about 6 MB of the 19). **The owner signs off on the list**; until then it is a proposal.
+**What the numbers say** (D95): at the 20 MB cap the list does not fit. Samsung, LG, Sony, Panasonic and Philips, the first five lines, are 11.6 MB of the 19 by the estimate (Sony alone has 1,061 remotes, and most of the bytes of a brand with old equipment are LIRC raw captures: 5.0 MB of signals for 1,375 of the 4,394 remotes); the bundle carries **33 brands of the list and none by the proxy**, and **79 brands of the list are left out for lack of room** (the first are JVC, Grundig, Thomson, Telefunken, Loewe Opta, Beko, Vestel...). Levers the owner has, none taken here: reorder the list so the brands that matter most come first (the cheap ones are taken wherever the budget allows), shorten it, raise the cap, or drop what is bulkiest per remote (the LIRC raw captures, about 6 MB of the 19). **The owner signs off on the list**; until then it is a proposal. *Measured before the hifi-remote.com import (§27):* the paragraph's own figures (Sony's 1,061 remotes, 4,394 remotes, 35 brands and a proxy brand, 77 left out) are those of the tree without the hifi-remote.com import. That import gives Sony 151 more remotes and 6,772 keys, so under the same cap Sanyo, Loewe, Haier, Integra and the proxy's brand moved out and Skyworth and Westinghouse, which are smaller, came in; the table above is the tree with it.
 
 ### D93 — The manifest, `dataVersion` and the signature
 
@@ -5554,16 +5558,16 @@ Measured on the 64-core development machine (eight workers), `gzip -9` as the co
 
 | | `full` | `selected` |
 |---|---|---|
-| file | 50,311,168 B | 19,443,712 B |
-| `gzip -9` | 12,720,486 B | 4,477,480 B |
-| brands | 5,028 | 36 |
-| models | 276,249 | 105,233 |
-| remote files | 13,218 | 4,394 |
-| remotes, the fragments of D103 folded | 12,903 | 4,096 |
-| keys | 525,096 | 165,646 |
-| signals | 155,976 | 65,691 |
-| left out | none | 4,992 brands, 8,824 remotes, 359,450 keys |
-| `rl bundle` (read, build, write) | 23.8 s, 0.8 GB peak | 12.7 s, 0.55 GB peak |
+| file | 51,318,784 B | 19,542,016 B |
+| `gzip -9` | 12,899,093 B | 4,468,799 B |
+| brands | 5,028 | 33 |
+| models | 276,551 | 101,851 |
+| remote files | 13,369 | 4,407 |
+| remotes, the fragments of D103 folded | 13,054 | 4,109 |
+| keys | 531,868 | 166,659 |
+| signals | 160,606 | 68,628 |
+| left out | none | 4,995 brands, 8,962 remotes, 365,209 keys |
+| `rl bundle` (read, build, write) | 23.7 s, 0.8 GB peak | 12.8 s, 0.55 GB peak |
 | `rl bundle --verify` | 21 s | 12 s |
 
 Where the bytes are, `full` (selected is the same shape): signals 22.4 MB (44.5%), keys 10.8 (21.5%), models 6.9 (13.8%), ngram 5.2 (10.2%), controls 3.4 (6.7%), remotes 1.3 (2.7%). For the app API (§21) the same catalog was 57 MB and 9,817 files, and 12.9 MB gzipped; the whole ledger's compiled corpus is 358 MB. The IR Blaster signals alone are 8,793,390 bytes as blobs (8.8 MB of binary words) and 280,511 bytes gzipped on their own (all 155,964: 20.1 MB, 892,095 gzipped, 23 times smaller). Sorted, the signals compress far better than the rest of the file (the other 28 MB gzip to about 11.8 MB), so **on the wire the catalog is its rows and not its signals**.
@@ -5618,19 +5622,19 @@ Written by `rl bundle matching-vectors --file tests/vectors/matching_vectors.jso
 
 ### D99 — What was measured, and what is not proven
 
-Seed 1, 40 devices a class. **Selected bundle** (36 brands, 105,233 models) and **full bundle** (5,028 brands, 276,249 models):
+Seed 1, 40 devices a class. **Selected bundle** (33 brands, 101,851 models) and **full bundle** (5,028 brands, 276,551 models):
 
 | class | selected top-1 | selected top-5 | full top-1 | full top-5 |
 |---|---|---|---|---|
 | exact | 40 (100.0%) | 40 (100.0%) | 39 (97.5%) | 40 (100.0%) |
 | case | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) |
 | punctuation | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) |
-| dropped-suffix | 36 (90.0%) | 40 (100.0%) | 36 (90.0%) | 40 (100.0%) |
-| typo | 36 (90.0%) | 40 (100.0%) | 32 (80.0%) | 39 (97.5%) |
-| brand-partial | 26 (65.0%) | 35 (87.5%) | 24 (60.0%) | 34 (85.0%) |
+| dropped-suffix | 34 (85.0%) | 39 (97.5%) | 37 (92.5%) | 40 (100.0%) |
+| typo | 36 (90.0%) | 40 (100.0%) | 33 (82.5%) | 40 (100.0%) |
+| brand-partial | 29 (72.5%) | 38 (95.0%) | 27 (67.5%) | 33 (82.5%) |
 | model-only | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) |
 | reversed | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) |
-| **all (320)** | **298 (93.1%)** | **315 (98.4%)** | **291 (90.9%)** | **313 (97.8%)** |
+| **all (320)** | **299 (93.4%)** | **317 (99.1%)** | **296 (92.5%)** | **313 (97.8%)** |
 
 **Read it as the upper bound it is** (D98). **A partial name is ambiguous**: `LG 42 LC 45` is the whole model `42 LC 45` and the start of `42 LC 45 - ZA`, and the device asked for was the second; `PHILIPS 24 CE 75` starts forty models. All five misses of the selected bundle, and six of the seven of the full one, are partial names (a person typing half a model number has to be shown a list, which the answer is: five candidates, and the brand's models when none matches). The seventh is a typo test on a name with two spaces in it (`UTV 21  70`). The 95% target is not established by this: it needs real queries.
 
@@ -5883,3 +5887,63 @@ gives **one row, or none when the profile does not carry the file** (the selecte
 - **Whether a folded fragment's keys work on the device.** Folding by file number is the ledger's own naming, not a check that two fragments are one physical remote, and the carrier's test key says the device answers to the carrier's protocol, not to the folded fragment's: a person who confirms Power in Sony12 has not confirmed a Volume up in Sony15 that the same remote now holds. That needs a device, as D50 says of every signal.
 - **The 164 and 50 fragments left**, and the 1,192 models with nothing to try, are not helped: they need a remote with a carrier and a rule per key, or a wider test key, which are other changes.
 - **Nothing was run by an app.** The tables are as the service's code and a reader of format 1 read them (a service that serves the bundle read the new one, and its opt-in tests against both bundles pass except the figures that are about the old counts), but no phone opened it.
+
+---
+
+## 27. Importing hifi-remote.com's Sony code pages
+
+The fourth import under SPEC R19, and the first from a website. `hifi-remote.com/sony/` is "Rhm5757's Sony Code Page": a person's compilation, "most of the information from [Pronto and One For All] remotes", of which command number each Sony device code answers to, one page per kind of device (TV, Blu-ray, receiver, CD, VCR, and 53 more kinds). It has no remote model and no capture, only tables of `Command Code | Command(s)` headed by lines such as `Sony:26.226; 26.234; 26.242`. It came up in the BX510 lookup behind SPEC §1, whose "official Sony BD table" it is (§13), and the owner asked for the rest of it to be imported rather than cited a key at a time.
+
+It adds `rl import hifi-remote`, `src/remote_ledger/hifiremote/` (`pages.py`, the reader; `importer.py`), `tools/fetch_hifi_remote.py`, the pinned snapshot `sources/hifi-remote/`, and `remotes/hifi-remote/` with its `README.md` and `IMPORT.md`. It registers the source in `paths.IMPORTS`, in the bundle's `SOURCES` (appended, so no existing source's id moves) and its notices, and in the keys report. The pages hold 66 files (the index and 65 linked), of which 58 have command tables: 104 tables, 3,880 rows. The import writes **151 files and 6,772 keys**: 84 Sony20, 36 Sony15 and 31 Sony12 files.
+
+### D109 — The unit is a device code: one file per table per device code
+
+A page says that a device code answers to a command number, and nothing about a remote. So a file here is not a remote: its `model` is the kind of device and the code (`Blu-ray 26.226`, `Receiver 16`, `TV 26`), its `controls` says the same in a sentence (`Sony Blu-ray (device code 26.226)`), and its path is the page and the code (`remotes/hifi-remote/sony/bluray-26.226.json`). A table headed with three codes gives three files that differ in their subdevice and nothing else, because a device code is what a person types into a universal remote and what the app selects, and a file that stood for two would hide which one the key was read at. The kind of device is the page's title without its codes (`Sony x (x)`, which says nothing, takes the page's first line, `System Off`).
+
+What this does not do is make a remote of any of them. The authored RMT-B118P is the physical remote whose keys the Blu-ray table lists, and `test_the_hifi_remote_blu_ray_table_agrees_with_the_authored_sony` holds that every one of its 38 functions is in `bluray-26.226` at the same address. The authored data wins (R19.4) by name, and the names do not collide.
+
+### D110 — A table of reference remote codes needs no licence
+
+The owner decided this on 2026-10-08, when the import was agreed: *reference remote code has nothing to do with licence.* The list of facts a table holds (this device code, this command number, this name) is the ledger's own subject, and no licence file, SPDX id or "firmness" statement is wanted for it. SPEC R19.1 says so, for a source of this kind; `paths.IMPORTS` gives it `licence: "none: a table of reference codes"` (the site's banner reads it); the bundle's notices give it `licenceKind: "none"`, like the authored remotes, with no text and no SPDX id, and a note that the repository records none; and the README of the import directory names the pages and says the same. What stays is the attribution: every citation names the page, its hash, the table and the row, so that the source is visible and checkable (R18), and the report says what the pages are (a hobbyist's compilation, not a Sony publication).
+
+**What was not changed.** SPEC §4 still excludes IRDB, Global Caché and Remote Central, "by their licences alone". The reasoning of this decision bears on them (they are tables of codes too), and the decision does not say they are admitted: TODO.md has the question. Nor did the three imports already made lose their licence files, which belong to files that are whole works.
+
+### D111 — The pin is a snapshot, committed beside the data
+
+A website has no commit. R19.5 asks that re-running over the same pinned upstream reproduces every file byte for byte, so the pin has to be bytes: `sources/hifi-remote/` holds the 66 pages as the server sent them (4.4 MB, Windows-1252 as Word wrote them) and a `MANIFEST.json` with the retrieval date, the source URL and, for each page, its SHA-256, size, `Last-Modified` and `ETag`. `tools/fetch_hifi_remote.py` makes it (a page a second, a User-Agent that names the project) and the importer refuses a page whose hash differs from the manifest's, so a page that moved cannot pass for the pinned one. It sits at the repository root and not under `remotes/`, because `rl validate` reads every `*.json` under `remotes/` as a remote and the manifest is not one. Every citation carries the first eight hex digits of its page's hash and the retrieval date. The snapshot of 2026-10-08 has the Blu-ray page as last modified on 2026-01-28 by its server.
+
+`test_the_committed_import_is_exactly_what_the_pinned_snapshot_yields` runs the import into a scratch tree and compares every file and the report byte for byte with the committed ones: R19.5 is a test, not a promise. To refresh: run the tool, review the page diff, run `rl import hifi-remote sources/hifi-remote`, then `rl build`.
+
+### D112 — A device code's frame is the page's word, then the dot, then its size
+
+Sony's infrared frames come in three shapes (`Sony12`: 5-bit device; `Sony15`: 8-bit device; `Sony20`: 5-bit device and 8-bit subdevice), and a code on a page does not name one. The importer reads, in this order: the bit count in the marker when there is one (four markers have one: `Sony15:4`, `Sony20:1.0`, `Sony20:4.5` and `Sony 15 :26`); a dotted code (`26.226`) as Sony20; a bare code below 32 as Sony12 and from 32 up as Sony15, because a 12-bit frame's device field cannot hold 32. A code no frame can hold is listed, not imported (none is). Every citation says when the frame was inferred from the size. The page says of the receivers that their *AV2* codes are the normal code plus 32 and listed after the semicolon (`16; 48`), and writes a few of those in parentheses, unconfirmed (`12; (44)`): they are imported like the rest, and the citation says the page parenthesised the code.
+
+Checked against the index page's own lists of device codes by frame (22 Sony12 and 33 Sony15 bare codes, and the dotted Sony20 ones): the rule agrees with every code the index lists that a table is headed with. The index is behind the tables on six codes (44 and 50, the AV2 codes just described, and 16.96, 16.104, 25.35, 25.43, which the receiver page has) and lists seven codes no table is headed with (Sony12 4 and 26, Sony15 36, Sony20 25.0, 26.26, 50.0, 100.0). One contradiction is the page's: the TV table is marked `Sony 15 :26`, while its prose and the index speak of "26.26", a Sony20 code. The marker is what the table is for, so the import reads Sony15 with device 26 and says so. `protocol.minSends` is 3 and the carrier 40 kHz, as the authored RMT-B118P has them and as the registry's nominal; every key passes the compile gate.
+
+### D113 — A colour is the page's annotation; one legend limits a command to a device
+
+Ten pages colour parts of their command cells, and say what each colour means in a legend line of their prose (`Olive = obsolete`, `Orange = foreign`, `Magenta = Plasma TV`, `Green = works on newer receivers`, `Orange = TiVo code`, `Light Blue=on CFD-E75 remote`, and so on). The reader keeps each name's colours (a cell `Enter, Set` has `Set` in blue), and the importer quotes the legend line in the citation of every key whose name carries the colour. A colour with no legend line is recorded as having none (one row of the boombox page, red). The colour of a word is never turned into a tier by itself.
+
+Exactly one page's legend limits a command to a device: the Blu-ray page says Magenta is the portable players (26.135) and Blue the Home Entertainment Server (26.164), on one table headed for six codes. Those two colours are the only entries of `LIMITED_TO`; a command in them is in the files of those device codes only (`26.226` has 84 keys, `26.135` 86, `26.164` 85), and a name in them is a name for those devices only (`Set` is the server's name for command 11). Every other colour describes the command and leaves it in every file of its table. The page's other six Blu-ray codes "presumably use the same set of commands" is its own wording, and the citation of each says which marker the row is under. A legend or a row that says the code is **probably incorrect** makes the key Untested, the tier of a candidate nobody has confirmed (SPEC §5): 12 keys, the Green and Yellow commands 110 and 111 on the six Blu-ray files. Nothing else is above or below Plausible (R19.3).
+
+### D114 — Names, labels, and what a cell with several names says
+
+A command cell lists the names the command goes by, separated by commas (`Enter, Set`; `0, 10`; 468 of the 3,880 do). The label of the key is the first name that applies to the device, as the page writes it, with Word's dashes made plain (`Volume –` is `Volume -`, so D84's fold meets it) and a trailing `(discrete)` left to the citation, so that `Power On (discrete)` is the key the vocabulary calls `POWER_ON`; the other names are in the citation (`also named 'Set'`). The key name is D49's fold of the label (`fold_label`: `Volume +` is `KEY_VOLUME_PLUS`), and where two commands fold alike every one of them gets `_<command code>`, so a name does not depend on the order of the rows (`KEY_UP_7`, `KEY_UP_8`); a label that folds to nothing (a comma, a question mark) is `KEY_COMMAND_<code>`. Brackets and parentheses other than `(discrete)` stay in the label (`Up (Menu)`, `[Sync] Stop`), which keeps the keys apart and costs the vocabulary's mapping a few of them.
+
+Four rows are not commands: `48-57 0-9`, `65-90 A-Z`, `97-122 a-z` (the MiniDisc keyboard) and `48-63 cassette codes`. They are listed in `IMPORT.md`, not dropped. The page's typos are left as written (`XM Recevier`).
+
+The vocabulary maps 43.5% of these keys (D86's table has the row). It is low because the pages describe commands of one kind of device (`Index Mark`, `Disc +`, `Scan Reverse`, and `Select`, which D84 deliberately does not map), and nothing in the vocabulary was changed for them.
+
+### D115 — What it does to the rest, and what is not proven
+
+**The selected bundle moved.** Sony is the third brand of the curated list, and its 151 files and 6,772 keys cost bytes under the 20 MB cap. The selected profile now carries 33 brands (it carried 35 of the list and one by the proxy): Sanyo, Loewe, Haier, Integra and the proxy's brand moved out, and Skyworth and Westinghouse, which are smaller, came in. The file is 19,542,016 bytes. The owner's levers are the ones D95 names; none was pulled. D95's own figures and D86's prose are marked as measured before this import, and the tables that tests compare with the tree (D86's, D95's, D99's) are the tree with it.
+
+**The pins moved with it:** 13,369 remote files, 531,868 keys, 160,606 distinct signals, 12,094 remotes with a key to try, and the figures in `test_bundle_*`, `test_keys_report`, `test_search_eval` and `test_brand_aliases` (which used Skyworth as the brand the selected bundle leaves out, and now uses Haier).
+
+**Not proven.**
+- *That any of it works on a device.* A table says what a device code answers to, as one person compiled it from other people's remotes; no row was sent to hardware. Where the authored RMT-B118P has a key, the table agrees (38 of 38); that is the only cross-check.
+- *That the frame is right where it was inferred.* 65 files rest on the size rule (the bare codes) and 82 on the dot; the four with a bit count in the marker are the page's word, not a check. D50's hardware questions apply.
+- *That one device code is one kind of device.* The page types are the author's. The same code can head tables on two pages (26.153 on the CD page and the CD/cassette/tuner page, 26.73 on the DVD and the DVD/receiver pages) and the two files are separate models with, where the pages differ, different keys.
+- *Whether a colour whose legend names a kind of device limits a command to some codes of its table.* `camcorder only` (DVD and VCR pages), `TiVo code` and `UltimateTV code` (the satellite page) and `foreign` (TV) could, but the pages do not say which of a table's codes they mean, so none is limited; each citation quotes the legend.
+- *The Blu-ray page's six codes.* Its words are "presumably the same set"; only the portable players' and the server's commands are marked apart.
+- *The BX510.* It is still in `unresolved.json` (§13).

@@ -2,14 +2,16 @@
 
 Project status as of 2026-10-06.
 
-**Where things stand.** v1 (DESIGN §8 Phases 0–6) is complete. Three
-databases have been imported under SPEC R19:
+**Where things stand.** v1 (DESIGN §8 Phases 0–6) is complete. Four
+sources have been imported under SPEC R19:
 
 - **LIRC**: 3,138 remotes, 112,789 keys (DESIGN §14).
 - **SmartIR**: `media_player` and `fan` only, 62 remotes, 914 keys
   (DESIGN §15).
 - **IR Blaster**, as shipped in SwiftRemote: 10,013 remote files, 411,265
   keys, GPL-3.0 by inheritance only (DESIGN §17, §18).
+- **hifi-remote.com's Sony code pages**: 151 files, 6,772 keys, a table of
+  reference codes with no licence recorded (DESIGN §27).
 
 SPEC v0.11 makes growing coverage from every source whose licence permits
 it the standing goal, with no fixed list of sources (DESIGN §8, Phase 8).
@@ -27,9 +29,13 @@ Land it in two PRs, code and then data.
       Candidates include Flipper-IRDB's files from after its CC0 cutoff and
       IrScrutinizer / JP1 exports. Record for each one why it does or does
       not meet R19.
-- [ ] **Re-check the excluded sources periodically**: IRDB, Global Caché
-      and Remote Central (SPEC §4). They are excluded by their licences
-      alone, so a licence change would admit them.
+- [ ] **Decide the excluded sources**: IRDB, Global Caché and Remote
+      Central (SPEC §4). They are excluded by their licences alone, and the
+      owner's decision of 2026-10-08 (D110) is that a table of reference
+      remote codes needs no licence. That reasoning bears on all three; none
+      has been changed.
+- [ ] **Other hifi-remote.com material**: its JP1 files and the One For All
+      code lists are not imported; only the Sony pages are (DESIGN §27).
 - [ ] **Factor out a common importer skeleton** now that a third importer
       exists. `import_common.py` already holds the probe, compile gate and
       authored-name helpers. The SmartIR and IR Blaster `Report` classes
@@ -75,14 +81,14 @@ deliberate skips, each reported with its reason.
 
 ## 4. Open evidence questions (authored data)
 
-- [ ] **Sony BDP-BX510 is still in `unresolved.json`.** No source ties the
-      RMT-B118P to the BX510, and the subdevice is disputed: 218 in SPEC
-      §1's cited hifi-remote.com table (which could not be retrieved)
-      against 226 in two independent sources (DESIGN §13).
-- [ ] **The BX510's fallback subdevices 234 and 242** have no
-      corroboration.
-- [ ] **RMT-B118P: 11 of 38 keys** come from a single capture and are
-      tiered Plausible. They need a second source.
+- [ ] **Sony BDP-BX510 is still in `unresolved.json`.** Its remote is
+      RMT-B119A according to search summaries of retailer pages, and no
+      source has codes or a key list for that remote. The subdevice is
+      settled as 226 (DESIGN §13); the table cited for 218 was found, and it
+      lists no 218.
+- [ ] **The Blu-ray command modes 234 and 242** are on hifi-remote.com's
+      table and in the import, but not as variants of RMT-B118P: the catalog
+      bundle carries only a key's primary group (DESIGN §13, §23).
 - [ ] **NECx2 has no published golden vector.** Gate 2b rests on a
       reproducible IrpTransmogrifier render, and `test_registry` warns
       about it on every run.
