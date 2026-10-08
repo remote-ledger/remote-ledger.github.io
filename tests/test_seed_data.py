@@ -89,7 +89,7 @@ def test_the_irblaster_import_keeps_r19():
 
 def test_the_hifi_remote_import_keeps_r19():
     """SPEC R19's conditions 2 and 3 over every form of the hifi-remote.com import
-    (DESIGN D109 to D115): README, report and the pinned snapshot sit beside it,
+    (DESIGN D109 to D116): README, report and the pinned snapshot sit beside it,
     every key holds one `irp` form, none above Plausible, and every citation has
     the fixed shape and names a page the snapshot's manifest holds, by hash. A
     cheap scan of the JSON, not a load."""

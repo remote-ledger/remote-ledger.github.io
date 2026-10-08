@@ -903,7 +903,9 @@ def real_selected_unfolded(real_records):
     patch = pytest.MonkeyPatch()
     patch.setattr(catalog, "fold", lambda records: merge.Folded(tuple(range(len(records)))))
     try:
-        built = bb.build_bundle(ROOT, "selected", records=real_records)
+        # never shipped, only compared with: it is 20,287,488 bytes, over the cap, because folding the
+        # fragments (D103) is what gives the real one room (D116)
+        built = bb.build_bundle(ROOT, "selected", records=real_records, max_bytes=25_000_000)
     finally:
         patch.undo()
     assert built.problems == []
@@ -944,10 +946,10 @@ def test_over_the_real_selected_bundle_the_matcher_answers_as_before_with_the_ca
 def test_the_selected_bundle_still_carries_the_selection_and_fits(real_selected, real_selected_unfolded):
     built, _ = real_selected
     assert built.selection.chosen == real_selected_unfolded.selection.chosen
-    assert built.stats["bytes"] <= 20_000_000
-    assert built.stats["remoteRefs"] == real_selected_unfolded.stats["remotes"] == 4_407
-    assert built.stats["remotes"] == 4_109 and built.stats["foldedFragments"] == 298
-    assert built.stats["keys"] == real_selected_unfolded.stats["keys"] == 166_659
+    assert built.stats["bytes"] <= bb.select.SELECTED_MAX_BYTES == 20_250_000
+    assert built.stats["remoteRefs"] == real_selected_unfolded.stats["remotes"] == 4_545
+    assert built.stats["remotes"] == 4_247 and built.stats["foldedFragments"] == 298
+    assert built.stats["keys"] == real_selected_unfolded.stats["keys"] == 172_418
 
 
 def test_design_quotes_the_numbers_of_the_measurement(real_records, real):

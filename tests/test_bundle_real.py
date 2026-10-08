@@ -66,6 +66,17 @@ def test_no_remote_has_a_second_candidate_group(real):
     assert sum(r.other_candidates for r in real[0]) == 0
 
 
+def test_the_selected_profile_carries_what_it_carried_before_the_import(selection):
+    """D116: hifi-remote.com's Sony pages cost the selected profile 609,400 estimated bytes, and
+    under the old budget that moved Sanyo, Loewe, Haier, Integra and the proxy's brand out. The
+    budget and the cap were raised until the selection was the one made before the import, so
+    these are in, and the estimate sits just under the budget as it did then."""
+    assert {"SANYO", "loewe", "HAIER", "INTEGRA"} <= set(selection.curated)
+    assert len(selection.curated) == 35 and selection.proxy_added == ["SOMMIGE MERKEN"]
+    assert {"SKYWORTH", "westinghouse"} <= set(selection.skipped)
+    assert select.BUDGET_BYTES - 1_000 <= selection.estimated_bytes <= select.BUDGET_BYTES
+
+
 def test_every_name_of_the_curated_list_is_a_brand_of_the_catalog(real, selection):
     names = select.read_curated(select.CURATED_FILE.read_text(encoding="utf-8"))
     assert selection.unresolved == []
@@ -83,7 +94,7 @@ def test_the_selection_uses_its_budget_and_starts_with_the_head_of_the_list(sele
 
 def test_the_selected_bundle_is_within_the_size_an_app_can_ship(real, selected, selection):
     assembled, data = selected
-    assert len(data) <= select.SELECTED_MAX_BYTES == 20_000_000
+    assert len(data) <= select.SELECTED_MAX_BYTES == 20_250_000
     # the estimate the rule works by is within a few percent of the file it predicts
     assert abs(len(data) - selection.estimated_bytes) / len(data) < 0.04
     assert len(assembled.brands) == len(selection.curated) + len(selection.proxy_added)
@@ -140,7 +151,7 @@ def test_design_quotes_the_numbers_of_the_real_build(real, selected, selection):
         f"160,606 | {len(assembled.signals):,}",
         f"{len(assembled.excluded):,} brands, {len(left_out):,} remotes, "
         f"{sum(len(r.keys) for r in left_out):,} keys",
-        f"{len(selection.curated)} brands of the list and none by the proxy",
+        f"{len(selection.curated)} brands of the list and one by the proxy",
         f"{len(selection.skipped)} brands of the list are left out for lack of room",
         f"{sum(1 for r in left_out if r.source != 'irblaster'):,} remotes of LIRC and SmartIR",
         f"{len(select.read_curated(select.CURATED_FILE.read_text(encoding='utf-8')))} well-known brands",
@@ -148,4 +159,4 @@ def test_design_quotes_the_numbers_of_the_real_build(real, selected, selection):
     ]
     for fact in quoted:
         assert fact in section, f"DESIGN section 23 no longer says {fact!r}"
-    assert len(selection.proxy_added) == 0
+    assert len(selection.proxy_added) == 1

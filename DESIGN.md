@@ -2050,7 +2050,7 @@ note rather than a live contract.
 
 ## 12. Implementation status
 
-Phases 0-6 are implemented: 3411 tests, `jsonschema` the only runtime
+Phases 0-6 are implemented: 3412 tests, `jsonschema` the only runtime
 dependency. Phase 2 landed its nine SPEC edits *before* its code, per §9 --
 the spec change is what authorises the implementation. (That count is asserted by the suite itself -- see
 `test_documented_test_count_is_current` -- so it cannot drift the way the
@@ -5393,7 +5393,7 @@ authored           4      120       75.8% (91)      25.0% (1)      50.0% (2)    
 all           12,453  527,456  76.5% (403,803)  38.1% (4,749)  65.1% (8,119)  90.6% (11,290)
 ```
 
-(The `hifi-remote` row is the import of §27 (D109 to D115), added after the figures in D85 to D87's prose were measured; those figures are the corpus without it. Its keys map less than the others' because the pages describe commands of one kind of device: `Index Mark`, `Disc +`, `Scan Reverse`, and `Select`, which D84 does not map.)
+(The `hifi-remote` row is the import of §27 (D109 to D116), added after the figures in D85 to D87's prose were measured; those figures are the corpus without it. Its keys map less than the others' because the pages describe commands of one kind of device: `Index Mark`, `Disc +`, `Scan Reverse`, and `Select`, which D84 does not map.)
 
 (The `authored` row is the Meridian MSR, Samsung BN59-01199F, Sony RMT-B118P and Topping RC-15A: 94 of 116 keys; the 22 left are the Meridian's tape and VCR sources, the Topping's DAC settings and `KEY_SEN`.)
 
@@ -5517,16 +5517,16 @@ FTS5 is not in every Android SQLite, so the search is ordinary columns and one p
 
 ### D92 — Profiles: `full` and `selected`
 
-**`full`** is every brand and remote: what a backend serves and what `selected` is cut from. **`selected`** is the subset an app ships in its install, **at most 20,000,000 bytes** (the owner's target: an app that ships it keeps its whole install near 30 MB). A build over the cap fails (`--max-bytes N` overrides). The ledger has no popularity data, so the rule is a proxy plus a list a person reviews, and every number of it is a constant of `bundle/select.py` or a line of `bundle/data/selected_brands.txt`:
+**`full`** is every brand and remote: what a backend serves and what `selected` is cut from. **`selected`** is the subset an app ships in its install, **at most 20,250,000 bytes** (the owner's target was 20,000,000, so that an app that ships it keeps its whole install near 30 MB; D116 raised it by 250,000). A build over the cap fails (`--max-bytes N` overrides). The ledger has no popularity data, so the rule is a proxy plus a list a person reviews, and every number of it is a constant of `bundle/select.py` or a line of `bundle/data/selected_brands.txt`:
 
 1. **The curated list**, `selected_brands.txt`: 112 well-known brands in the categories the owner named (television, AV receiver, set-top box, streaming box, projector, soundbar, disc player; air conditioners are out of scope), a brand per line, `#` to comment, matched by search key. **The order is the priority**: the bundle takes the brands from the top and carries each **whole** (all its models, remotes and signals) when what it adds still fits the budget of 19,000,000 bytes, by an estimate that is within 2.5% of the file; one that does not fit is skipped, the next is tried, and the command names the brands it skipped. The owner changes what ships by moving or adding a line.
 2. **The proxy fill**: the other brands, ranked by **models per byte** (the number of models a brand is listed with, over what its remotes and signals would add), among those with at least 40 models and 60% of their keys mapped to a canonical key, are added in that order while they fit what the list left of the budget. Models per brand is the one popularity signal the catalog has; dividing by the cost keeps out the makers of generic replacement remotes (`BRAVO`: 2,945 models, 2,275 remotes, 112,034 keys). Of the three proxies the owner named, **models per brand ranks the brands, and remotes per brand count as the cost** (with their keys and signals); **the third, the share of keys with signals, is 100% for every brand** (every key the ledger holds has a compiled signal), so it carries no information and the share of keys that map to a canonical key stands in for it.
 
 A remote is carried when **any** of its brands is chosen (its maker or a brand of a model it controls); a model when its brand is. A remote that is in for one brand keeps all its keys and signals, and the models it controls under brands that were not chosen are not in the bundle.
 
-**Everything not in the subset is recorded**: `excluded_brands` holds each left-out brand (`name`, `norm`) and `api_key`, the ten hex digits (SHA-1 of the exact name, D76) of the shard of the app API (§21) that has its remotes, comma-separated when the import spells it two ways; **NULL where the app API has none**, because the API serves the IR Blaster import only. 4,992 brands are left out of the selected bundle, 228 of them with no shard, and **1,830 remotes of LIRC and SmartIR (the authored ones and hifi-remote.com's counted with them) that it leaves out are in no static file of the ledger at all** until the full bundle (or a catalog service built from it) is published. That is a finding for the owner, not a decision of this change: it is the reason `full` exists.
+**Everything not in the subset is recorded**: `excluded_brands` holds each left-out brand (`name`, `norm`) and `api_key`, the ten hex digits (SHA-1 of the exact name, D76) of the shard of the app API (§21) that has its remotes, comma-separated when the import spells it two ways; **NULL where the app API has none**, because the API serves the IR Blaster import only. 4,992 brands are left out of the selected bundle, 228 of them with no shard, and **1,794 remotes of LIRC and SmartIR (the authored ones counted with them) that it leaves out are in no static file of the ledger at all** until the full bundle (or a catalog service built from it) is published. That is a finding for the owner, not a decision of this change: it is the reason `full` exists.
 
-**What the numbers say** (D95): at the 20 MB cap the list does not fit. Samsung, LG, Sony, Panasonic and Philips, the first five lines, are 11.6 MB of the 19 by the estimate (Sony alone has 1,061 remotes, and most of the bytes of a brand with old equipment are LIRC raw captures: 5.0 MB of signals for 1,375 of the 4,394 remotes); the bundle carries **33 brands of the list and none by the proxy**, and **79 brands of the list are left out for lack of room** (the first are JVC, Grundig, Thomson, Telefunken, Loewe Opta, Beko, Vestel...). Levers the owner has, none taken here: reorder the list so the brands that matter most come first (the cheap ones are taken wherever the budget allows), shorten it, raise the cap, or drop what is bulkiest per remote (the LIRC raw captures, about 6 MB of the 19). **The owner signs off on the list**; until then it is a proposal. *Measured before the hifi-remote.com import (§27):* the paragraph's own figures (Sony's 1,061 remotes, 4,394 remotes, 35 brands and a proxy brand, 77 left out) are those of the tree without the hifi-remote.com import. That import gives Sony 151 more remotes and 6,772 keys, so under the same cap Sanyo, Loewe, Haier, Integra and the proxy's brand moved out and Skyworth and Westinghouse, which are smaller, came in; the table above is the tree with it.
+**What the numbers say** (D95): at the 20 MB cap the list does not fit. Samsung, LG, Sony, Panasonic and Philips, the first five lines, are 11.6 MB of the 19 by the estimate (Sony alone has 1,061 remotes, and most of the bytes of a brand with old equipment are LIRC raw captures: 5.0 MB of signals for 1,375 of the 4,394 remotes); the bundle carries **35 brands of the list and one by the proxy**, and **77 brands of the list are left out for lack of room** (the first are JVC, Grundig, Thomson, Telefunken, Loewe Opta, Beko, Vestel...). Levers the owner has, none taken here: reorder the list so the brands that matter most come first (the cheap ones are taken wherever the budget allows), shorten it, raise the cap, or drop what is bulkiest per remote (the LIRC raw captures, about 6 MB of the 19). **The owner signs off on the list**; until then it is a proposal. *Since the hifi-remote.com import (§27, D116):* the figures of this paragraph are those of the tree without it, except that the selected profile now holds 4,545 remote files (Sony has 151 more) under a budget of 19,609,000 estimated bytes, which gives the same 35 brands and the proxy's brand.
 
 ### D93 — The manifest, `dataVersion` and the signature
 
@@ -5558,15 +5558,15 @@ Measured on the 64-core development machine (eight workers), `gzip -9` as the co
 
 | | `full` | `selected` |
 |---|---|---|
-| file | 51,318,784 B | 19,542,016 B |
-| `gzip -9` | 12,899,093 B | 4,468,799 B |
-| brands | 5,028 | 33 |
-| models | 276,551 | 101,851 |
-| remote files | 13,369 | 4,407 |
-| remotes, the fragments of D103 folded | 13,054 | 4,109 |
-| keys | 531,868 | 166,659 |
-| signals | 160,606 | 68,628 |
-| left out | none | 4,995 brands, 8,962 remotes, 365,209 keys |
+| file | 51,318,784 B | 20,148,224 B |
+| `gzip -9` | 12,899,093 B | 4,612,020 B |
+| brands | 5,028 | 36 |
+| models | 276,551 | 105,535 |
+| remote files | 13,369 | 4,545 |
+| remotes, the fragments of D103 folded | 13,054 | 4,247 |
+| keys | 531,868 | 172,418 |
+| signals | 160,606 | 70,342 |
+| left out | none | 4,992 brands, 8,824 remotes, 359,450 keys |
 | `rl bundle` (read, build, write) | 23.7 s, 0.8 GB peak | 12.8 s, 0.55 GB peak |
 | `rl bundle --verify` | 21 s | 12 s |
 
@@ -5622,19 +5622,19 @@ Written by `rl bundle matching-vectors --file tests/vectors/matching_vectors.jso
 
 ### D99 — What was measured, and what is not proven
 
-Seed 1, 40 devices a class. **Selected bundle** (33 brands, 101,851 models) and **full bundle** (5,028 brands, 276,551 models):
+Seed 1, 40 devices a class. **Selected bundle** (36 brands, 105,535 models) and **full bundle** (5,028 brands, 276,551 models):
 
 | class | selected top-1 | selected top-5 | full top-1 | full top-5 |
 |---|---|---|---|---|
 | exact | 40 (100.0%) | 40 (100.0%) | 39 (97.5%) | 40 (100.0%) |
 | case | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) |
 | punctuation | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) |
-| dropped-suffix | 34 (85.0%) | 39 (97.5%) | 37 (92.5%) | 40 (100.0%) |
-| typo | 36 (90.0%) | 40 (100.0%) | 33 (82.5%) | 40 (100.0%) |
-| brand-partial | 29 (72.5%) | 38 (95.0%) | 27 (67.5%) | 33 (82.5%) |
+| dropped-suffix | 38 (95.0%) | 40 (100.0%) | 37 (92.5%) | 40 (100.0%) |
+| typo | 35 (87.5%) | 40 (100.0%) | 33 (82.5%) | 40 (100.0%) |
+| brand-partial | 25 (62.5%) | 35 (87.5%) | 27 (67.5%) | 33 (82.5%) |
 | model-only | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) |
 | reversed | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) |
-| **all (320)** | **299 (93.4%)** | **317 (99.1%)** | **296 (92.5%)** | **313 (97.8%)** |
+| **all (320)** | **298 (93.1%)** | **315 (98.4%)** | **296 (92.5%)** | **313 (97.8%)** |
 
 **Read it as the upper bound it is** (D98). **A partial name is ambiguous**: `LG 42 LC 45` is the whole model `42 LC 45` and the start of `42 LC 45 - ZA`, and the device asked for was the second; `PHILIPS 24 CE 75` starts forty models. All five misses of the selected bundle, and six of the seven of the full one, are partial names (a person typing half a model number has to be shown a list, which the answer is: five candidates, and the brand's models when none matches). The seventh is a typo test on a name with two spaces in it (`UTV 21  70`). The 95% target is not established by this: it needs real queries.
 
@@ -5936,9 +5936,19 @@ The vocabulary maps 43.5% of these keys (D86's table has the row). It is low bec
 
 ### D115 — What it does to the rest, and what is not proven
 
-**The selected bundle moved.** Sony is the third brand of the curated list, and its 151 files and 6,772 keys cost bytes under the 20 MB cap. The selected profile now carries 33 brands (it carried 35 of the list and one by the proxy): Sanyo, Loewe, Haier, Integra and the proxy's brand moved out, and Skyworth and Westinghouse, which are smaller, came in. The file is 19,542,016 bytes. The owner's levers are the ones D95 names; none was pulled. D95's own figures and D86's prose are marked as measured before this import, and the tables that tests compare with the tree (D86's, D95's, D99's) are the tree with it.
+**The selected bundle moved, and D116 moved it back.** Sony is the third brand of the curated list, and its 151 files and 6,772 keys cost 609,400 estimated bytes (about 627,000 of the file) under a budget that had 1,000 to spare. With the budget as it was, the selected profile carried 33 brands and no proxy brand: Sanyo, Loewe, Haier, Integra and the proxy's brand moved out, and Skyworth and Westinghouse, which are smaller, came in, because the rule skips what does not fit and tries the next. D116 raises the budget and the cap so that the selection is the one made before the import.
 
-**The pins moved with it:** 13,369 remote files, 531,868 keys, 160,606 distinct signals, 12,094 remotes with a key to try, and the figures in `test_bundle_*`, `test_keys_report`, `test_search_eval` and `test_brand_aliases` (which used Skyworth as the brand the selected bundle leaves out, and now uses Haier).
+**The pins moved with it:** 13,369 remote files, 531,868 keys, 160,606 distinct signals, 12,094 remotes with a key to try, and the figures in `test_bundle_*`, `test_keys_report` and `test_search_eval`; D116 moves the selected profile's own figures again (36 brands, 4,545 remote files, 172,418 keys, 70,342 signals).
+
+### D116 — The selected profile's budget and cap follow the data it carries
+
+The two numbers are the owner's (D92, D95): the cap of 20,000,000 bytes, and an estimated budget of 19,000,000 under it. The first bytes the hifi-remote.com import adds to a brand the list carries have to come from somewhere, and the choices were these:
+
+- **Leave the 33-brand selection.** It is what the rule gives, and it puts two small brands (Skyworth, Westinghouse) in front of three bigger ones the list ranks higher (Sanyo, Loewe, Haier).
+- **Raise the budget alone.** The rule is greedy and not monotone in its budget, so this does not give the dropped brands back. Scanning budgets from 19.0 to 19.7 million at 10,000-byte steps, each one brings some of the four back and takes others in (Arcam, Comcast, GigaBlue, Changhong, Beko, Loewe Opta) and drops Skyworth, Westinghouse, Metz or Mitsubishi. Only budgets from 19,608,400 to 19,609,999 give exactly the brands chosen before the import (35 of the list and `SOMMIGE MERKEN` by the proxy).
+- **Keep the hifi-remote.com files out of the selected profile.** It would need a rule the bundle does not have: a brand is carried whole (D92), and the verifier, the folding of D103 and a dozen tests rest on that.
+
+D116 takes the second, with the window: **`BUDGET_BYTES` 19,000,000 to 19,609,000, and `SELECTED_MAX_BYTES` 20,000,000 to 20,250,000.** The estimate is 19,608,400 and the file 20,148,224 bytes (4,612,020 gzipped), 148,224 over the old cap and 101,776 under the new one. The selection is the one before the import, brand for brand (`test_the_selected_profile_carries_what_it_carried_before_the_import`), so the owner's reviewed list is the list that ships. What it costs is **0.15 MB of the install**, and a margin of 600 bytes where there were 1,000: the rule is as knife-edged as it was, and the next import into a carried brand moves the selection again until the budget is tuned again. Whether the install target allows 20.25 MB is the owner's to say; the alternative is the first choice above.
 
 **Not proven.**
 - *That any of it works on a device.* A table says what a device code answers to, as one person compiled it from other people's remotes; no row was sent to hardware. Where the authored RMT-B118P has a key, the table agrees (38 of 38); that is the only cross-check.

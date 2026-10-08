@@ -1,6 +1,6 @@
 """``rl import hifi-remote``: hifi-remote.com's Sony code pages, imported under R19.
 
-DESIGN.md section 27 (D109 to D115) is the contract. The source is a person's compilation of
+DESIGN.md section 27 (D109 to D116) is the contract. The source is a person's compilation of
 Sony's infrared command numbers, one page per kind of device, each page a few
 tables of ``Command Code | Command(s)`` headed by the device codes they hold for.
 It has no remote model and no capture: a table says that a device code answers
