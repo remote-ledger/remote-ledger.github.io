@@ -46,7 +46,7 @@ def selected(real_selected):
 
 def test_the_dedupe_numbers_the_design_quotes(real):
     """411,265 keys of the IR Blaster import share 57,709 compiled signals; the whole ledger's
-    525,096 keys share 155,976."""
+    531,868 keys share 160,606."""
     records, _ = real
     keys: Counter = Counter()
     distinct: dict[str, set[bytes]] = {}
@@ -56,8 +56,8 @@ def test_the_dedupe_numbers_the_design_quotes(real):
             distinct.setdefault(record.source, set()).add(key[4])
     assert (keys["irblaster"], len(distinct["irblaster"])) == (411_265, 57_709)
     assert (keys["lirc"], keys["smartir"], keys["authored"]) == (112_789, 914, 128)
-    assert sum(keys.values()) == 525_096 and len(records) == 13_218
-    assert len(set().union(*distinct.values())) == 155_976
+    assert sum(keys.values()) == 531_868 and len(records) == 13_369
+    assert len(set().union(*distinct.values())) == 160_606
     # the IR Blaster signals as blobs, with their two-byte counts: 8.8 MB of binary words
     assert sum(len(b) for b in distinct["irblaster"]) == 8_793_390
 
@@ -137,10 +137,10 @@ def test_design_quotes_the_numbers_of_the_real_build(real, selected, selection):
         f"{len(records):,} | {len(kept):,}",                                  # the remote files
         f"{len(records) - collected.folded.folded:,} | {len(assembled.remotes):,}",   # the remotes, D103
         f"{keys:,} | {len(assembled.keys):,}",
-        f"155,976 | {len(assembled.signals):,}",
+        f"160,606 | {len(assembled.signals):,}",
         f"{len(assembled.excluded):,} brands, {len(left_out):,} remotes, "
         f"{sum(len(r.keys) for r in left_out):,} keys",
-        f"{len(selection.curated)} brands of the list and one by the proxy",
+        f"{len(selection.curated)} brands of the list and none by the proxy",
         f"{len(selection.skipped)} brands of the list are left out for lack of room",
         f"{sum(1 for r in left_out if r.source != 'irblaster'):,} remotes of LIRC and SmartIR",
         f"{len(select.read_curated(select.CURATED_FILE.read_text(encoding='utf-8')))} well-known brands",
@@ -148,4 +148,4 @@ def test_design_quotes_the_numbers_of_the_real_build(real, selected, selection):
     ]
     for fact in quoted:
         assert fact in section, f"DESIGN section 23 no longer says {fact!r}"
-    assert len(selection.proxy_added) == 1
+    assert len(selection.proxy_added) == 0

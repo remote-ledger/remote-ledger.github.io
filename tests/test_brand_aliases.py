@@ -707,8 +707,9 @@ def test_the_real_bundle_resolves_the_seed_names_of_the_brands_it_carries(real_s
     for text in ("三星 UN50NU6900F", "三星UN50NU6900F"):
         got = real.match(None, None, [text])
         assert (got[0].brand, got[0].model, got[0].permille) == ("SAMSUNG", "UN50NU6900F", 900), text
-    # Skyworth is not in the selected bundle: its names are not either, in either script
-    assert real.match(None, None, ["创维"]) == [] and real.match(None, None, ["創維"]) == []
+    # Haier is not in the selected bundle (the cap moved it out when hifi-remote.com's Sony pages
+    # made Sony bigger, D110): its names are not either, in either script
+    assert real.match(None, None, ["海尔"]) == [] and real.match(None, None, ["海爾"]) == []
 
 
 def test_the_vectors_show_chinese_in_both_files():

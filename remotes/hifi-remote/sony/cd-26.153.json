@@ -1,0 +1,71 @@
+{
+  "manufacturer": "Sony",
+  "model": "CD 26.153",
+  "aliases": [],
+  "controls": [
+    "Sony CD (device code 26.153)"
+  ],
+  "protocol": {
+    "name": "Sony20",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_ARTIST_MODE": {
+      "label": "Artist Mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0x99",
+          "function": "0x48",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_cd.htm@6e80400c (retrieved 2026-10-08) table 2, command 72 'Artist Mode' under 'Sony:26.153; 26.161; 26.169': Sony20 device 26 subdevice 153 function 72"
+        }
+      ]
+    },
+    "KEY_HISTORY_MODE": {
+      "label": "History Mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0x99",
+          "function": "0x4B",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_cd.htm@6e80400c (retrieved 2026-10-08) table 2, command 75 'History Mode' under 'Sony:26.153; 26.161; 26.169': Sony20 device 26 subdevice 153 function 75"
+        }
+      ]
+    },
+    "KEY_LEVEL_ADJUST": {
+      "label": "Level Adjust",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0x99",
+          "function": "0x69",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_cd.htm@6e80400c (retrieved 2026-10-08) table 2, command 105 'Level Adjust' under 'Sony:26.153; 26.161; 26.169': Sony20 device 26 subdevice 153 function 105"
+        }
+      ]
+    },
+    "KEY_FLASH": {
+      "label": "Flash",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0x99",
+          "function": "0x77",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_cd.htm@6e80400c (retrieved 2026-10-08) table 2, command 119 'Flash' under 'Sony:26.153; 26.161; 26.169': Sony20 device 26 subdevice 153 function 119"
+        }
+      ]
+    }
+  }
+}
