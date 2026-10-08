@@ -1,0 +1,899 @@
+{
+  "manufacturer": "Sony",
+  "model": "Receiver 50",
+  "aliases": [],
+  "controls": [
+    "Sony Receiver (device code 50)"
+  ],
+  "protocol": {
+    "name": "Sony15",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_2CH_STEREO": {
+      "label": "2Ch Stereo",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 8 '2Ch Stereo' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 8 (the frame is inferred from the size of the device code); the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_EQ_SLOPE": {
+      "label": "EQ Slope",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 13 'EQ Slope' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 13 (the frame is inferred from the size of the device code); the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_MEMORY": {
+      "label": "Memory",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x0E",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 14 'Memory' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 14 (the frame is inferred from the size of the device code); the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_EQ_CHANNEL": {
+      "label": "EQ Channel",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 15 'EQ Channel' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 15 (the frame is inferred from the size of the device code); the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_LEVEL_UP": {
+      "label": "Level Up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 16 'Level Up, Cursor Up' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 16 (the frame is inferred from the size of the device code); also named 'Cursor Up'; the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_LEVEL_DOWN": {
+      "label": "Level Down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 17 'Level Down, Cursor Down' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 17 (the frame is inferred from the size of the device code); also named 'Cursor Down'; the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_FREQUENCY_UP": {
+      "label": "Frequency Up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 22 'Frequency Up, Cursor Right' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 22 (the frame is inferred from the size of the device code); also named 'Cursor Right'; the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_FREQUENCY_DOWN": {
+      "label": "Frequency Down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x17",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 23 'Frequency Down, Cursor Left' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 23 (the frame is inferred from the size of the device code); also named 'Cursor Left'; the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_9": {
+      "label": "9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x1D",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 29 '9, B, EQ F3, F4, Hall, WM' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 29 (the frame is inferred from the size of the device code); also named 'B', 'EQ F3', 'F4', 'Hall', 'WM'; the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_0": {
+      "label": "0",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x1E",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 30 '0, C, EQ Car, F4, F5, WM' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 30 (the frame is inferred from the size of the device code); also named 'C', 'EQ Car', 'F4', 'F5', 'WM'; the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_EQ_BAND": {
+      "label": "EQ Band",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x20",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 32 'EQ Band' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 32 (the frame is inferred from the size of the device code); the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_CAR": {
+      "label": "Car",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x21",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 33 'Car' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 33 (the frame is inferred from the size of the device code); the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_NORMAL": {
+      "label": "Normal",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x22",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 34 'Normal' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 34 (the frame is inferred from the size of the device code); the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_EQ_ON_SLASH_OFF": {
+      "label": "EQ On/Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x2C",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 44 'EQ On/Off, (Parametric) EQ, EQ Tone' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 44 (the frame is inferred from the size of the device code); also named '(Parametric) EQ', 'EQ Tone'; the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_8": {
+      "label": "8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x35",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 53 '8, A, EQ F2, F3, Night, TV-News' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 53 (the frame is inferred from the size of the device code); also named 'A', 'EQ F2', 'F3', 'Night', 'TV-News'; the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_SOUND_FIELD_PLUS": {
+      "label": "Sound Field +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x36",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 54 'Sound Field +, Sound Field Mode, Surround Mode, File Select, GEQ Mode, GEQ Right, Memory Up, Mode Up, Music Menu Right' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 54 (the frame is inferred from the size of the device code); also named 'Sound Field Mode', 'Surround Mode', 'File Select', 'GEQ Mode', 'GEQ Right', 'Memory Up', 'Mode Up', 'Music Menu Right'; the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_SOUND_FIELD_MINUS": {
+      "label": "Sound Field -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x37",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 55 'Sound Field –, GEQ Left, Memory Down, Mode Down, Music Menu Left' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 55 (the frame is inferred from the size of the device code); also named 'GEQ Left', 'Memory Down', 'Mode Down', 'Music Menu Left'; the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_1": {
+      "label": "1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x38",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 56 '1, EQ BGM, Disco, Hall, Jazz Club, Rock' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 56 (the frame is inferred from the size of the device code); also named 'EQ BGM', 'Disco', 'Hall', 'Jazz Club', 'Rock'; the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_2": {
+      "label": "2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x39",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 57 '2, EQ Disco, Pops, Stadium, Vocal' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 57 (the frame is inferred from the size of the device code); also named 'EQ Disco', 'Pops', 'Stadium', 'Vocal'; the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_3": {
+      "label": "3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x3A",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 58 '3, EQ Classic, Disco, Heavy, Jazz, Movie' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 58 (the frame is inferred from the size of the device code); also named 'EQ Classic', 'Disco', 'Heavy', 'Jazz', 'Movie'; the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_4": {
+      "label": "4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x3B",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 59 '4, EQ Classic, Jazz, Symphony, WM' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 59 (the frame is inferred from the size of the device code); also named 'EQ Classic', 'Jazz', 'Symphony', 'WM'; the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_5": {
+      "label": "5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x3C",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 60 '5, EQ Car, Movie' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 60 (the frame is inferred from the size of the device code); also named 'EQ Car', 'Movie'; the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_6": {
+      "label": "6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x3D",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 61 '6, EQ BGM, Car, F1, Flat, Pops' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 61 (the frame is inferred from the size of the device code); also named 'EQ BGM', 'Car', 'F1', 'Flat', 'Pops'; the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_7": {
+      "label": "7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x3E",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 62 '7, EQ BGM, F1, F2, Morning, WM' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 62 (the frame is inferred from the size of the device code); also named 'EQ BGM', 'F1', 'F2', 'Morning', 'WM'; the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_EQ_FLAT": {
+      "label": "EQ Flat",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x3F",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 63 'EQ Flat' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 63 (the frame is inferred from the size of the device code); the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_VIDEO_1": {
+      "label": "Video 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x40",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 64 'Video 1' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 64 (the frame is inferred from the size of the device code); the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_VIDEO_2": {
+      "label": "Video 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x41",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 65 'Video 2' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 65 (the frame is inferred from the size of the device code); the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_VIDEO_3": {
+      "label": "Video 3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x42",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 66 'Video 3' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 66 (the frame is inferred from the size of the device code); the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_AUDIO": {
+      "label": "Audio",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x43",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 67 'Audio' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 67 (the frame is inferred from the size of the device code); the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_REAR_DELAY_PLUS": {
+      "label": "Rear Delay +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x44",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 68 'Rear Delay +' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 68 (the frame is inferred from the size of the device code); the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_REAR_DELAY_MINUS": {
+      "label": "Rear Delay -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x45",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 69 'Rear Delay –' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 69 (the frame is inferred from the size of the device code); the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_10": {
+      "label": ">10",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x46",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 70 '>10' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 70 (the frame is inferred from the size of the device code); the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_VIDEO_4": {
+      "label": "Video 4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x47",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 71 'Video 4' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 71 (the frame is inferred from the size of the device code); the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_INV_LEFT": {
+      "label": "Inv Left",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x48",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 72 'Inv Left' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 72 (the frame is inferred from the size of the device code); the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_INV_RIGHT": {
+      "label": "Inv Right",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x49",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 73 'Inv Right' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 73 (the frame is inferred from the size of the device code); the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_TEST_TONE": {
+      "label": "Test Tone",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x4A",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 74 'Test Tone' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 74 (the frame is inferred from the size of the device code); the page's legend: 'Green = works on newer receivers'; the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_MASTER_VOLUME_PLUS": {
+      "label": "Master Volume +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x4C",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 76 'Master Volume +' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 76 (the frame is inferred from the size of the device code); the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_MASTER_VOLUME_MINUS": {
+      "label": "Master Volume -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x4D",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 77 'Master Volume –' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 77 (the frame is inferred from the size of the device code); the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_REAR_LEVEL_PLUS": {
+      "label": "Rear Level +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x4E",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 78 'Rear Level +' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 78 (the frame is inferred from the size of the device code); the page's legend: 'Green = works on newer receivers'; the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_REAR_LEVEL_MINUS": {
+      "label": "Rear Level -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x4F",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 79 'Rear Level –' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 79 (the frame is inferred from the size of the device code); the page's legend: 'Green = works on newer receivers'; the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_SURROUND_LEFT_LEVEL_PLUS": {
+      "label": "Surround Left Level +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 80 'Surround Left Level +' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 80 (the frame is inferred from the size of the device code); the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_SURROUND_LEFT_LEVEL_MINUS": {
+      "label": "Surround Left Level -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x51",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 81 'Surround Left Level –' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 81 (the frame is inferred from the size of the device code); the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_SURROUND_RIGHT_LEVEL_PLUS": {
+      "label": "Surround Right Level +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x52",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 82 'Surround Right Level +' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 82 (the frame is inferred from the size of the device code); the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_SURROUND_RIGHT_LEVEL_MINUS": {
+      "label": "Surround Right Level -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x53",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 83 'Surround Right Level –' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 83 (the frame is inferred from the size of the device code); the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_CENTER_LEVEL_PLUS": {
+      "label": "Center Level +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x54",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 84 'Center Level +' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 84 (the frame is inferred from the size of the device code); the page's legend: 'Green = works on newer receivers'; the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_CENTER_LEVEL_MINUS": {
+      "label": "Center Level -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x55",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 85 'Center Level –' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 85 (the frame is inferred from the size of the device code); the page's legend: 'Green = works on newer receivers'; the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_BASS_SLASH_WOOFER_LEVEL_PLUS": {
+      "label": "Bass/Woofer Level +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x56",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 86 'Bass/Woofer Level +' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 86 (the frame is inferred from the size of the device code); the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_BASS_SLASH_WOOFER_LEVEL_MINUS": {
+      "label": "Bass/Woofer Level -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x57",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 87 'Bass/Woofer Level –' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 87 (the frame is inferred from the size of the device code); the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_DOLBY": {
+      "label": "Dolby",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x58",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 88 'Dolby, Pro Logic' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 88 (the frame is inferred from the size of the device code); also named 'Pro Logic'; the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_MATRIX": {
+      "label": "Matrix",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x59",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 89 'Matrix' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 89 (the frame is inferred from the size of the device code); the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_HALL": {
+      "label": "Hall",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x5A",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 90 'Hall' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 90 (the frame is inferred from the size of the device code); the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_SIMULATED": {
+      "label": "Simulated",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x5B",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 91 'Simulated' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 91 (the frame is inferred from the size of the device code); the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_THEATER": {
+      "label": "Theater",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x5C",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 92 'Theater' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 92 (the frame is inferred from the size of the device code); the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_EFFECT_OFF": {
+      "label": "Effect Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x5D",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 93 'Effect Off, Surround Off' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 93 (the frame is inferred from the size of the device code); also named 'Surround Off'; the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_CENTER_MODE": {
+      "label": "Center Mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x5F",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 95 'Center Mode, Pro Logic Mode' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 95 (the frame is inferred from the size of the device code); also named 'Pro Logic Mode'; the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_LEFT_DELAY_PLUS": {
+      "label": "Left Delay +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x68",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 104 'Left Delay +' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 104 (the frame is inferred from the size of the device code); the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_LEFT_DELAY_MINUS": {
+      "label": "Left Delay -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x69",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 105 'Left Delay –' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 105 (the frame is inferred from the size of the device code); the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_RIGHT_DELAY_PLUS": {
+      "label": "Right Delay +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x6A",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 106 'Right Delay +' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 106 (the frame is inferred from the size of the device code); the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_RIGHT_DELAY_MINUS": {
+      "label": "Right Delay -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x6B",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 107 'Right Delay –' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 107 (the frame is inferred from the size of the device code); the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_MEMORY_SET": {
+      "label": "Memory Set",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x6C",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 108 'Memory Set' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 108 (the frame is inferred from the size of the device code); the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_TIME_MEMORY_1": {
+      "label": "Time Memory 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x6E",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 110 'Time Memory 1' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 110 (the frame is inferred from the size of the device code); the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_TIME_MEMORY_2": {
+      "label": "Time Memory 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x6F",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 111 'Time Memory 2' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 111 (the frame is inferred from the size of the device code); the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_TIME_MEMORY_3": {
+      "label": "Time Memory 3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x70",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 112 'Time Memory 3' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 112 (the frame is inferred from the size of the device code); the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_HALL_LPF_EFFECT_PLUS": {
+      "label": "Hall LPF Effect +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x78",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 120 'Hall LPF Effect +' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 120 (the frame is inferred from the size of the device code); the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_HALL_LPF_EFFECT_MINUS": {
+      "label": "Hall LPF Effect -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x79",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 121 'Hall LPF Effect –' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 121 (the frame is inferred from the size of the device code); the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_SWITCH_GENRE": {
+      "label": "Switch Genre",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x7C",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 124 'Switch Genre, File Select Up, GEQ Up, Music Menu Up, Preset EQ' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 124 (the frame is inferred from the size of the device code); also named 'File Select Up', 'GEQ Up', 'Music Menu Up', 'Preset EQ'; the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_FILE_SELECT_DOWN": {
+      "label": "File Select Down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x7D",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 125 'File Select Down, GEQ Down, Music Menu Down' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 125 (the frame is inferred from the size of the device code); also named 'GEQ Down', 'Music Menu Down'; the page writes this device code in parentheses"
+        }
+      ]
+    },
+    "KEY_P_FILE": {
+      "label": "P. File",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x32",
+          "function": "0x7E",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 4, command 126 'P. File, Preset, Sound Field User, User' under 'Sony:18; (50) (EQ levels)': Sony15 device 50 function 126 (the frame is inferred from the size of the device code); also named 'Preset', 'Sound Field User', 'User'; the page writes this device code in parentheses"
+        }
+      ]
+    }
+  }
+}

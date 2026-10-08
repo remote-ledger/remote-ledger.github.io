@@ -1,0 +1,57 @@
+{
+  "manufacturer": "Sony",
+  "model": "USB Media Player 26.119",
+  "aliases": [],
+  "controls": [
+    "Sony USB Media Player (device code 26.119)"
+  ],
+  "protocol": {
+    "name": "Sony20",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_ADVANCE": {
+      "label": "Advance",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0x77",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_usbmedia.htm@2d61d1ca (retrieved 2026-10-08) table 2, command 20 'Advance' under 'Sony:26.119': Sony20 device 26 subdevice 119 function 20"
+        }
+      ]
+    },
+    "KEY_MEDIA_SELECT": {
+      "label": "Media Select",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0x77",
+          "function": "0x4F",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_usbmedia.htm@2d61d1ca (retrieved 2026-10-08) table 2, command 79 'Media Select' under 'Sony:26.119': Sony20 device 26 subdevice 119 function 79"
+        }
+      ]
+    },
+    "KEY_ZOOM": {
+      "label": "Zoom",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0x77",
+          "function": "0x79",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_usbmedia.htm@2d61d1ca (retrieved 2026-10-08) table 2, command 121 'Zoom' under 'Sony:26.119': Sony20 device 26 subdevice 119 function 121"
+        }
+      ]
+    }
+  }
+}

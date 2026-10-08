@@ -1,0 +1,28 @@
+{
+  "manufacturer": "Sony",
+  "model": "DVD/Receiver Combo and HTIB systems 12",
+  "aliases": [],
+  "controls": [
+    "Sony DVD/Receiver Combo and HTIB systems (device code 12)"
+  ],
+  "protocol": {
+    "name": "Sony12",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_FUNCTION": {
+      "label": "Function",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0x69",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_dvdrcvr.htm@14f257d8 (retrieved 2026-10-08) table 5, command 105 'Function' under 'Sony:12 (preamp-type commands?)': Sony12 device 12 function 105 (the frame is inferred from the size of the device code)"
+        }
+      ]
+    }
+  }
+}

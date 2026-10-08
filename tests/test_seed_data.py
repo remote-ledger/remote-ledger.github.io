@@ -13,6 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 CORPUS = corpus_files(ROOT)
 IMPORT_ROOT = ROOT / "remotes" / "lirc"
 IRBLASTER_ROOT = ROOT / "remotes" / "irblaster"
+HIFI_ROOT = ROOT / "remotes" / "hifi-remote"
 #: Authored files, tested one by one. Imported ones are thousands and are
 #: regenerated rather than written (D39): `rl build --check` validates every
 #: one of them in CI, and test_the_imported_tree_keeps_r19 below checks R19's
@@ -20,9 +21,11 @@ IRBLASTER_ROOT = ROOT / "remotes" / "irblaster"
 #: files and 400,000 keys; one parametrized test per file would turn a
 #: one-minute suite into an hour, so it is scanned, like LIRC's, not enumerated.
 AUTHORED = [p for p in CORPUS
-            if IMPORT_ROOT not in p.parents and IRBLASTER_ROOT not in p.parents]
+            if IMPORT_ROOT not in p.parents and IRBLASTER_ROOT not in p.parents
+            and HIFI_ROOT not in p.parents]
 IMPORTED = [p for p in CORPUS if IMPORT_ROOT in p.parents]
 IRBLASTER = [p for p in CORPUS if IRBLASTER_ROOT in p.parents]
+HIFI = [p for p in CORPUS if HIFI_ROOT in p.parents]
 
 
 def test_the_corpus_is_not_empty():
@@ -82,6 +85,63 @@ def test_the_irblaster_import_keeps_r19():
                         or "verifiedBy" in form or not shape.match(form.get("source", ""))):
                     bad.append(f"{path.relative_to(ROOT)}:{key}")
     assert bad == []
+
+
+def test_the_hifi_remote_import_keeps_r19():
+    """SPEC R19's conditions 2 and 3 over every form of the hifi-remote.com import
+    (DESIGN D109 to D115): README, report and the pinned snapshot sit beside it,
+    every key holds one `irp` form, none above Plausible, and every citation has
+    the fixed shape and names a page the snapshot's manifest holds, by hash. A
+    cheap scan of the JSON, not a load."""
+    import re
+
+    from remote_ledger.serialize import load
+
+    assert (HIFI_ROOT / "README.md").is_file()
+    assert (HIFI_ROOT / "IMPORT.md").is_file()
+    manifest = json.loads((ROOT / "sources" / "hifi-remote" / "MANIFEST.json").read_text())
+    hashes = {name: entry["sha256"] for name, entry in manifest["pages"].items()}
+    shape = re.compile(
+        r"^hifi-remote\.com/sony/(Sony_[a-z0-9]+\.htm)@([0-9a-f]{8}) "
+        r"\(retrieved (\d{4}-\d{2}-\d{2})\) table \d+, command (\d+) '.+' under 'Sony[^']*': "
+        r"(Sony(?:12|15|20)) device (\d+)(?: subdevice (\d+))? function (\d+)", re.S)
+    assert HIFI, "remotes/hifi-remote has not been generated (rl import hifi-remote)"
+    def num(value):
+        return int(value, 0) if isinstance(value, str) else value
+
+    bad = []
+    for path in HIFI:
+        doc = load(path)
+        for key, spec in doc["keys"].items():
+            forms = spec["forms"]
+            if len(forms) != 1:
+                bad.append(f"{path.relative_to(ROOT)}:{key}")
+            for form in forms:
+                m = shape.match(form.get("source", ""))
+                ok = (form["type"] == "irp" and form["confidence"] in ("plausible", "untested")
+                      and "verifiedBy" not in form and m is not None
+                      and hashes.get(m[1], "").startswith(m[2]) and m[3] == manifest["retrieved"]
+                      and m[5] == doc["protocol"]["name"]
+                      and (int(m[4]), int(m[6]), None if m[7] is None else int(m[7]))
+                      == (num(form["function"]), num(form["device"]),
+                          None if "subdevice" not in form else num(form["subdevice"])))
+                if not ok:
+                    bad.append(f"{path.relative_to(ROOT)}:{key}")
+    assert bad == []
+
+
+def test_the_hifi_remote_blu_ray_table_agrees_with_the_authored_sony():
+    """The authored RMT-B118P holds 38 keys, Verified against this very table by
+    hand (DESIGN section 13). The import of the same table must give the same
+    signal for each of them: the check that the importer reads a row as the
+    person did."""
+    authored = load_remote(ROOT / "remotes" / "sony" / "RMT-B118P.json")
+    imported = load_remote(HIFI_ROOT / "sony" / "bluray-26.226.json")
+    by_signal = {(f.device, f.subdevice, f.function)
+                 for forms in imported.keys.values() for f in forms}
+    for key, forms in authored.keys.items():
+        (form,) = forms
+        assert (form.device, form.subdevice, form.function) in by_signal, key
 
 
 @pytest.mark.parametrize("path", AUTHORED, ids=lambda p: p.name)
@@ -238,3 +298,56 @@ def test_the_topping_is_the_capture_read_lsb_first():
             d, s, f, nf = (int(m[1][i:i + 2], 16) for i in (0, 2, 4, 6))
         assert (form.device, form.subdevice, form.function) == (d, s, f), key
         assert d ^ s == f ^ nf == 0xFF, key
+
+
+def test_the_sony_is_verified_at_226_by_a_second_table():
+    """Every RMT-B118P key is Verified at 26.226. The 11 keys that only the 2015
+    capture recorded became Verified when hifi-remote.com's Sony Blu-ray table
+    (`/sony/Sony_bluray.htm`, retrieved 2026-10-07) was read: it lists every
+    function the file holds. So each citation is re-derived here: the command
+    number it quotes is the form's own function. The table's other two Blu-ray
+    modes, 26.234 and 26.242, are not recorded: the catalog bundle carries a
+    key's primary group only (DESIGN section 23)."""
+    import re
+
+    remote = load_remote(ROOT / "remotes" / "sony" / "RMT-B118P.json")
+    assert remote.protocol.name == "Sony20"
+    assert len(remote.keys) == 38
+    for key in remote.keys:
+        groups = remote.groups(key)
+        assert list(groups) == ["primary"], key
+        (form,) = groups["primary"]
+        assert form.confidence == "verified", key
+        assert form.verified_by == "sony20-cross-source-check", key
+        assert (form.device, form.subdevice) == (26, 226), key
+        m = re.search(r"Sony_bluray\.htm \(retrieved 2026-10-07\) lists command (\d+) as", form.source or "")
+        assert m, f"{key}: cites no row of the hifi-remote table"
+        assert int(m[1]) == form.function, key
+
+
+def test_the_rc16a_is_one_capture_read_lsb_first_and_stays_plausible():
+    """The MX5's RC-16A has one source for its codes: a forum post whose low
+    bytes are the RC-15A's with the prefix changed from 11EE to 5AA5, so a copy
+    cannot be ruled out and the tier is `plausible`. Each form is re-derived
+    from the value its own citation quotes, as the RC-15A's are, and each low
+    byte must be a function the RC-15A holds Verified, which is what pins the
+    post's bit order."""
+    import re
+
+    rc15 = load_remote(ROOT / "remotes" / "topping" / "RC-15A.json")
+    verified = {f.function for forms in rc15.keys.values() for f in forms
+                if f.confidence == "verified"}
+    path = ROOT / "remotes" / "topping" / "RC-16A.json"
+    assert json.loads(path.read_text())["controls"] == ["MX5"]
+    remote = load_remote(path)
+    assert len(remote.keys) == 12
+    for key, forms in remote.keys.items():
+        (form,) = forms
+        assert form.confidence == "plausible", key
+        m = re.search(r"'[^']+: ([0-9A-F]{8})' in a C\+\+ comment", form.source or "")
+        assert m, f"{key}: cites no value it can be re-derived from"
+        quoted = [int(m[1][i:i + 2], 16) for i in (0, 2, 4, 6)]
+        d, s, f, nf = (_reverse_bits(b) for b in quoted)
+        assert (form.device, form.subdevice, form.function) == (d, s, f), key
+        assert (d, s) == (0x5A, 0xA5) and d ^ s == f ^ nf == 0xFF, key
+        assert f in verified, key

@@ -1,0 +1,71 @@
+{
+  "manufacturer": "Sony",
+  "model": "LCD Monitor 4.5",
+  "aliases": [],
+  "controls": [
+    "Sony LCD Monitor (device code 4.5)"
+  ],
+  "protocol": {
+    "name": "Sony20",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_PC": {
+      "label": "PC",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_lcd.htm@bec5d689 (retrieved 2026-10-08) table 2, command 21 'PC' under 'Sony20:4.5': Sony20 device 4 subdevice 5 function 21"
+        }
+      ]
+    },
+    "KEY_VIDEO": {
+      "label": "Video",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_lcd.htm@bec5d689 (retrieved 2026-10-08) table 2, command 22 'Video' under 'Sony20:4.5': Sony20 device 4 subdevice 5 function 22"
+        }
+      ]
+    },
+    "KEY_Y_SLASH_PB_SLASH_PR": {
+      "label": "Y/Pb/Pr",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x17",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_lcd.htm@bec5d689 (retrieved 2026-10-08) table 2, command 23 'Y/Pb/Pr' under 'Sony20:4.5': Sony20 device 4 subdevice 5 function 23"
+        }
+      ]
+    },
+    "KEY_WIDE_MODE": {
+      "label": "Wide Mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x3D",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_lcd.htm@bec5d689 (retrieved 2026-10-08) table 2, command 61 'Wide Mode' under 'Sony20:4.5': Sony20 device 4 subdevice 5 function 61"
+        }
+      ]
+    }
+  }
+}

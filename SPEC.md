@@ -1,8 +1,8 @@
 # Remote Ledger — Requirements Spec
 
-**Draft v0.11** · Status: §12 resolved; v1 implemented (Phases 0-6);
-imports open to any source R19 admits: LIRC, SmartIR and the IR Blaster
-database so far · Depends on
+**Draft v0.12** · Status: §12 resolved; v1 implemented (Phases 0-6);
+imports open to any source R19 admits: LIRC, SmartIR, the IR Blaster
+database and hifi-remote.com's Sony code pages so far · Depends on
 nothing upstream (self-contained)
 
 A self-contained JSON file per remote, where every key can hold several
@@ -41,13 +41,20 @@ holds for each lookup:
 - **`sony/RMT-B118P.json` uses subdevice 226, not 218.** A 2015 hardware
   capture of the remote and IRDB's Sony Blu-ray entry agree on 226, and
   IRDB's `26,218` is a PlayStation button set. 27 of the 38 keys agree across
-  the two sources with zero mismatches and are Verified. The other 11 rest on
-  the capture alone and are Plausible, so the file as a whole is Plausible.
-  The hifi-remote table cited for 218 was never retrieved. No source mentions
-  234 or 242. The capture names the BDP-S185, not the BX510, as the player
-  the remote shipped with. The BX510 therefore stays in `unresolved.json`
-  (R20) as a contradiction between sources, not as a settled error.
-  DESIGN.md §13 has the detail.
+  the two sources with zero mismatches. The other 11 rested on the capture
+  alone until hifi-remote.com's Sony Blu-ray table was retrieved (2026-10-07,
+  at `/sony/Sony_bluray.htm`; the name §1's lookup gave it does not resolve).
+  That table lists all 38 functions as the capture has them, so all 38 keys are
+  Verified and so is the file. It lists 26.226, 26.234 and 26.242 as the three
+  Blu-ray command modes, has no 218, and its PS2 page gives 26.218 to the
+  PlayStation 2. It is one person's compilation from Pronto and One For All
+  data, not a Sony publication, which is why §1's "official" was a claim. 234
+  and 242 are not recorded as variants: the catalog bundle carries only a
+  key's primary group (DESIGN §23), so they would not reach a client. The
+  capture names the BDP-S185, not the BX510, as the player the remote shipped
+  with, and retailer listings give the BX510's own remote as RMT-B119A, which
+  no source has a code table for. The BX510 therefore stays in
+  `unresolved.json` (R20). DESIGN.md §13 has the detail.
 - **`topping/RC-15A.json` uses device 0x88, subdevice 0x77, not 0x11/0xEE.**
   The cited capture is IRremoteESP8266 output, and that library prints NEC
   MSB-first. Read as NEC1's LSB-first fields, `0x11EE18E7` is `88 77 18 E7`.
@@ -58,7 +65,14 @@ holds for each lookup:
   error, the commonest NEC transcription mistake. The capture holds 12
   codes, not 8. All 13 keys, including OK from a second capture, are now
   Verified against two Flipper-IRDB files that record the address as `88`
-  in a different encoding.
+  in a different encoding. Topping's own code list, which two users relayed
+  from Topping (irplus-codes issues #379 and #540, unattributed on the
+  forum), gives 12 of the 13 functions with user code `0X8877` and agrees on
+  every one. It names no protocol or bit order. It is not a published table:
+  toppingaudio.com has none. The MX5's remote, the RC-16A, is a second Topping
+  remote in the ledger, at device 0x5A and subdevice 0xA5. Its one source is a
+  forum post whose low bytes are the RC-15A's with the prefix changed, so its
+  12 keys are Plausible. DESIGN.md §13 has the detail.
 - **`samsung/BN59-01199F.json`** holds as claimed: Plausible, NECx2 from
   IRDB's shared `7,7` Samsung TV address.
 
@@ -79,6 +93,7 @@ formats that each grew to own one layer of the problem.
 | Remote file | **LIRC's `lircd.conf`** | The de facto standard remote-configuration file, and the shape of most public captures in the wild. Imported under R19 (DESIGN §14), and otherwise a common authoring source, not a dependency. |
 | By address | **IRDB** ([probonopd/irdb](https://github.com/probonopd/irdb)) | A large crowd-sourced code database, organized `<manufacturer>/<devicetype>/<device>,<subdevice>.csv` — by *protocol address*, not model name. Its licence is conditional and revocable, so R19 does not admit it (§4). |
 | By model | **SmartIR** ([smartHomeHub/SmartIR](https://github.com/smartHomeHub/SmartIR)) | Each JSON file carries an explicit `manufacturer` and a `supportedModels` array. Closest existing prior art to Remote Ledger's shape — but no confidence tier, no citation field, one code per function, not several coexisting ones. MIT-licensed; imported under R19 (DESIGN §15, `media_player`/`fan` so far). |
+| By device code | **hifi-remote.com's Sony code pages** (`hifi-remote.com/sony/`) | One person's compilation of Sony's infrared command numbers from Pronto and One For All data, one page per kind of device: which command a Sony device code answers to, with no remote model and no capture. A reference table, not a Sony publication. Imported under R19 as a table of reference codes, which needs no licence (R19.1, DESIGN §27). |
 | By brand, as hex | **The IR Blaster database**, as shipped in SwiftRemote (`github.com/iodn/android-ir-blaster`, GPL-3.0) | 9,388 remote ids, each a bag of keys filed under a list of brand and model names, so there is no remote model, as with SmartIR. Each code is a hexcode and one of 23 protocol names, with no timings: what a hexcode *means* is a claim the ledger has to check, and for ten protocols SwiftRemote's own app reads a code differently from the published decodes of real remotes (DESIGN §18). No confidence, no citation, and nothing recording where any code came from. GPL-3.0 only by inheritance from the app it ships in. Imported under R19, on the weakest licence footing of any source so far (R19.1; DESIGN §17). |
 | Layout | **CSS Grid's `grid-template-areas`** | A named cell per line, `.` for a gap, spans by repeating a name — an already-standardized grammar, not a bespoke one. See §6. |
 
@@ -110,7 +125,8 @@ citing it (R19.2).
 - Make adding one device cheap and require nothing upstream.
 - Grow coverage from every source it can use. Import any database whose
   licence permits republishing it, wholesale, on the licence footing R19.1
-  states for it, and at a tier that says it was only imported (R19). Cite
+  states for it, or any table of reference remote codes, which needs none
+  (R19.1), and at a tier that says it was only imported (R19). Cite
   any other source one key at a time. Each new source is a new import
   meeting the same conditions. The spec does not need an edit to admit it.
 
@@ -125,7 +141,8 @@ citing it (R19.2).
   alias/controls/layout reference is well-formed.
 - A generated manufacturer+model index and a lookup script over it.
 - Importers, one per upstream database, for every source whose licence
-  permits republishing it here (R19). There is no fixed list: LIRC's
+  permits republishing it here, and for every table of reference remote
+  codes (R19). There is no fixed list: LIRC's
   remotes database, SmartIR and the IR Blaster database are the first
   three, and any source meeting R19's conditions is a candidate for the
   next one.
@@ -613,7 +630,12 @@ is the *only* place trust comes from — so it has to hold up on its own.
   to import from every source that qualifies. Each import must meet five
   conditions, each checkable:
 
-  1. **The licence permits republishing.** This repository is public. Each
+  1. **The licence permits republishing, unless the source is a table of
+     reference remote codes** (v0.12). A page or file that says which
+     command a device code answers to is a set of facts about a protocol, and
+     the owner's decision (2026-10-08) is that licence has nothing to do with
+     it: such a source needs none, and the repository records none. This
+     repository is public. Each
      source's files carry its licence and attribution, and live under a
      directory of their own, `remotes/<source>/`, so the licence boundary
      is a path. Every such directory is registered with its licence, and
@@ -632,10 +654,14 @@ is the *only* place trust comes from — so it has to hold up on its own.
        a reading of one. This import meets the condition on the weakest
        footing of any so far; its README says so, and deleting the directory
        removes every imported file.
+     - `remotes/hifi-remote/`: **no licence recorded**, as a table of
+       reference codes (above). Its README names the pages, and every
+       citation names the page and the row, so the source stays visible.
   2. **Every form cites exactly where it came from:** the upstream
      repository, pinned commit, the unit within it (file, remote block and
      line for LIRC; profile and command for SmartIR; remote id, label and
-     hexcode for IR Blaster), and *how* the form was produced. For LIRC it
+     hexcode for IR Blaster; page, its hash, table, row and marker line
+     for hifi-remote.com), and *how* the form was produced. For LIRC it
      is a `raw_codes` capture, a parametric block decoded to an `irp` form,
      or a parametric block expanded to raw timings by lircd's own transmit
      rules. For SmartIR it is a Broadlink packet decoded to a `raw` form,
@@ -658,7 +684,10 @@ is the *only* place trust comes from — so it has to hold up on its own.
      curate an imported remote, move it out of its source's directory:
      from then on it is authored, and the import skips it.
   5. **The import is regenerable.** Re-running it over the same pinned
-     upstream commit reproduces every imported file byte for byte. What it
+     upstream commit reproduces every imported file byte for byte. A source
+     that is not a repository is pinned by a snapshot committed beside the
+     data (hifi-remote.com's is `sources/hifi-remote/`, with each page's
+     SHA-256; DESIGN D111). What it
      could not represent is listed in a committed report, with reasons, not
      dropped silently.
 

@@ -1,0 +1,29 @@
+{
+  "manufacturer": "Sony",
+  "model": "CD/Cass/Tuner 26.153",
+  "aliases": [],
+  "controls": [
+    "Sony CD/Cass/Tuner (device code 26.153)"
+  ],
+  "protocol": {
+    "name": "Sony20",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_FLASH": {
+      "label": "Flash",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0x99",
+          "function": "0x77",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_cdcombo.htm@da5d476a (retrieved 2026-10-08) table 10, command 119 'Flash' under 'Sony:26.153': Sony20 device 26 subdevice 153 function 119"
+        }
+      ]
+    }
+  }
+}

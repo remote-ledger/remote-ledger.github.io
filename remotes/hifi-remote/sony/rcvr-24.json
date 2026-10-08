@@ -1,0 +1,54 @@
+{
+  "manufacturer": "Sony",
+  "model": "Receiver 24",
+  "aliases": [],
+  "controls": [
+    "Sony Receiver (device code 24)"
+  ],
+  "protocol": {
+    "name": "Sony12",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_A_ON": {
+      "label": "A On",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "function": "0x40",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 5, command 64 'A On' under 'Sony:24': Sony12 device 24 function 64 (the frame is inferred from the size of the device code)"
+        }
+      ]
+    },
+    "KEY_B_ON": {
+      "label": "B On",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "function": "0x42",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 5, command 66 'B On' under 'Sony:24': Sony12 device 24 function 66 (the frame is inferred from the size of the device code)"
+        }
+      ]
+    },
+    "KEY_A_SLASH_B_OFF": {
+      "label": "A/B Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "function": "0x45",
+          "confidence": "plausible",
+          "source": "hifi-remote.com/sony/Sony_rcvr.htm@4dd611e3 (retrieved 2026-10-08) table 5, command 69 'A/B Off' under 'Sony:24': Sony12 device 24 function 69 (the frame is inferred from the size of the device code)"
+        }
+      ]
+    }
+  }
+}

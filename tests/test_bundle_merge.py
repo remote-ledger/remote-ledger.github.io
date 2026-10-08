@@ -798,11 +798,11 @@ def real(real_records):
 def test_every_ref_of_the_ledger_maps_to_exactly_one_remote_of_the_bundle(real_records, real):
     collected, assembled = real
     refs = [merge.ref_of(r) for r in real_records]
-    assert len(set(refs)) == len(refs) == 13_217
+    assert len(set(refs)) == len(refs) == 13_369
     table = {ref: (remote_id, first, count) for ref, remote_id, first, count in assembled.remote_refs}
-    assert len(assembled.remote_refs) == len(table) == 13_217 and set(table) == set(refs)
+    assert len(assembled.remote_refs) == len(table) == 13_369 and set(table) == set(refs)
     remotes = {row[0]: row for row in assembled.remotes}
-    assert len(remotes) == len(assembled.remotes) == 13_217 - collected.folded.folded
+    assert len(remotes) == len(assembled.remotes) == 13_369 - collected.folded.folded
     for ref, (remote_id, first, count) in table.items():
         assert remote_id in remotes, ref
     # a remote is carried by its own ref, and the refs that map to it cut its keys into runs
@@ -836,7 +836,7 @@ def test_no_key_of_the_ledger_is_lost_or_changed_by_folding(real_records, real):
     for remote_id, keys in by_id.items():
         for n, canon, label, signal_id, confidence in keys:
             merged[(canon_of.get(canon), blob[signal_id], confidence)] += 1
-    assert files == merged and sum(files.values()) == 525_084
+    assert files == merged and sum(files.values()) == 531_868
     # and per ref: its run of the carrier's keys is the file's keys
     for i, record in enumerate(real_records):
         remote_id, first, count = next(row[1:] for row in assembled.remote_refs if row[0] == merge.ref_of(record)) if i % 97 == 0 else (None, 0, 0)
@@ -879,7 +879,7 @@ def test_the_folded_fragments_of_the_ledger_follow_the_rule_worked_out_again(rea
 
 
 def test_the_test_key_of_every_remote_is_the_carriers_and_the_testable_remotes_are_unchanged(real_records, real):
-    """Folding gives no remote a new test key and takes none away: the 12,018 remotes that can be
+    """Folding gives no remote a new test key and takes none away: the 12,094 remotes that can be
     tried before can be tried after, with the same key and signal."""
     collected, _ = real
     folded = collected.folded
@@ -894,8 +894,8 @@ def test_the_test_key_of_every_remote_is_the_carriers_and_the_testable_remotes_a
         if before is not None:
             tried += 1
             assert merged.keys[before[1]] == record.keys[before[1]]
-    assert tried == 12_018
-    assert sum(1 for i, r in enumerate(real_records) if folded.carrier[i] == i and merge.key_to_try(folded.remote(real_records, i)) is None) == 884
+    assert tried == 12_094
+    assert sum(1 for i, r in enumerate(real_records) if folded.carrier[i] == i and merge.key_to_try(folded.remote(real_records, i)) is None) == 960
 
 
 @pytest.fixture(scope="module")
@@ -945,9 +945,9 @@ def test_the_selected_bundle_still_carries_the_selection_and_fits(real_selected,
     built, _ = real_selected
     assert built.selection.chosen == real_selected_unfolded.selection.chosen
     assert built.stats["bytes"] <= 20_000_000
-    assert built.stats["remoteRefs"] == real_selected_unfolded.stats["remotes"] == 4_394
-    assert built.stats["remotes"] == 4_096 and built.stats["foldedFragments"] == 298
-    assert built.stats["keys"] == real_selected_unfolded.stats["keys"] == 165_646
+    assert built.stats["remoteRefs"] == real_selected_unfolded.stats["remotes"] == 4_407
+    assert built.stats["remotes"] == 4_109 and built.stats["foldedFragments"] == 298
+    assert built.stats["keys"] == real_selected_unfolded.stats["keys"] == 166_659
 
 
 def test_design_quotes_the_numbers_of_the_measurement(real_records, real):
