@@ -67,6 +67,15 @@ FACTS: dict[str, dict[str, Any]] = {
                 "of reference codes as facts (DESIGN D110). Every key cites the page, "
                 "its checksum and its row.",
     },
+    "jp1": {
+        "kind": "none",
+        "upstream_url": "https://github.com/hifiremote/deviceupgrades",
+        "note": "The JP1 device upgrades are what people of the hifi-remote.com forum "
+                "programmed into their remotes to send one device's codes: tables of "
+                "reference remote codes, which the repository records no licence for "
+                "(DESIGN D110); the upstream repository states none either. Every key "
+                "cites the repository's commit and the file.",
+    },
     "irblaster": {
         "kind": "inherited",
         "licence_file": "LICENSE",

@@ -659,6 +659,7 @@ def cmd_import(args: argparse.Namespace) -> int:
     """
     from .hifiremote import importer as hifiremote_importer
     from .irblaster import importer as irblaster_importer
+    from .jp1 import importer as jp1_importer
     from .lirc import importer as lirc_importer
     from .smartir import importer as smartir_importer
 
@@ -672,7 +673,7 @@ def cmd_import(args: argparse.Namespace) -> int:
 
     module = {
         "lirc": lirc_importer, "smartir": smartir_importer,
-        "irblaster": irblaster_importer,
+        "irblaster": irblaster_importer, "jp1": jp1_importer,
     }[args.source]
 
     checkout = Path(args.checkout)
@@ -828,7 +829,7 @@ def build_parser() -> argparse.ArgumentParser:
     im = sub.add_parser(
         "import", help="import an upstream database under SPEC R19", parents=[common]
     )
-    im.add_argument("source", choices=["lirc", "smartir", "irblaster", "hifi-remote"],
+    im.add_argument("source", choices=["lirc", "smartir", "irblaster", "hifi-remote", "jp1"],
                      help="a source meeting SPEC R19's five conditions")
     im.add_argument("checkout", help="a git checkout of the upstream source "
                                      "(for hifi-remote: its snapshot, sources/hifi-remote)")

@@ -2,7 +2,7 @@
 
 **Draft v0.12** · Status: §12 resolved; v1 implemented (Phases 0-6);
 imports open to any source R19 admits: LIRC, SmartIR, the IR Blaster
-database and hifi-remote.com's Sony code pages so far · Depends on
+database, hifi-remote.com's Sony code pages and its forum's JP1 device upgrades so far · Depends on
 nothing upstream (self-contained)
 
 A self-contained JSON file per remote, where every key can hold several
@@ -654,9 +654,11 @@ is the *only* place trust comes from — so it has to hold up on its own.
        a reading of one. This import meets the condition on the weakest
        footing of any so far; its README says so, and deleting the directory
        removes every imported file.
-     - `remotes/hifi-remote/`: **no licence recorded**, as a table of
-       reference codes (above). Its README names the pages, and every
-       citation names the page and the row, so the source stays visible.
+     - `remotes/hifi-remote/` and `remotes/jp1/`: **no licence recorded**, as
+       tables of reference codes (above). Each README names where the data is
+       (hifi-remote.com's Sony pages; the forum's JP1 device upgrades as
+       `github.com/hifiremote/deviceupgrades`), and every citation names the
+       page or commit and the row or file, so the source stays visible.
   2. **Every form cites exactly where it came from:** the upstream
      repository, pinned commit, the unit within it (file, remote block and
      line for LIRC; profile and command for SmartIR; remote id, label and
