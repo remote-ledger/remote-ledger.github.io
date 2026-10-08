@@ -115,7 +115,7 @@ names a person types for them), models, remotes, each remote's keys by
 canonical key, and the compiled signals once each as binary Pronto words. It needs nothing newer than Android 11's SQLite, is
 byte-for-byte the same for the same tree, comes with a manifest, a detached
 ECDSA P-256 signature and a notices file with every source's licence text, and
-has two profiles: `full` (51 MB, 12.9 MB gzipped) and `selected`, at most 20 MB.
+has two profiles: `full` (51 MB, 12.9 MB gzipped) and `selected`, at most 20.25 MB.
 It is a build artifact: never committed, never under `build/` or `site/`
 (DESIGN.md §23).
 

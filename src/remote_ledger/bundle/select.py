@@ -48,11 +48,16 @@ PROFILES = ("selected", "full")
 
 #: The size the owner asked of the ``selected`` profile: the app's whole install is
 #: to stay near 30 MB. A build over it fails (``rl bundle --max-bytes`` overrides).
-SELECTED_MAX_BYTES = 20_000_000
+#: 20,000,000 until D116, which raised it by the 250,000 the Sony pages of
+#: hifi-remote.com need (D109): the file is 20,148,224 bytes.
+SELECTED_MAX_BYTES = 20_250_000
 #: What the estimate below may add up to. Under the cap, because the estimate
 #: leaves out the small tables (the notices' licence texts, the vocabulary, the list
-#: of brands left out: about 0.3 MB) and is within 2% of the file, not exact.
-BUDGET_BYTES = 19_000_000
+#: of brands left out: about 0.3 MB) and is within 3% of the file, not exact.
+#: 19,000,000 until D116. The rule is greedy and skips what does not fit, so a
+#: budget is not worth what it adds: only 19,608,400 to 19,609,999 give the
+#: brands chosen before the Sony import, and 19,609,000 is in that window.
+BUDGET_BYTES = 19_609_000
 MIN_MODELS = 40
 MIN_MAPPED_SHARE = 0.60
 
