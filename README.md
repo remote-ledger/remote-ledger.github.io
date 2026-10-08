@@ -45,6 +45,11 @@ the upstream file and line, or the profile, or the remote id (SPEC R19).
 Authored remotes stay the four above, each checked against independent
 sources.
 
+**More sources are coming.** Coverage grows from any database whose
+licence permits republishing it. Each one gets its own `remotes/<source>/`
+directory and must meet R19's five conditions. LIRC, SmartIR and the IR
+Blaster database are the first three.
+
 ## Why
 
 Existing remote-code databases (LIRC's `lircd.conf` collection, IRDB,
@@ -92,6 +97,52 @@ remote, or a person's own rearrangement) is described separately from the
 code, using CSS's own `grid-template-areas` syntax rather than a bespoke
 coordinate system.
 
+What a key *means* is kept apart from how a source spells it. A versioned
+**canonical key vocabulary** (about 150 keys in a dozen groups, each with a
+display name, a standard Material Symbols icon, a glyph, a colour and whether
+holding it repeats it) and a table of aliases live in
+`src/remote_ledger/vocabulary/`;
+`keys.canonical_id(key_name, label)` maps `KEY_VOLUMEUP`, `VOL+` and `Vol +` to
+`VOLUME_UP`, or to nothing when it is not sure, so an app can show a generated
+layout with standard icons for any remote. `rl keys report` says how much of
+the corpus it maps, per remote (DESIGN.md §22).
+
+**The catalog bundle.** `rl bundle` turns the ledger into one prebuilt SQLite
+file an app can ship as an asset and open directly: brands (with the other
+names a person types for them), models, remotes, each remote's keys by
+canonical key, and the compiled signals once each as binary Pronto words. It needs nothing newer than Android 11's SQLite, is
+byte-for-byte the same for the same tree, comes with a manifest, a detached
+ECDSA P-256 signature and a notices file with every source's licence text, and
+has two profiles: `full` (51 MB, 12.9 MB gzipped) and `selected`, at most 20 MB.
+It is a build artifact: never committed, never under `build/` or `site/`
+(DESIGN.md §23).
+
+**Finding a device.** `matching.py` matches a typed query, or what a photo's
+text says, to the catalog (brand, model, part number; typo-tolerant, in
+integers so a port gets the same order) and `rl bundle search-eval` measures
+how often it offers the right remote, on generated queries and on hand-written
+ones. The generated queries are friendlier than real typing and the report
+says so (DESIGN.md §24). It also completes what a person has typed so far
+(`MatchIndex.suggest`: the brands and the models that go on from it, in a
+stable order) and knows other names for a brand, written out in each script, so
+that 海信, 创维 and 創維 find Hisense and Skyworth and their models as the Latin
+names do (`bundle/data/brand_aliases.json`, a reviewed list of 133 brands;
+DESIGN.md §25, D108). `suggest(query, limit, prefer=["Sony", ...])` takes the brands a
+person already uses and puts them first only where the rules cannot tell two
+entries apart (the hint never lifts a worse match: D106), and
+`MatchIndex.warm()` reads the biggest brands' model lists once at start and keeps
+them, so that the first keystroke inside a big brand is as quick as the next
+(D107).
+
+**One remote for a device the import split.** The IR Blaster import files a
+remote per protocol, and a fragment with no key a person could be asked to try
+(Power, Volume up, Mute) is a row nobody can test. The exporter folds such a
+fragment into a sibling of the same device that has one and plays the same
+way, and never folds two fragments that both can be tried; the remote files do
+not change, and `remote_refs` still maps every ref of the ledger to the remote
+that carries its keys (315 of the 1,225 fragments of split devices in the full
+bundle; DESIGN.md §26).
+
 ## Try it
 
 ```console
@@ -102,6 +153,11 @@ $ rl encode --protocol NEC1 --device 0x88 --subdevice 0x77 \
 
 $ pytest
 $ rl lookup "DX3 Pro"      # offline lookup, R20's three states
+$ rl keys report           # how much of the corpus the key vocabulary maps, per source and remote
+$ rl bundle --profile selected --out bundle-out/selected   # the app's catalog file, manifest and notices
+$ rl bundle --verify bundle-out/selected                     # check it against the tree
+$ rl bundle search-eval --bundle bundle-out/selected             # how often a typed device finds its remote
+$ rl bundle suggest-vectors --file tests/vectors/suggest_vectors.json --check   # the vectors a port of suggest is held to, with and without a hint
 $ rl build --check         # the CI gate: drift and orphans (-j N or RL_JOBS sets the workers)
 $ rl build && open site/index.html
 ```
@@ -112,6 +168,6 @@ $ rl build && open site/index.html
 notation, Pronto Hex, LIRC, IRDB, SmartIR, the IR Blaster database), the data
 model, layout, compiling and cross-validation, and the resolved decisions.
 
-**[DESIGN.md](DESIGN.md)** — how it is built: decisions D1 to D73, the
-Pronto contract to the byte, the seven-phase plan, the three imports, and what
-is not yet proven.
+**[DESIGN.md](DESIGN.md)** — how it is built: decisions D1 to D108, the
+Pronto contract to the byte, the seven-phase plan, the three imports, the key
+vocabulary, the catalog bundle, and what is not yet proven.

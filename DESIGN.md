@@ -1,6 +1,6 @@
 # Remote Ledger — Design & Build Plan
 
-**Draft v2.1** · Status: v1 complete; all three seed remotes authored; LIRC, SmartIR and IR Blaster imports built (§14, §15, §17); 28 protocols (§18) · Implements [SPEC.md](SPEC.md) v0.10
+**Draft v2.1** · Status: v1 complete; all three seed remotes authored; LIRC, SmartIR and IR Blaster imports built (§14, §15, §17); 28 protocols (§18) · Implements [SPEC.md](SPEC.md) v0.11
 
 SPEC.md says *what* the format has to hold and why. This says *how it gets
 built*: the resolved open decisions, the one intermediate representation
@@ -14,7 +14,7 @@ appear — D16–D20 came out of the v0.1 review, D21–D26 out of the v0.2
 review, D27–D29 out of the v0.3 review, and D30–D33 out of the v0.4 review,
 each sitting wherever it belongs topically. D34–D45 came with the LIRC and
 SmartIR imports (§14, §15), D46–D56 with the IR Blaster importer (§17) and
-D57–D68 with the protocols it needed (§18), D69–D71 for the index (§19), D72–D73 for the build driver (§20) and D74–D82 for the app API (§21).
+D57–D68 with the protocols it needed (§18), D69–D71 for the index (§19), D72–D73 for the build driver (§20), D74–D82 for the app API (§21), D83–D87 for the canonical key vocabulary (§22) and D88–D95 for the catalog bundle (§23) and D96–D99 for finding a device in it (§24).
 §11 lists what changed.
 
 ---
@@ -1322,7 +1322,12 @@ remote-ledger/
 ├── .gitattributes                      pins LF on generated JSON (D20)
 ├── src/remote_ledger/schema/           package data, not repo-relative:
 │   ├── remote.schema.json              a non-editable install has no
-│   └── unresolved.schema.json          checkout to read from
+│   ├── unresolved.schema.json          checkout to read from
+│   ├── keys.schema.json                the canonical key vocabulary (D83)
+│   └── aliases.schema.json             and its aliases (D85)
+├── src/remote_ledger/vocabulary/       hand-written, shipped as package data, never
+│   ├── keys.json                       generated: the canonical keys and groups (D83)
+│   └── aliases.json                    the spellings that mean each (D85)
 ├── remotes/                            hand-authored, the actual ledger.
 │   ├── sony/RMT-B118P.json             `remotes/**/*.json` is uniformly
 │   ├── topping/RC-15A.json             one remote — no reserved names
@@ -1347,6 +1352,12 @@ remote-ledger/
 │   ├── index.py       R14                                 D13
 │   ├── lookup.py      R16
 │   ├── site.py        R17                                 D15
+│   ├── keys.py        canonical_id, the vocabulary loader  R22 D83-D85
+│   ├── keys_report.py `rl keys report`                    D86
+│   ├── bundle/        the catalog bundle: corpus, catalog, select,
+│   │                  writer, sign, verify, vectors, notices  R23 D88-D95
+│   │                  search_eval, matching_vectors            R24 D97 D98
+│   ├── matching.py    the matcher over a bundle's search structures  R24 D96
 │   └── cli.py         `rl`
 ├── tests/vectors/ + CITATIONS.md                          D10
 └── .github/workflows/ci.yml                               D11
@@ -1421,12 +1432,19 @@ clean-tree requirement (D11).
 
 | Command | Requirement | Does |
 |---|---|---|
-| `rl validate [path]` | R15, R11 | Schema + semantic checks; exit non-zero on any error |
+| `rl validate [path]` | R15, R11 | Schema + semantic checks; exit non-zero on any error. Run with no path it also validates the canonical key vocabulary (D83) |
 | `rl compile [path] [--check]` | R12 | Write `build/pronto/…`; `--check` diffs instead |
 | `rl check [path]` | R13 | Cross-check every candidate group; the data gate |
 | `rl index [--check]` | R14 | Regenerate `build/index.json` |
 | `rl site [--check]` | R17 | Generate `site/` |
 | `rl app [--check]` | D74 | Generate `site/app/v1/`, the app API (§21) |
+| `rl keys report [--json]` | R22, D86 | How much of the corpus the canonical key vocabulary maps, per source and per remote; read-only (§22) |
+| `rl bundle [--profile selected\|full] [--out DIR] [--check]` | R23, D88 | Build the catalog bundle an app ships: `catalog.sqlite`, `notices.json`, `manifest.json`. An artifact, not a stage: never under `build/` or `site/`, never committed, not covered by `rl build --check` (§23) |
+| `rl bundle --verify DIR` | D88, D95 | Check a written bundle against the tree; decode every signal |
+| `rl bundle sign --key KEY.pem DIR`, `rl bundle verify-signature --pub PUB.pem DIR` | D93 | ECDSA P-256 / SHA-256 detached signature of the manifest, with `openssl` |
+| `rl bundle vectors --file FILE [--from DIR] [--check]` | D91 | The cross-language vectors of the signal table |
+| `rl bundle matching-vectors --file FILE [--check]` | D97 | The cross-language vectors of the matcher |
+| `rl bundle search-eval [--bundle DIR] [--queries FILE] [--timing]` | R24, D98 | Hit rates of the matcher over a bundle, on generated and hand-written queries, as a Markdown report (§24) |
 | **`rl build [--check]`** | **D19** | **The whole pipeline — validate → check → compile → index → site → app — whole-tree; `--check` is the CI gate for drift *and* orphans** |
 | `rl lookup "Sony BDP-BX510"` | R16 | Matching files, candidates, tiers, citations. Offline |
 | `rl fmt [--refresh] [--expand] [--sort]` | D9, D17, D20 | Canonicalize field order, hex spelling, and decimal form; refresh `derived` forms; expand `variants` longhand; `--sort` canonically orders *set-like* arrays only, never semantic ones (D20) |
@@ -1783,6 +1801,14 @@ the data. SmartIR (§15), RC-5 (§16) and the IR Blaster import (§17, §18) fol
 as post-v1 work outside the seven phases, and the last of them is the one that
 no longer fits D40's promise (§17).
 
+**Phase 8, post-v1: more sources.** SmartIR followed as the second import
+(§15, PR #21) and the IR Blaster database as the third (§17). SPEC v0.11
+makes that the standing direction rather than an exception: every database
+whose licence permits republishing is a candidate. Each lands the way
+SmartIR did, as its own §-numbered design section, an importer, and a
+registered `remotes/<source>/` directory. The SPEC needs no edit to admit
+it.
+
 ---
 
 ## 9. Edits to the existing docs — scheduled, not deferred
@@ -1823,6 +1849,7 @@ Applying the rule, in the phase that makes each true:
 | **7 done** | **SPEC §3, §4, §2 and R19 (v0.9).** R19 now permits importing a database on five checkable conditions: the licence permits republishing, each form cites its origin, nothing lands above Plausible, authored data wins, and the import is regenerable. §4 names the sources that stay excluded, and why. **R15** is scoped to a manufacturer: the global model-name check was written against three files, and the import has 55 cross-maker pairs such as Apple's and Pioneer's `CD` | D34–D40, D13 |
 | **post-6 done** | **SPEC §1 and §5's tier table.** §1 stated the lookups' claims as if they were the ledger's contents, and its RMT-B118P row claimed Verified at subdevice 218. It now records the claims as claims, then what the ledger holds. Plausible now also covers a single capture that nothing cross-checks, which is how PR #8 tiered 11 keys: no existing tier fitted, and the data came before the definition | §13 |
 | **post-7 done** | **SPEC §2, §3, §4, R19 and §12 (v0.10).** R19 admits a third database, the IR Blaster code database as shipped in SwiftRemote. R19.1 now says how each of the three meets the licence condition: LIRC by a reading (Debian's), SmartIR by a stated MIT licence, and IR Blaster **by inheritance only**, because nobody in its lineage says where the data came from. R19.2 generalises the citation beyond LIRC's file, block and line, and adds that where a source stores a code as a hexcode and a protocol name, the reading is the importer's claim and the committed report counts where the source's own app reads it differently. R19.3 adds that one source of unknown origin is Plausible, and R19.4 stops naming `remotes/lirc/`. §2 gains the database as prior art, §3 stops calling the admitted sources "openly licensed", §4 counts three, and §12's note on gate-2b vectors counts 28 protocols | D46, D50, D55, D68 |
+| **8 done** | **SPEC header, §2, §3, §4 and R19 (v0.11).** Imports are open to every source R19's conditions admit, and there is no fixed list. R19.1's licence boundary generalises to `remotes/<source>/`, registered with its licence. R19.2 says how a SmartIR form is produced, as it already did for LIRC. A new paragraph under R19 says that a missing parameter, such as a carrier or repeat count, is defaulted and cited rather than used as a reason to drop the key | §15 |
 
 Decisions that are *not* spec edits, for contrast: D19's tree ownership,
 D20's serialization, D28's `Decimal` context, D10's vector-citation gate,
@@ -1854,6 +1881,7 @@ Recording it as a late edit is more honest than folding it back into Phase 3.
 | Committed `build/` creates merge noise | Low | Single-author repo (OD1); D19's tree check makes drift loud |
 | The LIRC import makes the repo and the site large (~2,800 upstream files, ~115k keys with timings) | Medium | D40 shards the index and site per remote, so no committed file grows with the corpus. D20's one-line integer arrays cut raw forms roughly in half. The size is measured before the data PR, not after |
 | Imported data is taken for authored data | Medium | R19's conditions, enforced: the `remotes/lirc/` path is the licence *and* trust boundary, every form's citation names its upstream file and line, nothing is above Plausible, and the site labels imported remotes as imported |
+| An imported key's defaulted carrier is wrong for its protocol | Low | Nothing is dropped over it. The default is cited on every form, and every such form is Plausible. §15 measures it: about 14% of SmartIR's raw keys are 36 or 40 kHz families played at 38 kHz, which costs range rather than function. Inferring the carrier from a recognised timing family is the planned fix |
 | The GPL reading of the LIRC database is wrong | Low | It is Debian's reading, cited, and the only one on record (the upstream repository states no licence). The boundary is one directory, so reversing it is one deletion and one re-import |
 | The IR Blaster data belongs to someone who does not allow its republication | Medium | Nothing mitigates the *probability*: its origin is unknown and the licence is inherited from the app it ships in, not granted for the data (D46). What is bounded is the cost: one directory, one deletion, the same exit as LIRC's. R19.1 now names the footing, and the importer's README says it without softening |
 | The wire reading of a hexcode is wrong for a family, and the ledger holds a bug SwiftRemote does not | Medium | For ten protocols the ledger holds a reading that differs from the app's, for 44,789 keys (D57). The evidence is published decodes, real LIRC frames and structure, and no device was tested. The reading is isolated in one `FROM_DB_HEX` function per protocol, the app's reading is kept beside it as `FROM_DB_HEX_APP`, and `IMPORT.md` counts every code on which they differ, so reversing a family is one function and one re-import. Plausible is the tier that says none of it was checked on hardware |
@@ -2022,7 +2050,7 @@ note rather than a live contract.
 
 ## 12. Implementation status
 
-Phases 0-6 are implemented: 2560 tests, `jsonschema` the only runtime
+Phases 0-6 are implemented: 3351 tests, `jsonschema` the only runtime
 dependency. Phase 2 landed its nine SPEC edits *before* its code, per §9 --
 the spec change is what authorises the implementation. (That count is asserted by the suite itself -- see
 `test_documented_test_count_is_current` -- so it cannot drift the way the
@@ -2030,7 +2058,8 @@ three stale "148" figures did. It was 890 before the IR Blaster work, which
 added 1,367; it moves again whenever a test is added, and the figure here
 has to be re-fixed with it.) Post-v1 work has landed outside the phases: RC5
 (§16), the LIRC and SmartIR imports (§14, §15), and the IR Blaster importer
-with the 24 protocols it needed (§17, §18). The registry holds 28 protocols.
+with the 24 protocols it needed (§17, §18), and the canonical key vocabulary
+(§22). The registry holds 28 protocols.
 `rl encode --protocol NEC1 --device 0x88 --subdevice 0x77
 --function 0x18 --carrier 38000` emits the Topping RC-15A Power key. Until
 the RC-15A was corrected this read `0x11 / 0xEE`: the capture's MSB-first
@@ -2175,9 +2204,10 @@ says the first three are "the usual 3 Blu-ray modes". Three findings:
    with IRDB's `26,218.csv`. §1's 218 claim has no support left. The "official
    table" it cited names 226.
 3. **234 and 242 are real, as the other two modes of the same table.**
-   RMT-B118P now declares them as variants `mode2` and `mode3` (D17), each
-   Plausible on that one page. Nothing says this remote can be set to send
-   them, and the page's other three Blu-ray codes (26.151 for the UHP-H1 and
+   They are not recorded as variants (D17): the catalog bundle carries only a
+   key's `primary` group, and a test asserts the corpus has no other (§23), so
+   a variant would be silently dropped there. Nothing says this remote can be
+   set to send them either. The page's other three Blu-ray codes (26.151 for the UHP-H1 and
    its RMT-VB210, 26.135 for the BDP-SX portables and their RMT-B113, 26.164
    for the HES-V1000 and its RMT-HS001A) carry no list of which keys those
    remotes have, so no remote is authored for them.
@@ -2482,6 +2512,39 @@ carrier (word 1), so that word is read, not defaulted, via
 36 or 40 kHz Pronto profile would reject every one of its buttons outright.
 `minSends` still defaults to 1 either way, since neither encoding records
 a repeat count.
+
+**What the 38 kHz default costs: no keys dropped, some played
+off-carrier.** Carrier handling dropped nothing in the first import: the
+report lists zero "does not compile" skips, and all 10 Pronto keys declare
+38 kHz (`006D`) anyway. The default affects how some keys play, not
+coverage. Classifying the 904 `raw` keys by lead-in and bit timing gives:
+
+| Timing family | Keys | Usual carrier | Mainly |
+|---|---|---|---|
+| NEC-like, 9 ms lead-in | 445 | 38 kHz | Yamaha, LG, Onkyo |
+| Samsung-like, 4.5 ms lead-in | 142 | 38 kHz | Samsung, Thomson, TCL |
+| RC6 | 82 | 36 kHz | Philips, Sky |
+| RC5 | 29 | 36 kHz | Philips |
+| Sony SIRC | 18 | 40 kHz | Sony |
+| Kaseikyo | 7 | 37 kHz | Mitsubishi |
+| unrecognised | 181 | — | Noblex, Sharp, Pace |
+
+About 129 keys (14%) are therefore compiled at 38 kHz for a protocol
+that usually runs at 36 or 40 kHz. That is a 5% error. It is within the
+passband of a typical demodulating receiver, but it costs range, so a
+user may see such a key work at close range and fail across a room.
+Dropping those keys would lose them outright, which is worse, so they
+stay (SPEC R19: a missing parameter is defaulted, not a reason to drop).
+Any SmartIR user has already been sending them through a Broadlink
+transmitter's own fixed carrier, so 38 kHz is at least the condition in
+which upstream found them to work. This is an unverified, uncited claim
+and is recorded here only as a reason the risk is low.
+
+The improvement, not yet built, is to infer the carrier from a recognised
+timing family. That would record the value as a `claims` entry citing the
+protocol's published carrier, keep the form Plausible, and leave the 181
+unrecognised keys on the default. It is a deliberate step past D41's
+"no protocol detection", so it needs its own decision before any code.
 
 An odd-length Broadlink decode has no recorded trailing gap. Marking it
 `truncated: true` would need a `defaultGapUs` claim to substitute one
@@ -5209,3 +5272,614 @@ Pronto inline (D79).
   the weakest part of those two readings.
 - **The 2,066 keys the import refused** (964 codes, 27 ids' worth of nothing) are not in
   the app's new database: a loss against today's, by D54's rule, and not the API's.
+
+---
+
+## 22. The canonical key vocabulary
+
+A source spells a key as it likes: `KEY_VOLUMEUP` in LIRC, `VOL+` or `Vol +` in the IR Blaster database (which D49 folds to `KEY_VOL_PLUS`), `volumeUp` in SmartIR. The ledger keeps the spelling and never rewrites it. This section adds the one list of *meanings* those spellings are mapped onto, so that anything that has to understand a key reads an id and not a spelling: a generated layout that groups the volume keys and puts the arrows in a cross, a standard icon for each key, the language a macro or a prompt uses ("volume up"), a comparison between two remotes. SPEC R22 states the requirement.
+
+It adds: `keys.json` (the vocabulary: groups, canonical keys, and for each its display name, icon, glyph, colour and whether holding it repeats it), `aliases.json` (the spellings that mean each key), a schema for each, a validator, `keys.canonical_id(key_name, label)` (the mapping), and `rl keys report` (how far the mapping reaches into the corpus). It changes nothing that exists: no remote file, no importer, and not one byte of `build/`, `site/` or `site/app/v1/` (`rl build --check` reports 0 differences, as before). The vocabulary is **not** added to the app API: a new file there changes `dataVersion` and so every client's cache, which is a decision for the change that needs it. The files are read by code and written by hand, so no stage owns them (D19's owner table is unchanged).
+
+### D83 — The vocabulary is ledger data: two hand-written files, a schema each, a validator, a version
+
+**Where.** `src/remote_ledger/vocabulary/keys.json` and `aliases.json`, with `schema/keys.schema.json` and `schema/aliases.schema.json` beside the others. They ship as package data (`pyproject.toml` lists `vocabulary/*.json` as it lists `schema/*.json`) and `paths.VOCABULARY_DIR` finds them the way `validate.SCHEMA_DIR` finds the schemas: a consumer that installs the package has no checkout, and `canonical_id` must work for it. They are not repo-relative like `unresolved.json`, because the mapping is a library function before it is a command.
+
+**The contract**, the shape downstream code depends on (the field order is the file's, and a test pins it):
+
+```json
+{ "version": 1,
+  "groups": [ {"id": "power", "order": 1, "name": "Power"}, ... ],
+  "keys":   [ {"id": "VOLUME_UP", "group": "volume", "order": 1, "name": "Volume up",
+               "icon": "volume_up", "glyph": null, "color": null, "repeat": true}, ... ] }
+```
+
+- **`id`** is `UPPER_SNAKE_CASE` and never starts with `KEY_` or `BTN_`: those are how a source spells a key, not what it means. Ids are named for the meaning (`VOLUME_UP`, not `KEY_VOLUMEUP`), never for a source, and never for a device (`CD_PLAY` is not a key; it is `PLAY` on a CD player, D87).
+- **`group`**, **`order`**: an order is unique within its group (not across groups), so a layout reads a group in order without sorting ties.
+- **`icon`** is a Material Symbols name (snake_case) or null. **`glyph`** is up to eight characters of text, for a key shown as text (a digit, `CH+`, `OK`) or as a caption beside an icon. **`color`** is `red`, `green`, `yellow`, `blue` or null. **Every key has an icon, a glyph or a colour** (the schema's `anyOf`). A recommended reading, which the client decides: draw the icon when there is one, with the glyph as its caption; a key with only a glyph is text; a colour key is a dot.
+- **`repeat`** says whether holding the key should fire it again. True for the keys one adjusts or moves with (volume, channel, the four arrows, page, bass, treble, zoom, brightness, tuning), false for anything that changes state (power, mute, input, OK, the transport keys, the digits): a finger resting on Power must not switch the set off again. 32 of the 156 are true.
+- **`version`** is 1 and the schema accepts nothing else (`const`), as `schemaVersion` does elsewhere: a reader that sees another number refuses instead of guessing. Within a version an id is never renamed, removed or given another meaning, and a key, a group, an alias or a token may be added; anything else is version 2. A reader ignores ids it does not know and shows them in its "More" group, which is not in the file because it holds no canonical key.
+
+**The groups.** Eleven are required (`power`, `volume`, `channel`, `navigation`, `numbers`, `media`, `input`, `color`, `menu`, `apps`, `other`; the validator requires them and no group may be empty) and three the data asked for: `sound`, `picture` and `teletext`. Teletext is the one that decides it: `TEXT` is on 4,613 of the 10,013 IR Blaster remotes (46%), `HOLD`, `REVEAL` and `SIZE` on more than 300 each, and `SUBPAGE` and `MIX` on about 175; in a "More" group they would be most of what that group holds for a TV that has them. `MENU` is in `menu` and not in `navigation`: `navigation` is the cross (`UP`, `DOWN`, `LEFT`, `RIGHT`, `OK`) and the ways out of it (`BACK`, `HOME`, `EXIT`, `CANCEL`, `PAGE_UP`, `PAGE_DOWN`); `menu` is what opens a screen (`MENU`, `SETTINGS`, `INFO`, `GUIDE`, `DISPLAY`, ...).
+
+| group | keys | | group | keys |
+|---|---|---|---|---|
+| power | 4 | | menu | 13 |
+| volume | 3 | | sound | 15 |
+| channel | 12 | | picture | 17 |
+| navigation | 11 | | teletext | 6 |
+| numbers | 16 | | apps | 2 |
+| media (named Playback) | 23 | | other | 4 |
+| input | 26 | | color | 4 |
+
+156 keys in all. **Choices the data or the layout asked for:**
+
+- *`ENTER` is not `OK`.* They sit in `numbers` and `navigation`. In 37% of the LIRC remotes that have `KEY_ENTER` there is a `KEY_OK` too (229 of 612), so merging them would put two keys on one id in 229 files, and the layout could not tell the centre key from the confirm key.
+- *`STANDBY` is `POWER`*, a toggle with the standby symbol; `POWER_ON` and `POWER_OFF` exist for a key that says on or off and for nothing else (D84).
+- *`FORWARD` is `FAST_FORWARD`.* Of the 538 LIRC remotes with a `KEY_FORWARD`, 55 also have a `KEY_FASTFORWARD`; the others use `FORWARD` for the one fast-forward key, and so do 1,494 IR Blaster remotes (3 have both).
+- *`SOURCE`, `AV`, `TV/AV` and `INPUT SELECT` are all `INPUT`*, the key that steps through the inputs. A key that selects *one* input is `INPUT_TV`, `INPUT_DVD`, `HDMI_2` and so on: `TV` is a source here (4,922 keys), not a device.
+- *Apps are the generic ones only:* `APPS` and `BROWSER`. A streaming service is a brand, and a brand is never an icon here, so none is a key, an id or a glyph (a test searches for the common ones). `NETFLIX` and `YOUTUBE` are among the unmapped (55 and 35 keys) and show as text.
+- *Icons.* Every icon is a Material Symbols name from the Outlined, Rounded and Sharp styles' shared list. **82 distinct names are used**, checked against `google/material-design-icons` at `737e332` (the codepoints file, 4,299 names) by `tools/vocabulary_icons.py`: 0 missing. That needs the network, so it is a tool and not a test. The icon set is Apache-2.0; nothing was copied, only names. 92 keys carry an icon (11 of them with a glyph as caption), 60 are text only, 4 are colours. Whether the 60 want a drawn icon, and a description for a screen reader, is the icon work's.
+
+**Where it is validated.** The schemas hold what structure can say: the id pattern and the prefix rule, field types and bounds, the icon/glyph/colour rule, the version. `keys.semantic_problems` holds what needs two parts of a file related: ids unique, every group named by a key exists, an order unique within its group, no empty group, the eleven groups present, `DIGIT_0` to `DIGIT_9` present (the digit rule answers with them), and the alias rules of D85. It runs as `rl validate` with no path, as the first step of `rl build` (and so of `rl build --check`), and in the suite (`tests/test_key_vocabulary.py` breaks each rule in a copy of the shipped files and asks for the message). `rl validate <file>` is about that file's remote and does not run it.
+
+### D84 — The mapping is a fold and one lookup, and it prefers no answer to a wrong one
+
+`canonical_id(key_name, label=None)` returns an id or None. The pipeline, `keys.fold`, applied identically to a spelling in a file and to one in the alias table:
+
+1. NFKC and upper case, so full-width and compatibility forms are the plain ones (`ＶＯＬ＋` is `VOL+`, `①` is `1`).
+2. One name prefix removed from the start, and only with its underscore: `KEY_`, `BTN_`, and SmartIR's `SOURCES_` (D43's `sources` command group, as in `KEY_SOURCES_HDMI_1`). The word *key* in a label (`KEY LOCK`) is not a prefix.
+3. A hyphen between two letters or digits joins them (`A-B`, `S-VIDEO`, `Vol-Up`); any other hyphen is a sign.
+4. `+`, `-`, `*`, `#` become the words `PLUS`, `MINUS`, `STAR`, `HASH`, the way D49 already names them, so `VOL+` and `KEY_VOL_PLUS` meet.
+5. Split on spaces, `_`, `.`, `,`, `:`, `;`, brackets, quotes, `=`, `~` and `\`. **Not `/`**, and not `!`, `?`, `|` or symbols: `P/C` says "this or that" and is not `PC` (D85), `POWER?` is not `POWER`, and ⏩ is a spelling like any other.
+6. Each word is replaced by its `tokens` entry if it has one (`VOL` to `VOLUME`, `PWR` to `POWER`, `CH`, `CHAN` and `CHNL` to `CHANNEL`, `COLOUR` to `COLOR`).
+7. The words are joined without spaces (`squash`), which is what the lookup compares: `VOLUME UP`, `VOLUME_UP` and LIRC's `VOLUMEUP` are one spelling.
+
+Then **the digit rule** answers `0` to `9` however the source writes them (`1`, `KEY_KP1`, `NUM_1`, `NUMERIC 1`, `NUMBER 1`, `DIGIT 1`, `ONE`, and `CHANNEL 1`, which only the SmartIR import has: its `sources` group lists `Channel 1` to `Channel 9`, the codes that tune them) and not `10`, `0/10`, `D1`. Everything else is **one lookup** in a table of squashed spellings: each key's own id and display name, and every alias.
+
+**The label decides when there is one.** An imported key is named by folding its label to ASCII (D49), so a name says less than the label: ⏩ is `KEY_`, and `-►.◄-` is `KEY_MINUS_MINUS`, which on its own is `DASH`. A first version read both and let the name rescue a label it did not know; measured on the tree it rescued 597 keys, and the ones it got wrong were these (15 keys of `-►.◄-`, 6 of `◄--`, 7 of `TAPE ◄►` read as `INPUT_TAPE`). So the name is read only for a key with no label (every LIRC and SmartIR key; an authored key that names its meaning and prints nothing). A blank label is no label.
+
+**Conservative means these, each decided on the data and each a test in `test_what_does_not_map`:**
+
+- *A bare `POWER` is `POWER`.* `POWER_ON` and `POWER_OFF` are reached by `ON`, `OFF`, `POWER ON`, `PWR OFF`, `TURN ON` and little else; `ON/OFF`, `STANDBY` and `POWER ON/OFF` say both and are the toggle. Nothing else maps to either (a test walks the list).
+- *A device-qualified key is not mapped:* `POWER TV`, `TV_POWER`, `CD_PLAY`, `VCR_STOP`, `TV VOL+`. A layout is of one device, and an icon that hides *which* device a power key is for is worse than the text. LIRC's universal remotes are made of these (`remotes/lirc/philips/FA920.json`: `TV_0` to `TV_9`, `VCR_PLAY`, `LD_TRACK_UP`); they are most of the worst remotes in D86.
+- *A key with two functions is not mapped:* `RIGHT / VOL+`, `UP/CH+`, `RED/AUDIO`, `TV/SAT`, `PAUSE/STEP`. It is both, and which depends on the mode. The exceptions are compounds that say one thing twice (`⏩/FWD`), listed.
+- *A word with several meanings is not mapped:* `MODE`, `TIME`, `VIDEO`, `PROGRAM`, `PROG`, `SELECT`, `INDEX`, `LIST`, `AUTO`, `MEMORY`, `RESET`, `STILL`, `SCAN`, `TEST`. `SELECT` is the only OK-like key in 87% of the LIRC remotes that have it, and in the other 13% a `KEY_OK` is there as well; `INDEX` has a teletext key beside it in 92% of the IR Blaster remotes that have it and in 20% of the LIRC ones.
+- *A glyph that is an arrow or a play key is not mapped:* `►`, `◄`, `/\`, `\/`. D87 has the numbers.
+- *One that the data says is something else:* `P. UP`, `P. DOWN` (D85); `SKIP BACK` and `SKIP FORWARD`, which jump seconds on a recorder, are not `PREVIOUS` and `NEXT`; `ARC` is a soundbar's HDMI input as often as an aspect ratio; `OPT` is options or optical.
+
+### D85 — The aliases: what the table holds, how a collision is caught, and what building it found
+
+`aliases.json` is `{"version", "tokens", "aliases"}`: the six word rewrites of step 6, and for each canonical id the spellings that mean it besides its id and display name, 591 in all (a compound of a glyph and a word, such as `REV ⏪`, is listed only in the forms the data has). A spelling is written as a person would (`VOL+`, `Standby/On`, `⏩|`); the validator folds every one and **refuses** a table in which two ids claim a spelling that folds alike (`VOL UP` under `MUTE` is refused because `VOLUME_UP` has it), in which one id lists two spellings that fold alike (`VOL+` and `vol_plus`: one is redundant), in which a spelling folds to nothing, or is a digit (the rule answers those), or in which two keys' ids and display names fold alike. A token must be one folded word and is rewritten once. The same function folds the spelling in a file and in the table, so there is no second set of rules to drift from the first. Every alias in the table is tested to map to its id however it is spelled: lower case, upper case, as a name, with `KEY_` or `BTN_` in front, with spaces for underscores.
+
+A compound with a slash is listed twice, with and without it, because a name has already lost its slash (LIRC writes `tv_av`). The file keeps the aliases of an id sorted and, where spellings fold alike, the most compact one (`VOL+`, not `VOL +`).
+
+**What building it found**, each a change the first report made visible:
+
+- **`P/C` was `PC`.** Step 5 first split on `/`, and the table's `PC` (the computer input) then took `P/C`, a key on 4,284 IR Blaster remotes (43%) whose meaning is not known. That was 4,310 keys mapped wrongly, the largest error the report showed, and it moved irblaster's keys mapped from 83.2% to 81.9% when it was fixed. The slash is now part of the spelling.
+- **`P. UP` is not a channel key.** `P+` and `P-` are `CHANNEL_UP` and `CHANNEL_DOWN`, and the first table also had `P UP` and `P DOWN`. In 555 remotes `P. UP` sits beside `UP`, `DOWN`, `LEFT`, `RIGHT` (97%) and `P+`, `P-` (95%), with `P. DOWN`, `P. LEFT`, `P. RIGHT` after it: a second pad, not a channel key. The duplicate check below is what showed it.
+- **The duplicate check.** For each id, how often two *different* spellings land on it in one remote. Most are right (`PREV` and `SKIP PREV.` in 794 remotes: two previous keys), and `CHANNEL_DOWN` with `PMINUS` and `PDOWN` in 597 was the finding above. After it, the worst left are `P-` beside `CH -` (194 remotes of 5,057 with `P-`: a second key, or `P-` meaning another thing there; accepted, `P+` is the channel key in the other 96%) and the transport pairs. Across the corpus **4,240 of 13,217 remotes have a canonical id on two or more keys** (`POWER` twice, `SKIP PREV.` and `PREV`), which a layout must expect: place one, show the rest under their own label.
+- **`PREVIOUS CHANNEL` is `CHANNEL_DOWN`, a judgement.** SmartIR's `previousChannel` and `nextChannel` (55 keys, the only way those TVs change channel) are channel down and up; LIRC's `Prev_ch` (12 keys) may be "last channel". Taken as the pair, which is also the sequence. `PRE-CH` (72 keys), the likelier "last channel", is left unmapped.
+- **Non-English labels: none qualify.** Of the 121,252 unmapped keys, 79 have a non-ASCII letter (70 of them Cyrillic, 9 Latin; 70 distinct spellings, one to three keys each: `Вниз`, `Вверх`, `Menü`, `Grün`). A search for about a hundred common German, Spanish, French, Italian, Portuguese and Dutch key words found none on more than seven keys (`PROGRAMM`, seven; `PAUSA`, five). A foreign label earns an entry only where it is frequent in the data, and none is, so the table has no entry that is not English or a glyph. The mechanism (NFKC, upper case, Unicode letters kept) would take one.
+- **Glyph labels are spellings.** ⏩ and ⏪ are `FAST_FORWARD` and `REWIND` (1,155 and 1,144 keys), `|⏪`, `I⏪` and `!⏪` are `PREVIOUS`, `⏩|`, `⏩I` and `⏩!` are `NEXT` (the bar is written as `|`, `I` or `!` in the data), and a glyph with the word that says the same (`REV ⏪`, `⏩/FWD`) is listed beside them. 24,589 labels in the data have no letter or digit in them, of which `??` is 9,853.
+
+### D86 — The coverage report, and the numbers
+
+`rl keys report [--json]` prints, to standard output and deterministically: the keys mapped and the remotes with at least 90, 75 and 50 percent of their keys mapped, per source and overall; the same for remotes with at least 10 keys (one key mapped is a remote of 100 percent, and 7% of the remotes, 893, have fewer than ten); the 50 most frequent unmapped names with their keys and remotes; and the 20 remotes with the lowest coverage among those with ten keys. It reads `remotes/` and the vocabulary and nothing else, writes nothing, takes about 2 s (`ordered_map`, D81: 2.1 s wall and 5.3 s of CPU on the 64-core machine, 8 workers) and gives the same bytes at one worker and at three (tested). A percentage is **rounded down** to a tenth, so 89.97 is never printed as 90.0. `--json` is the same data with sorted keys (D20) and the percentages as numbers.
+
+The number that matters is the per-remote one, because an unmapped key is shown in the "More" group and a remote with half its keys there is a poor Simple layout. The final numbers, which `test_design_quotes_the_numbers_the_report_prints` compares with a fresh run, so that this block cannot go stale (R14):
+
+```
+All remotes:
+
+source     remotes     keys      keys mapped  >=90% of keys  >=75% of keys   >=50% of keys
+---------  -------  -------  ---------------  -------------  -------------  --------------
+irblaster   10,013  411,265  81.9% (337,172)  44.8% (4,491)  69.9% (7,008)   93.1% (9,323)
+lirc         3,138  112,789   58.3% (65,819)    18.8% (593)  49.6% (1,557)   79.9% (2,508)
+smartir         62      914      81.7% (747)     54.8% (34)     67.7% (42)      79.0% (49)
+authored         5      128       77.3% (99)      40.0% (2)      60.0% (3)       60.0% (3)
+all         13,218  525,096  76.9% (403,837)  38.7% (5,120)  65.1% (8,610)  89.9% (11,883)
+
+Remotes with at least 10 keys:
+
+source     remotes     keys      keys mapped  >=90% of keys  >=75% of keys   >=50% of keys
+---------  -------  -------  ---------------  -------------  -------------  --------------
+irblaster    9,415  408,466  82.0% (335,226)  44.8% (4,224)  70.6% (6,653)   94.2% (8,877)
+lirc         2,867  111,431   58.2% (64,915)    17.3% (496)  49.3% (1,415)   80.9% (2,320)
+smartir         39      786      84.3% (663)     58.9% (23)     76.9% (30)      94.8% (37)
+authored         4      120       75.8% (91)      25.0% (1)      50.0% (2)       50.0% (2)
+all         12,325  520,803  76.9% (400,895)  38.4% (4,744)  65.7% (8,100)  91.1% (11,236)
+```
+
+(The `authored` row is the Meridian MSR, Samsung BN59-01199F, Sony RMT-B118P and Topping RC-15A: 94 of 116 keys; the 22 left are the Meridian's tape and VCR sources, the Topping's DAC settings and `KEY_SEN`.)
+
+Read it as: **9 in 10 remotes have at least half their keys mapped, 2 in 3 at least three quarters, and 2 in 5 at least nine tenths.** The numbers went *down* while the table improved: the first pass, with 113 keys, mapped 77.0% of the keys and put 40.3% of the remotes at 90 percent, and 4,310 of those keys were `P/C` read as `PC` and 1,215 were `P. UP` and `P. DOWN` read as channel keys (D85). Coverage counts only as far as precision is held.
+
+Two things bound it, and neither is the vocabulary. **Keys with no label cost about 7 points.** Setting aside the keys whose text is `??`, `?`, empty or only separators or `/`, a bare number or a hex-like name (14,662 keys, 2.8%) and recounting with a throwaway script, 52.0% of the IR Blaster remotes are at 90 percent instead of 44.8%; 3,608 of its 10,013 remotes (36%) have at least one such key. **LIRC is the other limit,** 18.8% at 90 percent, because much of its 3,138 files is universal remotes that hold several devices (D84), raw dumps keyed by number (`remotes/lirc/rc-5/RC-5.json` has 2,048 keys and maps none; the IR Blaster has several 256-key dumps, `KEY_000` to `KEY_255`) and keyboard-style key sets (`KEY_A` to `KEY_Z`).
+
+### D87 — What is left, and where the next point would come from
+
+The 15 most frequent unmapped names, all on purpose (`rl keys report` prints 50):
+
+| keys | remotes | name | why it is not mapped |
+|---|---|---|---|
+| 9,853 | 2,497 | `??` | the source's own "unknown label": nothing to map |
+| 4,314 | 4,284 | `P/C` | meaning not known; on 43% of IR Blaster remotes; not `PC` (D85) |
+| 1,995 | 1,012 | `\/` and `/\` | arrows that are the cursor on one remote and a channel or volume key on another |
+| 1,139 | 1,123 | `►` | the right arrow or Play |
+| 1,116 | 1,111 | `◄` | the left arrow or reverse |
+| 661 | 659 | `MODE` | a different function on every device |
+| 658 | 658 | `KEY_AGAIN` | a Linux input code with no common meaning on a remote |
+| 650 | 650 | `P. DOWN` | a second pad, not channel down (D85) |
+| 565 | 565 | `P. UP` | the same |
+| 541 | 541 | `TIME` | elapsed time or the clock |
+| 514 | 512 | `VIDEO` | an input on one remote, a mode on another |
+| 510 | 510 | `PROGRAM` | a channel, or a CD's memory |
+| 501 | 500 | `PROG` | the same |
+| 470 | 470 | `P. RIGHT` | the second pad |
+| 469 | 469 | `P. LEFT` | the second pad |
+
+The remaining ranks of the 50 are the same kinds of thing: the ambiguous words of D84, device-qualified keys (`CD_PLAY`, `CD_STOP`, `tv_vcr`), and keys named after a Linux code with no common meaning (`KEY_102ND`, `KEY_10CHANNELSUP`, `KEY_KPPLUS`, `KEY_POWER2`, `KEY_C`). **Where the next gain is, not done because it is not a per-key mapping:**
+
+- **The arrow pad, with the remote as context.** 895 IR Blaster remotes have all four of `/\`, `\/`, `◄`, `►`, and in 788 of them (88%) no `UP`, `DOWN`, `LEFT` or `RIGHT` key is mapped anywhere else: the four are the cursor pad. A function over a whole remote (`canonical_ids(keys)`) could map them there and nowhere else; it would add 3,167 keys and, since the pad is what a Simple layout is built around, matters for more than the percentage. It is a second entry point beside `canonical_id` and would need its own tests, so it is left for the change that builds the layout.
+- **Device-qualified keys,** by reading the device from the prefix and handing the layout one remote per device. The same follow-up.
+- **The owner's review of the vocabulary and of the 330 most frequent mapped spellings** (99.2% of the 403,832 mapped keys; reviewed by eye for this section, not by anyone who owns a remote).
+
+### What is not proven
+
+- **The mapping's precision.** Recall is measured (D86); precision has no ground truth, since no labelled set exists. What was done is reading the 330 most frequent mapped spellings, which are 99.2% of the mapped keys, the duplicate statistics of D85 and the label-or-name comparison of D84, and the corrections those led to. A spelling that is wrong on a few remotes and right on the rest (`P+`, `FORWARD`, `PREVIOUS CHANNEL`) is accepted and named above.
+- **That every icon is the right icon,** or that a client can draw it: 82 names exist in the icon set (a tool, not a test), and none was rendered.
+- **That a layout can be built from it.** No client has read the files, and the reading of `icon`, `glyph` and `color` in D83 is a recommendation.
+- **Hardware.** A mapping says what a key is called, not that its code works; D50 is still that question.
+
+---
+
+## 23. The catalog bundle
+
+An app that has to work offline needs the catalog on the phone, and the app API (§21) is too big to ship (57 MB, 9,817 files, one brand at a time, and only the IR Blaster import). This section defines **bundle format v1**: one prebuilt SQLite file that an app can ship as an asset and open directly, the exporter that writes it (`rl bundle`), the two profiles it comes in (`full`, and `selected`, a subset for an app to ship), a manifest with a detached signature, and the notices of the sources it holds. It changes nothing that exists: no remote file, no importer, and not one byte of `build/`, `site/` or `site/app/v1/` (`rl build --check` reports 0 differences, as before, and a test builds a bundle between two checks and compares both trees). The code is `src/remote_ledger/bundle/`, the data it reads is `remotes/`, `src/remote_ledger/vocabulary/` (§22) and one plain-text list (`bundle/data/selected_brands.txt`). SPEC R23 states the requirement.
+
+### D88 — The bundle is an artifact, not a stage: `rl bundle`
+
+A stage is a tree the repository commits and `rl build --check` diffs (D19). A bundle is 19 to 50 MB of binary that changes with every remote, and nobody reads it in a pull request, so it is **not committed, owns no path of D19's table and is registered in no `generators.PIPELINE`**. The pipeline is still `check, compile, index, site, app`; `owned_paths()` is what it was (tested). It is written like the `app` stage in every other way: a function of the committed tree and of the code (`bundle.build.build_bundle(root, profile)` makes every file in memory, `write_bundle` writes them), workers through `parallel.ordered_map` (D81, so the bytes do not depend on the worker count), and a `--check`.
+
+| Command | Does |
+|---|---|
+| `rl bundle [--profile selected\|full] [--out DIR] [--max-bytes N]` | Build and write `catalog.sqlite`, `notices.json`, `manifest.json` under `DIR` (default `bundle-out/<profile>`, which `.gitignore` lists) |
+| `rl bundle ... --check` | Build in memory and compare with the files in `--out`; a signed manifest is compared without its `signature`. Writes nothing |
+| `rl bundle --verify DIR` | Check the written bundle against the tree (D95 lists what) |
+| `rl bundle sign --key KEY.pem DIR` and `rl bundle verify-signature --pub PUB.pem DIR` | D93 |
+| `rl bundle vectors --file FILE [--from DIR] [--check]` | The cross-language vectors of the signal table (D91) |
+
+**It is never written under `build/` or `site/`**: the writer refuses (`refuse_owned_path`), and with it the case D11 guards against, a command that writes into a tree a `--check` then compares. **Where its input is read from.** `remotes/` only: each remote is loaded and compiled by the very functions the `compile` stage uses (`load_remote`, `Remote.compile_group`, the selection of D7), not read from `build/pronto/`, so a bundle cannot be stale against the files it is built from, and the signals are the ledger's **wire readings** (D55): the 44,789 keys of the ten protocols whose second reading differs (D77) are in the bundle as the wire has them. The whole corpus compiles in about 4 s on eight workers. A key whose remote has several candidate groups (D16) is carried as its `primary` group; no remote of the corpus has another (`otherCandidates` in the report is 0), and the report counts them so that one appearing is not silent.
+
+### D89 — Format v1: the file and its tables
+
+**The file.** SQLite 3, UTF-8, `page_size` 4096, `auto_vacuum` none, rollback journal (header bytes 18 and 19 are 1: a bundle opens read-only from an asset and never needs the journal), `application_id` `0x524C4231` (`RLB1`), `user_version` 1, no free page. **Only what Android 11's SQLite 3.28 reads**: no `STRICT` table (3.37), no generated column (3.31), no `RETURNING`, no module, no trigger, no view; the schema is plain tables, two plain indexes and `WITHOUT ROWID` (3.8.2). A test reads `sqlite_master` for each of those words.
+
+**Deterministic.** The inserts of each table are sorted by its key and made in one transaction, the pragmas are fixed, a final `VACUUM` rewrites the file densely in the order of the schema, and nothing is read from the clock, the machine, the environment or the temporary directory the file is built in. Two builds are the same bytes (tested in one process at 1 and 3 workers, and in three processes with three `PYTHONHASHSEED`s), and `rl bundle --check` is that test run against a directory. **What is not fixed is the SQLite library**: its version number is in the header (offset 96) and a different library may lay pages out differently, so two machines with different libraries may write different bytes for one tree. `dataVersion` (D93) is the digest of the *rows*, so it is the same on both; the SHA-256 of the file is not, and the manifest names the file it signed. A publisher builds once, on one machine, and publishes that.
+
+**The tables.** Ids are integers; a table with a ``rowid`` has it as `id`.
+
+| Table | Columns | Holds |
+|---|---|---|
+| `meta` | `key`, `value` (text) | `schemaVersion` (1), `dataVersion`, `vocabularyVersion`, `profile`, `selection` (the rule that chose the brands), `tiers` (`confirmed,verified,plausible,untested`: the index is the number stored in `tier` and `confidence`), `gramLength` (3), `normalisation`, `sqliteMinVersion` (3.28.0), `count.*` of each table, `playRule.ledger` and `playRule.full-signal` (D78 in a sentence each) |
+| `sources` | `id`, `name`, `spdx`, `licence_kind`, `licence_notes`, `licence_text`, `upstream_url`, `upstream_commit`, `remote_count`, `key_count` | D94: one row per source, 1 authored, 2 LIRC, 3 SmartIR, 4 IR Blaster (a literal that only grows, like `app_api.PROTOCOLS`) |
+| `vocab_groups`, `vocab_keys` | `id`, `key`, `grp`, `ord`, `name`, `icon`, `glyph`, `color`, `repeat` | The canonical key vocabulary (D83), 156 keys in 14 groups, `id` its position in reading order. The bundle is self-contained: `keys.canon` joins here. `vocabularyVersion` is its `version` |
+| `brands` | `id`, `name`, `norm`, `first_model`, `model_count` | D90. A brand's models are the rows `first_model` to `first_model + model_count - 1` of `models` |
+| `brand_aliases` | `alias`, `norm`, `brand_id` | D101: other names a person types for a brand of this bundle, each written out; the key `norm` and the brand are its primary key, so an alias that two brands share is a row for each; `WITHOUT ROWID`. Added after the first bundles of format 1, without a new version (D101): a reader that does not know it never reads it |
+| `models` | `id`, `brand_id`, `name`, `kind` | D90. `kind` 0 is a product a person owns, 1 a remote's own part number |
+| `controls` | `model_id`, `remote_id` | The device model to the remotes that control it; `WITHOUT ROWID`, so the table is its own index by model. No index by remote: "which models does this remote control" is a scan of 120,000 to 307,000 small rows and the app rarely asks |
+| `remotes` | `id`, `ref`, `brand_id`, `model`, `source`, `tier`, `key_count`, `protocol`, `carrier_hz`, `repeat_passes`, `helper_repeat_passes`, `intro_empty`, `rule` | One row per remote file of the ledger (13,217), **except that a protocol fragment with no test key is a part of a sibling's row** (D103: 12,902 rows in the full bundle), see below |
+| `remote_refs` | `ref`, `remote_id`, `first_n`, `key_count` | D105: every remote file of the ledger the profile carries (13,217 in the full bundle), to the remote that carries its keys and where they start there; `WITHOUT ROWID`. Added after the first bundles of format 1, without a new version (D105) |
+| `keys` | `remote_id`, `n`, `canon`, `label`, `signal_id`, `confidence` | One row per key (525,084), primary key `(remote_id, n)`, `WITHOUT ROWID` |
+| `signals` | `id`, `words` | D91 |
+| `ngram` | `gram`, `ids` | D90 |
+| `excluded_brands` | `name`, `norm`, `api_key` | D92: the brands that are not in this bundle |
+
+**A remote** is a remote file of the ledger, which is one protocol (R3), **with the fragments folded into it** (D103). An IR Blaster database id with several protocols is several files (573 of its ids are), and each is a remote a model points at, except a fragment with no test key, which the sibling that has one carries (315 files in the full bundle); `remote_refs` (D105) says which remote carries each file.
+
+- `id` is the position, in the path order of the **whole ledger** and from 1, of the file that carries the remote (D103 leaves a gap where a folded fragment was), **in every profile**: the full and the selected bundle of one tree number a remote alike, so the remote ids that a matcher over the full catalog returns are the ids on the phone. `ref` is its path under `remotes/` without `.json` (`irblaster/ACER/1103-NEC1`, `lirc/sony/839`, `topping/RC-15A`) and **is its name across ledger versions**: the `id` of a remote moves when a file is added before it, its `ref` does not move unless the file does. Brand, model, signal and vocabulary ids are numbered inside one bundle.
+- `brand_id` is the brand of the file's `manufacturer`, NULL when the remote is in the bundle for another brand it controls and its own maker is not (391 remotes in the selected bundle). `model` is the file's own `model` where it is a name (LIRC's, the authored remotes') and **NULL where it is a placeholder the importer made** (`IR Blaster DB 1103 (NEC1)`, `SmartIR media_player 7`, D43, D46).
+- `source` is a row of `sources`. `tier` is the **weakest** tier of the remote's keys (`index.rolled_up_confidence`: a remote is as trustworthy as the key you happen to press); `key_count` is the number of its `keys` rows; `protocol` is the ledger's protocol name, NULL for a capture the ledger did not identify (D24; 3,062 LIRC remotes), and for a remote with fragments folded into it the protocol of its own file (D104); `carrier_hz` the file's carrier.
+- **The play fields are D78's, per remote.** `helper_repeat_passes` is what `_remoteLedgerSends` plays for a ledger remote: the repeat sequence `minSends` times when the intro is empty, `minSends - 1` times after it otherwise. `repeat_passes` is that, raised to one for a remote whose keys are all of a database protocol the oracle plays as the whole signal (`app_api.FULL_SIGNAL_PROTOCOLS`: Sharp, Denon); `rule` is `ledger` or `full-signal` accordingly, and `intro_empty` says whether word 2 of every one of its signals is 0. D78 stated these per database protocol and checked that a protocol's signals agree; here they are per file and the exporter **stops** if a file's signals disagree about the intro (none does, in 13,217 files) or its keys are played by two rules. The same arithmetic as `app_api._play`, over a file instead of a protocol; for the IR Blaster files it gives D78's table (tested, `PLAY` in `tests/test_bundle.py`). For a LIRC, SmartIR or authored remote there is no database protocol, so the rule is `ledger`.
+
+**A key** has its position `n` in the remote: its file's keys in the order of the key names and then, where fragments are folded into it, theirs (D104), `canon` the vocabulary id of its canonical key (`canonical_id(name, label)`, D84) or NULL, `signal_id`, and `confidence`, the tier of the form that compiled to the signal (0 confirmed to 3 untested: 524,996 keys are plausible and 88, those of the three authored remotes that cite a second source, verified; none is confirmed). **`label` is the key's own text where the bundle has nothing better, and NULL where the canonical key says it already.** The text is the source's `label` if the key has one, else its name (`KEY_AGAIN`). It is stored when the key has no canonical id (it is then the only name the key has), or when its text is not a spelling of the canonical key's id or display name (`VOL+` on `VOLUME_UP`; spellings compared by `keys.squash`, so `Volume Up`, `VOLUME_UP` and `volumeup` are the key's name and `STANDBY` on `POWER` is not). 220,000 of 525,084 keys store one, 1.5 MB. A key that stores none draws as its canonical key's icon and display name; a canonical id that two keys of a remote share (4,240 remotes have one, D85) has no label to tell them apart and a layout places one and lists the rest.
+
+### D90 — Search: the search key, `brands`, `models` and `ngram`
+
+FTS5 is not in every Android SQLite, so the search is ordinary columns and one posting table. The bundle holds the structures; a reader's algorithm is the reader's (§24 has one). What is fixed here is what is stored and how to read it.
+
+**The search key** of a text (`bundle/textnorm.search_norm`): Unicode **NFKD**, **lower case** (`lower()`, not `casefold()`: Kotlin's `lowercase()` agrees with it and `ß` stays), then **keep only the code points whose general category is a letter or a number** (`L*`, `N*`). Every space, punctuation mark, symbol and combining mark is dropped and nothing replaces it: `UN50NU6900F`, `un 50 nu-6900 f` and `UN50-NU6900/F` are `un50nu6900f`; `Ünï` is `uni`; `Ｓony ①` is `sony1`. Python's `str.isalnum` is exactly "category L or N" (checked over all of Unicode 15.0), so the filter is `re.sub(r"[\W_]+", "", ...)`. It deliberately does no more: no letter is turned into a digit, no brand word dropped and no suffix cut. Those are for the matcher, and are done to the query and never to what is stored.
+
+**`brands`**: one row per brand **search key**. `ORION`, `Orion` and `orion` (the IR Blaster import, the authored remotes and LIRC) are one brand; 5,028 brands for 5,496 spellings. `name` is the spelling the **whole ledger** writes most often, the first in code point order among equals (`ORION`; LIRC's lower-case `2wire` where no other source has it). `norm` is the key, with an index. A brand's models are a **contiguous range** of `models`, `first_model` and `model_count`: the models are written sorted by brand, so the range replaces an index of 276,000 rows (3 MB) and costs nothing to read (`WHERE id BETWEEN first_model AND first_model + model_count - 1`).
+
+**`models`**: one row per `(brand, search key of the name)`, so `ACME | TV-1`, `ACME | tv-1` and a LIRC remote named `TV-1` are one model; 276,247 models for 279,447 import pairs and the other sources' names. `name` is its commonest spelling. A model **is** the thing a person types, and where it comes from depends on the source:
+
+- the IR Blaster import files each remote under a list of `<BRAND> | <MODEL>` products with brand and model kept apart (D56b): each is a device, `kind` 0;
+- SmartIR, LIRC and the authored remotes keep `controls` as free text, so each entry is a device of the remote's manufacturer, `kind` 0;
+- a remote's own `model` and its `aliases` are **part numbers** (what a person reads on the back of a remote, `BN59-01199F`), `kind` 1, except where the model is a placeholder (D89). A model that is both a device and a part number is `kind` 0.
+
+**`controls`** links a model to every remote that lists it, across sources; each model has at least one.
+
+**`ngram`** is the candidate generator for a typo. A model's **grams** are every three characters of `^` + search key + `$` (`un5` gives `^un`, `un5`, `n5$`); `^` and `$` cannot occur in a key, a gram that starts with `^` is the start of a key, one that ends in `$` its end, and a key of one or two characters still has a gram. For each gram the table holds the ids of the models that have it, ascending, as the **differences between neighbours** (the first from 0), each an unsigned **LEB128 varint**: seven bits a byte, low group first, the high bit set on every byte but the last (`[1, 2, 300]` is `01 01 AA 02`). A query is turned into its grams, their postings are read and merged, and the models that share the most grams are the candidates, which the reader then ranks by its own distance; a model name's key is computed for those few and never stored, which keeps the bundle 4 MB smaller and costs a reader a few hundred keys per query. 35,763 grams hold 3.3 MB of postings for 276,247 models. Chosen over a table of `(gram, model_id)` rows, which is 10 bytes a row and about 25 MB for the full catalog, and over a deletion table (the same size).
+
+### D91 — Signals: shared, binary, sorted
+
+**The data-size reasoning.** The IR Blaster data has **411,265 keys but only 57,709 distinct compiled signals** (14%): the whole ledger has 525,096 keys and 155,976 (30%); LIRC alone shares little (112,789 keys, 97,775 signals, the raw captures). A key row is 20 bytes and a signal is 129 on average (the longest, a LIRC capture, 628 words), so storing each signal once is what makes the catalog small: the signals are 20.1 MB of blobs for 155,964, where one blob per key would be 72.9 MB. The key rows are the other half, and the reason `keys` has no text where the canonical key says it (D89).
+
+**The blob** is `signals.words`: a big-endian `uint16` **count of words**, then the words, each a big-endian `uint16`. The words are exactly those of the Pronto Hex string the ledger compiled the key to (`pronto.encode`): word 0 is `0000`, word 1 the frequency word, word 2 the number of burst pairs of the intro and word 3 of the repeat sequence, then the durations in carrier cycles, a mark then a space, first the intro and then the repeat (D6, D25, D78). The count is redundant with the length of the blob and with words 2 and 3 (`count = 4 + 2 x (n1 + n2)`); it is there so that a reader can reject a damaged blob without trusting anything else. One SQLite row per signal, `id` from 1 in the **sorted order of the blobs** as bytes: the length prefix makes that order by length first, then by content, so signals of one protocol and of one remote's family sit together, which is what compresses (D95). **Microseconds** are `round_half_up(cycles x period)` with `period = word1 x 0.241246 us` (D25: lossy in this direction by under half a cycle); the **carrier** is the catalog's (`remotes.carrier_hz`, what the file declared, `38000`) and the frequency word says another number (`006D` is 38,029 Hz): which an output transmits is its own decision, and both are in the vectors.
+
+**Test vectors**, `tests/vectors/bundle_vectors.json` (`rl bundle vectors --file tests/vectors/bundle_vectors.json`): 151 keys, chosen by a hash of `(remote, n)`, 4 for each source and protocol of the full bundle (29 protocol families, with the raw captures as `(unnamed)`) and the extremes (the shortest and the longest signal, each rule and each intro, the most passes). Each vector carries the `blobHex`, `frequencyWord`, `frequencyHz`, `catalogCarrierHz`, `introUs`, `repeatUs` computed by **the ledger's own decoder run on the blob** (`pronto.decode`), and `play`: the remote's four D78 fields and `pressUs`, the intro once and then the repeat sequence `repeatPasses` times, which is what one press transmits. A Kotlin reader is right when it makes those from the blob and the carrier. `tests/test_bundle_vectors.py` holds the file to the decoder, to a second computation that shares no code with it (Decimal arithmetic on the words) and to D78's numbers. The vectors are self-contained, so they do not have to follow the catalog; they are regenerated when the decoder or the format changes.
+
+### D92 — Profiles: `full` and `selected`
+
+**`full`** is every brand and remote: what a backend serves and what `selected` is cut from. **`selected`** is the subset an app ships in its install, **at most 20,000,000 bytes** (the owner's target: an app that ships it keeps its whole install near 30 MB). A build over the cap fails (`--max-bytes N` overrides). The ledger has no popularity data, so the rule is a proxy plus a list a person reviews, and every number of it is a constant of `bundle/select.py` or a line of `bundle/data/selected_brands.txt`:
+
+1. **The curated list**, `selected_brands.txt`: 112 well-known brands in the categories the owner named (television, AV receiver, set-top box, streaming box, projector, soundbar, disc player; air conditioners are out of scope), a brand per line, `#` to comment, matched by search key. **The order is the priority**: the bundle takes the brands from the top and carries each **whole** (all its models, remotes and signals) when what it adds still fits the budget of 19,000,000 bytes, by an estimate that is within 2.5% of the file; one that does not fit is skipped, the next is tried, and the command names the brands it skipped. The owner changes what ships by moving or adding a line.
+2. **The proxy fill**: the other brands, ranked by **models per byte** (the number of models a brand is listed with, over what its remotes and signals would add), among those with at least 40 models and 60% of their keys mapped to a canonical key, are added in that order while they fit what the list left of the budget. Models per brand is the one popularity signal the catalog has; dividing by the cost keeps out the makers of generic replacement remotes (`BRAVO`: 2,945 models, 2,275 remotes, 112,034 keys). Of the three proxies the owner named, **models per brand ranks the brands, and remotes per brand count as the cost** (with their keys and signals); **the third, the share of keys with signals, is 100% for every brand** (every key the ledger holds has a compiled signal), so it carries no information and the share of keys that map to a canonical key stands in for it.
+
+A remote is carried when **any** of its brands is chosen (its maker or a brand of a model it controls); a model when its brand is. A remote that is in for one brand keeps all its keys and signals, and the models it controls under brands that were not chosen are not in the bundle.
+
+**Everything not in the subset is recorded**: `excluded_brands` holds each left-out brand (`name`, `norm`) and `api_key`, the ten hex digits (SHA-1 of the exact name, D76) of the shard of the app API (§21) that has its remotes, comma-separated when the import spells it two ways; **NULL where the app API has none**, because the API serves the IR Blaster import only. 4,992 brands are left out of the selected bundle, 228 of them with no shard, and **1,794 remotes of LIRC and SmartIR (the authored ones counted with them) that it leaves out are in no static file of the ledger at all** until the full bundle (or a catalog service built from it) is published. That is a finding for the owner, not a decision of this change: it is the reason `full` exists.
+
+**What the numbers say** (D95): at the 20 MB cap the list does not fit. Samsung, LG, Sony, Panasonic and Philips, the first five lines, are 11.6 MB of the 19 by the estimate (Sony alone has 1,061 remotes, and most of the bytes of a brand with old equipment are LIRC raw captures: 5.0 MB of signals for 1,375 of the 4,394 remotes); the bundle carries **35 brands of the list and one by the proxy**, and **77 brands of the list are left out for lack of room** (the first are JVC, Grundig, Thomson, Telefunken, Loewe Opta, Beko, Vestel...). Levers the owner has, none taken here: reorder the list so the brands that matter most come first (the cheap ones are taken wherever the budget allows), shorten it, raise the cap, or drop what is bulkiest per remote (the LIRC raw captures, about 6 MB of the 19). **The owner signs off on the list**; until then it is a proposal.
+
+### D93 — The manifest, `dataVersion` and the signature
+
+`manifest.json` (compact JSON, sorted keys, the format of D76) lists: `schemaVersion` (1), `dataVersion`, `vocabularyVersion`, `profile`, `bundle` and `notices` (`file`, `bytes`, `sha256`; the bundle also `gzipBytes`, `gzip -9` with no clock in its header), `counts` (brands, brandAliases, models, remotes, remoteRefs, keys, signals) and `brands` (`included`, `excluded`). `rl bundle sign` adds `signature` (`algorithm`, `file`, `format`, `keyId`) and writes `manifest.sig`.
+
+**`dataVersion`** is twelve hex digits of the SHA-256 of **every row of every table but `meta`**, each table in key order, as JSON with ASCII escapes and blobs as hex (`writer.content_digest`). A file cannot hold the hash of its own bytes, and the version has to be inside the file (an app that ships the asset has no manifest to read), so it is the version of the *content*; the manifest repeats it and adds the SHA-256 of the whole file, which a signature covers. It does not depend on the SQLite library that laid out the pages (tested: the same rows in a file with another page size give the same version), and changing any row changes it.
+
+**The scheme.** ECDSA over P-256 with SHA-256, the signature DER encoded, detached: `manifest.sig` is the signature of the bytes of `manifest.json`. One signature covers the bundle and the notices through the hashes the manifest lists, and the manifest's own fields. Chosen because every Android version has it (`Signature.getInstance("SHA256withECDSA")`; Ed25519 is only on newer ones) and because `openssl` makes and checks it, so no cryptography is written here: the commands run `openssl dgst -sha256 -sign` and `-verify` as a subprocess, name `openssl` in the error when it is missing, and accept nothing but a P-256 key. **To verify, as an app does:**
+
+```kotlin
+val key = KeyFactory.getInstance("EC").generatePublic(X509EncodedKeySpec(publicKeyDer))  // SubjectPublicKeyInfo
+val sig = Signature.getInstance("SHA256withECDSA")
+sig.initVerify(key)
+sig.update(manifestJsonBytes)
+check(sig.verify(manifestSigDer))          // then: sha256(catalog.sqlite) == manifest.bundle.sha256
+```
+
+(`openssl pkey -pubin -in release.pub.pem -outform DER` gives the DER of the public key to ship in the app.)
+
+**Key id, custody, rotation.** The key id is the first sixteen hex digits of the SHA-256 of the public key's DER SubjectPublicKeyInfo, written into the manifest before it is signed (`signature.keyId`), so the signature covers the claim of who signed; `verify-signature` fails if the manifest names another key than the one given. The private key is generated once (`openssl ecparam -name prime256v1 -genkey -noout -out release.pem`), lives only where the publishing job runs (a secret of the CI that publishes, or an offline machine), **is never in this repository, a bundle or a test** (`.gitignore` keeps `*.pem` out as a net, `!*.pub.pem` lets a public key in, and a test asks `git grep` for a private key header and `git ls-files` for a key file), and is separate from any app-store signing key. An app holds the public keys it trusts, by id. **Rotation** is a new key with a new id: the app that trusts both ships first, the first bundle signed with the new key after, the old key dropped in a later app release. A compromised key is replaced the same way and cannot be revoked faster than an app update; that is the cost of an offline-verifiable scheme and is stated here and not hidden.
+
+### D94 — Notices
+
+`notices.json` (and the `sources` table, from the same data) lists, per source, what an app shows on a screen of open-source notices: `name`, `spdx`, `licenceKind`, `licenceNotes`, `licenceText` (the full text), `upstreamUrl`, `upstreamCommit`, and `contributed`: the ledger's remotes and keys of that source and the bundle's. **Nothing is inferred**: the SPDX id is `paths.IMPORTS`' (`GPL-2.0-or-later`, `MIT`, `GPL-3.0-only`); the text is the import directory's own `COPYING` or `LICENSE`, byte for byte, read at build time (a missing file stops the build); the commit is the one `IMPORT.md` names; and **`licenceNotes` are sentences of the import directory's README, quoted word for word**, which the exporter looks up in the README on every build and the tests again, so a README that stops saying it stops the build rather than leave a notice that says it. Where the repository says a licence holds **by inheritance only**, the notice says it in the repository's words and its `licenceKind` is `inherited`: *"Licence: GPL-3.0-only, by inheritance and nothing more."* and *"nobody in the chain states a licence for the data itself, because nobody in the chain says where the data came from. This is not a grant from the data's authors, and it is not a reading of one, as LIRC's is."* (LIRC's is `reading`: *"This is a reading of the licence, not a grant."*; SmartIR's is `stated`.) The IR Blaster entry also lists the lineage the README gives. **The authored remotes have no licence entry** (`spdx` and `licenceText` null, `licenceKind` `none`): the repository has no licence file for them and states none, and the notice says that; a test fails if a licence file appears at the root, so that the notice is revisited. Which licence the authored remotes should carry is the owner's to say.
+
+### D95 — Numbers, and what is not proven
+
+Measured on the 64-core development machine (eight workers), `gzip -9` as the command, SQLite 3.45 as Python links it. **Both profiles**, same tree:
+
+| | `full` | `selected` |
+|---|---|---|
+| file | 50,311,168 B | 19,443,712 B |
+| `gzip -9` | 12,720,486 B | 4,477,480 B |
+| brands | 5,028 | 36 |
+| models | 276,249 | 105,233 |
+| remote files | 13,218 | 4,394 |
+| remotes, the fragments of D103 folded | 12,903 | 4,096 |
+| keys | 525,096 | 165,646 |
+| signals | 155,976 | 65,691 |
+| left out | none | 4,992 brands, 8,824 remotes, 359,450 keys |
+| `rl bundle` (read, build, write) | 23.8 s, 0.8 GB peak | 12.7 s, 0.55 GB peak |
+| `rl bundle --verify` | 21 s | 12 s |
+
+Where the bytes are, `full` (selected is the same shape): signals 22.4 MB (44.5%), keys 10.8 (21.5%), models 6.9 (13.8%), ngram 5.2 (10.2%), controls 3.4 (6.7%), remotes 1.3 (2.7%). For the app API (§21) the same catalog was 57 MB and 9,817 files, and 12.9 MB gzipped; the whole ledger's compiled corpus is 358 MB. The IR Blaster signals alone are 8,793,390 bytes as blobs (8.8 MB of binary words) and 280,511 bytes gzipped on their own (all 155,964: 20.1 MB, 892,095 gzipped, 23 times smaller). Sorted, the signals compress far better than the rest of the file (the other 28 MB gzip to about 11.8 MB), so **on the wire the catalog is its rows and not its signals**.
+
+**What `--verify` checks** (21 s on `full`, no check repaired): the manifest's sizes and hashes; `application_id`, `user_version`, `page_size`, `quick_check`; every count against `meta` and the manifest; `dataVersion` recomputed from the rows; every reference between tables; a brand's models are its range; the grams recomputed from the models' names; every remote is a file of the tree and that remote, with the files folded into it (D103: id in path order, carrier, protocol, tier, play numbers, and every key's canonical id, text, confidence and blob); `remote_refs` is the refs of the files the profile carries, each to its carrier (D105); the full profile has every remote of the tree and the selected one every remote of a brand it carries; 150 remotes (chosen by hash) compiled again from `build/pronto/` where it has them, the compile stage's own output, and their Pronto strings compared with the blobs; a sample of models and remotes linked both ways; and **every `(signal, carrier)` decoded by the ledger's decoder and encoded back to the same words** (155,964 of them on `full`). `tests/test_bundle_verify.py` breaks a good bundle in 24 ways at the row level and in several at the file level (a changed byte, a wrong size, a missing file, a stale tree, a stale compile artifact) and requires each to be reported.
+
+**Not proven.**
+
+- **No Android has opened it.** The schema is written for SQLite 3.28 and a test refuses the newer features by name, but no bundle was read on a phone or by a SQLite older than 3.45, and no Kotlin reader exists: the vectors are the oracle for one, not a test of one. Room's `createFromAsset` validates a schema against its entities, and `WITHOUT ROWID` tables have not been tried with it; reading with `SQLiteDatabase` needs none of that.
+- **Search quality.** The structures are what a matcher needs; how well a query finds its remote is measured in §24 (D99), and only on generated queries.
+- **The selection is a proposal.** It is a judgement of popularity on a list nobody but its author has read. The owner signs off on it; 77 of its brands do not fit in 20 MB.
+- **The 4.5 MB gzip of the selected bundle is the transfer size; the install size depends on how the app stores the asset** (compressed in the package, or not: SQLite needs it uncompressed on disk to open it read-only).
+- **Hardware**, as everywhere: a bundle says what the ledger says, and D50 is still the question whether a signal moves a device.
+- **The signature is not tested with a real publishing key or an app.** The commands and the format are; where the key lives is the owner's.
+- **Reproducibility across SQLite versions** is not claimed (D89).
+
+---
+
+## 24. Finding a device in the catalog
+
+The bundle (§23) holds the search structures; this section is the **matcher** that reads them (`src/remote_ledger/matching.py`), the vectors a port is held to, and a **test set and harness** that measure how often it finds the right remote (`bundle/search_eval.py`, `rl bundle search-eval`). The matcher has two users and one set of rules: a search on a phone, where a person types a brand and a model or a part number, and a service that turns what a provider read off a photo (a brand, a model and some visible lines of text) into catalog entries. It changes nothing that exists (no stage, no generated file; `rl build --check` reports 0 differences). SPEC R24 states the requirement.
+
+### D96 — The matcher: simple rules, integers, no model
+
+`match(brand, model, texts) -> [Candidate(brand, model, remote_ids, score, evidence)]` (`MatchIndex.match`, or `matching.match(index, ...)`), five candidates at most, best first, over a bundle opened read-only (`MatchIndex.open(path)`) or a small catalog (`MatchIndex.from_entries`). A candidate with no model is a brand: `models` then lists its models. The **rules are in the module's docstring** and are the specification; in short:
+
+1. **Keys and tokens.** The key of a text is the bundle's search key (D90); its tokens are the runs of letters and digits of the same NFKD lower-case text, marks dropped, so the tokens joined are the key (`UN50-NU 6900/F` is `un50nu6900f`, tokens `un50 nu 6900 f`). A run of Han ideographs is a token of its own (D102).
+2. **Similarity of two keys**, an integer of thousandths: equal is 1000; **edit** is `1000 - 1000 x d / longer key` (rounded down) with `d` the optimal-string-alignment distance, a swap of two neighbours one edit and a substitution between the look-alikes `o/0 i/1 l/1 s/5 b/8 z/2` half an edit; **prefix**, when the shorter key has at least five characters and starts the longer, is `800 + 200 x shorter / longer`. The larger counts, and only from **800**, which is 20% of the longer key: a key of four characters must be exact, five to nine may differ by one edit, ten to fourteen by two. Look-alikes are cheaper, never free, so two different keys are never equal, and a brand is never read through them.
+3. **Brands.** A given brand is found by its key (1000), or by the same similarity among the brands that share grams with it (`Samsung Electronics` is `samsung` at 878, `Phillips` is `philips` at 875). Runs of it that are a brand's key score 900. A run of any text that is exactly a brand's key, of two characters or more (`LG`), scores 800: a **hint**, since a text holds incidental words (`DVD`, `PLUS` and `COLOR` are brands). A brand's aliases (D101) are keys of the brand wherever a brand's own key is looked up (D102).
+4. **Model keys.** A run is one to eight adjacent tokens of a line. The key of the whole `model` and each of its runs weigh 1000; the runs of each text weigh 900, among all models when they have 4 to 24 characters and a digit (a model number has one) and among the models of the named brands alone when they have none (`roku ultra`), never when the run is itself a brand's key. Sixty keys at most, **longest first**; a run inside a longer run that gave a candidate by exact or edit at 900 or more is not tried (`bdp-s360` is `bdps360` and not also another brand's `s360`).
+5. **Candidates.** From the grams of a key (D90) the models sharing at least 40% of them, the forty sharing most; and the same inside each named brand's models.
+6. **Score** = similarity (at 800 or more) x the key's weight x a **brand factor**: 1000 if the candidate's brand is a named one, 600 if a brand was *given* and it is not that one, else 950. Under 650 is dropped. **A model counts only if it matches a real entry**, so an invented model number gives nothing; and **when no model matches but a brand is named the answer is the brand and its models** (most remotes first, fifty at most).
+7. **Order**: score, similarity, the longer catalog key, then names.
+
+**Why these.** Integers because a port in another language must get the same order, and a float's last bit is not the same in two languages. The look-alike half-edit is the "letters for digits only where safe" the owner asked for: an OCR's `O` for `0` is close, not equal. The brand factor 600 and the floor 650 are how a model an LLM made up, or a real model of the wrong brand, is dropped when the provider named a brand. **What the first version got wrong, found by running it on the catalog** (D99): a two-letter brand (`LG`) was never named, because a brand needed three characters; a brand named by a stray word of a text (`DVD` in a model's own name) took every model of another brand away, so the penalty became the *given* brand's alone; a long run that matched a short model by its start (`PANASONIC` under another brand) hid the exact match inside it, so a prefix match does not hide; and a model of six tokens (`32 LC 2 RB - ZJ(DVD)`) was never tried, so a run may be eight.
+
+**Speed.** A query takes **about 3 ms at the median, 11 ms at the 95th percentile and 28 ms at worst** over the full catalog (320 generated queries, one thread, a 64-core machine, SQLite 3.45, caches cold at the start; runs differ by a millisecond or two); about 1.6, 5.5 and 11 ms over the selected bundle. Opening the index reads the brands (5,028) and nothing else; a model's key, its remotes and a gram's posting list are read when a query needs them, with small caches (`rl bundle search-eval --timing` reports it). Two things keep it there: the distance stops as soon as it is certainly above what could reach 800, and the posting lists of a key are counted once for all the brands it is asked in.
+
+### D97 — The vectors a port is held to: `tests/vectors/matching_vectors.json`
+
+Written by `rl bundle matching-vectors --file tests/vectors/matching_vectors.json` (`--check` compares). **Self-contained and independent of the data**: a small catalog of 45 entries written in `bundle/matching_vectors.py` (a pair of models one character apart, one that starts another, a part of a longer model under another brand, one model under two brands, brands written with spaces, hyphens and accents, a brand with models to list, a model with no digit, a model whose name holds a brand alias, one company spelled two ways), and 62 queries, each with a note on the rule it shows, and the matcher's answer: for each candidate the brand, model, remote ids, integer score, evidence and, for a brand, its models. The first 41 are the queries the file had before brand aliases existed, unchanged; the other 21 are Chinese (D102). The file also holds the constants (and `HAN_RANGES`), the 11 aliases of the catalog's brands, the tokens and keys of 19 texts and the similarity of 23 pairs of keys. Because it does not follow the repository's data it can be held to the code exactly, and a test does (`test_the_committed_vectors_are_what_the_matcher_gives`); it changes when the rules do. A port builds the small catalog, asks the queries and compares integers. The similarity vectors are checked in the suite against a textbook matrix implementation written there, and the answers against the rules by hand (`tests/test_matching.py`).
+
+### D98 — The search test set and its harness
+
+`rl bundle search-eval [--bundle DIR] [--queries FILE] [--seed N] [--per-class N] [--out FILE] [--timing]` reads a written bundle, generates queries from it, runs each as **typed text** through the matcher over the bundle's own tables, and prints a Markdown report: a table of top-1 and top-5 per class and overall, the hand-written queries in a table of their own, the generated queries that missed, and with `--timing` the time each took. Same bundle and seed, same report.
+
+**The generator** takes devices from the bundle (a `kind` 0 model whose search key has six characters or more and a digit, a name of at most 40 characters, at most two of a brand in a class, so that no big brand is the test set), ranked by a hash of the seed and the device, and applies **eight classes**, 40 devices each, 320 queries: `exact` (`SAMSUNG UN50NU6900F`), `case` (lower, upper or title), `punctuation` (separators stripped, or a space at every letter-digit boundary, or one hyphen), `dropped-suffix` (`UN50NU6900`, for a model with trailing letters), `typo` (one character dropped or two neighbours swapped, never the first), `brand-partial` (the brand and the first 60% of the model), `model-only` and `reversed` (`UN50NU6900F SAMSUNG`). **Expected** are the remote ids the bundle's `controls` give the device; **a hit** is an answer that is a model, not a brand, whose remote ids contain all of them. Top-1 is the first answer, top-5 any of the five.
+
+**Honesty.** The queries are the catalog's own names changed by mechanical rules. They never misspell a brand, never name a device the catalog does not have, never use a nickname or a model written from memory, and the exact class is a lookup. Real people type worse. **The rates are an upper bound on search quality, not an estimate of it**, and the report says so in its own text. The classes were written once and not changed after a result was seen. What was changed after seeing results is the matcher (the four corrections in D96), and, once, how the devices of a class are sampled (for speed; the sample it gave was kept); the numbers below are those of the last version.
+
+**Real queries.** `src/remote_ledger/bundle/data/real_queries.json` is the place, read by default (`--queries FILE` reads another) and reported in a table of its own. Format: `{"format": 1, "queries": [{"query": "samsung un50nu6900", "expect": {"brand": "SAMSUNG", "model": "UN50NU6900F"}, "note": "who typed it, where"}, ...]}`. `expect` names a device as the catalog spells it (case, spaces and punctuation do not matter) and the remotes that control it are what the answer must contain; `null` means the query names nothing the catalog has and is right when the answer holds no model (an invented model, a phrase). A device that the bundle being scored does not have is counted and left out of the rates, and the report says how many. The file ships empty, with its own description and one unscored example; **the owner's hand-written queries are the number that matters for the 95% target**, and none have been written.
+
+### D99 — What was measured, and what is not proven
+
+Seed 1, 40 devices a class. **Selected bundle** (36 brands, 105,233 models) and **full bundle** (5,028 brands, 276,249 models):
+
+| class | selected top-1 | selected top-5 | full top-1 | full top-5 |
+|---|---|---|---|---|
+| exact | 40 (100.0%) | 40 (100.0%) | 39 (97.5%) | 40 (100.0%) |
+| case | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) |
+| punctuation | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) |
+| dropped-suffix | 36 (90.0%) | 40 (100.0%) | 36 (90.0%) | 40 (100.0%) |
+| typo | 36 (90.0%) | 40 (100.0%) | 32 (80.0%) | 39 (97.5%) |
+| brand-partial | 26 (65.0%) | 35 (87.5%) | 24 (60.0%) | 34 (85.0%) |
+| model-only | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) |
+| reversed | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) |
+| **all (320)** | **298 (93.1%)** | **315 (98.4%)** | **291 (90.9%)** | **313 (97.8%)** |
+
+**Read it as the upper bound it is** (D98). **A partial name is ambiguous**: `LG 42 LC 45` is the whole model `42 LC 45` and the start of `42 LC 45 - ZA`, and the device asked for was the second; `PHILIPS 24 CE 75` starts forty models. All five misses of the selected bundle, and six of the seven of the full one, are partial names (a person typing half a model number has to be shown a list, which the answer is: five candidates, and the brand's models when none matches). The seventh is a typo test on a name with two spaces in it (`UTV 21  70`). The 95% target is not established by this: it needs real queries.
+
+**Not proven.**
+
+- **Real typing.** Nobody has typed a query into this. The owner's queries are the measurement, and the file for them is empty.
+- **Photo text.** The matcher is written for a provider's brand, model and lines, and tested on the lines of the small catalog and on generated text. No provider's output has been run through it; how often the right model is among a photo's lines is the evaluation of the providers, not of this.
+- **Words with no digit.** A model without a digit (`Ultra`, `Streaming Stick`) is found only when its brand is named (D96, rule 4): `ultra` alone finds nothing. A model of two or three characters is found only when it is given as the model, and exact. A typed query that a brand names wrongly by a stray word takes nothing away (D96), but may add a candidate.
+- **Brand-only text is hinted at, not given**: `Samsung` in a text scores 800 and as the brand 1000, so the same word is a weaker answer typed than read.
+- **Kotlin.** No port exists; the vectors are what one is held to. Python's `str.lower()` and `unicodedata` are Unicode 15.0; a platform with an older table may differ for a character newer than its table, which no catalog name has.
+- **Full-catalog speed on a phone.** The timings are of one machine; a phone is slower by a factor nobody has measured, and the index here is Python reading SQLite, not an app's.
+
+---
+
+## 25. Suggesting while a person types, and other names for a brand
+
+The matcher of §24 answers a query that is finished. A person typing wants a list that follows them, character by character (`suggest`), and a person who types in Chinese has no use for a catalog that only knows `HISENSE` (brand aliases). This section adds both. It changes no remote file, no importer and no generated tree (`rl build --check` reports 0 differences); the bundle gains one table, additively (D101). SPEC R25 and R26 state the requirements. A later change (D106 and D107, SPEC R28) lets a caller say which brands a person already uses, so that they go first where the rules cannot tell two entries apart, and lets a service read the biggest brands' model lists once at start; it changes no answer for a caller that does not ask. The code is `src/remote_ledger/matching.py` (`suggest`, `suggest_brands`, `suggest_models`, and the alias lookups in `MatchIndex`), `bundle/aliases.py` (the list's validator and loader), `bundle/suggest_vectors.py`, and the data `bundle/data/brand_aliases.json` with its schema `schema/brand_aliases.schema.json`.
+
+### D100 — `suggest`: the rules, and a port held to answers made from the Kotlin it came from
+
+`suggest` first existed as a Kotlin function beside a Kotlin port of §24's matcher, written for an app that searches the catalog on a phone. When the search moved to a service it came here, so that the Python is the one reference. (D99 said no port existed; one did by then, and this is the port the other way.) The API, which mirrors the Kotlin's types:
+
+```python
+MatchIndex.suggest(query: str, limit: int = 8) -> Suggestions
+MatchIndex.suggest_brands(query: str, limit: int = 8) -> list[BrandSuggestion]
+MatchIndex.suggest_models(brand_id: int, query: str, limit: int = 8) -> list[ModelSuggestion]
+matching.suggest(index, query, limit=8)                       # the function form, as match
+Suggestions(brands: tuple[BrandSuggestion, ...], models: tuple[ModelSuggestion, ...])   # .is_empty
+BrandSuggestion(brand_id: int, name: str, model_count: int)
+ModelSuggestion(model_id: int, brand_id: int, brand: str, model: str,
+                remote_ids: tuple[int, ...], part_number: bool)
+```
+
+**The rules** are the module docstring's S1 to S5, in order, and are the specification. In short: *brands* are the brand whose key (or alias, D101) is the query's key, then those whose key starts with it (most models first, then by name in code point order, then by id), then those the query names by a run of its words (the longest run first), then, with room left, those the matcher would read the query as (`Phillips`); *models*, when the query names a brand, are that brand's whose key starts with the rest of the query (the exact key first, then most remotes first, then by name), and when it names none the models of `match` over the query as one text, brand-only answers left out. A query with no letter or digit, or a limit of 0 or less, offers nothing; a smaller limit is always the start of a larger one (tested).
+
+**How it was held to the Kotlin.** The Kotlin was run once, over the real bundles, through its JDBC test source, on a throwaway list of queries, and Python answered the same list: `suggest` (brands and models, with their ids, remote ids and the part-number flag), `suggest_brands` against the brands of `suggest`, `suggest_models` for a brand and a start, and `match` as typed text (its top five, with scores and evidence), each compared field by field as JSON.
+
+| | queries | compared | differ |
+|---|---|---|---|
+| Selected bundle `c5da65940468` (36 brands, 105,233 models) | 36,305 | 139,187 | **0** |
+| Full bundle `41c99342480e` (5,028 brands, 276,247 models) | 61,870 | 217,765 | **0** |
+
+The queries: every brand name of the bundle (also lower and upper case, as the key, and with spaces around), every brand name typed a character at a time (every brand of the selected bundle; 800 of the full one), brand typos, up to 3,200 models spread over the brands (as written and in lower case), 260 of them typed a character at a time and 1,140 more at a few lengths, a brand and the model typed so far (6,000, and 60 typed a character at a time), the model before the brand, typos of models (a character dropped, swapped, changed, added, and with a brand), a dropped suffix and a longer label, queries that match nothing, **every one-character and two-character query over letters and digits** (1,368) and three-character ones, punctuation, spaces, full-width and accented and Greek and Cyrillic and non-BMP text and combining marks, more words than the matcher looks at, two and three brands in one query, a few dozen typed phrases, the ledger's real queries (none yet: D98), models of one brand through `suggest_models` (2,011 and 9,905 calls, limits 3, 8 and 60, a brand that does not exist), and limits of 1, 2, 3, 5, 20 and 50 on 300 queries each and of 0, -1 and -100 on six. Limit 8 is the default and most queries. **Every brand and model, in every order, was the same**: the ties of model count and of remote count, the exact key first, code point order against UTF-16 order, and the two places where a limit stops a list. Run again on the bundles the new exporter writes (D101), the Kotlin, which reads `brands`, `models`, `controls` and `ngram` of format version 1 and never the new table, gives output **byte-identical** to what it gave on the old bundles, and Python on them differs from it only for the 31 queries per bundle that hold Chinese characters, where Python now finds the brand (D102).
+
+**What the Kotlin does that looks odd, and is kept**, because the behaviour is the specification and the Kotlin is not the thing to second-guess here:
+
+- A brand typed twice loses only its first word to the brand: a run's key counts once, at its first place (`runs`), so the second `lg` of `lg lg 42` is part of the rest (`lg42`) and no model starts with it.
+- The brand names are looked for in the first twelve tokens only, but **the rest** of the query is made from every token, not the first twelve.
+- A brand named by a run is offered after every brand whose key starts with the query, however many: with a limit the named brand can be cut by brands that merely start alike.
+- The matcher's reading of the query (`Phillips`) is asked only when the list is not full, and never for one character.
+- Inside a brand a typo is not forgiven (`kd50` offers no `KD - 49`): it is a start-of-key match, which is what typing wants; `match` forgives typos once the person has typed it all.
+- A model with no digit is offered through a named brand (`roku ul`) but not alone (`ultra`, S5), because that is `match`'s rule 4.
+
+**The vectors left behind**: `tests/vectors/suggest_vectors.json` (`rl bundle suggest-vectors --file FILE`, `--check` compares) holds 238 cases of `suggest` and 26 of `suggest_models`, written by the Python once it gave what the Kotlin gave, over a catalog of 79 entries (the small catalog of D97, a few brands more) and 14 brand aliases (D101), self-contained and independent of the data. Each case has a note that says which rule or tie-break it shows; six queries are typed a character at a time (76 cases); limits of -3 to 20, among them every limit that falls on the edge between two brands' models; brands, models with their ids and remote ids, a part number. `tests/test_suggest.py` holds the file to the code exactly, to its notes (each rule and tie-break must be among them), and to an independent reference written in the test (what is offered inside a brand and the brands that start a query, worked out again from the entries). The 210 of its 264 cases with no Chinese in them were also answered by the Kotlin over its small catalog: all equal. The ids in the file are the small catalog's numbering (`MatchIndex.from_entries`): brands from 1 in the order of their search keys, models from 1 in that order inside a brand, which a tie that goes to the lower id depends on.
+
+**Speed**, Python reading SQLite on the 64-core development machine: opening the index 1 ms (selected) and 29 ms (full); `suggest` at limit 8 over 6,000 typing queries median 0.04 ms (selected) and 0.13 ms (full), 95th percentile 2 ms and 0.5 ms; reading a brand's whole model list takes 35 ms for Samsung's 21,512 models and making their keys 20 ms more, once (16 lists are kept), after which a keystroke inside it takes about 2.5 ms. A service that wants the first keystroke inside a big brand quick can ask for it once at startup (`warm`, D107).
+
+**Not proven.** The queries are made from the catalog's own names by mechanical rules, as D98 says of the evaluation: they say the two implementations agree, not that people are offered what they want. Python's `lower()` and `unicodedata` are Unicode 15.0, which the Kotlin matched for every code point; a platform with another table may differ. Nothing was run on a phone.
+
+### D101 — Brand aliases: the list, the table, and why the format is still version 1
+
+**The list**, `bundle/data/brand_aliases.json`, has a schema (`schema/brand_aliases.schema.json`) and a validator (`bundle/aliases.py`) like the key vocabulary of §22. The file is `{"header": {...}, "brands": [{"brand": ..., "aliases": [{"name": ...}, ...]}, ...]}`. A brand, spelled as the catalog spells it and matched by search key, has its aliases: other names a person types, **each written out as it is typed**. `创维` and `創維` are two entries, `索尼` and `新力` two more; nothing converts Traditional to Simplified characters when a person searches, so a name that is not listed is not found, and a mistake in the list is a mistake in one entry. **The exporter reads `brand`, `aliases`, `name` and the header's `status` and `intentional_shared_aliases`; every other field is information for the person who reviews the list and is allowed and ignored**: the tags of a name (`script`: `hans` Simplified, `hant` Traditional, `both` the same in the two; `region`: `CN`, `TW`, `HK`, `SG` or `any`; `confidence`: `certain` or `likely`), a brand's counts of `models` and `remotes`, the header's `date`, `method`, `counts`. The shape is the one a reviewed list of the whole catalog arrives in, so that it drops in as the file without conversion (the loader reads a draft of 132 brands and 225 aliases in that shape, and a full bundle builds from it with no problem and no note). **The list that shipped with this decision was a seed**: its header said so (`"status": "seed"`), it held 33 names of 20 brands that are well known (Hisense, Xiaomi, Skyworth, Changhong, Haier, Midea, Gree, Konka, Samsung, Sony, Panasonic, Sharp, Toshiba, Philips, Apple, Huawei, Yamaha, Pioneer, Denon, Onkyo) and nobody who reads Chinese had reviewed it. D108 replaces it with the reviewed list.
+
+**The rules of the data**, each a message of the validator (the module's docstring has them): an alias has a search key of two characters or more (a key of one is never looked up); **its key has no letter or digit of ASCII** (D102 says what this buys); no key is listed twice under one brand; a brand is listed once; **an alias key under two brands is an error unless the header declares it** (`intentional_shared_aliases`, below); **an alias is never the key of a brand of the catalog**, which is checked when a bundle is built against every brand of the ledger.
+
+**An alias that two brands share, on purpose.** The catalog spells one company two ways in a few places (`WESTERN DIGITAL` and `wd`), and a Chinese name of the company belongs to both. The header's `intentional_shared_aliases` maps such an alias to the brands that share it (`"西部数据": ["WESTERN DIGITAL", "wd"]`); the list then holds it under each of them. The validator requires the declaration to name exactly the brands the list has the alias under (by search key), and says so when it names others, fewer, or an alias that no brand has; **an alias under two brands that the header does not declare stays an error**, because two brands with one name is otherwise a guess. A shared alias names every one of its brands (D102). A schema problem or a broken rule stops the build and names the entry. **A brand the list names and the catalog lacks is reported and is not an error**: `rl bundle` prints `note: the brand 'Gree' of brand_aliases.json is not in the catalog, so its aliases (1) are not in the bundle`, and the report says how many aliases a profile left out because it does not carry their brand (the selected bundle has 24 of the 33, the full one 32).
+
+**The table**: `brand_aliases(alias TEXT, norm TEXT, brand_id INTEGER, PRIMARY KEY (norm, brand_id)) WITHOUT ROWID`, one row per alias of a brand the bundle carries: the alias as written, its search key, and the id of its brand (an alias that two brands share is a row for each; a profile that carries one of them has the row of that one). `meta` has `count.brandAliases`, the manifest's `counts` has `brandAliases`, and the table is one of those `dataVersion` digests (`writer.DIGEST_TABLES`), so adding or changing an alias is a new `dataVersion` and, because the digest now names the table, **every bundle built with this exporter has a new `dataVersion` even where no row of the catalog moved** (the selected bundle `c5da65940468` is `f3e4567134c8`, the full one `41c99342480e` is `6eb6823f9a51`). The files grow by one page (19,443,712 to 19,447,808 bytes selected, 50,311,168 to 50,315,264 full; the gzip of the full one is 12,741,285). `rl bundle --verify` recomputes the rows from the list that ships and the brands of the bundle, and checks that no alias is a brand's own key, that every key is its alias's, and that the brand exists; a bundle with no such table is told to be built again.
+
+**`meta.schemaVersion` stays 1, and so do `user_version` and `application_id`.** The rule, from now on: *a change that removes or alters what a version-1 reader reads raises the version; adding a table or a `meta` row does not.* A version-1 reader reads `brands`, `models`, `controls` and `ngram` by name and column and the rest of the tables the same way, and ignores a table it does not know; this one is read only by a reader that wants it. The proof is not an argument: the Kotlin matcher, which reads those four tables and was written before the new one existed, was run over the 98,175 queries of D100 on the bundles with the table, and its output is **byte-identical** to what it gave on the bundles without. A bump to 2 would have made every reader of version 1 refuse a file it reads perfectly, in exchange for telling it something it can learn from `meta.count.brandAliases` or from `sqlite_master`. The cost is that "format 1" now comes in two shapes, with the table and without; **a reader that wants aliases must check for the table** (`MatchIndex` does) and one that does not never needs to know. A bundle written before the table works in the matcher (it has no aliases) and is refused by `--verify` as stale.
+
+### D102 — The matcher reads an alias as a brand's name; Han ideographs are cut from what is next to them
+
+**Where an alias counts.** `MatchIndex` reads the table when it opens (`alias_by_key`, `aliases`) and holds one map from every key that names a brand, its own or an alias's (`name_by_key`); a brand's key wins a clash, a row whose brand the bundle does not have is ignored, and no table at all is no aliases. Every lookup that asked "is this key a brand's?" asks that map, at the same weights and with the same evidence words: the `brand` given (exact: 1000, `brand:given`), a run of it (900), a run of a text (800, `brand:text`), the brands a suggestion names by a run (S2), the start of a key (S1: an alias's key that starts with what was typed offers its brand, so `海` offers Hisense and Haier), and rule 4's "never a model key when it is itself a brand's key". The brand then **answers as any brand does**: a query with no model gives the brand-only answer listing its models, `suggest` offers the brand and its models for the rest of the query. **An alias that two brands share names both** (D101): `name_by_key` maps a key to the ids of its brands in order, every lookup adds each of them at the same weight with the same evidence, so a query for it answers with both brands (a brand-only answer lists each one's models, in the order of the brand ids), `suggest` offers both brands (S1 by models and name, and as named brands by id) and the models of the first up to the limit and then of the second, and the words of the alias are the brands' words in S3. **Aliases are exact**: they are not looked up by similarity, because two characters is all `海信` has and one edit is already half of it. A key must have two characters, as a brand's must.
+
+**A search typed in Latin letters is what it was.** An alias's key holds no letter or digit of ASCII (D101), so no query made of Latin letters and digits can equal one, start one or hold a run that does, and the new code is a lookup that fails. That is the proof; the tests and the Kotlin check it: the first 41 queries of `matching_vectors.json` (everything D97 had) are byte for byte the file's earlier content, with and without the table, and the Latin ones give the same on an index with and without aliases for 1,500 random queries (`match` and `suggest`, with and without a given brand and model) and for the 320 generated queries of the evaluation and every third prefix of each over the real selected bundle; and over the 98,113 queries of D100 that hold no Chinese character, the Python on the bundles with the table gives what the Kotlin gives, **0 differences in 356,704 comparisons**.
+
+**Han ideographs are cut from what is next to them** (rule 1). A person typing Chinese does not put a space between a name and a number: `海信55E7` is one run of letters and digits, and so would be one token that equals no alias and no model. A run of Han ideographs (the CJK Unified Ideograph blocks, `matching.HAN_RANGES`) is now a token of its own and a letter or digit next to it starts another: `海信55E7` is `海信` and `55e7`, `Sony索尼KD-49` is `sony`, `索尼`, `kd`, `49`. The key of a text is still its tokens joined, and **a text with no ideograph has the tokens it had**. This rule is not in the Kotlin, which is why the 31 queries per bundle that hold Chinese differ from it (above). It is a rule of its own and can be removed without touching anything else here (`tokens`).
+
+**What is not in this version**, so that nobody looks for it: no Traditional-to-Simplified folding, no Pinyin (`haixin`), no Chinese word for the kind of device (`电视`, `空调`: `海信电视` is one token and names nothing), no Chinese-only model names, no alias with a Latin letter or digit in it, and no similarity for an alias (a typo of `创维` finds nothing). Models stay Latin, so a person types a Chinese brand and then the model.
+
+**The vectors have Chinese cases.** `matching_vectors.json` (D97) keeps its 41 queries and gains 21: an alias alone (Simplified, Traditional, a regional form), as the given brand, with a model number with and without the space, a model of another brand, two aliases, an alias with a brand's name, an alias that is also part of a model name (the model that holds it is found as well), words that are no alias, a name that only starts with an alias, one character, and an alias that two brands share (alone, given, with a model of one of them); the file also states the aliases (`aliases`) and `HAN_RANGES`. `suggest_vectors.json` has 54 of its 238 cases with Chinese, including both scripts of Skyworth, `海信 55E7`, typing an alias a character at a time and a name that is no alias.
+
+**Not proven.** The names of the seed are written from what is commonly known and the Traditional forms with care, not converted by a tool and not read by a native reader of both: the list says so in its header, and the owner's review is the check that matters. Whether a person who types a Chinese name is offered what they want depends on that list. (D108: the list has since been reviewed.)
+
+### D106 — `suggest(..., prefer=)`: a hint that replaces only the last tie-break
+
+An app keeps, for a person, the brands they have already set up, and a service that answers its search wants `s` to offer *their* Sony before a Samsung that has the same number of models. A first version of that was written outside this repository as a copy of the index whose class overrode three of the matcher's private methods (`_named_by_runs`, `_rank`, `_brands_for`) and so depended on the exact text of the code it overrode. This is the same rule as a public argument, so that the next change here cannot break it silently. SPEC R28 states the requirement; the rule is S6 of the module's docstring.
+
+```python
+MatchIndex.suggest(query: str, limit: int = 8, prefer: Iterable[str] = ()) -> Suggestions
+MatchIndex.suggest_brands(query: str, limit: int = 8, prefer: Iterable[str] = ()) -> list[BrandSuggestion]
+MatchIndex.brand_ids(names: Iterable[str]) -> frozenset[int]      # which brands the names stand for
+matching.suggest(index, query, limit=8, prefer=())                 # the function form
+```
+
+**The rule.** `prefer` is the names of brands. A name is a brand's by its search key, as a given brand is (rule 3): case, spaces, accents and punctuation do not matter, an alias names its brand (`索尼` is Sony), a name two brands share names both, and **a name that is no brand's key is ignored: there is no similarity** (`Samsun` is nothing; a guess would move entries the person did not choose). The names are a set: their order, their number and a name given twice mean nothing. The ledger does not cap the number; a caller that takes them from outside decides how many it will accept. A single string is refused (`TypeError`), because `prefer="Sony"` would otherwise be read as four names of one letter and silently do nothing. **The hint replaces only the last tie-break of the order, and only between entries that the rules before it treat as equal**; inside each run of such entries the hinted ones come first and the others follow, each group in the order it had without the hint:
+
+| list | the entries tie when | the order broke the tie by | with a hint |
+|---|---|---|---|
+| brands (S1) | their key, or an alias's, is the query's key | most models, name, id | the hinted brands first |
+| brands (S1) | their key, or an alias's, starts with the query | most models, name, id | the same |
+| brands (S1) | the query names them by a run (S2) of the same length | id | the same |
+| brands (S1) | the matcher only reads the query as them (`Phillips`) | similarity, id | **never moved** |
+| models, a brand is named (S3) | their brand is named by a run of the same length | the brand's id | the hinted brand's models first, each brand's own order (S4) kept |
+| models, none is named (S5) | score, similarity and key length are equal | brand name, model name, id | the hinted brands' models first |
+
+The tie-break that is replaced is the one that stands in for popularity (most models) or for nothing at all (a name, an id): none of it says which brand the person means, and the hint does. **What the hint never does**: remove an entry, add one, or lift an entry above a better match. The brand whose key is the query stays before every other (`al` with `ALPS` is `AL`, `ALPS`, then the rest); a brand named by a shorter run stays after one named by a longer; a model that matches worse (`TX10001` for `tx1000`: only the start of a longer model) stays after every one that matches better, hinted or not; the models of one brand are never reordered (S4: a hint is about brands); a brand the matcher only reads the query as is never moved, because the person did not type it. A hint for a brand that the query does not offer adds nothing.
+
+**The limit.** A list is cut after its order, so the hint can change *which* entries are inside the limit, among entries of one run and nowhere else. Write the answer without a hint for a very large limit as runs of tied entries; with a hint the answer is the first `limit` entries of the same runs, each re-ordered, the hinted first. Every entry before the run that holds the cut is the same entry in the same place; inside that run the hinted entries take the places first. So a hinted entry can push out an entry of its own run and nothing else (`al`, limit 2: `AL, ALPINE` becomes `AL, ALPS`; limit 1 stays `AL`), and a smaller limit is still the start of a larger one. The hinted list is made whole and then cut, which is why a smaller limit is the start of a larger one.
+
+**How.** `brand_ids(prefer)` is the set of ids, and that set is passed to the three places where the order is made: `_named_by_runs` sorts `(-length, not hinted, id)` (which gives S1's third group and S3's order of brands at once), `_brands_for` sorts the first two groups `(not the exact key, not hinted, -models, name, id)` and leaves the matcher's reading where it was, and `_hinted` re-orders `_rank`'s models inside each run of equal score, similarity and key length. With `prefer` empty, or naming no brand, the set is empty and every key is the one it was. Nothing is stored: the hint is an argument and the index has no state of it; `match` has no hint (what a photo says is not a preference).
+
+**Checked.**
+
+- *The same rule as the earlier version.* The earlier version (the override, with its own tests and an independent oracle) and this one were asked the same 158,923 questions: the 134 cases of the new vectors, six generated catalogs made of ties (brands that start alike, models several brands have, aliases that two or three brands share) with about 11,000 questions each, the vector catalog, the catalog of ties and the four real bundles (selected and full, before and after the alias table; 15,000 or 25,000 questions each, hints of one to five brands, aliases and unknown names among them, limits 1 to 1,000), with a hint that names brands in the answer, brands that are not, and junk. **0 differ**; the hint moved the answer in 21,687 of them, so the comparison is not empty. The script is not committed (it needs the other implementation); the vectors are what is left of it.
+- *No hint is today's answer.* A copy of `suggest` as it was before the hint, in the test, gives the same answer as the code for 4 generated catalogs, 1,305 random queries at six limits (7,830 comparisons), with no `prefer`, with names that are no brand, and (a different path through the same code) with every brand hinted; and the 238 cases of `suggest` that the file held before are byte for byte what they were (the diff of the vectors only adds), also with an unknown name.
+- *The rule, by hand and by oracle.* `tests/test_suggest_prefer.py` has the rows of the table above written out by hand on the catalog of ties, and an oracle that works out the run of every entry of an answer from the index's keys and the ledger's run rule, never from the hint's code, and checks the whole answer and the limits 1, 2, 3, 5, 8, 13 and 20 for 3,593 pairs of a query and a hint: 853 generated queries on two catalogs, the 191 queries of the vectors on the vector catalog, 49 on the catalog of ties, the 134 cases of the new vectors and 11 queries on the real selected bundle. A test shows that the oracle tells a wrong ordering from a right one.
+- *The vectors of the hint*: `suggest_vectors.json` gains a section `prefer` of 134 cases over two catalogs, the 79 entries and 14 aliases of D100 and `TIES` (36 entries and 4 aliases, in `bundle/suggest_vectors.py`) made of ties for a hint to break, which the first catalog has few of. Each case has a note and says which catalog it asks; they cover every row of the table, the limit's edge, an alias and a shared alias, names compared by key, unknown names, the order of the names, and brands typed a character at a time. The 238 cases above and the file's other keys are unchanged, so a port that does not implement the hint ignores the section. The answers were also given by the earlier version over the same two catalogs: 134 of 134 equal. `rl build --check` reports 0 differences.
+
+**Speed.** On the full bundle, 4,700 typed prefixes of brands and models, limit 8, a hint of five brands: median 0.21 ms, 90th percentile 0.54 ms, 99th 2.0 ms, with or without the hint (0.21, 0.59, 2.05 without). The selected bundle is the same to the digit's rounding. The earlier version asked for every brand of S1, the matcher's readings included, and cut afterwards; this one asks for those only when there is room, as without a hint.
+
+**Not proven.** That people are better served by the order: the rule is the most cautious one that moves anything (a tie-break and nothing else), and whether `most models` was the right default is a question for the plain order too. No port to another language exists, and the Kotlin of D100 does not have the hint; the vectors are what one is held to.
+
+### D107 — `warm`: the biggest brands' model lists are read once and kept
+
+Inside a brand `suggest` needs the brand's whole model list, most remotes first (S4), and reads it from the bundle the first time somebody types inside the brand, then keeps 16 lists (`BRAND_LISTINGS`, least recently used out). On the full bundle, on the development machine, the first request inside Philips (24,362 models) takes 68 ms, Samsung (21,512) 51, Grundig (13,752) 34, Sony (12,031) 33, LG (10,783) 25, against 1 to 3 ms afterwards. Sixteen requests inside other brands empty the cache, and the biggest brand is a cold read again (57 ms in the measurement below). A service that wants the first keystroke inside a big brand quick needs those lists read before anybody types and kept.
+
+```python
+MatchIndex.warm(count: int = WARM_BRANDS) -> int      # WARM_BRANDS = 16; returns how many brands are kept
+```
+
+`warm` reads the whole model lists of the `count` brands with the most models (ties to the lower id; a brand with no model is not one), makes their search keys, and keeps them in a dictionary that is **outside the cache**: `_brand_list` looks there first and falls back to the cache. So other traffic can never evict them, and they take none of the cache's 16 places, which stay for the other brands. It changes no answer (tested on a warm and a cold index, with and without a hint, over the 238 vectors and `match`'s brand-only answers, which list from the same kept list), only how long one takes. Calling it again replaces what was kept (`warm(count)` with a different count, `warm(0)` forgets); it is not for two threads at once, like the rest of the index, and meant to be called once at start before the index is shared. **Why not a bigger cache**: the cache evicts by recency, so it would keep whichever lists were typed in last, not the ones that are expensive and likely; sixteen of 5,028 brands is a guarantee and a bigger cache only moves the number.
+
+Measured, full bundle (132,828 models in the 16 biggest brands): `warm()` 301 ms once (20 ms to open the index), resident memory 60 to 92 MiB (+32 MiB), the first request inside each of the five biggest brands 3.4, 2.8, 2.3, 2.0 and 1.3 ms; after 100 requests inside other brands, a request inside Philips 3.1 ms where the unkept index takes 57 ms. Selected bundle (36 brands, 102,969 models in the 16 biggest): 226 ms, +25 MiB. `tests/test_suggest_prefer.py` counts the reads of a whole list (the statement the reader runs): 16 for `warm`, none for a request inside a kept brand after three passes over twenty-five other brands, one for a brand that is not kept and none for its second request. Not measured: a phone, and a bundle bigger than the full one.
+
+### D108 — The reviewed list of Chinese names ships
+
+**What ships.** `bundle/data/brand_aliases.json` is no longer the seed of D101. It holds **133 brands and 226 names**: the 132 brands and 225 names of a list drafted for the whole catalog, and Gree (格力), which the seed had and the catalog does not carry. Its header says `"status": "reviewed"`, `"date": "2026-10-07"`: a reader of Chinese went through the list on that day and accepted it as it stands, with the remark that the names need not be exact to the last one. It is a good list, not a perfect one, and the header says that the 50 names tagged `likely` were not fully confirmed. Every name of the seed is still in it; two of its brands gained a name (`樂聲牌` for Panasonic in Hong Kong, `山葉` for Yamaha in Taiwan). A reader who finds a wrong or missing name fixes it by editing one entry; nothing else has to change (D101).
+
+**How it was made.** The draft was written for the brands of the full bundle, every spelling of the catalog read by eye. A name is in only where it is the established Chinese name of the brand's electronics in at least one Chinese-speaking market; where that could not be confirmed it is left out. The Simplified names are the author's, checked against the Chinese Wikipedia and shops' and companies' pages where they were not certain. The Traditional forms were made by OpenCC (`s2twp`, compared with `s2t` and `s2hk`; the three agreed for every name but three, decided by hand: 西部数据, 华为, 丽台) and read by eye, because the tool does not know brand names. Regional names that are not a conversion (新力, 國際牌, 樂聲牌, 輝達, 威騰, 山葉, 百靈, 安麗, 凱蒂貓, 吉蒂貓, 麗台) are written out by hand. Every name has two characters or more and a Han ideograph, as the validator requires.
+
+**Choices that were judgement calls**, so that nobody has to guess them. *Ordinary words* are in where they are the name people use for the brand: 苹果 (Apple), 小米 (Xiaomi), 山水 (Sansui), 先锋 (Pioneer). They are out where the word means something else first: 现代 (Hyundai, the car maker), 兄弟 (Brother), 创新 (Creative), and 博士 alone for Bose (博士音响 is in). A person who types one of these and finds nothing can ask for it to be added. *Two names in one script* are two entries (宏碁 and 宏基 for Acer). *One company the catalog spells twice*, `WESTERN DIGITAL` and `wd`, has its three names under both brands and declared in `intentional_shared_aliases`; a search for any of them answers with both brands (D101, D102). 肯特 (Grundig in the mainland, according to the Chinese Wikipedia) is not in: its author was not sure of it.
+
+**What it does to the bundles.** The full bundle (5,028 brands) carries 225 of the 226 names (Gree is the one note), the selected one 44 (181 names belong to brands the profile leaves out, 1 to the brand the catalog lacks). Built from the tree after D103 to D107 were in: the full bundle is 50,663,424 bytes (13,156,342 gzipped), dataVersion `936023abe5fa`; the selected one 19,468,288 bytes, dataVersion `d18cbf35cd0d`; `rl bundle --verify` passes on both. **Every bundle built from here has a new `dataVersion`**, because the table is one of the digests (D101); these two figures move again with the next change to the catalog.
+
+**Proven.** On the real full bundle, each of the 225 names, typed alone, makes `suggest` offer its brand and makes `match` given that name as the brand name it (0 of 225 do not), in Simplified and in Traditional, for the regional forms, and for the shared names (西部数据 and 威騰 offer both `WESTERN DIGITAL` and `wd`). A name followed by a model number finds the model (`索尼 KD-49`, `三星 UN50`). The tests of the list assert what the seed had, the counts, the tags of regional names, the company with two spellings and that no two brands share a name that is not declared.
+
+**Not proven.** That the list is complete (the catalog has 5,028 brands and 132 have a Chinese name here; most of the others have none that people use, and a well-known brand that is missing is a name to add) or that every name is the one people type today. The first real searches will show; a missing name is one entry.
+
+---
+
+## 26. Folding the protocol fragments of a device into one remote
+
+The IR Blaster import writes one file per database id and ledger protocol (D47): the remotes of one database id that have keys in Sony12 and in Sony15 are `irblaster/AIWA/2312-Sony12` and `irblaster/AIWA/2312-Sony15`, and the bundle carried each as a remote of its own. A service that lists the remotes of a device and asks a person to try one then shows several rows that are one physical remote, and some of them cannot be tried at all: it asks the person to send one key (Power, else Power off, Power on, Volume up, Mute, in that order: the **test key**) and a fragment with none of them has nothing to send. This section changes the exporter so that a fragment of that kind is carried by a sibling. It changes no remote file, no importer and no generated tree (`rl build --check` reports 0 differences: the merge exists only in the bundle); the bundle gains one table, additively (D105). SPEC R27 states the requirement. The code is `src/remote_ledger/bundle/merge.py` (the rule), `catalog.py` (`collect`, `assemble`), `writer.py` and `verify.py`.
+
+### D103 — Which fragments fold into which: the rule, and the data it was chosen on
+
+**The problem, measured.** In the bundle as D95 describes it, 1,199 of the full bundle's 13,217 remotes (9.1%) and 740 of the selected bundle's 4,394 (16.8%) have no key of the test order, so a person cannot be asked to try them. Of those, 458 and 335 are a fragment of a device whose other fragment has a test key, and in the lists of the 100 models with the most remotes, 155 of the 202 rows that cannot be tried (full) and 192 of 231 (selected) are such fragments.
+
+**The rule**, in `merge.fold`. Each line below is one decision of the code, so that the owner can widen it by changing one:
+
+1. A **device** is the files of the IR Blaster import that share their path without the protocol (`irblaster/AIWA/2312`) and the same maker, product list and aliases. A file of any other source is a device of its own (only the IR Blaster import writes a file per protocol).
+2. A fragment is **testable** when it has a key of the test order (`merge.TEST_KEY_ORDER`; a key is its canonical id, D84). **Only a fragment that is not testable is folded, and only into a testable sibling.** Two testable fragments are never folded into one another.
+3. The sibling must have **the same carrier and the same play rule**: `carrier_hz`, `repeat_passes`, `helper_repeat_passes`, `intro_empty` and `rule` (D89, D78), so that a key that moves is played by its new remote exactly as its own played it.
+4. When several siblings qualify, the one whose **test key is best in the order** (Power, Power off, Power on, Volume up, Mute) takes it, and where two have the same, the **lowest remote id** (the first in path order). A folded fragment is never a target, so nothing chains.
+
+**The data, both profiles, the rule as it stands** (`merge.fold` over the whole ledger; `selected` counts the files its brands carry, D92):
+
+| | full | selected |
+|---|---|---|
+| IR Blaster devices | 9,361 | 2,549 |
+| devices with two or more fragments, and their fragments | 573, 1,225 | 364, 798 |
+| fragments with no test key, and with one | 479, 746 | 348, 450 |
+| fragments with no test key that **can be folded** | **315** | **298** |
+| of those, with more than one qualifying sibling (best key decides in 8 and the lowest id in 4, both profiles) | 12 | 12 |
+| fragments with no test key that **cannot** | 164 | 50 |
+| no sibling with a test key | 21 (10 devices) | 13 (6 devices) |
+| only siblings at another carrier | 64 | 27 |
+| only siblings with the same carrier and another play rule | 79 | 10 |
+| pairs of testable fragments | 183 | 92 |
+| of those, with the same carrier and play rule (a full merge would join them) | 36 | 32 |
+| of those, with the same test key and different signals | 10 | 8 |
+| rows a **full** merge (every fragment of one carrier and rule into one remote) would remove | 357 | 336 |
+| rows the rule removes | 315 | 298 |
+
+In words: 9,361 devices are in the ledger as IR Blaster remotes, and 573 have two or more fragments (1,225 fragments). 479 fragments have no test key and 746 have one. 315 of them can be folded, 12 have more than one qualifying sibling and 164 cannot: 21 have no sibling with a test key, 64 only siblings at another carrier and 79 only siblings with another play rule (the NEC family: an NEC1 fragment beside an NEC2 one has the same carrier and a different intro; Sony fragments nearly always share both). Of the 183 pairs of testable fragments, 36 pairs of testable fragments share a carrier and a play rule, and 10 of them have the same test key with different signals: a Power in two Sony protocols for one device in seven, a Power in RC5 and another in RC6, and a Power in NEC1 and another in NECx1 (twice). The other 26 are a Power in one fragment and a Volume up (22) or a Mute (4) in the other. A full merge would remove 357 remotes, 42 more than the rule does (36 are those pairs, 6 are fragments none of which has a test key, so that the merged remote could still not be tried).
+
+**Why the conservative rule, and why the data does not say it is wrong.** The physical remote has both sets of keys, so a fragment with no test key loses nothing when it rides on a sibling: the sibling's test key is still the one tried, and its keys are all there. Two fragments that each have a test key may be **two encodings of one key**, and a device may answer to only one of them: 10 devices have a Power in two protocols with different signals, and a full merge would join 36 pairs, 26 of which put a Volume up or a Mute in the shadow of a Power in the other encoding. Folding them would remove a signal that a person could try, and the device may answer only to the other. The data shows the case is real, and mostly Sony, so the rule keeps each of them a row; that costs 42 rows the full merge would remove, which the table counts so the owner can see them. The measurement does not show the rule is wrong in the other direction either: a folded fragment has no key to try, so folding it takes no row a person could try away (the 12,018 remotes that can be tried before can be tried after, with the same test key and signal; a test holds this over the whole ledger).
+
+**What it leaves, and why.** 164 fragments stay a row that cannot be tried (143 of them with a testable sibling that plays differently). They need a remote that has a carrier and a play rule **per key**, which the format does not have: that is a change of format and not of this rule. 21 have no sibling with a test key at all, and a wider test key rule (Volume down, Channel up, Play, Stop) would reach some of them; that is a different question from folding and is not touched here.
+
+**To widen the rule**: line 2 is the only one that keeps testable fragments apart, and it is in `fold` as the two lines that skip a fragment that has a test key and take only the testable ones as targets. Letting every fragment of one carrier and play rule fold into the best-keyed one is that change; `test_design_quotes_the_numbers_of_the_measurement` recomputes the table above, so the numbers are then re-measured and not guessed. To make the choice among several siblings different, line 4 is one `min` over `(position of the test key, id)`.
+
+### D104 — The merged remote: what it holds, what stays and what moves
+
+- **The carrier is a file of the ledger.** The remote that carries a folded fragment is the testable sibling's, with **its own ref, id, maker, model, source, carrier and play fields, and protocol** (the protocol of the file with the test key: the name of the folded fragments' protocols is in their refs, which `remote_refs` keeps, D105). The ref is a path of the ledger, so `rl bundle --verify` still finds the file, "a remote's ref is its name across ledger versions" (D89) still holds, and a count kept by ref and test key (a person confirmed Power of `irblaster/AIWA/2312-Sony12`) is still that remote's, because the test key does not change (below). The remote id is still **the position of its file in the path order of the whole ledger**, in both profiles (D89): the folded fragment's id is not reused, so ids have gaps (12,902 remotes in the full bundle have ids up to 13,217) and a remote that nothing was folded into has the id it had.
+- **Keys**: the carrier's own keys first, in their order, then each folded fragment's, in the order of the fragments in the ledger (path order), each in its own; `n` runs from 0 without a gap, and `key_count` is the number of rows. `tier` is the weakest tier of all of them (D89's rule for a remote, over more keys). **A canonical key that both have is kept twice**: the carrier's has the lower `n` and so is the one a reader uses (D85), and the folded fragment's stays after it, because it is another signal for the same key (214 keys of 68 folded fragments in the full bundle, 168 of 64 in the selected; **no key of a folded fragment has the same canonical key and the same signal as the carrier's**, so nothing is a copy). Nothing is dropped: the keys of the bundle are the keys of the ledger, 525,084 and 165,646, and a test checks the multiset of (canonical key, signal, tier) of the files against that of the remotes.
+- **The test key is unchanged.** A fragment is folded only if it has none of the five canonical ids, so the merged remote's test key, its signal and its alternative are the carrier's. A reader that built its list from the old bundle gets the same test signal for every remote that could be tried (12,018 of them in the full bundle, 3,654 in the selected one), and the same distinct test signals (4,730 and 1,731).
+- **Models, brands, grams and signals are the same rows.** The exporter counts brands and models over the files, as it did, and only the remote a link names changes: a model's `controls` rows name the carrier in place of a folded fragment, once (306,581 rows become 295,313, and 120,902 become 110,393). The tables `brands`, `brand_aliases`, `models`, `ngram`, `signals`, `vocab_*` and `excluded_brands` are **row for row what the same tree gives with no folding** (a test builds both and compares), so `dataVersion` moves only through `remotes`, `keys`, `controls`, `remote_refs` and the counts. The matcher gives the same answers for every query with the remote ids of folded fragments replaced by their carrier's (tested over the real selected bundle on generated queries), and `suggest` offers the same brands and models; **a model's place among its brand's suggestions follows its number of remotes (D100), which falls where it listed a device twice**, so the order of models can differ from before and a limit can cut another.
+- **The selection does not move.** `select.choose` reads the files, as it did: the same brands are chosen (a test compares both builds) and the estimate is within the 2.5% of D92 (the file is 19,468,288 bytes, under the 20,000,000 of D92). The `sources` table counts remotes as rows of `remotes`.
+- **What it did to the lists a service builds**, measured with the ranking of a service that gives a person the remotes of a model (a script run on both bundles; its code is not in this repository): the 100 models with the most remotes, **the same 100 before and after**:
+
+  | | full, before | full, after | selected, before | selected, after |
+  |---|---|---|---|---|
+  | remotes in the bundle | 13,217 | 12,902 | 4,394 | 4,096 |
+  | remotes that can be tried | 12,018 | 12,018 | 3,654 | 3,654 |
+  | remotes with no test key | 1,199 (9.1%) | 884 (6.9%) | 740 (16.8%) | 442 (10.8%) |
+  | of those, a fragment of a device whose other fragment has one | 458 | 143 | 335 | 37 |
+  | rows in the 100 lists (identical test signals collapsed) | 542 | 393 | 462 | 272 |
+  | rows that cannot be tried | 202 | 53 | 231 | 41 |
+  | models with at least one such row | 65 | 19 | 86 | 14 |
+  | models with nothing to try (all the catalog's models) | 1,192 | 1,192 | 636 | 636 |
+
+  The 149 of 155 (full) and 190 of 192 (selected) rows that a fragment of one carrier and rule made are gone, as the measurement of D103 said they would; the rows left are those of the 164 and 50 fragments that play differently. **A device with nothing to try stays one**: folding gives a remote a test key only by never taking one away, so it cannot help a device none of whose fragments has a Power, Volume up or Mute key (1,192 models in the full bundle). The 100 models with the most remotes are other models after the merge (the most any has is still 11 remotes); chosen again over the new bundle they are 34 (full) and 35 (selected) models with such a row, 76 and 73 rows of 469 and 355.
+- **The vectors of D91 were regenerated** (`rl bundle vectors`): the file had to follow, because `--check` compares it with the full bundle, and 5 of its 151 vectors moved (a vector for a key of a folded fragment names the carrier's remote and protocol and the key's number there, and a folded fragment's own ref is no remote any more); the 29 protocols and every case D78 names are still covered, and the blobs are self-contained as before.
+- **Size and time**, same machine as D95 (SQLite 3.45, eight workers): the full bundle 50,315,264 to 50,655,232 bytes (+339,968: `remote_refs` less what the folded fragments' rows saved; gzip 12,741,285 to 12,855,401), the selected 19,447,808 to 19,468,288 (gzip 4,485,537 to 4,502,565), `dataVersion` `6eb6823f9a51` to `c7706cddc4ee` and `f3e4567134c8` to `ed609d120645`. `rl bundle` 22.9 s and 12.5 s (23.0 s and 12.7 s before; 0.8 GB peak), `--verify` 20.6 s and 11.8 s.
+
+### D105 — `remote_refs`: no ref goes missing
+
+A ref names a remote across ledger versions (D89), and something outside the bundle may hold one: a saved remote, a count of confirmations, a link. A folded fragment's ref is no longer a row of `remotes`, so the bundle says where it went:
+
+```sql
+CREATE TABLE remote_refs (
+  ref       TEXT PRIMARY KEY,
+  remote_id INTEGER NOT NULL,
+  first_n   INTEGER NOT NULL,
+  key_count INTEGER NOT NULL
+) WITHOUT ROWID;
+```
+
+**One row for every remote file of the ledger that the profile carries**, 13,217 in the full bundle and 4,394 in the selected one, **including the identity rows** of the remotes that carry their own ref (`first_n` 0, `key_count` the remote's). A file that was folded maps to the remote that carries it, and its keys are the rows `first_n` to `first_n + key_count - 1` of that remote in `keys` (the carrier's own keys are the run of its identity row, `first_n` 0, and the refs that map to one remote cut its keys into runs one after the other with no gap, which `--verify` checks).
+
+**The lookup**, to resolve a ref a reader holds, exactly:
+
+```sql
+SELECT r.* , f.first_n, f.key_count
+FROM remote_refs f JOIN remotes r ON r.id = f.remote_id
+WHERE f.ref = :ref;
+```
+
+gives **one row, or none when the profile does not carry the file** (the selected bundle leaves most of the ledger out, D92, and a ref that is in no row has to be looked for in the full bundle or is gone from the ledger). That row is the remote to read: its `keys` rows, its carrier and play fields apply to the whole remote, which now holds the old ref's keys. **A key the reader kept as `(ref, n)`** (the `n` of D89 in the old file) is `(remote, first_n + n)` in the new remote; **a key kept as a canonical id** is the remote's key of that id with the lowest `n` (D85), which for a canonical key both have is the carrier's, not the folded fragment's: a reader that needs the folded fragment's signal for a key that both have reads the row `first_n + n`. To go the other way, `SELECT ref, first_n, key_count FROM remote_refs WHERE remote_id = :id ORDER BY first_n` lists the files a remote holds, the carrier's own first. **A reader that keeps a count by `(ref, test key)` needs the lookup only for a ref of a folded fragment, which has no test key and so no count**; one that keeps saved remotes by ref needs it for every saved ref, which is one indexed read.
+
+**What a version-1 reader does** to open the file: nothing. `meta.schemaVersion` stays 1, with `user_version` and `application_id`, by D101's rule (*a change that removes or alters what a version-1 reader reads raises the version; adding a table or a `meta` row does not*). A reader written before this table reads `brands`, `models`, `controls`, `ngram`, `remotes` and `keys` by name and column: it sees fewer remotes, with more keys, and never reads the table, which a reader that wants it checks for in `sqlite_master`. **It does see changed rows**, and that is stated here and not hidden: `remotes` and `keys` are tables it reads, and their rows changed (a remote has keys of another protocol after its own, `key_count` is larger, and a remote id of a folded fragment is gone from `controls`), so a reader that holds a remote id or a ref from an earlier bundle will not find a folded fragment. That is the reason the table exists, and the reason `meta.mergeRule` states the rule in a sentence. A bump to 2 would have refused a file that reads perfectly for what it reads.
+
+**The rest of the file.** `meta` has `count.remoteRefs` and `mergeRule`, the manifest's `counts` has `remoteRefs`, and the table is one of the digests of `dataVersion` (`writer.DIGEST_TABLES`, after `remotes`), so a bundle built with this exporter has a new `dataVersion` even where no remote moved. **`rl bundle --verify` checks** the table against the tree: the refs are exactly those of the files the profile carries; each maps to the remote that `merge.fold` over the tree gives, at the `first_n` and `key_count` the files' order gives; each remote's own ref is its identity row; the runs of a remote's refs cover its keys exactly; every remote is the carrier's row with the folded files' keys after its own and the weakest tier (and a remote the rule folds, found as a remote of its own, is reported); and a sample of remotes is compiled again from the compile stage's own output, file by file, into the keys the remote holds. A bundle with no such table is told to be built again (as for D101). `tests/test_bundle_merge.py` breaks a good bundle in fifteen ways at the row level and requires each to be reported.
+
+### What is not proven (the folding)
+
+- **Whether a folded fragment's keys work on the device.** Folding by file number is the ledger's own naming, not a check that two fragments are one physical remote, and the carrier's test key says the device answers to the carrier's protocol, not to the folded fragment's: a person who confirms Power in Sony12 has not confirmed a Volume up in Sony15 that the same remote now holds. That needs a device, as D50 says of every signal.
+- **The 164 and 50 fragments left**, and the 1,192 models with nothing to try, are not helped: they need a remote with a carrier and a rule per key, or a wider test key, which are other changes.
+- **Nothing was run by an app.** The tables are as the service's code and a reader of format 1 read them (a service that serves the bundle read the new one, and its opt-in tests against both bundles pass except the figures that are about the old counts), but no phone opened it.

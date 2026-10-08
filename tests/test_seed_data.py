@@ -240,14 +240,14 @@ def test_the_topping_is_the_capture_read_lsb_first():
         assert d ^ s == f ^ nf == 0xFF, key
 
 
-def test_the_sony_is_verified_at_226_and_its_other_modes_are_plausible():
-    """Every RMT-B118P key is Verified at 26.226. The 11 keys that only the
-    2015 capture recorded became Verified when hifi-remote.com's Sony Blu-ray
-    table (`/sony/Sony_bluray.htm`, retrieved 2026-10-07) was read: it lists
-    every function the file holds. So each citation is re-derived here: the
-    command number it quotes is the form's own function. The table's other two
-    Blu-ray modes, 26.234 and 26.242, rest on that one page and stay Plausible
-    variants, never Verified, since nothing says this remote sends them."""
+def test_the_sony_is_verified_at_226_by_a_second_table():
+    """Every RMT-B118P key is Verified at 26.226. The 11 keys that only the 2015
+    capture recorded became Verified when hifi-remote.com's Sony Blu-ray table
+    (`/sony/Sony_bluray.htm`, retrieved 2026-10-07) was read: it lists every
+    function the file holds. So each citation is re-derived here: the command
+    number it quotes is the form's own function. The table's other two Blu-ray
+    modes, 26.234 and 26.242, are not recorded: the catalog bundle carries a
+    key's primary group only (DESIGN section 23)."""
     import re
 
     remote = load_remote(ROOT / "remotes" / "sony" / "RMT-B118P.json")
@@ -255,19 +255,14 @@ def test_the_sony_is_verified_at_226_and_its_other_modes_are_plausible():
     assert len(remote.keys) == 38
     for key in remote.keys:
         groups = remote.groups(key)
+        assert list(groups) == ["primary"], key
         (form,) = groups["primary"]
         assert form.confidence == "verified", key
         assert form.verified_by == "sony20-cross-source-check", key
         assert (form.device, form.subdevice) == (26, 226), key
-        src = form.source or ""
-        m = re.search(r"Sony_bluray\.htm \(retrieved 2026-10-07\) lists command (\d+) as", src)
+        m = re.search(r"Sony_bluray\.htm \(retrieved 2026-10-07\) lists command (\d+) as", form.source or "")
         assert m, f"{key}: cites no row of the hifi-remote table"
         assert int(m[1]) == form.function, key
-        for mode, subdevice in (("mode2", 234), ("mode3", 242)):
-            (alt,) = groups[mode]
-            assert alt.confidence == "plausible", (key, mode)
-            assert alt.verified_by is None, (key, mode)
-            assert (alt.device, alt.subdevice, alt.function) == (26, subdevice, form.function)
 
 
 def test_the_rc16a_is_one_capture_read_lsb_first_and_stays_plausible():
