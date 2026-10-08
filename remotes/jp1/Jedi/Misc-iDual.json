@@ -1,0 +1,379 @@
+{
+  "manufacturer": "Jedi",
+  "model": "Lighting iDual",
+  "aliases": [],
+  "controls": [
+    "Jedi Lighting iDual"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_ON": {
+      "label": "On",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xFE",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/iDual.rmdu function 0 'On' (OBC 7F; NEC1, parms 2 254 null 0 0): NEC1 device 2 subdevice 254 function 1"
+        }
+      ]
+    },
+    "KEY_OFF": {
+      "label": "Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xFE",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/iDual.rmdu function 1 'Off' (OBC BF; NEC1, parms 2 254 null 0 0): NEC1 device 2 subdevice 254 function 2"
+        }
+      ]
+    },
+    "KEY_DIM_PLUS": {
+      "label": "Dim +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xFE",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/iDual.rmdu function 2 'Dim +' (OBC 6F; NEC1, parms 2 254 null 0 0): NEC1 device 2 subdevice 254 function 9"
+        }
+      ]
+    },
+    "KEY_DIM_MINUS": {
+      "label": "Dim -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xFE",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/iDual.rmdu function 3 'Dim -' (OBC F7; NEC1, parms 2 254 null 0 0): NEC1 device 2 subdevice 254 function 16"
+        }
+      ]
+    },
+    "KEY_CANDLE_LIGHT": {
+      "label": "Candle light",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xFE",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/iDual.rmdu function 4 'Candle light' (OBC 77; NEC1, parms 2 254 null 0 0): NEC1 device 2 subdevice 254 function 17"
+        }
+      ]
+    },
+    "KEY_WARM_LIGHT": {
+      "label": "Warm light",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xFE",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/iDual.rmdu function 5 'Warm light' (OBC 97; NEC1, parms 2 254 null 0 0): NEC1 device 2 subdevice 254 function 22"
+        }
+      ]
+    },
+    "KEY_NEUTRAL_LIGHT": {
+      "label": "Neutral light",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xFE",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/iDual.rmdu function 6 'Neutral light' (OBC AF; NEC1, parms 2 254 null 0 0): NEC1 device 2 subdevice 254 function 10"
+        }
+      ]
+    },
+    "KEY_COLD_LIGHT": {
+      "label": "Cold light",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xFE",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/iDual.rmdu function 7 'Cold light' (OBC 3F; NEC1, parms 2 254 null 0 0): NEC1 device 2 subdevice 254 function 3"
+        }
+      ]
+    },
+    "KEY_NIGHT_LIGHT": {
+      "label": "Night light",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xFE",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/iDual.rmdu function 8 'Night light' (OBC B7; NEC1, parms 2 254 null 0 0): NEC1 device 2 subdevice 254 function 18"
+        }
+      ]
+    },
+    "KEY_SLEEPING": {
+      "label": "Sleeping",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xFE",
+          "function": "0x17",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/iDual.rmdu function 9 'Sleeping' (OBC 17; NEC1, parms 2 254 null 0 0): NEC1 device 2 subdevice 254 function 23"
+        }
+      ]
+    },
+    "KEY_WORKING": {
+      "label": "Working",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xFE",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/iDual.rmdu function 10 'Working' (OBC 2F; NEC1, parms 2 254 null 0 0): NEC1 device 2 subdevice 254 function 11"
+        }
+      ]
+    },
+    "KEY_RELAXING": {
+      "label": "Relaxing",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xFE",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/iDual.rmdu function 11 'Relaxing' (OBC DF; NEC1, parms 2 254 null 0 0): NEC1 device 2 subdevice 254 function 4"
+        }
+      ]
+    },
+    "KEY_SUNRISE": {
+      "label": "Sunrise",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xFE",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/iDual.rmdu function 12 'Sunrise' (OBC 37; NEC1, parms 2 254 null 0 0): NEC1 device 2 subdevice 254 function 19"
+        }
+      ]
+    },
+    "KEY_PASTEL": {
+      "label": "Pastel",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xFE",
+          "function": "0x18",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/iDual.rmdu function 13 'Pastel' (OBC E7; NEC1, parms 2 254 null 0 0): NEC1 device 2 subdevice 254 function 24"
+        }
+      ]
+    },
+    "KEY_PARTY": {
+      "label": "Party",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xFE",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/iDual.rmdu function 14 'Party' (OBC CF; NEC1, parms 2 254 null 0 0): NEC1 device 2 subdevice 254 function 12"
+        }
+      ]
+    },
+    "KEY_SUNSET": {
+      "label": "Sunset",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xFE",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/iDual.rmdu function 15 'Sunset' (OBC 5F; NEC1, parms 2 254 null 0 0): NEC1 device 2 subdevice 254 function 5"
+        }
+      ]
+    },
+    "KEY_FOREST": {
+      "label": "Forest",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xFE",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/iDual.rmdu function 16 'Forest' (OBC D7; NEC1, parms 2 254 null 0 0): NEC1 device 2 subdevice 254 function 20"
+        }
+      ]
+    },
+    "KEY_LAPPING_WATER": {
+      "label": "Lapping water",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xFE",
+          "function": "0x19",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/iDual.rmdu function 17 'Lapping water' (OBC 67; NEC1, parms 2 254 null 0 0): NEC1 device 2 subdevice 254 function 25"
+        }
+      ]
+    },
+    "KEY_FIREPLACE": {
+      "label": "Fireplace",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xFE",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/iDual.rmdu function 18 'Fireplace' (OBC 4F; NEC1, parms 2 254 null 0 0): NEC1 device 2 subdevice 254 function 13"
+        }
+      ]
+    },
+    "KEY_ROMANTIC": {
+      "label": "Romantic",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xFE",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/iDual.rmdu function 19 'Romantic' (OBC 9F; NEC1, parms 2 254 null 0 0): NEC1 device 2 subdevice 254 function 6"
+        }
+      ]
+    },
+    "KEY_RED": {
+      "label": "Red",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xFE",
+          "function": "0x0E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/iDual.rmdu function 20 'Red' (OBC 8F; NEC1, parms 2 254 null 0 0): NEC1 device 2 subdevice 254 function 14"
+        }
+      ]
+    },
+    "KEY_YELLOW": {
+      "label": "Yellow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xFE",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/iDual.rmdu function 21 'Yellow' (OBC 1F; NEC1, parms 2 254 null 0 0): NEC1 device 2 subdevice 254 function 7"
+        }
+      ]
+    },
+    "KEY_GREEN": {
+      "label": "Green",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xFE",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/iDual.rmdu function 22 'Green' (OBC EF; NEC1, parms 2 254 null 0 0): NEC1 device 2 subdevice 254 function 8"
+        }
+      ]
+    },
+    "KEY_BLUE": {
+      "label": "Blue",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xFE",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/iDual.rmdu function 23 'Blue' (OBC 57; NEC1, parms 2 254 null 0 0): NEC1 device 2 subdevice 254 function 21"
+        }
+      ]
+    },
+    "KEY_SATURATION_PLUS": {
+      "label": "Saturation +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xFE",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/iDual.rmdu function 24 'Saturation +' (OBC A7; NEC1, parms 2 254 null 0 0): NEC1 device 2 subdevice 254 function 26"
+        }
+      ]
+    },
+    "KEY_SATURATION_MINUS": {
+      "label": "Saturation -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xFE",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/iDual.rmdu function 25 'Saturation -' (OBC 0F; NEC1, parms 2 254 null 0 0): NEC1 device 2 subdevice 254 function 15"
+        }
+      ]
+    }
+  }
+}

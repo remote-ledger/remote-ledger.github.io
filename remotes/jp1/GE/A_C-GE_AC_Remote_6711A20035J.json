@@ -1,0 +1,99 @@
+{
+  "manufacturer": "GE",
+  "model": "AC Remote 6711A20035J",
+  "aliases": [],
+  "controls": [
+    "GE AC Remote 6711A20035J"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER": {
+      "label": "Power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x81",
+          "subdevice": "0x66",
+          "function": "0x81",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 A_C/GE AC Remote 6711A20035J.rmdu function 0 'Power' (OBC 7E; NEC1, parms 129 102 null): NEC1 device 129 subdevice 102 function 129"
+        }
+      ]
+    },
+    "KEY_TEMP_MINUS": {
+      "label": "Temp-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x81",
+          "subdevice": "0x66",
+          "function": "0x8A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 A_C/GE AC Remote 6711A20035J.rmdu function 1 'Temp-' (OBC AE; NEC1, parms 129 102 null): NEC1 device 129 subdevice 102 function 138"
+        }
+      ]
+    },
+    "KEY_TEMP_PLUS": {
+      "label": "Temp+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x81",
+          "subdevice": "0x66",
+          "function": "0x85",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 A_C/GE AC Remote 6711A20035J.rmdu function 2 'Temp+' (OBC 5E; NEC1, parms 129 102 null): NEC1 device 129 subdevice 102 function 133"
+        }
+      ]
+    },
+    "KEY_FAN_SPEED": {
+      "label": "Fan Speed",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x81",
+          "subdevice": "0x66",
+          "function": "0x99",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 A_C/GE AC Remote 6711A20035J.rmdu function 3 'Fan Speed' (OBC 66; NEC1, parms 129 102 null): NEC1 device 129 subdevice 102 function 153"
+        }
+      ]
+    },
+    "KEY_TIMER": {
+      "label": "Timer",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x81",
+          "subdevice": "0x66",
+          "function": "0x9F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 A_C/GE AC Remote 6711A20035J.rmdu function 4 'Timer' (OBC 06; NEC1, parms 129 102 null): NEC1 device 129 subdevice 102 function 159"
+        }
+      ]
+    },
+    "KEY_MODE": {
+      "label": "Mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x81",
+          "subdevice": "0x66",
+          "function": "0x9B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 A_C/GE AC Remote 6711A20035J.rmdu function 5 'Mode' (OBC 26; NEC1, parms 129 102 null): NEC1 device 129 subdevice 102 function 155"
+        }
+      ]
+    }
+  }
+}

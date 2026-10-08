@@ -1,0 +1,71 @@
+{
+  "manufacturer": "Audioengine",
+  "model": "A5+ Powered Speakers (.rmdu)",
+  "aliases": [],
+  "controls": [
+    "Audioengine A5+ Powered Speakers (.rmdu)"
+  ],
+  "protocol": {
+    "name": "NECx2",
+    "carrierHz": 38000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_VOL_PLUS": {
+      "label": "Vol+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFD",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Comcast AudioEngine A5.rmdu function 5 'Vol+' (OBC 6F; NECx2, parms 0 253 null): NECx2 device 0 subdevice 253 function 9"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "Vol-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFD",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Comcast AudioEngine A5.rmdu function 6 'Vol-' (OBC 1F; NECx2, parms 0 253 null): NECx2 device 0 subdevice 253 function 7"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "Mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFD",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Comcast AudioEngine A5.rmdu function 7 'Mute' (OBC 3F; NECx2, parms 0 253 null): NECx2 device 0 subdevice 253 function 3"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "Power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFD",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Comcast AudioEngine A5.rmdu function 10 'Power' (OBC 7F; NECx2, parms 0 253 null): NECx2 device 0 subdevice 253 function 1"
+        }
+      ]
+    }
+  }
+}

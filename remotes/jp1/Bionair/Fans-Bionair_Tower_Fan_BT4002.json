@@ -1,0 +1,71 @@
+{
+  "manufacturer": "Bionair",
+  "model": "Tower Fan BT4002",
+  "aliases": [],
+  "controls": [
+    "Bionair Tower Fan BT4002"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_ON_OFF_LEVEL": {
+      "label": "On Off Level",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x03",
+          "subdevice": "0xFC",
+          "function": "0x9B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Fans/Bionair Tower Fan BT4002.rmdu function 0 'On Off Level' (OBC 26; NEC1, parms 3 null null 0 0): NEC1 device 3 subdevice 252 function 155"
+        }
+      ]
+    },
+    "KEY_BREEZE": {
+      "label": "Breeze",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x03",
+          "subdevice": "0xFC",
+          "function": "0x91",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Fans/Bionair Tower Fan BT4002.rmdu function 1 'Breeze' (OBC 76; NEC1, parms 3 null null 0 0): NEC1 device 3 subdevice 252 function 145"
+        }
+      ]
+    },
+    "KEY_TIMER": {
+      "label": "Timer",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x03",
+          "subdevice": "0xFC",
+          "function": "0x90",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Fans/Bionair Tower Fan BT4002.rmdu function 2 'Timer' (OBC F6; NEC1, parms 3 null null 0 0): NEC1 device 3 subdevice 252 function 144"
+        }
+      ]
+    },
+    "KEY_OSCILLATE": {
+      "label": "Oscillate",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x03",
+          "subdevice": "0xFC",
+          "function": "0xD8",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Fans/Bionair Tower Fan BT4002.rmdu function 3 'Oscillate' (OBC E4; NEC1, parms 3 null null 0 0): NEC1 device 3 subdevice 252 function 216"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "manufacturer": "Kohree",
+  "model": "LED Curtain Lights",
+  "aliases": [],
+  "controls": [
+    "Kohree LED Curtain Lights"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_ON": {
+      "label": "on",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xFD",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Kohree LED Curtain Lights.rmdu function 0 'on' (OBC FF; NEC1, parms 2 253 null 0 0): NEC1 device 2 subdevice 253 function 0"
+        }
+      ]
+    },
+    "KEY_OFF": {
+      "label": "off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xFD",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Kohree LED Curtain Lights.rmdu function 1 'off' (OBC BF; NEC1, parms 2 253 null 0 0): NEC1 device 2 subdevice 253 function 2"
+        }
+      ]
+    },
+    "KEY_MODE_UP": {
+      "label": "Mode Up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xFD",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Kohree LED Curtain Lights.rmdu function 2 'Mode Up' (OBC 5F; NEC1, parms 2 253 null 0 0): NEC1 device 2 subdevice 253 function 5"
+        }
+      ]
+    },
+    "KEY_MODE_DOWN": {
+      "label": "Mode Down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xFD",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Kohree LED Curtain Lights.rmdu function 3 'Mode Down' (OBC 6F; NEC1, parms 2 253 null 0 0): NEC1 device 2 subdevice 253 function 9"
+        }
+      ]
+    },
+    "KEY_TIMER": {
+      "label": "timer",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0xFD",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Kohree LED Curtain Lights.rmdu function 4 'timer' (OBC 4F; NEC1, parms 2 253 null 0 0): NEC1 device 2 subdevice 253 function 13"
+        }
+      ]
+    }
+  }
+}

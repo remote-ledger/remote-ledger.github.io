@@ -1,0 +1,28 @@
+{
+  "manufacturer": "Sony",
+  "model": "KV-24FV12 Remote RM-Y168 [Sony15]",
+  "aliases": [],
+  "controls": [
+    "Sony KV-24FV12 Remote RM-Y168"
+  ],
+  "protocol": {
+    "name": "Sony15",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_VOLUME_AUTO_ON_SLASH_OFF": {
+      "label": "Volume Auto On/Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA4",
+          "function": "0x1F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/Sony KV-24FV12 Remote RM-Y168.rmdu function 19 'Volume Auto On/Off' (OBC F9; Sony 12/15, parms 1 0 164 1): Sony15 device 164 function 31"
+        }
+      ]
+    }
+  }
+}

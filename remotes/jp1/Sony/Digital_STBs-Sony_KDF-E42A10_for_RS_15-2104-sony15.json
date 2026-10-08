@@ -1,0 +1,67 @@
+{
+  "manufacturer": "Sony",
+  "model": "KDF-E42A10 [Sony15]",
+  "aliases": [],
+  "controls": [
+    "Sony KDF-E42A10"
+  ],
+  "protocol": {
+    "name": "Sony15",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_WIDE_MODE": {
+      "label": "wide mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA4",
+          "function": "0x3D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Sony KDF-E42A10 for RS 15-2104.rmdu function 27 'wide mode' (OBC BD; Sony 12/15, parms 1 0 164 0): Sony15 device 164 function 61"
+        }
+      ]
+    },
+    "KEY_SURROUND": {
+      "label": "surround",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA4",
+          "function": "0x1F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Sony KDF-E42A10 for RS 15-2104.rmdu function 28 'surround' (OBC F9; Sony 12/15, parms 1 0 164 0): Sony15 device 164 function 31"
+        }
+      ]
+    },
+    "KEY_CLOSE_CAPTION": {
+      "label": "close caption",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA4",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Sony KDF-E42A10 for RS 15-2104.rmdu function 32 'close caption' (OBC 09; Sony 12/15, parms 1 0 164 0): Sony15 device 164 function 16"
+        }
+      ]
+    },
+    "KEY_VIDEO6TEST": {
+      "label": "video6test",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA4",
+          "function": "0x71",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Sony KDF-E42A10 for RS 15-2104.rmdu function 39 'video6test' (OBC 8F; Sony 12/15, parms 1 0 164 0): Sony15 device 164 function 113"
+        }
+      ]
+    }
+  }
+}

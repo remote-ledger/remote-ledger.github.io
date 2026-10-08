@@ -1,0 +1,491 @@
+{
+  "manufacturer": "Yamaha",
+  "model": "HTR5550",
+  "aliases": [],
+  "controls": [
+    "Yamaha HTR5550"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER_TOGGLE": {
+      "label": "Power Toggle",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x1F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha HTR5550.rmdu function 0 'Power Toggle' (OBC 07; NEC1, parms 122 null null): NEC1 device 122 subdevice 133 function 31"
+        }
+      ]
+    },
+    "KEY_SYSTEM_POWER": {
+      "label": "System Power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x1D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha HTR5550.rmdu function 1 'System Power' (OBC 47; NEC1, parms 122 null null): NEC1 device 122 subdevice 133 function 29"
+        }
+      ]
+    },
+    "KEY_STANDBY": {
+      "label": "Standby",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x1E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha HTR5550.rmdu function 2 'Standby' (OBC 87; NEC1, parms 122 null null): NEC1 device 122 subdevice 133 function 30"
+        }
+      ]
+    },
+    "KEY_SLEEP": {
+      "label": "Sleep",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x57",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha HTR5550.rmdu function 3 'Sleep' (OBC 15; NEC1, parms 122 null null): NEC1 device 122 subdevice 133 function 87"
+        }
+      ]
+    },
+    "KEY_CD_INPUT": {
+      "label": "CD Input",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha HTR5550.rmdu function 4 'CD Input' (OBC 57; NEC1, parms 122 null null): NEC1 device 122 subdevice 133 function 21"
+        }
+      ]
+    },
+    "KEY_MD_SLASH_CD_MINUS_R_INPUT": {
+      "label": "MD/CD-R Input",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xC9",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha HTR5550.rmdu function 5 'MD/CD-R Input' (OBC 6C; NEC1, parms 122 null null): NEC1 device 122 subdevice 133 function 201"
+        }
+      ]
+    },
+    "KEY_TUNER_INPUT": {
+      "label": "Tuner Input",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha HTR5550.rmdu function 6 'Tuner Input' (OBC 97; NEC1, parms 122 null null): NEC1 device 122 subdevice 133 function 22"
+        }
+      ]
+    },
+    "KEY_DVD_INPUT": {
+      "label": "DVD Input",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xC1",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha HTR5550.rmdu function 7 'DVD Input' (OBC 7C; NEC1, parms 122 null null): NEC1 device 122 subdevice 133 function 193"
+        }
+      ]
+    },
+    "KEY_D_MINUS_TV_SLASH_CABLE_INPUT": {
+      "label": "D-TV/Cable Input",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x54",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha HTR5550.rmdu function 8 'D-TV/Cable Input' (OBC D5; NEC1, parms 122 null null): NEC1 device 122 subdevice 133 function 84"
+        }
+      ]
+    },
+    "KEY_V_MINUS_AUX_INPUT": {
+      "label": "V-Aux Input",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x55",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha HTR5550.rmdu function 9 'V-Aux Input' (OBC 55; NEC1, parms 122 null null): NEC1 device 122 subdevice 133 function 85"
+        }
+      ]
+    },
+    "KEY_VCR_INPUT": {
+      "label": "VCR Input",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha HTR5550.rmdu function 10 'VCR Input' (OBC 0F; NEC1, parms 122 null null): NEC1 device 122 subdevice 133 function 15"
+        }
+      ]
+    },
+    "KEY_6_CHANNEL_INPUT": {
+      "label": "6 Channel Input",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x87",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha HTR5550.rmdu function 11 '6 Channel Input' (OBC 1E; NEC1, parms 122 null null): NEC1 device 122 subdevice 133 function 135"
+        }
+      ]
+    },
+    "KEY_VOLUME_PLUS": {
+      "label": "Volume +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha HTR5550.rmdu function 12 'Volume +' (OBC A7; NEC1, parms 122 null null): NEC1 device 122 subdevice 133 function 26"
+        }
+      ]
+    },
+    "KEY_VOLUME_MINUS": {
+      "label": "Volume -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x1B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha HTR5550.rmdu function 13 'Volume -' (OBC 27; NEC1, parms 122 null null): NEC1 device 122 subdevice 133 function 27"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "Mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x1C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha HTR5550.rmdu function 14 'Mute' (OBC C7; NEC1, parms 122 null null): NEC1 device 122 subdevice 133 function 28"
+        }
+      ]
+    },
+    "KEY_1_SLASH_HALL": {
+      "label": "1 / Hall",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha HTR5550.rmdu function 15 '1 / Hall' (OBC 7F; NEC1, parms 122 null null): NEC1 device 122 subdevice 133 function 1"
+        }
+      ]
+    },
+    "KEY_2_SLASH_JAZZ_CLUB": {
+      "label": "2 / Jazz Club",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha HTR5550.rmdu function 16 '2 / Jazz Club' (OBC BF; NEC1, parms 122 null null): NEC1 device 122 subdevice 133 function 2"
+        }
+      ]
+    },
+    "KEY_3_SLASH_ROCK_CONCERT": {
+      "label": "3 / Rock Concert",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha HTR5550.rmdu function 17 '3 / Rock Concert' (OBC 3F; NEC1, parms 122 null null): NEC1 device 122 subdevice 133 function 3"
+        }
+      ]
+    },
+    "KEY_4_SLASH_ENTERTAINMENT": {
+      "label": "4 / Entertainment",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha HTR5550.rmdu function 18 '4 / Entertainment' (OBC DF; NEC1, parms 122 null null): NEC1 device 122 subdevice 133 function 4"
+        }
+      ]
+    },
+    "KEY_5_SLASH_TV_SPORTS": {
+      "label": "5 / TV Sports",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha HTR5550.rmdu function 19 '5 / TV Sports' (OBC 5F; NEC1, parms 122 null null): NEC1 device 122 subdevice 133 function 5"
+        }
+      ]
+    },
+    "KEY_6_SLASH_MONO_MOVIE": {
+      "label": "6 / Mono Movie",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha HTR5550.rmdu function 20 '6 / Mono Movie' (OBC 9F; NEC1, parms 122 null null): NEC1 device 122 subdevice 133 function 6"
+        }
+      ]
+    },
+    "KEY_7_SLASH_MOVIE_THEATER_1": {
+      "label": "7 / Movie Theater 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha HTR5550.rmdu function 21 '7 / Movie Theater 1' (OBC 1F; NEC1, parms 122 null null): NEC1 device 122 subdevice 133 function 7"
+        }
+      ]
+    },
+    "KEY_8_SLASH_MOVIE_THEATER_2": {
+      "label": "8 / Movie Theater 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha HTR5550.rmdu function 22 '8 / Movie Theater 2' (OBC EF; NEC1, parms 122 null null): NEC1 device 122 subdevice 133 function 8"
+        }
+      ]
+    },
+    "KEY_9_SLASH_DOLBY_SLASH_DTS_SURROUND": {
+      "label": "9 / Dolby/DTS Surround",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha HTR5550.rmdu function 23 '9 / Dolby/DTS Surround' (OBC 6F; NEC1, parms 122 null null): NEC1 device 122 subdevice 133 function 9"
+        }
+      ]
+    },
+    "KEY_0_SLASH_SELECT": {
+      "label": "0 / Select",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha HTR5550.rmdu function 24 '0 / Select' (OBC AF; NEC1, parms 122 null null): NEC1 device 122 subdevice 133 function 10"
+        }
+      ]
+    },
+    "KEY_PLUS_10_SLASH_MATRIX_6_1": {
+      "label": "+10 / Matrix 6.1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x25",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha HTR5550.rmdu function 25 '+10 / Matrix 6.1' (OBC 5B; NEC1, parms 122 null null): NEC1 device 122 subdevice 133 function 37"
+        }
+      ]
+    },
+    "KEY_ENTER_SLASH_STEREO_EFFECT": {
+      "label": "Enter / Stereo Effect",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x26",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha HTR5550.rmdu function 26 'Enter / Stereo Effect' (OBC 9B; NEC1, parms 122 null null): NEC1 device 122 subdevice 133 function 38"
+        }
+      ]
+    },
+    "KEY_UP_SLASH_PRESET_SLASH_CHANNEL": {
+      "label": "Up / Preset/Channel",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x98",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha HTR5550.rmdu function 27 'Up / Preset/Channel' (OBC E6; NEC1, parms 122 null null): NEC1 device 122 subdevice 133 function 152"
+        }
+      ]
+    },
+    "KEY_DOWN": {
+      "label": "Down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x99",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha HTR5550.rmdu function 28 'Down' (OBC 66; NEC1, parms 122 null null): NEC1 device 122 subdevice 133 function 153"
+        }
+      ]
+    },
+    "KEY_LEFT_SLASH_MINUS": {
+      "label": "Left / -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x53",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha HTR5550.rmdu function 29 'Left / -' (OBC 35; NEC1, parms 122 null null): NEC1 device 122 subdevice 133 function 83"
+        }
+      ]
+    },
+    "KEY_RIGHT_SLASH_PLUS": {
+      "label": "Right / +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x52",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha HTR5550.rmdu function 30 'Right / +' (OBC B5; NEC1, parms 122 null null): NEC1 device 122 subdevice 133 function 82"
+        }
+      ]
+    },
+    "KEY_LEVEL": {
+      "label": "Level",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x86",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha HTR5550.rmdu function 31 'Level' (OBC 9E; NEC1, parms 122 null null): NEC1 device 122 subdevice 133 function 134"
+        }
+      ]
+    },
+    "KEY_SET_MENU_SLASH_A_SLASH_B_SLASH_C_SLASH_D_SLASH_E": {
+      "label": "Set Menu / A/B/C/D/E",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x9C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha HTR5550.rmdu function 32 'Set Menu / A/B/C/D/E' (OBC C6; NEC1, parms 122 null null): NEC1 device 122 subdevice 133 function 156"
+        }
+      ]
+    },
+    "KEY_TEST": {
+      "label": "Test",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x85",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha HTR5550.rmdu function 33 'Test' (OBC 5E; NEC1, parms 122 null null): NEC1 device 122 subdevice 133 function 133"
+        }
+      ]
+    }
+  }
+}

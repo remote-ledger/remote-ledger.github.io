@@ -1,0 +1,57 @@
+{
+  "manufacturer": "Lasko",
+  "model": "18\" Cyclone Oscillating Pedestal Fan model 1843",
+  "aliases": [],
+  "controls": [
+    "Lasko 18\" Cyclone Oscillating Pedestal Fan model 1843"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER": {
+      "label": "power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x83",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Fans/Lasko Fan model 1843.rmdu function 0 'power' (OBC 3E; NEC1, parms 1 null null 0 0): NEC1 device 1 subdevice 254 function 131"
+        }
+      ]
+    },
+    "KEY_SPEED": {
+      "label": "speed",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x87",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Fans/Lasko Fan model 1843.rmdu function 1 'speed' (OBC 1E; NEC1, parms 1 null null 0 0): NEC1 device 1 subdevice 254 function 135"
+        }
+      ]
+    },
+    "KEY_TIMER": {
+      "label": "timer",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x8B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Fans/Lasko Fan model 1843.rmdu function 2 'timer' (OBC 2E; NEC1, parms 1 null null 0 0): NEC1 device 1 subdevice 254 function 139"
+        }
+      ]
+    }
+  }
+}

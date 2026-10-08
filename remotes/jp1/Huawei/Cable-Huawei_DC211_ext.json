@@ -1,0 +1,631 @@
+{
+  "manufacturer": "Huawei",
+  "model": "DC211 (Huawei DC211_ext)",
+  "aliases": [],
+  "controls": [
+    "Huawei DC211"
+  ],
+  "protocol": {
+    "name": "NEC2",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER": {
+      "label": "power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFD",
+          "function": "0xDC",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Huawei DC211_ext.rmdu function 0 'power' (OBC C4; NEC2, parms 1 253 0): NEC2 device 1 subdevice 253 function 220"
+        }
+      ]
+    },
+    "KEY_SLEEP": {
+      "label": "Sleep",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFD",
+          "function": "0xCB",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Huawei DC211_ext.rmdu function 1 'Sleep' (OBC 2C; NEC2, parms 1 253 0): NEC2 device 1 subdevice 253 function 203"
+        }
+      ]
+    },
+    "KEY_CHANNEL_UP": {
+      "label": "channel up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFD",
+          "function": "0x80",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Huawei DC211_ext.rmdu function 2 'channel up' (OBC FE; NEC2, parms 1 253 0): NEC2 device 1 subdevice 253 function 128"
+        }
+      ]
+    },
+    "KEY_LAST_CHANNEL": {
+      "label": "Last Channel",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFD",
+          "function": "0x82",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Huawei DC211_ext.rmdu function 3 'Last Channel' (OBC BE; NEC2, parms 1 253 0): NEC2 device 1 subdevice 253 function 130"
+        }
+      ]
+    },
+    "KEY_CHANNEL_DOWN": {
+      "label": "channel down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFD",
+          "function": "0x81",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Huawei DC211_ext.rmdu function 4 'channel down' (OBC 7E; NEC2, parms 1 253 0): NEC2 device 1 subdevice 253 function 129"
+        }
+      ]
+    },
+    "KEY_PAGE_UP": {
+      "label": "Page UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFD",
+          "function": "0xDD",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Huawei DC211_ext.rmdu function 5 'Page UP' (OBC 44; NEC2, parms 1 253 0): NEC2 device 1 subdevice 253 function 221"
+        }
+      ]
+    },
+    "KEY_PAGE_DOWN": {
+      "label": "Page Down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFD",
+          "function": "0x8C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Huawei DC211_ext.rmdu function 6 'Page Down' (OBC CE; NEC2, parms 1 253 0): NEC2 device 1 subdevice 253 function 140"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "Vol +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFD",
+          "function": "0x85",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Huawei DC211_ext.rmdu function 7 'Vol +' (OBC 5E; NEC2, parms 1 253 0): NEC2 device 1 subdevice 253 function 133"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "Mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFD",
+          "function": "0x9C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Huawei DC211_ext.rmdu function 8 'Mute' (OBC C6; NEC2, parms 1 253 0): NEC2 device 1 subdevice 253 function 156"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "Vol -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFD",
+          "function": "0x86",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Huawei DC211_ext.rmdu function 9 'Vol -' (OBC 9E; NEC2, parms 1 253 0): NEC2 device 1 subdevice 253 function 134"
+        }
+      ]
+    },
+    "KEY_SET": {
+      "label": "Set",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFD",
+          "function": "0xC3",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Huawei DC211_ext.rmdu function 10 'Set' (OBC 3C; NEC2, parms 1 253 0): NEC2 device 1 subdevice 253 function 195"
+        }
+      ]
+    },
+    "KEY_STATUS": {
+      "label": "Status",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFD",
+          "function": "0xD6",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Huawei DC211_ext.rmdu function 11 'Status' (OBC 94; NEC2, parms 1 253 0): NEC2 device 1 subdevice 253 function 214"
+        }
+      ]
+    },
+    "KEY_MENU": {
+      "label": "menu",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFD",
+          "function": "0x95",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Huawei DC211_ext.rmdu function 12 'menu' (OBC 56; NEC2, parms 1 253 0): NEC2 device 1 subdevice 253 function 149"
+        }
+      ]
+    },
+    "KEY_EXIT": {
+      "label": "exit",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFD",
+          "function": "0xC5",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Huawei DC211_ext.rmdu function 13 'exit' (OBC 5C; NEC2, parms 1 253 0): NEC2 device 1 subdevice 253 function 197"
+        }
+      ]
+    },
+    "KEY_UP_ARROW": {
+      "label": "up arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFD",
+          "function": "0xCA",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Huawei DC211_ext.rmdu function 14 'up arrow' (OBC AC; NEC2, parms 1 253 0): NEC2 device 1 subdevice 253 function 202"
+        }
+      ]
+    },
+    "KEY_LEFT_ARROW": {
+      "label": "left arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFD",
+          "function": "0x99",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Huawei DC211_ext.rmdu function 15 'left arrow' (OBC 66; NEC2, parms 1 253 0): NEC2 device 1 subdevice 253 function 153"
+        }
+      ]
+    },
+    "KEY_SELECT": {
+      "label": "select",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFD",
+          "function": "0xCE",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Huawei DC211_ext.rmdu function 16 'select' (OBC 8C; NEC2, parms 1 253 0): NEC2 device 1 subdevice 253 function 206"
+        }
+      ]
+    },
+    "KEY_RIGHT_ARROW": {
+      "label": "right arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFD",
+          "function": "0xC1",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Huawei DC211_ext.rmdu function 17 'right arrow' (OBC 7C; NEC2, parms 1 253 0): NEC2 device 1 subdevice 253 function 193"
+        }
+      ]
+    },
+    "KEY_DOWN_ARROW": {
+      "label": "down arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFD",
+          "function": "0xD2",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Huawei DC211_ext.rmdu function 18 'down arrow' (OBC B4; NEC2, parms 1 253 0): NEC2 device 1 subdevice 253 function 210"
+        }
+      ]
+    },
+    "KEY_BLUE_SLASH_GUIDE": {
+      "label": "Blue/Guide",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFD",
+          "function": "0xDA",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Huawei DC211_ext.rmdu function 19 'Blue/Guide' (OBC A4; NEC2, parms 1 253 0): NEC2 device 1 subdevice 253 function 218"
+        }
+      ]
+    },
+    "KEY_GREEN_SLASH_PPV": {
+      "label": "Green/PPV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFD",
+          "function": "0x88",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Huawei DC211_ext.rmdu function 20 'Green/PPV' (OBC EE; NEC2, parms 1 253 0): NEC2 device 1 subdevice 253 function 136"
+        }
+      ]
+    },
+    "KEY_YELLOW_SLASH_VOD": {
+      "label": "Yellow/VOD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFD",
+          "function": "0xC6",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Huawei DC211_ext.rmdu function 21 'Yellow/VOD' (OBC 9C; NEC2, parms 1 253 0): NEC2 device 1 subdevice 253 function 198"
+        }
+      ]
+    },
+    "KEY_RED_SLASH_HD": {
+      "label": "Red/HD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFD",
+          "function": "0xC7",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Huawei DC211_ext.rmdu function 22 'Red/HD' (OBC 1C; NEC2, parms 1 253 0): NEC2 device 1 subdevice 253 function 199"
+        }
+      ]
+    },
+    "KEY_1": {
+      "label": "1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFD",
+          "function": "0x92",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Huawei DC211_ext.rmdu function 23 '1' (OBC B6; NEC2, parms 1 253 0): NEC2 device 1 subdevice 253 function 146"
+        }
+      ]
+    },
+    "KEY_2": {
+      "label": "2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFD",
+          "function": "0x93",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Huawei DC211_ext.rmdu function 24 '2' (OBC 36; NEC2, parms 1 253 0): NEC2 device 1 subdevice 253 function 147"
+        }
+      ]
+    },
+    "KEY_3": {
+      "label": "3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFD",
+          "function": "0xCC",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Huawei DC211_ext.rmdu function 25 '3' (OBC CC; NEC2, parms 1 253 0): NEC2 device 1 subdevice 253 function 204"
+        }
+      ]
+    },
+    "KEY_4": {
+      "label": "4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFD",
+          "function": "0x8E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Huawei DC211_ext.rmdu function 26 '4' (OBC 8E; NEC2, parms 1 253 0): NEC2 device 1 subdevice 253 function 142"
+        }
+      ]
+    },
+    "KEY_5": {
+      "label": "5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFD",
+          "function": "0x8F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Huawei DC211_ext.rmdu function 27 '5' (OBC 0E; NEC2, parms 1 253 0): NEC2 device 1 subdevice 253 function 143"
+        }
+      ]
+    },
+    "KEY_6": {
+      "label": "6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFD",
+          "function": "0xC8",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Huawei DC211_ext.rmdu function 28 '6' (OBC EC; NEC2, parms 1 253 0): NEC2 device 1 subdevice 253 function 200"
+        }
+      ]
+    },
+    "KEY_7": {
+      "label": "7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFD",
+          "function": "0x8A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Huawei DC211_ext.rmdu function 29 '7' (OBC AE; NEC2, parms 1 253 0): NEC2 device 1 subdevice 253 function 138"
+        }
+      ]
+    },
+    "KEY_8": {
+      "label": "8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFD",
+          "function": "0x8B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Huawei DC211_ext.rmdu function 30 '8' (OBC 2E; NEC2, parms 1 253 0): NEC2 device 1 subdevice 253 function 139"
+        }
+      ]
+    },
+    "KEY_9": {
+      "label": "9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFD",
+          "function": "0xC4",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Huawei DC211_ext.rmdu function 31 '9' (OBC DC; NEC2, parms 1 253 0): NEC2 device 1 subdevice 253 function 196"
+        }
+      ]
+    },
+    "KEY_0": {
+      "label": "0",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFD",
+          "function": "0x87",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Huawei DC211_ext.rmdu function 32 '0' (OBC 1E; NEC2, parms 1 253 0): NEC2 device 1 subdevice 253 function 135"
+        }
+      ]
+    },
+    "KEY_F1_SLASH_SUBT": {
+      "label": "F1/Subt",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFD",
+          "function": "0x84",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Huawei DC211_ext.rmdu function 33 'F1/Subt' (OBC DE; NEC2, parms 1 253 0): NEC2 device 1 subdevice 253 function 132"
+        }
+      ]
+    },
+    "KEY_F2_SLASH_INFO": {
+      "label": "F2/Info",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFD",
+          "function": "0x83",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Huawei DC211_ext.rmdu function 34 'F2/Info' (OBC 3E; NEC2, parms 1 253 0): NEC2 device 1 subdevice 253 function 131"
+        }
+      ]
+    },
+    "KEY_F3_SLASH_MOSAIC": {
+      "label": "F3/Mosaic",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFD",
+          "function": "0xCD",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Huawei DC211_ext.rmdu function 35 'F3/Mosaic' (OBC 4C; NEC2, parms 1 253 0): NEC2 device 1 subdevice 253 function 205"
+        }
+      ]
+    },
+    "KEY_F4_SLASH_FAV": {
+      "label": "F4/Fav",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFD",
+          "function": "0x8D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Huawei DC211_ext.rmdu function 36 'F4/Fav' (OBC 4E; NEC2, parms 1 253 0): NEC2 device 1 subdevice 253 function 141"
+        }
+      ]
+    },
+    "KEY_F5_SLASH_MSJ": {
+      "label": "F5/Msj",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFD",
+          "function": "0x91",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Huawei DC211_ext.rmdu function 37 'F5/Msj' (OBC 76; NEC2, parms 1 253 0): NEC2 device 1 subdevice 253 function 145"
+        }
+      ]
+    },
+    "KEY_F6_SLASH_GAMES": {
+      "label": "F6/Games",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFD",
+          "function": "0xD0",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Huawei DC211_ext.rmdu function 38 'F6/Games' (OBC F4; NEC2, parms 1 253 0): NEC2 device 1 subdevice 253 function 208"
+        }
+      ]
+    },
+    "KEY_F7_SLASH_AUDIO": {
+      "label": "F7/Audio",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFD",
+          "function": "0xC9",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Huawei DC211_ext.rmdu function 39 'F7/Audio' (OBC 6C; NEC2, parms 1 253 0): NEC2 device 1 subdevice 253 function 201"
+        }
+      ]
+    },
+    "KEY_F8_SLASH_LOCK": {
+      "label": "F8/Lock",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFD",
+          "function": "0xCF",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Huawei DC211_ext.rmdu function 40 'F8/Lock' (OBC 0C; NEC2, parms 1 253 0): NEC2 device 1 subdevice 253 function 207"
+        }
+      ]
+    },
+    "KEY_F9_SLASH_FIND": {
+      "label": "F9/Find",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFD",
+          "function": "0x98",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Huawei DC211_ext.rmdu function 41 'F9/Find' (OBC E6; NEC2, parms 1 253 0): NEC2 device 1 subdevice 253 function 152"
+        }
+      ]
+    },
+    "KEY_F10_SLASH_TV_MINUS_MUSIC": {
+      "label": "F10/TV-Music",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFD",
+          "function": "0x9D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Huawei DC211_ext.rmdu function 42 'F10/TV-Music' (OBC 46; NEC2, parms 1 253 0): NEC2 device 1 subdevice 253 function 157"
+        }
+      ]
+    },
+    "KEY_HELP": {
+      "label": "Help",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFD",
+          "function": "0x96",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Huawei DC211_ext.rmdu function 43 'Help' (OBC 96; NEC2, parms 1 253 0): NEC2 device 1 subdevice 253 function 150"
+        }
+      ]
+    }
+  }
+}

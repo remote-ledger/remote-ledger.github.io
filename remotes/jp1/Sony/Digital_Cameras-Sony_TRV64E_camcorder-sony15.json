@@ -1,0 +1,54 @@
+{
+  "manufacturer": "Sony",
+  "model": "TRV64E camcorder [Sony15]",
+  "aliases": [],
+  "controls": [
+    "Sony TRV64E camcorder"
+  ],
+  "protocol": {
+    "name": "Sony15",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_POWER": {
+      "label": "power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD9",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital Cameras/Sony TRV64E camcorder.rmdu function 0 'power' (OBC 01; Sony 12/15, parms 7 0 217 0): Sony15 device 217 function 0; the upgrade's note: 'May not be needed'"
+        }
+      ]
+    },
+    "KEY_T": {
+      "label": "T",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD9",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital Cameras/Sony TRV64E camcorder.rmdu function 8 'T' (OBC 59; Sony 12/15, parms 7 0 217 0): Sony15 device 217 function 26"
+        }
+      ]
+    },
+    "KEY_W": {
+      "label": "W",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD9",
+          "function": "0x1B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital Cameras/Sony TRV64E camcorder.rmdu function 9 'W' (OBC D9; Sony 12/15, parms 7 0 217 0): Sony15 device 217 function 27"
+        }
+      ]
+    }
+  }
+}

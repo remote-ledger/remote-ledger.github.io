@@ -1,0 +1,57 @@
+{
+  "manufacturer": "Portta",
+  "model": "PET0301S 3x1 HDMI Switch",
+  "aliases": [],
+  "controls": [
+    "PORTTA PET0301S 3x1 HDMI Switch"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_NUM_1": {
+      "label": "num_1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio_Video Selectors/PORTTA PET0301S 3x1 Port HDMI Switch.rmdu function 0 'num_1' (OBC DF; NEC1, parms 0 null null): NEC1 device 0 subdevice 255 function 4"
+        }
+      ]
+    },
+    "KEY_NUM_2": {
+      "label": "num_2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio_Video Selectors/PORTTA PET0301S 3x1 Port HDMI Switch.rmdu function 1 'num_2' (OBC EF; NEC1, parms 0 null null): NEC1 device 0 subdevice 255 function 8"
+        }
+      ]
+    },
+    "KEY_NUM_3": {
+      "label": "num_3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio_Video Selectors/PORTTA PET0301S 3x1 Port HDMI Switch.rmdu function 2 'num_3' (OBC AF; NEC1, parms 0 null null): NEC1 device 0 subdevice 255 function 10"
+        }
+      ]
+    }
+  }
+}

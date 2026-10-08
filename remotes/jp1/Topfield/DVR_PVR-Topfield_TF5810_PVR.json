@@ -1,0 +1,757 @@
+{
+  "manufacturer": "Topfield",
+  "model": "TF5810 PVR",
+  "aliases": [],
+  "controls": [
+    "Topfield TF5810 PVR"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER": {
+      "label": "power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 0 'power' (OBC AF; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 10"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 1 'mute' (OBC CF; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 12"
+        }
+      ]
+    },
+    "KEY_V_FORMAT": {
+      "label": "v.format",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x42",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 2 'v.format' (OBC BD; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 66"
+        }
+      ]
+    },
+    "KEY_A_SLASH_R": {
+      "label": "a/r",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x43",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 3 'a/r' (OBC 3D; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 67"
+        }
+      ]
+    },
+    "KEY_AUX_TV_SLASH_VCR": {
+      "label": "aux (tv/vcr)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 4 'aux (tv/vcr)' (OBC EF; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 8"
+        }
+      ]
+    },
+    "KEY_TV_SLASH_RADIO": {
+      "label": "tv/radio",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 5 'tv/radio' (OBC DF; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 4"
+        }
+      ]
+    },
+    "KEY_1": {
+      "label": "1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 6 '1' (OBC 77; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 17"
+        }
+      ]
+    },
+    "KEY_2": {
+      "label": "2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 7 '2' (OBC B7; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 18"
+        }
+      ]
+    },
+    "KEY_3": {
+      "label": "3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 8 '3' (OBC 37; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 19"
+        }
+      ]
+    },
+    "KEY_4": {
+      "label": "4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 9 '4' (OBC D7; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 20"
+        }
+      ]
+    },
+    "KEY_5": {
+      "label": "5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 10 '5' (OBC 57; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 21"
+        }
+      ]
+    },
+    "KEY_6": {
+      "label": "6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 11 '6' (OBC 97; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 22"
+        }
+      ]
+    },
+    "KEY_7": {
+      "label": "7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x17",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 12 '7' (OBC 17; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 23"
+        }
+      ]
+    },
+    "KEY_8": {
+      "label": "8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x18",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 13 '8' (OBC E7; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 24"
+        }
+      ]
+    },
+    "KEY_9": {
+      "label": "9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x19",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 14 '9' (OBC 67; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 25"
+        }
+      ]
+    },
+    "KEY_RECALL_PREV_CH": {
+      "label": "recall (prev ch)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x1E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 15 'recall (prev ch)' (OBC 87; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 30"
+        }
+      ]
+    },
+    "KEY_0": {
+      "label": "0",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 16 '0' (OBC F7; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 16"
+        }
+      ]
+    },
+    "KEY_I_INFO": {
+      "label": "i (info)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x1D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 17 'i (info)' (OBC 47; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 29"
+        }
+      ]
+    },
+    "KEY_AUDIO_TRK": {
+      "label": "audio trk",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 18 'audio trk' (OBC 5F; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 5"
+        }
+      ]
+    },
+    "KEY_TEXT": {
+      "label": "text",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x47",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 19 'text' (OBC 1D; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 71"
+        }
+      ]
+    },
+    "KEY_SUBTITLES": {
+      "label": "subtitles",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 20 'subtitles' (OBC 1F; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 7"
+        }
+      ]
+    },
+    "KEY_OPT": {
+      "label": "opt",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x44",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 21 'opt' (OBC DD; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 68"
+        }
+      ]
+    },
+    "KEY_MENU": {
+      "label": "menu",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 22 'menu' (OBC A7; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 26"
+        }
+      ]
+    },
+    "KEY_GUIDE": {
+      "label": "guide",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x1B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 23 'guide' (OBC 27; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 27"
+        }
+      ]
+    },
+    "KEY_UP": {
+      "label": "up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 24 'up' (OBC FF; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 0"
+        }
+      ]
+    },
+    "KEY_LEFT": {
+      "label": "left",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 25 'left' (OBC 3F; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 3"
+        }
+      ]
+    },
+    "KEY_OK": {
+      "label": "ok",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x1F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 26 'ok' (OBC 07; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 31"
+        }
+      ]
+    },
+    "KEY_RIGHT": {
+      "label": "right",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 27 'right' (OBC BF; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 2"
+        }
+      ]
+    },
+    "KEY_DOWN": {
+      "label": "down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 28 'down' (OBC 7F; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 1"
+        }
+      ]
+    },
+    "KEY_EXIT": {
+      "label": "exit",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x1C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 29 'exit' (OBC C7; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 28"
+        }
+      ]
+    },
+    "KEY_LIST": {
+      "label": "list",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 30 'list' (OBC 6F; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 9"
+        }
+      ]
+    },
+    "KEY_V_PLUS": {
+      "label": "v+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x4D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 31 'v+' (OBC 4D; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 77"
+        }
+      ]
+    },
+    "KEY_V_MINUS": {
+      "label": "v-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 32 'v-' (OBC 4F; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 13"
+        }
+      ]
+    },
+    "KEY_P_PLUS": {
+      "label": "p+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x0E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 33 'p+' (OBC 8F; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 14"
+        }
+      ]
+    },
+    "KEY_P_MINUS": {
+      "label": "p-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 34 'p-' (OBC 0F; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 15"
+        }
+      ]
+    },
+    "KEY_REWIND": {
+      "label": "rewind",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x45",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 35 'rewind' (OBC 5D; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 69"
+        }
+      ]
+    },
+    "KEY_PAUSE": {
+      "label": "pause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 36 'pause' (OBC 9F; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 6"
+        }
+      ]
+    },
+    "KEY_PLAY": {
+      "label": "play",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x46",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 37 'play' (OBC 9D; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 70"
+        }
+      ]
+    },
+    "KEY_FAST_FWD": {
+      "label": "fast fwd",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x48",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 38 'fast fwd' (OBC ED; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 72"
+        }
+      ]
+    },
+    "KEY_RECORD": {
+      "label": "record",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x4B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 39 'record' (OBC 2D; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 75"
+        }
+      ]
+    },
+    "KEY_STOP": {
+      "label": "stop",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x4A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 40 'stop' (OBC AD; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 74"
+        }
+      ]
+    },
+    "KEY_SLOW": {
+      "label": "slow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x49",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 41 'slow' (OBC 6D; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 73"
+        }
+      ]
+    },
+    "KEY_FILELIST_ARCHIVE": {
+      "label": "filelist (archive)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x51",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 42 'filelist (archive)' (OBC 75; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 81"
+        }
+      ]
+    },
+    "KEY_WHITE": {
+      "label": "white",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x4C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 43 'white' (OBC CD; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 76; the upgrade's note: 'PiP service list/repeat mode/start play selection'"
+        }
+      ]
+    },
+    "KEY_PREV": {
+      "label": "prev",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 44 'prev' (OBC F5; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 80; the upgrade's note: 'to beginning/cycle PiP anti-clockwise'"
+        }
+      ]
+    },
+    "KEY_NEXT": {
+      "label": "next",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x52",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 45 'next' (OBC B5; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 82; the upgrade's note: 'to end/cycle PiP clockwise'"
+        }
+      ]
+    },
+    "KEY_SAT_PIP_SWAP": {
+      "label": "sat (pip swap)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x5E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 46 'sat (pip swap)' (OBC 85; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 94"
+        }
+      ]
+    },
+    "KEY_RED": {
+      "label": "red",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x5F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 47 'red' (OBC 05; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 95; the upgrade's note: 'f1'"
+        }
+      ]
+    },
+    "KEY_GREEN": {
+      "label": "green",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x53",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 48 'green' (OBC 35; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 83; the upgrade's note: 'f2/set bookmark'"
+        }
+      ]
+    },
+    "KEY_YELLOW": {
+      "label": "yellow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x57",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 49 'yellow' (OBC 15; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 87; the upgrade's note: 'f3/goto bookmark'"
+        }
+      ]
+    },
+    "KEY_BLUE": {
+      "label": "blue",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x5B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 50 'blue' (OBC 25; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 91; the upgrade's note: 'f4'"
+        }
+      ]
+    },
+    "KEY_PIP_MOVE": {
+      "label": "pip (move)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x4F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 51 'pip (move)' (OBC 0D; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 79"
+        }
+      ]
+    },
+    "KEY_FAV": {
+      "label": "fav",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "subdevice": "0x34",
+          "function": "0x4E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Topfield TF5810 PVR.rmdu function 52 'fav' (OBC 8D; NEC1, parms 2 52 null): NEC1 device 2 subdevice 52 function 78"
+        }
+      ]
+    }
+  }
+}

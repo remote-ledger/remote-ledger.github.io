@@ -1,0 +1,687 @@
+{
+  "manufacturer": "Protron",
+  "model": "PD-800",
+  "aliases": [],
+  "controls": [
+    "Protron PD-800"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_SETUP": {
+      "label": "Setup",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 0 'Setup' (OBC 2F; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 11"
+        }
+      ]
+    },
+    "KEY_TITLE": {
+      "label": "Title",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 1 'Title' (OBC 3F; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 3"
+        }
+      ]
+    },
+    "KEY_MENU": {
+      "label": "Menu",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 2 'Menu' (OBC AF; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 10"
+        }
+      ]
+    },
+    "KEY_DISPLAY": {
+      "label": "Display",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x53",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 3 'Display' (OBC 35; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 83"
+        }
+      ]
+    },
+    "KEY_SLOW": {
+      "label": "Slow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 4 'Slow' (OBC 37; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 19"
+        }
+      ]
+    },
+    "KEY_10_PLUS": {
+      "label": "10+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 5 '10+' (OBC EF; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 8"
+        }
+      ]
+    },
+    "KEY_A_MINUS_B": {
+      "label": "A-B",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 6 'A-B' (OBC BF; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 2"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "Mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 7 'Mute' (OBC 57; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 21"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "Vol+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x1F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 8 'Vol+' (OBC 07; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 31"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "Vol-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x1E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 9 'Vol-' (OBC 87; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 30"
+        }
+      ]
+    },
+    "KEY_SKIP_PLUS": {
+      "label": "Skip+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 10 'Skip+' (OBC D7; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 20"
+        }
+      ]
+    },
+    "KEY_SKIP_MINUS": {
+      "label": "Skip-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x1C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 11 'Skip-' (OBC C7; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 28"
+        }
+      ]
+    },
+    "KEY_UP": {
+      "label": "Up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 12 'Up' (OBC 7F; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 1"
+        }
+      ]
+    },
+    "KEY_DOWN": {
+      "label": "Down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 13 'Down' (OBC 6F; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 9"
+        }
+      ]
+    },
+    "KEY_LEFT": {
+      "label": "Left",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x19",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 14 'Left' (OBC 67; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 25"
+        }
+      ]
+    },
+    "KEY_RIGHT": {
+      "label": "Right",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 15 'Right' (OBC 77; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 17"
+        }
+      ]
+    },
+    "KEY_OK": {
+      "label": "OK",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x40",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 16 'OK' (OBC FD; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 64"
+        }
+      ]
+    },
+    "KEY_PLAY": {
+      "label": "Play",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x17",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 17 'Play' (OBC 17; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 23"
+        }
+      ]
+    },
+    "KEY_STOP": {
+      "label": "Stop",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 18 'Stop' (OBC 1F; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 7"
+        }
+      ]
+    },
+    "KEY_REW": {
+      "label": "Rew",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 19 'Rew' (OBC 0F; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 15"
+        }
+      ]
+    },
+    "KEY_FFWD": {
+      "label": "FFwd",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x0E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 20 'FFwd' (OBC 8F; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 14"
+        }
+      ]
+    },
+    "KEY_PAUSE": {
+      "label": "Pause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 21 'Pause' (OBC DF; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 4"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "Power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 22 'Power' (OBC B7; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 18"
+        }
+      ]
+    },
+    "KEY_NTSC_SLASH_PAL": {
+      "label": "NTSC/PAL",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 23 'NTSC/PAL' (OBC CF; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 12; the upgrade's note: 'Not found on OEM remote.'"
+        }
+      ]
+    },
+    "KEY_EJECT": {
+      "label": "Eject",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 24 'Eject' (OBC 97; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 22"
+        }
+      ]
+    },
+    "KEY_P_MINUS_SCAN": {
+      "label": "P-Scan",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x49",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 25 'P-Scan' (OBC 6D; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 73; the upgrade's note: 'A function for optimizing CRT displays. Not intended for HDTVs.'"
+        }
+      ]
+    },
+    "KEY_SUBTITLES": {
+      "label": "Subtitles",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x4A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 26 'Subtitles' (OBC AD; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 74"
+        }
+      ]
+    },
+    "KEY_LANGUAGE": {
+      "label": "Language",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x4B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 27 'Language' (OBC 2D; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 75"
+        }
+      ]
+    },
+    "KEY_TIME": {
+      "label": "Time",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x18",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 28 'Time' (OBC E7; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 24; the upgrade's note: 'Time & chapter jump. Press Play to activate.'"
+        }
+      ]
+    },
+    "KEY_REPEAT": {
+      "label": "Repeat",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x1B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 29 'Repeat' (OBC 27; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 27"
+        }
+      ]
+    },
+    "KEY_STEP": {
+      "label": "Step",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 30 'Step' (OBC 4F; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 13"
+        }
+      ]
+    },
+    "KEY_L_SLASH_R": {
+      "label": "L/R",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x1D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 31 'L/R' (OBC 47; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 29; the upgrade's note: 'in CD mode. It repeats the Language key in DVD mode.'"
+        }
+      ]
+    },
+    "KEY_0": {
+      "label": "0",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 32 '0' (OBC FF; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 0"
+        }
+      ]
+    },
+    "KEY_1": {
+      "label": "1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x41",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 33 '1' (OBC 7D; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 65"
+        }
+      ]
+    },
+    "KEY_4": {
+      "label": "4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x42",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 34 '4' (OBC BD; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 66"
+        }
+      ]
+    },
+    "KEY_7": {
+      "label": "7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x43",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 35 '7' (OBC 3D; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 67"
+        }
+      ]
+    },
+    "KEY_3": {
+      "label": "3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x45",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 36 '3' (OBC 5D; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 69"
+        }
+      ]
+    },
+    "KEY_6": {
+      "label": "6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x46",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 37 '6' (OBC 9D; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 70"
+        }
+      ]
+    },
+    "KEY_9": {
+      "label": "9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x47",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 38 '9' (OBC 1D; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 71"
+        }
+      ]
+    },
+    "KEY_2": {
+      "label": "2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x4D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 39 '2' (OBC 4D; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 77"
+        }
+      ]
+    },
+    "KEY_5": {
+      "label": "5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x4E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 40 '5' (OBC 8D; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 78"
+        }
+      ]
+    },
+    "KEY_8": {
+      "label": "8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x4F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 41 '8' (OBC 0D; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 79"
+        }
+      ]
+    },
+    "KEY_ANGLE": {
+      "label": "Angle",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 42 'Angle' (OBC F7; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 16"
+        }
+      ]
+    },
+    "KEY_ZOOM2": {
+      "label": "Zoom2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 43 'Zoom2' (OBC 9F; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 6; the upgrade's note: 'extra key'"
+        }
+      ]
+    },
+    "KEY_ZOOM": {
+      "label": "Zoom",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x48",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 44 'Zoom' (OBC ED; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 72"
+        }
+      ]
+    },
+    "KEY_RESUME": {
+      "label": "Resume",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 45 'Resume' (OBC A7; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 26"
+        }
+      ]
+    },
+    "KEY_DISPLAY2": {
+      "label": "Display2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x52",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 46 'Display2' (OBC B5; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 82; the upgrade's note: 'extra key'"
+        }
+      ]
+    },
+    "KEY_PROGRAM": {
+      "label": "Program",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x51",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Protron PD-800.rmdu function 47 'Program' (OBC 75; NEC1, parms 0 null null 0 0): NEC1 device 0 subdevice 255 function 81"
+        }
+      ]
+    }
+  }
+}

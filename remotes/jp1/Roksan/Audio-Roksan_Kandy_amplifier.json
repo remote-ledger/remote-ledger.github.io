@@ -1,0 +1,127 @@
+{
+  "manufacturer": "Roksan",
+  "model": "Kandy",
+  "aliases": [],
+  "controls": [
+    "Roksan Kandy"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_INPUT_MINUS": {
+      "label": "input-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x9F",
+          "function": "0x1C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Roksan Kandy amplifier.rmdu function 0 'input-' (OBC C7; NEC1, parms 32 159 0 0 0): NEC1 device 32 subdevice 159 function 28"
+        }
+      ]
+    },
+    "KEY_INPUT_PLUS": {
+      "label": "input+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x9F",
+          "function": "0x48",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Roksan Kandy amplifier.rmdu function 1 'input+' (OBC ED; NEC1, parms 32 159 0 0 0): NEC1 device 32 subdevice 159 function 72"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "Vol+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x9F",
+          "function": "0x44",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Roksan Kandy amplifier.rmdu function 2 'Vol+' (OBC DD; NEC1, parms 32 159 0 0 0): NEC1 device 32 subdevice 159 function 68"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "Vol-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x9F",
+          "function": "0x1D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Roksan Kandy amplifier.rmdu function 3 'Vol-' (OBC 47; NEC1, parms 32 159 0 0 0): NEC1 device 32 subdevice 159 function 29"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "Mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x9F",
+          "function": "0x40",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Roksan Kandy amplifier.rmdu function 4 'Mute' (OBC FD; NEC1, parms 32 159 0 0 0): NEC1 device 32 subdevice 159 function 64"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "Power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x9F",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Roksan Kandy amplifier.rmdu function 5 'Power' (OBC A7; NEC1, parms 32 159 0 0 0): NEC1 device 32 subdevice 159 function 26"
+        }
+      ]
+    },
+    "KEY_TAPE": {
+      "label": "Tape",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x9F",
+          "function": "0x0E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Roksan Kandy amplifier.rmdu function 6 'Tape' (OBC 8F; NEC1, parms 32 159 0 0 0): NEC1 device 32 subdevice 159 function 14; the upgrade's note: 'allows recording from the selected input to the \"tape\" output'"
+        }
+      ]
+    },
+    "KEY_MODE": {
+      "label": "Mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x9F",
+          "function": "0x4C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Roksan Kandy amplifier.rmdu function 7 'Mode' (OBC CD; NEC1, parms 32 159 0 0 0): NEC1 device 32 subdevice 159 function 76; the upgrade's note: '\\ 3/4 mute (decreases volume by 20db)'"
+        }
+      ]
+    }
+  }
+}

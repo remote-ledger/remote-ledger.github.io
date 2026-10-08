@@ -1,0 +1,141 @@
+{
+  "manufacturer": "Terminix",
+  "model": "AllClear Mosquito Mister Lantern Edition with Naturals",
+  "aliases": [],
+  "controls": [
+    "Terminix AllClear Mosquito Mister Lantern Edition with Naturals"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_ON": {
+      "label": "on",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Terminix AllClear Mosquito Mister Lantern Edition with Naturals.rmdu function 0 'on' (OBC FF; NEC1, parms 0 null null): NEC1 device 0 subdevice 255 function 0"
+        }
+      ]
+    },
+    "KEY_OFF": {
+      "label": "off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Terminix AllClear Mosquito Mister Lantern Edition with Naturals.rmdu function 1 'off' (OBC BF; NEC1, parms 0 null null): NEC1 device 0 subdevice 255 function 2"
+        }
+      ]
+    },
+    "KEY_1_MINUS_FLY": {
+      "label": "1-fly",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Terminix AllClear Mosquito Mister Lantern Edition with Naturals.rmdu function 2 '1-fly' (OBC DF; NEC1, parms 0 null null): NEC1 device 0 subdevice 255 function 4; the upgrade's note: 'sets to low mist frequency'"
+        }
+      ]
+    },
+    "KEY_2_MINUS_FLY": {
+      "label": "2-fly",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Terminix AllClear Mosquito Mister Lantern Edition with Naturals.rmdu function 3 '2-fly' (OBC 5F; NEC1, parms 0 null null): NEC1 device 0 subdevice 255 function 5; the upgrade's note: 'sets to medium mist frequency'"
+        }
+      ]
+    },
+    "KEY_3_MINUS_FLY": {
+      "label": "3-fly",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Terminix AllClear Mosquito Mister Lantern Edition with Naturals.rmdu function 4 '3-fly' (OBC 9F; NEC1, parms 0 null null): NEC1 device 0 subdevice 255 function 6; the upgrade's note: 'sets to high mist frequency'"
+        }
+      ]
+    },
+    "KEY_RESET": {
+      "label": "reset",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Terminix AllClear Mosquito Mister Lantern Edition with Naturals.rmdu function 5 'reset' (OBC EF; NEC1, parms 0 null null): NEC1 device 0 subdevice 255 function 8"
+        }
+      ]
+    },
+    "KEY_MIST_NOW": {
+      "label": "mist now",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Terminix AllClear Mosquito Mister Lantern Edition with Naturals.rmdu function 6 'mist now' (OBC AF; NEC1, parms 0 null null): NEC1 device 0 subdevice 255 function 10"
+        }
+      ]
+    },
+    "KEY_LIGHT": {
+      "label": "light",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Terminix AllClear Mosquito Mister Lantern Edition with Naturals.rmdu function 7 'light' (OBC CF; NEC1, parms 0 null null): NEC1 device 0 subdevice 255 function 12"
+        }
+      ]
+    },
+    "KEY_MUTE_BEEP": {
+      "label": "mute beep",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x0E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Misc/Terminix AllClear Mosquito Mister Lantern Edition with Naturals.rmdu function 8 'mute beep' (OBC 8F; NEC1, parms 0 null null): NEC1 device 0 subdevice 255 function 14"
+        }
+      ]
+    }
+  }
+}

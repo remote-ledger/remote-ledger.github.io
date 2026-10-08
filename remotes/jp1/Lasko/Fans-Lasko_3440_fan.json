@@ -1,0 +1,71 @@
+{
+  "manufacturer": "Lasko",
+  "model": "_3440_fan",
+  "aliases": [],
+  "controls": [
+    "Lasko_3440_fan"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER": {
+      "label": "power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Fans/Lasko_3440_fan.rmdu function 0 'power' (OBC 3F; NEC1, parms 1 null null 0 0): NEC1 device 1 subdevice 254 function 3; the upgrade's note: 'Fan On/Off'"
+        }
+      ]
+    },
+    "KEY_SPEED": {
+      "label": "speed",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Fans/Lasko_3440_fan.rmdu function 1 'speed' (OBC 1F; NEC1, parms 1 null null 0 0): NEC1 device 1 subdevice 254 function 7; the upgrade's note: 'Fan Speed'"
+        }
+      ]
+    },
+    "KEY_TIMER": {
+      "label": "timer",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Fans/Lasko_3440_fan.rmdu function 2 'timer' (OBC 2F; NEC1, parms 1 null null 0 0): NEC1 device 1 subdevice 254 function 11; the upgrade's note: 'Fan Timer'"
+        }
+      ]
+    },
+    "KEY_OSCILLATE": {
+      "label": "oscillate",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Fans/Lasko_3440_fan.rmdu function 3 'oscillate' (OBC 0F; NEC1, parms 1 null null 0 0): NEC1 device 1 subdevice 254 function 15; the upgrade's note: 'Fan Oscillate'"
+        }
+      ]
+    }
+  }
+}

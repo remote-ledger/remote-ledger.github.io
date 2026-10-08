@@ -1,0 +1,673 @@
+{
+  "manufacturer": "Vivid",
+  "model": "AT-STB500",
+  "aliases": [],
+  "controls": [
+    "Vivid AT-STB500"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER": {
+      "label": "Power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 0 'Power' (OBC 1F; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 7"
+        }
+      ]
+    },
+    "KEY_TELETEXT": {
+      "label": "Teletext",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 1 'Teletext' (OBC 37; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 19"
+        }
+      ]
+    },
+    "KEY_LIST": {
+      "label": "List",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x4D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 2 'List' (OBC 4D; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 77"
+        }
+      ]
+    },
+    "KEY_SUBTITLE": {
+      "label": "Subtitle",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x19",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 3 'Subtitle' (OBC 67; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 25"
+        }
+      ]
+    },
+    "KEY_AUDIO": {
+      "label": "Audio",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 4 'Audio' (OBC 57; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 21"
+        }
+      ]
+    },
+    "KEY_FAVORITE": {
+      "label": "Favorite",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x44",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 5 'Favorite' (OBC DD; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 68"
+        }
+      ]
+    },
+    "KEY_GOTO": {
+      "label": "Goto",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 6 'Goto' (OBC CF; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 12"
+        }
+      ]
+    },
+    "KEY_PVR": {
+      "label": "PVR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x4C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 7 'PVR' (OBC CD; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 76"
+        }
+      ]
+    },
+    "KEY_REPEAT": {
+      "label": "Repeat",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 8 'Repeat' (OBC F7; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 16"
+        }
+      ]
+    },
+    "KEY_TV_SLASH_RADIO": {
+      "label": "TV/Radio",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x46",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 9 'TV/Radio' (OBC 9D; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 70"
+        }
+      ]
+    },
+    "KEY_ZOOM": {
+      "label": "Zoom",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x4E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 10 'Zoom' (OBC 8D; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 78"
+        }
+      ]
+    },
+    "KEY_MENU": {
+      "label": "Menu",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x1C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 11 'Menu' (OBC C7; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 28"
+        }
+      ]
+    },
+    "KEY_INFO": {
+      "label": "Info",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 12 'Info' (OBC B7; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 18"
+        }
+      ]
+    },
+    "KEY_EXIT": {
+      "label": "Exit",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x1E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 13 'Exit' (OBC 87; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 30"
+        }
+      ]
+    },
+    "KEY_GUIDE": {
+      "label": "Guide",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 14 'Guide' (OBC 77; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 17"
+        }
+      ]
+    },
+    "KEY_RED": {
+      "label": "Red",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 15 'Red' (OBC F5; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 80"
+        }
+      ]
+    },
+    "KEY_GREEN": {
+      "label": "Green",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x51",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 16 'Green' (OBC 75; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 81"
+        }
+      ]
+    },
+    "KEY_YELLOW": {
+      "label": "Yellow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x52",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 17 'Yellow' (OBC B5; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 82"
+        }
+      ]
+    },
+    "KEY_BLUE": {
+      "label": "Blue",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x53",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 18 'Blue' (OBC 35; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 83"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "Vol+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x42",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 19 'Vol+' (OBC BD; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 66"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "Vol-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x40",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 20 'Vol-' (OBC FD; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 64"
+        }
+      ]
+    },
+    "KEY_CH_PLUS": {
+      "label": "Ch+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x1D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 21 'Ch+' (OBC 47; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 29"
+        }
+      ]
+    },
+    "KEY_CH_MINUS": {
+      "label": "Ch-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x45",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 22 'Ch-' (OBC 5D; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 69"
+        }
+      ]
+    },
+    "KEY_UP": {
+      "label": "Up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x1D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 23 'Up' (OBC 47; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 29"
+        }
+      ]
+    },
+    "KEY_DOWN": {
+      "label": "Down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x45",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 24 'Down' (OBC 5D; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 69"
+        }
+      ]
+    },
+    "KEY_LEFT": {
+      "label": "Left",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x40",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 25 'Left' (OBC FD; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 64"
+        }
+      ]
+    },
+    "KEY_RIGHT": {
+      "label": "Right",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x42",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 26 'Right' (OBC BD; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 66"
+        }
+      ]
+    },
+    "KEY_OK": {
+      "label": "Ok",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x41",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 27 'Ok' (OBC 7D; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 65"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "Mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 28 'Mute' (OBC 3F; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 3"
+        }
+      ]
+    },
+    "KEY_LAST": {
+      "label": "Last",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x0E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 29 'Last' (OBC 8F; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 14"
+        }
+      ]
+    },
+    "KEY_REWIND": {
+      "label": "Rewind",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 30 'Rewind' (OBC D7; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 20"
+        }
+      ]
+    },
+    "KEY_FAST_FWD": {
+      "label": "Fast_Fwd",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x18",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 31 'Fast_Fwd' (OBC E7; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 24"
+        }
+      ]
+    },
+    "KEY_SKIP_BACK": {
+      "label": "Skip_Back",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 32 'Skip_Back' (OBC 97; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 22"
+        }
+      ]
+    },
+    "KEY_SKIP_FWD": {
+      "label": "Skip_Fwd",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 33 'Skip_Fwd' (OBC A7; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 26"
+        }
+      ]
+    },
+    "KEY_PLAY": {
+      "label": "Play",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x48",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 34 'Play' (OBC ED; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 72"
+        }
+      ]
+    },
+    "KEY_PAUSE": {
+      "label": "Pause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x49",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 35 'Pause' (OBC 6D; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 73"
+        }
+      ]
+    },
+    "KEY_STOP": {
+      "label": "Stop",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x4A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 36 'Stop' (OBC AD; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 74"
+        }
+      ]
+    },
+    "KEY_1": {
+      "label": "1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 37 '1' (OBC FF; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 0"
+        }
+      ]
+    },
+    "KEY_2": {
+      "label": "2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 38 '2' (OBC 7F; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 1"
+        }
+      ]
+    },
+    "KEY_3": {
+      "label": "3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 39 '3' (OBC BF; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 2"
+        }
+      ]
+    },
+    "KEY_4": {
+      "label": "4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 40 '4' (OBC DF; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 4"
+        }
+      ]
+    },
+    "KEY_5": {
+      "label": "5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 41 '5' (OBC 5F; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 5"
+        }
+      ]
+    },
+    "KEY_6": {
+      "label": "6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 42 '6' (OBC 9F; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 6"
+        }
+      ]
+    },
+    "KEY_7": {
+      "label": "7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 43 '7' (OBC EF; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 8"
+        }
+      ]
+    },
+    "KEY_8": {
+      "label": "8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 44 '8' (OBC 6F; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 9"
+        }
+      ]
+    },
+    "KEY_9": {
+      "label": "9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 45 '9' (OBC AF; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 10"
+        }
+      ]
+    },
+    "KEY_0": {
+      "label": "0",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Digital STBs/Vivid AT-STB500.rmdu function 46 '0' (OBC 4F; NEC1, parms 0 null 0 0 0): NEC1 device 0 subdevice 255 function 13"
+        }
+      ]
+    }
+  }
+}

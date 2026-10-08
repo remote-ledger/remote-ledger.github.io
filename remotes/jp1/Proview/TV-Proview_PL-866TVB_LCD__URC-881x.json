@@ -1,0 +1,477 @@
+{
+  "manufacturer": "Proview",
+  "model": "PL-866TVB (LCD TV & Monitor)",
+  "aliases": [],
+  "controls": [
+    "Proview PL-866TVB (LCD TV & Monitor)"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/Proview PL-866TVB LCD (URC-881x).rmdu function 0 'POWER' (OBC 5F; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 5"
+        }
+      ]
+    },
+    "KEY_YCBCR": {
+      "label": "YCbCr",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x1C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/Proview PL-866TVB LCD (URC-881x).rmdu function 1 'YCbCr' (OBC C7; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 28"
+        }
+      ]
+    },
+    "KEY_TV": {
+      "label": "TV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x0E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/Proview PL-866TVB LCD (URC-881x).rmdu function 2 'TV' (OBC 8F; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 14"
+        }
+      ]
+    },
+    "KEY_C_MINUS_VIDEO": {
+      "label": "C-VIDEO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/Proview PL-866TVB LCD (URC-881x).rmdu function 3 'C-VIDEO' (OBC 0F; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 15"
+        }
+      ]
+    },
+    "KEY_S_MINUS_VIDEO": {
+      "label": "S-VIDEO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/Proview PL-866TVB LCD (URC-881x).rmdu function 4 'S-VIDEO' (OBC 6F; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 9"
+        }
+      ]
+    },
+    "KEY_PC": {
+      "label": "PC",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/Proview PL-866TVB LCD (URC-881x).rmdu function 5 'PC' (OBC EF; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 8"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/Proview PL-866TVB LCD (URC-881x).rmdu function 6 'MUTE' (OBC 2F; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 11"
+        }
+      ]
+    },
+    "KEY_AUTO_SCAN": {
+      "label": "AUTO SCAN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/Proview PL-866TVB LCD (URC-881x).rmdu function 7 'AUTO SCAN' (OBC 4F; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 13"
+        }
+      ]
+    },
+    "KEY_DISPLAY": {
+      "label": "DISPLAY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/Proview PL-866TVB LCD (URC-881x).rmdu function 8 'DISPLAY' (OBC A7; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 26; the upgrade's note: 'INFO key'"
+        }
+      ]
+    },
+    "KEY_RESET_DANGER_ERASES_ALL_SETTINGS": {
+      "label": "RESET (danger\\: erases ALL settings\\!)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/Proview PL-866TVB LCD (URC-881x).rmdu function 9 'RESET (danger\\: erases ALL settings\\!)' (OBC DF; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 4; the upgrade's note: 'for reference, normal use or mapping  not advised.'"
+        }
+      ]
+    },
+    "KEY_EXIT": {
+      "label": "EXIT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x1F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/Proview PL-866TVB LCD (URC-881x).rmdu function 10 'EXIT' (OBC 07; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 31"
+        }
+      ]
+    },
+    "KEY_MENU": {
+      "label": "MENU",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x1E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/Proview PL-866TVB LCD (URC-881x).rmdu function 11 'MENU' (OBC 87; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 30"
+        }
+      ]
+    },
+    "KEY_ARROW_UP": {
+      "label": "ARROW UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/Proview PL-866TVB LCD (URC-881x).rmdu function 12 'ARROW UP' (OBC 9F; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 6"
+        }
+      ]
+    },
+    "KEY_ARROW_LEFT": {
+      "label": "ARROW LEFT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x41",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/Proview PL-866TVB LCD (URC-881x).rmdu function 13 'ARROW LEFT' (OBC 7D; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 65"
+        }
+      ]
+    },
+    "KEY_ARROW_RIGHT": {
+      "label": "ARROW RIGHT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x43",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/Proview PL-866TVB LCD (URC-881x).rmdu function 14 'ARROW RIGHT' (OBC 3D; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 67"
+        }
+      ]
+    },
+    "KEY_ARROW_DOWN": {
+      "label": "ARROW DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/Proview PL-866TVB LCD (URC-881x).rmdu function 15 'ARROW DOWN' (OBC 1F; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 7"
+        }
+      ]
+    },
+    "KEY_OK": {
+      "label": "OK",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x42",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/Proview PL-866TVB LCD (URC-881x).rmdu function 16 'OK' (OBC BD; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 66; the upgrade's note: 'SELECT key'"
+        }
+      ]
+    },
+    "KEY_1": {
+      "label": "1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/Proview PL-866TVB LCD (URC-881x).rmdu function 17 '1' (OBC 77; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 17"
+        }
+      ]
+    },
+    "KEY_2": {
+      "label": "2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/Proview PL-866TVB LCD (URC-881x).rmdu function 18 '2' (OBC B7; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 18"
+        }
+      ]
+    },
+    "KEY_3": {
+      "label": "3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/Proview PL-866TVB LCD (URC-881x).rmdu function 19 '3' (OBC 37; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 19"
+        }
+      ]
+    },
+    "KEY_4": {
+      "label": "4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/Proview PL-866TVB LCD (URC-881x).rmdu function 20 '4' (OBC D7; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 20"
+        }
+      ]
+    },
+    "KEY_5": {
+      "label": "5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/Proview PL-866TVB LCD (URC-881x).rmdu function 21 '5' (OBC 57; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 21"
+        }
+      ]
+    },
+    "KEY_6": {
+      "label": "6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/Proview PL-866TVB LCD (URC-881x).rmdu function 22 '6' (OBC 97; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 22"
+        }
+      ]
+    },
+    "KEY_7": {
+      "label": "7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x17",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/Proview PL-866TVB LCD (URC-881x).rmdu function 23 '7' (OBC 17; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 23"
+        }
+      ]
+    },
+    "KEY_8": {
+      "label": "8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x18",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/Proview PL-866TVB LCD (URC-881x).rmdu function 24 '8' (OBC E7; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 24"
+        }
+      ]
+    },
+    "KEY_9": {
+      "label": "9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x19",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/Proview PL-866TVB LCD (URC-881x).rmdu function 25 '9' (OBC 67; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 25"
+        }
+      ]
+    },
+    "KEY_0": {
+      "label": "0",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/Proview PL-866TVB LCD (URC-881x).rmdu function 26 '0' (OBC F7; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 16"
+        }
+      ]
+    },
+    "KEY_JUMP": {
+      "label": "JUMP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/Proview PL-866TVB LCD (URC-881x).rmdu function 27 'JUMP' (OBC CF; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 12; the upgrade's note: 'PREV key'"
+        }
+      ]
+    },
+    "KEY_ENTER": {
+      "label": "ENTER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x1B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/Proview PL-866TVB LCD (URC-881x).rmdu function 28 'ENTER' (OBC 27; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 27"
+        }
+      ]
+    },
+    "KEY_CH_UP": {
+      "label": "CH UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/Proview PL-866TVB LCD (URC-881x).rmdu function 29 'CH UP' (OBC BF; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 2"
+        }
+      ]
+    },
+    "KEY_CH_DOWN": {
+      "label": "CH DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/Proview PL-866TVB LCD (URC-881x).rmdu function 30 'CH DOWN' (OBC 3F; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 3"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/Proview PL-866TVB LCD (URC-881x).rmdu function 31 'VOL +' (OBC FF; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 0"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/Proview PL-866TVB LCD (URC-881x).rmdu function 32 'VOL -' (OBC 7F; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 1"
+        }
+      ]
+    }
+  }
+}

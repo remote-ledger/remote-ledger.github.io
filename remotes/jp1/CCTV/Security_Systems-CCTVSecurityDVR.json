@@ -1,0 +1,617 @@
+{
+  "manufacturer": "CCTV",
+  "model": "4/8/16 Channel CCTV Security DVR",
+  "aliases": [],
+  "controls": [
+    "4/8/16 Channel CCTV Security DVR"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_REC": {
+      "label": "Rec",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Security Systems/CCTVSecurityDVR.rmdu function 0 'Rec' (OBC 2F; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 11"
+        }
+      ]
+    },
+    "KEY_STATUS": {
+      "label": "Status",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Security Systems/CCTVSecurityDVR.rmdu function 1 'Status' (OBC 1F; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 7"
+        }
+      ]
+    },
+    "KEY_AUTO": {
+      "label": "Auto",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Security Systems/CCTVSecurityDVR.rmdu function 2 'Auto' (OBC 5F; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 5"
+        }
+      ]
+    },
+    "KEY_LOCK": {
+      "label": "Lock",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Security Systems/CCTVSecurityDVR.rmdu function 3 'Lock' (OBC CF; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 12"
+        }
+      ]
+    },
+    "KEY_ZOOM_PLUS": {
+      "label": "Zoom +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Security Systems/CCTVSecurityDVR.rmdu function 4 'Zoom +' (OBC EF; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 8"
+        }
+      ]
+    },
+    "KEY_ZOOM_MINUS": {
+      "label": "Zoom -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Security Systems/CCTVSecurityDVR.rmdu function 5 'Zoom -' (OBC D7; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 20"
+        }
+      ]
+    },
+    "KEY_T_MINUS_SRH": {
+      "label": "T-Srh",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Security Systems/CCTVSecurityDVR.rmdu function 6 'T-Srh' (OBC 6F; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 9"
+        }
+      ]
+    },
+    "KEY_PLAY": {
+      "label": "Play",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x57",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Security Systems/CCTVSecurityDVR.rmdu function 7 'Play' (OBC 15; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 87"
+        }
+      ]
+    },
+    "KEY_FOCUS_PLUS": {
+      "label": "Focus +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Security Systems/CCTVSecurityDVR.rmdu function 8 'Focus +' (OBC DF; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 4"
+        }
+      ]
+    },
+    "KEY_FOCUS_MINUS": {
+      "label": "Focus -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x51",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Security Systems/CCTVSecurityDVR.rmdu function 9 'Focus -' (OBC 75; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 81"
+        }
+      ]
+    },
+    "KEY_MENU": {
+      "label": "Menu",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x5F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Security Systems/CCTVSecurityDVR.rmdu function 10 'Menu' (OBC 05; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 95"
+        }
+      ]
+    },
+    "KEY_ESC": {
+      "label": "Esc",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x4F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Security Systems/CCTVSecurityDVR.rmdu function 11 'Esc' (OBC 0D; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 79"
+        }
+      ]
+    },
+    "KEY_BACK_UP": {
+      "label": "Back Up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x48",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Security Systems/CCTVSecurityDVR.rmdu function 12 'Back Up' (OBC ED; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 72"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "Mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Security Systems/CCTVSecurityDVR.rmdu function 13 'Mute' (OBC 7F; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 1"
+        }
+      ]
+    },
+    "KEY_ENTER_SLASH_MODE": {
+      "label": "Enter/Mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x5A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Security Systems/CCTVSecurityDVR.rmdu function 14 'Enter/Mode' (OBC A5; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 90"
+        }
+      ]
+    },
+    "KEY_SLOW_SLASH_UP": {
+      "label": "Slow/Up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x5B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Security Systems/CCTVSecurityDVR.rmdu function 15 'Slow/Up' (OBC 25; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 91"
+        }
+      ]
+    },
+    "KEY_RIGHT_SLASH_FORWARD": {
+      "label": "Right/Forward",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x4E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Security Systems/CCTVSecurityDVR.rmdu function 16 'Right/Forward' (OBC 8D; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 78"
+        }
+      ]
+    },
+    "KEY_STOP_SLASH_DOWN": {
+      "label": "Stop/Down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x5C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Security Systems/CCTVSecurityDVR.rmdu function 17 'Stop/Down' (OBC C5; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 92"
+        }
+      ]
+    },
+    "KEY_LEFT_SLASH_REVERSE": {
+      "label": "Left/Reverse",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x5E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Security Systems/CCTVSecurityDVR.rmdu function 18 'Left/Reverse' (OBC 85; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 94"
+        }
+      ]
+    },
+    "KEY_1": {
+      "label": "1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x1F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Security Systems/CCTVSecurityDVR.rmdu function 19 '1' (OBC 07; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 31"
+        }
+      ]
+    },
+    "KEY_2": {
+      "label": "2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x1C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Security Systems/CCTVSecurityDVR.rmdu function 20 '2' (OBC C7; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 28"
+        }
+      ]
+    },
+    "KEY_3": {
+      "label": "3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x1D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Security Systems/CCTVSecurityDVR.rmdu function 21 '3' (OBC 47; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 29"
+        }
+      ]
+    },
+    "KEY_PLUS_IRIS": {
+      "label": "+ iris",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Security Systems/CCTVSecurityDVR.rmdu function 22 '+ iris' (OBC BF; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 2"
+        }
+      ]
+    },
+    "KEY_4": {
+      "label": "4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Security Systems/CCTVSecurityDVR.rmdu function 23 '4' (OBC A7; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 26"
+        }
+      ]
+    },
+    "KEY_5": {
+      "label": "5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x59",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Security Systems/CCTVSecurityDVR.rmdu function 24 '5' (OBC 65; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 89"
+        }
+      ]
+    },
+    "KEY_6": {
+      "label": "6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x40",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Security Systems/CCTVSecurityDVR.rmdu function 25 '6' (OBC FD; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 64"
+        }
+      ]
+    },
+    "KEY_MINUS_IRIS": {
+      "label": "- iris",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x54",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Security Systems/CCTVSecurityDVR.rmdu function 26 '- iris' (OBC D5; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 84"
+        }
+      ]
+    },
+    "KEY_7": {
+      "label": "7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Security Systems/CCTVSecurityDVR.rmdu function 27 '7' (OBC 97; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 22"
+        }
+      ]
+    },
+    "KEY_8": {
+      "label": "8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x46",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Security Systems/CCTVSecurityDVR.rmdu function 28 '8' (OBC 9D; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 70"
+        }
+      ]
+    },
+    "KEY_9": {
+      "label": "9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x19",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Security Systems/CCTVSecurityDVR.rmdu function 29 '9' (OBC 67; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 25"
+        }
+      ]
+    },
+    "KEY_0": {
+      "label": "0",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Security Systems/CCTVSecurityDVR.rmdu function 30 '0' (OBC 4F; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 13"
+        }
+      ]
+    },
+    "KEY_PIP": {
+      "label": "Pip",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x41",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Security Systems/CCTVSecurityDVR.rmdu function 31 'Pip' (OBC 7D; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 65"
+        }
+      ]
+    },
+    "KEY_OSD": {
+      "label": "OSD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x52",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Security Systems/CCTVSecurityDVR.rmdu function 32 'OSD' (OBC B5; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 82"
+        }
+      ]
+    },
+    "KEY_FREEZE": {
+      "label": "Freeze",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Security Systems/CCTVSecurityDVR.rmdu function 33 'Freeze' (OBC 57; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 21"
+        }
+      ]
+    },
+    "KEY_PLUS_10": {
+      "label": "+10",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x4B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Security Systems/CCTVSecurityDVR.rmdu function 34 '+10' (OBC 2D; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 75"
+        }
+      ]
+    },
+    "KEY_ZOOM": {
+      "label": "Zoom",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x4A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Security Systems/CCTVSecurityDVR.rmdu function 35 'Zoom' (OBC AD; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 74"
+        }
+      ]
+    },
+    "KEY_PTZ": {
+      "label": "Ptz",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x53",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Security Systems/CCTVSecurityDVR.rmdu function 36 'Ptz' (OBC 35; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 83"
+        }
+      ]
+    },
+    "KEY_TOUR": {
+      "label": "Tour",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Security Systems/CCTVSecurityDVR.rmdu function 37 'Tour' (OBC FF; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 0"
+        }
+      ]
+    },
+    "KEY_PRESET": {
+      "label": "Preset",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x56",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Security Systems/CCTVSecurityDVR.rmdu function 38 'Preset' (OBC 95; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 86"
+        }
+      ]
+    },
+    "KEY_QUAD_DISPLAY": {
+      "label": "Quad Display",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x5D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Security Systems/CCTVSecurityDVR.rmdu function 39 'Quad Display' (OBC 45; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 93"
+        }
+      ]
+    },
+    "KEY_9X_DISPLAY": {
+      "label": "9x Display",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x4D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Security Systems/CCTVSecurityDVR.rmdu function 40 '9x Display' (OBC 4D; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 77"
+        }
+      ]
+    },
+    "KEY_13X_DISPLAY": {
+      "label": "13x Display",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x55",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Security Systems/CCTVSecurityDVR.rmdu function 41 '13x Display' (OBC 55; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 85"
+        }
+      ]
+    },
+    "KEY_16X_DISPLAY": {
+      "label": "16x Display",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "subdevice": "0xF7",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Security Systems/CCTVSecurityDVR.rmdu function 42 '16x Display' (OBC 9F; NEC1, parms 8 null null): NEC1 device 8 subdevice 247 function 6"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,365 @@
+{
+  "manufacturer": "Arylic",
+  "model": "Arylic",
+  "aliases": [],
+  "controls": [
+    "Arylic"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER": {
+      "label": "Power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x89",
+          "subdevice": "0x89",
+          "function": "0x40",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arylic.rmdu function 0 'Power' (OBC FD; NEC1, parms 137 137 null 0 0): NEC1 device 137 subdevice 137 function 64; the upgrade's note: 'Long Press (LP) MSG_TEST_1'"
+        }
+      ]
+    },
+    "KEY_LED_ON_SLASH_OFF": {
+      "label": "LED on/off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x89",
+          "subdevice": "0x89",
+          "function": "0x4D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arylic.rmdu function 1 'LED on/off' (OBC 4D; NEC1, parms 137 137 null 0 0): NEC1 device 137 subdevice 137 function 77; the upgrade's note: 'LP MSG_TEST_2'"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "Mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x89",
+          "subdevice": "0x89",
+          "function": "0x41",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arylic.rmdu function 2 'Mute' (OBC 7D; NEC1, parms 137 137 null 0 0): NEC1 device 137 subdevice 137 function 65"
+        }
+      ]
+    },
+    "KEY_USB": {
+      "label": "USB",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x89",
+          "subdevice": "0x89",
+          "function": "0x4C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arylic.rmdu function 3 'USB' (OBC CD; NEC1, parms 137 137 null 0 0): NEC1 device 137 subdevice 137 function 76"
+        }
+      ]
+    },
+    "KEY_AUX": {
+      "label": "Aux",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x89",
+          "subdevice": "0x89",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arylic.rmdu function 4 'Aux' (OBC 77; NEC1, parms 137 137 null 0 0): NEC1 device 137 subdevice 137 function 17"
+        }
+      ]
+    },
+    "KEY_OPT": {
+      "label": "Opt",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x89",
+          "subdevice": "0x89",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arylic.rmdu function 5 'Opt' (OBC F7; NEC1, parms 137 137 null 0 0): NEC1 device 137 subdevice 137 function 16"
+        }
+      ]
+    },
+    "KEY_BLUETOOTH": {
+      "label": "Bluetooth",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x89",
+          "subdevice": "0x89",
+          "function": "0x18",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arylic.rmdu function 6 'Bluetooth' (OBC E7; NEC1, parms 137 137 null 0 0): NEC1 device 137 subdevice 137 function 24"
+        }
+      ]
+    },
+    "KEY_WIFI": {
+      "label": "WiFi",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x89",
+          "subdevice": "0x89",
+          "function": "0x19",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arylic.rmdu function 7 'WiFi' (OBC 67; NEC1, parms 137 137 null 0 0): NEC1 device 137 subdevice 137 function 25"
+        }
+      ]
+    },
+    "KEY_UP": {
+      "label": "Up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x89",
+          "subdevice": "0x89",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arylic.rmdu function 8 'Up' (OBC 97; NEC1, parms 137 137 null 0 0): NEC1 device 137 subdevice 137 function 22; the upgrade's note: 'LP VOL2_UP'"
+        }
+      ]
+    },
+    "KEY_DOWN": {
+      "label": "Down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x89",
+          "subdevice": "0x89",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arylic.rmdu function 9 'Down' (OBC A7; NEC1, parms 137 137 null 0 0): NEC1 device 137 subdevice 137 function 26; the upgrade's note: 'LP VOL2_DN'"
+        }
+      ]
+    },
+    "KEY_PREVIOUS": {
+      "label": "Previous",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x89",
+          "subdevice": "0x89",
+          "function": "0x51",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arylic.rmdu function 10 'Previous' (OBC 75; NEC1, parms 137 137 null 0 0): NEC1 device 137 subdevice 137 function 81; the upgrade's note: 'LP WIFI_PREV_CH'"
+        }
+      ]
+    },
+    "KEY_NEXT": {
+      "label": "Next",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x89",
+          "subdevice": "0x89",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arylic.rmdu function 11 'Next' (OBC F5; NEC1, parms 137 137 null 0 0): NEC1 device 137 subdevice 137 function 80; the upgrade's note: 'LP WIFI_NEXT_CH'"
+        }
+      ]
+    },
+    "KEY_PLAY_SLASH_PAUSE": {
+      "label": "Play/Pause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x89",
+          "subdevice": "0x89",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arylic.rmdu function 12 'Play/Pause' (OBC 37; NEC1, parms 137 137 null 0 0): NEC1 device 137 subdevice 137 function 19; the upgrade's note: 'LP STOP'"
+        }
+      ]
+    },
+    "KEY_BASS_PLUS": {
+      "label": "Bass+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x89",
+          "subdevice": "0x89",
+          "function": "0x4E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arylic.rmdu function 13 'Bass+' (OBC 8D; NEC1, parms 137 137 null 0 0): NEC1 device 137 subdevice 137 function 78"
+        }
+      ]
+    },
+    "KEY_BASS_MINUS": {
+      "label": "Bass-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x89",
+          "subdevice": "0x89",
+          "function": "0x4A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arylic.rmdu function 14 'Bass-' (OBC AD; NEC1, parms 137 137 null 0 0): NEC1 device 137 subdevice 137 function 74"
+        }
+      ]
+    },
+    "KEY_TREB_PLUS": {
+      "label": "Treb+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x89",
+          "subdevice": "0x89",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arylic.rmdu function 15 'Treb+' (OBC 4F; NEC1, parms 137 137 null 0 0): NEC1 device 137 subdevice 137 function 13"
+        }
+      ]
+    },
+    "KEY_TREB_MINUS": {
+      "label": "Treb-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x89",
+          "subdevice": "0x89",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arylic.rmdu function 16 'Treb-' (OBC 6F; NEC1, parms 137 137 null 0 0): NEC1 device 137 subdevice 137 function 9"
+        }
+      ]
+    },
+    "KEY_FLAT": {
+      "label": "Flat",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x89",
+          "subdevice": "0x89",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arylic.rmdu function 17 'Flat' (OBC CF; NEC1, parms 137 137 null 0 0): NEC1 device 137 subdevice 137 function 12; the upgrade's note: 'LP EQ FLAT'"
+        }
+      ]
+    },
+    "KEY_DEEP_BASS": {
+      "label": "Deep Bass",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x89",
+          "subdevice": "0x89",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arylic.rmdu function 18 'Deep Bass' (OBC EF; NEC1, parms 137 137 null 0 0): NEC1 device 137 subdevice 137 function 8"
+        }
+      ]
+    },
+    "KEY_1": {
+      "label": "1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x89",
+          "subdevice": "0x89",
+          "function": "0x46",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arylic.rmdu function 19 '1' (OBC 9D; NEC1, parms 137 137 null 0 0): NEC1 device 137 subdevice 137 function 70; the upgrade's note: 'LP WIFI_PRESET1'"
+        }
+      ]
+    },
+    "KEY_2": {
+      "label": "2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x89",
+          "subdevice": "0x89",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arylic.rmdu function 20 '2' (OBC 5F; NEC1, parms 137 137 null 0 0): NEC1 device 137 subdevice 137 function 5; the upgrade's note: 'LP WIFI_PRESET2'"
+        }
+      ]
+    },
+    "KEY_3": {
+      "label": "3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x89",
+          "subdevice": "0x89",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arylic.rmdu function 21 '3' (OBC DF; NEC1, parms 137 137 null 0 0): NEC1 device 137 subdevice 137 function 4; the upgrade's note: 'LP WIFI_PRESET3'"
+        }
+      ]
+    },
+    "KEY_4": {
+      "label": "4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x89",
+          "subdevice": "0x89",
+          "function": "0x42",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arylic.rmdu function 22 '4' (OBC BD; NEC1, parms 137 137 null 0 0): NEC1 device 137 subdevice 137 function 66; the upgrade's note: 'LP WIFI_PRESET4'"
+        }
+      ]
+    },
+    "KEY_5": {
+      "label": "5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x89",
+          "subdevice": "0x89",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arylic.rmdu function 23 '5' (OBC 7F; NEC1, parms 137 137 null 0 0): NEC1 device 137 subdevice 137 function 1; the upgrade's note: 'LP WIFI_PRESET5'"
+        }
+      ]
+    },
+    "KEY_6": {
+      "label": "6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x89",
+          "subdevice": "0x89",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arylic.rmdu function 24 '6' (OBC FF; NEC1, parms 137 137 null 0 0): NEC1 device 137 subdevice 137 function 0; the upgrade's note: 'LP WIFI_PRESET6'"
+        }
+      ]
+    }
+  }
+}
