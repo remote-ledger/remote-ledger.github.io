@@ -114,8 +114,28 @@ def test_sony_20_is_device_sub_device_and_the_reversed_command():
     assert signal(up, 3) == "the command does not fit Sony's seven bits"
 
 
+def test_rc5_is_a_device_slot_a_complemented_command_and_a_flag_for_the_seventh_bit():
+    """``Rc5Translator``: the OBC's low two bits pick one of three device slots, its top six are the command
+    complemented, and the slot's OBC>63 flag adds the seventh bit. Arcam AVR100's parameters, `16 0 16 1 17 0`:
+    the second slot is device 16 again with the flag, which is how it sends 16-124 and 16-123."""
+    up = upgrade("RC-5", "16 0 16 1 17 0", ("Power ON/OFF", "CC"), ("Power OFF", "0D"), ("Power ON", "11"),
+                 ("Tuner", "F2"), ("a slot past the third is the first", "03"))
+    assert [signal(up, i) for i in range(5)] == [
+        rmdu.Signal("RC5", 16, None, 12), rmdu.Signal("RC5", 16, None, 124), rmdu.Signal("RC5", 16, None, 123),
+        rmdu.Signal("RC5", 17, None, 3), rmdu.Signal("RC5", 16, None, 63)]
+
+
+def test_a_slot_with_no_device_is_the_nearest_earlier_one_and_no_device_at_all_is_said_so():
+    # slot 2 (OBC low bits 10) has no device: it is slot 1, device 16, whose flag is 1: 63 - 0x30 = 15, with 64
+    assert signal(upgrade("RC-5", "8 0 16 1 null 0", ("x", "C2")), 0) == rmdu.Signal("RC5", 16, None, 63 - 0x30 + 64)
+    # slot 1 has no device and slot 0 has: slot 0, no flag
+    assert signal(upgrade("RC-5", "8 0 null 0 null 0", ("x", "C1")), 0) == rmdu.Signal("RC5", 8, None, 63 - 0x30)
+    assert signal(upgrade("RC-5", "null 0 16 0 null 0", ("x", "C0")), 0) == "the device the function selects is not set"
+    assert signal(upgrade("RC-5", "40 0 null 0 null 0", ("x", "C0")), 0) == "the RC-5 device is not five bits"
+
+
 def test_an_executor_not_read_and_a_function_with_no_single_byte_are_said_so():
-    assert "not read by this import" in signal(upgrade("RC-5", "28 0 null", ("power", "C4")))
+    assert "not read by this import" in signal(upgrade("MCE", "28 0 null", ("power", "C4")))
     assert signal(upgrade("NEC1", "6 null null", ("Power", "FF BF"))) == "the function has no single OBC byte"
     assert signal(upgrade("NEC1", "6 null null", ("Guide", None))) == "the function has no single OBC byte"
 
@@ -171,7 +191,7 @@ FILES = {
                            "Function.0.name=Power\r\nFunction.0.hex=AF\r\n"),
     "Misc/Nobody Box.rmdu": ("Description=Nobody Box\r\nProtocol.name=NEC1\r\nProtocolParms=6 null null\r\n"
                              "Function.0.name=Power\r\nFunction.0.hex=AF\r\n"),
-    "Audio/Rc5 Box.rmdu": ("Description=Acme RC5\r\nProtocol.name=RC-5\r\nProtocolParms=10 0\r\n"
+    "Audio/Mce Box.rmdu": ("Description=Acme MCE\r\nProtocol.name=MCE\r\nProtocolParms=10 0\r\n"
                            "Function.0.name=power\r\nFunction.0.hex=CC\r\n"),
     "TV/Keymap Master.txt": "not read\r\n",
     "Audio/Empty.rmdu": "Description=Acme Empty\r\nProtocol.name=NEC1\r\nProtocolParms=6 null null\r\n",
@@ -218,7 +238,7 @@ def test_a_checkout_becomes_one_file_per_protocol_and_every_function_a_key(small
     assert samsung["protocol"]["name"] == "NECx2" and samsung["protocol"]["minSends"] == 1
     assert set(samsung["keys"]) == {"KEY_POWER"}      # `Guide` has no OBC byte
     assert (report.files["upgrades"], report.remotes["imported"]) == (8, 6)
-    assert report.unread == {"RC-5": 1} and report.files["not read: KeymapMaster .txt"] == 1
+    assert report.unread == {"MCE": 1} and report.files["not read: KeymapMaster .txt"] == 1
     assert dict(report.protocols) == {"Sony12": 1, "Sony15": 1, "Sony20": 1, "NECx2": 2, "NEC1": 1}
 
 
@@ -306,7 +326,7 @@ def test_the_committed_jp1_import_keeps_r19():
     assert f"@ `{meta['commit']}`" in (ROOT / jp.IMPORT_ROOT / jp.REPORT).read_text(encoding="utf-8")
     shape = re.compile(
         rf"^jp1-device-upgrades@{meta['commit'][:7]} \S.* function (\d+) '.*' \(OBC ([0-9A-F]{{2}}); [^;]+, parms [^)]*\): "
-        r"(NEC1|NEC2|NECx1|NECx2|Sony12|Sony15|Sony20) device (\d+)(?: subdevice (\d+))? function (\d+)", re.S)
+        r"(NEC1|NEC2|NECx1|NECx2|Sony12|Sony15|Sony20|RC5) device (\d+)(?: subdevice (\d+))? function (\d+)", re.S)
 
     def num(value):
         return int(value, 0) if isinstance(value, str) else value
@@ -343,3 +363,24 @@ def test_the_committed_samsung_upgrade_agrees_with_the_authored_bn59_on_every_ke
     for key in shared:
         a, b = authored[key][0], upgrade_keys[key][0]
         assert (a.device, a.subdevice, a.function) == (b.device, b.subdevice, b.function), key
+
+
+def test_the_committed_arcam_upgrades_send_the_codes_arcam_publishes():
+    """An independent check of the RC-5 rule, from another source. Arcam's own table of its amplifiers'
+    IR codes (arcam.co.uk/ugc/tor/a18/IR Codes/amps_rc.pdf, system code 16) lists PHONO select 16-1, AV select
+    16-2, Tuner select 16-3, tape select 16-5, CD select 16-7, Mute 16-13, Volume up 16-16, Volume down 16-17,
+    Power-on 16-123 and Power-off 16-124. Two forum upgrades of Arcam equipment, decoded through the RC-5
+    executor's translator, send exactly those (the AVR100's `Power OFF` and `Power ON` through the OBC>63
+    flag of its second device slot)."""
+    def codes(name: str) -> dict[str, tuple[int, int]]:
+        doc = load(ROOT / jp.IMPORT_ROOT / "Arcam" / name)
+        assert doc["protocol"]["name"] == "RC5"
+        return {key: (int(spec["forms"][0]["device"], 16), int(spec["forms"][0]["function"], 16))
+                for key, spec in doc["keys"].items()}
+
+    amp = codes("Audio-Arcam_Amp-Tuner-CD.json")
+    assert {k: amp[k] for k in ("KEY_PHONO", "KEY_AV", "KEY_TUNER", "KEY_TAPE", "KEY_CD", "KEY_MUTE", "KEY_VOL_PLUS", "KEY_VOL_MINUS")} == {
+        "KEY_PHONO": (16, 1), "KEY_AV": (16, 2), "KEY_TUNER": (16, 3), "KEY_TAPE": (16, 5), "KEY_CD": (16, 7),
+        "KEY_MUTE": (16, 13), "KEY_VOL_PLUS": (16, 16), "KEY_VOL_MINUS": (16, 17)}
+    receiver = codes("Audio-Arcam_Receiver_AVR100.json")
+    assert (receiver["KEY_POWER_ON"], receiver["KEY_POWER_OFF"]) == ((16, 123), (16, 124))
