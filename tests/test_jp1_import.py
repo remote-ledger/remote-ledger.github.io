@@ -189,6 +189,45 @@ def test_the_yamaha_4dev_combo_is_nec_in_its_plain_style_and_refused_in_the_thre
     assert [signal(up, i) for i in (1, 2, 3)] == [refused] * 3
 
 
+def test_the_one_byte_executors_keep_the_obc_as_their_translator_does():
+    """RC-6 is ``Translator()``, the OBC as it is; Aiwa and Denon ``Translator(lsb)``, reversed; JVC and
+    Panasonic ``Translator(lsb,comp)``, reversed and complemented. The device is a parameter."""
+    assert signal(upgrade("RC-6", "16", ("standby", "0C"))) == rmdu.Signal("RC6", 16, None, 12)
+    assert signal(upgrade("RC-6", "null", ("x", "0C"))) == "the device parameter is missing"
+    assert signal(upgrade("JVC", "3", ("a", "3F"), ("b", "FF"), ("c", "00"))) == rmdu.Signal("JVC", 3, None, 3)
+    jvc = upgrade("JVC", "3", ("a", "3F"), ("b", "FF"), ("c", "00"))
+    assert [signal(jvc, i) for i in (1, 2)] == [rmdu.Signal("JVC", 3, None, 0), rmdu.Signal("JVC", 3, None, 255)]
+    assert signal(upgrade("Aiwa", "1 2", ("x", "01"))) == rmdu.Signal("Aiwa", 1, 2, 128)
+    # null device and sub device are the protocol's defaults, 0 and 0
+    assert signal(upgrade("Aiwa", "null null", ("x", "80"))) == rmdu.Signal("Aiwa", 0, 0, 1)
+    assert signal(upgrade("Aiwa", "1 32", ("x", "80"))) == "the Aiwa sub device is not five bits"
+    assert signal(upgrade("Denon", "8", ("x", "80"))) == rmdu.Signal("Denon", 8, None, 1)
+    assert signal(upgrade("Denon", "32", ("x", "80"))) == "the device parameter is missing or is not five bits"
+
+
+def test_panasonic_is_device_sub_device_and_the_function_reversed_and_complemented_with_oem_bytes_2_and_32():
+    up = upgrade("Panasonic", "144 0 2 32", ("a", "7F"))
+    assert signal(up) == rmdu.Signal("Panasonic", 144, 0, 1)
+    assert signal(upgrade("Panasonic", "144 null null null", ("a", "7F"))) == rmdu.Signal("Panasonic", 144, 0, 1)
+    assert signal(upgrade("Panasonic", "144 0 162 32", ("a", "7F"))) == "the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes"
+    # the combo: the sub device is the first byte and the function the second, each complemented and reversed
+    combo = upgrade("Panasonic Combo", "160 2 32", ("a", "7F 7F"), fixed="BF FB FA")
+    assert signal(combo) == rmdu.Signal("Panasonic", 160, 1, 1)
+    # a null main device is in FixedData: FA is 160, the default
+    assert signal(upgrade("Panasonic Combo", "null 2 32", ("a", "7F 7F"), fixed="BF FB FA")) == rmdu.Signal("Panasonic", 160, 1, 1)
+    assert signal(upgrade("Panasonic Combo", "160 2 20", ("a", "7F 7F"))) == "the OEM byte 20 is not Panasonic's 32, which the ledger's frame fixes"
+
+
+def test_the_jvc_and_denon_combos_put_the_device_in_the_first_byte_and_the_function_in_the_second():
+    """JVC Combo: ``CmdParms=OBC,Device`` over ``Translator(lsb,comp,0,8,8) Translator(lsb,comp,1,8,0)``, so the
+    device is the first byte and the function the second. Denon Combo: the device is the first byte's top five
+    bits (complemented, reversed), a bit that says Sharp or Denon, and the function is the second byte."""
+    assert signal(upgrade("JVC Combo", "", ("x", "3F FF"))) == rmdu.Signal("JVC", 3, None, 0)
+    denon = upgrade("Denon Combo (Official)", "", ("d", "E8 7F"), ("s", "EC 7F"))
+    assert [signal(denon, i) for i in (0, 1)] == [rmdu.Signal("Denon", 8, None, 1), rmdu.Signal("Sharp", 8, None, 1)]
+    assert signal(upgrade("Denon Combo (Official)", "", ("x", "E8"))) == "the function has no two OBC bytes"
+
+
 def test_an_executor_not_read_and_a_function_with_no_single_byte_are_said_so():
     assert "not read by this import" in signal(upgrade("MCE", "28 0 null", ("power", "C4")))
     assert signal(upgrade("NEC1", "6 null null", ("Power", "FF BF"))) == "the function has no single OBC byte"
@@ -381,7 +420,7 @@ def test_the_committed_jp1_import_keeps_r19():
     assert f"@ `{meta['commit']}`" in (ROOT / jp.IMPORT_ROOT / jp.REPORT).read_text(encoding="utf-8")
     shape = re.compile(
         rf"^jp1-device-upgrades@{meta['commit'][:7]} \S.* function (\d+) '.*' \(OBC ((?:[0-9A-F]{{2}})(?: [0-9A-F]{{2}})*); [^;]+, parms [^)]*\): "
-        r"(NEC1|NEC2|NECx1|NECx2|Sony12|Sony15|Sony20|RC5) device (\d+)(?: subdevice (\d+))? function (\d+)", re.S)
+        r"(NEC1|NEC2|NECx1|NECx2|Sony12|Sony15|Sony20|RC5|RC6|JVC|Aiwa|Denon|Sharp|Panasonic) device (\d+)(?: subdevice (\d+))? function (\d+)", re.S)
 
     def num(value):
         return int(value, 0) if isinstance(value, str) else value

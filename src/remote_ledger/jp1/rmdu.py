@@ -139,8 +139,16 @@ NEC1_COMBO = "NEC1 Combo"
 NEC_4DEV = "NEC 4DEV Combo"
 NEC_4DEV_YAMAHA = "NEC 4DEV Yamaha Combo"
 #: The combos whose functions are two OBC bytes. The others are one.
-TWO_BYTE = (SONY_COMBO, NEC1_COMBO, NEC_4DEV, NEC_4DEV_YAMAHA)
-MAPPED = (*NEC_FAMILY, SONY_1215, SONY_20, RC5, *TWO_BYTE)
+RC6 = "RC-6"
+JVC = "JVC"
+JVC_COMBO = "JVC Combo"
+AIWA = "Aiwa"
+DENON = "Denon"
+DENON_COMBO = "Denon Combo (Official)"
+PANASONIC = "Panasonic"
+PANASONIC_COMBO = "Panasonic Combo"
+TWO_BYTE = (SONY_COMBO, NEC1_COMBO, NEC_4DEV, NEC_4DEV_YAMAHA, JVC_COMBO, DENON_COMBO, PANASONIC_COMBO)
+MAPPED = (*NEC_FAMILY, SONY_1215, SONY_20, RC5, RC6, JVC, AIWA, DENON, PANASONIC, *TWO_BYTE)
 
 
 def signal_of(upgrade: Upgrade, function: Function) -> Signal | str:
@@ -191,7 +199,7 @@ def signal_of(upgrade: Upgrade, function: Function) -> Signal | str:
         return Signal("Sony20", device, sub, command)
     if name == RC5:
         return rc5_signal(parms, byte)
-    return f"the executor {name!r} is not read by this import"
+    return simple_signal(name, parms, byte)
 
 
 def rc5_signal(parms: list[str], byte: int) -> Signal | str:
@@ -263,6 +271,22 @@ def combo_signal(name: str, parms: list[str], first: int, second: int, fixed: li
         if device is None:
             return "the device parameter is missing"
         return Signal("NEC1", device, rev8(~first & 0xFF), rev8(~second & 0xFF))
+    if name == JVC_COMBO:
+        return Signal("JVC", rev8(~first & 0xFF), None, rev8(~second & 0xFF))
+    if name == PANASONIC_COMBO:
+        device = parm(parms, 0)
+        if device is None and len(fixed) > 2 and _HEX_BYTE.match(fixed[2]):
+            device = rev8(~int(fixed[2], 16) & 0xFF)      # Translator(lsb,comp,0,8,16): the default is 160
+        if device is None:
+            return "the device parameter is missing"
+        why = _panasonic_oem(parms, 1)
+        if why:
+            return why
+        return Signal("Panasonic", device, rev8(~first & 0xFF), rev8(~second & 0xFF))
+    if name == DENON_COMBO:
+        device = rev_bits(~(first >> 3) & 0x1F, 5)
+        protocol = "Denon" if not (first >> 2) & 1 else "Sharp"
+        return Signal(protocol, device, None, rev8(~second & 0xFF))
     function = rev8(~first & 0xFF)
     if name == NEC_4DEV_YAMAHA and second & 0x06:
         return "the Yamaha style sends a second byte that is not the complement of the first"
@@ -278,3 +302,51 @@ def combo_signal(name: str, parms: list[str], first: int, second: int, fixed: li
             return "the sub device parameter is missing"
         sub = ~device & 0xFF
     return Signal(style, device, sub, function)
+
+
+#: What the OEM bytes of a Panasonic upgrade must be for the ledger's ``Panasonic`` frame, which has them fixed.
+PANASONIC_OEM = (2, 32)
+
+
+def _panasonic_oem(parms: list[str], first: int) -> str | None:
+    """Why the OEM bytes at ``parms[first:first + 2]`` are not Panasonic's 2 and 32, or None. A ``null`` is the
+    executor's default, which is 2 and 32."""
+    for index, want in enumerate(PANASONIC_OEM):
+        got = parm(parms, first + index)
+        if got is not None and got != want:
+            return f"the OEM byte {got} is not Panasonic's {want}, which the ledger's frame fixes"
+    return None
+
+
+def simple_signal(name: str, parms: list[str], byte: int) -> Signal | str:
+    """The executors with one OBC byte and one translator each (DESIGN D141): the device is a parameter, the
+    function the OBC as the executor's ``CmdTranslator`` keeps it: ``Translator()`` plain for RC-6,
+    ``Translator(lsb)`` reversed for Aiwa and Denon, ``Translator(lsb,comp)`` reversed and complemented for
+    JVC and Panasonic."""
+    if name == RC6:
+        device = parm(parms, 0)
+        return Signal("RC6", device, None, byte) if device is not None and device < 256 else "the device parameter is missing"
+    if name == JVC:
+        device = parm(parms, 0)
+        return Signal("JVC", device, None, rev8(~byte & 0xFF)) if device is not None else "the device parameter is missing"
+    if name == AIWA:
+        # the protocol's own defaults: Device 0, Sub Device 0 (range 0..31)
+        device, sub = parm(parms, 0), parm(parms, 1)
+        device, sub = 0 if device is None else device, 0 if sub is None else sub
+        if sub > 31:
+            return "the Aiwa sub device is not five bits"
+        return Signal("Aiwa", device, sub, rev8(byte))
+    if name == DENON:
+        device = parm(parms, 0)
+        if device is None or device > 31:
+            return "the device parameter is missing or is not five bits"
+        return Signal("Denon", device, None, rev8(byte))
+    if name == PANASONIC:
+        device, sub = parm(parms, 0), parm(parms, 1)
+        if device is None:
+            return "the device parameter is missing"
+        why = _panasonic_oem(parms, 2)
+        if why:
+            return why
+        return Signal("Panasonic", device, sub if sub is not None else 0, rev8(~byte & 0xFF))
+    return f"the executor {name!r} is not read by this import"
