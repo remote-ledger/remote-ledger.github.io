@@ -83,8 +83,8 @@ def test_the_counts_for_a_known_corpus(corpus):
     assert report["sources"]["smartir"] == {
         "remotes": 1, "keys": 2, "mapped": 2, "atLeast90": 1, "atLeast75": 1, "atLeast50": 1}
     assert report["sources"]["authored"]["remotes"] == 1
-    # the fixture holds no hifi-remote, jp1 or official file, and a source with no remote is not a row
-    assert list(report["sources"]) == [*(s for s in SOURCES if s not in ("hifi-remote", "jp1", "official")), "all"]
+    # the fixture holds no hifi-remote, jp1, official or remotecentral file, and a source with no remote is not a row
+    assert list(report["sources"]) == [*(s for s in SOURCES if s not in ("hifi-remote", "jp1", "official", "remotecentral")), "all"]
     assert report["sources"]["all"] == {
         "remotes": 10, "keys": 70, "mapped": 51, "atLeast90": 4, "atLeast75": 6, "atLeast50": 9}
 
