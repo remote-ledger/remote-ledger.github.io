@@ -27,7 +27,7 @@ from typing import Iterable
 from ..app_api import brand_key
 from ..keys import load_vocabulary, squash
 from .aliases import Alias, rows_for
-from .corpus import SOURCE_ID, RemoteRecord, is_synthetic_model, play
+from .corpus import RemoteRecord, is_synthetic_model, play, source_ids
 from .merge import Folded, fold, ref_of
 from .textnorm import search_norm
 
@@ -293,6 +293,7 @@ def assemble(collected: Collected, chosen: frozenset[str] | None, profile: str,
     signals = [(n + 1, blob) for n, blob in enumerate(ordered)]
 
     remotes, keys, remote_refs = [], [], []
+    source_id = source_ids()
     per_source: dict[str, list[int]] = defaultdict(lambda: [0, 0])
     for i in included:
         remote_refs.append((ref_of(records[i]), folded.carrier[i] + 1,
@@ -307,7 +308,7 @@ def assemble(collected: Collected, chosen: frozenset[str] | None, profile: str,
             rid, ref_of(record),
             brand_id.get(maker),
             None if is_synthetic_model(record.source) else record.model,
-            SOURCE_ID[record.source], record.tier, len(record.keys), record.protocol,
+            source_id[record.source], record.tier, len(record.keys), record.protocol,
             record.carrier_hz, repeat, helper, empty, rule,
         ))
         per_source[record.source][0] += 1

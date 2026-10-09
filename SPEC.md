@@ -160,7 +160,12 @@ citing it (R19.2).
   exclusion ends when the licence changes. Until then, they can still
   inform a single key under R18 and R19, like any other citation. The
   IR Blaster database meets the licence condition by inheritance only
-  (R19.1), which is the weakest way any admitted source does.
+  (R19.1), which is the weakest way any admitted source does. **Data whose
+  licence is unclear is not imported here at all.** It is kept in a private
+  repository in this repository's layout, which `rl validate`, `check`,
+  `keys report` and `bundle` read through `--extra-root` and which never
+  reaches `build/` or `site/`, until the licence is cleared (DESIGN
+  D128 to D130).
 
 ## 5. Data model
 

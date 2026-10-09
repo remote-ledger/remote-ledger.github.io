@@ -36,7 +36,7 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
-from .corpus import SOURCES
+from .corpus import sources
 from .signals import blob_words, decode_blob, frequency_hz, press
 
 FORMAT = 1
@@ -67,7 +67,7 @@ def build_vectors(bundle: Path) -> dict[str, Any]:
                 "FROM keys k JOIN signals s ON s.id = k.signal_id ORDER BY k.remote_id, k.n"):
             n_words = (len(blob) - 2) // 2
             row = remotes[remote_id]
-            group = (SOURCES[row[2] - 1], row[3] or "(unnamed)")
+            group = (sources()[row[2] - 1], row[3] or "(unnamed)")
             keys_of[group].append((_rank(row[1], n), remote_id, n, canon_id, label, confidence,
                                    blob, n_words))
         chosen: dict[tuple[int, int], tuple] = {}
@@ -100,7 +100,7 @@ def build_vectors(bundle: Path) -> dict[str, Any]:
                 remotes[remote_id][7], remotes[remote_id][8])
             signal = decode_blob(blob, carrier)
             vectors.append({
-                "remote": ref, "n": n, "source": SOURCES[source - 1],
+                "remote": ref, "n": n, "source": sources()[source - 1],
                 "protocol": protocol, "canon": canon.get(canon_id), "label": label,
                 "confidence": confidence,
                 "blobHex": blob.hex(),

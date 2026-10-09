@@ -13,7 +13,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from . import __version__, parallel, protocols
+from . import __version__, parallel, paths, protocols
 from .errors import LedgerError, ValidationError
 from .generators import PIPELINE, diff_tree, owned_paths, registered
 from .check import check_remote
@@ -22,7 +22,7 @@ from .keys import vocabulary_problems
 from .pronto import encode as pronto_encode
 from .remote import load_remote
 from .serialize import dumps
-from .validate import corpus_files, validate_file, validate_files
+from .validate import corpus_files, extra_root_conflicts, validate_file, validate_files
 
 EXIT_OK, EXIT_ERROR, EXIT_UNAVAILABLE = 0, 1, 2
 
@@ -84,6 +84,7 @@ def cmd_validate(args: argparse.Namespace) -> int:
     # a run on one path is about that path's remotes.
     if args.path is None:
         problems += vocabulary_problems()
+        problems += extra_root_conflicts(_repo_root())
     for p in problems:
         print(f"ERROR {p}", file=sys.stderr)
     print(f"{len(targets)} file(s) checked, {len(problems)} error(s)")
@@ -185,7 +186,6 @@ def compiled_artifact(remote) -> dict:
 
 def _artifact_path(root: Path, target: Path) -> Path:
     """The same rule the compile generator uses (D40): mirror the source."""
-    from . import paths
 
     return root / paths.artifact(paths.rel(root, target))
 
@@ -760,6 +760,15 @@ def build_parser() -> argparse.ArgumentParser:
              f"CPUs up to {parallel.MAX_AUTO_JOBS}. Output never depends on it",
     )
 
+    # Only the commands that read the corpus and write nothing into build/ or site/ take extra roots
+    # (D128), so the committed trees stay a function of this repository alone.
+    extra = argparse.ArgumentParser(add_help=False)
+    extra.add_argument(
+        "--extra-root", action="append", default=argparse.SUPPRESS, metavar="DIR",
+        help="also read the remotes of DIR, a directory laid out like this repository with an "
+             "imports.json naming its sources; repeatable (D128)",
+    )
+
     p = argparse.ArgumentParser(
         prog="rl",
         description="Remote Ledger: compile and check IR remote files.",
@@ -769,7 +778,7 @@ def build_parser() -> argparse.ArgumentParser:
     sub = p.add_subparsers(dest="command", required=True)
 
     v = sub.add_parser(
-        "validate", help="schema and semantic checks (R15)", parents=[common]
+        "validate", help="schema and semantic checks (R15)", parents=[common, extra]
     )
     v.add_argument("path", nargs="?")
     v.set_defaults(func=cmd_validate)
@@ -796,7 +805,7 @@ def build_parser() -> argparse.ArgumentParser:
     # binary cannot print two different phase numbers for the same stage.
     generator_phase = {g.name: g.phase for g in PIPELINE}
     c = sub.add_parser(
-        "check", help="cross-check every candidate group (R13)", parents=[common]
+        "check", help="cross-check every candidate group (R13)", parents=[common, extra]
     )
     c.add_argument("path", nargs="?")
     c.set_defaults(func=cmd_check)
@@ -857,7 +866,7 @@ def build_parser() -> argparse.ArgumentParser:
     ap.set_defaults(func=cmd_app)
 
     bu = sub.add_parser(
-        "bundle", parents=[common],
+        "bundle", parents=[common, extra],
         help="build the catalog bundle an app ships: a SQLite file, notices and a manifest (D88)")
     bu.add_argument("--profile", choices=["selected", "full"], default="selected",
                     help="selected: what an app ships, every brand since D117, no size limit; "
@@ -920,7 +929,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     ky_sub = ky.add_subparsers(dest="keys_command", required=True)
     kr = ky_sub.add_parser(
-        "report", parents=[common],
+        "report", parents=[common, extra],
         help="how much of the corpus the vocabulary maps, per source (D86)",
     )
     kr.add_argument("--json", action="store_true", help="print the report as JSON")
@@ -942,12 +951,15 @@ def main(argv: list[str] | None = None) -> int:
     # next one made in the same process (the test suite makes many).
     parallel.configure(getattr(args, "jobs", None))
     try:
+        if getattr(args, "extra_root", None):
+            paths.configure_extra_roots([Path(d) for d in args.extra_root], primary=_repo_root())
         return args.func(args)
     except LedgerError as exc:
         print(f"ERROR {exc}", file=sys.stderr)
         return EXIT_ERROR
     finally:
         parallel.configure(None)
+        paths.clear_extra_roots()
 
 
 if __name__ == "__main__":  # pragma: no cover

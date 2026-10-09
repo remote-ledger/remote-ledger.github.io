@@ -44,9 +44,15 @@ Land it in two PRs, code and then data.
       KeymapMaster files. Each executor needs its translator found and checked
       against the ledger's codes first. The forum's file section holds about
       2,000 more upgrades than the GitHub copy, behind a free login.
-- [ ] **RemoteCentral's Hex Code Database** is the next source in the order
-      the owner chose (2,114 models, about 53,000 Pronto strings). The codes
-      are learned from remotes, so they import at the lowest tier.
+- [ ] **Data whose licence is unclear goes to the private repository**, not
+      here (DESIGN D130). RemoteCentral's Infrared Hex Code Database, learned
+      codes with every key Untested, is its first resident. When a licence is
+      cleared a source moves here by its own pull request: its `remotes/` and
+      `sources/` directories, its entries in `paths.IMPORTS`, the bundle's
+      `SOURCES` and the notices' `FACTS`, and its removal from the private
+      repository.
+- [ ] **Data of other makers or sites whose licence is unclear**: import it into
+      the private repository first, so that it is never in this one's history.
 - [ ] **The other makers' tables**: Oppo (through the Wayback Machine),
       Kaleidescape, Arcam, Cambridge Audio (Wayback), KEF, T+A and JVC. Each
       is a document pinned by hash as D123 does it.

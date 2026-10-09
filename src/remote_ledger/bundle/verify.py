@@ -277,7 +277,7 @@ def _verify_against_tree(conn: sqlite3.Connection, root: Path, manifest: dict[st
         want = corpus.play(record)
         if (repeat, helper, empty, rule) != want:
             problems.append(f"{ref}: plays as {(repeat, helper, empty, rule)}, the tree says {want}")
-        if (corpus.SOURCES[source - 1], tier, protocol, carrier, key_count) != (
+        if (corpus.sources()[source - 1], tier, protocol, carrier, key_count) != (
                 record.source, record.tier, record.protocol, record.carrier_hz, len(record.keys)):
             problems.append(f"{ref}: source, tier, protocol, carrier or key count differ from the file")
         if (model is None) != corpus.is_synthetic_model(record.source) or (
@@ -404,7 +404,7 @@ def _recompile_one(root: Path, ref: str, rid: int, files: list[RemoteRecord],
                 from ..cli import compiled_artifact
                 from ..remote import load_remote
 
-                compiled = compiled_artifact(load_remote(root / record.where))["keys"]
+                compiled = compiled_artifact(load_remote(paths.locate(root, record.where)))["keys"]
         except (LedgerError, OSError, ValueError) as exc:
             return [f"{ref}: cannot be compiled again: {exc}"]
         keys += [(name, compiled[name]["candidates"]["primary"]["prontoHex"]) for name in sorted(compiled)]

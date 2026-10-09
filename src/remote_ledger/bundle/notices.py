@@ -26,7 +26,7 @@ from typing import Any
 
 from .. import paths
 from ..errors import ValidationError
-from .corpus import SOURCE_ID, SOURCES, RemoteRecord
+from .corpus import RemoteRecord, source_ids, sources
 
 #: Per source, the facts the repository does not hold as data. ``readme_sentences``
 #: are sentences of the import directory's README, quoted; ``urls`` are links of
@@ -115,7 +115,7 @@ def collapse(text: str) -> str:
 
 def import_root(source: str) -> str | None:
     """``lirc`` -> ``remotes/lirc/``; ``authored`` -> None."""
-    return next((r for r in paths.IMPORTS if r == f"remotes/{source}/"), None)
+    return next((r for r in paths.imports() if r == f"remotes/{source}/"), None)
 
 
 def _commit(report: Path) -> str | None:
@@ -133,10 +133,15 @@ def build_sources(root: Path, records: list[RemoteRecord]) -> list[dict[str, Any
     for r in records:
         ledger_keys[r.source] += len(r.keys)
     out: list[dict[str, Any]] = []
-    for name in SOURCES:
-        facts = FACTS[name]
+    ids = source_ids()
+    imports = paths.imports()
+    for name in sources():
+        extra = paths.extra_source(name)
+        facts = extra[1] if extra else FACTS[name]
+        # a source of an extra root (D128) keeps its README, licence text and report in that root
+        tree = extra[0] if extra else root
         entry: dict[str, Any] = {
-            "id": SOURCE_ID[name], "key": name, "licenceKind": facts["kind"],
+            "id": ids[name], "key": name, "licenceKind": facts["kind"],
             "ledgerRemotes": ledger_remotes.get(name, 0), "ledgerKeys": ledger_keys.get(name, 0),
         }
         base = import_root(name)
@@ -144,16 +149,16 @@ def build_sources(root: Path, records: list[RemoteRecord]) -> list[dict[str, Any
             # No licence is recorded: the authored remotes, and an import of reference
             # codes (D110). The import's README still has to name where it came from.
             upstream = facts.get("upstream_url")
-            readme = root / base / "README.md" if base else None
+            readme = tree / base / "README.md" if base else None
             if readme is not None and readme.is_file() and upstream and \
                     upstream not in collapse(readme.read_text(encoding="utf-8")):
                 raise ValidationError(f"{base}README.md does not name {upstream}, the notice's link")
-            entry.update(name=paths.IMPORTS[base]["name"] if base else facts["name"],
+            entry.update(name=imports[base]["name"] if base else facts["name"],
                          spdx=None, licenceText=None, licenceNotes=[facts["note"]],
                          upstreamUrl=upstream, upstreamCommit=None)
         else:
-            meta = paths.IMPORTS[base]
-            directory = root / base
+            meta = imports[base]
+            directory = tree / base
             licence = directory / facts["licence_file"]
             readme = directory / "README.md"
             if not licence.is_file():
