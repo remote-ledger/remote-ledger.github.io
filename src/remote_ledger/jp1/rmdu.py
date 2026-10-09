@@ -86,6 +86,19 @@ def obc_byte(hex_text: str | None) -> int | None:
     return int(parts[0], 16) if len(parts) == 1 and _HEX_BYTE.match(parts[0]) else None
 
 
+def obc_bytes(hex_text: str | None) -> tuple[int, ...] | None:
+    """The OBC bytes of a function as written, or None where the text is not a list of bytes."""
+    if hex_text is None:
+        return None
+    parts = hex_text.split()
+    return tuple(int(p, 16) for p in parts) if parts and all(_HEX_BYTE.match(p) for p in parts) else None
+
+
+def rev_bits(value: int, bits: int) -> int:
+    """The low ``bits`` bits of ``value`` in the other order (``Translate.reverse(v, bits)``)."""
+    return int(f"{value:0{bits}b}"[::-1], 2)
+
+
 def device_from_fixed_data(upgrade: Upgrade) -> int | None:
     """The NEC device number of an upgrade whose ``Device Number`` parameter is ``null``: the
     executor keeps it in the second byte of ``FixedData`` as the complement of its reverse. The
@@ -121,7 +134,13 @@ NEC_FAMILY = {"NEC1": "NEC1", "NEC1 (No Repeats)": "NEC1", "NEC2": "NEC2",
 SONY_1215 = "Sony 12/15"
 SONY_20 = "Sony20"
 RC5 = "RC-5"
-MAPPED = (*NEC_FAMILY, SONY_1215, SONY_20, RC5)
+SONY_COMBO = "Sony Combo (12/15/20)"
+NEC1_COMBO = "NEC1 Combo"
+NEC_4DEV = "NEC 4DEV Combo"
+NEC_4DEV_YAMAHA = "NEC 4DEV Yamaha Combo"
+#: The combos whose functions are two OBC bytes. The others are one.
+TWO_BYTE = (SONY_COMBO, NEC1_COMBO, NEC_4DEV, NEC_4DEV_YAMAHA)
+MAPPED = (*NEC_FAMILY, SONY_1215, SONY_20, RC5, *TWO_BYTE)
 
 
 def signal_of(upgrade: Upgrade, function: Function) -> Signal | str:
@@ -135,10 +154,15 @@ def signal_of(upgrade: Upgrade, function: Function) -> Signal | str:
     and the rest the 15-bit one. Sony20: device, sub device, and the OBC byte reversed. RC-5:
     :func:`rc5_signal`.
     """
+    name, parms = upgrade.protocol_name, upgrade.parms
+    if name in TWO_BYTE:
+        pair = obc_bytes(function.hex)
+        if pair is None or len(pair) != 2:
+            return "the function has no two OBC bytes"
+        return combo_signal(name, parms, pair[0], pair[1], upgrade.fields.get("FixedData", "").split())
     byte = obc_byte(function.hex)
     if byte is None:
         return "the function has no single OBC byte"
-    name, parms = upgrade.protocol_name, upgrade.parms
     if name in NEC_FAMILY:
         device = parm(parms, 0)
         if device is None:
@@ -193,3 +217,64 @@ def rc5_signal(parms: list[str], byte: int) -> Signal | str:
     if parm(parms, 2 * slot + 1):
         command |= 64
     return Signal("RC5", device, None, command)
+
+
+#: The ledger protocol of the four styles an NEC 4DEV combo function names.
+NEC_STYLES = ("NEC1", "NEC2", "NECx1", "NECx2")
+
+
+def combo_signal(name: str, parms: list[str], first: int, second: int, fixed: list[str] = ()) -> Signal | str:
+    """A function of a combo executor, whose functions are two bytes (DESIGN D137 to D139).
+
+    The rules are the translators' (RemoteMaster's ``Translator``, whose arguments are ``index, bits,
+    bit offset`` and which complements, then reverses, what it extracts; offsets count from the
+    most significant bit of the two bytes) and each is checked against the ledger's own codes.
+
+    * ``Sony Combo (12/15/20)``, ``SonyComboTranslator() Translator(lsb,3,7)``: the first byte's top
+      seven bits are the command reversed, its lowest bit says Sony15; the second byte is the
+      device reversed (eight bits) for Sony15, else the device reversed in its top five bits, an index
+      of the four ``ProtocolParms`` sub devices in the next two, and its lowest bit says Sony20.
+    * ``NEC1 Combo``, ``Translator(lsb,comp) Translator(lsb,comp,1,8,8)`` over ``CmdParms=Sub
+      Device,OBC``: the sub device and then the function, each complemented and reversed; the device
+      is the one parameter.
+    * ``NEC 4DEV Combo``: the function as for NEC, then in the second byte the device slot (its top
+      two bits) and the style (the bits at offsets 11 and 15): NEC1, NEC2, NECx1 or NECx2, with the
+      slot's device and sub device from ``ProtocolParms``. A ``null`` device or sub device is read
+      from ``FixedData``, which holds the executor's effective values, each byte complemented and
+      reversed (the device translators are ``Translator(lsb,comp)``). The Yamaha variant adds a Y style in
+      the bits at offsets 13 and 14, whose three other styles send a second byte that is not the
+      complement of the first, a frame the ledger has no protocol for.
+    """
+    if name == SONY_COMBO:
+        command = rev_bits(first >> 1, 7)
+        if first & 1:
+            return Signal("Sony15", rev8(second), None, command)
+        device = rev_bits(second >> 3, 5)
+        if not second & 1:
+            return Signal("Sony12", device, None, command)
+        sub = parm(parms, (second >> 1) & 3)
+        if sub is None:
+            return "the Sony20 sub device the function selects is not set"
+        return Signal("Sony20", device, sub, command)
+    if name == NEC1_COMBO:
+        device = parm(parms, 0)
+        if device is None and fixed and _HEX_BYTE.match(fixed[0]):
+            device = rev8(~int(fixed[0], 16) & 0xFF)
+        if device is None:
+            return "the device parameter is missing"
+        return Signal("NEC1", device, rev8(~first & 0xFF), rev8(~second & 0xFF))
+    function = rev8(~first & 0xFF)
+    if name == NEC_4DEV_YAMAHA and second & 0x06:
+        return "the Yamaha style sends a second byte that is not the complement of the first"
+    slot = second >> 6
+    style = NEC_STYLES[((second >> 4) & 1) << 1 | second & 1]
+    device, sub = parm(parms, 2 * slot), parm(parms, 2 * slot + 1)
+    if device is None and len(fixed) > 2 * slot and _HEX_BYTE.match(fixed[2 * slot]):
+        device = rev8(~int(fixed[2 * slot], 16) & 0xFF)
+    if device is None:
+        return "the device the function selects is not set"
+    if sub is None:
+        if style in ("NECx1", "NECx2"):
+            return "the sub device parameter is missing"
+        sub = ~device & 0xFF
+    return Signal(style, device, sub, function)
