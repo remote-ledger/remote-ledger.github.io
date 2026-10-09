@@ -1,0 +1,29 @@
+{
+  "manufacturer": "Harmon",
+  "model": "AVR 354 [NEC2]",
+  "aliases": [],
+  "controls": [
+    "AVR 354"
+  ],
+  "protocol": {
+    "name": "NEC2",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_SURROUND_MODES": {
+      "label": "Surround Modes",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x82",
+          "subdevice": "0x72",
+          "function": "0xA8",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK AVR354 Mark Custom - 1114 for 6131n.rmdu function 12 'Surround Modes' (OBC EA 61; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null 0): NEC2 device 130 subdevice 114 function 168"
+        }
+      ]
+    }
+  }
+}

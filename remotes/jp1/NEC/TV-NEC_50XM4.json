@@ -1,0 +1,827 @@
+{
+  "manufacturer": "NEC",
+  "model": "Plasma 50XM4",
+  "aliases": [],
+  "controls": [
+    "NEC Plasma 50XM4"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_ON": {
+      "label": "On",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0xE7",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 0 'On' (OBC 18 EF; NEC1 Combo, parms 24): NEC1 device 24 subdevice 231 function 8; the upgrade's note: 'OEM Remote 01'"
+        }
+      ]
+    },
+    "KEY_OFF": {
+      "label": "Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0xC0",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 1 'Off' (OBC E7 FC; NEC1 Combo, parms 24): NEC1 device 24 subdevice 24 function 192; the upgrade's note: 'OEM Remote 01'"
+        }
+      ]
+    },
+    "KEY_OFF_TIMER": {
+      "label": "Off Timer",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0xE7",
+          "function": "0x1E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 2 'Off Timer' (OBC 18 87; NEC1 Combo, parms 24): NEC1 device 24 subdevice 231 function 30; the upgrade's note: 'OEM Remote 14'"
+        }
+      ]
+    },
+    "KEY_VOLUME_PLUS": {
+      "label": "Volume +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0xE7",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 3 'Volume +' (OBC 18 BF; NEC1 Combo, parms 24): NEC1 device 24 subdevice 231 function 2; the upgrade's note: 'OEM Remote 10'"
+        }
+      ]
+    },
+    "KEY_VOLUME": {
+      "label": "Volume –",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0xE7",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 4 'Volume –' (OBC 18 3F; NEC1 Combo, parms 24): NEC1 device 24 subdevice 231 function 3; the upgrade's note: 'OEM Remote 10'"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "Mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0xE7",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 5 'Mute' (OBC 18 6F; NEC1 Combo, parms 24): NEC1 device 24 subdevice 231 function 9; the upgrade's note: 'OEM Remote 11'"
+        }
+      ]
+    },
+    "KEY_MENU_SLASH_ENTER": {
+      "label": "Menu/Enter",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0xB4",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 6 'Menu/Enter' (OBC E7 D2; NEC1 Combo, parms 24): NEC1 device 24 subdevice 24 function 180; the upgrade's note: 'OEM Remote 05'"
+        }
+      ]
+    },
+    "KEY_EXIT": {
+      "label": "Exit",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0xC5",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 7 'Exit' (OBC E7 5C; NEC1 Combo, parms 24): NEC1 device 24 subdevice 24 function 197; the upgrade's note: 'OEM Remote 07'"
+        }
+      ]
+    },
+    "KEY_DISPLAY": {
+      "label": "Display",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0xE7",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 8 'Display' (OBC 18 0F; NEC1 Combo, parms 24): NEC1 device 24 subdevice 231 function 15; the upgrade's note: 'OEM Remote 13'"
+        }
+      ]
+    },
+    "KEY_ARROW_U": {
+      "label": "Arrow U",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0xB0",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 9 'Arrow U' (OBC E7 F2; NEC1 Combo, parms 24): NEC1 device 24 subdevice 24 function 176; the upgrade's note: 'OEM Remote 06'"
+        }
+      ]
+    },
+    "KEY_ARROW_D": {
+      "label": "Arrow D",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0xB1",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 10 'Arrow D' (OBC E7 72; NEC1 Combo, parms 24): NEC1 device 24 subdevice 24 function 177; the upgrade's note: 'OEM Remote 06'"
+        }
+      ]
+    },
+    "KEY_ARROW_L": {
+      "label": "Arrow L",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0xB2",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 11 'Arrow L' (OBC E7 B2; NEC1 Combo, parms 24): NEC1 device 24 subdevice 24 function 178; the upgrade's note: 'OEM Remote 06'"
+        }
+      ]
+    },
+    "KEY_ARROW_R": {
+      "label": "Arrow R",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0xB3",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 12 'Arrow R' (OBC E7 32; NEC1 Combo, parms 24): NEC1 device 24 subdevice 24 function 179; the upgrade's note: 'OEM Remote 06'"
+        }
+      ]
+    },
+    "KEY_RGB_SLASH_PC": {
+      "label": "RGB/PC",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0xE7",
+          "function": "0x58",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 13 'RGB/PC' (OBC 18 E5; NEC1 Combo, parms 24): NEC1 device 24 subdevice 231 function 88; the upgrade's note: 'OEM Remote 02'"
+        }
+      ]
+    },
+    "KEY_RGB_SLASH_PC1_MINI_D_MINUS_SUB": {
+      "label": "RGB/PC1 Mini D-sub",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0xC1",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 14 'RGB/PC1 Mini D-sub' (OBC E7 7C; NEC1 Combo, parms 24): NEC1 device 24 subdevice 24 function 193"
+        }
+      ]
+    },
+    "KEY_RGB_SLASH_PC2_BNC": {
+      "label": "RGB/PC2 BNC",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0xC2",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 15 'RGB/PC2 BNC' (OBC E7 BC; NEC1 Combo, parms 24): NEC1 device 24 subdevice 24 function 194"
+        }
+      ]
+    },
+    "KEY_RGB_SLASH_PC3_DVI_MINUS_D": {
+      "label": "RGB/PC3 DVI-D",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0xC3",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 16 'RGB/PC3 DVI-D' (OBC E7 3C; NEC1 Combo, parms 24): NEC1 device 24 subdevice 24 function 195"
+        }
+      ]
+    },
+    "KEY_VIDEO": {
+      "label": "Video",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0xE7",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 17 'Video' (OBC 18 AF; NEC1 Combo, parms 24): NEC1 device 24 subdevice 231 function 10; the upgrade's note: 'OEM Remote 04'"
+        }
+      ]
+    },
+    "KEY_VIDEO1_BNC": {
+      "label": "Video1 BNC",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0xE7",
+          "function": "0x55",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 18 'Video1 BNC' (OBC 18 55; NEC1 Combo, parms 24): NEC1 device 24 subdevice 231 function 85"
+        }
+      ]
+    },
+    "KEY_VIDEO2_RCA": {
+      "label": "Video2 RCA",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0xE7",
+          "function": "0x56",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 19 'Video2 RCA' (OBC 18 95; NEC1 Combo, parms 24): NEC1 device 24 subdevice 231 function 86"
+        }
+      ]
+    },
+    "KEY_VIDEO3_SVIDEO": {
+      "label": "Video3 SVIDEO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0xE7",
+          "function": "0x57",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 20 'Video3 SVIDEO' (OBC 18 15; NEC1 Combo, parms 24): NEC1 device 24 subdevice 231 function 87"
+        }
+      ]
+    },
+    "KEY_DVD_SLASH_HD": {
+      "label": "DVD/HD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0x1C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 21 'DVD/HD' (OBC E7 C7; NEC1 Combo, parms 24): NEC1 device 24 subdevice 24 function 28; the upgrade's note: 'OEM Remote 03'"
+        }
+      ]
+    },
+    "KEY_DVD_SLASH_HD1_RCA": {
+      "label": "DVD/HD1 RCA",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0xEB",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 22 'DVD/HD1 RCA' (OBC E7 28; NEC1 Combo, parms 24): NEC1 device 24 subdevice 24 function 235"
+        }
+      ]
+    },
+    "KEY_DVD_SLASH_HD2_BNC": {
+      "label": "DVD/HD2 BNC",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0xDC",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 23 'DVD/HD2 BNC' (OBC E7 C4; NEC1 Combo, parms 24): NEC1 device 24 subdevice 24 function 220"
+        }
+      ]
+    },
+    "KEY_DVD_SLASH_HD3_DVI_MINUS_D": {
+      "label": "DVD/HD3 DVI-D",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0x40",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 24 'DVD/HD3 DVI-D' (OBC E7 FD; NEC1 Combo, parms 24): NEC1 device 24 subdevice 24 function 64"
+        }
+      ]
+    },
+    "KEY_AUTO_ADJUST": {
+      "label": "AUTO ADJUST",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0xE7",
+          "function": "0x1F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 25 'AUTO ADJUST' (OBC 18 07; NEC1 Combo, parms 24): NEC1 device 24 subdevice 231 function 31; the upgrade's note: 'OEM Remote 19'"
+        }
+      ]
+    },
+    "KEY_PICTUREMODE_MINUS_THEAT_1": {
+      "label": "PictureMode-Theat.1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0x9B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 26 'PictureMode-Theat.1' (OBC E7 26; NEC1 Combo, parms 24): NEC1 device 24 subdevice 24 function 155"
+        }
+      ]
+    },
+    "KEY_PICTUREMODE_MINUS_NORMAL": {
+      "label": "PictureMode-Normal",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0x9A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 27 'PictureMode-Normal' (OBC E7 A6; NEC1 Combo, parms 24): NEC1 device 24 subdevice 24 function 154"
+        }
+      ]
+    },
+    "KEY_PICTUREMODE_MINUS_THEAT_2": {
+      "label": "PictureMode-Theat.2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0x9C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 28 'PictureMode-Theat.2' (OBC E7 C6; NEC1 Combo, parms 24): NEC1 device 24 subdevice 24 function 156"
+        }
+      ]
+    },
+    "KEY_PICTUREMODE_MINUS_DEFAULT": {
+      "label": "PictureMode-Default",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0x9D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 29 'PictureMode-Default' (OBC E7 46; NEC1 Combo, parms 24): NEC1 device 24 subdevice 24 function 157"
+        }
+      ]
+    },
+    "KEY_PICTUREMODE_MINUS_BRIGHT": {
+      "label": "PictureMode-Bright",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0x9E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 30 'PictureMode-Bright' (OBC E7 86; NEC1 Combo, parms 24): NEC1 device 24 subdevice 24 function 158"
+        }
+      ]
+    },
+    "KEY_WIDE": {
+      "label": "Wide",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0xAD",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 31 'Wide' (OBC E7 4A; NEC1 Combo, parms 24): NEC1 device 24 subdevice 24 function 173; the upgrade's note: 'OEM Remote 12'"
+        }
+      ]
+    },
+    "KEY_WIDE_MINUS_NORMAL": {
+      "label": "Wide-Normal",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0x90",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 32 'Wide-Normal' (OBC E7 F6; NEC1 Combo, parms 24): NEC1 device 24 subdevice 24 function 144"
+        }
+      ]
+    },
+    "KEY_WIDE_MINUS_FULL": {
+      "label": "Wide-Full",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0x91",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 33 'Wide-Full' (OBC E7 76; NEC1 Combo, parms 24): NEC1 device 24 subdevice 24 function 145"
+        }
+      ]
+    },
+    "KEY_WIDE_MINUS_STADIUM": {
+      "label": "Wide-Stadium",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0x92",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 34 'Wide-Stadium' (OBC E7 B6; NEC1 Combo, parms 24): NEC1 device 24 subdevice 24 function 146"
+        }
+      ]
+    },
+    "KEY_WIDE_MINUS_ZOOM": {
+      "label": "Wide-Zoom",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0x93",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 35 'Wide-Zoom' (OBC E7 36; NEC1 Combo, parms 24): NEC1 device 24 subdevice 24 function 147"
+        }
+      ]
+    },
+    "KEY_WIDE_MINUS_14_9": {
+      "label": "Wide-14\\:9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0x94",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 36 'Wide-14\\:9' (OBC E7 D6; NEC1 Combo, parms 24): NEC1 device 24 subdevice 24 function 148"
+        }
+      ]
+    },
+    "KEY_WIDE_MINUS_2_35_1": {
+      "label": "Wide-2.35\\:1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0x95",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 37 'Wide-2.35\\:1' (OBC E7 56; NEC1 Combo, parms 24): NEC1 device 24 subdevice 24 function 149"
+        }
+      ]
+    },
+    "KEY_ID_SELECT": {
+      "label": "ID Select",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0xC8",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 38 'ID Select' (OBC E7 EC; NEC1 Combo, parms 24): NEC1 device 24 subdevice 24 function 200; the upgrade's note: 'OEM Remote 20'"
+        }
+      ]
+    },
+    "KEY_POINTER": {
+      "label": "Pointer",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0xC9",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 39 'Pointer' (OBC E7 6C; NEC1 Combo, parms 24): NEC1 device 24 subdevice 24 function 201; the upgrade's note: 'OEM Remote 08'"
+        }
+      ]
+    },
+    "KEY_ZOOM_PLUS": {
+      "label": "Zoom +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0xCA",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 40 'Zoom +' (OBC E7 AC; NEC1 Combo, parms 24): NEC1 device 24 subdevice 24 function 202; the upgrade's note: 'OEM Remote 10'"
+        }
+      ]
+    },
+    "KEY_ZOOM": {
+      "label": "Zoom –",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0xCB",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 41 'Zoom –' (OBC E7 2C; NEC1 Combo, parms 24): NEC1 device 24 subdevice 24 function 203; the upgrade's note: 'OEM Remote 10'"
+        }
+      ]
+    },
+    "KEY_CLEAR_SLASH_SEAMLESS_SW": {
+      "label": "Clear/Seamless SW",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0xE7",
+          "function": "0x19",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 42 'Clear/Seamless SW' (OBC 18 67; NEC1 Combo, parms 24): NEC1 device 24 subdevice 231 function 25; the upgrade's note: 'OEM Remote 21'"
+        }
+      ]
+    },
+    "KEY_SELECT_SLASH_FREEZE": {
+      "label": "Select/Freeze",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0xCD",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 43 'Select/Freeze' (OBC E7 4C; NEC1 Combo, parms 24): NEC1 device 24 subdevice 24 function 205; the upgrade's note: 'OEM Remote 18'"
+        }
+      ]
+    },
+    "KEY_SINGLE": {
+      "label": "Single",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0x83",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 44 'Single' (OBC E7 3E; NEC1 Combo, parms 24): NEC1 device 24 subdevice 24 function 131; the upgrade's note: 'OEM Remote 17'"
+        }
+      ]
+    },
+    "KEY_PICTURE_IN_PICTURE": {
+      "label": "Picture in Picture",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0x82",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 45 'Picture in Picture' (OBC E7 BE; NEC1 Combo, parms 24): NEC1 device 24 subdevice 24 function 130; the upgrade's note: 'OEM Remote 16'"
+        }
+      ]
+    },
+    "KEY_SIDE_BY_SIDE": {
+      "label": "Side by Side",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0x81",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 46 'Side by Side' (OBC E7 7E; NEC1 Combo, parms 24): NEC1 device 24 subdevice 24 function 129; the upgrade's note: 'OEM Remote 15'"
+        }
+      ]
+    },
+    "KEY_MULTI": {
+      "label": "Multi",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x18",
+          "function": "0xCC",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 47 'Multi' (OBC E7 CC; NEC1 Combo, parms 24): NEC1 device 24 subdevice 24 function 204"
+        }
+      ]
+    },
+    "KEY_SHARPNESS_PLUS": {
+      "label": "Sharpness +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0xE7",
+          "function": "0x4F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 48 'Sharpness +' (OBC 18 0D; NEC1 Combo, parms 24): NEC1 device 24 subdevice 231 function 79"
+        }
+      ]
+    },
+    "KEY_SHARPNESS_MINUS": {
+      "label": "Sharpness -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0xE7",
+          "function": "0x4E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 49 'Sharpness -' (OBC 18 8D; NEC1 Combo, parms 24): NEC1 device 24 subdevice 231 function 78"
+        }
+      ]
+    },
+    "KEY_BRIGHTNESS_PLUS": {
+      "label": "Brightness +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0xE7",
+          "function": "0x4A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 50 'Brightness +' (OBC 18 AD; NEC1 Combo, parms 24): NEC1 device 24 subdevice 231 function 74"
+        }
+      ]
+    },
+    "KEY_BRIGHTNESS_MINUS": {
+      "label": "Brightness -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0xE7",
+          "function": "0x4B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 51 'Brightness -' (OBC 18 2D; NEC1 Combo, parms 24): NEC1 device 24 subdevice 231 function 75"
+        }
+      ]
+    },
+    "KEY_TINT_PLUS": {
+      "label": "Tint +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0xE7",
+          "function": "0x4C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 52 'Tint +' (OBC 18 CD; NEC1 Combo, parms 24): NEC1 device 24 subdevice 231 function 76"
+        }
+      ]
+    },
+    "KEY_TINT_MINUS": {
+      "label": "Tint -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0xE7",
+          "function": "0x4D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 53 'Tint -' (OBC 18 4D; NEC1 Combo, parms 24): NEC1 device 24 subdevice 231 function 77"
+        }
+      ]
+    },
+    "KEY_COLOR_PLUS": {
+      "label": "Color +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0xE7",
+          "function": "0x48",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 54 'Color +' (OBC 18 ED; NEC1 Combo, parms 24): NEC1 device 24 subdevice 231 function 72"
+        }
+      ]
+    },
+    "KEY_COLOR_MINUS": {
+      "label": "Color -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0xE7",
+          "function": "0x49",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 55 'Color -' (OBC 18 6D; NEC1 Combo, parms 24): NEC1 device 24 subdevice 231 function 73"
+        }
+      ]
+    },
+    "KEY_CONTRAST_PLUS": {
+      "label": "Contrast +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0xE7",
+          "function": "0x46",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 56 'Contrast +' (OBC 18 9D; NEC1 Combo, parms 24): NEC1 device 24 subdevice 231 function 70"
+        }
+      ]
+    },
+    "KEY_CONTRAST_MINUS": {
+      "label": "Contrast -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0xE7",
+          "function": "0x47",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/NEC 50XM4.rmdu function 57 'Contrast -' (OBC 18 1D; NEC1 Combo, parms 24): NEC1 device 24 subdevice 231 function 71"
+        }
+      ]
+    }
+  }
+}

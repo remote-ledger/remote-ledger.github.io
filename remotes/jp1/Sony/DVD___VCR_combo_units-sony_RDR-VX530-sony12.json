@@ -1,0 +1,28 @@
+{
+  "manufacturer": "Sony",
+  "model": "DVD/VCR rdr-vx530 [Sony12]",
+  "aliases": [],
+  "controls": [
+    "Sony DVD/VCR rdr-vx530"
+  ],
+  "protocol": {
+    "name": "Sony12",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_TV_SLASH_VIDEO": {
+      "label": "tv/video",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x03",
+          "function": "0x25",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD _ VCR combo units/sony RDR-VX530.rmdu function 22 'tv/video' (OBC A4 C0; Sony Combo (12/15/20), parms 250 11 1 164): Sony12 device 3 function 37"
+        }
+      ]
+    }
+  }
+}

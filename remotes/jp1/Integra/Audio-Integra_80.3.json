@@ -1,0 +1,2731 @@
+{
+  "manufacturer": "Integra",
+  "model": "80.3",
+  "aliases": [],
+  "controls": [
+    "Integra 80.3"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_STANDBY": {
+      "label": "Standby",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x47",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 0 'Standby' (OBC C9 1D; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 71"
+        }
+      ]
+    },
+    "KEY_POWER_ON": {
+      "label": "Power On",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 1 'Power On' (OBC 49 DF; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 4"
+        }
+      ]
+    },
+    "KEY_STANDBY_SLASH_ON_TOGGLE": {
+      "label": "Standby/On (toggle)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0xCB",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 2 'Standby/On (toggle)' (OBC C9 2C; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 203"
+        }
+      ]
+    },
+    "KEY_AUDIO_MUTING_OFF": {
+      "label": "Audio Muting Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x85",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 3 'Audio Muting Off' (OBC C9 5E; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 133"
+        }
+      ]
+    },
+    "KEY_AUDIO_MUTING_ON": {
+      "label": "Audio Muting On",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x84",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 4 'Audio Muting On' (OBC C9 DE; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 132"
+        }
+      ]
+    },
+    "KEY_AUDIO_MUTING_TOGGLE": {
+      "label": "Audio Muting (toggle)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 5 'Audio Muting (toggle)' (OBC 49 5F; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 5"
+        }
+      ]
+    },
+    "KEY_SPEAKER_LAYOUT_TOGGLE": {
+      "label": "Speaker Layout(toggle)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x88",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 6 'Speaker Layout(toggle)' (OBC C9 EE; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 136"
+        }
+      ]
+    },
+    "KEY_MASTER_VOLUME_LEVEL_UP": {
+      "label": "Master Volume Level Up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 7 'Master Volume Level Up' (OBC 49 BF; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 2"
+        }
+      ]
+    },
+    "KEY_MASTER_VOLUME_LEVEL_DOWN": {
+      "label": "Master Volume Level Down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 8 'Master Volume Level Down' (OBC 49 3F; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 3"
+        }
+      ]
+    },
+    "KEY_SLEEP_TIME_WRAP_MINUS_AROUND_UP": {
+      "label": "Sleep Time (Wrap-Around Up)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x5D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 9 'Sleep Time (Wrap-Around Up)' (OBC 49 45; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 93"
+        }
+      ]
+    },
+    "KEY_SPEAKER_LEVEL_CALIB_TEST_TONE": {
+      "label": "Speaker Level Calib Test Tone",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x9A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 10 'Speaker Level Calib Test Tone' (OBC 49 A6; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 154"
+        }
+      ]
+    },
+    "KEY_SPEAKER_LEVEL_CALIB_CHANNEL_SELECT": {
+      "label": "Speaker Level Calib Channel Select",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x44",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 11 'Speaker Level Calib Channel Select' (OBC C9 DD; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 68"
+        }
+      ]
+    },
+    "KEY_SPEAKER_LEVEL_CALIB_LEVEL_UP": {
+      "label": "Speaker Level Calib Level Up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x42",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 12 'Speaker Level Calib Level Up' (OBC C9 BD; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 66"
+        }
+      ]
+    },
+    "KEY_SPEAKER_LEVEL_CALIB_LEVEL_DOWN": {
+      "label": "Speaker Level Calib Level Down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x43",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 13 'Speaker Level Calib Level Down' (OBC C9 3D; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 67"
+        }
+      ]
+    },
+    "KEY_SPEAKER_LEVEL_CALIB_SUBWOOFER_LEVEL_CONTROL": {
+      "label": "Speaker Level Calib Subwoofer Level Control",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0xDE",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 14 'Speaker Level Calib Subwoofer Level Control' (OBC C9 84; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 222"
+        }
+      ]
+    },
+    "KEY_DISPLAY_MODE_WRAP_MINUS_AROUND_UP": {
+      "label": "Display Mode (Wrap-Around Up)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x55",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 15 'Display Mode (Wrap-Around Up)' (OBC C9 55; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 85"
+        }
+      ]
+    },
+    "KEY_DIMMER_WRAP_MINUS_AROUND_UP": {
+      "label": "Dimmer (Wrap-Around Up)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x95",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 16 'Dimmer (Wrap-Around Up)' (OBC 49 56; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 149"
+        }
+      ]
+    },
+    "KEY_QUICK_SETUP": {
+      "label": "Quick Setup",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x53",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 17 'Quick Setup' (OBC C9 35; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 83"
+        }
+      ]
+    },
+    "KEY_HOME": {
+      "label": "Home",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x19",
+          "function": "0xC0",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 18 'Home' (OBC 67 FC; NEC1 Combo, parms 210): NEC1 device 210 subdevice 25 function 192"
+        }
+      ]
+    },
+    "KEY_CURSOR_UP": {
+      "label": "Cursor Up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x82",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 19 'Cursor Up' (OBC 49 BE; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 130"
+        }
+      ]
+    },
+    "KEY_CURSOR_DOWN": {
+      "label": "Cursor Down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x83",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 20 'Cursor Down' (OBC 49 3E; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 131"
+        }
+      ]
+    },
+    "KEY_CURSOR_LEFT": {
+      "label": "Cursor Left",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x84",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 21 'Cursor Left' (OBC 49 DE; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 132"
+        }
+      ]
+    },
+    "KEY_CURSOR_RIGHT": {
+      "label": "Cursor Right",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x85",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 22 'Cursor Right' (OBC 49 5E; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 133"
+        }
+      ]
+    },
+    "KEY_ENTER": {
+      "label": "Enter",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x97",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 23 'Enter' (OBC 49 16; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 151"
+        }
+      ]
+    },
+    "KEY_RETURN": {
+      "label": "Return",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x54",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 24 'Return' (OBC C9 D5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 84"
+        }
+      ]
+    },
+    "KEY_STORE": {
+      "label": "Store",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x02",
+          "function": "0x5C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 25 'Store' (OBC BF C5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 2 function 92"
+        }
+      ]
+    },
+    "KEY_RECALL": {
+      "label": "Recall",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x02",
+          "function": "0x5D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 26 'Recall' (OBC BF 45; NEC1 Combo, parms 210): NEC1 device 210 subdevice 2 function 93"
+        }
+      ]
+    },
+    "KEY_LOCK": {
+      "label": "Lock",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x02",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 27 'Lock' (OBC BF D7; NEC1 Combo, parms 210): NEC1 device 210 subdevice 2 function 20"
+        }
+      ]
+    },
+    "KEY_UNLOCK": {
+      "label": "Unlock",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x02",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 28 'Unlock' (OBC BF 57; NEC1 Combo, parms 210): NEC1 device 210 subdevice 2 function 21"
+        }
+      ]
+    },
+    "KEY_INPUT_VIDEO1_VCR_SLASH_DVR_STB_SLASH_DVR": {
+      "label": "Input VIDEO1 VCR/DVR STB/DVR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 29 'Input VIDEO1 VCR/DVR STB/DVR' (OBC 49 0F; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 15"
+        }
+      ]
+    },
+    "KEY_INPUT_VIDEO2_CBL_SLASH_SAT": {
+      "label": "Input VIDEO2 CBL/SAT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x0E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 30 'Input VIDEO2 CBL/SAT' (OBC 49 8F; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 14"
+        }
+      ]
+    },
+    "KEY_INPUT_VIDEO3_GAME_SLASH_TV_GAME_GAME1": {
+      "label": "Input VIDEO3 GAME/TV GAME GAME1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 31 'Input VIDEO3 GAME/TV GAME GAME1' (OBC 49 4F; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 13"
+        }
+      ]
+    },
+    "KEY_INPUT_VIDEO4_AUX1_AUX": {
+      "label": "Input VIDEO4 AUX1(AUX)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x9F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 32 'Input VIDEO4 AUX1(AUX)' (OBC 49 06; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 159"
+        }
+      ]
+    },
+    "KEY_INPUT_VIDEO6_PC": {
+      "label": "Input VIDEO6 PC",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x9C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 33 'Input VIDEO6 PC' (OBC 49 C6; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 156"
+        }
+      ]
+    },
+    "KEY_INPUT_HIDDEN1_EXTRA1": {
+      "label": "Input Hidden1 EXTRA1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0xCD",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 34 'Input Hidden1 EXTRA1' (OBC C9 4C; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 205"
+        }
+      ]
+    },
+    "KEY_INPUT_HIDDEN2_EXTRA2": {
+      "label": "Input Hidden2 EXTRA2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0xCE",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 35 'Input Hidden2 EXTRA2' (OBC C9 8C; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 206"
+        }
+      ]
+    },
+    "KEY_INPUT_HIDDEN3_EXTRA3": {
+      "label": "Input Hidden3 EXTRA3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0xCF",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 36 'Input Hidden3 EXTRA3' (OBC C9 0C; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 207"
+        }
+      ]
+    },
+    "KEY_INPUT_DVD_DVD_SLASH_BD_BD_SLASH_DVD": {
+      "label": "Input DVD DVD/BD BD/DVD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x8C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 37 'Input DVD DVD/BD BD/DVD' (OBC C9 CE; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 140"
+        }
+      ]
+    },
+    "KEY_INPUT_PHONO": {
+      "label": "Input PHONO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 38 'Input PHONO' (OBC 49 AF; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 10"
+        }
+      ]
+    },
+    "KEY_INPUT_CD_TV_SLASH_CD": {
+      "label": "Input CD TV/CD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 39 'Input CD TV/CD' (OBC 49 6F; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 9"
+        }
+      ]
+    },
+    "KEY_INPUT_FM": {
+      "label": "Input FM",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x46",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 40 'Input FM' (OBC 49 9D; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 70"
+        }
+      ]
+    },
+    "KEY_INPUT_AM": {
+      "label": "Input AM",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x47",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 41 'Input AM' (OBC 49 1D; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 71"
+        }
+      ]
+    },
+    "KEY_INPUT_TUNER": {
+      "label": "Input TUNER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 42 'Input TUNER' (OBC 49 2F; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 11"
+        }
+      ]
+    },
+    "KEY_INPUT_MUSIC_SERVER_P4S_DLNA_STAR_2": {
+      "label": "Input MUSIC SERVER P4S DLNA*2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x02",
+          "function": "0x88",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 43 'Input MUSIC SERVER P4S DLNA*2' (OBC BF EE; NEC1 Combo, parms 210): NEC1 device 210 subdevice 2 function 136"
+        }
+      ]
+    },
+    "KEY_INPUT_INTERNET_RADIO_IRADIO_FAVORITE_STAR_3": {
+      "label": "Input INTERNET RADIO iRadio Favorite*3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x02",
+          "function": "0x89",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 44 'Input INTERNET RADIO iRadio Favorite*3' (OBC BF 6E; NEC1 Combo, parms 210): NEC1 device 210 subdevice 2 function 137"
+        }
+      ]
+    },
+    "KEY_INPUT_USB_SLASH_USB_FRONT_USB_TOGGLE_STAR_4": {
+      "label": "Input USB/USB(Front) USB(Toggle)*4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0xAC",
+          "function": "0x9E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 45 'Input USB/USB(Front) USB(Toggle)*4' (OBC CA 86; NEC1 Combo, parms 210): NEC1 device 210 subdevice 172 function 158"
+        }
+      ]
+    },
+    "KEY_INPUT_USB_REAR": {
+      "label": "Input USB(Rear)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0xAC",
+          "function": "0x9F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 46 'Input USB(Rear)' (OBC CA 06; NEC1 Combo, parms 210): NEC1 device 210 subdevice 172 function 159"
+        }
+      ]
+    },
+    "KEY_INPUT_USB_FRONT": {
+      "label": "Input USB(Front)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 47 'Input USB(Front)' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_INPUT_NETAUDIO_NET": {
+      "label": "Input NETAUDIO NET",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x02",
+          "function": "0x87",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 48 'Input NETAUDIO NET' (OBC BF 1E; NEC1 Combo, parms 210): NEC1 device 210 subdevice 2 function 135"
+        }
+      ]
+    },
+    "KEY_INPUT_UNIVERSAL_PORT": {
+      "label": "Input Universal PORT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0xAC",
+          "function": "0x8A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 49 'Input Universal PORT' (OBC CA AE; NEC1 Combo, parms 210): NEC1 device 210 subdevice 172 function 138"
+        }
+      ]
+    },
+    "KEY_INPUT_SELECTOR_UP": {
+      "label": "Input Selector Up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x1E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 50 'Input Selector Up' (OBC C9 87; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 30"
+        }
+      ]
+    },
+    "KEY_INPUT_SELECTOR_DOWN": {
+      "label": "Input Selector Down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x1F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 51 'Input Selector Down' (OBC C9 07; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 31"
+        }
+      ]
+    },
+    "KEY_AUDIO_SEL_ANALOG": {
+      "label": "Audio Sel Analog",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x19",
+          "function": "0xD1",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 52 'Audio Sel Analog' (OBC 67 74; NEC1 Combo, parms 210): NEC1 device 210 subdevice 25 function 209"
+        }
+      ]
+    },
+    "KEY_AUDIO_SEL_MULTICH": {
+      "label": "Audio Sel Multich",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x19",
+          "function": "0xD2",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 53 'Audio Sel Multich' (OBC 67 B4; NEC1 Combo, parms 210): NEC1 device 210 subdevice 25 function 210"
+        }
+      ]
+    },
+    "KEY_AUDIO_SEL_HDMI_AUTO_HDMI": {
+      "label": "Audio Sel HDMI Auto(HDMI)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x19",
+          "function": "0xD3",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 54 'Audio Sel HDMI Auto(HDMI)' (OBC 67 34; NEC1 Combo, parms 210): NEC1 device 210 subdevice 25 function 211"
+        }
+      ]
+    },
+    "KEY_AUDIO_SEL_COAX_SLASH_OPT_AUTO_COAX_SLASH_OPT": {
+      "label": "Audio Sel COAX/OPT Auto(COAX/OPT)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x19",
+          "function": "0xC2",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 55 'Audio Sel COAX/OPT Auto(COAX/OPT)' (OBC 67 BC; NEC1 Combo, parms 210): NEC1 device 210 subdevice 25 function 194"
+        }
+      ]
+    },
+    "KEY_AUDIO_SEL_BALANCE": {
+      "label": "Audio Sel BALANCE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x19",
+          "function": "0xC1",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 56 'Audio Sel BALANCE' (OBC 67 7C; NEC1 Combo, parms 210): NEC1 device 210 subdevice 25 function 193"
+        }
+      ]
+    },
+    "KEY_AUDIO_SEL_ARC": {
+      "label": "Audio Sel ARC",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 57 'Audio Sel ARC' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_AUDIO_SELECTOR_WRAP_MINUS_AROUND_UP": {
+      "label": "Audio Selector (Wrap-Around Up)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0xD9",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 58 'Audio Selector (Wrap-Around Up)' (OBC C9 64; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 217"
+        }
+      ]
+    },
+    "KEY_12V_TRIGGER_A_ON": {
+      "label": "12V Trigger A On",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x02",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 59 '12V Trigger A On' (OBC BF DF; NEC1 Combo, parms 210): NEC1 device 210 subdevice 2 function 4"
+        }
+      ]
+    },
+    "KEY_12V_TRIGGER_A_OFF": {
+      "label": "12V Trigger A Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x02",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 60 '12V Trigger A Off' (OBC BF 5F; NEC1 Combo, parms 210): NEC1 device 210 subdevice 2 function 5"
+        }
+      ]
+    },
+    "KEY_12V_TRIGGER_B_ON": {
+      "label": "12V Trigger B On",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x02",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 61 '12V Trigger B On' (OBC BF 9F; NEC1 Combo, parms 210): NEC1 device 210 subdevice 2 function 6"
+        }
+      ]
+    },
+    "KEY_12V_TRIGGER_B_OFF": {
+      "label": "12V Trigger B Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x02",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 62 '12V Trigger B Off' (OBC BF 1F; NEC1 Combo, parms 210): NEC1 device 210 subdevice 2 function 7"
+        }
+      ]
+    },
+    "KEY_12V_TRIGGER_C_ON": {
+      "label": "12V Trigger C On",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x02",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 63 '12V Trigger C On' (OBC BF EF; NEC1 Combo, parms 210): NEC1 device 210 subdevice 2 function 8"
+        }
+      ]
+    },
+    "KEY_12V_TRIGGER_C_OFF": {
+      "label": "12V Trigger C Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x02",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 64 '12V Trigger C Off' (OBC BF 6F; NEC1 Combo, parms 210): NEC1 device 210 subdevice 2 function 9"
+        }
+      ]
+    },
+    "KEY_HDMI_OUT_SEL_NO_ANALOG": {
+      "label": "HDMI Out Sel No Analog",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0xAC",
+          "function": "0xD3",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 65 'HDMI Out Sel No Analog' (OBC CA 34; NEC1 Combo, parms 210): NEC1 device 210 subdevice 172 function 211"
+        }
+      ]
+    },
+    "KEY_HDMI_OUT_SEL_YES_SLASH_OUT1_HDMI_MAIN_HDMI": {
+      "label": "HDMI Out Sel Yes/OUT1 HDMI Main HDMI",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0xAC",
+          "function": "0xD4",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 66 'HDMI Out Sel Yes/OUT1 HDMI Main HDMI' (OBC CA D4; NEC1 Combo, parms 210): NEC1 device 210 subdevice 172 function 212"
+        }
+      ]
+    },
+    "KEY_HDMI_OUT_SEL_OUT2_HDMI_SUB_HDMI_SUB_SLASH_ZONE2_HDBASET": {
+      "label": "HDMI Out Sel OUT2 HDMI Sub HDMI Sub/Zone2 HDBaseT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0xAC",
+          "function": "0xD5",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 67 'HDMI Out Sel OUT2 HDMI Sub HDMI Sub/Zone2 HDBaseT' (OBC CA 54; NEC1 Combo, parms 210): NEC1 device 210 subdevice 172 function 213"
+        }
+      ]
+    },
+    "KEY_HDMI_OUT_SEL_BOTH": {
+      "label": "HDMI Out Sel Both",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 68 'HDMI Out Sel Both' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_HDMI_OUT_SEL_BOTH_MAIN": {
+      "label": "HDMI Out Sel Both(Main)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 69 'HDMI Out Sel Both(Main)' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_HDMI_OUT_SEL_BOTH_SUB": {
+      "label": "HDMI Out Sel Both(Sub)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 70 'HDMI Out Sel Both(Sub)' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_HDMI_OUT_WRAP_MINUS_AROUND_UP": {
+      "label": "HDMI OUT(Wrap-Around Up)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0xD2",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 71 'HDMI OUT(Wrap-Around Up)' (OBC C9 B4; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 210"
+        }
+      ]
+    },
+    "KEY_RESOLUTION_THROGH": {
+      "label": "Resolution Throgh",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x19",
+          "function": "0xCA",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 72 'Resolution Throgh' (OBC 67 AC; NEC1 Combo, parms 210): NEC1 device 210 subdevice 25 function 202"
+        }
+      ]
+    },
+    "KEY_RESOLUTION_AUTO": {
+      "label": "Resolution Auto",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x19",
+          "function": "0xCB",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 73 'Resolution Auto' (OBC 67 2C; NEC1 Combo, parms 210): NEC1 device 210 subdevice 25 function 203"
+        }
+      ]
+    },
+    "KEY_RESOLUTION_480P": {
+      "label": "Resolution 480p",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x19",
+          "function": "0xCC",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 74 'Resolution 480p' (OBC 67 CC; NEC1 Combo, parms 210): NEC1 device 210 subdevice 25 function 204"
+        }
+      ]
+    },
+    "KEY_RESOLUTION_720P": {
+      "label": "Resolution 720p",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x19",
+          "function": "0xCD",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 75 'Resolution 720p' (OBC 67 4C; NEC1 Combo, parms 210): NEC1 device 210 subdevice 25 function 205"
+        }
+      ]
+    },
+    "KEY_RESOLUTION_1080I": {
+      "label": "Resolution 1080i",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x19",
+          "function": "0xCE",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 76 'Resolution 1080i' (OBC 67 8C; NEC1 Combo, parms 210): NEC1 device 210 subdevice 25 function 206"
+        }
+      ]
+    },
+    "KEY_RESOLUTION_1080P": {
+      "label": "Resolution 1080p",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x19",
+          "function": "0xCF",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 77 'Resolution 1080p' (OBC 67 0C; NEC1 Combo, parms 210): NEC1 device 210 subdevice 25 function 207"
+        }
+      ]
+    },
+    "KEY_RESOLUTION_1080P_SLASH_24FS": {
+      "label": "Resolution 1080p/24fs",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x19",
+          "function": "0xC3",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 78 'Resolution 1080p/24fs' (OBC 67 3C; NEC1 Combo, parms 210): NEC1 device 210 subdevice 25 function 195"
+        }
+      ]
+    },
+    "KEY_RESOLUTION_4K_UPSCALING": {
+      "label": "Resolution 4K Upscaling",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 79 'Resolution 4K Upscaling' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_RESOLUTION_SOURCE": {
+      "label": "Resolution Source",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x19",
+          "function": "0xC9",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 80 'Resolution Source' (OBC 67 6C; NEC1 Combo, parms 210): NEC1 device 210 subdevice 25 function 201"
+        }
+      ]
+    },
+    "KEY_RESOLUTION_WRAP_MINUS_AROUND_UP": {
+      "label": "Resolution(Wrap-Around Up)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0xAC",
+          "function": "0x9D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 81 'Resolution(Wrap-Around Up)' (OBC CA 46; NEC1 Combo, parms 210): NEC1 device 210 subdevice 172 function 157"
+        }
+      ]
+    },
+    "KEY_ISF_MODE_MINUS_PIC_MODE_CUSTOM": {
+      "label": "ISF Mode-Pic Mode Custom",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 82 'ISF Mode-Pic Mode Custom' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_ISF_MODE_MINUS_PIC_MODE_DAY": {
+      "label": "ISF Mode-Pic Mode Day",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 83 'ISF Mode-Pic Mode Day' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_ISF_MODE_MINUS_PIC_MODE_NIGHT": {
+      "label": "ISF Mode-Pic Mode Night",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 84 'ISF Mode-Pic Mode Night' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_ISF_MODE_MINUS_PIC_MODE_CINEMA": {
+      "label": "ISF Mode-Pic Mode Cinema",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 85 'ISF Mode-Pic Mode Cinema' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_ISF_MODE_MINUS_PIC_MODE_GAME": {
+      "label": "ISF Mode-Pic Mode Game",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 86 'ISF Mode-Pic Mode Game' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_ISF_MODE_MINUS_PIC_MODE_THROUGH_STANDARD": {
+      "label": "ISF Mode-Pic Mode Through Standard",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 87 'ISF Mode-Pic Mode Through Standard' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_ISF_MODE_MINUS_PIC_MODE_STREAMING": {
+      "label": "ISF Mode-Pic Mode Streaming",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 88 'ISF Mode-Pic Mode Streaming' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_ISF_MODE_MINUS_PIC_MODE_DIRECT_BYPASS": {
+      "label": "ISF Mode-Pic Mode Direct Bypass",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 89 'ISF Mode-Pic Mode Direct Bypass' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_ISF_MODE_SLASH_PICTURE_MODE_WRAP_MINUS_AROUND_UP": {
+      "label": "ISF Mode/Picture Mode(Wrap-Around Up)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 90 'ISF Mode/Picture Mode(Wrap-Around Up)' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_WIDE_MODE_AUTO": {
+      "label": "Wide Mode Auto",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 91 'Wide Mode Auto' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_WIDE_MODE_4_3": {
+      "label": "Wide Mode 4\\:3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 92 'Wide Mode 4\\:3' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_WIDE_MODE_FULL": {
+      "label": "Wide Mode Full",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 93 'Wide Mode Full' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_WIDE_MODE_ZOOM": {
+      "label": "Wide Mode Zoom",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 94 'Wide Mode Zoom' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_WIDE_MODE_WIDE_ZOOM": {
+      "label": "Wide Mode Wide Zoom",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 95 'Wide Mode Wide Zoom' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_WIDE_MODE_WRAP_MINUS_AROUND_UP": {
+      "label": "Wide Mode(Wrap-Around Up)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 96 'Wide Mode(Wrap-Around Up)' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_HDMI_AUDIO_OUT_MAIN_OFF": {
+      "label": "HDMI Audio Out Main Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 97 'HDMI Audio Out Main Off' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_HDMI_AUDIO_OUT_MAIN_ON": {
+      "label": "HDMI Audio Out Main On",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 98 'HDMI Audio Out Main On' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_HDMI_AUDIO_OUT_WRAP_MINUS_AROUND_UP": {
+      "label": "HDMI Audio Out(Wrap-Around Up)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 99 'HDMI Audio Out(Wrap-Around Up)' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_STEREO_STEREO_SLASH_ALL_CH_ST": {
+      "label": "Listening Mode STEREO STEREO/ALL CH ST",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x4C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 100 'Listening Mode STEREO STEREO/ALL CH ST' (OBC C9 CD; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 76"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_DIRECT": {
+      "label": "Listening Mode DIRECT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x44",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 101 'Listening Mode DIRECT' (OBC 49 DD; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 68"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_SURROUND_WRAP_MINUS_AROUND_UP": {
+      "label": "Listening Mode SURROUND(Wrap-Around UP)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x4D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 102 'Listening Mode SURROUND(Wrap-Around UP)' (OBC C9 4D; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 77"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_THX_WRAP_MINUS_AROUND_UP": {
+      "label": "Listening Mode THX(Wrap-Around UP)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x4E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 103 'Listening Mode THX(Wrap-Around UP)' (OBC C9 8D; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 78"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_ALL_CH_STEREO": {
+      "label": "Listening Mode ALL CH STEREO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x52",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 104 'Listening Mode ALL CH STEREO' (OBC C9 B5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 82"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_PLIIX_MOVIE_STAR_1": {
+      "label": "Listening Mode PLIIx Movie (*1)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x02",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 105 'Listening Mode PLIIx Movie (*1)' (OBC BF AF; NEC1 Combo, parms 210): NEC1 device 210 subdevice 2 function 10"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_PLIIX_MUSIC_STAR_1": {
+      "label": "Listening Mode PLIIx Music (*1)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x02",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 106 'Listening Mode PLIIx Music (*1)' (OBC BF 2F; NEC1 Combo, parms 210): NEC1 device 210 subdevice 2 function 11"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_PLIIX_GAME_STAR_1": {
+      "label": "Listening Mode PLIIx Game (*1)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x02",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 107 'Listening Mode PLIIx Game (*1)' (OBC BF CF; NEC1 Combo, parms 210): NEC1 device 210 subdevice 2 function 12"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_PLIIZ_HEIGHT": {
+      "label": "Listening Mode PLIIz Height",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 108 'Listening Mode PLIIz Height' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_NEO_6_CINEMA_SLASH_NEO_6_SLASH_NEO_X_CINEMA_SLASH_NEO_X": {
+      "label": "Listening Mode Neo\\:6 Cinema/Neo\\:6/Neo\\:X Cinema/Neo\\:X",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x02",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 109 'Listening Mode Neo\\:6 Cinema/Neo\\:6/Neo\\:X Cinema/Neo\\:X' (OBC BF 4F; NEC1 Combo, parms 210): NEC1 device 210 subdevice 2 function 13"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_NEO_6_MUSIC_SLASH_NEO_X_MUSIC": {
+      "label": "Listening Mode Neo\\:6 Music/Neo\\:X Music",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x02",
+          "function": "0x0E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 110 'Listening Mode Neo\\:6 Music/Neo\\:X Music' (OBC BF 8F; NEC1 Combo, parms 210): NEC1 device 210 subdevice 2 function 14"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_NEO_X_GAME": {
+      "label": "Listening Mode Neo\\:X Game",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 111 'Listening Mode Neo\\:X Game' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_STRAIGHT_DECODE": {
+      "label": "Listening Mode Straight Decode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0xAC",
+          "function": "0x52",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 112 'Listening Mode Straight Decode' (OBC CA B5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 172 function 82"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_DOLBY_EX": {
+      "label": "Listening Mode Dolby EX",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0xAC",
+          "function": "0x53",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 113 'Listening Mode Dolby EX' (OBC CA 35; NEC1 Combo, parms 210): NEC1 device 210 subdevice 172 function 83"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_THX_CINEMA": {
+      "label": "Listening Mode THX Cinema",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x19",
+          "function": "0xDA",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 114 'Listening Mode THX Cinema' (OBC 67 A4; NEC1 Combo, parms 210): NEC1 device 210 subdevice 25 function 218"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_THX_MUSIC": {
+      "label": "Listening Mode THX Music",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x19",
+          "function": "0xC4",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 115 'Listening Mode THX Music' (OBC 67 DC; NEC1 Combo, parms 210): NEC1 device 210 subdevice 25 function 196"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_THX_GAMES": {
+      "label": "Listening Mode THX Games",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x19",
+          "function": "0xC5",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 116 'Listening Mode THX Games' (OBC 67 5C; NEC1 Combo, parms 210): NEC1 device 210 subdevice 25 function 197"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_THX_SURROUND_EX": {
+      "label": "Listening Mode THX Surround EX",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x19",
+          "function": "0xDB",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 117 'Listening Mode THX Surround EX' (OBC 67 24; NEC1 Combo, parms 210): NEC1 device 210 subdevice 25 function 219"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_THX_ULTRA2_SLASH_SELECT2_SLASH_I_SLASH_S_CINEMA_SLASH_CINEMA2": {
+      "label": "Listening Mode THX Ultra2/Select2/I/S Cinema/Cinema2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x19",
+          "function": "0xDC",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 118 'Listening Mode THX Ultra2/Select2/I/S Cinema/Cinema2' (OBC 67 C4; NEC1 Combo, parms 210): NEC1 device 210 subdevice 25 function 220"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_THX_MUSICMODE_ULTRA2_SLASH_SELECT2_SLASH_I_SLASH_S_MUSIC": {
+      "label": "Listening Mode THX MusicMode,Ultra2/Select2/I/S Music",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x19",
+          "function": "0xDD",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 119 'Listening Mode THX MusicMode,Ultra2/Select2/I/S Music' (OBC 67 44; NEC1 Combo, parms 210): NEC1 device 210 subdevice 25 function 221"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_THX_GAMES_MODE_ULTRA2_SLASH_SELECT2_SLASH_I_SLASH_S_GAMES": {
+      "label": "Listening Mode THX Games Mode,Ultra2/Select2/I/S Games",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x19",
+          "function": "0xDE",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 120 'Listening Mode THX Games Mode,Ultra2/Select2/I/S Games' (OBC 67 84; NEC1 Combo, parms 210): NEC1 device 210 subdevice 25 function 222"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_PLII_SLASH_PLIIX_THX_CINEMA": {
+      "label": "Listening Mode PLII/PLIIx THX Cinema",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x19",
+          "function": "0xD8",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 121 'Listening Mode PLII/PLIIx THX Cinema' (OBC 67 E4; NEC1 Combo, parms 210): NEC1 device 210 subdevice 25 function 216"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_NEO_6_THX_CINEMA_SLASH_NEO_X_THX_CINEMA": {
+      "label": "Listening Mode Neo\\:6 THX Cinema/Neo\\:X THX Cinema",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x19",
+          "function": "0xD9",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 122 'Listening Mode Neo\\:6 THX Cinema/Neo\\:X THX Cinema' (OBC 67 64; NEC1 Combo, parms 210): NEC1 device 210 subdevice 25 function 217"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_PLII_SLASH_PLIIX_THX_MUSIC": {
+      "label": "Listening Mode PLII/PLIIx THX Music",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x19",
+          "function": "0xD4",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 123 'Listening Mode PLII/PLIIx THX Music' (OBC 67 D4; NEC1 Combo, parms 210): NEC1 device 210 subdevice 25 function 212"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_NEO_6_THX_MUSIC_SLASH_NEO_X_THX_MUSIC": {
+      "label": "Listening Mode Neo\\:6 THX Music/Neo\\:X THX Music",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x19",
+          "function": "0xD5",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 124 'Listening Mode Neo\\:6 THX Music/Neo\\:X THX Music' (OBC 67 54; NEC1 Combo, parms 210): NEC1 device 210 subdevice 25 function 213"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_PLII_SLASH_PLIIX_THX_GAMES": {
+      "label": "Listening Mode PLII/PLIIx THX Games",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x19",
+          "function": "0xD6",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 125 'Listening Mode PLII/PLIIx THX Games' (OBC 67 94; NEC1 Combo, parms 210): NEC1 device 210 subdevice 25 function 214"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_NEO_6_THX_GAMES_SLASH_NEO_X_THX_GAMES": {
+      "label": "Listening Mode Neo\\:6 THX Games/Neo\\:X THX Games",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x19",
+          "function": "0xD7",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 126 'Listening Mode Neo\\:6 THX Games/Neo\\:X THX Games' (OBC 67 14; NEC1 Combo, parms 210): NEC1 device 210 subdevice 25 function 215"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_MONO": {
+      "label": "Listening Mode Mono",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0xAC",
+          "function": "0x54",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 127 'Listening Mode Mono' (OBC CA D5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 172 function 84"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_THEATER_MINUS_DIMENSIONAL": {
+      "label": "Listening Mode Theater-Dimensional",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0xDC",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 128 'Listening Mode Theater-Dimensional' (OBC C9 C4; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 220"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_AUDYSSEY_DSX": {
+      "label": "Listening Mode Audyssey DSX",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 129 'Listening Mode Audyssey DSX' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_GAME_MINUS_RPG": {
+      "label": "Listening Mode Game-RPG",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 130 'Listening Mode Game-RPG' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_GAME_MINUS_ACTION": {
+      "label": "Listening Mode Game-Action",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 131 'Listening Mode Game-Action' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_GAME_MINUS_ROCK": {
+      "label": "Listening Mode Game-Rock",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 132 'Listening Mode Game-Rock' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_GAME_MINUS_SPROTS": {
+      "label": "Listening Mode Game-Sprots",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 133 'Listening Mode Game-Sprots' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_ORCHESTRA": {
+      "label": "Listening Mode Orchestra",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 134 'Listening Mode Orchestra' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_UNPLUGGED": {
+      "label": "Listening Mode Unplugged",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 135 'Listening Mode Unplugged' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_STUDIO_MINUS_MIX": {
+      "label": "Listening Mode Studio-Mix",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 136 'Listening Mode Studio-Mix' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_TV_LOGIC": {
+      "label": "Listening Mode TV Logic",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 137 'Listening Mode TV Logic' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_FULL_MONO": {
+      "label": "Listening Mode Full Mono",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 138 'Listening Mode Full Mono' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_WHOLE_HOUSE_MODE": {
+      "label": "Listening Mode Whole House Mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 139 'Listening Mode Whole House Mode' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_PLIIX_SLASH_PLII_MOVIE_PLUS_AUDYSSEY_DSX": {
+      "label": "Listening Mode PLIIx/PLII Movie + Audyssey DSX",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 140 'Listening Mode PLIIx/PLII Movie + Audyssey DSX' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_PLIIX_SLASH_PLII_MUSIC_PLUS_AUDYSSEY_DSX": {
+      "label": "Listening Mode PLIIx/PLII Music + Audyssey DSX",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 141 'Listening Mode PLIIx/PLII Music + Audyssey DSX' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_PLIIX_SLASH_PLII_GAME_PLUS_AUDYSSEY_DSX": {
+      "label": "Listening Mode PLIIx/PLII Game + Audyssey DSX",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 142 'Listening Mode PLIIx/PLII Game + Audyssey DSX' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_DOLBY_EX_PLUS_AUDYSSEY_DSX": {
+      "label": "Listening Mode Dolby EX + Audyssey DSX",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 143 'Listening Mode Dolby EX + Audyssey DSX' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_PLIIZ_HEIGHT_PLUS_THX_CINEMA": {
+      "label": "Listening Mode PLIIz Height + THX Cinema",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 144 'Listening Mode PLIIz Height + THX Cinema' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_PLIIZ_HEIGHT_PLUS_THX_MUSIC": {
+      "label": "Listening Mode PLIIz Height + THX Music",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 145 'Listening Mode PLIIz Height + THX Music' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_PLIIZ_HEIGHT_PLUS_THX_GAMES": {
+      "label": "Listening Mode PLIIz Height + THX Games",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 146 'Listening Mode PLIIz Height + THX Games' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_PLIIZ_HEIGHT_PLUS_THX_U2_SLASH_S2_CINEMA": {
+      "label": "Listening Mode PLIIz Height + THX U2/S2 Cinema",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 147 'Listening Mode PLIIz Height + THX U2/S2 Cinema' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_PLIIZ_HEIGHT_PLUS_THX_U2_SLASH_S2_MUSIC": {
+      "label": "Listening Mode PLIIz Height + THX U2/S2 Music",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 148 'Listening Mode PLIIz Height + THX U2/S2 Music' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_PLIIZ_HEIGHT_PLUS_THX_U2_SLASH_S2_GAMES": {
+      "label": "Listening Mode PLIIz Height + THX U2/S2 Games",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 149 'Listening Mode PLIIz Height + THX U2/S2 Games' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_DSP_UP": {
+      "label": "Listening Mode DSP Up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x18",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 150 'Listening Mode DSP Up' (OBC C9 E7; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 24"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_DSP_DOWN": {
+      "label": "Listening Mode DSP Down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x19",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 151 'Listening Mode DSP Down' (OBC C9 67; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 25"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_LISTENING_MODE_UP": {
+      "label": "Listening Mode Listening Mode Up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x4C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 152 'Listening Mode Listening Mode Up' (OBC 49 CD; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 76"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_LISTENING_MODE_DOWN": {
+      "label": "Listening Mode Listening Mode Down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x45",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 153 'Listening Mode Listening Mode Down' (OBC C9 5D; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 69"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_LISTENING_MODE_MOVIE_SLASH_TV": {
+      "label": "Listening Mode Listening Mode Movie/TV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0xAC",
+          "function": "0xD0",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 154 'Listening Mode Listening Mode Movie/TV' (OBC CA F4; NEC1 Combo, parms 210): NEC1 device 210 subdevice 172 function 208"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_LISTENING_MODE_MUSIC": {
+      "label": "Listening Mode Listening Mode Music",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0xAC",
+          "function": "0xD1",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 155 'Listening Mode Listening Mode Music' (OBC CA 74; NEC1 Combo, parms 210): NEC1 device 210 subdevice 172 function 209"
+        }
+      ]
+    },
+    "KEY_LISTENING_MODE_LISTENING_MODE_GAME": {
+      "label": "Listening Mode Listening Mode Game",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0xAC",
+          "function": "0xD2",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 156 'Listening Mode Listening Mode Game' (OBC CA B4; NEC1 Combo, parms 210): NEC1 device 210 subdevice 172 function 210"
+        }
+      ]
+    },
+    "KEY_LATE_NIGHT_STATE_WRAP_MINUS_AROUND_UP": {
+      "label": "Late Night State(Wrap-Around Up)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0xD7",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 157 'Late Night State(Wrap-Around Up)' (OBC C9 14; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 215"
+        }
+      ]
+    },
+    "KEY_RE_MINUS_EQ_SLASH_CINEMA_WRAP_AROUND_UP": {
+      "label": "Re-EQ/Cinema (Wrap Around Up)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0xD6",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 158 'Re-EQ/Cinema (Wrap Around Up)' (OBC C9 94; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 214"
+        }
+      ]
+    },
+    "KEY_AUDESSEY_EQ_OFF": {
+      "label": "Audessey EQ Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 159 'Audessey EQ Off' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_AUDESSEY_EQ_ON_MOVIE": {
+      "label": "Audessey EQ On Movie",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 160 'Audessey EQ On Movie' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_AUDESSEY_EQ_MUSIC": {
+      "label": "Audessey EQ Music",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 161 'Audessey EQ Music' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_AUDYSSEY_2EQ_SLASH_MULTEQ_SLASH_MULTEQ_XT_WRAP_MINUS_AROUND_UP": {
+      "label": "Audyssey 2EQ/MultEQ/MultEQ XT(Wrap-Around Up)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0xAC",
+          "function": "0xDF",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 162 'Audyssey 2EQ/MultEQ/MultEQ XT(Wrap-Around Up)' (OBC CA 04; NEC1 Combo, parms 210): NEC1 device 210 subdevice 172 function 223"
+        }
+      ]
+    },
+    "KEY_DYN_EQ_OFF": {
+      "label": "Dyn EQ Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 163 'Dyn EQ Off' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_DYN_EQ_ON": {
+      "label": "Dyn EQ On",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 164 'Dyn EQ On' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_DYNAMIC_EQ_WRAP_MINUS_AROUND_UP": {
+      "label": "Dynamic EQ(Wrap-Around Up)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 165 'Dynamic EQ(Wrap-Around Up)' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_DYN_VOL_OFF": {
+      "label": "Dyn Vol Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 166 'Dyn Vol Off' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_DYN_VOL_LIGHT": {
+      "label": "Dyn Vol Light",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 167 'Dyn Vol Light' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_DYN_VOL_MEDIUM": {
+      "label": "Dyn Vol Medium",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 168 'Dyn Vol Medium' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_DYN_VOL_HEAVY": {
+      "label": "Dyn Vol Heavy",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 169 'Dyn Vol Heavy' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_DYNAMIC_VOLUME_WRAP_MINUS_AROUND_UP": {
+      "label": "Dynamic Volume(Wrap-Around Up)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 170 'Dynamic Volume(Wrap-Around Up)' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_DOLBY_VOL_OFF": {
+      "label": "Dolby Vol Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 171 'Dolby Vol Off' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_DOLBY_VOL_LOW_SLASH_ON": {
+      "label": "Dolby Vol Low/On",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 172 'Dolby Vol Low/On' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_DOLBY_VOLUME_WRAP_MINUS_AROUND_UP": {
+      "label": "Dolby Volume(Wrap-Around Up)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 173 'Dolby Volume(Wrap-Around Up)' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_MUSIC_OPTIMIZER_OFF": {
+      "label": "Music Optimizer Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 174 'Music Optimizer Off' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_MUSIC_OPTIMIZER_ON": {
+      "label": "Music Optimizer On",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 175 'Music Optimizer On' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_MUSIC_OPTIMIZER_WRAP_MINUS_AROUND_UP": {
+      "label": "Music Optimizer(Wrap-Around Up)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 176 'Music Optimizer(Wrap-Around Up)' (OBC 87 F5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 30 function 80"
+        }
+      ]
+    },
+    "KEY_TUNING_UP": {
+      "label": "Tuning Up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x02",
+          "function": "0x40",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 177 'Tuning Up' (OBC BF FD; NEC1 Combo, parms 210): NEC1 device 210 subdevice 2 function 64"
+        }
+      ]
+    },
+    "KEY_TUNING_DOWN": {
+      "label": "Tuning Down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x02",
+          "function": "0x41",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 178 'Tuning Down' (OBC BF 7D; NEC1 Combo, parms 210): NEC1 device 210 subdevice 2 function 65"
+        }
+      ]
+    },
+    "KEY_TUNING_MODE": {
+      "label": "Tuning Mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x02",
+          "function": "0xD3",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 179 'Tuning Mode' (OBC BF 34; NEC1 Combo, parms 210): NEC1 device 210 subdevice 2 function 211"
+        }
+      ]
+    },
+    "KEY_PRESET_UP": {
+      "label": "Preset Up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 180 'Preset Up' (OBC 49 FF; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 0"
+        }
+      ]
+    },
+    "KEY_PRESET_DOWN": {
+      "label": "Preset Down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 181 'Preset Down' (OBC 49 7F; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 1"
+        }
+      ]
+    },
+    "KEY_MEMORY": {
+      "label": "Memory",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x02",
+          "function": "0xD2",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 182 'Memory' (OBC BF B4; NEC1 Combo, parms 210): NEC1 device 210 subdevice 2 function 210"
+        }
+      ]
+    },
+    "KEY_DIRECT_TUNING": {
+      "label": "Direct Tuning",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x02",
+          "function": "0xDF",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 183 'Direct Tuning' (OBC BF 04; NEC1 Combo, parms 210): NEC1 device 210 subdevice 2 function 223"
+        }
+      ]
+    },
+    "KEY_DIRECT_PRESET_1": {
+      "label": "Direct Preset 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x02",
+          "function": "0xD5",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 184 'Direct Preset 1' (OBC BF 54; NEC1 Combo, parms 210): NEC1 device 210 subdevice 2 function 213"
+        }
+      ]
+    },
+    "KEY_DIRECT_PRESET_2": {
+      "label": "Direct Preset 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x02",
+          "function": "0xD6",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 185 'Direct Preset 2' (OBC BF 94; NEC1 Combo, parms 210): NEC1 device 210 subdevice 2 function 214"
+        }
+      ]
+    },
+    "KEY_DIRECT_PRESET_3": {
+      "label": "Direct Preset 3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x02",
+          "function": "0xD7",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 186 'Direct Preset 3' (OBC BF 14; NEC1 Combo, parms 210): NEC1 device 210 subdevice 2 function 215"
+        }
+      ]
+    },
+    "KEY_DIRECT_PRESET_4": {
+      "label": "Direct Preset 4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x02",
+          "function": "0xD8",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 187 'Direct Preset 4' (OBC BF E4; NEC1 Combo, parms 210): NEC1 device 210 subdevice 2 function 216"
+        }
+      ]
+    },
+    "KEY_DIRECT_PRESET_5": {
+      "label": "Direct Preset 5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x02",
+          "function": "0xD9",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 188 'Direct Preset 5' (OBC BF 64; NEC1 Combo, parms 210): NEC1 device 210 subdevice 2 function 217"
+        }
+      ]
+    },
+    "KEY_DIRECT_PRESET_6": {
+      "label": "Direct Preset 6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x02",
+          "function": "0xDA",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 189 'Direct Preset 6' (OBC BF A4; NEC1 Combo, parms 210): NEC1 device 210 subdevice 2 function 218"
+        }
+      ]
+    },
+    "KEY_DIRECT_PRESET_7": {
+      "label": "Direct Preset 7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x02",
+          "function": "0xDB",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 190 'Direct Preset 7' (OBC BF 24; NEC1 Combo, parms 210): NEC1 device 210 subdevice 2 function 219"
+        }
+      ]
+    },
+    "KEY_DIRECT_PRESET_8": {
+      "label": "Direct Preset 8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x02",
+          "function": "0xDC",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 191 'Direct Preset 8' (OBC BF C4; NEC1 Combo, parms 210): NEC1 device 210 subdevice 2 function 220"
+        }
+      ]
+    },
+    "KEY_DIRECT_PRESET_9": {
+      "label": "Direct Preset 9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x02",
+          "function": "0xDD",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 192 'Direct Preset 9' (OBC BF 44; NEC1 Combo, parms 210): NEC1 device 210 subdevice 2 function 221"
+        }
+      ]
+    },
+    "KEY_DIRECT_PRESET_0_SLASH_10": {
+      "label": "Direct Preset 0/10",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x02",
+          "function": "0xDE",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Integra 80.3.rmdu function 193 'Direct Preset 0/10' (OBC BF 84; NEC1 Combo, parms 210): NEC1 device 210 subdevice 2 function 222"
+        }
+      ]
+    }
+  }
+}

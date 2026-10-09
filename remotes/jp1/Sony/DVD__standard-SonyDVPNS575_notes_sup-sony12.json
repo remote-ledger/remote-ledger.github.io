@@ -1,0 +1,54 @@
+{
+  "manufacturer": "Sony",
+  "model": "SonyDVPNS575 - UEI upgrade 1033  annotated and supplemented with learned signals from OEM remote [Sony12]",
+  "aliases": [],
+  "controls": [
+    "SonyDVPNS575 - UEI upgrade 1033  annotated and supplemented with learned signals from OEM remote"
+  ],
+  "protocol": {
+    "name": "Sony12",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_STAR_REAL_STAR_TV_SLASH_VID": {
+      "label": "*real* TV/Vid",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x25",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/SonyDVPNS575_notes&sup.rmdu function 43 '*real* TV/Vid' (OBC A4 80; Sony Combo (12/15/20), parms 73 98 0 0): Sony12 device 1 function 37; the upgrade's note: 'see note at {27} above.  Does nothing with DVD player'"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "Vol +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/SonyDVPNS575_notes&sup.rmdu function 44 'Vol +' (OBC 48 80; Sony Combo (12/15/20), parms 73 98 0 0): Sony12 device 1 function 18; the upgrade's note: '\\ does nothing with DVD player'"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "Vol -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/SonyDVPNS575_notes&sup.rmdu function 45 'Vol -' (OBC C8 80; Sony Combo (12/15/20), parms 73 98 0 0): Sony12 device 1 function 19; the upgrade's note: '\\ does nothing with DVD player'"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "manufacturer": "Sony",
+  "model": "DVD/VCR rdr-vx530 [Sony15]",
+  "aliases": [],
+  "controls": [
+    "Sony DVD/VCR rdr-vx530"
+  ],
+  "protocol": {
+    "name": "Sony15",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_WIDE_MODE": {
+      "label": "wide mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA4",
+          "function": "0x3D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD _ VCR combo units/sony RDR-VX530.rmdu function 57 'wide mode' (OBC BD 25; Sony Combo (12/15/20), parms 250 11 1 164): Sony15 device 164 function 61"
+        }
+      ]
+    }
+  }
+}

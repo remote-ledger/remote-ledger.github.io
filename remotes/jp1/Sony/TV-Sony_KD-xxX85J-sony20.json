@@ -1,0 +1,43 @@
+{
+  "manufacturer": "Sony",
+  "model": "KD-xxX85J [Sony20]",
+  "aliases": [],
+  "controls": [
+    "Sony KD-xxX85J"
+  ],
+  "protocol": {
+    "name": "Sony20",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_DISNEY_PLUS": {
+      "label": "Disney+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1F",
+          "subdevice": "0x40",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/Sony KD-xxX85J.rmdu function 48 'Disney+' (OBC A0 F9; Sony Combo (12/15/20), parms 64 0 0 0): Sony20 device 31 subdevice 64 function 5"
+        }
+      ]
+    },
+    "KEY_PRIME_VIDEO": {
+      "label": "Prime Video",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1F",
+          "subdevice": "0x40",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/Sony KD-xxX85J.rmdu function 49 'Prime Video' (OBC 20 F9; Sony Combo (12/15/20), parms 64 0 0 0): Sony20 device 31 subdevice 64 function 4"
+        }
+      ]
+    }
+  }
+}

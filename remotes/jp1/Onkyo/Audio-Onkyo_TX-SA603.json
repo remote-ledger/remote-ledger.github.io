@@ -1,0 +1,855 @@
+{
+  "manufacturer": "Onkyo",
+  "model": "TX-SA603",
+  "aliases": [],
+  "controls": [
+    "Onkyo TX-SA603"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER_ON": {
+      "label": "power on",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 0 'power on' (OBC 49 DF; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 4; the upgrade's note: 'Power On from standby'"
+        }
+      ]
+    },
+    "KEY_STANDBY_POWER_MINUS_OFF": {
+      "label": "standby(power-off)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x47",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 1 'standby(power-off)' (OBC C9 1D; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 71; the upgrade's note: 'Enter standby from On state'"
+        }
+      ]
+    },
+    "KEY_1_SLASH_VIDEO_1": {
+      "label": "1 / video 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 2 '1 / video 1' (OBC 49 0F; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 15; the upgrade's note: 'BS'"
+        }
+      ]
+    },
+    "KEY_2_SLASH_VIDEO_2": {
+      "label": "2 / video 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x0E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 3 '2 / video 2' (OBC 49 8F; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 14; the upgrade's note: 'JVC VCR'"
+        }
+      ]
+    },
+    "KEY_3_SLASH_VIDEO_3": {
+      "label": "3 / video 3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 4 '3 / video 3' (OBC 49 4F; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 13; the upgrade's note: 'SatCruiser'"
+        }
+      ]
+    },
+    "KEY_4_SLASH_VIDEO_4": {
+      "label": "4 / video 4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x9F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 5 '4 / video 4' (OBC 49 06; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 159; the upgrade's note: 'Front Video'"
+        }
+      ]
+    },
+    "KEY_5_SLASH_MULTI_MINUS_CH": {
+      "label": "5 / Multi-ch",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 6 '5 / Multi-ch' (OBC C9 DF; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 4; the upgrade's note: 'Multi-channel input'"
+        }
+      ]
+    },
+    "KEY_6_SLASH_DVD": {
+      "label": "6 / DVD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x8C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 7 '6 / DVD' (OBC C9 CE; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 140; the upgrade's note: 'JVC DVD'"
+        }
+      ]
+    },
+    "KEY_7_SLASH_CD": {
+      "label": "7 / CD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 8 '7 / CD' (OBC 49 6F; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 9; the upgrade's note: 'Pioneer CLD'"
+        }
+      ]
+    },
+    "KEY_8_SLASH_TAPE": {
+      "label": "8 / Tape",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 9 '8 / Tape' (OBC 49 EF; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 8; the upgrade's note: 'EQ'"
+        }
+      ]
+    },
+    "KEY_9_SLASH_TUNER": {
+      "label": "9 / Tuner",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 10 '9 / Tuner' (OBC 49 2F; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 11"
+        }
+      ]
+    },
+    "KEY_10_PLUS_SLASH_PHONO_STAR": {
+      "label": "10+ / Phono *",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 11 '10+ / Phono *' (OBC 49 AF; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 10; the upgrade's note: '?'"
+        }
+      ]
+    },
+    "KEY_0_STAR": {
+      "label": "0 *",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x46",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 12 '0 *' (OBC 49 9D; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 70; the upgrade's note: '?'"
+        }
+      ]
+    },
+    "KEY_DIMMER_SLASH_TV_INPUT": {
+      "label": "Dimmer/TV input",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x95",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 13 'Dimmer/TV input' (OBC 49 56; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 149; the upgrade's note: 'Dim the display'"
+        }
+      ]
+    },
+    "KEY_TOP_MENU_STAR": {
+      "label": "Top menu *",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x4C",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 14 'Top menu *' (OBC CD BF; NEC1 Combo, parms 210): NEC1 device 210 subdevice 76 function 2; the upgrade's note: '?'"
+        }
+      ]
+    },
+    "KEY_MENU_STAR": {
+      "label": "menu *",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x02",
+          "function": "0x4D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 15 'menu *' (OBC BF 4D; NEC1 Combo, parms 210): NEC1 device 210 subdevice 2 function 77; the upgrade's note: '?'"
+        }
+      ]
+    },
+    "KEY_SLEEP": {
+      "label": "Sleep",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x5D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 16 'Sleep' (OBC 49 45; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 93; the upgrade's note: 'Sleep 10~90'"
+        }
+      ]
+    },
+    "KEY_CH_UP": {
+      "label": "CH ^ up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 17 'CH ^ up' (OBC 49 FF; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 0"
+        }
+      ]
+    },
+    "KEY_CH_V_DOWN": {
+      "label": "CH V down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 18 'CH V down' (OBC 49 7F; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 1"
+        }
+      ]
+    },
+    "KEY_VOL_UP": {
+      "label": "vol ^ up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 19 'vol ^ up' (OBC 49 BF; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 2; the upgrade's note: 'Increase the volume'"
+        }
+      ]
+    },
+    "KEY_VOL_V_DOWN": {
+      "label": "vol V down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 20 'vol V down' (OBC 49 3F; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 3; the upgrade's note: 'Decrease the volume'"
+        }
+      ]
+    },
+    "KEY_MUTING": {
+      "label": "muting",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 21 'muting' (OBC 49 5F; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 5; the upgrade's note: 'Mute'"
+        }
+      ]
+    },
+    "KEY_UP_ARROW": {
+      "label": "^ up arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x82",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 22 '^ up arrow' (OBC 49 BE; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 130"
+        }
+      ]
+    },
+    "KEY_V_DOWN_ARROW": {
+      "label": "V down arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x83",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 23 'V down arrow' (OBC 49 3E; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 131"
+        }
+      ]
+    },
+    "KEY_ENTER": {
+      "label": "ENTER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x97",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 24 'ENTER' (OBC 49 16; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 151; the upgrade's note: 'Enter (Select menu / menuitem)'"
+        }
+      ]
+    },
+    "KEY_LEFT_ARROW": {
+      "label": "< left arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x84",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 25 '< left arrow' (OBC 49 DE; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 132"
+        }
+      ]
+    },
+    "KEY_RIGHT_ARROW": {
+      "label": "> right arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x85",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 26 '> right arrow' (OBC 49 5E; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 133"
+        }
+      ]
+    },
+    "KEY_DISPLAY": {
+      "label": "display",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x55",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 27 'display' (OBC C9 55; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 85; the upgrade's note: 'Display info about current audio/video source'"
+        }
+      ]
+    },
+    "KEY_RETURN_SLASH_EXIT_STAR": {
+      "label": "return/exit *",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x54",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 28 'return/exit *' (OBC C9 D5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 84; the upgrade's note: 'Return/Exit from menu / menuitem'"
+        }
+      ]
+    },
+    "KEY_SETUP_SLASH_GUIDE": {
+      "label": "setup/guide",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x53",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 29 'setup/guide' (OBC C9 35; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 83; the upgrade's note: 'Enter the Setup menu'"
+        }
+      ]
+    },
+    "KEY_THX_STAR": {
+      "label": "THX *",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x4E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 30 'THX *' (OBC C9 8D; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 78"
+        }
+      ]
+    },
+    "KEY_SURROUND": {
+      "label": "surround",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x4D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 31 'surround' (OBC C9 4D; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 77; the upgrade's note: 'Select the surround mode'"
+        }
+      ]
+    },
+    "KEY_ALL_CH_STEREO": {
+      "label": "All CH stereo",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x52",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 32 'All CH stereo' (OBC C9 B5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 82; the upgrade's note: 'Select All Channel Stereo mode'"
+        }
+      ]
+    },
+    "KEY_STEREO": {
+      "label": "stereo",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x4C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 33 'stereo' (OBC C9 CD; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 76; the upgrade's note: 'Select stereo mode'"
+        }
+      ]
+    },
+    "KEY_PURE_A": {
+      "label": "pure A",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0xD3",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 34 'pure A' (OBC C9 34; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 211; the upgrade's note: 'pure audio'"
+        }
+      ]
+    },
+    "KEY_DIRECT": {
+      "label": "Direct",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x44",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 35 'Direct' (OBC 49 DD; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 68; the upgrade's note: 'Select Direct mode (no DSP or bass management)'"
+        }
+      ]
+    },
+    "KEY_DSP_PLUS": {
+      "label": "DSP +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x18",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 36 'DSP +' (OBC C9 E7; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 24; the upgrade's note: 'Cycle through DSP modes'"
+        }
+      ]
+    },
+    "KEY_DSP_MINUS": {
+      "label": "DSP -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x19",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 37 'DSP -' (OBC C9 67; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 25; the upgrade's note: 'Cycle through DSP modes'"
+        }
+      ]
+    },
+    "KEY_TEST_TONE": {
+      "label": "Test tone",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x9A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 38 'Test tone' (OBC 49 A6; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 154; the upgrade's note: 'Start the test tone for calibrating levels'"
+        }
+      ]
+    },
+    "KEY_CH_SELECT_SPK": {
+      "label": "CH select(SPK)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x44",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 39 'CH select(SPK)' (OBC C9 DD; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 68; the upgrade's note: 'Select the channel to be calibrated'"
+        }
+      ]
+    },
+    "KEY_LEVEL_PLUS": {
+      "label": "Level +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x42",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 40 'Level +' (OBC C9 BD; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 66; the upgrade's note: 'Increase the level of the selected channel'"
+        }
+      ]
+    },
+    "KEY_LEVEL_MINUS": {
+      "label": "Level -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x43",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 41 'Level -' (OBC C9 3D; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 67; the upgrade's note: 'Decrease the level of the selected channel'"
+        }
+      ]
+    },
+    "KEY_LATE_NIGHT": {
+      "label": "Late night",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0xD7",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 42 'Late night' (OBC C9 14; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 215; the upgrade's note: 'Late Night feature (Dynamic Compression)'"
+        }
+      ]
+    },
+    "KEY_CINE_FLTR_SLASH_RE_MINUS_EQ": {
+      "label": "Cine FLTR/Re-EQ",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0xD6",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 43 'Cine FLTR/Re-EQ' (OBC C9 94; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 214; the upgrade's note: 'Toggle Cinema Filter feature'"
+        }
+      ]
+    },
+    "KEY_TONE_STAR": {
+      "label": "Tone *",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x49",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 44 'Tone *' (OBC C9 6D; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 73; the upgrade's note: 'Tone menu (bass, treble controls)'"
+        }
+      ]
+    },
+    "KEY_TONE_PLUS_STAR": {
+      "label": "Tone + *",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x40",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 45 'Tone + *' (OBC C9 FD; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 64; the upgrade's note: 'Increase selected tone control'"
+        }
+      ]
+    },
+    "KEY_TONE_MINUS_STAR": {
+      "label": "Tone - *",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x41",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 46 'Tone - *' (OBC C9 7D; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 65; the upgrade's note: 'Decrease selected tone control'"
+        }
+      ]
+    },
+    "KEY_SPEAKER_A": {
+      "label": "Speaker A",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x59",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 47 'Speaker A' (OBC 49 65; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 89; the upgrade's note: 'Toggle speaker set A on/off'"
+        }
+      ]
+    },
+    "KEY_SPEAKER_B": {
+      "label": "Speaker B",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x5A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 48 'Speaker B' (OBC 49 A5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 90; the upgrade's note: 'Toggle speaker set B on/off'"
+        }
+      ]
+    },
+    "KEY_STAR": {
+      "label": "? *",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x9D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 49 '? *' (OBC 49 46; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 157; the upgrade's note: '?'"
+        }
+      ]
+    },
+    "KEY_UNLABELED_STAR": {
+      "label": "?? *",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0xA8",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 50 '?? *' (OBC 49 EA; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 168; the upgrade's note: '?'"
+        }
+      ]
+    },
+    "KEY_OPEN_SLASH_CLOSE": {
+      "label": "open/close",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0xD8",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 51 'open/close' (OBC C9 E4; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 216"
+        }
+      ]
+    },
+    "KEY_SKIP_MINUS": {
+      "label": "skip -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x93",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 52 'skip -' (OBC 49 36; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 147"
+        }
+      ]
+    },
+    "KEY_PLAY": {
+      "label": "play",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 53 'play' (OBC 49 57; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 21"
+        }
+      ]
+    },
+    "KEY_SKIP_PLUS": {
+      "label": "skip +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x94",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 54 'skip +' (OBC 49 D6; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 148"
+        }
+      ]
+    },
+    "KEY_REWIND": {
+      "label": "rewind",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 55 'rewind' (OBC 49 A7; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 26"
+        }
+      ]
+    },
+    "KEY_PAUSE": {
+      "label": "pause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 56 'pause' (OBC 49 97; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 22"
+        }
+      ]
+    },
+    "KEY_STOP": {
+      "label": "stop",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 57 'stop' (OBC 49 37; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 19"
+        }
+      ]
+    },
+    "KEY_FWD": {
+      "label": "fwd",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x19",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 58 'fwd' (OBC 49 67; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 25"
+        }
+      ]
+    },
+    "KEY_RECORD": {
+      "label": "record",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x18",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo TX-SA603.rmdu function 59 'record' (OBC 49 E7; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 24"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,687 @@
+{
+  "manufacturer": "Adcom",
+  "model": "GTP-602",
+  "aliases": [],
+  "controls": [
+    "Adcom GTP-602"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER": {
+      "label": "power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x80",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 0 'power' (OBC 58 FE; NEC1 Combo, parms 26): NEC1 device 26 subdevice 229 function 128"
+        }
+      ]
+    },
+    "KEY_VOL_UP": {
+      "label": "vol up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0xD5",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 1 'vol up' (OBC 58 54; NEC1 Combo, parms 26): NEC1 device 26 subdevice 229 function 213"
+        }
+      ]
+    },
+    "KEY_VOL_DOWN": {
+      "label": "vol down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0xD1",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 2 'vol down' (OBC 58 74; NEC1 Combo, parms 26): NEC1 device 26 subdevice 229 function 209"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x82",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 3 'mute' (OBC 58 BE; NEC1 Combo, parms 26): NEC1 device 26 subdevice 229 function 130"
+        }
+      ]
+    },
+    "KEY_BASS_UP": {
+      "label": "bass up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x5A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 4 'bass up' (OBC 58 A5; NEC1 Combo, parms 26): NEC1 device 26 subdevice 229 function 90"
+        }
+      ]
+    },
+    "KEY_BASS_DOWN": {
+      "label": "bass down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x5B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 5 'bass down' (OBC 58 25; NEC1 Combo, parms 26): NEC1 device 26 subdevice 229 function 91"
+        }
+      ]
+    },
+    "KEY_TREBLE_UP": {
+      "label": "treble up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x58",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 6 'treble up' (OBC 58 E5; NEC1 Combo, parms 26): NEC1 device 26 subdevice 229 function 88"
+        }
+      ]
+    },
+    "KEY_TREBLE_DOWN": {
+      "label": "treble down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x59",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 7 'treble down' (OBC 58 65; NEC1 Combo, parms 26): NEC1 device 26 subdevice 229 function 89"
+        }
+      ]
+    },
+    "KEY_BALANCE_LEFT": {
+      "label": "balance left",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0xD9",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 8 'balance left' (OBC 58 64; NEC1 Combo, parms 26): NEC1 device 26 subdevice 229 function 217"
+        }
+      ]
+    },
+    "KEY_BALANCE_RIGHT": {
+      "label": "balance right",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0xDA",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 9 'balance right' (OBC 58 A4; NEC1 Combo, parms 26): NEC1 device 26 subdevice 229 function 218"
+        }
+      ]
+    },
+    "KEY_BYPASS": {
+      "label": "bypass",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x4D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 10 'bypass' (OBC 58 4D; NEC1 Combo, parms 26): NEC1 device 26 subdevice 229 function 77"
+        }
+      ]
+    },
+    "KEY_CD": {
+      "label": "cd",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x88",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 11 'cd' (OBC 58 EE; NEC1 Combo, parms 26): NEC1 device 26 subdevice 229 function 136"
+        }
+      ]
+    },
+    "KEY_TUNER": {
+      "label": "tuner",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x89",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 12 'tuner' (OBC 58 6E; NEC1 Combo, parms 26): NEC1 device 26 subdevice 229 function 137"
+        }
+      ]
+    },
+    "KEY_TAPE": {
+      "label": "tape",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x8A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 13 'tape' (OBC 58 AE; NEC1 Combo, parms 26): NEC1 device 26 subdevice 229 function 138"
+        }
+      ]
+    },
+    "KEY_AUX_1": {
+      "label": "aux 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x8B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 14 'aux 1' (OBC 58 2E; NEC1 Combo, parms 26): NEC1 device 26 subdevice 229 function 139"
+        }
+      ]
+    },
+    "KEY_AUX_2": {
+      "label": "aux 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x84",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 15 'aux 2' (OBC 58 DE; NEC1 Combo, parms 26): NEC1 device 26 subdevice 229 function 132"
+        }
+      ]
+    },
+    "KEY_PHONO": {
+      "label": "phono",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x86",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 16 'phono' (OBC 58 9E; NEC1 Combo, parms 26): NEC1 device 26 subdevice 229 function 134"
+        }
+      ]
+    },
+    "KEY_RDS": {
+      "label": "rds",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 17 'rds' (OBC 58 BF; NEC1 Combo, parms 26): NEC1 device 26 subdevice 229 function 2"
+        }
+      ]
+    },
+    "KEY_MEMORY": {
+      "label": "memory",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 18 'memory' (OBC 58 2F; NEC1 Combo, parms 26): NEC1 device 26 subdevice 229 function 11"
+        }
+      ]
+    },
+    "KEY_FM_MODE": {
+      "label": "FM mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0xCE",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 19 'FM mode' (OBC 58 8C; NEC1 Combo, parms 26): NEC1 device 26 subdevice 229 function 206"
+        }
+      ]
+    },
+    "KEY_TUNING_PLUS": {
+      "label": "tuning+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x8C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 20 'tuning+' (OBC 58 CE; NEC1 Combo, parms 26): NEC1 device 26 subdevice 229 function 140"
+        }
+      ]
+    },
+    "KEY_TUNING_MINUS": {
+      "label": "tuning-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x8D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 21 'tuning-' (OBC 58 4E; NEC1 Combo, parms 26): NEC1 device 26 subdevice 229 function 141"
+        }
+      ]
+    },
+    "KEY_AM_SLASH_FM": {
+      "label": "am/fm",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x8F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 22 'am/fm' (OBC 58 0E; NEC1 Combo, parms 26): NEC1 device 26 subdevice 229 function 143"
+        }
+      ]
+    },
+    "KEY_PRESET_SCAN": {
+      "label": "preset scan",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0xD3",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 23 'preset scan' (OBC 58 34; NEC1 Combo, parms 26): NEC1 device 26 subdevice 229 function 211"
+        }
+      ]
+    },
+    "KEY_PRESET_1": {
+      "label": "preset 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x90",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 24 'preset 1' (OBC 58 F6; NEC1 Combo, parms 26): NEC1 device 26 subdevice 229 function 144"
+        }
+      ]
+    },
+    "KEY_PRESET_2": {
+      "label": "preset 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x91",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 25 'preset 2' (OBC 58 76; NEC1 Combo, parms 26): NEC1 device 26 subdevice 229 function 145"
+        }
+      ]
+    },
+    "KEY_PRESET_3": {
+      "label": "preset 3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x92",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 26 'preset 3' (OBC 58 B6; NEC1 Combo, parms 26): NEC1 device 26 subdevice 229 function 146"
+        }
+      ]
+    },
+    "KEY_PRESET_4": {
+      "label": "preset 4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x93",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 27 'preset 4' (OBC 58 36; NEC1 Combo, parms 26): NEC1 device 26 subdevice 229 function 147"
+        }
+      ]
+    },
+    "KEY_PRESET_5": {
+      "label": "preset 5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x94",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 28 'preset 5' (OBC 58 D6; NEC1 Combo, parms 26): NEC1 device 26 subdevice 229 function 148"
+        }
+      ]
+    },
+    "KEY_PRESET_6": {
+      "label": "preset 6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x95",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 29 'preset 6' (OBC 58 56; NEC1 Combo, parms 26): NEC1 device 26 subdevice 229 function 149"
+        }
+      ]
+    },
+    "KEY_PRESET_7": {
+      "label": "preset 7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x96",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 30 'preset 7' (OBC 58 96; NEC1 Combo, parms 26): NEC1 device 26 subdevice 229 function 150"
+        }
+      ]
+    },
+    "KEY_PRESET_8": {
+      "label": "preset 8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x9C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 31 'preset 8' (OBC 58 C6; NEC1 Combo, parms 26): NEC1 device 26 subdevice 229 function 156"
+        }
+      ]
+    },
+    "KEY_PRESET_9": {
+      "label": "preset 9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x9D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 32 'preset 9' (OBC 58 46; NEC1 Combo, parms 26): NEC1 device 26 subdevice 229 function 157"
+        }
+      ]
+    },
+    "KEY_PRESET_10": {
+      "label": "preset 10",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x9E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 33 'preset 10' (OBC 58 86; NEC1 Combo, parms 26): NEC1 device 26 subdevice 229 function 158"
+        }
+      ]
+    },
+    "KEY_PRESET_11": {
+      "label": "preset 11",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0x9F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 34 'preset 11' (OBC 58 06; NEC1 Combo, parms 26): NEC1 device 26 subdevice 229 function 159"
+        }
+      ]
+    },
+    "KEY_PRESET_12": {
+      "label": "preset 12",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE5",
+          "function": "0xDC",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 35 'preset 12' (OBC 58 C4; NEC1 Combo, parms 26): NEC1 device 26 subdevice 229 function 220"
+        }
+      ]
+    },
+    "KEY_POWER_ON": {
+      "label": "power on",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE8",
+          "function": "0x54",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 37 'power on' (OBC E8 D5; NEC1 Combo, parms 26): NEC1 device 26 subdevice 232 function 84"
+        }
+      ]
+    },
+    "KEY_POWER_OFF": {
+      "label": "power off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE8",
+          "function": "0x55",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 38 'power off' (OBC E8 55; NEC1 Combo, parms 26): NEC1 device 26 subdevice 232 function 85"
+        }
+      ]
+    },
+    "KEY_MUTE_ON": {
+      "label": "mute on",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE8",
+          "function": "0x56",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 39 'mute on' (OBC E8 95; NEC1 Combo, parms 26): NEC1 device 26 subdevice 232 function 86"
+        }
+      ]
+    },
+    "KEY_MUTE_OFF": {
+      "label": "mute off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE8",
+          "function": "0x57",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 40 'mute off' (OBC E8 15; NEC1 Combo, parms 26): NEC1 device 26 subdevice 232 function 87"
+        }
+      ]
+    },
+    "KEY_BYPASS_ON": {
+      "label": "bypass on",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE8",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 41 'bypass on' (OBC E8 97; NEC1 Combo, parms 26): NEC1 device 26 subdevice 232 function 22"
+        }
+      ]
+    },
+    "KEY_BYPASS_OFF": {
+      "label": "bypass off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE8",
+          "function": "0x17",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 42 'bypass off' (OBC E8 17; NEC1 Combo, parms 26): NEC1 device 26 subdevice 232 function 23"
+        }
+      ]
+    },
+    "KEY_AM": {
+      "label": "am",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE8",
+          "function": "0xC9",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 43 'am' (OBC E8 6C; NEC1 Combo, parms 26): NEC1 device 26 subdevice 232 function 201"
+        }
+      ]
+    },
+    "KEY_FM": {
+      "label": "fm",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE8",
+          "function": "0xCA",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 44 'fm' (OBC E8 AC; NEC1 Combo, parms 26): NEC1 device 26 subdevice 232 function 202"
+        }
+      ]
+    },
+    "KEY_TUNE_MODE": {
+      "label": "tune mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE8",
+          "function": "0x8B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 45 'tune mode' (OBC E8 2E; NEC1 Combo, parms 26): NEC1 device 26 subdevice 232 function 139"
+        }
+      ]
+    },
+    "KEY_PRESET_MODE": {
+      "label": "preset mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE8",
+          "function": "0xC8",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 46 'preset mode' (OBC E8 EC; NEC1 Combo, parms 26): NEC1 device 26 subdevice 232 function 200"
+        }
+      ]
+    },
+    "KEY_FM_MONO_MODE": {
+      "label": "fm mono mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE8",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 47 'fm mono mode' (OBC E8 D7; NEC1 Combo, parms 26): NEC1 device 26 subdevice 232 function 20"
+        }
+      ]
+    },
+    "KEY_FM_STEREO_MODE": {
+      "label": "fm stereo mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1A",
+          "subdevice": "0xE8",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Adcom GTP-602.rmdu function 48 'fm stereo mode' (OBC E8 57; NEC1 Combo, parms 26): NEC1 device 26 subdevice 232 function 21"
+        }
+      ]
+    }
+  }
+}

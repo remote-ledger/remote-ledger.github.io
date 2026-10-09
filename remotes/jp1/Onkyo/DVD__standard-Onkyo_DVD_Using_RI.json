@@ -1,0 +1,687 @@
+{
+  "manufacturer": "Onkyo",
+  "model": "DVD Using RI",
+  "aliases": [],
+  "controls": [
+    "Onkyo DVD Using RI"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_ON_POWER": {
+      "label": "On (Power)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0xAC",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 0 'On (Power)' (OBC CA DF; NEC1 Combo, parms 210): NEC1 device 210 subdevice 172 function 4; the upgrade's note: 'DVD off->turns on DVD and receiver; DVD on->ignored'"
+        }
+      ]
+    },
+    "KEY_STANDBY": {
+      "label": "Standby",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0xAC",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 1 'Standby' (OBC CA 9F; NEC1 Combo, parms 210): NEC1 device 210 subdevice 172 function 6; the upgrade's note: 'DVD on->DVD enters standby; DVD off->ignored'"
+        }
+      ]
+    },
+    "KEY_STANDBY_SLASH_ON_TOGGLE": {
+      "label": "Standby/On (Toggle)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x2B",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 2 'Standby/On (Toggle)' (OBC 2B DF; NEC1 Combo, parms 210): NEC1 device 210 subdevice 43 function 4; the upgrade's note: 'Standby/On toggle from DVD remote'"
+        }
+      ]
+    },
+    "KEY_0": {
+      "label": "0",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0xAC",
+          "function": "0x17",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 3 '0' (OBC CA 17; NEC1 Combo, parms 210): NEC1 device 210 subdevice 172 function 23; the upgrade's note: 'Enter the number 0'"
+        }
+      ]
+    },
+    "KEY_1": {
+      "label": "1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0xAC",
+          "function": "0x0E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 4 '1' (OBC CA 8F; NEC1 Combo, parms 210): NEC1 device 210 subdevice 172 function 14; the upgrade's note: 'Enter the number 1'"
+        }
+      ]
+    },
+    "KEY_2": {
+      "label": "2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0xAC",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 5 '2' (OBC CA 0F; NEC1 Combo, parms 210): NEC1 device 210 subdevice 172 function 15; the upgrade's note: 'Enter the number 2'"
+        }
+      ]
+    },
+    "KEY_3": {
+      "label": "3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0xAC",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 6 '3' (OBC CA F7; NEC1 Combo, parms 210): NEC1 device 210 subdevice 172 function 16; the upgrade's note: 'Enter the number 3'"
+        }
+      ]
+    },
+    "KEY_4": {
+      "label": "4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0xAC",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 7 '4' (OBC CA 77; NEC1 Combo, parms 210): NEC1 device 210 subdevice 172 function 17; the upgrade's note: 'Enter the number 4'"
+        }
+      ]
+    },
+    "KEY_5": {
+      "label": "5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0xAC",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 8 '5' (OBC CA B7; NEC1 Combo, parms 210): NEC1 device 210 subdevice 172 function 18; the upgrade's note: 'Enter the number 5'"
+        }
+      ]
+    },
+    "KEY_6": {
+      "label": "6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0xAC",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 9 '6' (OBC CA 37; NEC1 Combo, parms 210): NEC1 device 210 subdevice 172 function 19; the upgrade's note: 'Enter the number 6'"
+        }
+      ]
+    },
+    "KEY_7": {
+      "label": "7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0xAC",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 10 '7' (OBC CA D7; NEC1 Combo, parms 210): NEC1 device 210 subdevice 172 function 20; the upgrade's note: 'Enter the number 7'"
+        }
+      ]
+    },
+    "KEY_8": {
+      "label": "8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0xAC",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 11 '8' (OBC CA 57; NEC1 Combo, parms 210): NEC1 device 210 subdevice 172 function 21; the upgrade's note: 'Enter the number 8'"
+        }
+      ]
+    },
+    "KEY_9": {
+      "label": "9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0xAC",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 12 '9' (OBC CA 97; NEC1 Combo, parms 210): NEC1 device 210 subdevice 172 function 22; the upgrade's note: 'Enter the number 9'"
+        }
+      ]
+    },
+    "KEY_PLUS_10": {
+      "label": "+10",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0xAC",
+          "function": "0x18",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 13 '+10' (OBC CA E7; NEC1 Combo, parms 210): NEC1 device 210 subdevice 172 function 24; the upgrade's note: 'Add 10 to next number pressed'"
+        }
+      ]
+    },
+    "KEY_CLEAR": {
+      "label": "Clear",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0xAC",
+          "function": "0x1C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 14 'Clear' (OBC CA C7; NEC1 Combo, parms 210): NEC1 device 210 subdevice 172 function 28; the upgrade's note: 'Cancel functions and clear entered numbers'"
+        }
+      ]
+    },
+    "KEY_UP_ARROW": {
+      "label": "Up Arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x9A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 15 'Up Arrow' (OBC C9 A6; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 154; the upgrade's note: 'Cursor up'"
+        }
+      ]
+    },
+    "KEY_DOWN_ARROW": {
+      "label": "Down Arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x9B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 16 'Down Arrow' (OBC C9 26; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 155; the upgrade's note: 'Cursor down'"
+        }
+      ]
+    },
+    "KEY_LEFT_ARROW": {
+      "label": "Left Arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x9C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 17 'Left Arrow' (OBC C9 C6; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 156; the upgrade's note: 'Cursor left'"
+        }
+      ]
+    },
+    "KEY_RIGHT_ARROW": {
+      "label": "Right Arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x9D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 18 'Right Arrow' (OBC C9 46; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 157; the upgrade's note: 'Cursor right'"
+        }
+      ]
+    },
+    "KEY_ENTER": {
+      "label": "Enter",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x9E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 19 'Enter' (OBC C9 86; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 158; the upgrade's note: 'Select an item'"
+        }
+      ]
+    },
+    "KEY_TOP_MENU": {
+      "label": "Top Menu",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x98",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 20 'Top Menu' (OBC C9 E6; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 152; the upgrade's note: 'DVD Disc Top Menu'"
+        }
+      ]
+    },
+    "KEY_MENU": {
+      "label": "Menu",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x99",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 21 'Menu' (OBC C9 66; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 153; the upgrade's note: 'DVD Disc Menu'"
+        }
+      ]
+    },
+    "KEY_RETURN": {
+      "label": "Return",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x9F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 22 'Return' (OBC C9 06; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 159; the upgrade's note: 'Return to previous menu/menu item; Exit menu or display'"
+        }
+      ]
+    },
+    "KEY_DISPLAY": {
+      "label": "Display",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0xAC",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 23 'Display' (OBC CA 4F; NEC1 Combo, parms 210): NEC1 device 210 subdevice 172 function 13; the upgrade's note: 'On screen summary of disc information'"
+        }
+      ]
+    },
+    "KEY_SETUP": {
+      "label": "Setup",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x97",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 24 'Setup' (OBC C9 16; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 151; the upgrade's note: 'Disc summary info + setup for search, repeat, etc'"
+        }
+      ]
+    },
+    "KEY_STEP_SLOW_MINUS": {
+      "label": "Step & Slow -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0xC1",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 25 'Step & Slow -' (OBC C9 7C; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 193; the upgrade's note: 'Slow advance backwards'"
+        }
+      ]
+    },
+    "KEY_STEP_SLOW_PLUS": {
+      "label": "Step & Slow +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0xC0",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 26 'Step & Slow +' (OBC C9 FC; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 192; the upgrade's note: 'Slow advance forwards'"
+        }
+      ]
+    },
+    "KEY_PREVIOUS": {
+      "label": "Previous",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x90",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 27 'Previous' (OBC C9 F6; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 144; the upgrade's note: 'Previous track/chapter'"
+        }
+      ]
+    },
+    "KEY_NEXT": {
+      "label": "Next",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x8F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 28 'Next' (OBC C9 0E; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 143; the upgrade's note: 'Next track/chapter'"
+        }
+      ]
+    },
+    "KEY_F_REW": {
+      "label": "F. Rew",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x92",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 29 'F. Rew' (OBC C9 B6; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 146; the upgrade's note: 'Fast rewind'"
+        }
+      ]
+    },
+    "KEY_F_FWD": {
+      "label": "F.Fwd",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x91",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 30 'F.Fwd' (OBC C9 76; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 145; the upgrade's note: 'Fast forward'"
+        }
+      ]
+    },
+    "KEY_STOP": {
+      "label": "Stop",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x8E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 31 'Stop' (OBC C9 8E; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 142; the upgrade's note: 'Stop playback'"
+        }
+      ]
+    },
+    "KEY_PAUSE": {
+      "label": "Pause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x93",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 32 'Pause' (OBC C9 36; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 147; the upgrade's note: 'Pause playback'"
+        }
+      ]
+    },
+    "KEY_PLAY": {
+      "label": "Play",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x8D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 33 'Play' (OBC C9 4E; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 141; the upgrade's note: 'Play'"
+        }
+      ]
+    },
+    "KEY_DISC_SKIP_MINUS": {
+      "label": "Disc Skip -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0xAC",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 34 'Disc Skip -' (OBC CA CF; NEC1 Combo, parms 210): NEC1 device 210 subdevice 172 function 12; the upgrade's note: 'Previous Disc (DVD changers)'"
+        }
+      ]
+    },
+    "KEY_DISC_SKIP_PLUS": {
+      "label": "Disc Skip +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0xAC",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 35 'Disc Skip +' (OBC CA 2F; NEC1 Combo, parms 210): NEC1 device 210 subdevice 172 function 11; the upgrade's note: 'Next Disc (DVD changers)'"
+        }
+      ]
+    },
+    "KEY_AUDIO": {
+      "label": "Audio",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0xAC",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 36 'Audio' (OBC CA EF; NEC1 Combo, parms 210): NEC1 device 210 subdevice 172 function 8; the upgrade's note: 'Select audio track'"
+        }
+      ]
+    },
+    "KEY_SUBTITLE": {
+      "label": "Subtitle",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x96",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 37 'Subtitle' (OBC C9 96; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 150; the upgrade's note: 'Select subtitle, including subtitles off'"
+        }
+      ]
+    },
+    "KEY_ANGLE": {
+      "label": "Angle",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0xAC",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 38 'Angle' (OBC CA 6F; NEC1 Combo, parms 210): NEC1 device 210 subdevice 172 function 9; the upgrade's note: 'Change camera angle if disc contains multiple angles'"
+        }
+      ]
+    },
+    "KEY_MEMORY": {
+      "label": "Memory",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0xAC",
+          "function": "0x1B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 39 'Memory' (OBC CA 27; NEC1 Combo, parms 210): NEC1 device 210 subdevice 172 function 27; the upgrade's note: 'Add items to playlist'"
+        }
+      ]
+    },
+    "KEY_LAST_M": {
+      "label": "Last M",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x94",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 40 'Last M' (OBC C9 D6; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 148; the upgrade's note: 'Resume playback from last memorized location'"
+        }
+      ]
+    },
+    "KEY_RANDOM": {
+      "label": "Random",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0xAC",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 41 'Random' (OBC CA AF; NEC1 Combo, parms 210): NEC1 device 210 subdevice 172 function 10; the upgrade's note: 'Random playback'"
+        }
+      ]
+    },
+    "KEY_REPEAT": {
+      "label": "Repeat",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0xAC",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 42 'Repeat' (OBC CA A7; NEC1 Combo, parms 210): NEC1 device 210 subdevice 172 function 26; the upgrade's note: 'Repeat track, chapter, disc'"
+        }
+      ]
+    },
+    "KEY_A_MINUS_B": {
+      "label": "A-B",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0xAC",
+          "function": "0x1D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 43 'A-B' (OBC CA 47; NEC1 Combo, parms 210): NEC1 device 210 subdevice 172 function 29; the upgrade's note: 'Repeat between points A and B'"
+        }
+      ]
+    },
+    "KEY_SEARCH": {
+      "label": "Search",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0xAC",
+          "function": "0x19",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 44 'Search' (OBC CA 67; NEC1 Combo, parms 210): NEC1 device 210 subdevice 172 function 25; the upgrade's note: 'Go to a specific point in time on the disc'"
+        }
+      ]
+    },
+    "KEY_VIDEO_OFF": {
+      "label": "Video Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0xC5",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 45 'Video Off' (OBC C9 5C; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 197; the upgrade's note: 'Turn off Video when playing audio only discs'"
+        }
+      ]
+    },
+    "KEY_OPEN_SLASH_CLOSE": {
+      "label": "Open/Close",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0xAC",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 46 'Open/Close' (OBC CA 1F; NEC1 Combo, parms 210): NEC1 device 210 subdevice 172 function 7; the upgrade's note: 'Open/Close the disc tray'"
+        }
+      ]
+    },
+    "KEY_DIMMER": {
+      "label": "Dimmer",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x2B",
+          "function": "0x46",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Onkyo DVD Using RI.rmdu function 47 'Dimmer' (OBC 2B 9D; NEC1 Combo, parms 210): NEC1 device 210 subdevice 43 function 70; the upgrade's note: 'From DVD remote; with RI, dimming receiver dims DVD'"
+        }
+      ]
+    }
+  }
+}
