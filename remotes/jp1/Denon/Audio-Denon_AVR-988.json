@@ -1,0 +1,808 @@
+{
+  "manufacturer": "Denon",
+  "model": "AVR-988",
+  "aliases": [],
+  "controls": [
+    "Denon AVR-988"
+  ],
+  "protocol": {
+    "name": "Denon",
+    "carrierHz": 38000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER_ON": {
+      "label": "power on",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xE2",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 0 'power on' (OBC B8 B8; Denon Combo (Official), parms none): Denon device 2 function 226"
+        }
+      ]
+    },
+    "KEY_POWER_OFF": {
+      "label": "power off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xE3",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 1 'power off' (OBC B8 38; Denon Combo (Official), parms none): Denon device 2 function 227"
+        }
+      ]
+    },
+    "KEY_PHONO": {
+      "label": "phono",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xC3",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 2 'phono' (OBC B8 3C; Denon Combo (Official), parms none): Denon device 2 function 195"
+        }
+      ]
+    },
+    "KEY_CD": {
+      "label": "cd",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xC4",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 3 'cd' (OBC B8 DC; Denon Combo (Official), parms none): Denon device 2 function 196"
+        }
+      ]
+    },
+    "KEY_TUNER": {
+      "label": "tuner",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xC5",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 4 'tuner' (OBC B8 5C; Denon Combo (Official), parms none): Denon device 2 function 197"
+        }
+      ]
+    },
+    "KEY_AUX": {
+      "label": "aux",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xC6",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 5 'aux' (OBC B8 9C; Denon Combo (Official), parms none): Denon device 2 function 198"
+        }
+      ]
+    },
+    "KEY_DBS_SLASH_SAT": {
+      "label": "dbs/sat",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xC8",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 6 'dbs/sat' (OBC B8 EC; Denon Combo (Official), parms none): Denon device 2 function 200"
+        }
+      ]
+    },
+    "KEY_TV": {
+      "label": "tv",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xC9",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 7 'tv' (OBC B8 6C; Denon Combo (Official), parms none): Denon device 2 function 201"
+        }
+      ]
+    },
+    "KEY_HDP": {
+      "label": "hdp",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xCA",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 8 'hdp' (OBC B8 AC; Denon Combo (Official), parms none): Denon device 2 function 202"
+        }
+      ]
+    },
+    "KEY_V_AUX": {
+      "label": "v. aux",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xCC",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 9 'v. aux' (OBC B8 CC; Denon Combo (Official), parms none): Denon device 2 function 204"
+        }
+      ]
+    },
+    "KEY_VCR_1": {
+      "label": "vcr 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xCD",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 10 'vcr 1' (OBC B8 4C; Denon Combo (Official), parms none): Denon device 2 function 205"
+        }
+      ]
+    },
+    "KEY_VCR_2": {
+      "label": "vcr 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xCE",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 11 'vcr 2' (OBC B8 8C; Denon Combo (Official), parms none): Denon device 2 function 206"
+        }
+      ]
+    },
+    "KEY_CDR_SLASH_TAPE": {
+      "label": "cdr / tape",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xD2",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 12 'cdr / tape' (OBC B8 B4; Denon Combo (Official), parms none): Denon device 2 function 210"
+        }
+      ]
+    },
+    "KEY_DVD": {
+      "label": "dvd",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xE4",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 13 'dvd' (OBC B8 D8; Denon Combo (Official), parms none): Denon device 2 function 228"
+        }
+      ]
+    },
+    "KEY_VIDEO_SELECT": {
+      "label": "video select",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xD8",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 14 'video select' (OBC B8 E4; Denon Combo (Official), parms none): Denon device 2 function 216"
+        }
+      ]
+    },
+    "KEY_STATUS": {
+      "label": "status",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xDF",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 15 'status' (OBC B8 04; Denon Combo (Official), parms none): Denon device 2 function 223"
+        }
+      ]
+    },
+    "KEY_OSD_ON_SCREEN_DISPLAY": {
+      "label": "OSD (on screen display)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xE0",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 16 'OSD (on screen display)' (OBC B8 F8; Denon Combo (Official), parms none): Denon device 2 function 224"
+        }
+      ]
+    },
+    "KEY_ENTER": {
+      "label": "enter",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xE1",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 17 'enter' (OBC B8 78; Denon Combo (Official), parms none): Denon device 2 function 225"
+        }
+      ]
+    },
+    "KEY_DOLBY_SLASH_DTS_SURROUND": {
+      "label": "dolby/dts surround",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xE6",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 18 'dolby/dts surround' (OBC B8 98; Denon Combo (Official), parms none): Denon device 2 function 230"
+        }
+      ]
+    },
+    "KEY_DSP_SIMULATION": {
+      "label": "dsp simulation",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xEA",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 19 'dsp simulation' (OBC B8 A8; Denon Combo (Official), parms none): Denon device 2 function 234"
+        }
+      ]
+    },
+    "KEY_TEST_TONE": {
+      "label": "test tone",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xED",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 20 'test tone' (OBC B8 48; Denon Combo (Official), parms none): Denon device 2 function 237"
+        }
+      ]
+    },
+    "KEY_SPEAKER": {
+      "label": "speaker",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xF0",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 21 'speaker' (OBC B8 F0; Denon Combo (Official), parms none): Denon device 2 function 240"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xF1",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 22 'mute' (OBC B8 70; Denon Combo (Official), parms none): Denon device 2 function 241"
+        }
+      ]
+    },
+    "KEY_VOL_UP": {
+      "label": "vol up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xF2",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 23 'vol up' (OBC B8 B0; Denon Combo (Official), parms none): Denon device 2 function 242"
+        }
+      ]
+    },
+    "KEY_VOL_DOWN": {
+      "label": "vol down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xD6",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 24 'vol down' (OBC B8 94; Denon Combo (Official), parms none): Denon device 2 function 214"
+        }
+      ]
+    },
+    "KEY_SAT_SLASH_M": {
+      "label": "sat/m",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0x8A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 26 'sat/m' (OBC C8 AE; Denon Combo (Official), parms none): Denon device 12 function 138"
+        }
+      ]
+    },
+    "KEY_VOL_UP_SLASH_M": {
+      "label": "vol up/m",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0x8D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 27 'vol up/m' (OBC C8 4E; Denon Combo (Official), parms none): Denon device 12 function 141"
+        }
+      ]
+    },
+    "KEY_VOL_DOWN_SLASH_M": {
+      "label": "vol down/m",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0x8E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 28 'vol down/m' (OBC C8 8E; Denon Combo (Official), parms none): Denon device 12 function 142"
+        }
+      ]
+    },
+    "KEY_PHONO_SLASH_M": {
+      "label": "phono/m",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0x8F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 29 'phono/m' (OBC C8 0E; Denon Combo (Official), parms none): Denon device 12 function 143"
+        }
+      ]
+    },
+    "KEY_CD_SLASH_M": {
+      "label": "cd/m",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0x90",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 30 'cd/m' (OBC C8 F6; Denon Combo (Official), parms none): Denon device 12 function 144"
+        }
+      ]
+    },
+    "KEY_TUNER_SLASH_M": {
+      "label": "tuner/m",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0x91",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 31 'tuner/m' (OBC C8 76; Denon Combo (Official), parms none): Denon device 12 function 145"
+        }
+      ]
+    },
+    "KEY_HDP_SLASH_M": {
+      "label": "hdp/m",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0x92",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 32 'hdp/m' (OBC C8 B6; Denon Combo (Official), parms none): Denon device 12 function 146"
+        }
+      ]
+    },
+    "KEY_V_AUX_SLASH_M": {
+      "label": "v. aux/m",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0x93",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 33 'v. aux/m' (OBC C8 36; Denon Combo (Official), parms none): Denon device 12 function 147"
+        }
+      ]
+    },
+    "KEY_VCR_1_SLASH_M": {
+      "label": "vcr 1/m",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0x94",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 34 'vcr 1/m' (OBC C8 D6; Denon Combo (Official), parms none): Denon device 12 function 148"
+        }
+      ]
+    },
+    "KEY_AUX_SLASH_M": {
+      "label": "aux/m",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0x98",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 35 'aux/m' (OBC C8 E6; Denon Combo (Official), parms none): Denon device 12 function 152"
+        }
+      ]
+    },
+    "KEY_VCR_2_SLASH_M": {
+      "label": "vcr 2/m",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0x99",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 36 'vcr 2/m' (OBC C8 66; Denon Combo (Official), parms none): Denon device 12 function 153"
+        }
+      ]
+    },
+    "KEY_TV_SLASH_M": {
+      "label": "tv/m",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0x9B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 37 'tv/m' (OBC C8 26; Denon Combo (Official), parms none): Denon device 12 function 155"
+        }
+      ]
+    },
+    "KEY_CDR_SLASH_TAPE_SLASH_M": {
+      "label": "cdr/tape/m",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0x9C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 38 'cdr/tape/m' (OBC C8 C6; Denon Combo (Official), parms none): Denon device 12 function 156"
+        }
+      ]
+    },
+    "KEY_DVD_SLASH_M": {
+      "label": "dvd/m",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xBE",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 39 'dvd/m' (OBC C8 82; Denon Combo (Official), parms none): Denon device 12 function 190"
+        }
+      ]
+    },
+    "KEY_SYSTEM_SETUP": {
+      "label": "system setup",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xA0",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 40 'system setup' (OBC C8 FA; Denon Combo (Official), parms none): Denon device 12 function 160"
+        }
+      ]
+    },
+    "KEY_SURROUND_PARAMETER": {
+      "label": "surround parameter",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xA1",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 41 'surround parameter' (OBC C8 7A; Denon Combo (Official), parms none): Denon device 12 function 161"
+        }
+      ]
+    },
+    "KEY_UP_ARROW": {
+      "label": "up arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xA3",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 42 'up arrow' (OBC C8 3A; Denon Combo (Official), parms none): Denon device 12 function 163"
+        }
+      ]
+    },
+    "KEY_DOWN_ARROW": {
+      "label": "down arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xA4",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 43 'down arrow' (OBC C8 DA; Denon Combo (Official), parms none): Denon device 12 function 164"
+        }
+      ]
+    },
+    "KEY_LEFT_ARROW": {
+      "label": "left arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0x7F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 44 'left arrow' (OBC C8 01; Denon Combo (Official), parms none): Denon device 12 function 127"
+        }
+      ]
+    },
+    "KEY_RIGHT_ARROW": {
+      "label": "right arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xDE",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 45 'right arrow' (OBC B8 84; Denon Combo (Official), parms none): Denon device 2 function 222"
+        }
+      ]
+    },
+    "KEY_5CH_SLASH_7CH_STEREO": {
+      "label": "5ch/7ch stereo",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xA8",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 46 '5ch/7ch stereo' (OBC C8 EA; Denon Combo (Official), parms none): Denon device 12 function 168"
+        }
+      ]
+    },
+    "KEY_INPUT_MODE": {
+      "label": "input mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xB6",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 47 'input mode' (OBC C8 92; Denon Combo (Official), parms none): Denon device 12 function 182"
+        }
+      ]
+    },
+    "KEY_PURE_DIRECT": {
+      "label": "pure direct",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x6A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 49 'pure direct' (OBC B8 A9; Denon Combo (Official), parms none): Denon device 2 function 106"
+        }
+      ]
+    },
+    "KEY_MAIN_ZONE_ON": {
+      "label": "main zone on",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x79",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 50 'main zone on' (OBC B8 61; Denon Combo (Official), parms none): Denon device 2 function 121"
+        }
+      ]
+    },
+    "KEY_MAIN_ZONE_OFF": {
+      "label": "main zone off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x7A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 51 'main zone off' (OBC B8 A1; Denon Combo (Official), parms none): Denon device 2 function 122"
+        }
+      ]
+    },
+    "KEY_MULTI_ZONE_ON": {
+      "label": "multi zone on",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x7B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 52 'multi zone on' (OBC B8 21; Denon Combo (Official), parms none): Denon device 2 function 123"
+        }
+      ]
+    },
+    "KEY_MULTI_ZONE_OFF": {
+      "label": "multi zone off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x7C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 53 'multi zone off' (OBC B8 C1; Denon Combo (Official), parms none): Denon device 2 function 124"
+        }
+      ]
+    },
+    "KEY_TUNER_MEMORY": {
+      "label": "tuner memory",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xCC",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 55 'tuner memory' (OBC C8 CC; Denon Combo (Official), parms none): Denon device 12 function 204"
+        }
+      ]
+    },
+    "KEY_TUNER_SHIFT": {
+      "label": "tuner shift",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xCD",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 56 'tuner shift' (OBC C8 4C; Denon Combo (Official), parms none): Denon device 12 function 205"
+        }
+      ]
+    },
+    "KEY_TUNER_CH_MINUS": {
+      "label": "tuner ch-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xD5",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 57 'tuner ch-' (OBC C8 54; Denon Combo (Official), parms none): Denon device 12 function 213"
+        }
+      ]
+    },
+    "KEY_TUNER_CH_PLUS": {
+      "label": "tuner ch+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xD6",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 58 'tuner ch+' (OBC C8 94; Denon Combo (Official), parms none): Denon device 12 function 214"
+        }
+      ]
+    },
+    "KEY_TUNER_BAND": {
+      "label": "tuner band",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xD7",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 59 'tuner band' (OBC C8 14; Denon Combo (Official), parms none): Denon device 12 function 215"
+        }
+      ]
+    },
+    "KEY_TUNER_MODE": {
+      "label": "tuner mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xD8",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 60 'tuner mode' (OBC C8 E4; Denon Combo (Official), parms none): Denon device 12 function 216"
+        }
+      ]
+    },
+    "KEY_TUNER_TUNING_UP": {
+      "label": "tuner tuning up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xD9",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 61 'tuner tuning up' (OBC C8 64; Denon Combo (Official), parms none): Denon device 12 function 217"
+        }
+      ]
+    },
+    "KEY_TUNER_TUNING_DOWN": {
+      "label": "tuner tuning down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xDA",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 62 'tuner tuning down' (OBC C8 A4; Denon Combo (Official), parms none): Denon device 12 function 218"
+        }
+      ]
+    },
+    "KEY_DIMMER": {
+      "label": "dimmer",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xDF",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-988.rmdu function 63 'dimmer' (OBC C8 04; Denon Combo (Official), parms none): Denon device 12 function 223"
+        }
+      ]
+    }
+  }
+}
