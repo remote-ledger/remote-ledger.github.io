@@ -5,8 +5,10 @@ snapshots in `sources/official/`. It is **not authored here**. SPEC.md R19 sets 
 import must meet, and DESIGN.md section 29 describes how this one meets them.
 
 - **Upstream:** each manufacturer's own published table, so far **Marantz's** AV receiver and processor
-  command charts (<https://www.marantz.com/>, the Archive pages of each model) and **Anthem's** MRX and AVM
-  IR hex sheet (<https://www.anthemav.com/>). They are the makers' documents, not a third party's
+  command charts (<https://www.marantz.com/>, the Archive pages of each model), **Anthem's** MRX and AVM
+  IR hex sheet (<https://www.anthemav.com/>) and **Oppo's** remote code workbooks for its Blu-ray and Ultra HD
+  players (Oppo's download host is gone, so they are the Wayback Machine's copies of
+  `download.oppodigital.com`, DESIGN.md section 31). They are the makers' documents, not a third party's
   compilation, and they are still imported at Plausible: a manufacturer's word is one source (R19.3).
 - **The pin:** a manufacturer's page is not a repository, so `sources/official/<maker>/` holds each document
   as the server sent it, the sheets the importer reads converted to CSV by
@@ -24,6 +26,9 @@ manufacturer's chart marks that model as accepting. Marantz publishes the signal
 and imports it verbatim as a `pronto` form; a plain RC-5 command with no hex is an `irp` RC5 form; an RC-5
 *extension* command (Marantz's RC-5x) with no hex is listed in `IMPORT.md`, because the ledger has no
 protocol for it. Anthem's codes are NEC1, read from the sheet's device and data columns and **checked
-against its own Pronto hex**. A key the sheet contradicts itself on is Untested and says so.
+against its own Pronto hex**. A key the sheet contradicts itself on is Untested and says so. Oppo's are NEC1
+from the hex column of each of a player's three code sets (`BDP-103`, `BDP-103 [code set 2]`...), **checked against
+the decimal column, the TSU3000 string and the classic Pronto hex**: where the signal itself disagrees the key is
+Untested, and where only a derived column has a typo (seven rows) it stays Plausible and the citation says so.
 
 `IMPORT.md` lists everything a document holds that does not become a key, with the reason.
