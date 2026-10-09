@@ -43,6 +43,11 @@ IMPORTS: dict[str, dict[str, str]] = {
         "licence": "none: tables of reference codes",
         "readme": "remotes/official/README.md",
     },
+    "remotes/remotecentral/": {
+        "name": "RemoteCentral Infrared Hex Code Database",
+        "licence": "none: a table of reference codes",
+        "readme": "remotes/remotecentral/README.md",
+    },
     "remotes/jp1/": {
         "name": "JP1 device upgrades of hifi-remote.com's forum",
         "licence": "none: a table of reference codes",

@@ -2,8 +2,8 @@
 
 **Draft v0.12** · Status: §12 resolved; v1 implemented (Phases 0-6);
 imports open to any source R19 admits: LIRC, SmartIR, the IR Blaster
-database, hifi-remote.com's Sony code pages, its forum's JP1 device upgrades and
-manufacturers' own IR code tables so far · Depends on
+database, hifi-remote.com's Sony code pages, its forum's JP1 device upgrades,
+manufacturers' own IR code tables and RemoteCentral's learned codes so far · Depends on
 nothing upstream (self-contained)
 
 A self-contained JSON file per remote, where every key can hold several
@@ -155,10 +155,13 @@ citing it (R19.2).
   that way.
 - Importing, wholesale, any source whose licence does not permit
   republishing it here. That currently rules out IRDB's conditional,
-  revocable permission, Flipper-IRDB files from before its CC0 cutoff,
-  Global Caché and Remote Central. Only the licence excludes them, so the
-  exclusion ends when the licence changes. Until then, they can still
-  inform a single key under R18 and R19, like any other citation. The
+  revocable permission, Flipper-IRDB files from before its CC0 cutoff and
+  Global Caché. Only the licence excludes them, so the exclusion ends when
+  the licence changes. Until then, they can still inform a single key under
+  R18 and R19, like any other citation. (Remote Central's Infrared Hex Code
+  Database was on this list. It is now imported as a table of reference
+  codes under D110, which DESIGN D131 applies to it; the site states no
+  licence and says "All rights reserved".) The
   IR Blaster database meets the licence condition by inheritance only
   (R19.1), which is the weakest way any admitted source does.
 
@@ -655,11 +658,13 @@ is the *only* place trust comes from — so it has to hold up on its own.
        a reading of one. This import meets the condition on the weakest
        footing of any so far; its README says so, and deleting the directory
        removes every imported file.
-     - `remotes/hifi-remote/`, `remotes/jp1/` and `remotes/official/`: **no
-       licence recorded**, as tables of reference codes (above). Each README
-       names where the data is (hifi-remote.com's Sony pages; the forum's JP1
-       device upgrades as `github.com/hifiremote/deviceupgrades`; the
-       manufacturers' own spreadsheets, Marantz's and Anthem's), and every
+     - `remotes/hifi-remote/`, `remotes/jp1/`, `remotes/official/` and
+       `remotes/remotecentral/`: **no licence recorded**, as tables of
+       reference codes (above). Each README names where the data is
+       (hifi-remote.com's Sony pages; the forum's JP1 device upgrades as
+       `github.com/hifiremote/deviceupgrades`; the manufacturers' own
+       spreadsheets, Marantz's and Anthem's; RemoteCentral's Infrared Hex
+       Code Database, whose codes are learned and Untested), and every
        citation names the page, commit or document hash and the row or file,
        so the source stays visible.
   2. **Every form cites exactly where it came from:** the upstream

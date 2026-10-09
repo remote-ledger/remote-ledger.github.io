@@ -42,8 +42,10 @@ reference codes and so carry no licence (DESIGN.md §27); and the JP1 device
 upgrades of hifi-remote.com's forum, 1,789 files and 67,417 keys under
 `remotes/jp1/`, likewise (DESIGN.md §28); and the manufacturers' own IR code
 tables, Marantz's and Anthem's, 174 files and 11,980 keys under
-`remotes/official/`, likewise (DESIGN.md §29). That makes 15,332 remote files with
-the five authored ones. The IR Blaster database stores each code as a hexcode, and for
+`remotes/official/`, likewise (DESIGN.md §29); and RemoteCentral's Infrared Hex
+Code Database of learned codes, 2,187 files and 54,975 keys under
+`remotes/remotecentral/`, every key Untested and no licence recorded (DESIGN.md
+§30). That makes 17,519 remote files with the five authored ones. The IR Blaster database stores each code as a hexcode, and for
 ten of its protocols the ledger reads the code as the real remotes send it,
 which is not what SwiftRemote itself transmits for 44,789 of its keys
 (§18). Every imported key is Plausible and cites where it came from, down to

@@ -84,6 +84,15 @@ FACTS: dict[str, dict[str, Any]] = {
                 "records no licence for (DESIGN D110). Every key cites the document, its checksum "
                 "and the row.",
     },
+    "remotecentral": {
+        "kind": "none",
+        "upstream_url": "https://www.remotecentral.com/cgi-bin/codes/",
+        "note": "RemoteCentral's Infrared Hex Code Database is codes that people learned from remotes "
+                "and uploaded as Pronto hex, and the site says some may be duplicated or imperfect "
+                "learns. They are tables of reference remote codes, which the repository records no "
+                "licence for (DESIGN D110), and every key is Untested. Every key cites the page, the "
+                "snapshot and its checksum.",
+    },
     "irblaster": {
         "kind": "inherited",
         "licence_file": "LICENSE",

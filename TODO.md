@@ -2,7 +2,7 @@
 
 Project status as of 2026-10-08.
 
-**Where things stand.** v1 (DESIGN §8 Phases 0–6) is complete. Six
+**Where things stand.** v1 (DESIGN §8 Phases 0–6) is complete. Seven
 sources have been imported under SPEC R19:
 
 - **LIRC**: 3,138 remotes, 112,789 keys (DESIGN §14).
@@ -16,6 +16,8 @@ sources have been imported under SPEC R19:
   seven executors (DESIGN §28).
 - **Manufacturers' own IR tables**: Marantz's AV receiver charts and Anthem's
   IR hex sheet, 174 files, 11,980 keys (DESIGN §29).
+- **RemoteCentral's Infrared Hex Code Database**: learned Pronto codes, every
+  key Untested (DESIGN §30).
 
 SPEC v0.11 makes growing coverage from every source whose licence permits
 it the standing goal, with no fixed list of sources (DESIGN §8, Phase 8).
@@ -44,9 +46,21 @@ Land it in two PRs, code and then data.
       KeymapMaster files. Each executor needs its translator found and checked
       against the ledger's codes first. The forum's file section holds about
       2,000 more upgrades than the GitHub copy, behind a free login.
-- [ ] **RemoteCentral's Hex Code Database** is the next source in the order
-      the owner chose (2,114 models, about 53,000 Pronto strings). The codes
-      are learned from remotes, so they import at the lowest tier.
+- [ ] **RemoteCentral's other sections** (DESIGN D132): the Command Library of
+      discrete power, input and mode codes (files.remotecentral.com/library),
+      and its file area, which holds far more codes behind the forum's login.
+- [ ] **Learned codes with a carrier word one or two units off** are filed
+      apart from the rest of their page (about a quarter of the pages split).
+      Merging them into the page's own carrier would change the string a
+      little and so is the owner's call (DESIGN D129).
+- [ ] **The 12,730 learned codes with a zero mark** (DESIGN D130) are not
+      imported. For a protocol that keeps its bits in the spaces (NEC) the
+      information is there, and reading the string back as that protocol is a
+      guess to check against codes the ledger holds, as the JP1 decoders were
+      (D119). Sony's are gone: its bits are in the marks.
+- [ ] **Identify the protocol of a learned code**: a decoder over the Pronto
+      strings of this import could name the NEC, Sony and RC-5 ones and so
+      join them to the same device's codes from other sources.
 - [ ] **The other makers' tables**: Oppo (through the Wayback Machine),
       Kaleidescape, Arcam, Cambridge Audio (Wayback), KEF, T+A and JVC. Each
       is a document pinned by hash as D123 does it.
