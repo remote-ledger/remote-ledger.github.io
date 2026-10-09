@@ -18,7 +18,7 @@ from typing import Any, Iterator
 
 from jsonschema import Draft202012Validator
 
-from . import protocols
+from . import paths, protocols
 from .errors import LedgerError, ValidationError
 from .parallel import ordered_map
 from .serialize import load
@@ -300,10 +300,55 @@ def validate_files(targets: list[Path]) -> list[Problem]:
     return [p for batch in ordered_map(validate_file, targets) for p in batch]
 
 
+def _identity_of(path: Path) -> tuple[str, str, list[str]] | None:
+    """``(manufacturer, model, aliases)`` of a file, or None when it is not readable as a remote (the
+    schema's problem, reported by ``validate_file``). A worker's unit."""
+    try:
+        doc = json.loads(path.read_text(encoding="utf-8"))
+        return doc["manufacturer"], doc["model"], list(doc.get("aliases") or [])
+    except (OSError, ValueError, KeyError, TypeError):
+        return None
+
+
+def extra_root_conflicts(root: Path) -> list[str]:
+    """R15 across the roots (D128): a name claimed by a file of an extra root and by any other file.
+
+    The index stage checks the repository's own files, and it does not run over an extra root, so
+    this is where a name that two roots both claim is found. A claim among the repository's own
+    files only is the index stage's, and is not repeated."""
+    from .index import alias_conflicts
+
+    prefixes = tuple(f"{paths.REMOTES}{name}/" for name in paths.extra_source_names())
+    if not prefixes:
+        return []
+    files = corpus_files(root)
+    summaries = []
+    for path, identity in zip(files, ordered_map(_identity_of, files)):
+        if identity is not None:
+            summaries.append({"manufacturer": identity[0], "model": identity[1], "aliases": identity[2],
+                              "file": paths.rel(root, path)})
+    return [line for line in alias_conflicts(summaries) if any(prefix in line for prefix in prefixes)]
+
+
 def corpus_files(root: Path) -> list[Path]:
     """Every remote file, in a deterministic order (D20).
 
     ``remotes/**/*.json`` is uniformly one remote -- no reserved names, which
     is why ``unresolved.json`` sits at the repo root instead (D12).
     """
-    return sorted((root / "remotes").glob("**/*.json"))
+    files = sorted((root / "remotes").glob("**/*.json"))
+    extras = paths.extra_roots()
+    if not extras:
+        return files
+    # The remotes of the extra roots (D128) follow the repository's own, each root in its own sorted
+    # order, so the ids the bundle gives the repository's remotes do not depend on them. A path that
+    # two roots both hold would be one remote to every reader that keys on the path.
+    held = {paths.rel(root, f): f for f in files}
+    for extra in extras:
+        for file in sorted((extra.path / "remotes").glob("**/*.json")):
+            where = paths.rel(root, file)
+            if where in held:
+                raise ValidationError(f"{where} is held by {held[where]} and by {file}: one path, two files")
+            held[where] = file
+            files.append(file)
+    return files

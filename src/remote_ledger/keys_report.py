@@ -50,6 +50,11 @@ class RemoteKeys:
     keys: tuple[tuple[str, str | None], ...]
 
 
+def sources() -> tuple[str, ...]:
+    """``SOURCES`` with the sources of the extra roots (D128) before ``authored``."""
+    return (*(s for s in SOURCES if s != "authored"), *paths.extra_source_names(), "authored")
+
+
 def source_of(where: str) -> str:
     """``irblaster``, ``lirc``, ``smartir``, ``hifi-remote``, ``jp1``, ``official``, or ``authored``, from a repo-relative path."""
     root = paths.imported_from(where)
@@ -135,7 +140,7 @@ def build_report(remotes: list[RemoteKeys], vocabulary: Vocabulary | None = None
         "sources": {},
         "sourcesWithMinKeys": {},
     }
-    for tag in (*SOURCES, "all"):
+    for tag in (*sources(), "all"):
         chosen = [(len(r.keys), m) for r, m in per_remote if tag == "all" or r.source == tag]
         if not chosen:
             continue

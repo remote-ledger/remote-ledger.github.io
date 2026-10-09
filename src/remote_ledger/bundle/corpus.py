@@ -33,6 +33,15 @@ from ..validate import corpus_files
 SOURCES: tuple[str, ...] = ("authored", "lirc", "smartir", "irblaster", "hifi-remote", "jp1", "official")
 SOURCE_ID = {name: i + 1 for i, name in enumerate(SOURCES)}
 
+
+def sources() -> tuple[str, ...]:
+    """``SOURCES`` and then the sources of the extra roots (D128), whose ids follow the repository's."""
+    return SOURCES + paths.extra_source_names()
+
+
+def source_ids() -> dict[str, int]:
+    return {name: i + 1 for i, name in enumerate(sources())}
+
 #: ``remotes.tier`` and ``keys.confidence``: ``forms.CONFIDENCE_RANK`` itself, so
 #: 0 is the best tier. Written out in the meta table too.
 TIERS = tuple(sorted(CONFIDENCE_RANK, key=CONFIDENCE_RANK.__getitem__))
