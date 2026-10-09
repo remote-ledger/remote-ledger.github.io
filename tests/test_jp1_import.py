@@ -134,6 +134,61 @@ def test_a_slot_with_no_device_is_the_nearest_earlier_one_and_no_device_at_all_i
     assert signal(upgrade("RC-5", "40 0 null 0 null 0", ("x", "C0")), 0) == "the RC-5 device is not five bits"
 
 
+SONY_COMBO = "Sony Combo (12/15/20)"
+
+
+def test_a_sony_combo_function_is_two_bytes_a_flag_and_a_device_by_the_frame():
+    """``SonyComboTranslator() Translator(lsb,3,7)``: the first byte's top seven bits are the command reversed
+    and its lowest bit says Sony15; the second byte is the device reversed (8 bits) for Sony15, else the device
+    reversed in its top five bits, an index of the four sub devices in the next two, and Sony20 in its lowest.
+    The parameters are Sony STR-DN860's, `8 40 35 104`."""
+    up = upgrade(SONY_COMBO, "8 40 35 104", ("POWER", "A9 0C"), ("Master Volume +", "49 0C"), ("Tools/Options", "CE 09"),
+                 ("TV power", "A8 80"), ("Sony20 index 2", "A8 5D"), ("Sony20 index 3", "A8 5F"))
+    assert [signal(up, i) for i in range(6)] == [
+        rmdu.Signal("Sony15", 48, None, 21), rmdu.Signal("Sony15", 48, None, 18), rmdu.Signal("Sony20", 16, 8, 115),
+        rmdu.Signal("Sony12", 1, None, 21), rmdu.Signal("Sony20", 26, 35, 21), rmdu.Signal("Sony20", 26, 104, 21)]
+    unset = upgrade(SONY_COMBO, "8 null null null", ("x", "A8 5D"))
+    assert signal(unset, 0) == "the Sony20 sub device the function selects is not set"
+    assert signal(upgrade(SONY_COMBO, "8", ("x", "A8")), 0) == "the function has no two OBC bytes"
+
+
+def test_an_nec1_combo_function_is_the_sub_device_then_the_function_and_a_null_device_is_in_fixed_data():
+    """``Translator(lsb,comp) Translator(lsb,comp,1,8,8)`` over ``CmdParms=Sub Device,OBC``: the first byte is the
+    sub device. Adcom GTP-602's `power`, `58 FE` with device 26, is 26.229 function 128. A null device is the
+    executor's effective one in FixedData: `E2` is 184, the default (Onkyo Master File)."""
+    up = upgrade("NEC1 Combo", "26", ("power", "58 FE"), fixed="A7")
+    assert signal(up, 0) == rmdu.Signal("NEC1", 26, 229, 128)
+    onkyo = upgrade("NEC1 Combo", "null", ("PLII Movie", "BF AF"), fixed="E2")
+    assert signal(onkyo, 0) == rmdu.Signal("NEC1", 184, 2, 10)
+    assert signal(upgrade("NEC1 Combo", "null", ("x", "BF AF")), 0) == "the device parameter is missing"
+
+
+def test_an_nec_4dev_combo_function_is_a_function_a_device_slot_and_a_style():
+    """The second byte's top two bits are the device slot, the bits at offsets 11 and 15 the style (NEC1, NEC2,
+    NECx1, NECx2). Emotiva UMC-1's parameters: slot 0 is 32.95, slot 1 is 2 with the complement as sub device."""
+    parms = "32 95 2 null null null null null 0"
+    fixed = "FB 05 BF 40 FF 00 FF 00"
+    up = upgrade("NEC 4DEV Combo", parms, ("back sur-", "E5 20"), ("cancel", "65 60"), ("nec2", "E5 21"), ("necx1", "E5 30"),
+                 fixed=fixed)
+    assert [signal(up, i) for i in range(3)] == [
+        rmdu.Signal("NEC1", 32, 95, 88), rmdu.Signal("NEC1", 2, 253, 89), rmdu.Signal("NEC2", 32, 95, 88)]
+    # NECx wants a sub device, and slot 0 has none here
+    assert signal(upgrade("NEC 4DEV Combo", "32 null", ("x", "E5 30")), 0) == "the sub device parameter is missing"
+    # a null device is in FixedData, each byte complemented and reversed: FB is 32, and a null sub device is the complement
+    consistent = "FB 04 BF 40 FF 00 FF 00"
+    assert signal(upgrade("NEC 4DEV Combo", "null null 2 null", ("x", "E5 20"), fixed=consistent), 0) == rmdu.Signal("NEC1", 32, 223, 88)
+    assert signal(upgrade("NEC 4DEV Combo", "32 95", ("x", "E5 60")), 0) == "the device the function selects is not set"
+
+
+def test_the_yamaha_4dev_combo_is_nec_in_its_plain_style_and_refused_in_the_three_that_are_not():
+    """The Yamaha variant's Y style (offsets 13 and 14) is NEC, Y1, Y2 or Y3, and the last three send a second byte
+    that is not the complement of the first, a frame the ledger has no protocol for."""
+    up = upgrade("NEC 4DEV Yamaha Combo", "122 null 126 null", ("plain", "3E 21"), ("Y1", "3E 25"), ("Y2", "3E 23"), ("Y3", "3E 27"))
+    assert signal(up, 0) == rmdu.Signal("NEC2", 122, 133, 131)
+    refused = "the Yamaha style sends a second byte that is not the complement of the first"
+    assert [signal(up, i) for i in (1, 2, 3)] == [refused] * 3
+
+
 def test_an_executor_not_read_and_a_function_with_no_single_byte_are_said_so():
     assert "not read by this import" in signal(upgrade("MCE", "28 0 null", ("power", "C4")))
     assert signal(upgrade("NEC1", "6 null null", ("Power", "FF BF"))) == "the function has no single OBC byte"
@@ -325,7 +380,7 @@ def test_the_committed_jp1_import_keeps_r19():
     assert (ROOT / jp.IMPORT_ROOT / "README.md").is_file() and (ROOT / jp.IMPORT_ROOT / jp.REPORT).is_file()
     assert f"@ `{meta['commit']}`" in (ROOT / jp.IMPORT_ROOT / jp.REPORT).read_text(encoding="utf-8")
     shape = re.compile(
-        rf"^jp1-device-upgrades@{meta['commit'][:7]} \S.* function (\d+) '.*' \(OBC ([0-9A-F]{{2}}); [^;]+, parms [^)]*\): "
+        rf"^jp1-device-upgrades@{meta['commit'][:7]} \S.* function (\d+) '.*' \(OBC ((?:[0-9A-F]{{2}})(?: [0-9A-F]{{2}})*); [^;]+, parms [^)]*\): "
         r"(NEC1|NEC2|NECx1|NECx2|Sony12|Sony15|Sony20|RC5) device (\d+)(?: subdevice (\d+))? function (\d+)", re.S)
 
     def num(value):
@@ -384,3 +439,21 @@ def test_the_committed_arcam_upgrades_send_the_codes_arcam_publishes():
         "KEY_MUTE": (16, 13), "KEY_VOL_PLUS": (16, 16), "KEY_VOL_MINUS": (16, 17)}
     receiver = codes("Audio-Arcam_Receiver_AVR100.json")
     assert (receiver["KEY_POWER_ON"], receiver["KEY_POWER_OFF"]) == ((16, 123), (16, 124))
+
+
+def test_a_sony_combo_upgrade_sends_every_verified_key_of_the_authored_rmt_b118p():
+    """An independent check of the Sony Combo rule's hardest part, the index of the four sub devices. The ledger's
+    authored RMT-B118P has 38 keys Verified against hifi-remote's own Sony Blu-ray table (Sony20, device 26, sub
+    device 226). The forum's `Sony UHP-H1` upgrade is a Sony Combo (12/15/20) whose functions choose their sub
+    device through the index in the second byte, and the signals it decodes to include all 38."""
+    def triples(path: Path) -> set[tuple[int, int, int]]:
+        doc = load(path)
+        return {(int(f["device"], 0), int(f["subdevice"], 0), int(f["function"], 0))
+                for spec in doc["keys"].values() for f in spec["forms"] if "subdevice" in f}
+
+    authored = triples(ROOT / "remotes" / "sony" / "RMT-B118P.json")
+    assert len(authored) == 38 and {(d, s) for d, s, _ in authored} == {(26, 226)}
+    files = sorted((ROOT / jp.IMPORT_ROOT / "Sony").glob("DVD__Blu-Ray-Sony_UHP-H1*.json"))
+    assert files and all(load(f)["keys"] for f in files)
+    sent = set().union(*(triples(f) for f in files))
+    assert authored <= sent

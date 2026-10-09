@@ -1,0 +1,41 @@
+{
+  "manufacturer": "Sony",
+  "model": "0158 and 0159 combined [Sony15]",
+  "aliases": [],
+  "controls": [
+    "Sony 0158 and 0159 combined"
+  ],
+  "protocol": {
+    "name": "Sony15",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_CHANNEL_UP": {
+      "label": "channel up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Sony 0158 and 0159 combined.rmdu function 18 'channel up' (OBC 09 B0; Sony Combo (12/15/20), parms null null null null): Sony15 device 13 function 16"
+        }
+      ]
+    },
+    "KEY_CHANNEL_DOWN": {
+      "label": "channel down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Sony 0158 and 0159 combined.rmdu function 19 'channel down' (OBC 89 B0; Sony Combo (12/15/20), parms null null null null): Sony15 device 13 function 17"
+        }
+      ]
+    }
+  }
+}

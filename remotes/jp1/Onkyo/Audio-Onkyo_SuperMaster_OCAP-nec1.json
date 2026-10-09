@@ -1,0 +1,813 @@
+{
+  "manufacturer": "Onkyo",
+  "model": "HT Receiver [NEC1]",
+  "aliases": [],
+  "controls": [
+    "Onkyo HT Receiver"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_MENU": {
+      "label": "menu",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x02",
+          "function": "0x4D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 0 'menu' (OBC 4D A0; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 2 function 77"
+        }
+      ]
+    },
+    "KEY_TOP_MENU": {
+      "label": "top menu",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0xB0",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 1 'top menu' (OBC BF E0; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 176 function 2"
+        }
+      ]
+    },
+    "KEY_OR_MINUS_EQ": {
+      "label": "OR-EQ",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0xB0",
+          "function": "0xDF",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 2 'OR-EQ' (OBC 04 E0; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 176 function 223; the upgrade's note: 'Requires a FIFTH dev/sub-dev combination (210\\:172). (OBC\\=223)'"
+        }
+      ]
+    },
+    "KEY_MULTI_CH": {
+      "label": "multi ch",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 4 'multi ch' (OBC DF 20; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 108 function 4"
+        }
+      ]
+    },
+    "KEY_DSP_PLUS": {
+      "label": "DSP+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x18",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 5 'DSP+' (OBC E7 20; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 108 function 24"
+        }
+      ]
+    },
+    "KEY_DSP_MINUS": {
+      "label": "DSP-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x19",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 6 'DSP-' (OBC 67 20; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 108 function 25"
+        }
+      ]
+    },
+    "KEY_INPUT": {
+      "label": "input",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x1E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 7 'input' (OBC 87 20; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 108 function 30"
+        }
+      ]
+    },
+    "KEY_CHANNEL_SEL": {
+      "label": "channel sel",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x44",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 10 'channel sel' (OBC DD 20; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 108 function 68"
+        }
+      ]
+    },
+    "KEY_MODE_SLASH_DSP_MINUS_SLASH": {
+      "label": "mode/DSP-/<",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x45",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 11 'mode/DSP-/<' (OBC 5D 20; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 108 function 69"
+        }
+      ]
+    },
+    "KEY_POWER_MINUS_OFF_SLASH_STANDBY": {
+      "label": "power-off/standby",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x47",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 12 'power-off/standby' (OBC 1D 20; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 108 function 71"
+        }
+      ]
+    },
+    "KEY_STEREO_SLASH_DSP_PLUS": {
+      "label": "stereo/DSP+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x4C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 13 'stereo/DSP+' (OBC CD 20; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 108 function 76"
+        }
+      ]
+    },
+    "KEY_SURROUND": {
+      "label": "surround",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x4D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 14 'surround' (OBC 4D 20; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 108 function 77"
+        }
+      ]
+    },
+    "KEY_THX_SLASH_SUBTITLE": {
+      "label": "THX/subtitle",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x4E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 15 'THX/subtitle' (OBC 8D 20; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 108 function 78"
+        }
+      ]
+    },
+    "KEY_ALT_ST_SLASH_PLAY_MODE": {
+      "label": "alt st/play mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x52",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 16 'alt st/play mode' (OBC B5 20; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 108 function 82"
+        }
+      ]
+    },
+    "KEY_MENU_SLASH_SETUP": {
+      "label": "menu/setup",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x53",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 17 'menu/setup' (OBC 35 20; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 108 function 83"
+        }
+      ]
+    },
+    "KEY_RETURN_SLASH_EXIT": {
+      "label": "return/exit",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x54",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 18 'return/exit' (OBC D5 20; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 108 function 84"
+        }
+      ]
+    },
+    "KEY_DISPLAY": {
+      "label": "display",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x55",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 19 'display' (OBC 55 20; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 108 function 85"
+        }
+      ]
+    },
+    "KEY_SPEAKERS_A_SLASH_B": {
+      "label": "Speakers A/B",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x88",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 20 'Speakers A/B' (OBC EE 20; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 108 function 136"
+        }
+      ]
+    },
+    "KEY_6_SLASH_DVD": {
+      "label": "6/DVD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x8C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 21 '6/DVD' (OBC CE 20; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 108 function 140"
+        }
+      ]
+    },
+    "KEY_POWER_ON_SLASH_OFF_TOGGLE": {
+      "label": "power on/off toggle",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0xCB",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 22 'power on/off toggle' (OBC 2C 20; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 108 function 203"
+        }
+      ]
+    },
+    "KEY_PURE_AUDIO": {
+      "label": "Pure audio",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0xD3",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 23 'Pure audio' (OBC 34 20; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 108 function 211"
+        }
+      ]
+    },
+    "KEY_AUDIO_ADJUST": {
+      "label": "Audio Adjust",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0xD4",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 24 'Audio Adjust' (OBC D4 20; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 108 function 212"
+        }
+      ]
+    },
+    "KEY_RE_MINUS_EQ": {
+      "label": "Re-EQ",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0xD6",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 25 'Re-EQ' (OBC 94 20; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 108 function 214"
+        }
+      ]
+    },
+    "KEY_ENTER_NIGHT": {
+      "label": "enter | night",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0xD7",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 26 'enter | night' (OBC 14 20; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 108 function 215"
+        }
+      ]
+    },
+    "KEY_OPEN_SLASH_CLOSE": {
+      "label": "open/close",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0xD8",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 27 'open/close' (OBC E4 20; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 108 function 216"
+        }
+      ]
+    },
+    "KEY_AUDIO_SELECT": {
+      "label": "Audio select",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0xD9",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 28 'Audio select' (OBC 64 20; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 108 function 217"
+        }
+      ]
+    },
+    "KEY_DISTANCE": {
+      "label": "distance",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0xDF",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 29 'distance' (OBC 04 20; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 108 function 223"
+        }
+      ]
+    },
+    "KEY_POWER_SLASH_ON": {
+      "label": "power/on",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 35 'power/on' (OBC DF 60; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 109 function 4"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 36 'mute' (OBC 5F 60; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 109 function 5"
+        }
+      ]
+    },
+    "KEY_8_SLASH_TAPE": {
+      "label": "8/Tape",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 37 '8/Tape' (OBC EF 60; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 109 function 8"
+        }
+      ]
+    },
+    "KEY_9_SLASH_CD_SLASH_7": {
+      "label": "9/CD/7?",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 38 '9/CD/7?' (OBC 6F 60; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 109 function 9"
+        }
+      ]
+    },
+    "KEY_7_SLASH_PHONO_SLASH_10_PLUS": {
+      "label": "7/Phono/10+?",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 39 '7/Phono/10+?' (OBC AF 60; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 109 function 10"
+        }
+      ]
+    },
+    "KEY_TUNER_SLASH_9": {
+      "label": "Tuner/9?",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 40 'Tuner/9?' (OBC 2F 60; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 109 function 11"
+        }
+      ]
+    },
+    "KEY_3_SLASH_GAME_SLASH_TV_SLASH_VID_3": {
+      "label": "3/Game/TV/Vid 3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 41 '3/Game/TV/Vid 3' (OBC 4F 60; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 109 function 13"
+        }
+      ]
+    },
+    "KEY_2_SLASH_CBL_SLASH_SAT_SLASH_VID_2": {
+      "label": "2/CBL/SAT/Vid 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x0E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 42 '2/CBL/SAT/Vid 2' (OBC 8F 60; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 109 function 14"
+        }
+      ]
+    },
+    "KEY_1_SLASH_VCR_SLASH_DVR_SLASH_VID_1": {
+      "label": "1/VCR/DVR/Vid 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 43 '1/VCR/DVR/Vid 1' (OBC 0F 60; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 109 function 15"
+        }
+      ]
+    },
+    "KEY_STOP": {
+      "label": "stop",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 44 'stop' (OBC 37 60; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 109 function 19"
+        }
+      ]
+    },
+    "KEY_PLAY": {
+      "label": "play",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 45 'play' (OBC 57 60; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 109 function 21"
+        }
+      ]
+    },
+    "KEY_PAUSE": {
+      "label": "pause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 46 'pause' (OBC 97 60; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 109 function 22"
+        }
+      ]
+    },
+    "KEY_RECORD": {
+      "label": "record",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x18",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 47 'record' (OBC E7 60; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 109 function 24"
+        }
+      ]
+    },
+    "KEY_FAST_FWD": {
+      "label": "fast fwd",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x19",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 48 'fast fwd' (OBC 67 60; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 109 function 25"
+        }
+      ]
+    },
+    "KEY_REWIND": {
+      "label": "rewind",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 49 'rewind' (OBC A7 60; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 109 function 26"
+        }
+      ]
+    },
+    "KEY_DIRECT": {
+      "label": "Direct",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x44",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 50 'Direct' (OBC DD 60; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 109 function 68"
+        }
+      ]
+    },
+    "KEY_0_SLASH_TUNER": {
+      "label": "0/tuner",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x46",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 51 '0/tuner' (OBC 9D 60; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 109 function 70"
+        }
+      ]
+    },
+    "KEY_MODE_PLUS_SLASH": {
+      "label": "mode+/>",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x4C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 52 'mode+/>' (OBC CD 60; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 109 function 76"
+        }
+      ]
+    },
+    "KEY_SPEAKERS_A": {
+      "label": "Speakers A",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x59",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 53 'Speakers A' (OBC 65 60; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 109 function 89"
+        }
+      ]
+    },
+    "KEY_SPEAKERS_B": {
+      "label": "Speakers B",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x5A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 54 'Speakers B' (OBC A5 60; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 109 function 90"
+        }
+      ]
+    },
+    "KEY_SLEEP_55": {
+      "label": "sleep",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x5D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 55 'sleep' (OBC 45 60; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 109 function 93"
+        }
+      ]
+    },
+    "KEY_SKIP_MINUS": {
+      "label": "skip -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x93",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 60 'skip -' (OBC 36 60; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 109 function 147"
+        }
+      ]
+    },
+    "KEY_SKIP_PLUS": {
+      "label": "skip +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x94",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 61 'skip +' (OBC D6 60; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 109 function 148"
+        }
+      ]
+    },
+    "KEY_DIMMER": {
+      "label": "Dimmer",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x95",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 62 'Dimmer' (OBC 56 60; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 109 function 149"
+        }
+      ]
+    },
+    "KEY_ENTER_SLASH_SELECT": {
+      "label": "enter/select",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x97",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 63 'enter/select' (OBC 16 60; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 109 function 151"
+        }
+      ]
+    },
+    "KEY_TEST_TONE": {
+      "label": "Test (tone)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x9A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 64 'Test (tone)' (OBC A6 60; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 109 function 154"
+        }
+      ]
+    },
+    "KEY_5_SLASH_AUX2": {
+      "label": "5/Aux2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x9D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 65 '5/Aux2' (OBC 46 60; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 109 function 157"
+        }
+      ]
+    },
+    "KEY_4_SLASH_AUX1_SLASH_VID_4": {
+      "label": "4/Aux1/Vid 4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x9F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 66 '4/Aux1/Vid 4' (OBC 06 60; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 109 function 159"
+        }
+      ]
+    },
+    "KEY_SLEEP_67": {
+      "label": "sleep",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0xA8",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 67 'sleep' (OBC EA 60; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 109 function 168"
+        }
+      ]
+    },
+    "KEY_ZONE_2_PREFIX": {
+      "label": "zone 2 [prefix]",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0xCC",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_SuperMaster_OCAP.rmdu function 68 'zone 2 [prefix]' (OBC CC 60; NEC 4DEV Combo, parms 210 108 210 109 210 2 210 176): NEC1 device 210 subdevice 109 function 204"
+        }
+      ]
+    }
+  }
+}

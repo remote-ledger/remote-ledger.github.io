@@ -19,8 +19,9 @@ An upgrade names a device (`Description`), a JP1 *executor* (`Protocol.name`) wi
 parameters, and for each function an *OBC* byte. The executors' translators store the OBC reversed
 (and, for NEC, complemented), and `src/remote_ledger/jp1/rmdu.py` undoes that. Only the executors
 whose translators were **checked against the ledger's own codes** are read: the NEC family (NEC1,
-NEC1 (No Repeats), NEC2, NECx1, NECx2), Sony (12/15 and 20) and RC-5 (DESIGN.md section 32, whose rule is
-RemoteMaster's own `Rc5Translator`). Every other upgrade is counted by
+NEC1 (No Repeats), NEC2, NECx1, NECx2), Sony (12/15 and 20), RC-5 (DESIGN.md section 32, whose rule is
+RemoteMaster's own `Rc5Translator`) and four combos whose functions are two OBC bytes: Sony Combo (12/15/20), NEC1
+Combo, NEC 4DEV Combo and NEC 4DEV Yamaha Combo, in its plain style (section 33). Every other upgrade is counted by
 executor in `IMPORT.md`, with the KeymapMaster `.txt` files, which are not read.
 
 A file becomes one remote file per ledger protocol it sends, and every function a key with an `irp`

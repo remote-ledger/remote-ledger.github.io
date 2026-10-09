@@ -1,0 +1,43 @@
+{
+  "manufacturer": "Sony",
+  "model": "A80J TV [Sony20]",
+  "aliases": [],
+  "controls": [
+    "Sony A80J TV"
+  ],
+  "protocol": {
+    "name": "Sony20",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_AMAZON_PRIME_APP": {
+      "label": "Amazon Prime App",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1F",
+          "subdevice": "0x40",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/Device - SONY A80J.rmdu function 43 'Amazon Prime App' (OBC 20 F9; Sony Combo (12/15/20), parms 64 0 0 0): Sony20 device 31 subdevice 64 function 4"
+        }
+      ]
+    },
+    "KEY_DISNEY_APP": {
+      "label": "Disney App",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1F",
+          "subdevice": "0x40",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 TV/Device - SONY A80J.rmdu function 56 'Disney App' (OBC A0 F9; Sony Combo (12/15/20), parms 64 0 0 0): Sony20 device 31 subdevice 64 function 5"
+        }
+      ]
+    }
+  }
+}

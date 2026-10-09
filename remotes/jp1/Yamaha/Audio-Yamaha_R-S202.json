@@ -1,0 +1,295 @@
+{
+  "manufacturer": "Yamaha",
+  "model": "receiver R-S202 remote RAX33",
+  "aliases": [],
+  "controls": [
+    "Yamaha receiver R-S202 remote RAX33"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_PWR_ON": {
+      "label": "Pwr ON",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x7E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha R-S202.rmdu function 0 'Pwr ON' (OBC 81 60; NEC 4DEV Yamaha Combo, parms 122 133 126 129 127 1 255 127): NEC1 device 126 subdevice 129 function 126"
+        }
+      ]
+    },
+    "KEY_PWR_OFF": {
+      "label": "Pwr OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x7F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha R-S202.rmdu function 1 'Pwr OFF' (OBC 01 60; NEC 4DEV Yamaha Combo, parms 122 133 126 129 127 1 255 127): NEC1 device 126 subdevice 129 function 127"
+        }
+      ]
+    },
+    "KEY_PWR_TOGGLE": {
+      "label": "Pwr Toggle",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x2A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha R-S202.rmdu function 2 'Pwr Toggle' (OBC AB 60; NEC 4DEV Yamaha Combo, parms 122 133 126 129 127 1 255 127): NEC1 device 126 subdevice 129 function 42"
+        }
+      ]
+    },
+    "KEY_VOLUME_PLUS": {
+      "label": "Volume +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha R-S202.rmdu function 3 'Volume +' (OBC A7 20; NEC 4DEV Yamaha Combo, parms 122 133 126 129 127 1 255 127): NEC1 device 122 subdevice 133 function 26"
+        }
+      ]
+    },
+    "KEY_VOLUME_MINUS": {
+      "label": "Volume -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x1B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha R-S202.rmdu function 4 'Volume -' (OBC 27 20; NEC 4DEV Yamaha Combo, parms 122 133 126 129 127 1 255 127): NEC1 device 122 subdevice 133 function 27"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "Mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x1C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha R-S202.rmdu function 5 'Mute' (OBC C7 20; NEC 4DEV Yamaha Combo, parms 122 133 126 129 127 1 255 127): NEC1 device 122 subdevice 133 function 28"
+        }
+      ]
+    },
+    "KEY_TUNER": {
+      "label": "Tuner",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha R-S202.rmdu function 6 'Tuner' (OBC 97 20; NEC 4DEV Yamaha Combo, parms 122 133 126 129 127 1 255 127): NEC1 device 122 subdevice 133 function 22"
+        }
+      ]
+    },
+    "KEY_CD": {
+      "label": "CD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha R-S202.rmdu function 7 'CD' (OBC 57 20; NEC 4DEV Yamaha Combo, parms 122 133 126 129 127 1 255 127): NEC1 device 122 subdevice 133 function 21"
+        }
+      ]
+    },
+    "KEY_LPS": {
+      "label": "LPs",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xC1",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha R-S202.rmdu function 8 'LPs' (OBC 7C 20; NEC 4DEV Yamaha Combo, parms 122 133 126 129 127 1 255 127): NEC1 device 122 subdevice 133 function 193; the upgrade's note: 'Line 1'"
+        }
+      ]
+    },
+    "KEY_TV": {
+      "label": "TV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x19",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha R-S202.rmdu function 9 'TV' (OBC 67 20; NEC 4DEV Yamaha Combo, parms 122 133 126 129 127 1 255 127): NEC1 device 122 subdevice 133 function 25; the upgrade's note: 'Line 2'"
+        }
+      ]
+    },
+    "KEY_LINE_3": {
+      "label": "Line 3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x18",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha R-S202.rmdu function 10 'Line 3' (OBC E7 20; NEC 4DEV Yamaha Combo, parms 122 133 126 129 127 1 255 127): NEC1 device 122 subdevice 133 function 24; the upgrade's note: 'Line 3'"
+        }
+      ]
+    },
+    "KEY_SLEEP": {
+      "label": "Sleep",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x30",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha R-S202.rmdu function 24 'Sleep' (OBC F3 20; NEC 4DEV Yamaha Combo, parms 122 133 126 129 127 1 255 127): NEC1 device 122 subdevice 133 function 48"
+        }
+      ]
+    },
+    "KEY_UP_BLUETOOTH": {
+      "label": "Up Bluetooth",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x9D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha R-S202.rmdu function 25 'Up Bluetooth' (OBC 46 20; NEC 4DEV Yamaha Combo, parms 122 133 126 129 127 1 255 127): NEC1 device 122 subdevice 133 function 157"
+        }
+      ]
+    },
+    "KEY_DN_BT_PAUSE": {
+      "label": "Dn BT Pause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x9C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha R-S202.rmdu function 26 'Dn BT Pause' (OBC C6 20; NEC 4DEV Yamaha Combo, parms 122 133 126 129 127 1 255 127): NEC1 device 122 subdevice 133 function 156"
+        }
+      ]
+    },
+    "KEY_LEFT_BT_REW": {
+      "label": "Left BT Rew",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x9F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha R-S202.rmdu function 27 'Left BT Rew' (OBC 06 20; NEC 4DEV Yamaha Combo, parms 122 133 126 129 127 1 255 127): NEC1 device 122 subdevice 133 function 159"
+        }
+      ]
+    },
+    "KEY_RIGHT_BT_FF": {
+      "label": "Right BT FF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x9E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha R-S202.rmdu function 28 'Right BT FF' (OBC 86 20; NEC 4DEV Yamaha Combo, parms 122 133 126 129 127 1 255 127): NEC1 device 122 subdevice 133 function 158"
+        }
+      ]
+    },
+    "KEY_ENTER": {
+      "label": "Enter",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xDE",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha R-S202.rmdu function 29 'Enter' (OBC 84 20; NEC 4DEV Yamaha Combo, parms 122 133 126 129 127 1 255 127): NEC1 device 122 subdevice 133 function 222"
+        }
+      ]
+    },
+    "KEY_MENU": {
+      "label": "Menu",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x84",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha R-S202.rmdu function 30 'Menu' (OBC DE 20; NEC 4DEV Yamaha Combo, parms 122 133 126 129 127 1 255 127): NEC1 device 122 subdevice 133 function 132"
+        }
+      ]
+    },
+    "KEY_SPKR_A": {
+      "label": "Spkr A",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x9A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha R-S202.rmdu function 31 'Spkr A' (OBC A6 20; NEC 4DEV Yamaha Combo, parms 122 133 126 129 127 1 255 127): NEC1 device 122 subdevice 133 function 154"
+        }
+      ]
+    },
+    "KEY_SPKR_B": {
+      "label": "Spkr B",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x9B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha R-S202.rmdu function 32 'Spkr B' (OBC 26 20; NEC 4DEV Yamaha Combo, parms 122 133 126 129 127 1 255 127): NEC1 device 122 subdevice 133 function 155"
+        }
+      ]
+    }
+  }
+}

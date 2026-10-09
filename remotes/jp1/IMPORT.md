@@ -16,46 +16,45 @@ silently (SPEC R19, condition 5).
 | Upstream files: skipped: no brand | 12 |
 | Upstream files: skipped: no function decodes | 3 |
 | Upstream files: upgrades | 3,251 |
-| Remotes: imported | 1,936 |
+| Remotes: imported | 2,184 |
 | Remotes: skipped: an authored remote wins | 5 |
-| Keys: imported: NEC1 | 56,045 |
-| Keys: imported: NEC2 | 1,883 |
+| Keys: imported: NEC1 | 61,666 |
+| Keys: imported: NEC2 | 1,985 |
 | Keys: imported: NECx1 | 1,496 |
-| Keys: imported: NECx2 | 4,470 |
+| Keys: imported: NECx2 | 4,512 |
 | Keys: imported: RC5 | 5,648 |
-| Keys: imported: Sony12 | 1,462 |
-| Keys: imported: Sony15 | 423 |
-| Keys: imported: Sony20 | 1,638 |
+| Keys: imported: Sony12 | 2,813 |
+| Keys: imported: Sony15 | 1,705 |
+| Keys: imported: Sony20 | 2,955 |
+| Keys: skipped: the Yamaha style sends a second byte that is not the complement of the first | 1,087 |
 | Keys: skipped: the command does not fit Sony's seven bits | 35 |
 | Keys: skipped: the device the function selects is not set | 40 |
 | Keys: skipped: the function has no single OBC byte | 4,269 |
+| Keys: skipped: the function has no two OBC bytes | 317 |
 | Keys: skipped: the sub device parameter is missing | 97 |
-| Files by ledger protocol: NEC1 | 1,506 |
-| Files by ledger protocol: NEC2 | 64 |
+| Files by ledger protocol: NEC1 | 1,596 |
+| Files by ledger protocol: NEC2 | 75 |
 | Files by ledger protocol: NECx1 | 38 |
-| Files by ledger protocol: NECx2 | 89 |
+| Files by ledger protocol: NECx2 | 90 |
 | Files by ledger protocol: RC5 | 147 |
-| Files by ledger protocol: Sony12 | 34 |
-| Files by ledger protocol: Sony15 | 18 |
-| Files by ledger protocol: Sony20 | 40 |
-| Brand taken from: the longest brand of the index that begins the description | 100 |
-| Brand taken from: the master index | 1,835 |
+| Files by ledger protocol: Sony12 | 76 |
+| Files by ledger protocol: Sony15 | 77 |
+| Files by ledger protocol: Sony20 | 85 |
+| Brand taken from: the longest brand of the index that begins the description | 114 |
+| Brand taken from: the master index | 1,994 |
 
-## Executors this import does not read (upgrades) (191)
+## Executors this import does not read (upgrades) (187)
 
 | Executor | Files |
 |---|---|
 | `MCE` | 83 |
-| `Sony Combo (12/15/20)` | 82 |
 | `Manual Settings` | 75 |
 | `Panasonic Combo` | 53 |
-| `NEC1 Combo` | 46 |
 | `RC-6` | 42 |
 | `Nokia32` | 40 |
 | `JVC` | 33 |
 | `Panasonic` | 33 |
 | `Aiwa` | 31 |
-| `NEC 4DEV Combo` | 30 |
 | `Denon Combo (Official)` | 28 |
 | `Pioneer MIX` | 27 |
 | `XMP (Slingbox)` | 26 |
@@ -67,7 +66,6 @@ silently (SPEC R19, condition 5).
 | `RECS80 (45)` | 17 |
 | `RC-5/5x Combo` | 16 |
 | `TDC` | 16 |
-| `NEC 4DEV Yamaha Combo` | 15 |
 | `RC6-M-20n` | 15 |
 | `Denon` | 14 |
 | `NEC1-f16 Official` | 13 |
@@ -267,12 +265,14 @@ silently (SPEC R19, condition 5).
 | `Satellite/SonicView SV1000 6131.rmdu` | `remotes/jp1/Sonicview/Satellite-SonicView_SV1000_6131.json` |
 | `TV/VESTEL TV.rmdu` | `remotes/jp1/Vestel/TV-VESTEL_TV.json` |
 
-## Functions skipped (4,441)
+## Functions skipped (5,845)
 
 | File | Function | Reason |
 |---|---|---|
 | `A_C/Panasonic CW-XC104HU.rmdu` | `#8` | `the function has no single OBC byte` |
 | `Audio/Adcom GTP-550 GTP-600.rmdu` | `#33` | `the function has no single OBC byte` |
+| `Audio/Adcom GTP-602.rmdu` | `#36` | `the function has no two OBC bytes` |
+| `Audio/Adcom GTP-602.rmdu` | `#49` | `the function has no two OBC bytes` |
 | `Audio/Comcast AudioEngine A5.rmdu` | `+100` | `the function has no single OBC byte` |
 | `Audio/Comcast AudioEngine A5.rmdu` | 5 | `the function has no single OBC byte` |
 | `Audio/Comcast AudioEngine A5.rmdu` | 6 | `the function has no single OBC byte` |
@@ -319,6 +319,14 @@ silently (SPEC R19, condition 5).
 | `Audio/Comcast AudioEngine A5.rmdu` | `surround` | `the function has no single OBC byte` |
 | `Audio/Comcast AudioEngine A5.rmdu` | `tv/vcr` | `the function has no single OBC byte` |
 | `Audio/Comcast AudioEngine A5.rmdu` | `up arrow` | `the function has no single OBC byte` |
+| `Audio/Kenwood VRS-7100.rmdu` | `#45` | `the function has no two OBC bytes` |
+| `Audio/Kenwood VRS-7100.rmdu` | `#46` | `the function has no two OBC bytes` |
+| `Audio/Kenwood VRS-7100.rmdu` | `#47` | `the function has no two OBC bytes` |
+| `Audio/Kenwood VRS-7100.rmdu` | `#48` | `the function has no two OBC bytes` |
+| `Audio/Kenwood VRS-7100.rmdu` | `#49` | `the function has no two OBC bytes` |
+| `Audio/Kenwood VRS-7100.rmdu` | `#50` | `the function has no two OBC bytes` |
+| `Audio/Kenwood VRS-7100.rmdu` | `#51` | `the function has no two OBC bytes` |
+| `Audio/Kenwood VRS-7100.rmdu` | `#52` | `the function has no two OBC bytes` |
 | `Audio/Klipsch DD-5.1.rmdu` | `+100` | `the function has no single OBC byte` |
 | `Audio/Klipsch DD-5.1.rmdu` | `X2` | `the function has no single OBC byte` |
 | `Audio/Klipsch DD-5.1.rmdu` | `center` | `the function has no single OBC byte` |
@@ -440,6 +448,45 @@ silently (SPEC R19, condition 5).
 | `Audio/Logitech Speaker System Z906.rmdu` | `surround` | `the function has no single OBC byte` |
 | `Audio/Logitech Speaker System Z906.rmdu` | `tv/vcr` | `the function has no single OBC byte` |
 | `Audio/Logitech Speaker System Z906.rmdu` | `up arrow` | `the function has no single OBC byte` |
+| `Audio/Onkyo TX-NR807 AVR Upgrade.rmdu` | `#51` | `the function has no two OBC bytes` |
+| `Audio/Onkyo TX-NR807 AVR Upgrade.rmdu` | `#52` | `the function has no two OBC bytes` |
+| `Audio/Onkyo TX-NR807 AVR Upgrade.rmdu` | `#53` | `the function has no two OBC bytes` |
+| `Audio/Onkyo TX-NR807 AVR Upgrade.rmdu` | `#54` | `the function has no two OBC bytes` |
+| `Audio/Onkyo TX-NR807 AVR Upgrade.rmdu` | `#55` | `the function has no two OBC bytes` |
+| `Audio/Onkyo TX-NR807 AVR Upgrade.rmdu` | `#56` | `the function has no two OBC bytes` |
+| `Audio/Onkyo TX-NR807 AVR Upgrade.rmdu` | `#57` | `the function has no two OBC bytes` |
+| `Audio/Onkyo TX-NR807 AVR Upgrade.rmdu` | `#58` | `the function has no two OBC bytes` |
+| `Audio/Onkyo TX-NR807 AVR Upgrade.rmdu` | `#59` | `the function has no two OBC bytes` |
+| `Audio/Onkyo TX-SR502.rmdu` | `#42` | `the function has no two OBC bytes` |
+| `Audio/Onkyo TX-SR605 RCVR.rmdu` | `*** bottom ***` | `the function has no two OBC bytes` |
+| `Audio/Onkyo TX-SR605 RCVR.rmdu` | `fast fwd` | `the function has no two OBC bytes` |
+| `Audio/Onkyo TX-SR605 RCVR.rmdu` | `input select` | `the function has no two OBC bytes` |
+| `Audio/Onkyo TX-SR605 RCVR.rmdu` | `input toggle` | `the function has no two OBC bytes` |
+| `Audio/Onkyo TX-SR605 RCVR.rmdu` | `last (prev ch)` | `the function has no two OBC bytes` |
+| `Audio/Onkyo TX-SR605 RCVR.rmdu` | `pause` | `the function has no two OBC bytes` |
+| `Audio/Onkyo TX-SR605 RCVR.rmdu` | `pip move` | `the function has no two OBC bytes` |
+| `Audio/Onkyo TX-SR605 RCVR.rmdu` | `pip on/off` | `the function has no two OBC bytes` |
+| `Audio/Onkyo TX-SR605 RCVR.rmdu` | `pip swap` | `the function has no two OBC bytes` |
+| `Audio/Onkyo TX-SR605 RCVR.rmdu` | `play` | `the function has no two OBC bytes` |
+| `Audio/Onkyo TX-SR605 RCVR.rmdu` | `program guide` | `the function has no two OBC bytes` |
+| `Audio/Onkyo TX-SR605 RCVR.rmdu` | `record` | `the function has no two OBC bytes` |
+| `Audio/Onkyo TX-SR605 RCVR.rmdu` | `rewind` | `the function has no two OBC bytes` |
+| `Audio/Onkyo TX-SR605 RCVR.rmdu` | `stop` | `the function has no two OBC bytes` |
+| `Audio/Onkyo TX-SR605 RCVR.rmdu` | `tv/vcr` | `the function has no two OBC bytes` |
+| `Audio/Onkyo TX-SR805.rmdu` | `#18` | `the function has no two OBC bytes` |
+| `Audio/Onkyo TX-SR805.rmdu` | `#19` | `the function has no two OBC bytes` |
+| `Audio/Onkyo TX-SR805.rmdu` | `#21` | `the function has no two OBC bytes` |
+| `Audio/Onkyo TX-SR805.rmdu` | `#28` | `the function has no two OBC bytes` |
+| `Audio/Onkyo TX-SR805.rmdu` | `#30` | `the function has no two OBC bytes` |
+| `Audio/Onkyo TX-SR805.rmdu` | `#33` | `the function has no two OBC bytes` |
+| `Audio/Onkyo TX-SR805.rmdu` | `#34` | `the function has no two OBC bytes` |
+| `Audio/Onkyo TX-SR805.rmdu` | `*** bottom ***` | `the function has no two OBC bytes` |
+| `Audio/Onkyo_SuperMaster_OCAP.rmdu` | `#3` | `the function has no two OBC bytes` |
+| `Audio/Onkyo_SuperMaster_OCAP.rmdu` | `#30` | `the function has no two OBC bytes` |
+| `Audio/Onkyo_TX-LR552.rmdu` | `P MEM` | `the function has no two OBC bytes` |
+| `Audio/Onkyo_TX-LR552.rmdu` | `TUN +` | `the function has no two OBC bytes` |
+| `Audio/Onkyo_TX-LR552.rmdu` | `TUN -` | `the function has no two OBC bytes` |
+| `Audio/Onkyo_TX-LR552.rmdu` | `TUN M` | `the function has no two OBC bytes` |
 | `Audio/Outlaw Audio 990 Preamp.rmdu` | `#48` | `the function has no single OBC byte` |
 | `Audio/Polk 9500BT Device Upgrade.rmdu` | `#13` | `the function has no single OBC byte` |
 | `Audio/Polk 9500BT Device Upgrade.rmdu` | `+100` | `the function has no single OBC byte` |
@@ -487,6 +534,34 @@ silently (SPEC R19, condition 5).
 | `Audio/RME ADI-2 DAC FS.rmdu` | `#50` | `the function has no single OBC byte` |
 | `Audio/Sherwood RX-4105 receiver.rmdu` | `<< 0-255 scan results >>` | `the function has no single OBC byte` |
 | `Audio/Sherwood RX-4105 receiver.rmdu` | `tone select base/treble toggle` | `the function has no single OBC byte` |
+| `Audio/Sony HT-CT770 Sound Bar.rmdu` | `#42` | `the function has no two OBC bytes` |
+| `Audio/Sony STR-DE675 AV SYSTEM RM-PP505.rmdu` | `#66` | `the function has no two OBC bytes` |
+| `Audio/Sony STR-DE675 AV SYSTEM RM-PP505.rmdu` | `<` | `the function has no two OBC bytes` |
+| `Audio/Sony STR-DE675 AV SYSTEM RM-PP505.rmdu` | `AV Menu` | `the function has no two OBC bytes` |
+| `Audio/Sony STR-DE675 AV SYSTEM RM-PP505.rmdu` | `Title/Guide` | `the function has no two OBC bytes` |
+| `Audio/Sony STR-DH810.rmdu` | `#62` | `the function has no two OBC bytes` |
+| `Audio/Sony STR-DH810.rmdu` | `#63` | `the function has no two OBC bytes` |
+| `Audio/Sony STR-DH810.rmdu` | `#64` | `the function has no two OBC bytes` |
+| `Audio/Sony STR-DH810.rmdu` | `#65` | `the function has no two OBC bytes` |
+| `Audio/Sony STR-DH810.rmdu` | `#66` | `the function has no two OBC bytes` |
+| `Audio/Sony STR-DH810.rmdu` | `#67` | `the function has no two OBC bytes` |
+| `Audio/Sony_AV-Receiver_STR-DN1030_(MostComplete).rmdu` | `#7` | `the function has no two OBC bytes` |
+| `Audio/Sony_AV-Receiver_STR-DN1030_(MostComplete).rmdu` | `#8` | `the function has no two OBC bytes` |
+| `Audio/Sony_AV-Receiver_STR-DN1030_(MostComplete).rmdu` | `#9` | `the function has no two OBC bytes` |
+| `Audio/Sony_AV-Receiver_STR-DN1030_(MostComplete).rmdu` | `#93` | `the function has no two OBC bytes` |
+| `Audio/Sony_AV-Receiver_STR-DN1030_(MostComplete).rmdu` | `ALPHABET SEARCH` | `the function has no two OBC bytes` |
+| `Audio/Sony_AV-Receiver_STR-DN1030_(MostComplete).rmdu` | `AMP` | `the function has no two OBC bytes` |
+| `Audio/Sony_AV-Receiver_STR-DN1030_(MostComplete).rmdu` | `AV ON/OFF` | `the function has no two OBC bytes` |
+| `Audio/Sony_AV-Receiver_STR-DN1030_(MostComplete).rmdu` | `Guide` | `the function has no two OBC bytes` |
+| `Audio/Sony_AV-Receiver_STR-DN1030_(MostComplete).rmdu` | `ON/OFF` | `the function has no two OBC bytes` |
+| `Audio/Sony_AV-Receiver_STR-DN1030_(MostComplete).rmdu` | `PopUp Menu / Wide` | `the function has no two OBC bytes` |
+| `Audio/Sony_AV-Receiver_STR-DN1030_(MostComplete).rmdu` | `RM Setup` | `the function has no two OBC bytes` |
+| `Audio/Sony_AV-Receiver_STR-DN1030_(MostComplete).rmdu` | `SHIFT` | `the function has no two OBC bytes` |
+| `Audio/Sony_AV-Receiver_STR-DN1030_(MostComplete).rmdu` | `START/ CLOSE` | `the function has no two OBC bytes` |
+| `Audio/Sony_AV-Receiver_STR-DN1030_(MostComplete).rmdu` | `TV` | `the function has no two OBC bytes` |
+| `Audio/Sony_AV-Receiver_STR-DN1030_(MostComplete).rmdu` | `Top Menu / TV input` | `the function has no two OBC bytes` |
+| `Audio/Sony_AV-Receiver_STR-DN1030_(MostComplete).rmdu` | `ZONE` | `the function has no two OBC bytes` |
+| `Audio/Sony_AV-Receiver_STR-DN1030_(MostComplete).rmdu` | `_____  (character)` | `the function has no two OBC bytes` |
 | `Audio/Sony_STR-K502P.rmdu` | `+100` | `the function has no single OBC byte` |
 | `Audio/Sony_STR-K502P.rmdu` | 0 | `the function has no single OBC byte` |
 | `Audio/Sony_STR-K502P.rmdu` | 8 | `the function has no single OBC byte` |
@@ -557,6 +632,10 @@ silently (SPEC R19, condition 5).
 | `Audio/TEAC AV SURROUND AMPLIFIER AV-H5000.rmdu` | `slow-` | `the function has no single OBC byte` |
 | `Audio/TEAC AV SURROUND AMPLIFIER AV-H5000.rmdu` | `stop` | `the function has no single OBC byte` |
 | `Audio/TEAC AV SURROUND AMPLIFIER AV-H5000.rmdu` | `tv/vcr` | `the function has no single OBC byte` |
+| `Audio/YAMAHA RX-V661.rmdu` | `SCENE 1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/YAMAHA RX-V661.rmdu` | `SCENE 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/YAMAHA RX-V661.rmdu` | `SCENE 3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/YAMAHA RX-V661.rmdu` | `SCENE 4` | `the Yamaha style sends a second byte that is not the complement of the first` |
 | `Audio/Yamaha AVC-50.rmdu` | `#18` | `the function has no single OBC byte` |
 | `Audio/Yamaha AVC-50.rmdu` | `#25` | `the function has no single OBC byte` |
 | `Audio/Yamaha AVC-50.rmdu` | `#45` | `the function has no single OBC byte` |
@@ -576,6 +655,67 @@ silently (SPEC R19, condition 5).
 | `Audio/Yamaha AVC-50.rmdu` | `#6` | `the function has no single OBC byte` |
 | `Audio/Yamaha AVC-50.rmdu` | `AUDIO INPUTS` | `the function has no single OBC byte` |
 | `Audio/Yamaha AVC-50.rmdu` | `VIDEO INPUTS` | `the function has no single OBC byte` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `ADAPTIVE DRC OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `ADAPTIVE DRC ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `ADAPTIVE DSP OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `ADAPTIVE DSP ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `AUDIO- 1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `AUDIO- 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `AUDIO- 3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `AUDIO- 4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `AV- 1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `AV- 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `AV- 3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `AV- 4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `AV- 5` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `AV- 6` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `AV- 7` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `CATEGORY/BAND AM` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `CATEGORY/BAND FM` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `DOWN` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `HDMI Auto Lipsync OFF(MANUAL)` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `HDMI Auto Lipsync ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `HDMI OUT 1 and 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `HDMI OUT 1 or ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `HDMI OUT 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `HDMI OUT OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `INFO` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `MUTE  ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `OPTION` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `PRESET+` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `PRESET-` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `SCENE 1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `SCENE 10` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `SCENE 11` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `SCENE 12` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `SCENE 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `SCENE 3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `SCENE 4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `SCENE 5` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `SCENE 6` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `SCENE 7` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `SCENE 8` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `SCENE 9` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `SMART ZOOM OFF (THROUGH)` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `SMART ZOOM ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `STANDBY OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `STANDBY ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `SUB INPUT NET RADIO` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `SUB INPUT Napster` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `SUB INPUT PC/MCX` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `SUB INPUT Pandora` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `SUB INPUT Rhapsody` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `SUB INPUT SIRIUS Internet` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `TUNING/CH TUNING+` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `TUNING/CH TUNING-` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `UP` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `USB` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `VIDEO PRESET 1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `VIDEO PRESET 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `VIDEO PRESET 3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `VIDEO PRESET 4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `VIDEO PRESET 5` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu` | `VIDEO PRESET 6` | `the Yamaha style sends a second byte that is not the complement of the first` |
 | `Audio/Yamaha DP-U50 6131 AUD.rmdu` | `+100` | `the function has no single OBC byte` |
 | `Audio/Yamaha DP-U50 6131 AUD.rmdu` | `X2` | `the function has no single OBC byte` |
 | `Audio/Yamaha DP-U50 6131 AUD.rmdu` | `center` | `the function has no single OBC byte` |
@@ -612,6 +752,20 @@ silently (SPEC R19, condition 5).
 | `Audio/Yamaha DP-U50 6131 AUD.rmdu` | `stop` | `the function has no single OBC byte` |
 | `Audio/Yamaha DP-U50 6131 AUD.rmdu` | `surround` | `the function has no single OBC byte` |
 | `Audio/Yamaha DP-U50 6131 AUD.rmdu` | `up arrow` | `the function has no single OBC byte` |
+| `Audio/Yamaha R-S202.rmdu` | `AM / FM` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha R-S202.rmdu` | `Bal L` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha R-S202.rmdu` | `Bal R` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha R-S202.rmdu` | `Bass +` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha R-S202.rmdu` | `Bass -` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha R-S202.rmdu` | `Dimmer` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha R-S202.rmdu` | `Info` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha R-S202.rmdu` | `Memory` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha R-S202.rmdu` | `Preset +` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha R-S202.rmdu` | `Preset -` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha R-S202.rmdu` | `Treble +` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha R-S202.rmdu` | `Treble -` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha R-S202.rmdu` | `Tuning +` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha R-S202.rmdu` | `Tuning -` | `the Yamaha style sends a second byte that is not the complement of the first` |
 | `Audio/Yamaha RX-V2500 Receiver.rmdu` | `+100` | `the function has no single OBC byte` |
 | `Audio/Yamaha RX-V2500 Receiver.rmdu` | 0 | `the function has no single OBC byte` |
 | `Audio/Yamaha RX-V2500 Receiver.rmdu` | 1 | `the function has no single OBC byte` |
@@ -658,6 +812,38 @@ silently (SPEC R19, condition 5).
 | `Audio/Yamaha RX-V359.rmdu` | `#15` | `the function has no single OBC byte` |
 | `Audio/Yamaha RX-V359.rmdu` | `#16` | `the function has no single OBC byte` |
 | `Audio/Yamaha RX-V359.rmdu` | `#17` | `the function has no single OBC byte` |
+| `Audio/Yamaha RX-V575.rmdu` | `AM` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V575.rmdu` | `AUD 1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V575.rmdu` | `AUD 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V575.rmdu` | `AV 1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V575.rmdu` | `AV 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V575.rmdu` | `AV 3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V575.rmdu` | `AV 4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V575.rmdu` | `AV 5` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V575.rmdu` | `AV 6` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V575.rmdu` | `FM` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V575.rmdu` | `HDMI 1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V575.rmdu` | `HDMI 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V575.rmdu` | `HDMI 3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V575.rmdu` | `HDMI 4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V575.rmdu` | `Info` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V575.rmdu` | `Input Toggle + ZONE 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V575.rmdu` | `Input Toggle - ZONE 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V575.rmdu` | `Input toggle +` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V575.rmdu` | `Input toggle -` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V575.rmdu` | `No protect (service menu?)` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V575.rmdu` | `Option` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V575.rmdu` | `Power Toggle\: Zone 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V575.rmdu` | `Preset +` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V575.rmdu` | `Preset -` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V575.rmdu` | `Scene 1\: BD/DVD1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V575.rmdu` | `Scene 2\: TV` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V575.rmdu` | `Scene 3\: CD` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V575.rmdu` | `Scene 4\: Radio` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V575.rmdu` | `Tun./Ch -` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V575.rmdu` | `Tun./Ch+` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V575.rmdu` | `USB` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V575.rmdu` | `memory` | `the Yamaha style sends a second byte that is not the complement of the first` |
 | `Audio/Yamaha RX-V595 receiver no setup.rmdu` | `+100` | `the function has no single OBC byte` |
 | `Audio/Yamaha RX-V595 receiver no setup.rmdu` | 9 | `the function has no single OBC byte` |
 | `Audio/Yamaha RX-V595 receiver no setup.rmdu` | `X2` | `the function has no single OBC byte` |
@@ -734,10 +920,973 @@ silently (SPEC R19, condition 5).
 | `Audio/Yamaha RX-V595 receiver.rmdu` | `stop` | `the function has no single OBC byte` |
 | `Audio/Yamaha RX-V595 receiver.rmdu` | `surround` | `the function has no single OBC byte` |
 | `Audio/Yamaha RX-V595 receiver.rmdu` | `tv/vcr` | `the function has no single OBC byte` |
+| `Audio/Yamaha RX-V671_NEC_Yam_4DEV_v001.rmdu` | `AM` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V671_NEC_Yam_4DEV_v001.rmdu` | `AUD 1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V671_NEC_Yam_4DEV_v001.rmdu` | `AUD 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V671_NEC_Yam_4DEV_v001.rmdu` | `AV 1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V671_NEC_Yam_4DEV_v001.rmdu` | `AV 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V671_NEC_Yam_4DEV_v001.rmdu` | `AV 3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V671_NEC_Yam_4DEV_v001.rmdu` | `AV 4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V671_NEC_Yam_4DEV_v001.rmdu` | `AV 5` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V671_NEC_Yam_4DEV_v001.rmdu` | `AV 6` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V671_NEC_Yam_4DEV_v001.rmdu` | `FM` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V671_NEC_Yam_4DEV_v001.rmdu` | `HDMI 1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V671_NEC_Yam_4DEV_v001.rmdu` | `HDMI 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V671_NEC_Yam_4DEV_v001.rmdu` | `HDMI 3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V671_NEC_Yam_4DEV_v001.rmdu` | `HDMI 4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V671_NEC_Yam_4DEV_v001.rmdu` | `Info` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V671_NEC_Yam_4DEV_v001.rmdu` | `Input Toggle + ZONE 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V671_NEC_Yam_4DEV_v001.rmdu` | `Input Toggle - ZONE 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V671_NEC_Yam_4DEV_v001.rmdu` | `Input toggle +` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V671_NEC_Yam_4DEV_v001.rmdu` | `Input toggle -` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V671_NEC_Yam_4DEV_v001.rmdu` | `No protect (service menu?)` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V671_NEC_Yam_4DEV_v001.rmdu` | `Option` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V671_NEC_Yam_4DEV_v001.rmdu` | `Power Toggle\: Zone 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V671_NEC_Yam_4DEV_v001.rmdu` | `Preset +` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V671_NEC_Yam_4DEV_v001.rmdu` | `Preset -` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V671_NEC_Yam_4DEV_v001.rmdu` | `Scene 1\: BD/DVD1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V671_NEC_Yam_4DEV_v001.rmdu` | `Scene 2\: TV` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V671_NEC_Yam_4DEV_v001.rmdu` | `Scene 3\: CD` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V671_NEC_Yam_4DEV_v001.rmdu` | `Scene 4\: Radio` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V671_NEC_Yam_4DEV_v001.rmdu` | `Tun./Ch -` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V671_NEC_Yam_4DEV_v001.rmdu` | `Tun./Ch+` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V671_NEC_Yam_4DEV_v001.rmdu` | `USB` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX-V671_NEC_Yam_4DEV_v001.rmdu` | `memory` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX765_NEC_Yam_4DEV.rmdu` | `AUD 1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX765_NEC_Yam_4DEV.rmdu` | `AUD 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX765_NEC_Yam_4DEV.rmdu` | `AV 1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX765_NEC_Yam_4DEV.rmdu` | `AV 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX765_NEC_Yam_4DEV.rmdu` | `AV 3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX765_NEC_Yam_4DEV.rmdu` | `AV 4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX765_NEC_Yam_4DEV.rmdu` | `AV 5` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX765_NEC_Yam_4DEV.rmdu` | `AV 6` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX765_NEC_Yam_4DEV.rmdu` | `HDMI 1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX765_NEC_Yam_4DEV.rmdu` | `HDMI 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX765_NEC_Yam_4DEV.rmdu` | `HDMI 3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX765_NEC_Yam_4DEV.rmdu` | `HDMI 4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX765_NEC_Yam_4DEV.rmdu` | `Input toggle +` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX765_NEC_Yam_4DEV.rmdu` | `Input toggle -` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX765_NEC_Yam_4DEV.rmdu` | `No protect (service menu?)` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX765_NEC_Yam_4DEV.rmdu` | `Scene 1\: BD/DVD1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX765_NEC_Yam_4DEV.rmdu` | `Scene 2\: TV` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX765_NEC_Yam_4DEV.rmdu` | `Scene 3\: CD` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX765_NEC_Yam_4DEV.rmdu` | `Scene 4\: Radio` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX765_NEC_Yam_4DEV.rmdu` | `am` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX765_NEC_Yam_4DEV.rmdu` | `fm` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX765_NEC_Yam_4DEV.rmdu` | `info` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX765_NEC_Yam_4DEV.rmdu` | `memory` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX765_NEC_Yam_4DEV.rmdu` | `option` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX765_NEC_Yam_4DEV.rmdu` | `preset down` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX765_NEC_Yam_4DEV.rmdu` | `preset up` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX765_NEC_Yam_4DEV.rmdu` | `tune down` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha RX765_NEC_Yam_4DEV.rmdu` | `tune up` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Rcvr Zone 1 Control.rmdu` | `Category Backward / FM` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Rcvr Zone 1 Control.rmdu` | `Category Forward / AM` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Rcvr Zone 1 Control.rmdu` | `Info` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Rcvr Zone 1 Control.rmdu` | `Input AV-1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Rcvr Zone 1 Control.rmdu` | `Input AV-2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Rcvr Zone 1 Control.rmdu` | `Input AV-3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Rcvr Zone 1 Control.rmdu` | `Input AV-4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Rcvr Zone 1 Control.rmdu` | `Input AV-5` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Rcvr Zone 1 Control.rmdu` | `Input AV-6` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Rcvr Zone 1 Control.rmdu` | `Input AV-7` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Rcvr Zone 1 Control.rmdu` | `Input Audio 1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Rcvr Zone 1 Control.rmdu` | `Input Audio 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Rcvr Zone 1 Control.rmdu` | `Input Audio 3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Rcvr Zone 1 Control.rmdu` | `Input Audio 4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Rcvr Zone 1 Control.rmdu` | `Input Bluetooth` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Rcvr Zone 1 Control.rmdu` | `Input HDMI-1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Rcvr Zone 1 Control.rmdu` | `Input HDMI-2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Rcvr Zone 1 Control.rmdu` | `Input HDMI-3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Rcvr Zone 1 Control.rmdu` | `Input HDMI-4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Rcvr Zone 1 Control.rmdu` | `Input HDMI-5` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Rcvr Zone 1 Control.rmdu` | `Input HDMI-6` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Rcvr Zone 1 Control.rmdu` | `Input Select Down` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Rcvr Zone 1 Control.rmdu` | `Input Select Up` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Rcvr Zone 1 Control.rmdu` | `Input Sub Net` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Rcvr Zone 1 Control.rmdu` | `Input Sub PC` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Rcvr Zone 1 Control.rmdu` | `Input Sub Pandora` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Rcvr Zone 1 Control.rmdu` | `Input Sub Rhapsody` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Rcvr Zone 1 Control.rmdu` | `Input Sub Sirius` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Rcvr Zone 1 Control.rmdu` | `Input USB` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Rcvr Zone 1 Control.rmdu` | `Memory` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Rcvr Zone 1 Control.rmdu` | `Option` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Rcvr Zone 1 Control.rmdu` | `Preset Backward` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Rcvr Zone 1 Control.rmdu` | `Preset Forward` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Rcvr Zone 1 Control.rmdu` | `Scene-BD/DVD` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Rcvr Zone 1 Control.rmdu` | `Scene-Net` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Rcvr Zone 1 Control.rmdu` | `Scene-Radio` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Rcvr Zone 1 Control.rmdu` | `Scene-TV` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Rcvr Zone 1 Control.rmdu` | `Tuning Down` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Rcvr Zone 1 Control.rmdu` | `Tuning Up` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver R-S300 Remote RAX23 wv5000020.rmdu` | `A Speakers` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver R-S300 Remote RAX23 wv5000020.rmdu` | `AM` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver R-S300 Remote RAX23 wv5000020.rmdu` | `B Speakers` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver R-S300 Remote RAX23 wv5000020.rmdu` | `CD` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver R-S300 Remote RAX23 wv5000020.rmdu` | `Dimmer` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver R-S300 Remote RAX23 wv5000020.rmdu` | `Doc` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver R-S300 Remote RAX23 wv5000020.rmdu` | `Down` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver R-S300 Remote RAX23 wv5000020.rmdu` | `Down/Play Pause` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver R-S300 Remote RAX23 wv5000020.rmdu` | `Enter` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver R-S300 Remote RAX23 wv5000020.rmdu` | `FM` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver R-S300 Remote RAX23 wv5000020.rmdu` | `Info` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver R-S300 Remote RAX23 wv5000020.rmdu` | `Line1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver R-S300 Remote RAX23 wv5000020.rmdu` | `Line2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver R-S300 Remote RAX23 wv5000020.rmdu` | `MUTE` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver R-S300 Remote RAX23 wv5000020.rmdu` | `PRESET+` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver R-S300 Remote RAX23 wv5000020.rmdu` | `PRESET-` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver R-S300 Remote RAX23 wv5000020.rmdu` | `Phono` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver R-S300 Remote RAX23 wv5000020.rmdu` | `Power` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver R-S300 Remote RAX23 wv5000020.rmdu` | `Repeat` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver R-S300 Remote RAX23 wv5000020.rmdu` | `Right/Skip+` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver R-S300 Remote RAX23 wv5000020.rmdu` | `Shuffle` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver R-S300 Remote RAX23 wv5000020.rmdu` | `TP` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver R-S300 Remote RAX23 wv5000020.rmdu` | `Tape` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver R-S300 Remote RAX23 wv5000020.rmdu` | `Up` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver R-S300 Remote RAX23 wv5000020.rmdu` | `Up/menu` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver R-S300 Remote RAX23 wv5000020.rmdu` | `VOL+` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver R-S300 Remote RAX23 wv5000020.rmdu` | `VOL-` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver R-S300 Remote RAX23 wv5000020.rmdu` | `left/Skip-` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver R-S300 Remote RAX23 wv5000020.rmdu` | `options` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver R-S300 Remote RAX23 wv5000020.rmdu` | `rew` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver R-S300 Remote RAX23 wv5000020.rmdu` | `sleep` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ALL - HDMI OUT 1 OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ALL - HDMI OUT 1 ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ALL - HDMI OUT 2 OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ALL - HDMI OUT 2 ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ALL - HDMI OUT 3 OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ALL - HDMI OUT 3 ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ALL - PARTY OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ALL - PARTY ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ALL - SLEEP ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ALL - TRIGGER 1 MANUAL OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ALL - TRIGGER 1 MANUAL ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ALL - TRIGGER 2 MANUAL OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ALL - TRIGGER 2 MANUAL ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - ADAPTIVE DRC OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - ADAPTIVE DRC ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - ADAPTIVE DSP OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - ADAPTIVE DSP ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - AM` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - AUDIO` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - AUDIO-1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - AUDIO-2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - AUDIO-3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - AUDIO-4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - AUDIO-5` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - AV-1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - AV-2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - AV-3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - AV-4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - AV-5` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - AV-6` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - AV-7` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - AirPlay` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - Alexa` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - Amazon Music` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - BASS` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - BLUE` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - BLUETOOTH` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - CUSTOMIZE+` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - CUSTOMIZE-` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - DIALOGUE LEVEL 0` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - DIALOGUE LEVEL 1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - DIALOGUE LEVEL 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - DIALOGUE LEVEL 3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - DOWN` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - Deezer` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - FM` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - GREEN` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - HDMI Auto Lipsync OFF(MANUAL)` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - HDMI Auto Lipsync ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - HDMI-1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - HDMI-2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - HDMI-3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - HDMI-4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - HDMI-5` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - HDMI-6` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - HDMI-7` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - HELP` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - INFO` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - JUKE*G` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - MC Link` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - MEMORY` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - MUTE ON (-40dB)` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - NET RADIO` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - OPTION` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - POP-UP MENU` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - PRESET+` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - PRESET-` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - Pandora` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - Qobuz*BG` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - RED` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - Radiko*J` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - Rhapsody/Napster` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - SCENE 1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - SCENE 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - SCENE 3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - SCENE 4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - SCENE 5` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - SCENE 6` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - SCENE 7` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - SCENE 8` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - SCENE MENU` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - SERVER` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - SLEEP OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - SLEEP ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - SUR. DOLBY SURROUND` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - SiriusXM` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - Spotify *Except TK` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - TIDAL` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - TOP MENU` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - TUNING+` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - TUNING-` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - UP` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - USB` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - VIDEO PRESET 1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - VIDEO PRESET 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - VIDEO PRESET 3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - VIDEO PRESET 4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - VIDEO PRESET 5` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - VIDEO PRESET 6` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - MAIN - YELLOW` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - AM` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - AUDIO` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - AUDIO-1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - AUDIO-2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - AUDIO-3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - AUDIO-4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - AUDIO-5` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - AV-1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - AV-2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - AV-3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - AV-4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - AV-5` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - AV-6` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - AV-7` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - AirPlay` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - Alexa` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - Amazon Music` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - BLUETOOTH` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - CURSOR DOWN` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - CURSOR LEFT` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - CURSOR RIGHT` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - CURSOR UP` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - CUSTOMIZE+` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - CUSTOMIZE-` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - DOWN` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - Deezer` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - ENHANCER` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - ENHANCER OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - ENHANCER ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - ENTER` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - FM` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - HDMI OUT` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - HELP` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - JUKE*G` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - MAIN SYNC ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - MC Link` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - MUTE ON (-20dB)` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - MUTE ON (-40dB)` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - NET RADIO` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - POWER` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - PRESET+` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - PRESET-` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - Pandora` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - Qobuz*BG` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - RETURN` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - Radiko*J` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - Rhapsody/Napster` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - SCENE 1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - SCENE 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - SCENE 3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - SCENE 4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - SCENE 5` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - SCENE 6` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - SCENE 7` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - SCENE 8` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - SCENE MENU` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - SERVER` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - SLEEP OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - SLEEP ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - SiriusXM` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - Spotify *Except TK` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - TIDAL` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - TUNING+` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - TUNING-` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - UP` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE2 - USB` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - AM` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - AUDIO-1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - AUDIO-2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - AUDIO-3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - AUDIO-4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - AV-1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - AV-2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - AV-3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - AV-4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - AirPlay` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - Alexa` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - Amazon Music` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - BLUETOOTH` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - CUSTOMIZE+` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - CUSTOMIZE-` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - DOWN` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - Deezer` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - ENHANCER` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - ENHANCER OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - ENHANCER ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - FM` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - HELP` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - JUKE*G` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - MAIN SYNC ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - MC Link` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - MUTE ON (-20dB)` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - MUTE ON (-40dB)` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - NET RADIO` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - POWER` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - PRESET+` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - PRESET-` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - Pandora` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - Qobuz*BG` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - Radiko*J` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - Rhapsody/Napster` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - SCENE 1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - SCENE 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - SCENE 3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - SCENE 4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - SCENE 5` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - SCENE 6` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - SCENE 7` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - SCENE 8` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - SCENE MENU` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - SERVER` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - SLEEP OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - SLEEP ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - SiriusXM` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - Spotify *Except TK` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - TIDAL` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - TUNING+` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - TUNING-` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - UP` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE3 - USB` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE4 - AV-1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE4 - AV-2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE4 - AV-3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE4 - AV-4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE4 - AV-5` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE4 - AV-6` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE4 - AV-7` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE4 - DOWN` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE4 - HDMI OUT` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE4 - HELP` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE4 - POWER` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE4 - SCENE 1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE4 - SCENE 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE4 - SCENE 3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE4 - SCENE 4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE4 - SCENE 5` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE4 - SCENE 6` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE4 - SCENE 7` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE4 - SCENE 8` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE4 - SCENE MENU` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE4 - SLEEP OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE4 - SLEEP ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id1 - ZONE4 - UP` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ALL - AUTO TUNING DOWN` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ALL - AUTO TUNING UP` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ALL - BAND AM(DAB)` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ALL - BAND FM` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ALL - HDMI OUT 1 OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ALL - HDMI OUT 1 ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ALL - HDMI OUT 2 OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ALL - HDMI OUT 2 ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ALL - HDMI OUT 3 OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ALL - HDMI OUT 3 ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ALL - PARTY` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ALL - PARTY OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ALL - PARTY ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ALL - POWER OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ALL - POWER ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ALL - SLEEP` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ALL - SLEEP 120min` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ALL - SLEEP 30min` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ALL - SLEEP 60min` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ALL - SLEEP 90min` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ALL - SLEEP OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ALL - SLEEP ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ALL - SRCH MODE MANUAL` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ALL - SRCH MODE PRESET` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ALL - SRCH MODE TOGGLE` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ALL - TRIGGER 1 MANUAL OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ALL - TRIGGER 1 MANUAL ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ALL - TRIGGER 2 MANUAL OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ALL - TRIGGER 2 MANUAL ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ALL - TUNING/PRESET No. DOWN` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ALL - TUNING/PRESET No. UP` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - 0` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - 1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - 3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - 4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - 5` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - 6` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - 7` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - 8` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - 9` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - ADAPTIVE DRC OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - ADAPTIVE DRC ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - ADAPTIVE DSP OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - ADAPTIVE DSP ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - AM` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - ANALOG` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - AUDIO` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - AUDIO-1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - AUDIO-2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - AUDIO-3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - AUDIO-4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - AUDIO-5` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - AUTO` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - AUX` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - AV-1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - AV-2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - AV-3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - AV-4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - AV-5` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - AV-6` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - AV-7` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - AirPlay` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - Alexa` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - Amazon Music` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - BASS` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - BLUE` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - BLUETOOTH` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - CLASSICAL` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - COAX/OPT` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - CURSOR DOWN` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - CURSOR LEFT` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - CURSOR RIGHT` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - CURSOR UP` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - CUSTOMIZE+` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - CUSTOMIZE-` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - DIALOGUE LEVEL 0` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - DIALOGUE LEVEL 1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - DIALOGUE LEVEL 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - DIALOGUE LEVEL 3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - DIRECT OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - DIRECT ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - DOWN` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - DUAL MONO ALL` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - DUAL MONO MAIN` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - DUAL MONO SUB` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - Deezer` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - ENHANCER` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - ENHANCER OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - ENHANCER ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - ENTER` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - ENTER` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - ENTERTAIN` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - FM` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - GREEN` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - HDMI` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - HDMI Auto Lipsync OFF(MANUAL)` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - HDMI Auto Lipsync ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - HDMI OUT` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - HDMI-1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - HDMI-2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - HDMI-3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - HDMI-4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - HDMI-5` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - HDMI-6` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - HDMI-7` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - HELP` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - HOME` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - INFO` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - JUKE*G` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - LEVEL` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - LIVE/CLUB` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - MC Link` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - MEMORY` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - MOVIE` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - MOVIE THEATER` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - MUSIC` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - MUTE` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - MUTE OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - MUTE ON (-20dB)` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - MUTE ON (-40dB)` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - MUTE ON (FULL)` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - NET` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - NET RADIO` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - OPTION` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - PAUSE/BAND` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - PHONO` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - PLAY/MEMORY` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - POP-UP MENU` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - POWER` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - POWER OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - POWER ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - PRESET+` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - PRESET-` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - PROGRAM DOWN` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - PROGRAM UP` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - PROGRAM\: 2ch Stereo` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - PROGRAM\: Action Game` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - PROGRAM\: Adventure` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - PROGRAM\: Arena` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - PROGRAM\: Cellar Club` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - PROGRAM\: Chamber` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - PROGRAM\: Church in Freiburg` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - PROGRAM\: Church in Royaumont` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - PROGRAM\: Church in Tokyo` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - PROGRAM\: Disco` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - PROGRAM\: Drama` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - PROGRAM\: Enhanced` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - PROGRAM\: Hall in Amsterdam` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - PROGRAM\: Hall in Frankfurt` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - PROGRAM\: Hall in Munich A` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - PROGRAM\: Hall in Munich B` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - PROGRAM\: Hall in Stuttgart` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - PROGRAM\: Hall in USA A` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - PROGRAM\: Hall in USA B` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - PROGRAM\: Hall in Vienna` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - PROGRAM\: Mono Movie` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - PROGRAM\: Music Video` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - PROGRAM\: Pavilion` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - PROGRAM\: Recital/Opera` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - PROGRAM\: Roleplaying Game` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - PROGRAM\: Sci-Fi` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - PROGRAM\: Spectacle` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - PROGRAM\: Sports` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - PROGRAM\: Standard` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - PROGRAM\: The Bottom Line` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - PROGRAM\: The Roxy Theatre` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - PROGRAM\: Village Gate` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - PROGRAM\: Village Vanguard` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - PROGRAM\: Warehouse Loft` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - PROGRAM\: Xch Stereo` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - PURE DIRECT` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - Pandora` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - Qobuz*BG` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - RED` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - RETURN` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - Radiko*J` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - Rhapsody/Napster` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - SCENE 1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - SCENE 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - SCENE 3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - SCENE 4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - SCENE 5` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - SCENE 6` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - SCENE 7` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - SCENE 8` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - SCENE MENU` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - SEARCH/TUNING+` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - SEARCH/TUNING-` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - SERVER` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - SETUP` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - SKIP+` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - SKIP-` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - SLEEP` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - SLEEP OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - SLEEP ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - STEREO` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - STOP` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - STRAIGHT` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - STRAIGHT OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - STRAIGHT ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - SUR. AI` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - SUR. Auto` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - SUR. DECODE` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - SUR. DECODE ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - SUR. DOLBY SURROUND` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - SUR. NEO\:6 CINEMA` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - SUR. NEO\:6 MUSIC` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - SUR. Neural\:X` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - SiriusXM` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - Spotify *Except TK` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - TIDAL` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - TOP MENU` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - TUNER` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - TUNING+` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - TUNING-` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - UP` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - USB` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - VIDEO PRESET 1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - VIDEO PRESET 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - VIDEO PRESET 3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - VIDEO PRESET 4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - VIDEO PRESET 5` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - VIDEO PRESET 6` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - VOLUME DOWN` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - VOLUME MEMORY 1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - VOLUME MEMORY 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - VOLUME MEMORY 3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - VOLUME MEMORY 4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - VOLUME MEMORY 5` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - VOLUME MEMORY 6` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - VOLUME RECALL 1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - VOLUME RECALL 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - VOLUME RECALL 3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - VOLUME RECALL 4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - VOLUME RECALL 5` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - VOLUME RECALL 6` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - VOLUME UP` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - MAIN - YELLOW` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - 0` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - 1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - 3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - 4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - 5` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - 6` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - 7` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - 8` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - 9` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - AM` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - AUDIO` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - AUDIO-1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - AUDIO-2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - AUDIO-3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - AUDIO-4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - AUDIO-5` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - AUX` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - AV-1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - AV-2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - AV-3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - AV-4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - AV-5` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - AV-6` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - AV-7` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - AirPlay` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - Alexa` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - Amazon Music` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - BALANCE LEFT` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - BALANCE RIGHT` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - BASS +` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - BASS -` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - BLUETOOTH` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - CURSOR DOWN` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - CURSOR LEFT` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - CURSOR RIGHT` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - CURSOR UP` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - CUSTOMIZE+` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - CUSTOMIZE-` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - DOWN` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - Deezer` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - ENHANCER` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - ENHANCER OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - ENHANCER ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - ENTER` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - ENTER` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - FM` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - HDMI OUT` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - HELP` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - JUKE*G` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - MAIN SYNC ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - MC Link` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - MUTE` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - MUTE OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - MUTE ON (-20dB)` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - MUTE ON (-40dB)` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - MUTE ON (FULL)` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - NET` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - NET RADIO` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - PAUSE/BAND` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - PHONO` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - PLAY/MEMORY` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - POWER` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - POWER OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - POWER ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - PRESET+` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - PRESET-` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - Pandora` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - Qobuz*BG` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - RETURN` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - Radiko*J` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - Rhapsody/Napster` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - SCENE 1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - SCENE 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - SCENE 3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - SCENE 4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - SCENE 5` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - SCENE 6` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - SCENE 7` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - SCENE 8` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - SCENE MENU` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - SEARCH/TUNING+` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - SEARCH/TUNING-` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - SERVER` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - SKIP+` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - SKIP-` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - SLEEP` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - SLEEP OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - SLEEP ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - STOP` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - SiriusXM` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - Spotify *Except TK` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - TIDAL` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - TREBLE +` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - TREBLE -` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - TUNER` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - TUNING+` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - TUNING-` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - UP` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - USB` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - VOLUME DOWN` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - VOLUME MEMORY 1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - VOLUME MEMORY 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - VOLUME MEMORY 3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - VOLUME MEMORY 4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - VOLUME MEMORY 5` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - VOLUME MEMORY 6` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - VOLUME RECALL 1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - VOLUME RECALL 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - VOLUME RECALL 3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - VOLUME RECALL 4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - VOLUME RECALL 5` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - VOLUME RECALL 6` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE2 - VOLUME UP` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - 0` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - 1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - 3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - 4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - 5` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - 6` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - 7` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - 8` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - 9` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - AM` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - AUDIO-1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - AUDIO-2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - AUDIO-3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - AUDIO-4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - AUX` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - AV-1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - AV-2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - AV-3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - AV-4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - AirPlay` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - Alexa` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - Amazon Music` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - BALANCE LEFT` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - BALANCE RIGHT` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - BASS +` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - BASS -` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - BLUETOOTH` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - CUSTOMIZE+` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - CUSTOMIZE-` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - DOWN` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - Deezer` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - ENHANCER` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - ENHANCER OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - ENHANCER ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - ENTER` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - FM` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - HELP` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - JUKE*G` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - MAIN SYNC ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - MC Link` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - MUTE` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - MUTE OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - MUTE ON (-20dB)` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - MUTE ON (-40dB)` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - MUTE ON (FULL)` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - NET` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - NET RADIO` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - PAUSE/BAND` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - PHONO` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - PLAY/MEMORY` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - POWER` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - POWER OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - POWER ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - PRESET+` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - PRESET-` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - Pandora` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - Qobuz*BG` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - Radiko*J` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - Rhapsody/Napster` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - SCENE 1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - SCENE 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - SCENE 3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - SCENE 4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - SCENE 5` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - SCENE 6` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - SCENE 7` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - SCENE 8` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - SCENE MENU` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - SEARCH/TUNING+` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - SEARCH/TUNING-` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - SERVER` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - SKIP+` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - SKIP-` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - SLEEP` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - SLEEP OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - SLEEP ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - STOP` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - SiriusXM` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - Spotify *Except TK` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - TIDAL` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - TREBLE +` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - TREBLE -` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - TUNER` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - TUNING+` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - TUNING-` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - UP` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - USB` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - VOLUME DOWN` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - VOLUME MEMORY 1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - VOLUME MEMORY 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - VOLUME MEMORY 3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - VOLUME MEMORY 4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - VOLUME MEMORY 5` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - VOLUME MEMORY 6` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - VOLUME RECALL 1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - VOLUME RECALL 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - VOLUME RECALL 3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - VOLUME RECALL 4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - VOLUME RECALL 5` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - VOLUME RECALL 6` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE3 - VOLUME UP` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE4 - AV-1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE4 - AV-2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE4 - AV-3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE4 - AV-4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE4 - AV-5` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE4 - AV-6` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE4 - AV-7` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE4 - DOWN` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE4 - HDMI OUT` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE4 - HELP` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE4 - POWER` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE4 - POWER OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE4 - POWER ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE4 - SCENE 1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE4 - SCENE 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE4 - SCENE 3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE4 - SCENE 4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE4 - SCENE 5` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE4 - SCENE 6` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE4 - SCENE 7` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE4 - SCENE 8` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE4 - SCENE MENU` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE4 - SLEEP` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE4 - SLEEP OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE4 - SLEEP ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha Receiver.rmdu` | `id2 - ZONE4 - UP` | `the Yamaha style sends a second byte that is not the complement of the first` |
 | `Audio/Yamaha YSP-1000.rmdu` | `#15` | `the function has no single OBC byte` |
 | `Audio/Yamaha YSP-1000.rmdu` | `#25` | `the function has no single OBC byte` |
 | `Audio/Yamaha YSP-1000.rmdu` | `#35` | `the function has no single OBC byte` |
 | `Audio/Yamaha YSP-1000.rmdu` | `enter` | `the function has no single OBC byte` |
+| `Audio/Yamaha combo special 4.rmdu` | `#37` | `the function has no two OBC bytes` |
+| `Audio/Yamaha combo special 4.rmdu` | `#68` | `the function has no two OBC bytes` |
+| `Audio/Yamaha combo special 4.rmdu` | `AUD 1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha combo special 4.rmdu` | `AUD 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha combo special 4.rmdu` | `AV 1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha combo special 4.rmdu` | `AV 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha combo special 4.rmdu` | `AV 3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha combo special 4.rmdu` | `AV 4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha combo special 4.rmdu` | `AV 5` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha combo special 4.rmdu` | `AV 6` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha combo special 4.rmdu` | `Adaptive DSP ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha combo special 4.rmdu` | `Adaptive DSP Off` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha combo special 4.rmdu` | `HDMI 1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha combo special 4.rmdu` | `HDMI 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha combo special 4.rmdu` | `HDMI 3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha combo special 4.rmdu` | `HDMI 4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha combo special 4.rmdu` | `HDMI AUTO Lipsync OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha combo special 4.rmdu` | `HDMI AUTO Lipsync ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha combo special 4.rmdu` | `Input toggle` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha combo special 4.rmdu` | `No protect (service menu?)` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha combo special 4.rmdu` | `Scene 1\: BD/DVD1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha combo special 4.rmdu` | `Scene 2\: TV` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha combo special 4.rmdu` | `Scene 3\: CD` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha combo special 4.rmdu` | `Scene 4\: Radio` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha combo special 4.rmdu` | `am` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha combo special 4.rmdu` | `fm` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha combo special 4.rmdu` | `info` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha combo special 4.rmdu` | `memory` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha combo special 4.rmdu` | `preset down` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha combo special 4.rmdu` | `preset up` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha combo special 4.rmdu` | `tune down` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha combo special 4.rmdu` | `tune up` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/YamahaRcvr-RX-V567(Atlas(setup1112)).rmdu` | `#37` | `the function has no two OBC bytes` |
+| `Audio/YamahaRcvr-RX-V567(Atlas(setup1112)).rmdu` | `#73` | `the function has no two OBC bytes` |
+| `Audio/YamahaRcvr-RX-V567(Atlas(setup1112)).rmdu` | `+10` | `the function has no two OBC bytes` |
+| `Audio/YamahaRcvr-RX-V567(Atlas(setup1112)).rmdu` | `AUD 1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/YamahaRcvr-RX-V567(Atlas(setup1112)).rmdu` | `AUD 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/YamahaRcvr-RX-V567(Atlas(setup1112)).rmdu` | `AV 1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/YamahaRcvr-RX-V567(Atlas(setup1112)).rmdu` | `AV 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/YamahaRcvr-RX-V567(Atlas(setup1112)).rmdu` | `AV 3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/YamahaRcvr-RX-V567(Atlas(setup1112)).rmdu` | `AV 4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/YamahaRcvr-RX-V567(Atlas(setup1112)).rmdu` | `AV 5` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/YamahaRcvr-RX-V567(Atlas(setup1112)).rmdu` | `AV 6` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/YamahaRcvr-RX-V567(Atlas(setup1112)).rmdu` | `Adaptive DSP ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/YamahaRcvr-RX-V567(Atlas(setup1112)).rmdu` | `Adaptive DSP Off` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/YamahaRcvr-RX-V567(Atlas(setup1112)).rmdu` | `HDMI 1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/YamahaRcvr-RX-V567(Atlas(setup1112)).rmdu` | `HDMI 2` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/YamahaRcvr-RX-V567(Atlas(setup1112)).rmdu` | `HDMI 3` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/YamahaRcvr-RX-V567(Atlas(setup1112)).rmdu` | `HDMI 4` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/YamahaRcvr-RX-V567(Atlas(setup1112)).rmdu` | `HDMI AUTO Lipsync OFF` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/YamahaRcvr-RX-V567(Atlas(setup1112)).rmdu` | `HDMI AUTO Lipsync ON` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/YamahaRcvr-RX-V567(Atlas(setup1112)).rmdu` | `Input toggle` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/YamahaRcvr-RX-V567(Atlas(setup1112)).rmdu` | `No protect (service menu?)` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/YamahaRcvr-RX-V567(Atlas(setup1112)).rmdu` | `Option` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/YamahaRcvr-RX-V567(Atlas(setup1112)).rmdu` | `Scene 1\: BD/DVD1` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/YamahaRcvr-RX-V567(Atlas(setup1112)).rmdu` | `Scene 2\: TV` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/YamahaRcvr-RX-V567(Atlas(setup1112)).rmdu` | `Scene 3\: CD` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/YamahaRcvr-RX-V567(Atlas(setup1112)).rmdu` | `Scene 4\: Radio` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/YamahaRcvr-RX-V567(Atlas(setup1112)).rmdu` | `am` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/YamahaRcvr-RX-V567(Atlas(setup1112)).rmdu` | `fm` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/YamahaRcvr-RX-V567(Atlas(setup1112)).rmdu` | `info` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/YamahaRcvr-RX-V567(Atlas(setup1112)).rmdu` | `memory` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/YamahaRcvr-RX-V567(Atlas(setup1112)).rmdu` | `preset down` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/YamahaRcvr-RX-V567(Atlas(setup1112)).rmdu` | `preset up` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/YamahaRcvr-RX-V567(Atlas(setup1112)).rmdu` | `tune down` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/YamahaRcvr-RX-V567(Atlas(setup1112)).rmdu` | `tune up` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha_RX-V473(and_573).rmdu` | `#89` | `the function has no two OBC bytes` |
+| `Audio/Yamaha_RX-V473(and_573).rmdu` | `AIRPLAY input select` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha_RX-V473(and_573).rmdu` | `AM` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha_RX-V473(and_573).rmdu` | `AUDIO input select` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha_RX-V473(and_573).rmdu` | `AV1 input select` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha_RX-V473(and_573).rmdu` | `AV2 input select` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha_RX-V473(and_573).rmdu` | `AV3 input select` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha_RX-V473(and_573).rmdu` | `AV4 input select` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha_RX-V473(and_573).rmdu` | `AV5 input select` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha_RX-V473(and_573).rmdu` | `AV6 input select` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha_RX-V473(and_573).rmdu` | `FM` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha_RX-V473(and_573).rmdu` | `HDMI1 input select` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha_RX-V473(and_573).rmdu` | `HDMI2 input select` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha_RX-V473(and_573).rmdu` | `HDMI3 input select` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha_RX-V473(and_573).rmdu` | `HDMI4 input select` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha_RX-V473(and_573).rmdu` | `INFO` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha_RX-V473(and_573).rmdu` | `MEMORY` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha_RX-V473(and_573).rmdu` | `NET RADIO input select` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha_RX-V473(and_573).rmdu` | `NEXT INPUT` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha_RX-V473(and_573).rmdu` | `OPTION` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha_RX-V473(and_573).rmdu` | `PRESET Down` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha_RX-V473(and_573).rmdu` | `PRESET Up` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha_RX-V473(and_573).rmdu` | `PREVIOUS INPUT` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha_RX-V473(and_573).rmdu` | `Pop-Up menu` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha_RX-V473(and_573).rmdu` | `SERVER input select` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha_RX-V473(and_573).rmdu` | `Scene BD/DVD` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha_RX-V473(and_573).rmdu` | `Scene NET` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha_RX-V473(and_573).rmdu` | `Scene RADIO` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha_RX-V473(and_573).rmdu` | `Scene TV` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha_RX-V473(and_573).rmdu` | `TUNING Down` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha_RX-V473(and_573).rmdu` | `TUNING Up` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha_RX-V473(and_573).rmdu` | `TV chan +` | `the function has no two OBC bytes` |
+| `Audio/Yamaha_RX-V473(and_573).rmdu` | `TV chan -` | `the function has no two OBC bytes` |
+| `Audio/Yamaha_RX-V473(and_573).rmdu` | `TV input` | `the function has no two OBC bytes` |
+| `Audio/Yamaha_RX-V473(and_573).rmdu` | `TV mute` | `the function has no two OBC bytes` |
+| `Audio/Yamaha_RX-V473(and_573).rmdu` | `TV power` | `the function has no two OBC bytes` |
+| `Audio/Yamaha_RX-V473(and_573).rmdu` | `TV vol +` | `the function has no two OBC bytes` |
+| `Audio/Yamaha_RX-V473(and_573).rmdu` | `TV vol -` | `the function has no two OBC bytes` |
+| `Audio/Yamaha_RX-V473(and_573).rmdu` | `Top Menu` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha_RX-V473(and_573).rmdu` | `USB input select` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha_RX-V473(and_573).rmdu` | `V-AUX input select` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/Yamaha_RX-V473(and_573).rmdu` | `ZONE A` | `the function has no two OBC bytes` |
+| `Audio/Yamaha_RX-V473(and_573).rmdu` | `ZONE B` | `the function has no two OBC bytes` |
 | `Audio/atlas_Yamaha_RX-V596_receiver.rmdu` | `+100` | `the function has no single OBC byte` |
 | `Audio/atlas_Yamaha_RX-V596_receiver.rmdu` | `X2` | `the function has no single OBC byte` |
 | `Audio/atlas_Yamaha_RX-V596_receiver.rmdu` | `center` | `the function has no single OBC byte` |
@@ -800,6 +1949,34 @@ silently (SPEC R19, condition 5).
 | `Audio/jamo i300.rmdu` | `select` | `the function has no single OBC byte` |
 | `Audio/jamo i300.rmdu` | `tv/vcr` | `the function has no single OBC byte` |
 | `Audio/jamo i300.rmdu` | `yellow` | `the function has no single OBC byte` |
+| `Audio/yamaha rx-v483.rmdu` | `AIRPLAY input select` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/yamaha rx-v483.rmdu` | `AM` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/yamaha rx-v483.rmdu` | `AUDIO input select` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/yamaha rx-v483.rmdu` | `AV1 input select` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/yamaha rx-v483.rmdu` | `AV2 input select` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/yamaha rx-v483.rmdu` | `AV3 input select` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/yamaha rx-v483.rmdu` | `FM` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/yamaha rx-v483.rmdu` | `HDMI1 input select` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/yamaha rx-v483.rmdu` | `HDMI2 input select` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/yamaha rx-v483.rmdu` | `HDMI3 input select` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/yamaha rx-v483.rmdu` | `HDMI4 input select` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/yamaha rx-v483.rmdu` | `MEMORY` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/yamaha rx-v483.rmdu` | `NET RADIO input select` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/yamaha rx-v483.rmdu` | `NEXT INPUT` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/yamaha rx-v483.rmdu` | `OPTION` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/yamaha rx-v483.rmdu` | `PRESET Down` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/yamaha rx-v483.rmdu` | `PRESET Up` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/yamaha rx-v483.rmdu` | `PREVIOUS INPUT` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/yamaha rx-v483.rmdu` | `Pop-Up menu` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/yamaha rx-v483.rmdu` | `SERVER input select` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/yamaha rx-v483.rmdu` | `Scene BD/DVD` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/yamaha rx-v483.rmdu` | `Scene NET` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/yamaha rx-v483.rmdu` | `Scene RADIO` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/yamaha rx-v483.rmdu` | `Scene TV` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/yamaha rx-v483.rmdu` | `TUNING Down` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/yamaha rx-v483.rmdu` | `TUNING Up` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/yamaha rx-v483.rmdu` | `Top Menu` | `the Yamaha style sends a second byte that is not the complement of the first` |
+| `Audio/yamaha rx-v483.rmdu` | `USB input select` | `the Yamaha style sends a second byte that is not the complement of the first` |
 | `Audio_Video Selectors/GXT HDMI HSA-401 HDMI Switcher.rmdu` | `+100` | `the function has no single OBC byte` |
 | `Audio_Video Selectors/GXT HDMI HSA-401 HDMI Switcher.rmdu` | 0 | `the function has no single OBC byte` |
 | `Audio_Video Selectors/GXT HDMI HSA-401 HDMI Switcher.rmdu` | 5 | `the function has no single OBC byte` |
@@ -1241,6 +2418,13 @@ silently (SPEC R19, condition 5).
 | `Audio_Video Selectors/Uninex VS-14.rmdu` | `up arrow` | `the function has no single OBC byte` |
 | `Audio_Video Selectors/Uninex VS-14.rmdu` | `vol down` | `the function has no single OBC byte` |
 | `Audio_Video Selectors/Uninex VS-14.rmdu` | `vol up` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/YamahaHTR-6090_RX-1700_RX-2700.rmdu` | `#119` | `the function has no two OBC bytes` |
+| `Audio_Video Selectors/YamahaHTR-6090_RX-1700_RX-2700.rmdu` | `#120` | `the function has no two OBC bytes` |
+| `Audio_Video Selectors/YamahaHTR-6090_RX-1700_RX-2700.rmdu` | `#129` | `the function has no two OBC bytes` |
+| `Audio_Video Selectors/YamahaHTR-6090_RX-1700_RX-2700.rmdu` | `#144` | `the function has no two OBC bytes` |
+| `Audio_Video Selectors/YamahaHTR-6090_RX-1700_RX-2700.rmdu` | `#215` | `the function has no two OBC bytes` |
+| `Audio_Video Selectors/YamahaHTR-6090_RX-1700_RX-2700.rmdu` | `#222` | `the function has no two OBC bytes` |
+| `Audio_Video Selectors/YamahaHTR-6090_RX-1700_RX-2700.rmdu` | `#223` | `the function has no two OBC bytes` |
 | `CD/Hermstedt Hifidelio.rmdu` | `+100` | `the function has no single OBC byte` |
 | `CD/Hermstedt Hifidelio.rmdu` | `X2` | `the function has no single OBC byte` |
 | `CD/Hermstedt Hifidelio.rmdu` | `center` | `the function has no single OBC byte` |
@@ -1566,6 +2750,61 @@ silently (SPEC R19, condition 5).
 | `Combo Audio Systems/Samsung HT DS690 DVD (DVD) 1295.rmdu` | `slow+` | `the function has no single OBC byte` |
 | `Combo Audio Systems/Samsung HT DS690 DVD (DVD) 1295.rmdu` | `slow-` | `the function has no single OBC byte` |
 | `Combo Audio Systems/Samsung HT DS690 DVD (DVD) 1295.rmdu` | `swap` | `the function has no single OBC byte` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | `+100` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | 0 | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | 1 | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | 2 | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | 3 | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | 4 | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | 5 | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | 6 | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | 7 | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | 8 | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | 9 | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | `X2` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | `center` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | `channel down` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | `channel up` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | `device button` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | `display` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | `down arrow` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | `eject` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | `enter` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | `exit` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | `fast fwd` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | `fav/scan` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | `input toggle` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | `last (prev ch)` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | `left arrow` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | `menu` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | `mute` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | `next track` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | `pause` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | `pip freeze` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | `pip move` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | `pip on/off` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | `pip swap` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | `play` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | `power` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | `prev track` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | `program guide` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | `rear` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | `record` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | `rewind` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | `right arrow` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | `select` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | `shift-left` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | `shift-right` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | `sleep` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | `slow` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | `slow+` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | `slow-` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | `stop` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | `surround` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | `tv/vcr` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | `up arrow` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | `vol down` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony Boombox Master.rmdu` | `vol up` | `the function has no two OBC bytes` |
 | `Combo Audio Systems/Sony RMT-CG35A Boombox Radio-CD.rmdu` | `#15` | `the function has no single OBC byte` |
 | `Combo Audio Systems/Sony RMT-CG35A Boombox Radio-CD.rmdu` | `#19` | `the function has no single OBC byte` |
 | `Combo Audio Systems/Sony RMT-CG35A Boombox Radio-CD.rmdu` | `#23` | `the function has no single OBC byte` |
@@ -1573,6 +2812,18 @@ silently (SPEC R19, condition 5).
 | `Combo Audio Systems/Sony RMT-CG35A Boombox Radio-CD.rmdu` | `#3` | `the function has no single OBC byte` |
 | `Combo Audio Systems/Sony RMT-CG35A Boombox Radio-CD.rmdu` | `#32` | `the function has no single OBC byte` |
 | `Combo Audio Systems/Sony RMT-CG35A Boombox Radio-CD.rmdu` | `#33` | `the function has no single OBC byte` |
+| `Combo Audio Systems/Sony_BDV-E370.rmdu` | `#38` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony_BDV-E370.rmdu` | `#39` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony_BDV-E370.rmdu` | `#58` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony_BDV-E370.rmdu` | `enter` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony_BDV-E370.rmdu` | `exit` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony_BDV-E370.rmdu` | `last` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony_BDV-E370.rmdu` | `pip move` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony_BDV-E370.rmdu` | `pip on/off` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony_BDV-E370.rmdu` | `pip swap` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony_BDV-E370.rmdu` | `program guide` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony_BDV-E370.rmdu` | `record` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Sony_BDV-E370.rmdu` | `sleep` | `the function has no two OBC bytes` |
 | `DVD (Blu-Ray)/Insignia NS-BRDVD3 Blu-ray Player.rmdu` | `#54` | `the function has no single OBC byte` |
 | `DVD (Blu-Ray)/Insignia NS-BRDVD3 Blu-ray Player.rmdu` | `#55` | `the function has no single OBC byte` |
 | `DVD (Blu-Ray)/Insignia NS-BRDVD3 Blu-ray Player.rmdu` | `#56` | `the function has no single OBC byte` |
@@ -1765,6 +3016,34 @@ silently (SPEC R19, condition 5).
 | `DVD (standard)/Diamond Vision DVD V805-04.rmdu` | `vol up` | `the function has no single OBC byte` |
 | `DVD (standard)/GPX  DVD  # D1816SIL.rmdu` | `+10` | `the function has no single OBC byte` |
 | `DVD (standard)/GPX  DVD  # D1816SIL.rmdu` | `tv/vcr` | `the function has no single OBC byte` |
+| `DVD (standard)/Hyundai HY-635PS DVD Player.rmdu` | `+100` | `the function has no two OBC bytes` |
+| `DVD (standard)/Hyundai HY-635PS DVD Player.rmdu` | `X2` | `the function has no two OBC bytes` |
+| `DVD (standard)/Hyundai HY-635PS DVD Player.rmdu` | `center` | `the function has no two OBC bytes` |
+| `DVD (standard)/Hyundai HY-635PS DVD Player.rmdu` | `channel down` | `the function has no two OBC bytes` |
+| `DVD (standard)/Hyundai HY-635PS DVD Player.rmdu` | `channel up` | `the function has no two OBC bytes` |
+| `DVD (standard)/Hyundai HY-635PS DVD Player.rmdu` | `device button` | `the function has no two OBC bytes` |
+| `DVD (standard)/Hyundai HY-635PS DVD Player.rmdu` | `display` | `the function has no two OBC bytes` |
+| `DVD (standard)/Hyundai HY-635PS DVD Player.rmdu` | `exit` | `the function has no two OBC bytes` |
+| `DVD (standard)/Hyundai HY-635PS DVD Player.rmdu` | `fav/scan` | `the function has no two OBC bytes` |
+| `DVD (standard)/Hyundai HY-635PS DVD Player.rmdu` | `input toggle` | `the function has no two OBC bytes` |
+| `DVD (standard)/Hyundai HY-635PS DVD Player.rmdu` | `last (prev ch)` | `the function has no two OBC bytes` |
+| `DVD (standard)/Hyundai HY-635PS DVD Player.rmdu` | `pause` | `the function has no two OBC bytes` |
+| `DVD (standard)/Hyundai HY-635PS DVD Player.rmdu` | `pip freeze` | `the function has no two OBC bytes` |
+| `DVD (standard)/Hyundai HY-635PS DVD Player.rmdu` | `pip move` | `the function has no two OBC bytes` |
+| `DVD (standard)/Hyundai HY-635PS DVD Player.rmdu` | `pip on/off` | `the function has no two OBC bytes` |
+| `DVD (standard)/Hyundai HY-635PS DVD Player.rmdu` | `pip swap` | `the function has no two OBC bytes` |
+| `DVD (standard)/Hyundai HY-635PS DVD Player.rmdu` | `program guide` | `the function has no two OBC bytes` |
+| `DVD (standard)/Hyundai HY-635PS DVD Player.rmdu` | `rear` | `the function has no two OBC bytes` |
+| `DVD (standard)/Hyundai HY-635PS DVD Player.rmdu` | `record` | `the function has no two OBC bytes` |
+| `DVD (standard)/Hyundai HY-635PS DVD Player.rmdu` | `select` | `the function has no two OBC bytes` |
+| `DVD (standard)/Hyundai HY-635PS DVD Player.rmdu` | `shift-left` | `the function has no two OBC bytes` |
+| `DVD (standard)/Hyundai HY-635PS DVD Player.rmdu` | `shift-right` | `the function has no two OBC bytes` |
+| `DVD (standard)/Hyundai HY-635PS DVD Player.rmdu` | `sleep` | `the function has no two OBC bytes` |
+| `DVD (standard)/Hyundai HY-635PS DVD Player.rmdu` | `slow` | `the function has no two OBC bytes` |
+| `DVD (standard)/Hyundai HY-635PS DVD Player.rmdu` | `slow+` | `the function has no two OBC bytes` |
+| `DVD (standard)/Hyundai HY-635PS DVD Player.rmdu` | `slow-` | `the function has no two OBC bytes` |
+| `DVD (standard)/Hyundai HY-635PS DVD Player.rmdu` | `surround` | `the function has no two OBC bytes` |
+| `DVD (standard)/Hyundai HY-635PS DVD Player.rmdu` | `tv/vcr` | `the function has no two OBC bytes` |
 | `DVD (standard)/Initial DVD-1810 Portable DVD Player.rmdu` | `+100` | `the function has no single OBC byte` |
 | `DVD (standard)/Initial DVD-1810 Portable DVD Player.rmdu` | `channel down` | `the function has no single OBC byte` |
 | `DVD (standard)/Initial DVD-1810 Portable DVD Player.rmdu` | `channel up` | `the function has no single OBC byte` |
@@ -3172,6 +4451,45 @@ silently (SPEC R19, condition 5).
 | `Projectors/BenQ W1070.rmdu` | `#8` | `the function has no single OBC byte` |
 | `Projectors/BenQ W1070.rmdu` | `#9` | `the function has no single OBC byte` |
 | `Projectors/Infocus IN72.rmdu` | `#32` | `the function has no single OBC byte` |
+| `Projectors/Sony Projector VH11HT.rmdu` | `+100` | `the function has no two OBC bytes` |
+| `Projectors/Sony Projector VH11HT.rmdu` | 0 | `the function has no two OBC bytes` |
+| `Projectors/Sony Projector VH11HT.rmdu` | 7 | `the function has no two OBC bytes` |
+| `Projectors/Sony Projector VH11HT.rmdu` | 8 | `the function has no two OBC bytes` |
+| `Projectors/Sony Projector VH11HT.rmdu` | 9 | `the function has no two OBC bytes` |
+| `Projectors/Sony Projector VH11HT.rmdu` | `X2` | `the function has no two OBC bytes` |
+| `Projectors/Sony Projector VH11HT.rmdu` | `center` | `the function has no two OBC bytes` |
+| `Projectors/Sony Projector VH11HT.rmdu` | `channel down` | `the function has no two OBC bytes` |
+| `Projectors/Sony Projector VH11HT.rmdu` | `channel up` | `the function has no two OBC bytes` |
+| `Projectors/Sony Projector VH11HT.rmdu` | `device button` | `the function has no two OBC bytes` |
+| `Projectors/Sony Projector VH11HT.rmdu` | `display` | `the function has no two OBC bytes` |
+| `Projectors/Sony Projector VH11HT.rmdu` | `eject` | `the function has no two OBC bytes` |
+| `Projectors/Sony Projector VH11HT.rmdu` | `exit` | `the function has no two OBC bytes` |
+| `Projectors/Sony Projector VH11HT.rmdu` | `fast fwd` | `the function has no two OBC bytes` |
+| `Projectors/Sony Projector VH11HT.rmdu` | `fav/scan` | `the function has no two OBC bytes` |
+| `Projectors/Sony Projector VH11HT.rmdu` | `last (prev ch)` | `the function has no two OBC bytes` |
+| `Projectors/Sony Projector VH11HT.rmdu` | `mute` | `the function has no two OBC bytes` |
+| `Projectors/Sony Projector VH11HT.rmdu` | `next track` | `the function has no two OBC bytes` |
+| `Projectors/Sony Projector VH11HT.rmdu` | `pause` | `the function has no two OBC bytes` |
+| `Projectors/Sony Projector VH11HT.rmdu` | `pip freeze` | `the function has no two OBC bytes` |
+| `Projectors/Sony Projector VH11HT.rmdu` | `pip move` | `the function has no two OBC bytes` |
+| `Projectors/Sony Projector VH11HT.rmdu` | `pip on/off` | `the function has no two OBC bytes` |
+| `Projectors/Sony Projector VH11HT.rmdu` | `pip swap` | `the function has no two OBC bytes` |
+| `Projectors/Sony Projector VH11HT.rmdu` | `play` | `the function has no two OBC bytes` |
+| `Projectors/Sony Projector VH11HT.rmdu` | `prev track` | `the function has no two OBC bytes` |
+| `Projectors/Sony Projector VH11HT.rmdu` | `program guide` | `the function has no two OBC bytes` |
+| `Projectors/Sony Projector VH11HT.rmdu` | `rear` | `the function has no two OBC bytes` |
+| `Projectors/Sony Projector VH11HT.rmdu` | `record` | `the function has no two OBC bytes` |
+| `Projectors/Sony Projector VH11HT.rmdu` | `rewind` | `the function has no two OBC bytes` |
+| `Projectors/Sony Projector VH11HT.rmdu` | `select` | `the function has no two OBC bytes` |
+| `Projectors/Sony Projector VH11HT.rmdu` | `shift-right` | `the function has no two OBC bytes` |
+| `Projectors/Sony Projector VH11HT.rmdu` | `sleep` | `the function has no two OBC bytes` |
+| `Projectors/Sony Projector VH11HT.rmdu` | `slow` | `the function has no two OBC bytes` |
+| `Projectors/Sony Projector VH11HT.rmdu` | `slow+` | `the function has no two OBC bytes` |
+| `Projectors/Sony Projector VH11HT.rmdu` | `slow-` | `the function has no two OBC bytes` |
+| `Projectors/Sony Projector VH11HT.rmdu` | `stop` | `the function has no two OBC bytes` |
+| `Projectors/Sony Projector VH11HT.rmdu` | `surround` | `the function has no two OBC bytes` |
+| `Projectors/Sony Projector VH11HT.rmdu` | `vol down` | `the function has no two OBC bytes` |
+| `Projectors/Sony Projector VH11HT.rmdu` | `vol up` | `the function has no two OBC bytes` |
 | `Satellite/AXAS His Twin DVBS2 H.265 Satellite Receiver.rmdu` | `#26` | `the function has no single OBC byte` |
 | `Satellite/AXAS His Twin DVBS2 H.265 Satellite Receiver.rmdu` | `#27` | `the function has no single OBC byte` |
 | `Satellite/AZBox Bravissimo Twin.rmdu` | `#11` | `the function has no single OBC byte` |
@@ -3440,6 +4758,41 @@ silently (SPEC R19, condition 5).
 | `Satellite/SkyBox F5.rmdu` | `tv/vcr` | `the function has no single OBC byte` |
 | `Satellite/SkyBox F5.rmdu` | `vol down` | `the function has no single OBC byte` |
 | `Satellite/SkyBox F5.rmdu` | `vol up` | `the function has no single OBC byte` |
+| `Satellite/SkyPerfecTv_DST-SP5.rmdu` | `+100` | `the function has no two OBC bytes` |
+| `Satellite/SkyPerfecTv_DST-SP5.rmdu` | `X2` | `the function has no two OBC bytes` |
+| `Satellite/SkyPerfecTv_DST-SP5.rmdu` | `center` | `the function has no two OBC bytes` |
+| `Satellite/SkyPerfecTv_DST-SP5.rmdu` | `device button` | `the function has no two OBC bytes` |
+| `Satellite/SkyPerfecTv_DST-SP5.rmdu` | `display` | `the function has no two OBC bytes` |
+| `Satellite/SkyPerfecTv_DST-SP5.rmdu` | `eject` | `the function has no two OBC bytes` |
+| `Satellite/SkyPerfecTv_DST-SP5.rmdu` | `enter` | `the function has no two OBC bytes` |
+| `Satellite/SkyPerfecTv_DST-SP5.rmdu` | `exit` | `the function has no two OBC bytes` |
+| `Satellite/SkyPerfecTv_DST-SP5.rmdu` | `fast fwd` | `the function has no two OBC bytes` |
+| `Satellite/SkyPerfecTv_DST-SP5.rmdu` | `fav/scan` | `the function has no two OBC bytes` |
+| `Satellite/SkyPerfecTv_DST-SP5.rmdu` | `input toggle` | `the function has no two OBC bytes` |
+| `Satellite/SkyPerfecTv_DST-SP5.rmdu` | `last (prev ch)` | `the function has no two OBC bytes` |
+| `Satellite/SkyPerfecTv_DST-SP5.rmdu` | `mute` | `the function has no two OBC bytes` |
+| `Satellite/SkyPerfecTv_DST-SP5.rmdu` | `next track` | `the function has no two OBC bytes` |
+| `Satellite/SkyPerfecTv_DST-SP5.rmdu` | `pause` | `the function has no two OBC bytes` |
+| `Satellite/SkyPerfecTv_DST-SP5.rmdu` | `pip freeze` | `the function has no two OBC bytes` |
+| `Satellite/SkyPerfecTv_DST-SP5.rmdu` | `pip move` | `the function has no two OBC bytes` |
+| `Satellite/SkyPerfecTv_DST-SP5.rmdu` | `pip on/off` | `the function has no two OBC bytes` |
+| `Satellite/SkyPerfecTv_DST-SP5.rmdu` | `pip swap` | `the function has no two OBC bytes` |
+| `Satellite/SkyPerfecTv_DST-SP5.rmdu` | `play` | `the function has no two OBC bytes` |
+| `Satellite/SkyPerfecTv_DST-SP5.rmdu` | `prev track` | `the function has no two OBC bytes` |
+| `Satellite/SkyPerfecTv_DST-SP5.rmdu` | `rear` | `the function has no two OBC bytes` |
+| `Satellite/SkyPerfecTv_DST-SP5.rmdu` | `record` | `the function has no two OBC bytes` |
+| `Satellite/SkyPerfecTv_DST-SP5.rmdu` | `rewind` | `the function has no two OBC bytes` |
+| `Satellite/SkyPerfecTv_DST-SP5.rmdu` | `shift-left` | `the function has no two OBC bytes` |
+| `Satellite/SkyPerfecTv_DST-SP5.rmdu` | `shift-right` | `the function has no two OBC bytes` |
+| `Satellite/SkyPerfecTv_DST-SP5.rmdu` | `sleep` | `the function has no two OBC bytes` |
+| `Satellite/SkyPerfecTv_DST-SP5.rmdu` | `slow` | `the function has no two OBC bytes` |
+| `Satellite/SkyPerfecTv_DST-SP5.rmdu` | `slow+` | `the function has no two OBC bytes` |
+| `Satellite/SkyPerfecTv_DST-SP5.rmdu` | `slow-` | `the function has no two OBC bytes` |
+| `Satellite/SkyPerfecTv_DST-SP5.rmdu` | `stop` | `the function has no two OBC bytes` |
+| `Satellite/SkyPerfecTv_DST-SP5.rmdu` | `surround` | `the function has no two OBC bytes` |
+| `Satellite/SkyPerfecTv_DST-SP5.rmdu` | `tv/vcr` | `the function has no two OBC bytes` |
+| `Satellite/SkyPerfecTv_DST-SP5.rmdu` | `vol down` | `the function has no two OBC bytes` |
+| `Satellite/SkyPerfecTv_DST-SP5.rmdu` | `vol up` | `the function has no two OBC bytes` |
 | `Satellite/Strong SRT-6410.rmdu` | `+100` | `the function has no single OBC byte` |
 | `Satellite/Strong SRT-6410.rmdu` | `X2` | `the function has no single OBC byte` |
 | `Satellite/Strong SRT-6410.rmdu` | `center` | `the function has no single OBC byte` |
@@ -4019,6 +5372,24 @@ silently (SPEC R19, condition 5).
 | `TV/Memorex MT1196A.rmdu` | `slow` | `the function has no single OBC byte` |
 | `TV/Memorex MT1196A.rmdu` | `stop` | `the function has no single OBC byte` |
 | `TV/Memorex MT1196A.rmdu` | `surround` | `the function has no single OBC byte` |
+| `TV/NEC Plasma final.rmdu` | `#42` | `the function has no two OBC bytes` |
+| `TV/NEC Plasma final.rmdu` | `#43` | `the function has no two OBC bytes` |
+| `TV/NEC Plasma final.rmdu` | `#44` | `the function has no two OBC bytes` |
+| `TV/NEC Plasma final.rmdu` | `#45` | `the function has no two OBC bytes` |
+| `TV/NEC Plasma final.rmdu` | `#46` | `the function has no two OBC bytes` |
+| `TV/NEC Plasma final.rmdu` | `#47` | `the function has no two OBC bytes` |
+| `TV/NEC Plasma final.rmdu` | `#48` | `the function has no two OBC bytes` |
+| `TV/NEC Plasma final.rmdu` | `#49` | `the function has no two OBC bytes` |
+| `TV/NEC Plasma final.rmdu` | `#50` | `the function has no two OBC bytes` |
+| `TV/NEC Plasma.rmdu` | `#57` | `the function has no two OBC bytes` |
+| `TV/NEC Plasma.rmdu` | `#58` | `the function has no two OBC bytes` |
+| `TV/NEC Plasma.rmdu` | `#59` | `the function has no two OBC bytes` |
+| `TV/NEC Plasma.rmdu` | `#60` | `the function has no two OBC bytes` |
+| `TV/NEC Plasma.rmdu` | `#61` | `the function has no two OBC bytes` |
+| `TV/NEC Plasma.rmdu` | `#62` | `the function has no two OBC bytes` |
+| `TV/NEC Plasma.rmdu` | `#63` | `the function has no two OBC bytes` |
+| `TV/NEC Plasma.rmdu` | `#64` | `the function has no two OBC bytes` |
+| `TV/NEC Plasma.rmdu` | `#65` | `the function has no two OBC bytes` |
 | `TV/Philips_221T1.rmdu` | `#44` | `the function has no single OBC byte` |
 | `TV/Phillips-Magnavox PT2758.rmdu` | `+100` | `the function has no single OBC byte` |
 | `TV/Phillips-Magnavox PT2758.rmdu` | `down arrow` | `the function has no single OBC byte` |
@@ -4315,6 +5686,37 @@ silently (SPEC R19, condition 5).
 | `TV/Samsung_TXP3264W_HDTV_Monitor.rmdu` | `surround` | `the function has no single OBC byte` |
 | `TV/Sanyo 65 inch LED LCD.rmdu` | `#42` | `the function has no single OBC byte` |
 | `TV/Sanyo 65 inch LED LCD.rmdu` | `#43` | `the function has no single OBC byte` |
+| `TV/Sony Bravia KD-43XE8005 - 1280.rmdu` | `#53` | `the function has no two OBC bytes` |
+| `TV/Sony KDL-40S3000 TV.rmdu` | `+100` | `the function has no two OBC bytes` |
+| `TV/Sony KDL-40S3000 TV.rmdu` | `X2` | `the function has no two OBC bytes` |
+| `TV/Sony KDL-40S3000 TV.rmdu` | `center` | `the function has no two OBC bytes` |
+| `TV/Sony KDL-40S3000 TV.rmdu` | `device button` | `the function has no two OBC bytes` |
+| `TV/Sony KDL-40S3000 TV.rmdu` | `eject` | `the function has no two OBC bytes` |
+| `TV/Sony KDL-40S3000 TV.rmdu` | `fast fwd` | `the function has no two OBC bytes` |
+| `TV/Sony KDL-40S3000 TV.rmdu` | `input toggle` | `the function has no two OBC bytes` |
+| `TV/Sony KDL-40S3000 TV.rmdu` | `next track` | `the function has no two OBC bytes` |
+| `TV/Sony KDL-40S3000 TV.rmdu` | `pause` | `the function has no two OBC bytes` |
+| `TV/Sony KDL-40S3000 TV.rmdu` | `play` | `the function has no two OBC bytes` |
+| `TV/Sony KDL-40S3000 TV.rmdu` | `prev track` | `the function has no two OBC bytes` |
+| `TV/Sony KDL-40S3000 TV.rmdu` | `program guide` | `the function has no two OBC bytes` |
+| `TV/Sony KDL-40S3000 TV.rmdu` | `rear` | `the function has no two OBC bytes` |
+| `TV/Sony KDL-40S3000 TV.rmdu` | `record` | `the function has no two OBC bytes` |
+| `TV/Sony KDL-40S3000 TV.rmdu` | `rewind` | `the function has no two OBC bytes` |
+| `TV/Sony KDL-40S3000 TV.rmdu` | `shift-left` | `the function has no two OBC bytes` |
+| `TV/Sony KDL-40S3000 TV.rmdu` | `shift-right` | `the function has no two OBC bytes` |
+| `TV/Sony KDL-40S3000 TV.rmdu` | `slow` | `the function has no two OBC bytes` |
+| `TV/Sony KDL-40S3000 TV.rmdu` | `slow+` | `the function has no two OBC bytes` |
+| `TV/Sony KDL-40S3000 TV.rmdu` | `slow-` | `the function has no two OBC bytes` |
+| `TV/Sony KDL-40S3000 TV.rmdu` | `stop` | `the function has no two OBC bytes` |
+| `TV/Sony KDL-40S3000 TV.rmdu` | `surround` | `the function has no two OBC bytes` |
+| `TV/Sony KDL-50W800C.rmdu` | `#24` | `the function has no two OBC bytes` |
+| `TV/Sony KDL-50W800C.rmdu` | `#35` | `the function has no two OBC bytes` |
+| `TV/Sony KDL-50W800C.rmdu` | `#42` | `the function has no two OBC bytes` |
+| `TV/Sony KDL-50W800C.rmdu` | `#45` | `the function has no two OBC bytes` |
+| `TV/Sony KDL-50W800C.rmdu` | `#53` | `the function has no two OBC bytes` |
+| `TV/Sony KDL-50W800C.rmdu` | `#57` | `the function has no two OBC bytes` |
+| `TV/Sony KDL-50W800C.rmdu` | `#58` | `the function has no two OBC bytes` |
+| `TV/Sony KDL55NX810.rmdu` | `#49` | `the function has no two OBC bytes` |
 | `TV/Sony Trinitron RM-694.rmdu` | `----------` | `the function has no single OBC byte` |
 | `TV/Sony Trinitron RM-694.rmdu` | `----------` | `the function has no single OBC byte` |
 | `TV/Sony Trinitron RM-694.rmdu` | `----------` | `the function has no single OBC byte` |

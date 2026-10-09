@@ -1,0 +1,93 @@
+{
+  "manufacturer": "Sony",
+  "model": "12 15 20 AV mode 2 HCDFC7 [Sony12]",
+  "aliases": [],
+  "controls": [
+    "SONY 12 15 20 AV mode 2 HCDFC7"
+  ],
+  "protocol": {
+    "name": "Sony12",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_TV_POWER": {
+      "label": "TV power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Combo Audio Systems/Sony_HCDfc7.rmdu function 52 'TV power' (OBC A8 80; Sony Combo (12/15/20), parms 16 16 null null): Sony12 device 1 function 21; the upgrade's note: 'TV function only Sony default'"
+        }
+      ]
+    },
+    "KEY_TV_VOL_PLUS": {
+      "label": "TV vol +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Combo Audio Systems/Sony_HCDfc7.rmdu function 53 'TV vol +' (OBC 48 80; Sony Combo (12/15/20), parms 16 16 null null): Sony12 device 1 function 18; the upgrade's note: 'TV function only Sony default'"
+        }
+      ]
+    },
+    "KEY_TV_VOL_MINUS": {
+      "label": "TV vol -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Combo Audio Systems/Sony_HCDfc7.rmdu function 54 'TV vol -' (OBC C8 80; Sony Combo (12/15/20), parms 16 16 null null): Sony12 device 1 function 19; the upgrade's note: 'TV function only Sony default'"
+        }
+      ]
+    },
+    "KEY_TV_SLASH_VIDEO": {
+      "label": "TV/Video",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x25",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Combo Audio Systems/Sony_HCDfc7.rmdu function 55 'TV/Video' (OBC A4 80; Sony Combo (12/15/20), parms 16 16 null null): Sony12 device 1 function 37; the upgrade's note: 'TV function only Sony default'"
+        }
+      ]
+    },
+    "KEY_TV_CHANNEL_UP": {
+      "label": "TV channel up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Combo Audio Systems/Sony_HCDfc7.rmdu function 56 'TV channel up' (OBC 08 80; Sony Combo (12/15/20), parms 16 16 null null): Sony12 device 1 function 16; the upgrade's note: 'TV function only Sony default'"
+        }
+      ]
+    },
+    "KEY_TV_CHANNEL_DOWN": {
+      "label": "TV channel down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Combo Audio Systems/Sony_HCDfc7.rmdu function 57 'TV channel down' (OBC 88 80; Sony Combo (12/15/20), parms 16 16 null null): Sony12 device 1 function 17; the upgrade's note: 'TV function only Sony default'"
+        }
+      ]
+    }
+  }
+}

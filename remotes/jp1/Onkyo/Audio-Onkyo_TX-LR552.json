@@ -1,0 +1,547 @@
+{
+  "manufacturer": "Onkyo",
+  "model": "TX-LR552",
+  "aliases": [],
+  "controls": [
+    "Onkyo TX-LR552"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER_ON": {
+      "label": "Power On",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_TX-LR552.rmdu function 0 'Power On' (OBC 49 DF; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 4; the upgrade's note: 'Power On from standby'"
+        }
+      ]
+    },
+    "KEY_STANDBY": {
+      "label": "Standby",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x47",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_TX-LR552.rmdu function 1 'Standby' (OBC C9 1D; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 71; the upgrade's note: 'Enter standby from On state'"
+        }
+      ]
+    },
+    "KEY_TONE": {
+      "label": "Tone",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x49",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_TX-LR552.rmdu function 2 'Tone' (OBC C9 6D; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 73; the upgrade's note: 'Tone menu (bass, treble controls), does nothing'"
+        }
+      ]
+    },
+    "KEY_TONE_MINUS": {
+      "label": "Tone -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x41",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_TX-LR552.rmdu function 3 'Tone -' (OBC C9 7D; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 65; the upgrade's note: 'Decrease selected tone control, does nothig'"
+        }
+      ]
+    },
+    "KEY_TONE_PLUS": {
+      "label": "Tone +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x40",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_TX-LR552.rmdu function 4 'Tone +' (OBC C9 FD; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 64; the upgrade's note: 'Increase selected tone control, does nothing'"
+        }
+      ]
+    },
+    "KEY_DVD": {
+      "label": "DVD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x8C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_TX-LR552.rmdu function 5 'DVD' (OBC C9 CE; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 140; the upgrade's note: 'DVD input'"
+        }
+      ]
+    },
+    "KEY_VIDEO_1": {
+      "label": "Video 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_TX-LR552.rmdu function 6 'Video 1' (OBC 49 0F; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 15; the upgrade's note: 'Video 1 input'"
+        }
+      ]
+    },
+    "KEY_VIDEO_2": {
+      "label": "Video 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x0E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_TX-LR552.rmdu function 7 'Video 2' (OBC 49 8F; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 14; the upgrade's note: 'Video 2 input'"
+        }
+      ]
+    },
+    "KEY_TV": {
+      "label": "TV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x48",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_TX-LR552.rmdu function 8 'TV' (OBC 49 ED; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 72; the upgrade's note: 'TV input'"
+        }
+      ]
+    },
+    "KEY_AUX": {
+      "label": "AUX",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_TX-LR552.rmdu function 9 'AUX' (OBC 49 9F; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 6; the upgrade's note: 'Auxillary input'"
+        }
+      ]
+    },
+    "KEY_TUNER": {
+      "label": "Tuner",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_TX-LR552.rmdu function 10 'Tuner' (OBC 49 2F; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 11; the upgrade's note: 'Tuner input, EFC 059 or 166'"
+        }
+      ]
+    },
+    "KEY_DIMMER": {
+      "label": "Dimmer",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x95",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_TX-LR552.rmdu function 11 'Dimmer' (OBC 49 56; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 149; the upgrade's note: 'Dim the display'"
+        }
+      ]
+    },
+    "KEY_SLEEP": {
+      "label": "Sleep",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x5D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_TX-LR552.rmdu function 12 'Sleep' (OBC 49 45; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 93; the upgrade's note: 'Enable sleep function and set the sleep timer, EFC 093'"
+        }
+      ]
+    },
+    "KEY_TUNER_PRESET_PLUS": {
+      "label": "Tuner Preset +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_TX-LR552.rmdu function 13 'Tuner Preset +' (OBC 49 FF; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 0; the upgrade's note: 'Select next radio preset'"
+        }
+      ]
+    },
+    "KEY_TUNER_PRESET_MINUS": {
+      "label": "Tuner Preset -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_TX-LR552.rmdu function 14 'Tuner Preset -' (OBC 49 7F; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 1; the upgrade's note: 'Select previous radio preset'"
+        }
+      ]
+    },
+    "KEY_DISPLAY": {
+      "label": "Display",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x55",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_TX-LR552.rmdu function 15 'Display' (OBC C9 55; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 85; the upgrade's note: 'Display info about current audio/video source'"
+        }
+      ]
+    },
+    "KEY_VOLUME_UP": {
+      "label": "Volume Up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_TX-LR552.rmdu function 16 'Volume Up' (OBC 49 BF; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 2; the upgrade's note: 'Increase the volume'"
+        }
+      ]
+    },
+    "KEY_VOLUME_DOWN": {
+      "label": "Volume Down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_TX-LR552.rmdu function 17 'Volume Down' (OBC 49 3F; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 3; the upgrade's note: 'Decrease the volume'"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "Mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_TX-LR552.rmdu function 18 'Mute' (OBC 49 5F; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 5; the upgrade's note: 'Mute'"
+        }
+      ]
+    },
+    "KEY_UP_ARROW": {
+      "label": "Up Arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x82",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_TX-LR552.rmdu function 19 'Up Arrow' (OBC 49 BE; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 130; the upgrade's note: 'Cursor up'"
+        }
+      ]
+    },
+    "KEY_DOWN_ARROW": {
+      "label": "Down Arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x83",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_TX-LR552.rmdu function 20 'Down Arrow' (OBC 49 3E; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 131; the upgrade's note: 'Cursor down'"
+        }
+      ]
+    },
+    "KEY_LEFT_ARROW": {
+      "label": "Left Arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x84",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_TX-LR552.rmdu function 21 'Left Arrow' (OBC 49 DE; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 132; the upgrade's note: 'Cursor left'"
+        }
+      ]
+    },
+    "KEY_RIGHT_ARROW": {
+      "label": "Right Arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x85",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_TX-LR552.rmdu function 22 'Right Arrow' (OBC 49 5E; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 133; the upgrade's note: 'Cursor right'"
+        }
+      ]
+    },
+    "KEY_ENTER": {
+      "label": "Enter",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x97",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_TX-LR552.rmdu function 23 'Enter' (OBC 49 16; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 151; the upgrade's note: 'Enter (Select menu / menuitem)'"
+        }
+      ]
+    },
+    "KEY_RETURN": {
+      "label": "Return",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x54",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_TX-LR552.rmdu function 24 'Return' (OBC C9 D5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 84; the upgrade's note: 'Return/Exit from menu / menuitem'"
+        }
+      ]
+    },
+    "KEY_SETUP": {
+      "label": "Setup",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x53",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_TX-LR552.rmdu function 25 'Setup' (OBC C9 35; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 83; the upgrade's note: 'Enter the Setup menu'"
+        }
+      ]
+    },
+    "KEY_SPEAKER_A": {
+      "label": "Speaker A",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x59",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_TX-LR552.rmdu function 26 'Speaker A' (OBC 49 65; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 89; the upgrade's note: 'Toggle speaker set A on/off, works'"
+        }
+      ]
+    },
+    "KEY_SPEAKER_B": {
+      "label": "Speaker B",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x5A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_TX-LR552.rmdu function 27 'Speaker B' (OBC 49 A5; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 90; the upgrade's note: 'Toggle speaker set B on/off, works'"
+        }
+      ]
+    },
+    "KEY_DIRECT": {
+      "label": "Direct",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x44",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_TX-LR552.rmdu function 28 'Direct' (OBC 49 DD; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 68; the upgrade's note: 'Select Direct mode (no DSP or bass management)'"
+        }
+      ]
+    },
+    "KEY_STEREO": {
+      "label": "Stereo",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x4C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_TX-LR552.rmdu function 29 'Stereo' (OBC C9 CD; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 76; the upgrade's note: 'Selects stereo mode'"
+        }
+      ]
+    },
+    "KEY_SURR": {
+      "label": "SURR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x4D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_TX-LR552.rmdu function 30 'SURR' (OBC C9 4D; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 77; the upgrade's note: 'Cycle through surround modes'"
+        }
+      ]
+    },
+    "KEY_DSP": {
+      "label": "DSP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x18",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_TX-LR552.rmdu function 31 'DSP' (OBC C9 E7; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 24; the upgrade's note: 'Cycle through DSP modes'"
+        }
+      ]
+    },
+    "KEY_TEST_TONE": {
+      "label": "Test Tone",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6D",
+          "function": "0x9A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_TX-LR552.rmdu function 36 'Test Tone' (OBC 49 A6; NEC1 Combo, parms 210): NEC1 device 210 subdevice 109 function 154; the upgrade's note: 'Start the test tone for calibrating levels'"
+        }
+      ]
+    },
+    "KEY_CH_SEL": {
+      "label": "CH SEL",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x44",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_TX-LR552.rmdu function 37 'CH SEL' (OBC C9 DD; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 68; the upgrade's note: 'Select the channel to be calibrated'"
+        }
+      ]
+    },
+    "KEY_LEVEL_MINUS": {
+      "label": "LEVEL -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x43",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_TX-LR552.rmdu function 38 'LEVEL -' (OBC C9 3D; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 67; the upgrade's note: 'Decrease the level of the selected channel'"
+        }
+      ]
+    },
+    "KEY_LEVEL_PLUS": {
+      "label": "LEVEL +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0x42",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_TX-LR552.rmdu function 39 'LEVEL +' (OBC C9 BD; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 66; the upgrade's note: 'Increase the level of the selected channel'"
+        }
+      ]
+    },
+    "KEY_LATE_NIGHT": {
+      "label": "Late Night",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0xD7",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_TX-LR552.rmdu function 40 'Late Night' (OBC C9 14; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 215; the upgrade's note: 'Late Night feature'"
+        }
+      ]
+    },
+    "KEY_CINEMA_FILTER": {
+      "label": "Cinema Filter",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x6C",
+          "function": "0xD6",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Onkyo_TX-LR552.rmdu function 41 'Cinema Filter' (OBC C9 94; NEC1 Combo, parms 210): NEC1 device 210 subdevice 108 function 214; the upgrade's note: 'Toggle Cinema Filter feature'"
+        }
+      ]
+    }
+  }
+}

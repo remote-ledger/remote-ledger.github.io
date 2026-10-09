@@ -1,0 +1,799 @@
+{
+  "manufacturer": "Harman",
+  "model": "Kardon AVR 340 Nec4Dev combo- code 1110",
+  "aliases": [],
+  "controls": [
+    "Harman Kardon AVR 340 Nec4Dev combo- code 1110"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER_ON": {
+      "label": "Power ON",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xC0",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 0 'Power ON' (OBC FC 20; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 128 subdevice 112 function 192"
+        }
+      ]
+    },
+    "KEY_POWER_OFF": {
+      "label": "Power OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0x9F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 1 'Power OFF' (OBC 06 20; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 128 subdevice 112 function 159"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "Mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xC1",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 2 'Mute' (OBC 7C 20; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 128 subdevice 112 function 193"
+        }
+      ]
+    },
+    "KEY_AVR": {
+      "label": "AVR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xC0",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 3 'AVR' (OBC FC 20; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 128 subdevice 112 function 192; the upgrade's note: 'AVR Selector. Switches remote to AVR functions / mode. If unit in Standby mode it will turn it on. (same device, and sub-device as Power ON)'"
+        }
+      ]
+    },
+    "KEY_DVD": {
+      "label": "DVD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xD0",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 4 'DVD' (OBC F4 20; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 128 subdevice 112 function 208; the upgrade's note: 'DVD input\\: 1. Turns on main unit (if off). 2. Selects DVD as input source. 3. Changes remote to DVD mode. Press AVR btn to change remote back to main unit mode.'"
+        }
+      ]
+    },
+    "KEY_CD": {
+      "label": "CD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xC4",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 5 'CD' (OBC DC 20; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 128 subdevice 112 function 196; the upgrade's note: 'Same as DVD btn but for CD functions.'"
+        }
+      ]
+    },
+    "KEY_TAPE": {
+      "label": "Tape",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xCC",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 6 'Tape' (OBC CC 20; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 128 subdevice 112 function 204; the upgrade's note: 'Same as DVD btn but for Tape functions.'"
+        }
+      ]
+    },
+    "KEY_VID1_VCR": {
+      "label": "Vid1 VCR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xCA",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 7 'Vid1 VCR' (OBC AC 20; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 128 subdevice 112 function 202; the upgrade's note: 'Same as DVD btn but for VCR functions.'"
+        }
+      ]
+    },
+    "KEY_VID2_CBL_SLASH_SAT": {
+      "label": "Vid2 CBL/SAT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xCB",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 8 'Vid2 CBL/SAT' (OBC 2C 20; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 128 subdevice 112 function 203; the upgrade's note: 'Same as DVD btn but for CBL/SAT functions.'"
+        }
+      ]
+    },
+    "KEY_VID3_TV": {
+      "label": "Vid3 TV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xCE",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 9 'Vid3 TV' (OBC 8C 20; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 128 subdevice 112 function 206; the upgrade's note: 'Same as DVD btn but for TV functions.'"
+        }
+      ]
+    },
+    "KEY_DIM": {
+      "label": "Dim",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xDC",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 10 'Dim' (OBC C4 20; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 128 subdevice 112 function 220; the upgrade's note: 'Dimmer. Reduces brightness of front panel display. Toggles Full / Half / Off. (except Power light). Tip\\: can be set to auto OFF in advanced OSD menu.'"
+        }
+      ]
+    },
+    "KEY_AM_SLASH_FM": {
+      "label": "Am / Fm",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0x81",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 11 'Am / Fm' (OBC 7E 20; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 128 subdevice 112 function 129; the upgrade's note: 'Radio tuner. 1st key press -> tuner mode. Cosecutive key press toggles AM / FM bands.'"
+        }
+      ]
+    },
+    "KEY_6_SLASH_8_CH": {
+      "label": "6 / 8 Ch",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x82",
+          "subdevice": "0x72",
+          "function": "0xDB",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 12 '6 / 8 Ch' (OBC 24 60; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 130 subdevice 114 function 219; the upgrade's note: '-Selects device connected to 6 / 8 - channel direct inputs (these inputs pass the sound directly to VOL control without analog-to-digital conversion)'"
+        }
+      ]
+    },
+    "KEY_DMP": {
+      "label": "DMP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xF1",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 13 'DMP' (OBC 70 20; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 128 subdevice 112 function 241; the upgrade's note: 'Digital Media Player (iPod connection to HK's \"The Bridge\" ). Selects iPod as audio source.'"
+        }
+      ]
+    },
+    "KEY_SLEEP": {
+      "label": "Sleep",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xDB",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 14 'Sleep' (OBC 24 20; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 128 subdevice 112 function 219; the upgrade's note: 'After selected time, the main unit goes in standby mode. Consecutive key press decrements timer from 90 min to OFF by 10 min.'"
+        }
+      ]
+    },
+    "KEY_TEST": {
+      "label": "Test",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x82",
+          "subdevice": "0x72",
+          "function": "0x8C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 15 'Test' (OBC CE 60; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 130 subdevice 114 function 140; the upgrade's note: '*Starts sound sequence for calibration of output levels (about 1sec / speaker).'"
+        }
+      ]
+    },
+    "KEY_TV_SLASH_VID": {
+      "label": "Tv / Vid",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 16 'Tv / Vid' (OBC 1F 20; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 128 subdevice 112 function 7; the upgrade's note: 'Device 4, sub 0. Not used for main unit.'"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "Vol +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xC7",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 17 'Vol +' (OBC 1C 20; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 128 subdevice 112 function 199; the upgrade's note: 'Vol +'"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "Vol -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xC8",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 18 'Vol -' (OBC EC 20; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 128 subdevice 112 function 200; the upgrade's note: 'Vol -'"
+        }
+      ]
+    },
+    "KEY_SURROUND": {
+      "label": "Surround",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x82",
+          "subdevice": "0x72",
+          "function": "0x58",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 19 'Surround' (OBC E5 60; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 130 subdevice 114 function 88; the upgrade's note: '*Cycles through\\: DSP, VMAx, and Stereo surround modes\\: VMAx Near -> VMAx Far -> Hall1 -> Hall2 -> Theater, Surround OFF.'"
+        }
+      ]
+    },
+    "KEY_NIGHT": {
+      "label": "Night",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x82",
+          "subdevice": "0x72",
+          "function": "0x96",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 20 'Night' (OBC 96 60; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 130 subdevice 114 function 150; the upgrade's note: '*Night mode\\: preserves dialogue (center channel) intelligibility at low vol levels (not all modes).'"
+        }
+      ]
+    },
+    "KEY_CH": {
+      "label": "CH.",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x82",
+          "subdevice": "0x72",
+          "function": "0x5D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 21 'CH.' (OBC 45 60; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 130 subdevice 114 function 93; the upgrade's note: '*Channel adjustments\\: starts output level setting process for each speaker on Semi OSD (front panel). Use navigation and set btns.'"
+        }
+      ]
+    },
+    "KEY_SPKR": {
+      "label": "SPKR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x82",
+          "subdevice": "0x72",
+          "function": "0x53",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 22 'SPKR' (OBC 35 60; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 130 subdevice 114 function 83; the upgrade's note: '*Loudspeaker sizes (large / small)\\: starts speaker mode process for each speaker on Semi OSD (front panel). Use navigation and set btns.'"
+        }
+      ]
+    },
+    "KEY_DELAY": {
+      "label": "DELAY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x82",
+          "subdevice": "0x72",
+          "function": "0x52",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 23 'DELAY' (OBC B5 60; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 130 subdevice 114 function 82; the upgrade's note: '*Speaker delay times for surround sound\\: starts delay / distance settings process for each speaker on Semi OSD (front panel). Use navigation and set btns.'"
+        }
+      ]
+    },
+    "KEY_DIGITAL": {
+      "label": "DIGITAL",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x82",
+          "subdevice": "0x72",
+          "function": "0x54",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 24 'DIGITAL' (OBC D5 60; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 130 subdevice 114 function 84; the upgrade's note: '*Starts assignment process of inputs to sources for each speaker on Semi OSD (front panel). Use navigation and set btns.'"
+        }
+      ]
+    },
+    "KEY_UP": {
+      "label": "Up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x82",
+          "subdevice": "0x72",
+          "function": "0x99",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 25 'Up' (OBC 66 60; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 130 subdevice 114 function 153; the upgrade's note: '*'"
+        }
+      ]
+    },
+    "KEY_DOWN": {
+      "label": "Down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x82",
+          "subdevice": "0x72",
+          "function": "0x9A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 26 'Down' (OBC A6 60; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 130 subdevice 114 function 154; the upgrade's note: '*'"
+        }
+      ]
+    },
+    "KEY_RIGHT": {
+      "label": "Right",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x82",
+          "subdevice": "0x72",
+          "function": "0xC2",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 27 'Right' (OBC BC 60; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 130 subdevice 114 function 194; the upgrade's note: '*'"
+        }
+      ]
+    },
+    "KEY_LEFT": {
+      "label": "Left",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x82",
+          "subdevice": "0x72",
+          "function": "0xC1",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 28 'Left' (OBC 7C 60; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 130 subdevice 114 function 193; the upgrade's note: '*'"
+        }
+      ]
+    },
+    "KEY_SET": {
+      "label": "Set",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x82",
+          "subdevice": "0x72",
+          "function": "0x84",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 29 'Set' (OBC DE 60; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 130 subdevice 114 function 132; the upgrade's note: '*'"
+        }
+      ]
+    },
+    "KEY_1": {
+      "label": "1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0x87",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 30 '1' (OBC 1E 20; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 128 subdevice 112 function 135"
+        }
+      ]
+    },
+    "KEY_2": {
+      "label": "2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0x88",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 31 '2' (OBC EE 20; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 128 subdevice 112 function 136"
+        }
+      ]
+    },
+    "KEY_3": {
+      "label": "3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0x89",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 32 '3' (OBC 6E 20; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 128 subdevice 112 function 137"
+        }
+      ]
+    },
+    "KEY_4": {
+      "label": "4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0x8A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 33 '4' (OBC AE 20; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 128 subdevice 112 function 138"
+        }
+      ]
+    },
+    "KEY_5": {
+      "label": "5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0x8B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 34 '5' (OBC 2E 20; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 128 subdevice 112 function 139"
+        }
+      ]
+    },
+    "KEY_6": {
+      "label": "6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0x8C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 35 '6' (OBC CE 20; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 128 subdevice 112 function 140"
+        }
+      ]
+    },
+    "KEY_7": {
+      "label": "7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0x8D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 36 '7' (OBC 4E 20; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 128 subdevice 112 function 141"
+        }
+      ]
+    },
+    "KEY_8": {
+      "label": "8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0x8E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 37 '8' (OBC 8E 20; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 128 subdevice 112 function 142"
+        }
+      ]
+    },
+    "KEY_9": {
+      "label": "9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0x9D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 38 '9' (OBC 46 20; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 128 subdevice 112 function 157"
+        }
+      ]
+    },
+    "KEY_0": {
+      "label": "0",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0x9E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 39 '0' (OBC 86 20; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 128 subdevice 112 function 158"
+        }
+      ]
+    },
+    "KEY_TUN_MINUS_M": {
+      "label": "Tun-M",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0x93",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 40 'Tun-M' (OBC 36 20; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 128 subdevice 112 function 147; the upgrade's note: 'Tuner Mode. Toggle Auto / Manual modes for AM / FM tunning.'"
+        }
+      ]
+    },
+    "KEY_MEM": {
+      "label": "Mem",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0x86",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 41 'Mem' (OBC 9E 20; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 128 subdevice 112 function 134; the upgrade's note: 'Used to enter radio stations into unit's preset memory. While tuned into the station press the button followed by memory number (1 to 30)'"
+        }
+      ]
+    },
+    "KEY_TUNE_PLUS": {
+      "label": "Tune +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0x84",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 42 'Tune +' (OBC DE 20; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 128 subdevice 112 function 132; the upgrade's note: 'Manual mode\\: single step increments. Auto mode\\: hold 3 sec to seek next acceptable quality station.'"
+        }
+      ]
+    },
+    "KEY_TUNE_MINUS": {
+      "label": "Tune -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0x85",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 43 'Tune -' (OBC 5E 20; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 128 subdevice 112 function 133; the upgrade's note: 'Manual mode\\: single step decrements. Auto mode\\: hold 3 sec to seek next acceptable quality station.'"
+        }
+      ]
+    },
+    "KEY_DIRECT": {
+      "label": "Direct",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0x9B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 44 'Direct' (OBC 26 20; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 128 subdevice 112 function 155; the upgrade's note: 'Manual entry of station frequency. Press, then enter digits.'"
+        }
+      ]
+    },
+    "KEY_CLEAR": {
+      "label": "Clear",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xD9",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 45 'Clear' (OBC 64 20; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 128 subdevice 112 function 217; the upgrade's note: '-Clear manual frequency entries.'"
+        }
+      ]
+    },
+    "KEY_PRESET_PLUS": {
+      "label": "Preset +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x82",
+          "subdevice": "0x72",
+          "function": "0xD0",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 46 'Preset +' (OBC F4 60; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 130 subdevice 114 function 208; the upgrade's note: '*Scans preset memory stations.'"
+        }
+      ]
+    },
+    "KEY_PRESET_MINUS": {
+      "label": "Preset -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x82",
+          "subdevice": "0x72",
+          "function": "0xD1",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 47 'Preset -' (OBC 74 60; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 130 subdevice 114 function 209; the upgrade's note: '*Scans preset memory stations.'"
+        }
+      ]
+    },
+    "KEY_OSD": {
+      "label": "OSD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x82",
+          "subdevice": "0x72",
+          "function": "0x5C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 48 'OSD' (OBC C5 60; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 130 subdevice 114 function 92; the upgrade's note: '*On-Screen Display menu.'"
+        }
+      ]
+    },
+    "KEY_DOLBY_SUR": {
+      "label": "Dolby Sur",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x82",
+          "subdevice": "0x72",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 49 'Dolby Sur' (OBC F5 60; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 130 subdevice 114 function 80; the upgrade's note: '*Cycles through Dolby Surrond modes\\: Pro Logic II Movie, Music, Pro Logic, Dolby 3 Stereo, or Dolby Digital if available.'"
+        }
+      ]
+    },
+    "KEY_DTS_SUR": {
+      "label": "DTS Sur",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x82",
+          "subdevice": "0x72",
+          "function": "0xA0",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 50 'DTS Sur' (OBC FA 60; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 130 subdevice 114 function 160; the upgrade's note: '*Cycles through DTS modes\\: 5.1, 6.1 Matrix, 6.1 Discrete, 96/24.'"
+        }
+      ]
+    },
+    "KEY_DTS_NEO_6": {
+      "label": "DTS Neo\\:6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x82",
+          "subdevice": "0x72",
+          "function": "0xA1",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 51 'DTS Neo\\:6' (OBC 7A 60; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 130 subdevice 114 function 161; the upgrade's note: '*Cycles through DTS Neo\\:6 modes\\: Cinema, Music.'"
+        }
+      ]
+    },
+    "KEY_LOGIC_7": {
+      "label": "Logic 7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x82",
+          "subdevice": "0x72",
+          "function": "0xA2",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 52 'Logic 7' (OBC BA 60; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 130 subdevice 114 function 162; the upgrade's note: '*Cycles through Logic 7 modes\\: Cinema, Music, Enhance.'"
+        }
+      ]
+    },
+    "KEY_STEREO": {
+      "label": "Stereo",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x82",
+          "subdevice": "0x72",
+          "function": "0x9B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 53 'Stereo' (OBC 26 60; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 130 subdevice 114 function 155; the upgrade's note: '*Cycles through 5 Ch Stereo, 7 Ch Stereo, and Stereo OFF\\: 1. + DSP \\= bypass mode\\: 2 ch L/R stereo w/o surround/bass mgnt). 2. - DSP \\= 2 ch stereo with bass mgnt.'"
+        }
+      ]
+    },
+    "KEY_SKIP_DWN": {
+      "label": "Skip DWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x82",
+          "subdevice": "0x72",
+          "function": "0x30",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 54 'Skip DWN' (OBC F3 60; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 130 subdevice 114 function 48; the upgrade's note: '-Not used for main unit.'"
+        }
+      ]
+    },
+    "KEY_SKIP_UP": {
+      "label": "Skip UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x82",
+          "subdevice": "0x72",
+          "function": "0x31",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Harman Kardon AVR 340 nec4dev protocol.rmdu function 55 'Skip UP' (OBC 73 60; NEC 4DEV Combo, parms 128 112 130 114 null null null null): NEC1 device 130 subdevice 114 function 49; the upgrade's note: '-Not used for main unit.'"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,687 @@
+{
+  "manufacturer": "Harman",
+  "model": "AVR 2600",
+  "aliases": [],
+  "controls": [
+    "AVR 2600"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_AVR_POWER_ON": {
+      "label": "AVR Power On",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xC0",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 0 'AVR Power On' (OBC FC 20; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 128 subdevice 112 function 192"
+        }
+      ]
+    },
+    "KEY_AVR_POWER_OFF": {
+      "label": "AVR Power Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0x9F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 1 'AVR Power Off' (OBC 06 20; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 128 subdevice 112 function 159"
+        }
+      ]
+    },
+    "KEY_CABLE_SLASH_SAT": {
+      "label": "Cable/Sat",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xB0",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 2 'Cable/Sat' (OBC F2 20; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 128 subdevice 112 function 176"
+        }
+      ]
+    },
+    "KEY_DVD": {
+      "label": "DVD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xD0",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 3 'DVD' (OBC F4 20; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 128 subdevice 112 function 208"
+        }
+      ]
+    },
+    "KEY_THE_BRIDGE": {
+      "label": "The Bridge",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xF1",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 4 'The Bridge' (OBC 70 20; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 128 subdevice 112 function 241"
+        }
+      ]
+    },
+    "KEY_RADIO": {
+      "label": "Radio",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0x81",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 5 'Radio' (OBC 7E 20; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 128 subdevice 112 function 129"
+        }
+      ]
+    },
+    "KEY_TV": {
+      "label": "TV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xB1",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 6 'TV' (OBC 72 20; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 128 subdevice 112 function 177"
+        }
+      ]
+    },
+    "KEY_GAME": {
+      "label": "Game",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xB2",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 7 'Game' (OBC B2 20; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 128 subdevice 112 function 178"
+        }
+      ]
+    },
+    "KEY_MEDIA_SERVER": {
+      "label": "Media Server",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xB3",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 8 'Media Server' (OBC 32 20; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 128 subdevice 112 function 179"
+        }
+      ]
+    },
+    "KEY_AUX": {
+      "label": "AUX",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xB4",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 9 'AUX' (OBC D2 20; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 128 subdevice 112 function 180"
+        }
+      ]
+    },
+    "KEY_AUDIO_EFFECTS": {
+      "label": "Audio Effects",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x82",
+          "subdevice": "0x72",
+          "function": "0xA7",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 10 'Audio Effects' (OBC 1A 60; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 130 subdevice 114 function 167"
+        }
+      ]
+    },
+    "KEY_VIDEO_MODES": {
+      "label": "Video Modes",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xFB",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 11 'Video Modes' (OBC 20 20; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 128 subdevice 112 function 251"
+        }
+      ]
+    },
+    "KEY_SURROUND_MODES": {
+      "label": "Surround Modes",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xA8",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 12 'Surround Modes' (OBC EA 20; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 128 subdevice 112 function 168"
+        }
+      ]
+    },
+    "KEY_1": {
+      "label": "1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0x87",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 13 '1' (OBC 1E 20; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 128 subdevice 112 function 135"
+        }
+      ]
+    },
+    "KEY_2": {
+      "label": "2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0x88",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 14 '2' (OBC EE 20; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 128 subdevice 112 function 136"
+        }
+      ]
+    },
+    "KEY_3": {
+      "label": "3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0x89",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 15 '3' (OBC 6E 20; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 128 subdevice 112 function 137"
+        }
+      ]
+    },
+    "KEY_4": {
+      "label": "4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0x8A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 16 '4' (OBC AE 20; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 128 subdevice 112 function 138"
+        }
+      ]
+    },
+    "KEY_5": {
+      "label": "5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0x8B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 17 '5' (OBC 2E 20; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 128 subdevice 112 function 139"
+        }
+      ]
+    },
+    "KEY_6": {
+      "label": "6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0x8C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 18 '6' (OBC CE 20; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 128 subdevice 112 function 140"
+        }
+      ]
+    },
+    "KEY_7": {
+      "label": "7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0x8D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 19 '7' (OBC 4E 20; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 128 subdevice 112 function 141"
+        }
+      ]
+    },
+    "KEY_8": {
+      "label": "8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0x8E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 20 '8' (OBC 8E 20; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 128 subdevice 112 function 142"
+        }
+      ]
+    },
+    "KEY_9": {
+      "label": "9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0x9D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 21 '9' (OBC 46 20; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 128 subdevice 112 function 157"
+        }
+      ]
+    },
+    "KEY_0": {
+      "label": "0",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0x9E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 22 '0' (OBC 86 20; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 128 subdevice 112 function 158"
+        }
+      ]
+    },
+    "KEY_LAST": {
+      "label": "Last",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xB6",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 23 'Last' (OBC 92 20; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 128 subdevice 112 function 182"
+        }
+      ]
+    },
+    "KEY_BACK_SLASH_EXIT": {
+      "label": "Back/Exit",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xB7",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 24 'Back/Exit' (OBC 12 20; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 128 subdevice 112 function 183"
+        }
+      ]
+    },
+    "KEY_UP": {
+      "label": "Up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x82",
+          "subdevice": "0x72",
+          "function": "0x99",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 25 'Up' (OBC 66 60; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 130 subdevice 114 function 153"
+        }
+      ]
+    },
+    "KEY_MENU": {
+      "label": "Menu",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xB8",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 26 'Menu' (OBC E2 20; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 128 subdevice 112 function 184"
+        }
+      ]
+    },
+    "KEY_LEFT": {
+      "label": "Left",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x82",
+          "subdevice": "0x72",
+          "function": "0xC1",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 27 'Left' (OBC 7C 60; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 130 subdevice 114 function 193"
+        }
+      ]
+    },
+    "KEY_OK": {
+      "label": "OK",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x82",
+          "subdevice": "0x72",
+          "function": "0x84",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 28 'OK' (OBC DE 60; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 130 subdevice 114 function 132"
+        }
+      ]
+    },
+    "KEY_RIGHT": {
+      "label": "Right",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x82",
+          "subdevice": "0x72",
+          "function": "0xC2",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 29 'Right' (OBC BC 60; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 130 subdevice 114 function 194"
+        }
+      ]
+    },
+    "KEY_DOWN": {
+      "label": "Down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x82",
+          "subdevice": "0x72",
+          "function": "0x9A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 30 'Down' (OBC A6 60; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 130 subdevice 114 function 154"
+        }
+      ]
+    },
+    "KEY_DISC_MENU": {
+      "label": "Disc Menu",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xEC",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 31 'Disc Menu' (OBC C8 20; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 128 subdevice 112 function 236"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xC7",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 32 'VOL+' (OBC 1C 20; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 128 subdevice 112 function 199"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xC8",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 33 'VOL-' (OBC EC 20; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 128 subdevice 112 function 200"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "Mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xC1",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 34 'Mute' (OBC 7C 20; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 128 subdevice 112 function 193"
+        }
+      ]
+    },
+    "KEY_CH_PLUS": {
+      "label": "CH+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xBD",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 35 'CH+' (OBC 42 20; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 128 subdevice 112 function 189"
+        }
+      ]
+    },
+    "KEY_CH_MINUS": {
+      "label": "CH-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xBE",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 36 'CH-' (OBC 82 20; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 128 subdevice 112 function 190"
+        }
+      ]
+    },
+    "KEY_SETUP": {
+      "label": "Setup",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0x5C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 37 'Setup' (OBC C5 20; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 128 subdevice 112 function 92"
+        }
+      ]
+    },
+    "KEY_INFO": {
+      "label": "Info",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xBF",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 38 'Info' (OBC 02 20; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 128 subdevice 112 function 191"
+        }
+      ]
+    },
+    "KEY_SLEEP": {
+      "label": "Sleep",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xDB",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 39 'Sleep' (OBC 24 20; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 128 subdevice 112 function 219"
+        }
+      ]
+    },
+    "KEY_SKIP_BACK": {
+      "label": "Skip_Back",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x84",
+          "subdevice": "0x74",
+          "function": "0x55",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 40 'Skip_Back' (OBC 55 A0; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 132 subdevice 116 function 85; the upgrade's note: 'The Bridge'"
+        }
+      ]
+    },
+    "KEY_SKIP_FORWARD": {
+      "label": "Skip_Forward",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x84",
+          "subdevice": "0x74",
+          "function": "0x56",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 41 'Skip_Forward' (OBC 95 A0; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 132 subdevice 116 function 86; the upgrade's note: 'The Bridge'"
+        }
+      ]
+    },
+    "KEY_REWIND": {
+      "label": "Rewind",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x84",
+          "subdevice": "0x74",
+          "function": "0x53",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 42 'Rewind' (OBC 35 A0; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 132 subdevice 116 function 83; the upgrade's note: 'The Bridge'"
+        }
+      ]
+    },
+    "KEY_PLAY": {
+      "label": "Play",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x84",
+          "subdevice": "0x74",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 43 'Play' (OBC F5 A0; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 132 subdevice 116 function 80; the upgrade's note: 'The Bridge'"
+        }
+      ]
+    },
+    "KEY_FAST_FWD": {
+      "label": "Fast_Fwd",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x84",
+          "subdevice": "0x74",
+          "function": "0x54",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 44 'Fast_Fwd' (OBC D5 A0; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 132 subdevice 116 function 84; the upgrade's note: 'The Bridge'"
+        }
+      ]
+    },
+    "KEY_STOP": {
+      "label": "Stop",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x84",
+          "subdevice": "0x74",
+          "function": "0x51",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 45 'Stop' (OBC 75 A0; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 132 subdevice 116 function 81; the upgrade's note: 'The Bridge'"
+        }
+      ]
+    },
+    "KEY_PAUSE": {
+      "label": "Pause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x84",
+          "subdevice": "0x74",
+          "function": "0x52",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 46 'Pause' (OBC B5 A0; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 132 subdevice 116 function 82; the upgrade's note: 'The Bridge'"
+        }
+      ]
+    },
+    "KEY_RECORD": {
+      "label": "Record",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x70",
+          "function": "0xEC",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/HK-AVR-2600.rmdu function 47 'Record' (OBC C8 20; NEC 4DEV Combo, parms 128 112 130 114 132 116 null null): NEC1 device 128 subdevice 112 function 236; the upgrade's note: 'The Bridge'"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,1821 @@
+{
+  "manufacturer": "Yamaha",
+  "model": "Aventage AVR RX-A3000",
+  "aliases": [],
+  "controls": [
+    "Yamaha Aventage AVR RX-A3000"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER_ON_SLASH_OFF": {
+      "label": "POWER ON/OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x2A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 0 'POWER ON/OFF' (OBC AB 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 42"
+        }
+      ]
+    },
+    "KEY_SLEEP": {
+      "label": "SLEEP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x30",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 1 'SLEEP' (OBC F3 20; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 122 subdevice 133 function 48"
+        }
+      ]
+    },
+    "KEY_V_MINUS_AUX": {
+      "label": "V-AUX",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x55",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 13 'V-AUX' (OBC 55 20; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 122 subdevice 133 function 85"
+        }
+      ]
+    },
+    "KEY_PHONO": {
+      "label": "PHONO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 14 'PHONO' (OBC D7 20; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 122 subdevice 133 function 20"
+        }
+      ]
+    },
+    "KEY_NET": {
+      "label": "NET",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x3F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 16 'NET' (OBC 03 A0; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 127 subdevice 1 function 63"
+        }
+      ]
+    },
+    "KEY_DOCK": {
+      "label": "DOCK",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x4A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 17 'DOCK' (OBC AD A0; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 127 subdevice 1 function 74"
+        }
+      ]
+    },
+    "KEY_TUNER": {
+      "label": "TUNER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 18 'TUNER' (OBC 97 20; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 122 subdevice 133 function 22"
+        }
+      ]
+    },
+    "KEY_SIRIUS": {
+      "label": "SIRIUS",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x39",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 19 'SIRIUS' (OBC 63 20; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 122 subdevice 133 function 57"
+        }
+      ]
+    },
+    "KEY_MULTI_CH_IN": {
+      "label": "MULTI CH IN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x87",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 20 'MULTI CH IN' (OBC 1E 20; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 122 subdevice 133 function 135"
+        }
+      ]
+    },
+    "KEY_NET_SLASH_USB": {
+      "label": "NET/USB",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xA8",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 23 'NET/USB' (OBC EA 20; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 122 subdevice 133 function 168"
+        }
+      ]
+    },
+    "KEY_HDMI_OUT": {
+      "label": "HDMI OUT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x35",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 24 'HDMI OUT' (OBC 53 20; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 122 subdevice 133 function 53"
+        }
+      ]
+    },
+    "KEY_ENHANCER": {
+      "label": "ENHANCER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x94",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 25 'ENHANCER' (OBC D6 20; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 122 subdevice 133 function 148"
+        }
+      ]
+    },
+    "KEY_STRAIGHT": {
+      "label": "STRAIGHT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x56",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 26 'STRAIGHT' (OBC 95 20; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 122 subdevice 133 function 86"
+        }
+      ]
+    },
+    "KEY_PURE_DIRECT_OR_DIRECT": {
+      "label": "PURE DIRECT or DIRECT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xDD",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 27 'PURE DIRECT or DIRECT' (OBC 44 20; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 122 subdevice 133 function 221"
+        }
+      ]
+    },
+    "KEY_SUR_DECODE": {
+      "label": "SUR. DECODE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x8D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 28 'SUR. DECODE' (OBC 4E 20; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 122 subdevice 133 function 141"
+        }
+      ]
+    },
+    "KEY_CLASSICAL": {
+      "label": "CLASSICAL",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x8A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 29 'CLASSICAL' (OBC AE 20; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 122 subdevice 133 function 138"
+        }
+      ]
+    },
+    "KEY_LIVE_SLASH_CLUB": {
+      "label": "LIVE/CLUB",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x8B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 30 'LIVE/CLUB' (OBC 2E 20; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 122 subdevice 133 function 139"
+        }
+      ]
+    },
+    "KEY_ENTERTAIN": {
+      "label": "ENTERTAIN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x8C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 31 'ENTERTAIN' (OBC CE 20; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 122 subdevice 133 function 140"
+        }
+      ]
+    },
+    "KEY_MOVIE": {
+      "label": "MOVIE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x8E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 32 'MOVIE' (OBC 8E 20; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 122 subdevice 133 function 142"
+        }
+      ]
+    },
+    "KEY_STEREO": {
+      "label": "STEREO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x8F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 33 'STEREO' (OBC 0E 20; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 122 subdevice 133 function 143"
+        }
+      ]
+    },
+    "KEY_PROGRAM_UP": {
+      "label": "PROGRAM UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x58",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 34 'PROGRAM UP' (OBC E5 20; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 122 subdevice 133 function 88"
+        }
+      ]
+    },
+    "KEY_PROGRAM_DOWN": {
+      "label": "PROGRAM DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x59",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 35 'PROGRAM DOWN' (OBC 65 20; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 122 subdevice 133 function 89"
+        }
+      ]
+    },
+    "KEY_ON_SCREEN": {
+      "label": "ON SCREEN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x84",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 36 'ON SCREEN' (OBC DE 20; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 122 subdevice 133 function 132"
+        }
+      ]
+    },
+    "KEY_TOP_MENU": {
+      "label": "TOP MENU",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xA0",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 38 'TOP MENU' (OBC FA 20; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 122 subdevice 133 function 160"
+        }
+      ]
+    },
+    "KEY_POP_MINUS_UP_MENU": {
+      "label": "POP-UP MENU",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xA4",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 39 'POP-UP MENU' (OBC DA 20; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 122 subdevice 133 function 164"
+        }
+      ]
+    },
+    "KEY_CURSOR_UP": {
+      "label": "CURSOR UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x9D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 40 'CURSOR UP' (OBC 46 20; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 122 subdevice 133 function 157"
+        }
+      ]
+    },
+    "KEY_CURSOR_DOWN": {
+      "label": "CURSOR DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x9C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 41 'CURSOR DOWN' (OBC C6 20; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 122 subdevice 133 function 156"
+        }
+      ]
+    },
+    "KEY_CURSOR_LEFT": {
+      "label": "CURSOR LEFT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x9F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 42 'CURSOR LEFT' (OBC 06 20; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 122 subdevice 133 function 159"
+        }
+      ]
+    },
+    "KEY_CURSOR_RIGHT": {
+      "label": "CURSOR RIGHT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x9E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 43 'CURSOR RIGHT' (OBC 86 20; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 122 subdevice 133 function 158"
+        }
+      ]
+    },
+    "KEY_ENTER": {
+      "label": "ENTER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xDE",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 44 'ENTER' (OBC 84 20; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 122 subdevice 133 function 222"
+        }
+      ]
+    },
+    "KEY_RETURN": {
+      "label": "RETURN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xAA",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 45 'RETURN' (OBC AA 20; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 122 subdevice 133 function 170"
+        }
+      ]
+    },
+    "KEY_LEVEL": {
+      "label": "LEVEL",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x86",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 46 'LEVEL' (OBC 9E 20; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 122 subdevice 133 function 134"
+        }
+      ]
+    },
+    "KEY_VOLUME_UP": {
+      "label": "VOLUME UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 47 'VOLUME UP' (OBC A7 20; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 122 subdevice 133 function 26"
+        }
+      ]
+    },
+    "KEY_VOLUME_DOWN": {
+      "label": "VOLUME DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x1B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 48 'VOLUME DOWN' (OBC 27 20; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 122 subdevice 133 function 27"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x1C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 49 'MUTE' (OBC C7 20; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 122 subdevice 133 function 28"
+        }
+      ]
+    },
+    "KEY_DISPLAY": {
+      "label": "DISPLAY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x60",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 50 'DISPLAY' (OBC F9 A0; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 127 subdevice 1 function 96"
+        }
+      ]
+    },
+    "KEY_MODE": {
+      "label": "MODE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x66",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 52 'MODE' (OBC 99 A0; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 127 subdevice 1 function 102"
+        }
+      ]
+    },
+    "KEY_STOP": {
+      "label": "STOP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x69",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 53 'STOP' (OBC 69 A0; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 127 subdevice 1 function 105"
+        }
+      ]
+    },
+    "KEY_PAUSE": {
+      "label": "PAUSE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x67",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 54 'PAUSE' (OBC 19 A0; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 127 subdevice 1 function 103"
+        }
+      ]
+    },
+    "KEY_PLAY": {
+      "label": "PLAY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x68",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 55 'PLAY' (OBC E9 A0; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 127 subdevice 1 function 104"
+        }
+      ]
+    },
+    "KEY_SEARCH_SEARCH_MINUS": {
+      "label": "SEARCH SEARCH-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x6A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 56 'SEARCH SEARCH-' (OBC A9 A0; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 127 subdevice 1 function 106"
+        }
+      ]
+    },
+    "KEY_TAG_SEARCH_PLUS": {
+      "label": "TAG SEARCH+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x6B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 57 'TAG SEARCH+' (OBC 29 A0; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 127 subdevice 1 function 107"
+        }
+      ]
+    },
+    "KEY_SKIP_MINUS": {
+      "label": "SKIP-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x6C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 58 'SKIP-' (OBC C9 A0; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 127 subdevice 1 function 108"
+        }
+      ]
+    },
+    "KEY_SKIP_PLUS": {
+      "label": "SKIP+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x6D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 59 'SKIP+' (OBC 49 A0; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 127 subdevice 1 function 109"
+        }
+      ]
+    },
+    "KEY_1": {
+      "label": "1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x51",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 66 '1' (OBC 75 A0; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 127 subdevice 1 function 81"
+        }
+      ]
+    },
+    "KEY_2": {
+      "label": "2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x52",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 67 '2' (OBC B5 A0; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 127 subdevice 1 function 82"
+        }
+      ]
+    },
+    "KEY_3": {
+      "label": "3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x53",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 68 '3' (OBC 35 A0; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 127 subdevice 1 function 83"
+        }
+      ]
+    },
+    "KEY_4": {
+      "label": "4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x54",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 69 '4' (OBC D5 A0; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 127 subdevice 1 function 84"
+        }
+      ]
+    },
+    "KEY_5": {
+      "label": "5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x55",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 70 '5' (OBC 55 A0; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 127 subdevice 1 function 85"
+        }
+      ]
+    },
+    "KEY_6": {
+      "label": "6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x56",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 71 '6' (OBC 95 A0; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 127 subdevice 1 function 86"
+        }
+      ]
+    },
+    "KEY_7": {
+      "label": "7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x57",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 72 '7' (OBC 15 A0; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 127 subdevice 1 function 87"
+        }
+      ]
+    },
+    "KEY_8": {
+      "label": "8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x58",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 73 '8' (OBC E5 A0; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 127 subdevice 1 function 88"
+        }
+      ]
+    },
+    "KEY_9": {
+      "label": "9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x59",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 74 '9' (OBC 65 A0; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 127 subdevice 1 function 89"
+        }
+      ]
+    },
+    "KEY_0": {
+      "label": "0",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x5A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 75 '0' (OBC A5 A0; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 127 subdevice 1 function 90"
+        }
+      ]
+    },
+    "KEY_ENT": {
+      "label": "ENT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x5C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 76 'ENT' (OBC C5 A0; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 127 subdevice 1 function 92"
+        }
+      ]
+    },
+    "KEY_POWER_ON": {
+      "label": "POWER ON",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x7E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 77 'POWER ON' (OBC 81 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 126"
+        }
+      ]
+    },
+    "KEY_STANDBY_OFF": {
+      "label": "STANDBY OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x7F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 78 'STANDBY OFF' (OBC 01 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 127"
+        }
+      ]
+    },
+    "KEY_AUDIO_SEL_AUTO": {
+      "label": "AUDIO SEL AUTO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xA6",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 81 'AUDIO SEL AUTO' (OBC 9A 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 166"
+        }
+      ]
+    },
+    "KEY_AUDIO_SEL_HDMI": {
+      "label": "AUDIO SEL HDMI",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xDA",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 82 'AUDIO SEL HDMI' (OBC A4 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 218"
+        }
+      ]
+    },
+    "KEY_AUDIO_SEL_COAX_SLASH_OPT": {
+      "label": "AUDIO SEL COAX/OPT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xA9",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 83 'AUDIO SEL COAX/OPT' (OBC 6A 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 169"
+        }
+      ]
+    },
+    "KEY_AUDIO_SEL_ANALOG": {
+      "label": "AUDIO SEL ANALOG",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xAA",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 84 'AUDIO SEL ANALOG' (OBC AA 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 170"
+        }
+      ]
+    },
+    "KEY_MUTE_ON_95": {
+      "label": "MUTE  ON",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xA2",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 95 'MUTE  ON' (OBC BA 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 162"
+        }
+      ]
+    },
+    "KEY_MUTE_ON_97": {
+      "label": "MUTE  ON",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xDF",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 97 'MUTE  ON' (OBC 04 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 223"
+        }
+      ]
+    },
+    "KEY_MUTE_OFF": {
+      "label": "MUTE  OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xA3",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 98 'MUTE  OFF' (OBC 3A 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 163"
+        }
+      ]
+    },
+    "KEY_PURE_DIRECT_ON": {
+      "label": "PURE DIRECT ON",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x80",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 101 'PURE DIRECT ON' (OBC FE 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 128"
+        }
+      ]
+    },
+    "KEY_PURE_DIRECT_OFF": {
+      "label": "PURE DIRECT OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x82",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 102 'PURE DIRECT OFF' (OBC BE 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 130"
+        }
+      ]
+    },
+    "KEY_STRAIGHT_ON": {
+      "label": "STRAIGHT ON",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xE0",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 103 'STRAIGHT ON' (OBC F8 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 224"
+        }
+      ]
+    },
+    "KEY_STRAIGHT_OFF": {
+      "label": "STRAIGHT OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x27",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 104 'STRAIGHT OFF' (OBC 1B 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 39"
+        }
+      ]
+    },
+    "KEY_PROGRAM_HALL_IN_MUNICH": {
+      "label": "PROGRAM Hall in Munich",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xE1",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 105 'PROGRAM Hall in Munich' (OBC 78 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 225"
+        }
+      ]
+    },
+    "KEY_PROGRAM_HALL_IN_VIENNA": {
+      "label": "PROGRAM Hall in Vienna",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xE5",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 106 'PROGRAM Hall in Vienna' (OBC 58 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 229"
+        }
+      ]
+    },
+    "KEY_PROGRAM_HALL_IN_AMSTERDAM": {
+      "label": "PROGRAM Hall in Amsterdam",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xE6",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 107 'PROGRAM Hall in Amsterdam' (OBC 98 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 230"
+        }
+      ]
+    },
+    "KEY_PROGRAM_CHAMBER": {
+      "label": "PROGRAM Chamber",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xAF",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 108 'PROGRAM Chamber' (OBC 0A 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 175"
+        }
+      ]
+    },
+    "KEY_PROGRAM_CHURCH_IN_FREIBURG": {
+      "label": "PROGRAM Church in Freiburg",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xE8",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 109 'PROGRAM Church in Freiburg' (OBC E8 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 232"
+        }
+      ]
+    },
+    "KEY_PROGRAM_CHURCH_IN_ROYAUMONT": {
+      "label": "PROGRAM Church in Royaumont",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xE9",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 110 'PROGRAM Church in Royaumont' (OBC 68 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 233"
+        }
+      ]
+    },
+    "KEY_PROGRAM_VILLAGE_VANGUARD": {
+      "label": "PROGRAM Village Vanguard",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xEB",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 111 'PROGRAM Village Vanguard' (OBC 28 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 235"
+        }
+      ]
+    },
+    "KEY_PROGRAM_THE_BOTTOM_LINE": {
+      "label": "PROGRAM The Bottom Line",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xEC",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 112 'PROGRAM The Bottom Line' (OBC C8 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 236"
+        }
+      ]
+    },
+    "KEY_PROGRAM_CELLAR_CLUB": {
+      "label": "PROGRAM Cellar Club",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xCD",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 113 'PROGRAM Cellar Club' (OBC 4C 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 205"
+        }
+      ]
+    },
+    "KEY_PROGRAM_THE_ROXY_THEATRE": {
+      "label": "PROGRAM The Roxy Theatre",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xED",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 114 'PROGRAM The Roxy Theatre' (OBC 48 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 237"
+        }
+      ]
+    },
+    "KEY_PROGRAM_WAREHOUSE_LOFT": {
+      "label": "PROGRAM Warehouse Loft",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xEE",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 115 'PROGRAM Warehouse Loft' (OBC 88 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 238"
+        }
+      ]
+    },
+    "KEY_PROGRAM_SPORTS": {
+      "label": "PROGRAM Sports",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xF8",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 116 'PROGRAM Sports' (OBC E0 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 248"
+        }
+      ]
+    },
+    "KEY_PROGRAM_MUSIC_VIDEO": {
+      "label": "PROGRAM Music Video",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xF3",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 117 'PROGRAM Music Video' (OBC 30 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 243"
+        }
+      ]
+    },
+    "KEY_PROGRAM_RECITAL_SLASH_OPERA": {
+      "label": "PROGRAM Recital/Opera",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xF5",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 118 'PROGRAM Recital/Opera' (OBC 50 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 245"
+        }
+      ]
+    },
+    "KEY_PROGRAM_ACTION_GAME": {
+      "label": "PROGRAM Action Game",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xF2",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 119 'PROGRAM Action Game' (OBC B0 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 242"
+        }
+      ]
+    },
+    "KEY_PROGRAM_ROLEPLAYING_GAME": {
+      "label": "PROGRAM Roleplaying Game",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xCE",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 120 'PROGRAM Roleplaying Game' (OBC 8C 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 206"
+        }
+      ]
+    },
+    "KEY_PROGRAM_STANDARD": {
+      "label": "PROGRAM Standard",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xFE",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 121 'PROGRAM Standard' (OBC 80 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 254"
+        }
+      ]
+    },
+    "KEY_PROGRAM_SPECTACLE": {
+      "label": "PROGRAM Spectacle",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xF9",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 122 'PROGRAM Spectacle' (OBC 60 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 249"
+        }
+      ]
+    },
+    "KEY_PROGRAM_SCI_MINUS_FI": {
+      "label": "PROGRAM Sci-Fi",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xFA",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 123 'PROGRAM Sci-Fi' (OBC A0 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 250"
+        }
+      ]
+    },
+    "KEY_PROGRAM_ADVENTURE": {
+      "label": "PROGRAM Adventure",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xFB",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 124 'PROGRAM Adventure' (OBC 20 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 251"
+        }
+      ]
+    },
+    "KEY_PROGRAM_DRAMA": {
+      "label": "PROGRAM Drama",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xFC",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 125 'PROGRAM Drama' (OBC C0 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 252"
+        }
+      ]
+    },
+    "KEY_PROGRAM_MONO_MOVIE": {
+      "label": "PROGRAM Mono Movie",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xF7",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 126 'PROGRAM Mono Movie' (OBC 10 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 247"
+        }
+      ]
+    },
+    "KEY_PROGRAM_2CH_STEREO": {
+      "label": "PROGRAM 2ch Stereo",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xC0",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 127 'PROGRAM 2ch Stereo' (OBC FC 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 192"
+        }
+      ]
+    },
+    "KEY_PROGRAM_XCH_STEREO": {
+      "label": "PROGRAM Xch Stereo",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xFF",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 128 'PROGRAM Xch Stereo' (OBC 00 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 255"
+        }
+      ]
+    },
+    "KEY_SUR_DECODE_ON": {
+      "label": "SUR. DECODE ON",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xFD",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 129 'SUR. DECODE ON' (OBC 40 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 253"
+        }
+      ]
+    },
+    "KEY_ENHANCER_AUTO": {
+      "label": "ENHANCER AUTO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xD8",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 130 'ENHANCER AUTO' (OBC E4 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 216"
+        }
+      ]
+    },
+    "KEY_ENHANCER_OFF": {
+      "label": "ENHANCER OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xD9",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 131 'ENHANCER OFF' (OBC 64 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 217"
+        }
+      ]
+    },
+    "KEY_SUR_DECODE_PLII_IIX_MOVIE": {
+      "label": "SUR.DECODE PLII(IIx) MOVIE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x67",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 132 'SUR.DECODE PLII(IIx) MOVIE' (OBC 19 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 103"
+        }
+      ]
+    },
+    "KEY_SUR_DECODE_PLII_IIX_MUSIC": {
+      "label": "SUR.DECODE PLII(IIx) MUSIC",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x68",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 133 'SUR.DECODE PLII(IIx) MUSIC' (OBC E9 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 104"
+        }
+      ]
+    },
+    "KEY_SUR_DECODE_PLII_IIX_GAME": {
+      "label": "SUR.DECODE PLII(IIx) GAME",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xC7",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 134 'SUR.DECODE PLII(IIx) GAME' (OBC 1C 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 199"
+        }
+      ]
+    },
+    "KEY_SUR_DECODE_NEO_6_CINEMA": {
+      "label": "SUR.DECODE NEO\\:6 CINEMA",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x69",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 135 'SUR.DECODE NEO\\:6 CINEMA' (OBC 69 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 105"
+        }
+      ]
+    },
+    "KEY_SUR_DECODE_NEO_6_MUSIC": {
+      "label": "SUR.DECODE NEO\\:6 MUSIC",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x6A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 136 'SUR.DECODE NEO\\:6 MUSIC' (OBC A9 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 106"
+        }
+      ]
+    },
+    "KEY_SUR_DECODE_PROLOGIC": {
+      "label": "SUR.DECODE Prologic",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xC9",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 137 'SUR.DECODE Prologic' (OBC 6C 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 201"
+        }
+      ]
+    },
+    "KEY_EXTED_SRND_AUTO": {
+      "label": "EXTED SRND AUTO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x7C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 138 'EXTED SRND AUTO' (OBC C1 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 124"
+        }
+      ]
+    },
+    "KEY_EXTED_SRND_PLII_MOVIE": {
+      "label": "EXTED SRND PLII MOVIE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xDD",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 139 'EXTED SRND PLII MOVIE' (OBC 44 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 221"
+        }
+      ]
+    },
+    "KEY_EXTED_SRND_PLII_MUSIC": {
+      "label": "EXTED SRND PLII MUSIC",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xDE",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 140 'EXTED SRND PLII MUSIC' (OBC 84 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 222"
+        }
+      ]
+    },
+    "KEY_EXTED_SRND_ON_EX_SLASH_ES": {
+      "label": "EXTED SRND ON(EX/ES)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xB8",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 141 'EXTED SRND ON(EX/ES)' (OBC E2 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 184"
+        }
+      ]
+    },
+    "KEY_EXTED_SRND_OFF": {
+      "label": "EXTED SRND OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xB9",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 142 'EXTED SRND OFF' (OBC 62 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 185"
+        }
+      ]
+    },
+    "KEY_DUAL_MONO_MAIN": {
+      "label": "DUAL MONO MAIN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x93",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 145 'DUAL MONO MAIN' (OBC 36 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 147"
+        }
+      ]
+    },
+    "KEY_DUAL_MONO_SUB": {
+      "label": "DUAL MONO SUB",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x94",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 146 'DUAL MONO SUB' (OBC D6 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 148"
+        }
+      ]
+    },
+    "KEY_DUAL_MONO_ALL": {
+      "label": "DUAL MONO ALL",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x95",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 147 'DUAL MONO ALL' (OBC 56 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 149"
+        }
+      ]
+    },
+    "KEY_VOLUME_MEMORY_1": {
+      "label": "VOLUME MEMORY 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x6B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 160 'VOLUME MEMORY 1' (OBC 29 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 107"
+        }
+      ]
+    },
+    "KEY_VOLUME_MEMORY_2": {
+      "label": "VOLUME MEMORY 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x6C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 161 'VOLUME MEMORY 2' (OBC C9 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 108"
+        }
+      ]
+    },
+    "KEY_VOLUME_MEMORY_3": {
+      "label": "VOLUME MEMORY 3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x6D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 162 'VOLUME MEMORY 3' (OBC 49 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 109"
+        }
+      ]
+    },
+    "KEY_VOLUME_MEMORY_4": {
+      "label": "VOLUME MEMORY 4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x6E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 163 'VOLUME MEMORY 4' (OBC 89 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 110"
+        }
+      ]
+    },
+    "KEY_VOLUME_MEMORY_5": {
+      "label": "VOLUME MEMORY 5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x6F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 164 'VOLUME MEMORY 5' (OBC 09 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 111"
+        }
+      ]
+    },
+    "KEY_VOLUME_MEMORY_6": {
+      "label": "VOLUME MEMORY 6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x70",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 165 'VOLUME MEMORY 6' (OBC F1 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 112"
+        }
+      ]
+    },
+    "KEY_VOLUME_RECALL_1": {
+      "label": "VOLUME RECALL 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x75",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 166 'VOLUME RECALL 1' (OBC 51 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 117"
+        }
+      ]
+    },
+    "KEY_VOLUME_RECALL_2": {
+      "label": "VOLUME RECALL 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x76",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 167 'VOLUME RECALL 2' (OBC 91 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 118"
+        }
+      ]
+    },
+    "KEY_VOLUME_RECALL_3": {
+      "label": "VOLUME RECALL 3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x77",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 168 'VOLUME RECALL 3' (OBC 11 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 119"
+        }
+      ]
+    },
+    "KEY_VOLUME_RECALL_4": {
+      "label": "VOLUME RECALL 4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x78",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 169 'VOLUME RECALL 4' (OBC E1 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 120"
+        }
+      ]
+    },
+    "KEY_VOLUME_RECALL_5": {
+      "label": "VOLUME RECALL 5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x79",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 170 'VOLUME RECALL 5' (OBC 61 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 121"
+        }
+      ]
+    },
+    "KEY_VOLUME_RECALL_6": {
+      "label": "VOLUME RECALL 6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x7A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 171 'VOLUME RECALL 6' (OBC A1 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 122"
+        }
+      ]
+    },
+    "KEY_ZONE_2_ON": {
+      "label": "Zone 2 On",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xBA",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 182 'Zone 2 On' (OBC A2 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 186"
+        }
+      ]
+    },
+    "KEY_ZONE_2_OFF": {
+      "label": "Zone 2 Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xBB",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 183 'Zone 2 Off' (OBC 22 60; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 126 subdevice 129 function 187"
+        }
+      ]
+    },
+    "KEY_ZONE_3_ON": {
+      "label": "Zone 3 On",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xED",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 184 'Zone 3 On' (OBC 48 20; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 122 subdevice 133 function 237"
+        }
+      ]
+    },
+    "KEY_ZONE_3_OFF": {
+      "label": "Zone 3 Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xEE",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 185 'Zone 3 Off' (OBC 88 20; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 122 subdevice 133 function 238"
+        }
+      ]
+    },
+    "KEY_ZONE_4_ON": {
+      "label": "Zone 4 On",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x7B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 186 'Zone 4 On' (OBC 21 20; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 122 subdevice 133 function 123"
+        }
+      ]
+    },
+    "KEY_ZONE_4_OFF": {
+      "label": "Zone 4 Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x7C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 187 'Zone 4 Off' (OBC C1 20; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 122 subdevice 133 function 124"
+        }
+      ]
+    },
+    "KEY_ALL_ZONES_ON": {
+      "label": "All Zones On",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x1D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 188 'All Zones On' (OBC 47 20; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 122 subdevice 133 function 29"
+        }
+      ]
+    },
+    "KEY_ALL_ZONES_OFF": {
+      "label": "All Zones Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x1E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Yamaha Aventage AVR RX-A3000-expanded for 6440 with extended functions.rmdu function 189 'All Zones Off' (OBC 87 20; NEC 4DEV Yamaha Combo, parms 122 null 126 null 127 1 124 null): NEC1 device 122 subdevice 133 function 30"
+        }
+      ]
+    }
+  }
+}

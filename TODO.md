@@ -12,8 +12,8 @@ sources have been imported under SPEC R19:
   keys, GPL-3.0 by inheritance only (DESIGN §17, §18).
 - **hifi-remote.com's Sony code pages**: 151 files, 6,772 keys, a table of
   reference codes with no licence recorded (DESIGN §27).
-- **The JP1 device upgrades** of its forum: 1,936 files, 73,065 keys, read for
-  eight executors (DESIGN §28, §32).
+- **The JP1 device upgrades** of its forum: 2,184 files, 82,780 keys, read for
+  twelve executors (DESIGN §28, §32, §33).
 - **Manufacturers' own IR tables**: Marantz's AV receiver charts, Anthem's IR
   hex sheet and Oppo's remote code workbooks, 189 files, 12,844 keys (DESIGN
   §29, §31).
@@ -39,10 +39,12 @@ Land it in two PRs, code and then data.
       owner's decision of 2026-10-08 (D110) is that a table of reference
       remote codes needs no licence. That reasoning bears on all three; none
       has been changed.
-- [ ] **The rest of the JP1 upgrades** (DESIGN D120, D136): 1,301 upgrades of
-      other executors (MCE 83, Sony Combo 82, Panasonic Combo 53, NEC1 Combo
-      46, RC-6 42, Nokia32 40, JVC 33, Panasonic 33, Aiwa 31, RC-5/5x Combo 16,
-      RC5/6 combo 12...) and 2,073 KeymapMaster files. Each executor needs its
+- [ ] **The rest of the JP1 upgrades** (DESIGN D120, D136, D140): about 1,130
+      upgrades of other executors (MCE 83, Panasonic Combo 53, RC-6 42, Nokia32
+      40, JVC 33, Panasonic 33, Aiwa 31, RC-5/5x Combo 16, RC5/6 combo 12...)
+      and 2,073 KeymapMaster files. **The Yamaha combo's Y1 to Y3 styles**
+      (1,087 functions of 15 upgrades) send NEC with 16 data bits, which needs
+      NEC1-f16 and NEC2-f16 registered with a cited golden vector (D18's gate). Each executor needs its
       translator found (the RemoteMaster source has the classes the
       `protocols.ini` expressions name) and checked against the ledger's codes
       first, as RC-5 was. The forum's file section holds about

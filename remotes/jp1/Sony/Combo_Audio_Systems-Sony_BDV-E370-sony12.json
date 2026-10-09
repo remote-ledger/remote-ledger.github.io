@@ -1,0 +1,54 @@
+{
+  "manufacturer": "Sony",
+  "model": "BDV E370 [Sony12]",
+  "aliases": [],
+  "controls": [
+    "Sony BDV E370"
+  ],
+  "protocol": {
+    "name": "Sony12",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_CHANNEL_UP": {
+      "label": "channel up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Combo Audio Systems/Sony_BDV-E370.rmdu function 13 'channel up' (OBC 48 80; Sony Combo (12/15/20), parms 16 48 null null): Sony12 device 1 function 18"
+        }
+      ]
+    },
+    "KEY_CHANNEL_DOWN": {
+      "label": "channel down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Combo Audio Systems/Sony_BDV-E370.rmdu function 14 'channel down' (OBC C8 80; Sony Combo (12/15/20), parms 16 48 null null): Sony12 device 1 function 19"
+        }
+      ]
+    },
+    "KEY_TV_SLASH_VCR": {
+      "label": "tv/vcr",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "function": "0x25",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Combo Audio Systems/Sony_BDV-E370.rmdu function 17 'tv/vcr' (OBC A4 80; Sony Combo (12/15/20), parms 16 48 null null): Sony12 device 1 function 37"
+        }
+      ]
+    }
+  }
+}

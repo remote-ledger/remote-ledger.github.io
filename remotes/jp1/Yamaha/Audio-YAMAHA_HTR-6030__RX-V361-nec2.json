@@ -1,0 +1,463 @@
+{
+  "manufacturer": "Yamaha",
+  "model": "HTR-6030 (RX-V361) [NEC2]",
+  "aliases": [],
+  "controls": [
+    "YAMAHA HTR-6030 (RX-V361)"
+  ],
+  "protocol": {
+    "name": "NEC2",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_STANDBY": {
+      "label": "STANDBY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x7F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YAMAHA HTR-6030 (RX-V361).rmdu function 0 'STANDBY' (OBC 01 61; NEC 4DEV Combo, parms 122 null 126 null null null null null 0): NEC2 device 126 subdevice 129 function 127"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x7E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YAMAHA HTR-6030 (RX-V361).rmdu function 1 'POWER' (OBC 81 61; NEC 4DEV Combo, parms 122 null 126 null null null null null 0): NEC2 device 126 subdevice 129 function 126"
+        }
+      ]
+    },
+    "KEY_MULTI_CH_IN": {
+      "label": "MULTI CH IN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x87",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YAMAHA HTR-6030 (RX-V361).rmdu function 2 'MULTI CH IN' (OBC 1E 21; NEC 4DEV Combo, parms 122 null 126 null null null null null 0): NEC2 device 122 subdevice 133 function 135"
+        }
+      ]
+    },
+    "KEY_AUDIO_SEL": {
+      "label": "AUDIO SEL",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xC3",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YAMAHA HTR-6030 (RX-V361).rmdu function 3 'AUDIO SEL' (OBC 3C 21; NEC 4DEV Combo, parms 122 null 126 null null null null null 0): NEC2 device 122 subdevice 133 function 195"
+        }
+      ]
+    },
+    "KEY_SLEEP": {
+      "label": "SLEEP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x57",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YAMAHA HTR-6030 (RX-V361).rmdu function 4 'SLEEP' (OBC 15 21; NEC 4DEV Combo, parms 122 null 126 null null null null null 0): NEC2 device 122 subdevice 133 function 87"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x1C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YAMAHA HTR-6030 (RX-V361).rmdu function 5 'MUTE' (OBC C7 21; NEC 4DEV Combo, parms 122 null 126 null null null null null 0): NEC2 device 122 subdevice 133 function 28"
+        }
+      ]
+    },
+    "KEY_CD": {
+      "label": "CD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YAMAHA HTR-6030 (RX-V361).rmdu function 6 'CD' (OBC 57 21; NEC 4DEV Combo, parms 122 null 126 null null null null null 0): NEC2 device 122 subdevice 133 function 21"
+        }
+      ]
+    },
+    "KEY_MD_SLASH_CD_MINUS_R": {
+      "label": "MD/CD-R",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xC9",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YAMAHA HTR-6030 (RX-V361).rmdu function 7 'MD/CD-R' (OBC 6C 21; NEC 4DEV Combo, parms 122 null 126 null null null null null 0): NEC2 device 122 subdevice 133 function 201"
+        }
+      ]
+    },
+    "KEY_TUNER": {
+      "label": "TUNER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YAMAHA HTR-6030 (RX-V361).rmdu function 8 'TUNER' (OBC 97 21; NEC 4DEV Combo, parms 122 null 126 null null null null null 0): NEC2 device 122 subdevice 133 function 22"
+        }
+      ]
+    },
+    "KEY_DVD": {
+      "label": "DVD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xC1",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YAMAHA HTR-6030 (RX-V361).rmdu function 9 'DVD' (OBC 7C 21; NEC 4DEV Combo, parms 122 null 126 null null null null null 0): NEC2 device 122 subdevice 133 function 193"
+        }
+      ]
+    },
+    "KEY_DTV_SLASH_CBL": {
+      "label": "DTV/CBL",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x54",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YAMAHA HTR-6030 (RX-V361).rmdu function 10 'DTV/CBL' (OBC D5 21; NEC 4DEV Combo, parms 122 null 126 null null null null null 0): NEC2 device 122 subdevice 133 function 84"
+        }
+      ]
+    },
+    "KEY_DVR": {
+      "label": "DVR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YAMAHA HTR-6030 (RX-V361).rmdu function 11 'DVR' (OBC 37 21; NEC 4DEV Combo, parms 122 null 126 null null null null null 0): NEC2 device 122 subdevice 133 function 19"
+        }
+      ]
+    },
+    "KEY_V_MINUS_AUX": {
+      "label": "V-AUX",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x55",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YAMAHA HTR-6030 (RX-V361).rmdu function 12 'V-AUX' (OBC 55 21; NEC 4DEV Combo, parms 122 null 126 null null null null null 0): NEC2 device 122 subdevice 133 function 85"
+        }
+      ]
+    },
+    "KEY_STAR": {
+      "label": "*",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xB4",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YAMAHA HTR-6030 (RX-V361).rmdu function 13 '*' (OBC D2 21; NEC 4DEV Combo, parms 122 null 126 null null null null null 0): NEC2 device 122 subdevice 133 function 180"
+        }
+      ]
+    },
+    "KEY_STAR_STAR": {
+      "label": "**",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YAMAHA HTR-6030 (RX-V361).rmdu function 14 '**' (OBC FF 21; NEC 4DEV Combo, parms 122 null 126 null null null null null 0): NEC2 device 122 subdevice 133 function 0"
+        }
+      ]
+    },
+    "KEY_TITLE": {
+      "label": "TITLE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x86",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YAMAHA HTR-6030 (RX-V361).rmdu function 19 'TITLE' (OBC 9E 21; NEC 4DEV Combo, parms 122 null 126 null null null null null 0): NEC2 device 122 subdevice 133 function 134"
+        }
+      ]
+    },
+    "KEY_MENU": {
+      "label": "MENU",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x84",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YAMAHA HTR-6030 (RX-V361).rmdu function 20 'MENU' (OBC DE 21; NEC 4DEV Combo, parms 122 null 126 null null null null null 0): NEC2 device 122 subdevice 133 function 132"
+        }
+      ]
+    },
+    "KEY_RETURN": {
+      "label": "RETURN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xAA",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YAMAHA HTR-6030 (RX-V361).rmdu function 21 'RETURN' (OBC AA 21; NEC 4DEV Combo, parms 122 null 126 null null null null null 0): NEC2 device 122 subdevice 133 function 170"
+        }
+      ]
+    },
+    "KEY_DISPLAY": {
+      "label": "DISPLAY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xC2",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YAMAHA HTR-6030 (RX-V361).rmdu function 22 'DISPLAY' (OBC BC 21; NEC 4DEV Combo, parms 122 null 126 null null null null null 0): NEC2 device 122 subdevice 133 function 194"
+        }
+      ]
+    },
+    "KEY_UP": {
+      "label": "UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YAMAHA HTR-6030 (RX-V361).rmdu function 23 'UP' (OBC F7 21; NEC 4DEV Combo, parms 122 null 126 null null null null null 0): NEC2 device 122 subdevice 133 function 16"
+        }
+      ]
+    },
+    "KEY_DOWN": {
+      "label": "DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YAMAHA HTR-6030 (RX-V361).rmdu function 24 'DOWN' (OBC 77 21; NEC 4DEV Combo, parms 122 null 126 null null null null null 0): NEC2 device 122 subdevice 133 function 17"
+        }
+      ]
+    },
+    "KEY_LEFT": {
+      "label": "LEFT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xAC",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YAMAHA HTR-6030 (RX-V361).rmdu function 25 'LEFT' (OBC CA 21; NEC 4DEV Combo, parms 122 null 126 null null null null null 0): NEC2 device 122 subdevice 133 function 172"
+        }
+      ]
+    },
+    "KEY_RIGHT": {
+      "label": "RIGHT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YAMAHA HTR-6030 (RX-V361).rmdu function 26 'RIGHT' (OBC B7 21; NEC 4DEV Combo, parms 122 null 126 null null null null null 0): NEC2 device 122 subdevice 133 function 18"
+        }
+      ]
+    },
+    "KEY_ENTER": {
+      "label": "ENTER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xAD",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YAMAHA HTR-6030 (RX-V361).rmdu function 27 'ENTER' (OBC 4A 21; NEC 4DEV Combo, parms 122 null 126 null null null null null 0): NEC2 device 122 subdevice 133 function 173"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YAMAHA HTR-6030 (RX-V361).rmdu function 28 'VOL+' (OBC A7 21; NEC 4DEV Combo, parms 122 null 126 null null null null null 0): NEC2 device 122 subdevice 133 function 26"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x1B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YAMAHA HTR-6030 (RX-V361).rmdu function 29 'VOL-' (OBC 27 21; NEC 4DEV Combo, parms 122 null 126 null null null null null 0): NEC2 device 122 subdevice 133 function 27"
+        }
+      ]
+    },
+    "KEY_PROG_30": {
+      "label": "<< PROG",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x59",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YAMAHA HTR-6030 (RX-V361).rmdu function 30 '<< PROG' (OBC 65 21; NEC 4DEV Combo, parms 122 null 126 null null null null null 0): NEC2 device 122 subdevice 133 function 89"
+        }
+      ]
+    },
+    "KEY_PROG_31": {
+      "label": "PROG >>",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x58",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YAMAHA HTR-6030 (RX-V361).rmdu function 31 'PROG >>' (OBC E5 21; NEC 4DEV Combo, parms 122 null 126 null null null null null 0): NEC2 device 122 subdevice 133 function 88"
+        }
+      ]
+    },
+    "KEY_ENHANCER": {
+      "label": "ENHANCER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x94",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YAMAHA HTR-6030 (RX-V361).rmdu function 32 'ENHANCER' (OBC D6 21; NEC 4DEV Combo, parms 122 null 126 null null null null null 0): NEC2 device 122 subdevice 133 function 148"
+        }
+      ]
+    },
+    "KEY_STRAIGHT": {
+      "label": "STRAIGHT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x56",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YAMAHA HTR-6030 (RX-V361).rmdu function 33 'STRAIGHT' (OBC 95 21; NEC 4DEV Combo, parms 122 null 126 null null null null null 0): NEC2 device 122 subdevice 133 function 86"
+        }
+      ]
+    },
+    "KEY_SUR_DECODE": {
+      "label": "SUR. DECODE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x8D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YAMAHA HTR-6030 (RX-V361).rmdu function 34 'SUR. DECODE' (OBC 4E 21; NEC 4DEV Combo, parms 122 null 126 null null null null null 0): NEC2 device 122 subdevice 133 function 141"
+        }
+      ]
+    },
+    "KEY_NIGHT": {
+      "label": "NIGHT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x95",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YAMAHA HTR-6030 (RX-V361).rmdu function 35 'NIGHT' (OBC 56 21; NEC 4DEV Combo, parms 122 null 126 null null null null null 0): NEC2 device 122 subdevice 133 function 149"
+        }
+      ]
+    }
+  }
+}
