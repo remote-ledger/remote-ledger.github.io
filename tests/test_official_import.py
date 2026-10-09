@@ -11,7 +11,7 @@ from pathlib import Path
 import pytest
 
 from remote_ledger.errors import ValidationError
-from remote_ledger.official import anthem, marantz
+from remote_ledger.official import anthem, marantz, oppo
 from remote_ledger.official import importer as oi
 from remote_ledger.official.common import MANIFEST, Report, load_snapshot
 from remote_ledger.serialize import load
@@ -24,9 +24,9 @@ SNAPSHOT = ROOT / oi.SNAPSHOT
 
 
 def test_every_document_and_csv_is_the_one_the_manifest_pins():
-    for maker in ("marantz", "anthem"):
+    for maker, retrieved in (("marantz", "2026-10-08"), ("anthem", "2026-10-08"), ("oppo", "2026-10-09")):
         snap = load_snapshot(SNAPSHOT / maker)
-        assert snap.maker == maker and snap.retrieved == "2026-10-08"
+        assert snap.maker == maker and snap.retrieved == retrieved
         assert snap.documents and snap.sheets
         for name, entry in snap.documents.items():
             assert entry["url"].startswith("https://") and entry["sha256"] and entry["bytes"] > 1000, name
@@ -258,15 +258,16 @@ def test_the_committed_official_import_keeps_r19():
     """Conditions 2 and 3 over every form: README and report beside it, one form a key, Plausible
     or Untested, and a citation that names a document the manifest pins, by hash."""
     assert (ROOT / oi.IMPORT_ROOT / "README.md").is_file() and (ROOT / oi.IMPORT_ROOT / oi.REPORT).is_file()
-    hashes = {}
-    for maker in ("marantz", "anthem"):
+    hashes, dates, snapshots = {}, {}, {}
+    for maker in ("marantz", "anthem", "oppo"):
         manifest = json.loads((SNAPSHOT / maker / MANIFEST).read_text(encoding="utf-8"))
-        hashes.update({n: e["sha256"] for n, e in manifest["documents"].items()})
-        retrieved = manifest["retrieved"]
-    shape = re.compile(r"^(?:marantz\.com archive-downloads|anthemav\.com \(storage\.googleapis\.com/sandbox1-anthemav/an\))/"
-                       r"(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})\) sheet '[^']+' row (\d+) ")
+        for name, entry in manifest["documents"].items():
+            hashes[name], dates[name], snapshots[name] = entry["sha256"], manifest["retrieved"], entry.get("snapshot")
+    shape = re.compile(r"^(?:marantz\.com archive-downloads|anthemav\.com \(storage\.googleapis\.com/sandbox1-anthemav/an\)"
+                       r"|download\.oppodigital\.com/\w+)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
+                       r"(?:, from the Wayback Machine snapshot (\d{14}))?\) sheet '[^']+' row (\d+) ")
     files = sorted((ROOT / oi.IMPORT_ROOT).rglob("*.json"))
-    assert len(files) > 150
+    assert len(files) > 180
     bad = []
     for path in files:
         for key, spec in load(path)["keys"].items():
@@ -276,7 +277,78 @@ def test_the_committed_official_import_keeps_r19():
                 m = shape.match(form.get("source", ""))
                 ok = (form["confidence"] in ("plausible", "untested") and "verifiedBy" not in form
                       and form["type"] in ("pronto", "irp") and m is not None
-                      and hashes.get(m[1], "").startswith(m[2]) and m[3] == retrieved)
+                      and hashes.get(m[1], "").startswith(m[2]) and m[3] == dates[m[1]] and m[4] == snapshots[m[1]])
                 if not ok:
                     bad.append(f"{path.name}:{key}")
     assert bad == []
+
+
+# --- Oppo --------------------------------------------------------------------------------------------------------
+
+
+def oppo_rows(device: str = "49B6", keys=(("POWER", "1A", "26.0"), ("Vol +", "13", "19.0"))) -> list[list[str]]:
+    rows = [["Product", "BDP-103/105 Remote Code Set 1", "", "", ""], ["Protocol", "NEC or NEC1", "", "", ""], ["", "HEX", "DEC", "", ""],
+            ["Custom Code", device[:2], "", "", ""], ["Device", device, "", "", ""], [""] * 5,
+            ["Key", "Hex Key Data", "Decimal Key Cmd", "Pronto TSU3000 Code", "Pronto Classic Hex Code"]]
+    for name, hex_, dec in keys:
+        d, s, f = int(device[:2], 16), int(device[2:], 16), int(hex_, 16)
+        rows.append([name, hex_, dec, f"900A 006D 0000 0001 {device} {f:02X}{~f & 0xFF:02X}", nec_pronto(d, s, f)])
+    return rows
+
+
+def test_an_oppo_sheet_is_a_head_and_a_table_of_keys():
+    sheet = oppo.parse_sheet("Remote Code 1", oppo_rows())
+    assert (sheet.number, sheet.product, sheet.custom, sheet.device) == (1, "BDP-103/105 Remote Code Set 1", "49", "49B6")
+    assert [(k.row, k.name, k.hex, k.decimal) for k in sheet.keys] == [(8, "POWER", "1A", "26.0"), (9, "Vol +", "13", "19.0")]
+    with pytest.raises(ValueError, match="no Product, Custom Code and Device lines"):
+        oppo.parse_sheet("Remote Code 2", [["Key", "Hex Key Data"]])
+    assert oppo.key_names(list(oppo.parse_sheet("Remote Code 1", oppo_rows(keys=(("Vol +", "13", "19"), ("VOL+", "14", "20")))).keys)) == {
+        8: "KEY_VOL_PLUS", 9: "KEY_VOL_PLUS_2"}
+
+
+def test_a_row_is_checked_against_every_other_statement_of_the_same_code():
+    sheet = oppo.parse_sheet("Remote Code 1", oppo_rows())
+    key = sheet.keys[0]
+    triple = oppo.check_key(sheet, key)
+    assert triple == (0x49, 0xB6, 0x1A) and oppo.disagreements(sheet, key, triple) == ([], [])
+    typo = oppo.Key(key.row, key.name, key.hex, key.decimal, key.tsu[:-4] + "1AE4", key.classic)
+    assert oppo.disagreements(sheet, typo, triple) == ([], ["its TSU3000 string is 900A 006D 0000 0001 49B6 1AE4, not 900A 006D 0000 0001 49B6 1AE5"])
+    wrong = oppo.Key(key.row, key.name, key.hex, "27.0", key.tsu, nec_pronto(0x49, 0xB6, 0x1B))
+    signal, other = oppo.disagreements(sheet, wrong, triple)
+    assert signal == ["its classic Pronto hex decodes to device 73, sub device 182, function 27"] and other == ["its decimal column says 27.0"]
+    assert oppo.check_key(sheet, oppo.Key(1, "X", "ZZ", "", "", "")) == ("the key's hex is not a byte",)
+
+
+def test_every_signal_oppo_published_says_the_code_of_its_key_and_only_one_derived_string_is_wrong():
+    """The classic Pronto hex is the signal. Decoded bit by bit it says the key's code on every row of the three
+    workbooks (519 rows), and the one place another column is wrong is a TSU3000 string, in the `Picture Adj.` row of
+    seven of the nine sheets."""
+    snap = load_snapshot(SNAPSHOT / "oppo")
+    rows = other = 0
+    wrong = []
+    for document, _models in oppo.DOCUMENTS:
+        for sheet in oppo.SHEETS:
+            code_set = oppo.parse_sheet(sheet, snap.sheet_of(document, sheet))
+            for key in code_set.keys:
+                triple = oppo.check_key(code_set, key)
+                assert isinstance(triple[0], int), (document, sheet, key)
+                signal, others = oppo.disagreements(code_set, key, triple)
+                rows += 1
+                assert signal == [], (document, sheet, key.name)
+                if others:
+                    other += 1
+                    wrong.append((key.name, others[0].split(" is ")[0]))
+    assert rows == 519 and other == 7 and {w for w in wrong} == {("Picture Adj.", "its TSU3000 string")}
+
+
+def test_the_models_of_a_workbook_are_the_ones_its_name_gives_and_the_newest_workbook_has_a_shared_model():
+    oppo_dir = ROOT / oi.IMPORT_ROOT / "oppo"
+    sources = {p.stem: load(p)["keys"]["KEY_POWER"]["forms"][0]["source"] for p in oppo_dir.glob("*.json")}
+    assert sorted(sources) == sorted(f"{m}{s}" for m in ("BDP-103", "BDP-103D", "BDP-105", "UDP-203", "UDP-205") for s in ("", "__code_set_2", "__code_set_3"))
+    assert "BDP-103_BDP-103D_Remote_Code_v1.2.xls" in sources["BDP-103"] and "BDP-103_BDP-105_Remote_Code_v1.1.xls" in sources["BDP-105"]
+    assert "UDP203/UDP-203_Remote_Code_v1.2.xls@" in sources["UDP-205"] and "snapshot 20251211233638" in sources["UDP-205"]
+    for suffix, device in (("", (0x49, 0xB6)), ("__code_set_2", (0x61, 0x9E)), ("__code_set_3", (0x43, 0xBC))):
+        form = load(oppo_dir / f"UDP-203{suffix}.json")["keys"]["KEY_POWER"]["forms"][0]
+        assert tuple(int(form[k], 16) for k in ("device", "subdevice", "function")) == (*device, 0x1A) and form["confidence"] == "plausible"
+    doc = load(oppo_dir / "UDP-203__code_set_2.json")
+    assert (doc["model"], doc["controls"], doc["protocol"]) == ("UDP-203 [code set 2]", ["Oppo UDP-203"], {"name": "NEC1", "carrierHz": 38000, "minSends": 1})

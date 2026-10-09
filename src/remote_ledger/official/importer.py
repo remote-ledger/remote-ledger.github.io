@@ -14,11 +14,11 @@ from typing import Any
 from ..fmt import format_document
 from ..import_common import authored_names as _authored_names
 from ..serialize import dumps
-from . import anthem, marantz
+from . import anthem, marantz, oppo
 from .common import IMPORT_ROOT, MANIFEST, REPORT, SNAPSHOT, Report, load_snapshot
 
 #: maker -> its reader. A maker is imported when its directory is in the snapshot.
-MAKERS = {"anthem": anthem, "marantz": marantz}
+MAKERS = {"anthem": anthem, "marantz": marantz, "oppo": oppo}
 
 
 def import_tree(root: Path, snapshot: Path, authored: dict[tuple[str, str], str]):

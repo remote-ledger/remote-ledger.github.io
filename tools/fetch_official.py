@@ -3,10 +3,11 @@
 
 The documents are what ``rl import official`` is pinned to: a manufacturer's page is not a
 repository, so the pin is the file as the server sent it, and ``MANIFEST.json`` records its URL,
-size, SHA-256, the retrieval date and the server's ``Last-Modified``. Run it, then
+size, SHA-256, the retrieval date (today: do not pass --date) and the server's ``Last-Modified``
+(and, for a copy from the Wayback Machine, the address and snapshot it was archived from). Run it, then
 ``tools/official_sheets_to_csv.py <maker>`` for the spreadsheets, review the diff, and import.
 
-    python3 tools/fetch_official.py marantz|anthem [--date YYYY-MM-DD]
+    python3 tools/fetch_official.py marantz|anthem|oppo
 """
 
 from __future__ import annotations
@@ -14,6 +15,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 import sys
 import time
 import urllib.parse
@@ -22,6 +24,7 @@ import zipfile
 from datetime import date
 from pathlib import Path
 
+WAYBACK = re.compile(r"^https://web\.archive\.org/web/(?P<snapshot>\d{14})id_/(?P<original>https?://.+)$")
 USER_AGENT = "remote-ledger snapshot (+https://github.com/remote-ledger)"
 MARANTZ = ("https://www.marantz.com/on/demandware.static/-/Library-Sites-marantz_europe_shared/default/"
            "dw78eade36/archive-downloads/")
@@ -32,6 +35,17 @@ DOCUMENTS = {
         ("marantz-2014-ir-command-sheet.xls", MARANTZ + "marantz-2014-ir-command-sheet.xls", None),
         ("marantz_fy18_av_sr_nr_ir_code_v02-02072018.xls",
          MARANTZ + "marantz_fy18_av_sr_nr_ir_code_v02-02072018.xls", None),
+    ],
+    # Oppo's own host no longer resolves (the company stopped in 2018 and 2019): these are the Wayback Machine's
+    # copies, each the snapshot named in its URL (``id_``, the raw bytes: the plain form answers a script with a
+    # page of its own), which the manifest records with the original address.
+    "oppo": [
+        ("BDP-103_BDP-103D_Remote_Code_v1.2.xls",
+         "https://web.archive.org/web/20240105021353id_/http://download.oppodigital.com/BDP103/BDP-103_BDP-103D_Remote_Code_v1.2.xls", None),
+        ("BDP-103_BDP-105_Remote_Code_v1.1.xls",
+         "https://web.archive.org/web/20260308143620id_/http://download.oppodigital.com/BDP103/BDP-103_BDP-105_Remote_Code_v1.1.xls", None),
+        ("UDP-203_Remote_Code_v1.2.xls",
+         "https://web.archive.org/web/20251211233638id_/http://download.oppodigital.com/UDP203/UDP-203_Remote_Code_v1.2.xls", None),
     ],
     "anthem": [
         ("AVM-MRXx40-IR-hex-20251202185749500.xlsx",
@@ -64,10 +78,18 @@ def main(argv: list[str] | None = None) -> int:
         data, headers = fetch(url)
         if member is not None:
             data = zipfile.ZipFile(__import__("io").BytesIO(data)).read(member)
+        if name.endswith(".xls") and not data.startswith(b"\xd0\xcf\x11\xe0"):
+            raise SystemExit(f"{name}: {url} did not answer with a spreadsheet ({data[:40]!r}); nothing was pinned")
         (target / name).write_bytes(data)
         entry = {"url": url, "bytes": len(data), "sha256": hashlib.sha256(data).hexdigest()}
+        archived = WAYBACK.match(url)
+        if archived:
+            # a copy from the Wayback Machine: the address it was archived from and when, and what the origin said
+            entry["original"], entry["snapshot"] = archived["original"], archived["snapshot"]
         if "last-modified" in headers:
             entry["lastModified"] = headers["last-modified"]
+        elif "x-archive-orig-last-modified" in headers:
+            entry["lastModified"] = headers["x-archive-orig-last-modified"]
         manifest["documents"][name] = entry
         print(f"{name}: {len(data):,} bytes", file=sys.stderr)
     manifest["documents"] = dict(sorted(manifest["documents"].items()))

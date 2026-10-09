@@ -2050,7 +2050,7 @@ note rather than a live contract.
 
 ## 12. Implementation status
 
-Phases 0-6 are implemented: 3499 tests, `jsonschema` the only runtime
+Phases 0-6 are implemented: 3503 tests, `jsonschema` the only runtime
 dependency. Phase 2 landed its nine SPEC edits *before* its code, per §9 --
 the spec change is what authorises the implementation. (That count is asserted by the suite itself -- see
 `test_documented_test_count_is_current` -- so it cannot drift the way the
@@ -5379,9 +5379,9 @@ lirc           3,138  112,789   58.3% (65,819)    18.8% (593)  49.6% (1,557)   7
 smartir           62      914      81.7% (747)     54.8% (34)     67.7% (42)      79.0% (49)
 hifi-remote      151    6,772    43.5% (2,951)       3.9% (6)     14.5% (22)      39.7% (60)
 jp1            1,789   67,417   76.7% (51,771)    24.2% (433)  68.3% (1,223)   90.2% (1,615)
-official         174   11,980    16.9% (2,026)       3.4% (6)       3.4% (6)        4.0% (7)
+official         189   12,844    21.6% (2,776)       3.1% (6)     11.1% (21)      11.6% (22)
 authored           5      128       77.3% (99)      40.0% (2)      60.0% (3)       60.0% (3)
-all           15,332  611,265  75.3% (460,585)  36.2% (5,565)  64.3% (9,861)  88.4% (13,565)
+all           15,347  612,129  75.3% (461,335)  36.2% (5,565)  64.3% (9,876)  88.4% (13,580)
 
 Remotes with at least 10 keys:
 
@@ -5392,12 +5392,12 @@ lirc           2,867  111,431   58.2% (64,915)    17.3% (496)  49.3% (1,415)   8
 smartir           39      786      84.3% (663)     58.9% (23)     76.9% (30)      94.8% (37)
 hifi-remote      128    6,653    43.7% (2,908)       3.9% (5)     14.8% (19)      42.1% (54)
 jp1            1,691   66,792   76.8% (51,361)    23.5% (399)  69.6% (1,177)   91.4% (1,547)
-official         164   11,938    16.7% (1,995)       0.0% (0)       0.0% (0)        0.6% (1)
+official         179   12,802    21.4% (2,745)       0.0% (0)      8.3% (15)       8.9% (16)
 authored           4      120       75.8% (91)      25.0% (1)      50.0% (2)       50.0% (2)
-all           14,308  606,186  75.4% (457,159)  35.9% (5,148)  64.9% (9,296)  89.7% (12,838)
+all           14,323  607,050  75.4% (457,909)  35.9% (5,148)  65.0% (9,311)  89.7% (12,853)
 ```
 
-(The `official` row is the import of §29 (D123 to D127): 174 files of Marantz's and Anthem's own charts. **Its keys map the least of any source, 16.9%, and only 6 of its 174 remotes reach 90%**, because a receiver's chart is the whole command set of a receiver (tuner presets and frequency steps, surround modes, Pure Direct, discrete `Audio Mute On` and `Off`, a source key for each input), which the 156 keys of D84 do not cover: 9,954 of its 11,980 keys are unmapped, under 574 different names, and what does map is volume, power, the cursor, bass, treble and sleep. Widening the vocabulary to the receiver commands is the owner's call (D84 is theirs) and is in TODO.md, not done here. The `jp1` row is the import of §28 (D118 to D122), added after the same figures. The `hifi-remote` row is the import of §27 (D109 to D117), added after the figures in D85 to D87's prose were measured; those figures are the corpus without it. Its keys map less than the others' because the pages describe commands of one kind of device: `Index Mark`, `Disc +`, `Scan Reverse`, and `Select`, which D84 does not map.)
+(The `official` row is the import of §29 and §31 (D123 to D127, D131 to D133): 189 files of Marantz's, Anthem's and Oppo's own tables. **Its keys map the least of any source, 21.6%, and only 6 of its 189 remotes reach 90%**, because a receiver's chart is the whole command set of a receiver (tuner presets and frequency steps, surround modes, Pure Direct, discrete `Audio Mute On` and `Off`, a source key for each input), which the 156 keys of D84 do not cover: 10,068 of its 12,844 keys are unmapped, under 584 different names, and what does map is volume, power, the cursor, bass, treble and sleep. Oppo's player tables are the exception, and are why the share is not lower: 750 of its 864 keys (86.8%) map. Widening the vocabulary to the receiver commands is the owner's call (D84 is theirs) and is in TODO.md, not done here. The `jp1` row is the import of §28 (D118 to D122), added after the same figures. The `hifi-remote` row is the import of §27 (D109 to D117), added after the figures in D85 to D87's prose were measured; those figures are the corpus without it. Its keys map less than the others' because the pages describe commands of one kind of device: `Index Mark`, `Disc +`, `Scan Reverse`, and `Select`, which D84 does not map.)
 
 (The `authored` row is the Meridian MSR, Samsung BN59-01199F, Sony RMT-B118P and Topping RC-15A: 94 of 116 keys; the 22 left are the Meridian's tape and VCR sources, the Topping's DAC settings and `KEY_SEN`.)
 
@@ -5513,7 +5513,7 @@ FTS5 is not in every Android SQLite, so the search is ordinary columns and one p
 
 ### D91 — Signals: shared, binary, sorted
 
-**The data-size reasoning.** The IR Blaster data has **411,265 keys but only 57,709 distinct compiled signals** (14%): the whole ledger has 611,265 keys and 167,707 (27%); LIRC alone shares little (112,789 keys, 97,775 signals, the raw captures). A key row is 20 bytes and a signal is 129 on average (the longest, a LIRC capture, 628 words), so storing each signal once is what makes the catalog small: the signals are 20.1 MB of blobs for 155,964, where one blob per key would be 72.9 MB. The key rows are the other half, and the reason `keys` has no text where the canonical key says it (D89).
+**The data-size reasoning.** The IR Blaster data has **411,265 keys but only 57,709 distinct compiled signals** (14%): the whole ledger has 612,129 keys and 167,869 (27%); LIRC alone shares little (112,789 keys, 97,775 signals, the raw captures). A key row is 20 bytes and a signal is 129 on average (the longest, a LIRC capture, 628 words), so storing each signal once is what makes the catalog small: the signals are 20.1 MB of blobs for 155,964, where one blob per key would be 72.9 MB. The key rows are the other half, and the reason `keys` has no text where the canonical key says it (D89).
 
 **The blob** is `signals.words`: a big-endian `uint16` **count of words**, then the words, each a big-endian `uint16`. The words are exactly those of the Pronto Hex string the ledger compiled the key to (`pronto.encode`): word 0 is `0000`, word 1 the frequency word, word 2 the number of burst pairs of the intro and word 3 of the repeat sequence, then the durations in carrier cycles, a mark then a space, first the intro and then the repeat (D6, D25, D78). The count is redundant with the length of the blob and with words 2 and 3 (`count = 4 + 2 x (n1 + n2)`); it is there so that a reader can reject a damaged blob without trusting anything else. One SQLite row per signal, `id` from 1 in the **sorted order of the blobs** as bytes: the length prefix makes that order by length first, then by content, so signals of one protocol and of one remote's family sit together, which is what compresses (D95). **Microseconds** are `round_half_up(cycles x period)` with `period = word1 x 0.241246 us` (D25: lossy in this direction by under half a cycle); the **carrier** is the catalog's (`remotes.carrier_hz`, what the file declared, `38000`) and the frequency word says another number (`006D` is 38,029 Hz): which an output transmits is its own decision, and both are in the vectors.
 
@@ -5530,7 +5530,7 @@ A remote is carried when **any** of its brands is chosen (its maker or a brand o
 
 **Everything not in the subset is recorded**: `excluded_brands` holds each left-out brand (`name`, `norm`) and `api_key`, the ten hex digits (SHA-1 of the exact name, D76) of the shard of the app API (§21) that has its remotes, comma-separated when the import spells it two ways; **NULL where the app API has none**, because the API serves the IR Blaster import only. Since D117 nothing is left out of the selected bundle, so the table is empty and **0 brands, 0 remotes, 0 keys** are missing from it, and **0 remotes of LIRC and SmartIR** are in no static file of the ledger that the bundle does not hold. Before it, 4,992 brands were left out, 228 of them with no shard, and 1,794 remotes of LIRC and SmartIR (the authored ones counted with them) were in no static file of the ledger at all until the full bundle was published; that finding is why `full` exists, and the selected bundle no longer has it.
 
-**What the numbers said** (D95, at a 20 MB cap; D117 removed the cap and these are history): the list did not fit. Samsung, LG, Sony, Panasonic and Philips, the first five lines, are 11.6 MB of the 19 by the estimate (Sony alone has 1,061 remotes, and most of the bytes of a brand with old equipment are LIRC raw captures: 5.0 MB of signals for 1,375 of the 4,394 remotes); the bundle carries **35 brands of the list and one by the proxy**, and **77 brands of the list are left out for lack of room** (the first are JVC, Grundig, Thomson, Telefunken, Loewe Opta, Beko, Vestel...). Levers the owner has, none taken here: reorder the list so the brands that matter most come first (the cheap ones are taken wherever the budget allows), shorten it, raise the cap, or drop what is bulkiest per remote (the LIRC raw captures, about 6 MB of the 19). **The owner signs off on the list**; until then it is a proposal. *Since D117:* nothing is skipped (0 brands of the list are left out) and nothing is left out of the bundle. The profile carries 112 brands of the list and 5,260 by the proxy, 5,372 in all, with 15,332 remote files, and its file is the size of `full`.
+**What the numbers said** (D95, at a 20 MB cap; D117 removed the cap and these are history): the list did not fit. Samsung, LG, Sony, Panasonic and Philips, the first five lines, are 11.6 MB of the 19 by the estimate (Sony alone has 1,061 remotes, and most of the bytes of a brand with old equipment are LIRC raw captures: 5.0 MB of signals for 1,375 of the 4,394 remotes); the bundle carries **35 brands of the list and one by the proxy**, and **77 brands of the list are left out for lack of room** (the first are JVC, Grundig, Thomson, Telefunken, Loewe Opta, Beko, Vestel...). Levers the owner has, none taken here: reorder the list so the brands that matter most come first (the cheap ones are taken wherever the budget allows), shorten it, raise the cap, or drop what is bulkiest per remote (the LIRC raw captures, about 6 MB of the 19). **The owner signs off on the list**; until then it is a proposal. *Since D117:* nothing is skipped (0 brands of the list are left out) and nothing is left out of the bundle. The profile carries 112 brands of the list and 5,260 by the proxy, 5,372 in all, with 15,347 remote files, and its file is the size of `full`.
 
 ### D93 — The manifest, `dataVersion` and the signature
 
@@ -5562,16 +5562,16 @@ Measured on the 64-core development machine (eight workers), `gzip -9` as the co
 
 | | `full` | `selected` |
 |---|---|---|
-| file | 54,947,840 B | 54,947,840 B |
-| `gzip -9` | 13,952,748 B | 13,953,334 B |
+| file | 54,988,800 B | 54,988,800 B |
+| `gzip -9` | 13,960,382 B | 13,960,518 B |
 | brands | 5,372 | 5,372 |
-| models | 279,886 | 279,886 |
-| remote files | 15,332 | 15,332 |
-| remotes, the fragments of D103 folded | 15,017 | 15,017 |
-| keys | 611,265 | 611,265 |
-| signals | 167,707 | 167,707 |
+| models | 279,905 | 279,905 |
+| remote files | 15,347 | 15,347 |
+| remotes, the fragments of D103 folded | 15,032 | 15,032 |
+| keys | 612,129 | 612,129 |
+| signals | 167,869 | 167,869 |
 | left out | none | none: 0 brands, 0 remotes, 0 keys |
-| `rl bundle` (read, build, write) | 28 s, 0.86 GB peak | 26 s, 0.87 GB peak |
+| `rl bundle` (read, build, write) | 26 s, 0.86 GB peak | 26 s, 0.86 GB peak |
 | `rl bundle --verify` | 22 s | 22 s |
 
 Where the bytes are, `full` (selected is the same shape): signals 22.4 MB (44.5%), keys 10.8 (21.5%), models 6.9 (13.8%), ngram 5.2 (10.2%), controls 3.4 (6.7%), remotes 1.3 (2.7%). For the app API (§21) the same catalog was 57 MB and 9,817 files, and 12.9 MB gzipped; the whole ledger's compiled corpus is 358 MB. The IR Blaster signals alone are 8,793,390 bytes as blobs (8.8 MB of binary words) and 280,511 bytes gzipped on their own (all 155,964: 20.1 MB, 892,095 gzipped, 23 times smaller). Sorted, the signals compress far better than the rest of the file (the other 28 MB gzip to about 11.8 MB), so **on the wire the catalog is its rows and not its signals**.
@@ -5626,23 +5626,23 @@ Written by `rl bundle matching-vectors --file tests/vectors/matching_vectors.jso
 
 ### D99 — What was measured, and what is not proven
 
-Seed 1, 40 devices a class. **Selected bundle** (5,372 brands, 279,886 models: the same as the full one since D117) and **full bundle** (5,372 brands, 279,886 models):
+Seed 1, 40 devices a class. **Selected bundle** (5,372 brands, 279,905 models: the same as the full one since D117) and **full bundle** (5,372 brands, 279,905 models):
 
 | class | selected top-1 | selected top-5 | full top-1 | full top-5 |
 |---|---|---|---|---|
 | exact | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) |
 | case | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) |
 | punctuation | 39 (97.5%) | 40 (100.0%) | 39 (97.5%) | 40 (100.0%) |
-| dropped-suffix | 35 (87.5%) | 40 (100.0%) | 35 (87.5%) | 40 (100.0%) |
+| dropped-suffix | 36 (90.0%) | 39 (97.5%) | 36 (90.0%) | 39 (97.5%) |
 | typo | 35 (87.5%) | 40 (100.0%) | 35 (87.5%) | 40 (100.0%) |
-| brand-partial | 21 (52.5%) | 32 (80.0%) | 21 (52.5%) | 32 (80.0%) |
-| model-only | 37 (92.5%) | 39 (97.5%) | 37 (92.5%) | 39 (97.5%) |
+| brand-partial | 29 (72.5%) | 35 (87.5%) | 29 (72.5%) | 35 (87.5%) |
+| model-only | 39 (97.5%) | 40 (100.0%) | 39 (97.5%) | 40 (100.0%) |
 | reversed | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) |
-| **all (320)** | **287 (89.7%)** | **311 (97.2%)** | **287 (89.7%)** | **311 (97.2%)** |
+| **all (320)** | **298 (93.1%)** | **314 (98.1%)** | **298 (93.1%)** | **314 (98.1%)** |
 
-**Read it as the upper bound it is** (D98). **A partial name is ambiguous**: `LG 32 LG 5` is the start of `32 LG 5010`, `32 LG 5020` and `32 LG 5300`, and `PHILIPS 24 CE 75` starts forty models. Eight of the nine misses of the first five, in both bundles, are partial names of that kind (Sanyo, Etco, Loewe Opta, LG, Toshiba, Samsung, Onkyo, Sharp); the ninth is a model-only query for `30076687`, a number that five brands give to a model, whose first five answers are those five brands' and not the device the query was drawn from. A person typing half a model number has to be shown a list, which the answer is: five candidates, and the brand's models when none matches.
+**Read it as the upper bound it is** (D98). **A partial name is ambiguous**: `LG 32 LG 5` is the start of `32 LG 5010`, `32 LG 5020` and `32 LG 5300`, and `SONY KDL - 40 X 2` starts a dozen. The six misses of the first five, the same in both bundles, are five partial names of that kind (`ETCO 4822 218`, `SONY KDL - 40 X 2`, `LOEWE OPTA PROFI`, `LG 32 LG 5`, `ONKYO TX-NR5`) and one dropped suffix where the sibling models differ by a character (`PANASONIC TX-28XD3`, answered with `TX 28 XD 3` and its variants). A person typing half a model number has to be shown a list, which the answer is: five candidates, and the brand's models when none matches.
 
-**Why these rates are lower than the ones D99 first printed (91.2% and 97.8%).** The generator ranks devices by a hash of the seed, the brand and the model's id, and an id is a place in the catalog's sorted list of models, so a catalog that gains models shifts the ids after them and the draw of 40 devices a class is a different draw. The 174 files of §29 added 254 models and moved it: brand-partial fell most (28 to 21 first answers, 35 to 32 in the first five, of 40), because a draw of partial names is only as good as how many of them name a unique model. Nothing in the matcher changed, none of the nine misses is a Marantz or Anthem device, and the table is still the bound of 320 queries it was: the 1.5 points of the first answer are five queries. The 95% target is not established by this: it needs real queries.
+**Why the rates are not the ones D99 first printed (91.2% and 97.8%), and why they move.** The generator ranks devices by a hash of the seed, the brand and the model's id, and an id is a place in the catalog's sorted list of models, so a catalog that gains models shifts the ids after them and the draw of 40 devices a class is a different draw. §29's 254 models moved it (89.7% and 97.2%) and §31's 19 models moved it again (93.1% and 98.1%), with `brand-partial` up (52.5% to 72.5% at the first answer, 80.0% to 87.5% in the first five), `model-only` up (92.5% to 97.5%) and `typo` unchanged. Nothing in the matcher changed, none of the six misses is a device of the Oppo import, and the table is still the bound of 320 queries it was: the 3.4 points of the first answer are eleven queries. The 95% target is not established by this: it needs real queries.
 
 **Not proven.**
 
@@ -6075,3 +6075,27 @@ What it needs of this repository is one thing: the tools that read the corpus mu
 It is `remote-ledger/remote-ledger-private`: `remotes/<source>/` and `sources/<source>/` as here, an `imports.json`, the importers and fetchers of its sources (a package, `remote_ledger_private`, over `remote_ledger`), their tests, and a document for each source, and **no `build/` or `site/`**, which are this repository's. Its first source is RemoteCentral's, 2,187 files and 54,975 keys, every key Untested. Run from either checkout, the tools read both: over the real data, `rl validate --extra-root` finds 17,519 files and no error, `rl keys report` the row the data had here (57.8% of its keys mapped), and `rl bundle --profile full --extra-root` a bundle of 63,385,600 bytes that `--verify` reads against the trees (17,204 remotes, 211,680 signals): the size and the counts the same data made when it was in this repository. **A source leaves the private repository for this one when its licence is cleared**, by a pull request here that moves its two directories, adds it to `paths.IMPORTS`, the bundle's `SOURCES` and the notices' `FACTS`, and writes its section; nothing in either repository's history needs rewriting for that.
 
 **Not proven.** That the private repository stays private: the options of this repository cannot make a bundle private, and the closed pull request that first carried the RemoteCentral data was public for a time, so the data may be cached or cloned (GitHub keeps a closed pull request's commits reachable through its refs, and its support removes them). That the tools stay compatible: the private importers use `remote_ledger`'s internals (`import_common`, `official.common`, `irblaster.importer`), so the repository pins the commit it was last run against.
+
+## 31. Oppo's remote code workbooks
+
+The second batch of manufacturers' own tables (§29): Oppo's three remote code workbooks, for the BDP-103 and BDP-105 Blu-ray players, the BDP-103D and the UDP-203 and UDP-205 Ultra HD players. Each is a workbook of three sheets, the three code sets (`Remote Code 1` to `3`) a player's remote can be set to, with a row for each key: its NEC function in hex and decimal, the Pronto string Pronto's own TSU3000 remote takes, and the Pronto classic hex. The survey that found them (the manufacturers' tables, ranked) rated them A-: popular players, and the survey found the first code set's custom code (`0x49`) in the ledger as an anonymous IR Blaster group, and the others (`0x61`, `0x43`) and both Ultra HD players absent.
+
+It adds `src/remote_ledger/official/oppo.py`, `oppo` to the fetcher and the sheet converter, `sources/official/oppo/` (the three workbooks and 12 CSVs, 1.6 MB), and `remotes/official/oppo/` (**15 files, 864 keys, every key Plausible**) beside Marantz and Anthem; it registers nothing new, since `official` is already a source.
+
+### D131 — The workbooks are the Wayback Machine's copies
+
+Oppo's download host (`download.oppodigital.com`) no longer resolves, and the support pages still link to it. The three workbooks are the Wayback Machine's copies, each the snapshot named in its URL (`BDP-103_BDP-103D_Remote_Code_v1.2.xls` 2024-01-05, `BDP-103_BDP-105_Remote_Code_v1.1.xls` 2026-03-08, `UDP-203_Remote_Code_v1.2.xls` 2025-12-11), and the manifest records the original address, the snapshot and **the origin's own `Last-Modified`** as the archive kept it (2014-01-31, 2012-10-23 and 2016-12-13), so a citation says "from the Wayback Machine snapshot 20251211233638" and the manifest says when Oppo last changed the file. The raw form of an archived URL (`.../<snapshot>id_/<original>`) is the original bytes; the plain form answered a script with an HTML page of the archive's own, which the tool pinned for a moment on the first run, so `fetch_official.py` now **refuses a spreadsheet that does not begin like one**. The three files are byte-identical to the copies the survey had fetched another way.
+
+### D132 — Each row is checked against the sheet's other statements of its code
+
+A sheet is NEC1 with one custom code (`49`, `61` and `43` for the three sets), and its `Device` cell is that byte and its complement. The key's function is read from the hex column and made an `irp` NEC1 form with device, sub device (the complement) and function, as the Anthem codes are, and each row is checked against **three other statements of the same code**: the decimal column, the TSU3000 string (`900A 006D 0000 0001 49B6 1AE5`: device bytes, function, and its complement), and the NEC frame decoded bit by bit from the classic hex. **The classic hex is the signal, and on all 519 rows it says the key's code** (the tests decode every one). On seven of the nine sheets the `Picture Adj.` row's TSU3000 string is `...0EE1` where function `0E` needs `...0EF1` (`E1` is the complement of `1E`): a typo in a derived string, with the hex column, the decimal column and the signal agreeing on `0E`. The rule is that a row whose **signal** disagrees with its code is Untested (none is) and one where only another column does is Plausible with the discrepancy in its citation, which these seven are.
+
+A workbook serves the models its file name gives (`BDP-103` and `BDP-105`; `BDP-103` and `BDP-103D`; `UDP-203`, and `UDP-205`, whose support page links the UDP-203 workbook, whose sheets say `UDP-20X`), and a model two workbooks name takes the newest (`BDP-103` from v1.2). The first code set has the model's name and the others are `BDP-103 [code set 2]` and `[code set 3]`, so a player a person set to code set 2 finds its own file; `controls` is `Oppo <model>`. A key's name is `KEY_` and the fold of its label (`Vol +` is `KEY_VOL_PLUS`).
+
+### D133 — What it does to the rest, what is not read, and what is not proven
+
+The corpus is **15,347 remote files and 612,129 keys**, 5,372 brands (Oppo was in the catalog) and 279,905 models, with 167,869 distinct signals (162 more: the five models share three code sets, so the 864 keys are 180 distinct codes, 60 for each custom code, and 18 of them were already in the ledger). Both bundle profiles are 54,988,800 bytes and `rl bundle --verify` passes on each. 86.8% of Oppo's keys map to the vocabulary (§22), which lifts the `official` row from 16.9% to 21.6%, and the 15 files carry the `carrier-off-nominal` warning Anthem's 12 do (the maker's own strings use word `006D`, 38.0 kHz). The search evaluation's draw moved again (D99).
+
+**Not read**: each workbook's `Notes` (discrete input selection is a sequence, `INPUT`, a 2 second wait and the input's number; a picture preset is `Picture Adj.`, a number and `SETUP`), which are macros and are in `IMPORT.md` as notes; the `Layout` sheets, which are empty; and Oppo's pages for the older BDP-83 and BDP-93, which link no code file.
+
+**Not proven.** That any code was sent to a player. That the `DARBEE` key, which the v1.2 workbook lists for `BDP-103`, belongs to the plain BDP-103 and not only the `D` model: the file's name gives both and the rule takes the newest. That the Wayback copies are what Oppo last published: the `Last-Modified` dates are the archive's record of the origin's headers.

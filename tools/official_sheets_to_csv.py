@@ -27,6 +27,11 @@ SHEETS = {
         "marantz-2014-ir-command-sheet.xls": ["AVR Commands"],
         "marantz_fy18_av_sr_nr_ir_code_v02-02072018.xls": ["AVR Commands"],
     },
+    "oppo": {
+        "BDP-103_BDP-103D_Remote_Code_v1.2.xls": ["Remote Code 1", "Remote Code 2", "Remote Code 3", "Notes"],
+        "BDP-103_BDP-105_Remote_Code_v1.1.xls": ["Remote Code 1", "Remote Code 2", "Remote Code 3", "Notes"],
+        "UDP-203_Remote_Code_v1.2.xls": ["Remote Code 1", "Remote Code 2", "Remote Code 3", "Notes"],
+    },
     "anthem": {"AVM-MRXx40-IR-hex-20251202185749500.xlsx": ["MRX x10-x40 remote layout", "MRX x10-x40 IR hex codes"]},
 }
 
