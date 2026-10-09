@@ -56,8 +56,8 @@ def test_the_dedupe_numbers_the_design_quotes(real):
             distinct.setdefault(record.source, set()).add(key[4])
     assert (keys["irblaster"], len(distinct["irblaster"])) == (411_265, 57_709)
     assert (keys["lirc"], keys["smartir"], keys["authored"]) == (112_789, 914, 128)
-    assert sum(keys.values()) == 612_129 and len(records) == 15_347
-    assert len(set().union(*distinct.values())) == 167_869
+    assert sum(keys.values()) == 617_777 and len(records) == 15_494
+    assert len(set().union(*distinct.values())) == 168_080
     # the IR Blaster signals as blobs, with their two-byte counts: 8.8 MB of binary words
     assert sum(len(b) for b in distinct["irblaster"]) == 8_793_390
 
@@ -76,9 +76,9 @@ def test_the_selected_profile_carries_every_brand_and_has_neither_a_budget_nor_a
     assert select.MIN_MODELS == 0 and select.MIN_MAPPED_SHARE == 0.0
     assembled, data = selected
     carried = {row[2] for row in assembled.brands}
-    assert carried == set(real[1].brands) and len(carried) == 5_372 and assembled.excluded == []
+    assert carried == set(real[1].brands) and len(carried) == 5_398 and assembled.excluded == []
     assert len(selection.curated) == 112 and selection.skipped == [] and selection.unresolved == []
-    assert len(selection.proxy_added) == 5_260
+    assert len(selection.proxy_added) == 5_286
     assert {"sanyo", "loewe", "haier", "integra", "skyworth", "westinghouse", "topping"} <= carried
     kept = {row[0] for row in assembled.remote_refs}
     assert kept == {merge.ref_of(r) for r in real[0]}
@@ -155,7 +155,7 @@ def test_design_quotes_the_numbers_of_the_real_build(real, selected, selection):
         f"{len(records):,} | {len(kept):,}",                                  # the remote files
         f"{len(records) - collected.folded.folded:,} | {len(assembled.remotes):,}",   # the remotes, D103
         f"{keys:,} | {len(assembled.keys):,}",
-        f"167,869 | {len(assembled.signals):,}",
+        f"168,080 | {len(assembled.signals):,}",
         f"{len(assembled.excluded):,} brands, {len(left_out):,} remotes, "
         f"{sum(len(r.keys) for r in left_out):,} keys",
         f"{len(selection.curated)} brands of the list and {len(selection.proxy_added):,} by the proxy",

@@ -13,36 +13,38 @@ silently (SPEC R19, condition 5).
 | | Count |
 |---|---|
 | Upstream files: not read: KeymapMaster .txt | 2,073 |
-| Upstream files: skipped: no brand | 11 |
-| Upstream files: skipped: no function decodes | 2 |
+| Upstream files: skipped: no brand | 12 |
+| Upstream files: skipped: no function decodes | 3 |
 | Upstream files: upgrades | 3,251 |
-| Remotes: imported | 1,789 |
-| Remotes: skipped: an authored remote wins | 3 |
+| Remotes: imported | 1,936 |
+| Remotes: skipped: an authored remote wins | 5 |
 | Keys: imported: NEC1 | 56,045 |
 | Keys: imported: NEC2 | 1,883 |
 | Keys: imported: NECx1 | 1,496 |
 | Keys: imported: NECx2 | 4,470 |
+| Keys: imported: RC5 | 5,648 |
 | Keys: imported: Sony12 | 1,462 |
 | Keys: imported: Sony15 | 423 |
 | Keys: imported: Sony20 | 1,638 |
 | Keys: skipped: the command does not fit Sony's seven bits | 35 |
-| Keys: skipped: the function has no single OBC byte | 4,031 |
+| Keys: skipped: the device the function selects is not set | 40 |
+| Keys: skipped: the function has no single OBC byte | 4,269 |
 | Keys: skipped: the sub device parameter is missing | 97 |
 | Files by ledger protocol: NEC1 | 1,506 |
 | Files by ledger protocol: NEC2 | 64 |
 | Files by ledger protocol: NECx1 | 38 |
 | Files by ledger protocol: NECx2 | 89 |
+| Files by ledger protocol: RC5 | 147 |
 | Files by ledger protocol: Sony12 | 34 |
 | Files by ledger protocol: Sony15 | 18 |
 | Files by ledger protocol: Sony20 | 40 |
-| Brand taken from: the longest brand of the index that begins the description | 97 |
-| Brand taken from: the master index | 1,689 |
+| Brand taken from: the longest brand of the index that begins the description | 100 |
+| Brand taken from: the master index | 1,835 |
 
-## Executors this import does not read (upgrades) (192)
+## Executors this import does not read (upgrades) (191)
 
 | Executor | Files |
 |---|---|
-| `RC-5` | 151 |
 | `MCE` | 83 |
 | `Sony Combo (12/15/20)` | 82 |
 | `Manual Settings` | 75 |
@@ -235,7 +237,7 @@ silently (SPEC R19, condition 5).
 | `pid\: 01 61` | 1 |
 | `pid\: 01 E2` | 1 |
 
-## Upgrades of a read executor that yield nothing (13)
+## Upgrades of a read executor that yield nothing (15)
 
 | File | Reason |
 |---|---|
@@ -251,17 +253,21 @@ silently (SPEC R19, condition 5).
 | `Satellite/Zodiac DZR-10DTT.rmdu` | `no function decodes` |
 | `TV Combos/Dynex-DX-26LD150A11 TV-DVD.rmdu` | `no brand: the file is not in the master index and its description begins with no brand of it` |
 | `TV/Admiral-Dynex Roku TV.rmdu` | `no brand: the file is not in the master index and its description begins with no brand of it` |
+| `TV/Beko .rmdu` | `no function decodes` |
+| `TV/Pionier N555 ST.rmdu` | `no brand: the file is not in the master index and its description begins with no brand of it` |
 | `TV/Samsung TV LCD Alec2.rmdu` | `no function decodes` |
 
-## Remotes skipped because an authored remote wins (R19, condition 4) (3)
+## Remotes skipped because an authored remote wins (R19, condition 4) (5)
 
 | File | Would have been |
 |---|---|
+| `CD/Hermstedt Hifidelio.rmdu` | `remotes/jp1/Hermstedt/CD-Hermstedt_Hifidelio.json` |
 | `DVD (standard)/CyberHome RMC-300Z x6 (1025).rmdu` | `remotes/jp1/CyberHome/DVD__standard-CyberHome_RMC-300Z_x6__1025.json` |
 | `Minidisc & DAT/Sony DAT.rmdu` | `remotes/jp1/Sony/Minidisc___DAT-Sony_DAT.json` |
 | `Satellite/SonicView SV1000 6131.rmdu` | `remotes/jp1/Sonicview/Satellite-SonicView_SV1000_6131.json` |
+| `TV/VESTEL TV.rmdu` | `remotes/jp1/Vestel/TV-VESTEL_TV.json` |
 
-## Functions skipped (4,163)
+## Functions skipped (4,441)
 
 | File | Function | Reason |
 |---|---|---|
@@ -769,6 +775,31 @@ silently (SPEC R19, condition 5).
 | `Audio/atlas_Yamaha_RX-V596_receiver.rmdu` | `stop` | `the function has no single OBC byte` |
 | `Audio/atlas_Yamaha_RX-V596_receiver.rmdu` | `surround` | `the function has no single OBC byte` |
 | `Audio/atlas_Yamaha_RX-V596_receiver.rmdu` | `tv/vcr` | `the function has no single OBC byte` |
+| `Audio/jamo i300.rmdu` | `#12` | `the function has no single OBC byte` |
+| `Audio/jamo i300.rmdu` | `#16` | `the function has no single OBC byte` |
+| `Audio/jamo i300.rmdu` | `#20` | `the function has no single OBC byte` |
+| `Audio/jamo i300.rmdu` | `#23` | `the function has no single OBC byte` |
+| `Audio/jamo i300.rmdu` | `#29` | `the function has no single OBC byte` |
+| `Audio/jamo i300.rmdu` | `#36` | `the function has no single OBC byte` |
+| `Audio/jamo i300.rmdu` | `#46` | `the function has no single OBC byte` |
+| `Audio/jamo i300.rmdu` | `#49` | `the function has no single OBC byte` |
+| `Audio/jamo i300.rmdu` | `blue` | `the function has no single OBC byte` |
+| `Audio/jamo i300.rmdu` | `channel down` | `the function has no single OBC byte` |
+| `Audio/jamo i300.rmdu` | `channel up` | `the function has no single OBC byte` |
+| `Audio/jamo i300.rmdu` | `custom5` | `the function has no single OBC byte` |
+| `Audio/jamo i300.rmdu` | `exit` | `the function has no single OBC byte` |
+| `Audio/jamo i300.rmdu` | `green` | `the function has no single OBC byte` |
+| `Audio/jamo i300.rmdu` | `last (prev ch)` | `the function has no single OBC byte` |
+| `Audio/jamo i300.rmdu` | `left arrow` | `the function has no single OBC byte` |
+| `Audio/jamo i300.rmdu` | `live` | `the function has no single OBC byte` |
+| `Audio/jamo i300.rmdu` | `pagedown` | `the function has no single OBC byte` |
+| `Audio/jamo i300.rmdu` | `pageup` | `the function has no single OBC byte` |
+| `Audio/jamo i300.rmdu` | `record` | `the function has no single OBC byte` |
+| `Audio/jamo i300.rmdu` | `red` | `the function has no single OBC byte` |
+| `Audio/jamo i300.rmdu` | `right arrow` | `the function has no single OBC byte` |
+| `Audio/jamo i300.rmdu` | `select` | `the function has no single OBC byte` |
+| `Audio/jamo i300.rmdu` | `tv/vcr` | `the function has no single OBC byte` |
+| `Audio/jamo i300.rmdu` | `yellow` | `the function has no single OBC byte` |
 | `Audio_Video Selectors/GXT HDMI HSA-401 HDMI Switcher.rmdu` | `+100` | `the function has no single OBC byte` |
 | `Audio_Video Selectors/GXT HDMI HSA-401 HDMI Switcher.rmdu` | 0 | `the function has no single OBC byte` |
 | `Audio_Video Selectors/GXT HDMI HSA-401 HDMI Switcher.rmdu` | 5 | `the function has no single OBC byte` |
@@ -818,6 +849,57 @@ silently (SPEC R19, condition 5).
 | `Audio_Video Selectors/GXT HDMI HSA-401 HDMI Switcher.rmdu` | `up arrow` | `the function has no single OBC byte` |
 | `Audio_Video Selectors/GXT HDMI HSA-401 HDMI Switcher.rmdu` | `vol down` | `the function has no single OBC byte` |
 | `Audio_Video Selectors/GXT HDMI HSA-401 HDMI Switcher.rmdu` | `vol up` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | `+100` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | 0 | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | 5 | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | 6 | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | 7 | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | 8 | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | 9 | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | `X2` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | `center` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | `channel down` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | `channel up` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | `device button` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | `display` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | `down arrow` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | `eject` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | `enter` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | `exit` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | `fast fwd` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | `fav/scan` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | `input toggle` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | `last (prev ch)` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | `left arrow` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | `menu` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | `mute` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | `next track` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | `pause` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | `pip freeze` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | `pip move` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | `pip on/off` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | `pip swap` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | `play` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | `power` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | `prev track` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | `program guide` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | `rear` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | `record` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | `rewind` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | `right arrow` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | `select` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | `shift-left` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | `shift-right` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | `sleep` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | `slow` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | `slow+` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | `slow-` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | `stop` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | `surround` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | `tv/vcr` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | `up arrow` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | `vol down` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/Gefen HD Digital Audio Switcher HDMI-441A.rmdu` | `vol up` | `the function has no single OBC byte` |
 | `Audio_Video Selectors/HDMI Switch HSW0301.rmdu` | `+100` | `the function has no single OBC byte` |
 | `Audio_Video Selectors/HDMI Switch HSW0301.rmdu` | 3 | `the function has no single OBC byte` |
 | `Audio_Video Selectors/HDMI Switch HSW0301.rmdu` | 4 | `the function has no single OBC byte` |
@@ -1159,6 +1241,49 @@ silently (SPEC R19, condition 5).
 | `Audio_Video Selectors/Uninex VS-14.rmdu` | `up arrow` | `the function has no single OBC byte` |
 | `Audio_Video Selectors/Uninex VS-14.rmdu` | `vol down` | `the function has no single OBC byte` |
 | `Audio_Video Selectors/Uninex VS-14.rmdu` | `vol up` | `the function has no single OBC byte` |
+| `CD/Hermstedt Hifidelio.rmdu` | `+100` | `the function has no single OBC byte` |
+| `CD/Hermstedt Hifidelio.rmdu` | `X2` | `the function has no single OBC byte` |
+| `CD/Hermstedt Hifidelio.rmdu` | `center` | `the function has no single OBC byte` |
+| `CD/Hermstedt Hifidelio.rmdu` | `device button` | `the function has no single OBC byte` |
+| `CD/Hermstedt Hifidelio.rmdu` | `eject` | `the function has no single OBC byte` |
+| `CD/Hermstedt Hifidelio.rmdu` | `fav/scan` | `the function has no single OBC byte` |
+| `CD/Hermstedt Hifidelio.rmdu` | `next track` | `the function has no single OBC byte` |
+| `CD/Hermstedt Hifidelio.rmdu` | `pip freeze` | `the function has no single OBC byte` |
+| `CD/Hermstedt Hifidelio.rmdu` | `prev track` | `the function has no single OBC byte` |
+| `CD/Hermstedt Hifidelio.rmdu` | `rear` | `the function has no single OBC byte` |
+| `CD/Hermstedt Hifidelio.rmdu` | `shift-left` | `the function has no single OBC byte` |
+| `CD/Hermstedt Hifidelio.rmdu` | `shift-right` | `the function has no single OBC byte` |
+| `CD/Hermstedt Hifidelio.rmdu` | `slow` | `the function has no single OBC byte` |
+| `CD/Hermstedt Hifidelio.rmdu` | `slow+` | `the function has no single OBC byte` |
+| `CD/Hermstedt Hifidelio.rmdu` | `slow-` | `the function has no single OBC byte` |
+| `CD/Marantz CD-67mkIISE & PM-66SE AMP.rmdu` | `+100` | `the function has no single OBC byte` |
+| `CD/Marantz CD-67mkIISE & PM-66SE AMP.rmdu` | `X2` | `the function has no single OBC byte` |
+| `CD/Marantz CD-67mkIISE & PM-66SE AMP.rmdu` | `center` | `the function has no single OBC byte` |
+| `CD/Marantz CD-67mkIISE & PM-66SE AMP.rmdu` | `device button` | `the function has no single OBC byte` |
+| `CD/Marantz CD-67mkIISE & PM-66SE AMP.rmdu` | `down arrow` | `the function has no single OBC byte` |
+| `CD/Marantz CD-67mkIISE & PM-66SE AMP.rmdu` | `enter` | `the function has no single OBC byte` |
+| `CD/Marantz CD-67mkIISE & PM-66SE AMP.rmdu` | `fav/scan` | `the function has no single OBC byte` |
+| `CD/Marantz CD-67mkIISE & PM-66SE AMP.rmdu` | `input toggle` | `the function has no single OBC byte` |
+| `CD/Marantz CD-67mkIISE & PM-66SE AMP.rmdu` | `last (prev ch)` | `the function has no single OBC byte` |
+| `CD/Marantz CD-67mkIISE & PM-66SE AMP.rmdu` | `left arrow` | `the function has no single OBC byte` |
+| `CD/Marantz CD-67mkIISE & PM-66SE AMP.rmdu` | `pip freeze` | `the function has no single OBC byte` |
+| `CD/Marantz CD-67mkIISE & PM-66SE AMP.rmdu` | `pip move` | `the function has no single OBC byte` |
+| `CD/Marantz CD-67mkIISE & PM-66SE AMP.rmdu` | `pip on/off` | `the function has no single OBC byte` |
+| `CD/Marantz CD-67mkIISE & PM-66SE AMP.rmdu` | `pip swap` | `the function has no single OBC byte` |
+| `CD/Marantz CD-67mkIISE & PM-66SE AMP.rmdu` | `power` | `the function has no single OBC byte` |
+| `CD/Marantz CD-67mkIISE & PM-66SE AMP.rmdu` | `rear` | `the function has no single OBC byte` |
+| `CD/Marantz CD-67mkIISE & PM-66SE AMP.rmdu` | `record` | `the function has no single OBC byte` |
+| `CD/Marantz CD-67mkIISE & PM-66SE AMP.rmdu` | `right arrow` | `the function has no single OBC byte` |
+| `CD/Marantz CD-67mkIISE & PM-66SE AMP.rmdu` | `select` | `the function has no single OBC byte` |
+| `CD/Marantz CD-67mkIISE & PM-66SE AMP.rmdu` | `shift-left` | `the function has no single OBC byte` |
+| `CD/Marantz CD-67mkIISE & PM-66SE AMP.rmdu` | `shift-right` | `the function has no single OBC byte` |
+| `CD/Marantz CD-67mkIISE & PM-66SE AMP.rmdu` | `sleep` | `the function has no single OBC byte` |
+| `CD/Marantz CD-67mkIISE & PM-66SE AMP.rmdu` | `slow` | `the function has no single OBC byte` |
+| `CD/Marantz CD-67mkIISE & PM-66SE AMP.rmdu` | `slow+` | `the function has no single OBC byte` |
+| `CD/Marantz CD-67mkIISE & PM-66SE AMP.rmdu` | `slow-` | `the function has no single OBC byte` |
+| `CD/Marantz CD-67mkIISE & PM-66SE AMP.rmdu` | `surround` | `the function has no single OBC byte` |
+| `CD/Marantz CD-67mkIISE & PM-66SE AMP.rmdu` | `tv/vcr` | `the function has no single OBC byte` |
+| `CD/Marantz CD-67mkIISE & PM-66SE AMP.rmdu` | `up arrow` | `the function has no single OBC byte` |
 | `CD/Onkyo DX-C390.rmdu` | `+100` | `the function has no single OBC byte` |
 | `CD/Onkyo DX-C390.rmdu` | `X2` | `the function has no single OBC byte` |
 | `CD/Onkyo DX-C390.rmdu` | `center` | `the function has no single OBC byte` |
@@ -1340,6 +1465,7 @@ silently (SPEC R19, condition 5).
 | `Cable/Huawei DC211.rmdu` | `yellow` | `the function has no single OBC byte` |
 | `Cable/Pace DCR-712.rmdu` | `#43` | `the function has no single OBC byte` |
 | `Cable/Pace DCR-712.rmdu` | `#44` | `the function has no single OBC byte` |
+| `Cable/Philips DCX-6171.rmdu` | `Serv` | `the function has no single OBC byte` |
 | `Combo Audio Systems/Durabrand HT-395.rmdu` | `+100` | `the function has no single OBC byte` |
 | `Combo Audio Systems/Durabrand HT-395.rmdu` | 0 | `the function has no single OBC byte` |
 | `Combo Audio Systems/Durabrand HT-395.rmdu` | 1 | `the function has no single OBC byte` |
@@ -1679,6 +1805,7 @@ silently (SPEC R19, condition 5).
 | `DVD (standard)/Mintek DVD 1400.rmdu` | `channel down` | `the function has no single OBC byte` |
 | `DVD (standard)/Mintek DVD 1400.rmdu` | `channel up` | `the function has no single OBC byte` |
 | `DVD (standard)/Momitsu V880N DVD player.rmdu` | `slow` | `the function has no single OBC byte` |
+| `DVD (standard)/NetGear AV2000.rmdu` | `list/PVR menu` | `the function has no single OBC byte` |
 | `DVD (standard)/Norcent DP300.rmdu` | `#0` | `the function has no single OBC byte` |
 | `DVD (standard)/Norcent DP300.rmdu` | `#37` | `the function has no single OBC byte` |
 | `DVD (standard)/Norcent DP300.rmdu` | `#45` | `the function has no single OBC byte` |
@@ -2029,6 +2156,13 @@ silently (SPEC R19, condition 5).
 | `DVR_PVR/FireDTV.rmdu` | `slow-` | `the function has no single OBC byte` |
 | `DVR_PVR/FireDTV.rmdu` | `surround` | `the function has no single OBC byte` |
 | `DVR_PVR/FireDTV.rmdu` | `tv/vcr` | `the function has no single OBC byte` |
+| `DVR_PVR/Fusion FVRT200.rmdu` | `+100` | `the function has no single OBC byte` |
+| `DVR_PVR/Fusion FVRT200.rmdu` | `enter` | `the function has no single OBC byte` |
+| `DVR_PVR/Fusion FVRT200.rmdu` | `pip freeze` | `the function has no single OBC byte` |
+| `DVR_PVR/Fusion FVRT200.rmdu` | `pip move` | `the function has no single OBC byte` |
+| `DVR_PVR/Fusion FVRT200.rmdu` | `pip on/off` | `the function has no single OBC byte` |
+| `DVR_PVR/Fusion FVRT200.rmdu` | `pip swap` | `the function has no single OBC byte` |
+| `DVR_PVR/Fusion FVRT200.rmdu` | `sleep` | `the function has no single OBC byte` |
 | `DVR_PVR/Huawei EC2118.rmdu` | `Custom10` | `the function has no single OBC byte` |
 | `DVR_PVR/Huawei EC2118.rmdu` | `Custom11` | `the function has no single OBC byte` |
 | `DVR_PVR/Huawei EC2118.rmdu` | `Custom12` | `the function has no single OBC byte` |
@@ -2453,6 +2587,7 @@ silently (SPEC R19, condition 5).
 | `Digital STBs/TVPad 2 M233 .rmdu` | `Last_ch` | `the function has no single OBC byte` |
 | `Digital STBs/TVPad 2 M233 .rmdu` | `Record` | `the function has no single OBC byte` |
 | `Digital STBs/TVPad 2 M233 .rmdu` | `White` | `the function has no single OBC byte` |
+| `Digital STBs/Technicolor Set top box.rmdu` | `input` | `the function has no single OBC byte` |
 | `Digital STBs/Teledunya OHC 1600C HD.rmdu` | `#35` | `the function has no single OBC byte` |
 | `Digital STBs/Teledunya OHC 1600C HD.rmdu` | `#36` | `the function has no single OBC byte` |
 | `Digital STBs/Teledunya OHC 1600C HD.rmdu` | `#37` | `the function has no single OBC byte` |
@@ -2783,6 +2918,7 @@ silently (SPEC R19, condition 5).
 | `Media Players/HiMedia HD900.rmdu` | `slow-` | `the function has no single OBC byte` |
 | `Media Players/HiMedia HD900.rmdu` | `surround` | `the function has no single OBC byte` |
 | `Media Players/Klegg MediaShare.rmdu` | `#47` | `the function has no single OBC byte` |
+| `Media Players/Netgear EVA8000.rmdu` | `#40` | `the function has no single OBC byte` |
 | `Media Players/TViX Multimedia Player.rmdu` | `Gap in OBCs\: 18` | `the function has no single OBC byte` |
 | `Media Players/TViX Multimedia Player.rmdu` | `Gap in OBCs\: 32-36` | `the function has no single OBC byte` |
 | `Media Players/TViX Multimedia Player.rmdu` | `Gap in OBCs\: 38-63` | `the function has no single OBC byte` |
@@ -2936,6 +3072,31 @@ silently (SPEC R19, condition 5).
 | `Misc/NoonTec GV3500.rmdu` | `tv/vcr` | `the function has no single OBC byte` |
 | `Misc/Sigma_Designs_Real_Magic.rmdu` | `#33` | `the function has no single OBC byte` |
 | `Misc/Sigma_Designs_Real_Magic.rmdu` | `#36` | `the function has no single OBC byte` |
+| `Misc/Zaaptv IPTV.rmdu` | 0 | `the function has no single OBC byte` |
+| `Misc/Zaaptv IPTV.rmdu` | 1 | `the function has no single OBC byte` |
+| `Misc/Zaaptv IPTV.rmdu` | 2 | `the function has no single OBC byte` |
+| `Misc/Zaaptv IPTV.rmdu` | 3 | `the function has no single OBC byte` |
+| `Misc/Zaaptv IPTV.rmdu` | 4 | `the function has no single OBC byte` |
+| `Misc/Zaaptv IPTV.rmdu` | 5 | `the function has no single OBC byte` |
+| `Misc/Zaaptv IPTV.rmdu` | 6 | `the function has no single OBC byte` |
+| `Misc/Zaaptv IPTV.rmdu` | 7 | `the function has no single OBC byte` |
+| `Misc/Zaaptv IPTV.rmdu` | 8 | `the function has no single OBC byte` |
+| `Misc/Zaaptv IPTV.rmdu` | 9 | `the function has no single OBC byte` |
+| `Misc/Zaaptv IPTV.rmdu` | `audio` | `the function has no single OBC byte` |
+| `Misc/Zaaptv IPTV.rmdu` | `blue` | `the function has no single OBC byte` |
+| `Misc/Zaaptv IPTV.rmdu` | `enter` | `the function has no single OBC byte` |
+| `Misc/Zaaptv IPTV.rmdu` | `fast fwd` | `the function has no single OBC byte` |
+| `Misc/Zaaptv IPTV.rmdu` | `favourite` | `the function has no single OBC byte` |
+| `Misc/Zaaptv IPTV.rmdu` | `green` | `the function has no single OBC byte` |
+| `Misc/Zaaptv IPTV.rmdu` | `page+` | `the function has no single OBC byte` |
+| `Misc/Zaaptv IPTV.rmdu` | `page-` | `the function has no single OBC byte` |
+| `Misc/Zaaptv IPTV.rmdu` | `program guide` | `the function has no single OBC byte` |
+| `Misc/Zaaptv IPTV.rmdu` | `record` | `the function has no single OBC byte` |
+| `Misc/Zaaptv IPTV.rmdu` | `red` | `the function has no single OBC byte` |
+| `Misc/Zaaptv IPTV.rmdu` | `rewind` | `the function has no single OBC byte` |
+| `Misc/Zaaptv IPTV.rmdu` | `skip+` | `the function has no single OBC byte` |
+| `Misc/Zaaptv IPTV.rmdu` | `skip-` | `the function has no single OBC byte` |
+| `Misc/Zaaptv IPTV.rmdu` | `yellow` | `the function has no single OBC byte` |
 | `Misc/iodatanew.rmdu` | `+100` | `the function has no single OBC byte` |
 | `Misc/iodatanew.rmdu` | `X2` | `the function has no single OBC byte` |
 | `Misc/iodatanew.rmdu` | `center` | `the function has no single OBC byte` |
@@ -3202,6 +3363,14 @@ silently (SPEC R19, condition 5).
 | `Satellite/Pansat 9200 HD  .rmdu` | `surround` | `the function has no single OBC byte` |
 | `Satellite/Pansat 9200 HD  .rmdu` | `vol down` | `the function has no single OBC byte` |
 | `Satellite/Pansat 9200 HD  .rmdu` | `vol up` | `the function has no single OBC byte` |
+| `Satellite/QualiTv_QS1080.rmdu` | `+100` | `the function has no single OBC byte` |
+| `Satellite/QualiTv_QS1080.rmdu` | `f.fwd/next track` | `the function has no single OBC byte` |
+| `Satellite/QualiTv_QS1080.rmdu` | `f.rew/prev track` | `the function has no single OBC byte` |
+| `Satellite/QualiTv_QS1080.rmdu` | `pip freeze` | `the function has no single OBC byte` |
+| `Satellite/QualiTv_QS1080.rmdu` | `pip move` | `the function has no single OBC byte` |
+| `Satellite/QualiTv_QS1080.rmdu` | `pip on/off` | `the function has no single OBC byte` |
+| `Satellite/QualiTv_QS1080.rmdu` | `pip swap` | `the function has no single OBC byte` |
+| `Satellite/QualiTv_QS1080.rmdu` | `record` | `the function has no single OBC byte` |
 | `Satellite/REDLINE SAT.rmdu` | `+100` | `the function has no single OBC byte` |
 | `Satellite/REDLINE SAT.rmdu` | `X2` | `the function has no single OBC byte` |
 | `Satellite/REDLINE SAT.rmdu` | `center` | `the function has no single OBC byte` |
@@ -3569,6 +3738,7 @@ silently (SPEC R19, condition 5).
 | `Soundbars/iLive Soundbar itp280b .rmdu` | `#59` | `the function has no single OBC byte` |
 | `Soundbars/iLive Soundbar itp280b .rmdu` | `#60` | `the function has no single OBC byte` |
 | `Soundbars/iLive Soundbar itp280b .rmdu` | `#61` | `the function has no single OBC byte` |
+| `TV Combos/Magnavox 32MD357B_6131.rmdu` | `#39` | `the function has no single OBC byte` |
 | `TV Combos/Symphonic WF20D4 20 inch TV-DVD Combo.rmdu` | `+100` | `the function has no single OBC byte` |
 | `TV Combos/Symphonic WF20D4 20 inch TV-DVD Combo.rmdu` | `pip freeze` | `the function has no single OBC byte` |
 | `TV Combos/Symphonic WF20D4 20 inch TV-DVD Combo.rmdu` | `sleep` | `the function has no single OBC byte` |
@@ -3660,9 +3830,50 @@ silently (SPEC R19, condition 5).
 | `TV/15-100 Apex LD3288M.rmdu` | `#53` | `the function has no single OBC byte` |
 | `TV/15-100 Apex LD3288M.rmdu` | `#54` | `the function has no single OBC byte` |
 | `TV/15-100 Apex LD3288M.rmdu` | `CCD` | `the function has no single OBC byte` |
+| `TV/1700_telefunken on Dream IR.rmdu` | `record` | `the function has no single OBC byte` |
 | `TV/8811-Samsung PN50C550 v1.0.rmdu` | `pip move` | `the function has no single OBC byte` |
 | `TV/8811-Samsung PN50C550 v1.0.rmdu` | `pip swap` | `the function has no single OBC byte` |
 | `TV/Apex_GT2715.rmdu` | `F` | `the function has no single OBC byte` |
+| `TV/Beko .rmdu` | 0 | `the device the function selects is not set` |
+| `TV/Beko .rmdu` | 1 | `the device the function selects is not set` |
+| `TV/Beko .rmdu` | 16/9 | `the device the function selects is not set` |
+| `TV/Beko .rmdu` | 2 | `the device the function selects is not set` |
+| `TV/Beko .rmdu` | 3 | `the device the function selects is not set` |
+| `TV/Beko .rmdu` | 4 | `the device the function selects is not set` |
+| `TV/Beko .rmdu` | 5 | `the device the function selects is not set` |
+| `TV/Beko .rmdu` | 6 | `the device the function selects is not set` |
+| `TV/Beko .rmdu` | 7 | `the device the function selects is not set` |
+| `TV/Beko .rmdu` | 8 | `the device the function selects is not set` |
+| `TV/Beko .rmdu` | 9 | `the device the function selects is not set` |
+| `TV/Beko .rmdu` | `AV` | `the device the function selects is not set` |
+| `TV/Beko .rmdu` | `Blue` | `the device the function selects is not set` |
+| `TV/Beko .rmdu` | `Ch+` | `the device the function selects is not set` |
+| `TV/Beko .rmdu` | `Ch-` | `the device the function selects is not set` |
+| `TV/Beko .rmdu` | `Down` | `the device the function selects is not set` |
+| `TV/Beko .rmdu` | `Enlarge` | `the device the function selects is not set` |
+| `TV/Beko .rmdu` | `Green` | `the device the function selects is not set` |
+| `TV/Beko .rmdu` | `Index` | `the device the function selects is not set` |
+| `TV/Beko .rmdu` | `Left` | `the device the function selects is not set` |
+| `TV/Beko .rmdu` | `Menu` | `the device the function selects is not set` |
+| `TV/Beko .rmdu` | `Mute` | `the device the function selects is not set` |
+| `TV/Beko .rmdu` | `OK` | `the device the function selects is not set` |
+| `TV/Beko .rmdu` | `PC` | `the device the function selects is not set` |
+| `TV/Beko .rmdu` | `Picture` | `the device the function selects is not set` |
+| `TV/Beko .rmdu` | `Power` | `the device the function selects is not set` |
+| `TV/Beko .rmdu` | `Red` | `the device the function selects is not set` |
+| `TV/Beko .rmdu` | `Reveal` | `the device the function selects is not set` |
+| `TV/Beko .rmdu` | `Right` | `the device the function selects is not set` |
+| `TV/Beko .rmdu` | `Sound` | `the device the function selects is not set` |
+| `TV/Beko .rmdu` | `Stop` | `the device the function selects is not set` |
+| `TV/Beko .rmdu` | `Subpage` | `the device the function selects is not set` |
+| `TV/Beko .rmdu` | `Swap` | `the device the function selects is not set` |
+| `TV/Beko .rmdu` | `TV` | `the device the function selects is not set` |
+| `TV/Beko .rmdu` | `Teletext` | `the device the function selects is not set` |
+| `TV/Beko .rmdu` | `Up` | `the device the function selects is not set` |
+| `TV/Beko .rmdu` | `Update` | `the device the function selects is not set` |
+| `TV/Beko .rmdu` | `Yellow` | `the device the function selects is not set` |
+| `TV/Beko .rmdu` | `vol+` | `the device the function selects is not set` |
+| `TV/Beko .rmdu` | `vol-` | `the device the function selects is not set` |
 | `TV/Benq 8700.rmdu` | `+100` | `the function has no single OBC byte` |
 | `TV/Benq 8700.rmdu` | 0 | `the function has no single OBC byte` |
 | `TV/Benq 8700.rmdu` | `channel up` | `the function has no single OBC byte` |
@@ -3735,10 +3946,32 @@ silently (SPEC R19, condition 5).
 | `TV/Digital Research DLCD32.rmdu` | `#35` | `the function has no single OBC byte` |
 | `TV/Digital Research DLCD32.rmdu` | `#36` | `the function has no single OBC byte` |
 | `TV/Digital Research DLCD32.rmdu` | `#37` | `the function has no single OBC byte` |
+| `TV/Hyundai HLT-37V2FH .rmdu` | `#10` | `the function has no single OBC byte` |
+| `TV/Hyundai HLT-37V2FH .rmdu` | `#11` | `the function has no single OBC byte` |
+| `TV/Hyundai HLT-37V2FH .rmdu` | `#15` | `the function has no single OBC byte` |
+| `TV/Hyundai HLT-37V2FH .rmdu` | `#20` | `the function has no single OBC byte` |
+| `TV/Hyundai HLT-37V2FH .rmdu` | `#21` | `the function has no single OBC byte` |
+| `TV/Hyundai HLT-37V2FH .rmdu` | `#25` | `the function has no single OBC byte` |
+| `TV/Hyundai HLT-37V2FH .rmdu` | `#26` | `the function has no single OBC byte` |
+| `TV/Hyundai HLT-37V2FH .rmdu` | `#30` | `the function has no single OBC byte` |
+| `TV/Hyundai HLT-37V2FH .rmdu` | `#31` | `the function has no single OBC byte` |
+| `TV/Hyundai HLT-37V2FH .rmdu` | `#40` | `the function has no single OBC byte` |
+| `TV/Hyundai HLT-37V2FH .rmdu` | `#46` | `the function has no single OBC byte` |
+| `TV/Hyundai HLT-37V2FH .rmdu` | `#48` | `the function has no single OBC byte` |
+| `TV/Hyundai HLT-37V2FH .rmdu` | `#49` | `the function has no single OBC byte` |
+| `TV/Hyundai HLT-37V2FH .rmdu` | `#51` | `the function has no single OBC byte` |
+| `TV/Hyundai HLT-37V2FH .rmdu` | `#52` | `the function has no single OBC byte` |
+| `TV/Hyundai HLT-37V2FH .rmdu` | `#54` | `the function has no single OBC byte` |
+| `TV/Hyundai HLT-37V2FH .rmdu` | `#55` | `the function has no single OBC byte` |
+| `TV/Hyundai HLT-37V2FH .rmdu` | `#56` | `the function has no single OBC byte` |
+| `TV/Insignia NS-20LCD RC5.rmdu` | `Display` | `the function has no single OBC byte` |
+| `TV/Insignia NS-20LCD RC5.rmdu` | `OK` | `the function has no single OBC byte` |
 | `TV/LG 60px950.rmdu` | `#62` | `the function has no single OBC byte` |
 | `TV/LG 60px950.rmdu` | `#63` | `the function has no single OBC byte` |
 | `TV/LG 65LM6200.rmdu` | `#63` | `the function has no single OBC byte` |
 | `TV/LG 65LM6200.rmdu` | `#64` | `the function has no single OBC byte` |
+| `TV/Magnavox 19A800-7561  Remote Control RC 0731-04.rmdu` | `#26` | `the function has no single OBC byte` |
+| `TV/Magnavox 19A800-7561  Remote Control RC 0731-04.rmdu` | `#27` | `the function has no single OBC byte` |
 | `TV/Magnavox 27MS343S.rmdu` | `+100` | `the function has no single OBC byte` |
 | `TV/Magnavox 27MS343S.rmdu` | `X2` | `the function has no single OBC byte` |
 | `TV/Magnavox 27MS343S.rmdu` | `center` | `the function has no single OBC byte` |
@@ -3787,6 +4020,28 @@ silently (SPEC R19, condition 5).
 | `TV/Memorex MT1196A.rmdu` | `stop` | `the function has no single OBC byte` |
 | `TV/Memorex MT1196A.rmdu` | `surround` | `the function has no single OBC byte` |
 | `TV/Philips_221T1.rmdu` | `#44` | `the function has no single OBC byte` |
+| `TV/Phillips-Magnavox PT2758.rmdu` | `+100` | `the function has no single OBC byte` |
+| `TV/Phillips-Magnavox PT2758.rmdu` | `down arrow` | `the function has no single OBC byte` |
+| `TV/Phillips-Magnavox PT2758.rmdu` | `enter` | `the function has no single OBC byte` |
+| `TV/Phillips-Magnavox PT2758.rmdu` | `exit` | `the function has no single OBC byte` |
+| `TV/Phillips-Magnavox PT2758.rmdu` | `fast fwd` | `the function has no single OBC byte` |
+| `TV/Phillips-Magnavox PT2758.rmdu` | `left arrow` | `the function has no single OBC byte` |
+| `TV/Phillips-Magnavox PT2758.rmdu` | `mute` | `the function has no single OBC byte` |
+| `TV/Phillips-Magnavox PT2758.rmdu` | `pip freeze` | `the function has no single OBC byte` |
+| `TV/Phillips-Magnavox PT2758.rmdu` | `pip move` | `the function has no single OBC byte` |
+| `TV/Phillips-Magnavox PT2758.rmdu` | `pip on/off` | `the function has no single OBC byte` |
+| `TV/Phillips-Magnavox PT2758.rmdu` | `pip swap` | `the function has no single OBC byte` |
+| `TV/Phillips-Magnavox PT2758.rmdu` | `play` | `the function has no single OBC byte` |
+| `TV/Phillips-Magnavox PT2758.rmdu` | `program/guide` | `the function has no single OBC byte` |
+| `TV/Phillips-Magnavox PT2758.rmdu` | `record` | `the function has no single OBC byte` |
+| `TV/Phillips-Magnavox PT2758.rmdu` | `rewind` | `the function has no single OBC byte` |
+| `TV/Phillips-Magnavox PT2758.rmdu` | `right arrow` | `the function has no single OBC byte` |
+| `TV/Phillips-Magnavox PT2758.rmdu` | `select` | `the function has no single OBC byte` |
+| `TV/Phillips-Magnavox PT2758.rmdu` | `sleep` | `the function has no single OBC byte` |
+| `TV/Phillips-Magnavox PT2758.rmdu` | `tv/vcr` | `the function has no single OBC byte` |
+| `TV/Phillips-Magnavox PT2758.rmdu` | `up arrow` | `the function has no single OBC byte` |
+| `TV/Phillips-Magnavox PT2758.rmdu` | `vol down` | `the function has no single OBC byte` |
+| `TV/Phillips-Magnavox PT2758.rmdu` | `vol up` | `the function has no single OBC byte` |
 | `TV/RCA 42PA30RQ TV using remote RE20QP80 Atlas OCAP.rmdu` | `#100` | `the function has no single OBC byte` |
 | `TV/RCA 42PA30RQ TV using remote RE20QP80 Atlas OCAP.rmdu` | `#101` | `the function has no single OBC byte` |
 | `TV/RCA 42PA30RQ TV using remote RE20QP80 Atlas OCAP.rmdu` | `#102` | `the function has no single OBC byte` |
@@ -4151,6 +4406,34 @@ silently (SPEC R19, condition 5).
 | `TV/Toshiba 30HF83 TV (URC-8911).rmdu` | `tv/vcr` | `the function has no single OBC byte` |
 | `TV/Toshiba 30HF83 TV (URC-8911).rmdu` | `x2` | `the function has no single OBC byte` |
 | `TV/Toshiba65HX81.rmdu` | `*** bottom ***` | `the function has no single OBC byte` |
+| `TV/VESTEL TV.rmdu` | `+100` | `the function has no single OBC byte` |
+| `TV/VESTEL TV.rmdu` | `X2` | `the function has no single OBC byte` |
+| `TV/VESTEL TV.rmdu` | `center` | `the function has no single OBC byte` |
+| `TV/VESTEL TV.rmdu` | `channel down` | `the function has no single OBC byte` |
+| `TV/VESTEL TV.rmdu` | `channel up` | `the function has no single OBC byte` |
+| `TV/VESTEL TV.rmdu` | `device button` | `the function has no single OBC byte` |
+| `TV/VESTEL TV.rmdu` | `display` | `the function has no single OBC byte` |
+| `TV/VESTEL TV.rmdu` | `eject` | `the function has no single OBC byte` |
+| `TV/VESTEL TV.rmdu` | `enter` | `the function has no single OBC byte` |
+| `TV/VESTEL TV.rmdu` | `exit` | `the function has no single OBC byte` |
+| `TV/VESTEL TV.rmdu` | `fav/scan` | `the function has no single OBC byte` |
+| `TV/VESTEL TV.rmdu` | `input toggle` | `the function has no single OBC byte` |
+| `TV/VESTEL TV.rmdu` | `last (prev ch)` | `the function has no single OBC byte` |
+| `TV/VESTEL TV.rmdu` | `next track` | `the function has no single OBC byte` |
+| `TV/VESTEL TV.rmdu` | `pip freeze` | `the function has no single OBC byte` |
+| `TV/VESTEL TV.rmdu` | `pip move` | `the function has no single OBC byte` |
+| `TV/VESTEL TV.rmdu` | `pip swap` | `the function has no single OBC byte` |
+| `TV/VESTEL TV.rmdu` | `prev track` | `the function has no single OBC byte` |
+| `TV/VESTEL TV.rmdu` | `program guide` | `the function has no single OBC byte` |
+| `TV/VESTEL TV.rmdu` | `rear` | `the function has no single OBC byte` |
+| `TV/VESTEL TV.rmdu` | `shift-left` | `the function has no single OBC byte` |
+| `TV/VESTEL TV.rmdu` | `shift-right` | `the function has no single OBC byte` |
+| `TV/VESTEL TV.rmdu` | `slow` | `the function has no single OBC byte` |
+| `TV/VESTEL TV.rmdu` | `slow+` | `the function has no single OBC byte` |
+| `TV/VESTEL TV.rmdu` | `slow-` | `the function has no single OBC byte` |
+| `TV/VESTEL TV.rmdu` | `surround` | `the function has no single OBC byte` |
+| `TV/VESTEL TV.rmdu` | `tv/vcr` | `the function has no single OBC byte` |
+| `TV/ViewSonic N3290w.rmdu` | `program guide` | `the function has no single OBC byte` |
 | `TV/Viewsonic 2060W.rmdu` | `+100` | `the function has no single OBC byte` |
 | `TV/Viewsonic 2060W.rmdu` | `X2` | `the function has no single OBC byte` |
 | `TV/Viewsonic 2060W.rmdu` | `center` | `the function has no single OBC byte` |
@@ -4428,3 +4711,4 @@ silently (SPEC R19, condition 5).
 | `VCR/RS2116 Toshiba VCR 1045.rmdu` | `vol+` | `the function has no single OBC byte` |
 | `VCR/RS2116 Toshiba VCR 1045.rmdu` | `vol-` | `the function has no single OBC byte` |
 | `VCR/VCR LG LV300.rmdu` | `a` | `the function has no single OBC byte` |
+| `VCR/philips vcr500-code1081.rmdu` | `*** bottom ***` | `the function has no single OBC byte` |
