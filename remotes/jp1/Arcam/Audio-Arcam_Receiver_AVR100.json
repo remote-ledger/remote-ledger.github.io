@@ -1,0 +1,392 @@
+{
+  "manufacturer": "Arcam",
+  "model": "Receiver AVR100",
+  "aliases": [],
+  "controls": [
+    "Arcam Receiver AVR100"
+  ],
+  "protocol": {
+    "name": "RC5",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER_ON_SLASH_OFF": {
+      "label": "Power ON/OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arcam Receiver AVR100.rmdu function 0 'Power ON/OFF' (OBC CC; RC-5, parms 16 0 16 1 17 0): RC5 device 16 function 12"
+        }
+      ]
+    },
+    "KEY_POWER_OFF": {
+      "label": "Power OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x7C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arcam Receiver AVR100.rmdu function 1 'Power OFF' (OBC 0D; RC-5, parms 16 0 16 1 17 0): RC5 device 16 function 124"
+        }
+      ]
+    },
+    "KEY_POWER_ON": {
+      "label": "Power ON",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x7B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arcam Receiver AVR100.rmdu function 2 'Power ON' (OBC 11; RC-5, parms 16 0 16 1 17 0): RC5 device 16 function 123"
+        }
+      ]
+    },
+    "KEY_SAT": {
+      "label": "SAT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arcam Receiver AVR100.rmdu function 3 'SAT' (OBC FC; RC-5, parms 16 0 16 1 17 0): RC5 device 16 function 0"
+        }
+      ]
+    },
+    "KEY_DVD": {
+      "label": "DVD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arcam Receiver AVR100.rmdu function 4 'DVD' (OBC EC; RC-5, parms 16 0 16 1 17 0): RC5 device 16 function 4"
+        }
+      ]
+    },
+    "KEY_VCR": {
+      "label": "VCR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arcam Receiver AVR100.rmdu function 5 'VCR' (OBC E4; RC-5, parms 16 0 16 1 17 0): RC5 device 16 function 6"
+        }
+      ]
+    },
+    "KEY_AUX": {
+      "label": "AUX",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arcam Receiver AVR100.rmdu function 6 'AUX' (OBC DC; RC-5, parms 16 0 16 1 17 0): RC5 device 16 function 8"
+        }
+      ]
+    },
+    "KEY_TAPE_MONITOR": {
+      "label": "Tape Monitor",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arcam Receiver AVR100.rmdu function 7 'Tape Monitor' (OBC E8; RC-5, parms 16 0 16 1 17 0): RC5 device 16 function 5"
+        }
+      ]
+    },
+    "KEY_CD": {
+      "label": "CD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arcam Receiver AVR100.rmdu function 8 'CD' (OBC E0; RC-5, parms 16 0 16 1 17 0): RC5 device 16 function 7"
+        }
+      ]
+    },
+    "KEY_EXTERNAL_5_1": {
+      "label": "External 5.1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arcam Receiver AVR100.rmdu function 9 'External 5.1' (OBC F4; RC-5, parms 16 0 16 1 17 0): RC5 device 16 function 2"
+        }
+      ]
+    },
+    "KEY_FM": {
+      "label": "FM",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x35",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arcam Receiver AVR100.rmdu function 10 'FM' (OBC 28; RC-5, parms 16 0 16 1 17 0): RC5 device 16 function 53"
+        }
+      ]
+    },
+    "KEY_AM": {
+      "label": "AM",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x34",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arcam Receiver AVR100.rmdu function 11 'AM' (OBC 2C; RC-5, parms 16 0 16 1 17 0): RC5 device 16 function 52"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "Mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arcam Receiver AVR100.rmdu function 12 'Mute' (OBC C8; RC-5, parms 16 0 16 1 17 0): RC5 device 16 function 13"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arcam Receiver AVR100.rmdu function 13 'VOL+' (OBC BC; RC-5, parms 16 0 16 1 17 0): RC5 device 16 function 16"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arcam Receiver AVR100.rmdu function 14 'VOL-' (OBC B8; RC-5, parms 16 0 16 1 17 0): RC5 device 16 function 17"
+        }
+      ]
+    },
+    "KEY_OK": {
+      "label": "OK",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x57",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arcam Receiver AVR100.rmdu function 15 'OK' (OBC A1; RC-5, parms 16 0 16 1 17 0): RC5 device 16 function 87; the upgrade's note: 'On Screen Display'"
+        }
+      ]
+    },
+    "KEY_UP": {
+      "label": "Up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x56",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arcam Receiver AVR100.rmdu function 16 'Up' (OBC A5; RC-5, parms 16 0 16 1 17 0): RC5 device 16 function 86; the upgrade's note: 'On Screen Display'"
+        }
+      ]
+    },
+    "KEY_DOWN": {
+      "label": "Down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x55",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arcam Receiver AVR100.rmdu function 17 'Down' (OBC A9; RC-5, parms 16 0 16 1 17 0): RC5 device 16 function 85; the upgrade's note: 'On Screen Display'"
+        }
+      ]
+    },
+    "KEY_LEFT": {
+      "label": "Left",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x51",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arcam Receiver AVR100.rmdu function 18 'Left' (OBC B9; RC-5, parms 16 0 16 1 17 0): RC5 device 16 function 81; the upgrade's note: 'On Screen Display'"
+        }
+      ]
+    },
+    "KEY_RIGHT": {
+      "label": "Right",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arcam Receiver AVR100.rmdu function 19 'Right' (OBC BD; RC-5, parms 16 0 16 1 17 0): RC5 device 16 function 80; the upgrade's note: 'On Screen Display'"
+        }
+      ]
+    },
+    "KEY_SURROUND_MODE": {
+      "label": "Surround Mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x20",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arcam Receiver AVR100.rmdu function 20 'Surround Mode' (OBC 7C; RC-5, parms 16 0 16 1 17 0): RC5 device 16 function 32; the upgrade's note: 'Cycle\\: Stereo, PL, Hall'"
+        }
+      ]
+    },
+    "KEY_SLEEP": {
+      "label": "Sleep",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x2A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arcam Receiver AVR100.rmdu function 21 'Sleep' (OBC 54; RC-5, parms 16 0 16 1 17 0): RC5 device 16 function 42"
+        }
+      ]
+    },
+    "KEY_RDS_INFO": {
+      "label": "RDS Info",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x37",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arcam Receiver AVR100.rmdu function 22 'RDS Info' (OBC 20; RC-5, parms 16 0 16 1 17 0): RC5 device 16 function 55; the upgrade's note: 'Radio Data System (RDS) text Info'"
+        }
+      ]
+    },
+    "KEY_TUNER_MODE": {
+      "label": "Tuner Mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x36",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arcam Receiver AVR100.rmdu function 23 'Tuner Mode' (OBC 24; RC-5, parms 16 0 16 1 17 0): RC5 device 16 function 54; the upgrade's note: 'Toggle between preset mode & tuner mode'"
+        }
+      ]
+    },
+    "KEY_P_PLUS": {
+      "label": "P+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x38",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arcam Receiver AVR100.rmdu function 24 'P+' (OBC 1C; RC-5, parms 16 0 16 1 17 0): RC5 device 16 function 56; the upgrade's note: 'Cycle\\: Stations or Scan Frequency (Up)'"
+        }
+      ]
+    },
+    "KEY_P_MINUS": {
+      "label": "P-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x39",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arcam Receiver AVR100.rmdu function 25 'P-' (OBC 18; RC-5, parms 16 0 16 1 17 0): RC5 device 16 function 57; the upgrade's note: 'Cycle\\: Stations or Scan Frequency (Down)'"
+        }
+      ]
+    },
+    "KEY_TEST": {
+      "label": "Test",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x58",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arcam Receiver AVR100.rmdu function 26 'Test' (OBC 9D; RC-5, parms 16 0 16 1 17 0): RC5 device 16 function 88; the upgrade's note: 'Test Signal Generator'"
+        }
+      ]
+    },
+    "KEY_TRIM": {
+      "label": "Trim",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x25",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arcam Receiver AVR100.rmdu function 27 'Trim' (OBC 68; RC-5, parms 16 0 16 1 17 0): RC5 device 16 function 37; the upgrade's note: 'Cycle\\: Center, Rear, Sub'"
+        }
+      ]
+    },
+    "KEY_DYN": {
+      "label": "DYN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x3E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Arcam Receiver AVR100.rmdu function 28 'DYN' (OBC 04; RC-5, parms 16 0 16 1 17 0): RC5 device 16 function 62; the upgrade's note: 'Dynamic Range\\: 100%, 75%, 50%, 25%'"
+        }
+      ]
+    }
+  }
+}

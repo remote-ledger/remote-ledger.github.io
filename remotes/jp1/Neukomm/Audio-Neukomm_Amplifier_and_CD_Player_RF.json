@@ -1,0 +1,509 @@
+{
+  "manufacturer": "Neukomm",
+  "model": "Amplifier and CD Player",
+  "aliases": [],
+  "controls": [
+    "Neukomm Amplifier and CD Player"
+  ],
+  "protocol": {
+    "name": "RC5",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER_OFF": {
+      "label": "Power OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x3D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Neukomm Amplifier and CD Player RF.rmdu function 0 'Power OFF' (OBC 08; RC-5, parms 16 0 20 0 null 0): RC5 device 16 function 61"
+        }
+      ]
+    },
+    "KEY_POWER_TOGGLE": {
+      "label": "Power Toggle",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x3E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Neukomm Amplifier and CD Player RF.rmdu function 1 'Power Toggle' (OBC 04; RC-5, parms 16 0 20 0 null 0): RC5 device 16 function 62"
+        }
+      ]
+    },
+    "KEY_POWER_ON": {
+      "label": "Power ON",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x3F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Neukomm Amplifier and CD Player RF.rmdu function 2 'Power ON' (OBC 00; RC-5, parms 16 0 20 0 null 0): RC5 device 16 function 63"
+        }
+      ]
+    },
+    "KEY_CD_POWER_OFF": {
+      "label": "CD Power OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x3D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Neukomm Amplifier and CD Player RF.rmdu function 3 'CD Power OFF' (OBC 09; RC-5, parms 16 0 20 0 null 0): RC5 device 20 function 61"
+        }
+      ]
+    },
+    "KEY_CD_POWER_TOGGLE": {
+      "label": "CD Power Toggle",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x3E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Neukomm Amplifier and CD Player RF.rmdu function 4 'CD Power Toggle' (OBC 05; RC-5, parms 16 0 20 0 null 0): RC5 device 20 function 62"
+        }
+      ]
+    },
+    "KEY_CD_POWER_ON": {
+      "label": "CD Power ON",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x3F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Neukomm Amplifier and CD Player RF.rmdu function 5 'CD Power ON' (OBC 01; RC-5, parms 16 0 20 0 null 0): RC5 device 20 function 63"
+        }
+      ]
+    },
+    "KEY_CD_PLAY": {
+      "label": "CD Play",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x35",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Neukomm Amplifier and CD Player RF.rmdu function 6 'CD Play' (OBC 29; RC-5, parms 16 0 20 0 null 0): RC5 device 20 function 53"
+        }
+      ]
+    },
+    "KEY_CD_FB": {
+      "label": "CD FB",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x32",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Neukomm Amplifier and CD Player RF.rmdu function 7 'CD FB' (OBC 35; RC-5, parms 16 0 20 0 null 0): RC5 device 20 function 50"
+        }
+      ]
+    },
+    "KEY_CD_FF": {
+      "label": "CD FF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x34",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Neukomm Amplifier and CD Player RF.rmdu function 8 'CD FF' (OBC 2D; RC-5, parms 16 0 20 0 null 0): RC5 device 20 function 52"
+        }
+      ]
+    },
+    "KEY_CD_STOP": {
+      "label": "CD Stop",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x36",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Neukomm Amplifier and CD Player RF.rmdu function 9 'CD Stop' (OBC 25; RC-5, parms 16 0 20 0 null 0): RC5 device 20 function 54"
+        }
+      ]
+    },
+    "KEY_CD_PAUSE": {
+      "label": "CD Pause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x30",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Neukomm Amplifier and CD Player RF.rmdu function 10 'CD Pause' (OBC 3D; RC-5, parms 16 0 20 0 null 0): RC5 device 20 function 48"
+        }
+      ]
+    },
+    "KEY_CD_REP": {
+      "label": "CD Rep",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x1D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Neukomm Amplifier and CD Player RF.rmdu function 11 'CD Rep' (OBC 89; RC-5, parms 16 0 20 0 null 0): RC5 device 20 function 29"
+        }
+      ]
+    },
+    "KEY_CD_TIME": {
+      "label": "CD Time",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Neukomm Amplifier and CD Player RF.rmdu function 12 'CD Time' (OBC D1; RC-5, parms 16 0 20 0 null 0): RC5 device 20 function 11"
+        }
+      ]
+    },
+    "KEY_CD_NEXT": {
+      "label": "CD Next",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x20",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Neukomm Amplifier and CD Player RF.rmdu function 13 'CD Next' (OBC 7D; RC-5, parms 16 0 20 0 null 0): RC5 device 20 function 32"
+        }
+      ]
+    },
+    "KEY_CD_PREV": {
+      "label": "CD Prev",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x21",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Neukomm Amplifier and CD Player RF.rmdu function 14 'CD Prev' (OBC 79; RC-5, parms 16 0 20 0 null 0): RC5 device 20 function 33"
+        }
+      ]
+    },
+    "KEY_CD_OPEN_CLOSE": {
+      "label": "CD Open Close",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x2D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Neukomm Amplifier and CD Player RF.rmdu function 15 'CD Open Close' (OBC 49; RC-5, parms 16 0 20 0 null 0): RC5 device 20 function 45"
+        }
+      ]
+    },
+    "KEY_CD_SHUFFLE_PLAY": {
+      "label": "CD Shuffle Play",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x1C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Neukomm Amplifier and CD Player RF.rmdu function 16 'CD Shuffle Play' (OBC 8D; RC-5, parms 16 0 20 0 null 0): RC5 device 20 function 28"
+        }
+      ]
+    },
+    "KEY_CD_SCAN_TRACKS": {
+      "label": "CD Scan tracks",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x2B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Neukomm Amplifier and CD Player RF.rmdu function 17 'CD Scan tracks' (OBC 51; RC-5, parms 16 0 20 0 null 0): RC5 device 20 function 43"
+        }
+      ]
+    },
+    "KEY_CD_PROGRAM": {
+      "label": "CD Program",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x29",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Neukomm Amplifier and CD Player RF.rmdu function 18 'CD Program' (OBC 58; RC-5, parms 16 0 20 0 null 0): RC5 device 16 function 41"
+        }
+      ]
+    },
+    "KEY_CD_AB_PROGRAM": {
+      "label": "CD AB Program",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x3B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Neukomm Amplifier and CD Player RF.rmdu function 19 'CD AB Program' (OBC 10; RC-5, parms 16 0 20 0 null 0): RC5 device 16 function 59"
+        }
+      ]
+    },
+    "KEY_CD_FAST": {
+      "label": "CD Fast",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x2F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Neukomm Amplifier and CD Player RF.rmdu function 20 'CD Fast' (OBC 40; RC-5, parms 16 0 20 0 null 0): RC5 device 16 function 47"
+        }
+      ]
+    },
+    "KEY_BALANCE_LEFT": {
+      "label": "Balance Left",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x1B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Neukomm Amplifier and CD Player RF.rmdu function 21 'Balance Left' (OBC 90; RC-5, parms 16 0 20 0 null 0): RC5 device 16 function 27"
+        }
+      ]
+    },
+    "KEY_BALANCE_RIGHT": {
+      "label": "Balance Right",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Neukomm Amplifier and CD Player RF.rmdu function 22 'Balance Right' (OBC 94; RC-5, parms 16 0 20 0 null 0): RC5 device 16 function 26"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "Vol+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Neukomm Amplifier and CD Player RF.rmdu function 23 'Vol+' (OBC BC; RC-5, parms 16 0 20 0 null 0): RC5 device 16 function 16"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "Vol-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Neukomm Amplifier and CD Player RF.rmdu function 24 'Vol-' (OBC B8; RC-5, parms 16 0 20 0 null 0): RC5 device 16 function 17"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "Mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Neukomm Amplifier and CD Player RF.rmdu function 25 'Mute' (OBC CC; RC-5, parms 16 0 20 0 null 0): RC5 device 16 function 12"
+        }
+      ]
+    },
+    "KEY_PVOL_1": {
+      "label": "PVol <1>",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Neukomm Amplifier and CD Player RF.rmdu function 26 'PVol <1>' (OBC C8; RC-5, parms 16 0 20 0 null 0): RC5 device 16 function 13"
+        }
+      ]
+    },
+    "KEY_PVOL_2": {
+      "label": "PVol <2>",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x0E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Neukomm Amplifier and CD Player RF.rmdu function 27 'PVol <2>' (OBC C4; RC-5, parms 16 0 20 0 null 0): RC5 device 16 function 14"
+        }
+      ]
+    },
+    "KEY_1": {
+      "label": "1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Neukomm Amplifier and CD Player RF.rmdu function 28 '1' (OBC F8; RC-5, parms 16 0 20 0 null 0): RC5 device 16 function 1"
+        }
+      ]
+    },
+    "KEY_2": {
+      "label": "2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Neukomm Amplifier and CD Player RF.rmdu function 29 '2' (OBC F4; RC-5, parms 16 0 20 0 null 0): RC5 device 16 function 2"
+        }
+      ]
+    },
+    "KEY_3": {
+      "label": "3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Neukomm Amplifier and CD Player RF.rmdu function 30 '3' (OBC F0; RC-5, parms 16 0 20 0 null 0): RC5 device 16 function 3"
+        }
+      ]
+    },
+    "KEY_4": {
+      "label": "4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Neukomm Amplifier and CD Player RF.rmdu function 31 '4' (OBC EC; RC-5, parms 16 0 20 0 null 0): RC5 device 16 function 4"
+        }
+      ]
+    },
+    "KEY_5": {
+      "label": "5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Neukomm Amplifier and CD Player RF.rmdu function 32 '5' (OBC E8; RC-5, parms 16 0 20 0 null 0): RC5 device 16 function 5"
+        }
+      ]
+    },
+    "KEY_6": {
+      "label": "6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Neukomm Amplifier and CD Player RF.rmdu function 33 '6' (OBC E4; RC-5, parms 16 0 20 0 null 0): RC5 device 16 function 6"
+        }
+      ]
+    },
+    "KEY_7": {
+      "label": "7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Neukomm Amplifier and CD Player RF.rmdu function 34 '7' (OBC E0; RC-5, parms 16 0 20 0 null 0): RC5 device 16 function 7"
+        }
+      ]
+    },
+    "KEY_8": {
+      "label": "8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Neukomm Amplifier and CD Player RF.rmdu function 35 '8' (OBC DC; RC-5, parms 16 0 20 0 null 0): RC5 device 16 function 8"
+        }
+      ]
+    },
+    "KEY_9": {
+      "label": "9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Neukomm Amplifier and CD Player RF.rmdu function 36 '9' (OBC D8; RC-5, parms 16 0 20 0 null 0): RC5 device 16 function 9"
+        }
+      ]
+    },
+    "KEY_0": {
+      "label": "0",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Neukomm Amplifier and CD Player RF.rmdu function 37 '0' (OBC FC; RC-5, parms 16 0 20 0 null 0): RC5 device 16 function 0"
+        }
+      ]
+    }
+  }
+}

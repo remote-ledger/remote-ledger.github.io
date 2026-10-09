@@ -120,7 +120,8 @@ NEC_FAMILY = {"NEC1": "NEC1", "NEC1 (No Repeats)": "NEC1", "NEC2": "NEC2",
               "NECx1": "NECx1", "NECx2": "NECx2"}
 SONY_1215 = "Sony 12/15"
 SONY_20 = "Sony20"
-MAPPED = (*NEC_FAMILY, SONY_1215, SONY_20)
+RC5 = "RC-5"
+MAPPED = (*NEC_FAMILY, SONY_1215, SONY_20, RC5)
 
 
 def signal_of(upgrade: Upgrade, function: Function) -> Signal | str:
@@ -131,7 +132,8 @@ def signal_of(upgrade: Upgrade, function: Function) -> Signal | str:
     (``Translator(lsb,comp)``). Sony 12/15: the parameters are device 1, 0, device 2, 0, the
     OBC byte's lowest bit says which device a function uses and its other seven the command
     reversed (``Translator(0,1,7) Translator(lsb,1,7)``); a device below 32 is the 12-bit frame
-    and the rest the 15-bit one. Sony20: device, sub device, and the OBC byte reversed.
+    and the rest the 15-bit one. Sony20: device, sub device, and the OBC byte reversed. RC-5:
+    :func:`rc5_signal`.
     """
     byte = obc_byte(function.hex)
     if byte is None:
@@ -163,4 +165,31 @@ def signal_of(upgrade: Upgrade, function: Function) -> Signal | str:
         if command > 127:
             return "the command does not fit Sony's seven bits"
         return Signal("Sony20", device, sub, command)
+    if name == RC5:
+        return rc5_signal(parms, byte)
     return f"the executor {name!r} is not read by this import"
+
+
+def rc5_signal(parms: list[str], byte: int) -> Signal | str:
+    """The ``RC-5`` executor: a quickie combo of up to three RC-5 devices (DESIGN D123's neighbour, D129).
+
+    ``ProtocolParms`` is ``Device 1, OBC>63, Device 2, OBC>63, Device 3, OBC>63``. The OBC byte is
+    what ``Rc5Translator`` (RemoteMaster) keeps: its low two bits select the device slot (a slot above
+    the third is the first) and its top six bits are the command, complemented. A slot's ``OBC>63``
+    flag adds the seventh bit; a slot with no device is the nearest earlier slot that has one, as
+    the executor's own defaults make it."""
+    select = byte & 3
+    if select > 2:
+        select = 0
+    command = 63 - (byte >> 2)
+    slot = select
+    while slot >= 0 and parm(parms, 2 * slot) is None:
+        slot -= 1
+    if slot < 0:
+        return "the device the function selects is not set"
+    device = parm(parms, 2 * slot)
+    if device is None or device > 31:
+        return "the RC-5 device is not five bits"
+    if parm(parms, 2 * slot + 1):
+        command |= 64
+    return Signal("RC5", device, None, command)

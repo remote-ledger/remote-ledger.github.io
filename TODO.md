@@ -12,8 +12,8 @@ sources have been imported under SPEC R19:
   keys, GPL-3.0 by inheritance only (DESIGN §17, §18).
 - **hifi-remote.com's Sony code pages**: 151 files, 6,772 keys, a table of
   reference codes with no licence recorded (DESIGN §27).
-- **The JP1 device upgrades** of its forum: 1,789 files, 67,417 keys, read for
-  seven executors (DESIGN §28).
+- **The JP1 device upgrades** of its forum: 1,936 files, 73,065 keys, read for
+  eight executors (DESIGN §28, §32).
 - **Manufacturers' own IR tables**: Marantz's AV receiver charts, Anthem's IR
   hex sheet and Oppo's remote code workbooks, 189 files, 12,844 keys (DESIGN
   §29, §31).
@@ -39,11 +39,13 @@ Land it in two PRs, code and then data.
       owner's decision of 2026-10-08 (D110) is that a table of reference
       remote codes needs no licence. That reasoning bears on all three; none
       has been changed.
-- [ ] **The rest of the JP1 upgrades** (DESIGN D120): 1,462 upgrades of other
-      executors (RC-5 and its combos, MCE and RC-6, Sony Combo, Panasonic
-      Combo, NEC1 Combo, Nokia32, JVC, Aiwa, Denon, Pioneer...) and 2,073
-      KeymapMaster files. Each executor needs its translator found and checked
-      against the ledger's codes first. The forum's file section holds about
+- [ ] **The rest of the JP1 upgrades** (DESIGN D120, D136): 1,301 upgrades of
+      other executors (MCE 83, Sony Combo 82, Panasonic Combo 53, NEC1 Combo
+      46, RC-6 42, Nokia32 40, JVC 33, Panasonic 33, Aiwa 31, RC-5/5x Combo 16,
+      RC5/6 combo 12...) and 2,073 KeymapMaster files. Each executor needs its
+      translator found (the RemoteMaster source has the classes the
+      `protocols.ini` expressions name) and checked against the ledger's codes
+      first, as RC-5 was. The forum's file section holds about
       2,000 more upgrades than the GitHub copy, behind a free login.
 - [ ] **Data whose licence is unclear goes to the private repository**, not
       here (DESIGN D130). RemoteCentral's Infrared Hex Code Database, learned

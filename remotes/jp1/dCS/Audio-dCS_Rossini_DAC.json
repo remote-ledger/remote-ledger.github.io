@@ -1,0 +1,652 @@
+{
+  "manufacturer": "dCS",
+  "model": "Rossini DAC",
+  "aliases": [],
+  "controls": [
+    "dCS Rossini DAC"
+  ],
+  "protocol": {
+    "name": "RC5",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_SELECT_SPDIF1_INPUT": {
+      "label": "Select SPDIF1 input",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 0 'Select SPDIF1 input' (OBC F8; RC-5, parms 13 0 20 0 null 0): RC5 device 13 function 1"
+        }
+      ]
+    },
+    "KEY_SELECT_USB1_INPUT": {
+      "label": "Select USB1 input",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 1 'Select USB1 input' (OBC F4; RC-5, parms 13 0 20 0 null 0): RC5 device 13 function 2"
+        }
+      ]
+    },
+    "KEY_SELECT_AES1_INPUT": {
+      "label": "Select AES1 input",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 2 'Select AES1 input' (OBC F0; RC-5, parms 13 0 20 0 null 0): RC5 device 13 function 3"
+        }
+      ]
+    },
+    "KEY_SELECT_AES2_INPUT": {
+      "label": "Select AES2 input",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 3 'Select AES2 input' (OBC EC; RC-5, parms 13 0 20 0 null 0): RC5 device 13 function 4"
+        }
+      ]
+    },
+    "KEY_SELECT_TOSLINK_INPUT": {
+      "label": "Select Toslink input",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 4 'Select Toslink input' (OBC E8; RC-5, parms 13 0 20 0 null 0): RC5 device 13 function 5"
+        }
+      ]
+    },
+    "KEY_SELECT_SPDIF2_INPUT": {
+      "label": "Select SPDIF2 input",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 5 'Select SPDIF2 input' (OBC E4; RC-5, parms 13 0 20 0 null 0): RC5 device 13 function 6"
+        }
+      ]
+    },
+    "KEY_VOLUME_SLASH_BALANCE": {
+      "label": "Volume/Balance",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 6 'Volume/Balance' (OBC DC; RC-5, parms 13 0 20 0 null 0): RC5 device 13 function 8"
+        }
+      ]
+    },
+    "KEY_CHANGE_PHASE": {
+      "label": "Change Phase",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 7 'Change Phase' (OBC D8; RC-5, parms 13 0 20 0 null 0): RC5 device 13 function 9"
+        }
+      ]
+    },
+    "KEY_MUTE_TOGGLE": {
+      "label": "Mute toggle",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 8 'Mute toggle' (OBC C8; RC-5, parms 13 0 20 0 null 0): RC5 device 13 function 13"
+        }
+      ]
+    },
+    "KEY_CHANGE_FILTER_PLUS": {
+      "label": "Change Filter +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x0E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 9 'Change Filter +' (OBC C4; RC-5, parms 13 0 20 0 null 0): RC5 device 13 function 14"
+        }
+      ]
+    },
+    "KEY_VOLUME_PLUS": {
+      "label": "Volume +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 10 'Volume +' (OBC BC; RC-5, parms 13 0 20 0 null 0): RC5 device 13 function 16"
+        }
+      ]
+    },
+    "KEY_VOLUME_MINUS": {
+      "label": "Volume -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 11 'Volume -' (OBC B8; RC-5, parms 13 0 20 0 null 0): RC5 device 13 function 17"
+        }
+      ]
+    },
+    "KEY_MENU_SELECT": {
+      "label": "Menu Select",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 12 'Menu Select' (OBC 94; RC-5, parms 13 0 20 0 null 0): RC5 device 13 function 26"
+        }
+      ]
+    },
+    "KEY_SELECT_NEXT_INPUT": {
+      "label": "Select next Input",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x1B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 13 'Select next Input' (OBC 90; RC-5, parms 13 0 20 0 null 0): RC5 device 13 function 27"
+        }
+      ]
+    },
+    "KEY_SELECT_PREVIOUS_INPUT": {
+      "label": "Select previous Input",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x1C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 14 'Select previous Input' (OBC 8C; RC-5, parms 13 0 20 0 null 0): RC5 device 13 function 28"
+        }
+      ]
+    },
+    "KEY_SELECT_DUAL_AES_1_PLUS_2_INPUT": {
+      "label": "Select Dual AES 1+2 input",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x20",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 15 'Select Dual AES 1+2 input' (OBC 7C; RC-5, parms 13 0 20 0 null 0): RC5 device 13 function 32"
+        }
+      ]
+    },
+    "KEY_SELECT_CD_PLAYER_MODE": {
+      "label": "Select CD player mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x25",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 16 'Select CD player mode' (OBC 68; RC-5, parms 13 0 20 0 null 0): RC5 device 13 function 37"
+        }
+      ]
+    },
+    "KEY_MUTE_ON": {
+      "label": "Mute ON",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x27",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 17 'Mute ON' (OBC 60; RC-5, parms 13 0 20 0 null 0): RC5 device 13 function 39"
+        }
+      ]
+    },
+    "KEY_MUTE_OFF": {
+      "label": "Mute OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x28",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 18 'Mute OFF' (OBC 5C; RC-5, parms 13 0 20 0 null 0): RC5 device 13 function 40"
+        }
+      ]
+    },
+    "KEY_SYNC_TO_MASTER": {
+      "label": "Sync to MASTER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x32",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 19 'Sync to MASTER' (OBC 34; RC-5, parms 13 0 20 0 null 0): RC5 device 13 function 50"
+        }
+      ]
+    },
+    "KEY_SYNC_TO_AUDIO": {
+      "label": "Sync to AUDIO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x33",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 20 'Sync to AUDIO' (OBC 30; RC-5, parms 13 0 20 0 null 0): RC5 device 13 function 51"
+        }
+      ]
+    },
+    "KEY_SYNC_TO_WORD_CLOCK1_SLASH_2": {
+      "label": "Sync to WORD CLOCK1/2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x34",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 21 'Sync to WORD CLOCK1/2' (OBC 2C; RC-5, parms 13 0 20 0 null 0): RC5 device 13 function 52"
+        }
+      ]
+    },
+    "KEY_SYNC_TO_WORD_CLOCK_1": {
+      "label": "Sync to WORD CLOCK 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x36",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 22 'Sync to WORD CLOCK 1' (OBC 24; RC-5, parms 13 0 20 0 null 0): RC5 device 13 function 54"
+        }
+      ]
+    },
+    "KEY_MENU_FORWARD": {
+      "label": "Menu Forward",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x37",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 23 'Menu Forward' (OBC 20; RC-5, parms 13 0 20 0 null 0): RC5 device 13 function 55"
+        }
+      ]
+    },
+    "KEY_MENU_BACK": {
+      "label": "Menu Back",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x38",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 24 'Menu Back' (OBC 1C; RC-5, parms 13 0 20 0 null 0): RC5 device 13 function 56"
+        }
+      ]
+    },
+    "KEY_SYNC_TO_WORD_CLOCK_2": {
+      "label": "Sync to WORD CLOCK 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0D",
+          "function": "0x39",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 25 'Sync to WORD CLOCK 2' (OBC 18; RC-5, parms 13 0 20 0 null 0): RC5 device 13 function 57"
+        }
+      ]
+    },
+    "KEY_0": {
+      "label": "0",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 26 '0' (OBC FD; RC-5, parms 13 0 20 0 null 0): RC5 device 20 function 0"
+        }
+      ]
+    },
+    "KEY_1": {
+      "label": "1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 27 '1' (OBC F9; RC-5, parms 13 0 20 0 null 0): RC5 device 20 function 1"
+        }
+      ]
+    },
+    "KEY_2": {
+      "label": "2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 28 '2' (OBC F5; RC-5, parms 13 0 20 0 null 0): RC5 device 20 function 2"
+        }
+      ]
+    },
+    "KEY_3": {
+      "label": "3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 29 '3' (OBC F1; RC-5, parms 13 0 20 0 null 0): RC5 device 20 function 3"
+        }
+      ]
+    },
+    "KEY_4": {
+      "label": "4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 30 '4' (OBC ED; RC-5, parms 13 0 20 0 null 0): RC5 device 20 function 4"
+        }
+      ]
+    },
+    "KEY_5": {
+      "label": "5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 31 '5' (OBC E9; RC-5, parms 13 0 20 0 null 0): RC5 device 20 function 5"
+        }
+      ]
+    },
+    "KEY_6": {
+      "label": "6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 32 '6' (OBC E5; RC-5, parms 13 0 20 0 null 0): RC5 device 20 function 6"
+        }
+      ]
+    },
+    "KEY_7": {
+      "label": "7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 33 '7' (OBC E1; RC-5, parms 13 0 20 0 null 0): RC5 device 20 function 7"
+        }
+      ]
+    },
+    "KEY_8": {
+      "label": "8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 34 '8' (OBC DD; RC-5, parms 13 0 20 0 null 0): RC5 device 20 function 8"
+        }
+      ]
+    },
+    "KEY_9": {
+      "label": "9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 35 '9' (OBC D9; RC-5, parms 13 0 20 0 null 0): RC5 device 20 function 9"
+        }
+      ]
+    },
+    "KEY_SLEEP": {
+      "label": "Sleep",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 36 'Sleep' (OBC D5; RC-5, parms 13 0 20 0 null 0): RC5 device 20 function 10"
+        }
+      ]
+    },
+    "KEY_WAKE": {
+      "label": "Wake",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 37 'Wake' (OBC D1; RC-5, parms 13 0 20 0 null 0): RC5 device 20 function 11"
+        }
+      ]
+    },
+    "KEY_TOGGLE_SLEEP_SLASH_WAKE": {
+      "label": "Toggle Sleep/Wake",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 38 'Toggle Sleep/Wake' (OBC CD; RC-5, parms 13 0 20 0 null 0): RC5 device 20 function 12"
+        }
+      ]
+    },
+    "KEY_REPEAT": {
+      "label": "Repeat",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x1D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 39 'Repeat' (OBC 89; RC-5, parms 13 0 20 0 null 0): RC5 device 20 function 29"
+        }
+      ]
+    },
+    "KEY_NEXT_TRACK": {
+      "label": "Next Track",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x20",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 40 'Next Track' (OBC 7D; RC-5, parms 13 0 20 0 null 0): RC5 device 20 function 32"
+        }
+      ]
+    },
+    "KEY_PREVIOUS_TRACK": {
+      "label": "Previous Track",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x21",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 41 'Previous Track' (OBC 79; RC-5, parms 13 0 20 0 null 0): RC5 device 20 function 33"
+        }
+      ]
+    },
+    "KEY_FAST_REVERSE": {
+      "label": "Fast Reverse",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x24",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 42 'Fast Reverse' (OBC 6D; RC-5, parms 13 0 20 0 null 0): RC5 device 20 function 36"
+        }
+      ]
+    },
+    "KEY_PROGRAM": {
+      "label": "Program",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x29",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 43 'Program' (OBC 59; RC-5, parms 13 0 20 0 null 0): RC5 device 20 function 41"
+        }
+      ]
+    },
+    "KEY_PLAY_SLASH_PAUSE": {
+      "label": "Play/Pause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x35",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 44 'Play/Pause' (OBC 29; RC-5, parms 13 0 20 0 null 0): RC5 device 20 function 53"
+        }
+      ]
+    },
+    "KEY_STOP_SLASH_EJECT": {
+      "label": "Stop/Eject",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x36",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 45 'Stop/Eject' (OBC 25; RC-5, parms 13 0 20 0 null 0): RC5 device 20 function 54"
+        }
+      ]
+    },
+    "KEY_POWER_OFF_STAR": {
+      "label": "Power Off*",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x37",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 46 'Power Off*' (OBC 21; RC-5, parms 13 0 20 0 null 0): RC5 device 20 function 55"
+        }
+      ]
+    },
+    "KEY_CLEAR": {
+      "label": "Clear",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x3A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 47 'Clear' (OBC 15; RC-5, parms 13 0 20 0 null 0): RC5 device 20 function 58"
+        }
+      ]
+    },
+    "KEY_FAST_FORWARD": {
+      "label": "Fast Forward",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x3B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/dCS Rossini DAC.rmdu function 48 'Fast Forward' (OBC 11; RC-5, parms 13 0 20 0 null 0): RC5 device 20 function 59"
+        }
+      ]
+    }
+  }
+}
