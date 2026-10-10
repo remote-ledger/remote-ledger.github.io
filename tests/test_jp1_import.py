@@ -21,8 +21,11 @@ ROOT = Path(__file__).resolve().parent.parent
 COMMIT = "87b0ac05bc3b73eb5d392b9f468ae24a875ff83e"
 
 
-def upgrade(name: str, parms: str, *functions: tuple[str | None, str | None], fixed: str = "") -> rmdu.Upgrade:
+def upgrade(name: str, parms: str, *functions: tuple[str | None, str | None], fixed: str = "",
+            variant: str = "") -> rmdu.Upgrade:
     lines = [f"Protocol.name={name}", f"ProtocolParms={parms}"]
+    if variant:
+        lines.append(f"Protocol.variantName={variant}")
     if fixed:
         lines.append(f"FixedData={fixed}")
     for i, (fname, hx) in enumerate(functions):
@@ -279,6 +282,83 @@ def test_a_protocol_the_ioblaster_import_gives_extras_gets_them_here_too():
     assert "unitUs" not in jp.Importer.block("NEC1")
 
 
+def test_pioneer_is_one_frame_written_as_the_ledgers_two_equal_parts():
+    """``Translator(lsb,comp)`` for the device and the function: a single frame, which the ledger writes as its
+    two parts equal (``D0:D`` and ``F0:F``). The function ``FF`` is ``rev8(~0xFF)``, 0; ``BF`` is ``rev8(0x40)``, 2;
+    ``3F`` is ``rev8(0xC0)``, 3. A ``null`` device is in FixedData: ``BA`` is ``~0xA2`` reversed."""
+    up = upgrade("Pioneer", "162", ("a", "FF"), ("b", "BF"), ("c", "3F"))
+    assert [signal(up, i) for i in range(3)] == [
+        rmdu.Signal("Pioneer-2Part", 0xA2A2, None, 0x0000), rmdu.Signal("Pioneer-2Part", 0xA2A2, None, 0x0202),
+        rmdu.Signal("Pioneer-2Part", 0xA2A2, None, 0x0303)]
+    assert signal(upgrade("Pioneer", "null", ("a", "FF"), fixed="BA")) == rmdu.Signal("Pioneer-2Part", 0xA2A2, None, 0)
+    assert signal(upgrade("Pioneer", "256", ("a", "FF"))) == "the device parameter is missing"
+
+
+def test_pioneer_mix_is_a_function_and_a_flag_byte_and_a_second_part_where_the_flag_says_so():
+    """``Translator(lsb,comp,3) PioneerMixTranslator()``: the first byte is the function, ``rev8(~OBC)``; in the
+    second the lowest bit says a two-part signal and the next two pick the prefix command. ``DB`` is 36, and
+    device 170, prefix command 91, device 175 and function 36 are IrpTransmogrifier's decode of a real Pioneer
+    receiver's capture (``device=0xAAAF, function=0x5B24``, pioneer.py)."""
+    v2 = upgrade("Pioneer MIX", "170 175 90 91", ("guide", "DB 03"), ("one", "DB 00"), ("first", "DB 01"),
+                 ("third", "DB 05"), ("wide", "DB 08"), variant="2")
+    assert [signal(v2, i) for i in range(5)] == [
+        rmdu.Signal("Pioneer-2Part", 0xAAAF, None, 0x5B24), rmdu.Signal("Pioneer-2Part", 0xAAAA, None, 0x2424),
+        rmdu.Signal("Pioneer-2Part", 0xAAAF, None, 0x5A24),
+        "the function selects a prefix command the variant does not have",
+        "the flag byte has bits the variant does not use"]
+    v3 = upgrade("Pioneer MIX", "170 175 90 91 94 null", ("third", "DB 05"), ("fourth", "DB 07"), variant="3")
+    assert signal(v3, 0) == rmdu.Signal("Pioneer-2Part", 0xAAAF, None, 0x5E24)
+    assert signal(v3, 1) == "the device or the prefix command parameter is missing"
+    # a null parameter is in FixedData, at the byte the DeviceTranslator's offset gives (variant 2: 0, 2, 1, 3)
+    nulls = upgrade("Pioneer MIX", "null null null null", ("guide", "DB 03"), fixed="AA A5 0A 25", variant="2")
+    assert signal(nulls) == rmdu.Signal("Pioneer-2Part", 0xAAAF, None, 0x5B24)
+    for variant in ("", "4", "5"):
+        assert signal(upgrade("Pioneer MIX", "170 175 90 91", ("a", "DB 03"), variant=variant)) == \
+            "the variant is not read (its devices are chosen by more flag bits)"
+
+
+def test_panasonic_multi_device_is_the_panasonic_combo_with_its_two_bytes_the_other_way_round():
+    """``Translator(lsb,comp,0,8,8) Translator(lsb,comp,1)``: the function is the first byte and the sub device the
+    second, each complemented and reversed (``67`` is 25, ``DF`` is 4); the OEM bytes are parameters 2 and 3, and a
+    null device is in FixedData (``FA`` is 160)."""
+    up = upgrade("Panasonic Multi-Device (Hacked)", "160 null null null", ("a", "67 DF"), ("b", "FF FF"))
+    assert [signal(up, i) for i in (0, 1)] == [rmdu.Signal("Panasonic", 160, 4, 25), rmdu.Signal("Panasonic", 160, 0, 0)]
+    nulls = upgrade("Panasonic Multi-Device (Hacked)", "null null null null", ("a", "67 DF"), fixed="bf fb fa ff")
+    assert signal(nulls) == rmdu.Signal("Panasonic", 160, 4, 25)
+    assert signal(upgrade("Panasonic Multi-Device (Hacked)", "160 null 3 32", ("a", "67 DF"))) == \
+        "the OEM byte 3 is not Panasonic's 2, which the ledger's frame fixes"
+
+
+def test_recs80_68_jvc_48_and_teac_k_are_their_translators():
+    """RECS80 (68) keeps its device complemented (``Translator(0,3,2,comp)``) and the ledger's frame sends what is
+    kept: parameter 0 is device 7, and ``D8`` is 63 - 54 = 9. JVC-48 is device, sub device and ``rev8(~OBC)``
+    (``F7`` is 16). Teac-K is the first byte as ``rev8(~OBC)`` (``7F`` is 1), a four-bit device, the sub device
+    (or ``DF`` of FixedData, 4) and the OEM bytes 67 and 83 the ledger's frame fixes."""
+    assert signal(upgrade("RECS80 (68)", "0", ("a", "D8"))) == rmdu.Signal("RECS80-0068", 7, None, 9)
+    assert signal(upgrade("RECS80 (68)", "8", ("a", "D8"))) == "the device parameter is missing or is not three bits"
+    assert signal(upgrade("JVC-48", "34 26", ("a", "F7"))) == rmdu.Signal("JVC-48", 34, 26, 16)
+    assert signal(upgrade("JVC-48", "34 null", ("a", "F7"))) == "the device or the sub device parameter is missing"
+    assert signal(upgrade("Teac-K", "0 4 null null", ("a", "7F FF"))) == rmdu.Signal("Teac-K", 0, 4, 1)
+    assert signal(upgrade("Teac-K", "0 null null null", ("a", "7F FF"), fixed="3D 35 FF DF")) == rmdu.Signal("Teac-K", 0, 4, 1)
+    assert signal(upgrade("Teac-K", "16 4 null null", ("a", "7F FF"))) == "the device parameter is missing or is not four bits"
+    assert signal(upgrade("Teac-K", "0 4 68 null", ("a", "7F FF"))) == "the OEM byte 68 is not Teac's 67, which the ledger's frame fixes"
+
+
+def test_rca_is_read_only_where_it_sends_the_38_khz_of_the_ledgers_rca_38():
+    """``RCA-38`` is ``Translator()``: the function is the OBC as it is. ``RCA`` (variant 2) and ``RCA-56`` are
+    ``Translator(comp)`` (``B5`` is 0x4A) and say their carrier in parameter 1, where 1 is 38 kHz; the first
+    variant of ``RCA`` sends 56 kHz. The ledger has no 56 kHz RCA, so those are said so and not read."""
+    assert signal(upgrade("RCA-38", "15", ("a", "4A"))) == rmdu.Signal("RCA-38", 15, None, 0x4A)
+    assert signal(upgrade("RCA-56", "15 1", ("a", "B5"))) == rmdu.Signal("RCA-38", 15, None, 0x4A)
+    assert signal(upgrade("RCA", "15 1", ("a", "B5"), variant="2")) == rmdu.Signal("RCA-38", 15, None, 0x4A)
+    carrier = "the carrier is not 38 kHz, which the ledger's RCA-38 has"
+    assert signal(upgrade("RCA-56", "15 0", ("a", "B5"))) == carrier
+    assert signal(upgrade("RCA", "15 0", ("a", "B5"), variant="2")) == carrier
+    assert signal(upgrade("RCA", "15", ("a", "4A"))) == carrier
+    assert signal(upgrade("RCA-38", "16", ("a", "4A"))) == "the device parameter is missing or is not four bits"
+    assert signal(upgrade("RCA-38 Official", "null", ("a", "4A"), fixed="00")) == "the device parameter is missing or is not four bits"
+
+
 def test_an_executor_not_read_and_a_function_with_no_single_byte_are_said_so():
     assert "not read by this import" in signal(upgrade("MCE", "28 0 null", ("power", "C4")))
     assert signal(upgrade("NEC1", "6 null null", ("Power", "FF BF"))) == "the function has no single OBC byte"
@@ -471,7 +551,7 @@ def test_the_committed_jp1_import_keeps_r19():
     assert f"@ `{meta['commit']}`" in (ROOT / jp.IMPORT_ROOT / jp.REPORT).read_text(encoding="utf-8")
     shape = re.compile(
         rf"^jp1-device-upgrades@{meta['commit'][:7]} \S.* function (\d+) '.*' \(OBC ((?:[0-9A-F]{{2}})(?: [0-9A-F]{{2}})*); [^;]+, parms [^)]*\): "
-        r"(NEC1|NEC2|NECx1|NECx2|Sony12|Sony15|Sony20|RC5|RC6|JVC|Aiwa|Denon|Sharp|Panasonic|Samsung36|Proton|F12_relaxed|RECS80|Denon-K) device (\d+)(?: subdevice (\d+))? function (\d+)", re.S)
+        r"(NEC1|NEC2|NECx1|NECx2|Sony12|Sony15|Sony20|RC5|RC6|JVC|Aiwa|Denon|Sharp|Panasonic|Samsung36|Proton|F12_relaxed|RECS80|Denon-K|Pioneer-2Part|RCA-38|RECS80-0068|JVC-48|Teac-K) device (\d+)(?: subdevice (\d+))? function (\d+)", re.S)
 
     def num(value):
         return int(value, 0) if isinstance(value, str) else value
@@ -557,3 +637,18 @@ def test_a_jp1_samsung36_key_compiles_to_the_signal_the_ir_blaster_import_has_fo
     theirs = load_remote(next((ROOT / "remotes" / "irblaster").glob("*/1952-Samsung36.json")))
     assert mine.keys["KEY_POWER"][0].function == theirs.keys["KEY_POWER"][0].function == 0x70
     assert mine.compile_group("KEY_POWER", "primary") == theirs.compile_group("KEY_POWER", "primary")
+
+
+def test_two_committed_pioneer_upgrades_send_the_signal_irptransmogrifier_decoded_from_a_receiver():
+    """An independent check of the Pioneer MIX rule. IrpTransmogrifier's own teaser capture of a Pioneer receiver
+    (PioneerMix2.ict, decoded as D0=170, F0=91, D=175, F=36) is the ledger's golden vector for Pioneer-2Part
+    (tests/vectors/irpt_pioneer2part_D170_F91_D175_F36.pronto, CITATIONS.md). Two forum upgrades of Pioneer plasma
+    TVs, each with a function whose OBC and flag byte the rule decodes to exactly that, name it a TV guide key."""
+    expected = (0xAAAF, 0x5B24)               # device = D0 * 256 + D, function = F0 * 256 + F
+    assert (170 * 256 + 175, 91 * 256 + 36) == expected
+    for name, key in (("TV-Pioneer_PDP-5080HD.json", "KEY_TV_GUIDE"),
+                      ("TV-Pioneer_PDP-SX4280D__UK_version__-_as_modded_Oct_14.json", "KEY_EPG")):
+        doc = load(ROOT / jp.IMPORT_ROOT / "Pioneer" / name)
+        assert doc["protocol"]["name"] == "Pioneer-2Part"
+        form = doc["keys"][key]["forms"][0]
+        assert (int(form["device"], 16), int(form["function"], 16)) == expected, (name, key)
