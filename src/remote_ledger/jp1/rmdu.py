@@ -167,6 +167,8 @@ RCA_38 = "RCA-38"
 RCA_38_OFFICIAL = "RCA-38 Official"
 RCA_FAMILY = (RCA, RCA_56, RCA_38, RCA_38_OFFICIAL)
 MCE = "MCE"
+NOKIA32 = "Nokia32"
+PANASONIC_OLD = "Panasonic (old)"
 NEC1_F16_OFFICIAL = "NEC1-f16 Official"
 NEC1_RNC = "NEC1-rnc"
 #: ``NEC-Yamaha``'s styles Y1 to Y3 (IrpTransmogrifier's IRP, DESIGN D158): the fourth byte is the third with these bits
@@ -175,7 +177,7 @@ YAMAHA_E_XOR = {1: 0x7F, 2: 0xFE, 3: 0x7E}
 TWO_BYTE = (SONY_COMBO, NEC1_COMBO, NEC_4DEV, NEC_4DEV_YAMAHA, NEC_2DEV, JVC_COMBO, DENON_COMBO, SHARP_COMBO,
             PANASONIC_COMBO, DENON_K, PIONEER_MIX, PANASONIC_HACKED, TEAC_K)
 MAPPED = (*NEC_FAMILY, SONY_1215, SONY_20, RC5, RC6, JVC, AIWA, DENON, PANASONIC, SHARP, SAMSUNG36, PROTON, F12,
-          RECS80_45, PIONEER, RECS80_68, JVC_48, *RCA_FAMILY, NEC1_F16_OFFICIAL, NEC1_RNC, MCE, *TWO_BYTE)
+          RECS80_45, PIONEER, RECS80_68, JVC_48, *RCA_FAMILY, NEC1_F16_OFFICIAL, NEC1_RNC, MCE, NOKIA32, PANASONIC_OLD, *TWO_BYTE)
 
 
 def signal_of(upgrade: Upgrade, function: Function) -> Signal | str:
@@ -518,6 +520,41 @@ def simple_signal(name: str, parms: list[str], byte: int, fixed: list[str] = ())
         if device is None or device > 7:
             return "the device parameter is missing or is not three bits"
         return Signal("RECS80", device, None, 63 - (byte >> 2))
+    if name == NOKIA32:
+        # CmdTranslator=Translator(): F is the OBC as it is. The device translators put the mode (``High X-bit``) in
+        # byte 0 of FixedData and the Device, Sub Device and X bytes in 1, 2 and 3, as they are (DESIGN D182)
+        def given(index: int, at: int) -> int | None:
+            value = parm(parms, index)
+            if value is None and len(fixed) > at and _HEX_BYTE.match(fixed[at]):
+                value = int(fixed[at], 16)
+            return value
+
+        device, sub, x, mode = given(0, 1), given(1, 2), given(2, 3), given(3, 0)
+        if None in (device, sub, x, mode):
+            return "the device, sub device, X or high X-bit parameter is missing"
+        if device > 255 or sub > 255 or x > 255:
+            return "a parameter is not a byte"
+        if mode == 2:
+            return "the high X bit is sent at release, which a form cannot say"
+        if mode == 0 and x >= 128:
+            return "the high X bit is set and constant, which a form cannot send (its toggle is not in a file)"
+        return Signal("Nokia32", device, sub, (x & 0x7F) << 8 | byte)
+    if name == PANASONIC_OLD:
+        # Translator(comp,0,2,6) Translator(lsb,1,6,0): the top six bits of the byte are F reversed and its low two
+        # the complement of the device the function uses (0 to 2: Device 1 to 3; 3 is OBC/2). A device the upgrade
+        # leaves null is the one in FixedData (Translator(lsb,comp,i,5,...): its five bits after the first, reversed
+        # and complemented), which is the executor's default
+        selected = ~byte & 3
+        if selected == 3:
+            return "the function sends OBC/2, which is not read"
+        device = parm(parms, selected)
+        if device is None and selected < len(fixed) and _HEX_BYTE.match(fixed[selected]):
+            device = ~rev_bits((int(fixed[selected], 16) >> 2) & 0x1F, 5) & 0x1F
+        if device is None:
+            return "the device parameter is missing"
+        if device > 31:
+            return "the device is not five bits"
+        return Signal("Panasonic_Old", device, None, rev_bits(byte >> 2, 6))
     if name == MCE:
         # Translator(0): the function is the OBC as it is; the device is seven bits and the second OEM byte eight, both
         # parameters (``Device:7=4``, ``OEM2:8=15``); the first OEM byte is the executor's 128
