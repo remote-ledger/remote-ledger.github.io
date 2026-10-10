@@ -13,6 +13,9 @@ each with the decode IrpTransmogrifier's own test expects:
     NEC2-f16.ict  / .exp   an NEC2-f16 remote (and four plain NEC2 keys of it)
     NEC1-y1_nofinalA / _B  two Yamaha receivers' NEC1-Yamaha, style Y1
     NEC2-rnc.ict  / .exp   an NEC1-rnc remote, NEC2-f16 with E the nibble-swapped complement
+    Nokia32.ict   / .exp   a Nokia receiver's remote, whose symbols are pulse positions
+    Panasonic_Old.ict / .exp   an older Panasonic remote
+    Panasonic_Old_Pronto.txt / .exp   sixteen Pronto strings of a cable box's remote
 
 They are **cited, not vendored**: the repository is GPL-3.0 and the files are
 used there by permission of a third party. Check it out at the pinned commit
@@ -170,8 +173,41 @@ def decode_nec_family(frame: list[int]):
     return {"D": _lsb(bits[:8]), "S": _lsb(bits[8:16]), "F": _lsb(bits[16:24]), "E": _lsb(bits[24:32])}
 
 
+def decode_nokia32(frame: list[int]):
+    """The lead-in, sixteen symbols (a 6-period mark and a space of 10, 16, 22 or 28 periods) and the stop mark:
+    D, S, T, X and F. The period is the mean of the symbols' marks over 6."""
+    pairs = list(zip(frame[0::2], frame[1::2]))
+    assert len(pairs) >= 18, "too short for a Nokia32 frame"
+    lead, symbols = pairs[0], pairs[1:17]
+    period = statistics.mean(m for m, _ in symbols) / 6
+    assert 13 < lead[0] / period < 17 and 8 < lead[1] / period < 12, "not a 15,10 lead-in"
+    word = 0
+    for _, space in symbols:
+        steps = round((space / period - 10) / 6)
+        assert 0 <= steps <= 3, "a symbol with no place"
+        word = word << 2 | steps
+    return {"D": word >> 24, "S": word >> 16 & 0xFF, "T": word >> 15 & 1, "X": word >> 8 & 0x7F, "F": word & 0xFF}
+
+
+def decode_panasonic_old(frame: list[int]):
+    """A 4,4 lead-in and 22 bits (D:5, F:6, ~D:5, ~F:6), least significant first; the complements are checked."""
+    pairs = list(zip(frame[0::2], frame[1::2]))
+    assert len(pairs) >= 24, "too short for a Panasonic_Old frame"
+    lead, body = pairs[0], pairs[1:23]
+    assert 0.8 < lead[0] / lead[1] < 1.25 and lead[0] > 3 * min(m for m, _ in body), "no 4,4 lead-in"
+    bits = [_bit(m, s, wide_mark=False) for m, s in body]
+    d, f, nd, nf = _lsb(bits[:5]), _lsb(bits[5:11]), _lsb(bits[11:16]), _lsb(bits[16:22])
+    assert nd == (~d & 0x1F) and nf == (~f & 0x3F), "the complements are not complements"
+    return {"D": d, "F": f}
+
+
 def encode_like(proto: str, p: dict[str, int], carrier: int):
     entry = REGISTRY[proto]
+    if proto == "Nokia32":
+        return entry.encode(device=p["D"], subdevice=p["S"], function=(p["X"] << 8) | p["F"], carrier_hz=carrier,
+                            toggle=p["T"])
+    if proto == "Panasonic_Old":
+        return entry.encode(device=p["D"], subdevice=None, function=p["F"], carrier_hz=carrier)
     if proto in ("NEC1-f16", "NEC2-f16"):
         return entry.encode(device=p["D"], subdevice=p["S"], function=(p["F"] << 8) | p["E"],
                             carrier_hz=carrier)
@@ -194,6 +230,8 @@ CASES = (
     ("NEC1-y1_nofinal_B", "NEC1-f16", decode_nec_family),
     ("NEC2-f16", "NEC2-f16", decode_nec_family),
     ("NEC2-rnc", "NEC2-f16", decode_nec_family),
+    ("Nokia32", "Nokia32", decode_nokia32),
+    ("Panasonic_Old", "Panasonic_Old", decode_panasonic_old),
 )
 
 
@@ -203,9 +241,42 @@ def the_signal_frame(proto: str, signal) -> tuple[int, ...]:
     return signal.intro if proto == "NEC1-f16" else signal.repeat
 
 
+def audit_pronto_panasonic_old(data: Path) -> int:
+    """The sixteen Pronto strings of ``Panasonic_Old_Pronto.txt`` (a cable box's remote), each decoded from its words
+    at the carrier its own frequency word gives, against the ``.exp`` file's decode (D=27 and a function each)."""
+    expected = read_expected(data / "Panasonic_Old_Pronto.exp")
+    label, strings = None, {}
+    for line in (data / "Panasonic_Old_Pronto.txt").read_text().splitlines():
+        line = line.strip()
+        if re.fullmatch(r"(?:[0-9A-Fa-f]{4} ?)+", line) and label is not None:
+            strings[label] = line.split()
+        elif line:
+            label = line
+    failures = ok = 0
+    ratios = []
+    for key, words in strings.items():
+        period = int(words[1], 16) * 0.241246               # a Pronto cycle, in microseconds
+        burst = [int(w, 16) * period for w in words[4:]]
+        fields = decode_panasonic_old([round(x) for x in burst])
+        want = {k: v for k, v in expected[key].items() if k in fields}
+        if fields != want:
+            failures += 1
+            print(f"  FAIL Panasonic_Old_Pronto/{key}: string reads {fields}, .exp says {want}")
+            continue
+        ours = encode_like("Panasonic_Old", fields, round(1e6 / period)).repeat
+        ok += 1
+        ratios += [b / a for a, b in zip(ours[:-1], burst[:-1])]
+    print(f"Panasonic_Old_Pronto (Panasonic_Old): {ok}/{len(strings)} strings decode to the .exp fields "
+          f"(D {sorted({expected[k]['D'] for k in strings})})")
+    if ratios:
+        print(f"  string / encoder, every duration but the lead-out: median {statistics.median(ratios):.3f}, "
+              f"min {min(ratios):.3f}, max {max(ratios):.3f}")
+    return failures
+
+
 def audit(root: Path) -> int:
     data = root / "src" / "test" / "teaserfiles"
-    failures = 0
+    failures = audit_pronto_panasonic_old(data)
     for stem, proto, decode in CASES:
         captures = load_ict(data / f"{stem}.ict")
         expected = read_expected(data / f"{stem}.exp")
@@ -220,6 +291,8 @@ def audit(root: Path) -> int:
             fields = decode(frame)
             if decode is decode_nec_family:
                 want = nec_expected(expected[key])
+            elif decode is decode_nokia32:
+                want = {"D": 0, "S": 0, "F": 0, "X": 0, "T": 0} | {k: v for k, v in expected[key].items() if k in fields}
             else:
                 want = {k: v for k, v in expected[key].items() if k in fields}
             if fields != want:

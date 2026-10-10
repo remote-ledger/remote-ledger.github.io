@@ -1,6 +1,6 @@
 # Remote Ledger — Design & Build Plan
 
-**Draft v2.1** · Status: v1 complete; all three seed remotes authored; LIRC, SmartIR and IR Blaster imports built (§14, §15, §17); 31 protocols (§18, §37, §41) · Implements [SPEC.md](SPEC.md) v0.11
+**Draft v2.1** · Status: v1 complete; all three seed remotes authored; LIRC, SmartIR and IR Blaster imports built (§14, §15, §17); 33 protocols (§18, §37, §41, §43) · Implements [SPEC.md](SPEC.md) v0.11
 
 SPEC.md says *what* the format has to hold and why. This says *how it gets
 built*: the resolved open decisions, the one intermediate representation
@@ -341,7 +341,7 @@ Two conditional rules the validator enforces:
   *and* `name` is omitted or its registry entry has `extent_us = None`. All
   three v1 protocols declared an extent, so in practice this only bit
   raw-only files — which is exactly where truncation is most likely. Since §18
-  fifteen of the 31 protocols declare none (D3), so it now bites a file that
+  fifteen of the 33 protocols declare none (D3), so it now bites a file that
   names one of them as well. A truncated form with neither an extent nor
   `defaultGapUs` is a validation error, never a guess (D4a).
 
@@ -1342,7 +1342,7 @@ remote-ledger/
 ├── src/remote_ledger/
 │   ├── signal.py      IrSignal, cycle quantization        D1
 │   ├── pronto.py      encode / decode                     D5 D6
-│   ├── protocols/     one module per family (31 protocols) D3 D18 §18 §37 §41
+│   ├── protocols/     one module per family (33 protocols) D3 D18 §18 §37 §41 §43
 │   ├── irblaster/     importer + six hex_*.py maps        §17 §18
 │   ├── lirc/ smartir/ importers                           §14 §15
 │   ├── forms.py       form → IrSignal, precedence         D7
@@ -2051,7 +2051,7 @@ note rather than a live contract.
 
 ## 12. Implementation status
 
-Phases 0-6 are implemented: 3610 tests, `jsonschema` the only runtime
+Phases 0-6 are implemented: 3656 tests, `jsonschema` the only runtime
 dependency. Phase 2 landed its nine SPEC edits *before* its code, per §9 --
 the spec change is what authorises the implementation. (That count is asserted by the suite itself -- see
 `test_documented_test_count_is_current` -- so it cannot drift the way the
@@ -2060,7 +2060,7 @@ added 1,367; it moves again whenever a test is added, and the figure here
 has to be re-fixed with it.) Post-v1 work has landed outside the phases: RC5
 (§16), the LIRC and SmartIR imports (§14, §15), and the IR Blaster importer
 with the 24 protocols it needed (§17, §18), and the canonical key vocabulary
-(§22). The registry held 28 protocols then, and holds 31 since §41 (30 after §37).
+(§22). The registry held 28 protocols then, and holds 33 since §43 (30 after §37, 31 after §41).
 `rl encode --protocol NEC1 --device 0x88 --subdevice 0x77
 --function 0x18 --carrier 38000` emits the Topping RC-15A Power key. Until
 the RC-15A was corrected this read `0x11 / 0xEE`: the capture's MSB-first
@@ -6432,3 +6432,19 @@ The ledger held no MCE signal, so there is no hit rate against it. **The LIRC re
 The corpus is **16,305 remote files and 651,517 keys**, 5,438 brands (12 more), 281,505 models (139 more) and 174,305 signals (1,688 more). Both bundle profiles are 57,376,768 bytes and `rl bundle --verify` passes on each. **80.0% of the new keys map to the vocabulary** (§22, 2,713 of 3,391): a media-center remote's keys are the vocabulary's, and the `jp1` row goes from 70.8% to 71.1%. The search evaluation's draw moved again (D99): none of its nine misses is a device of this import.
 
 **Not read**: **620 upgrades of 158 executor names**, counted in `IMPORT.md`: `Nokia32` (40), which needs a protocol admitted through D18's gate (D145), `Manual Settings` (75 and 31 more of its spellings), `XMP` and `XMP (Slingbox)` (48), `GI Cable` (20), `Panasonic (old)` (19), `RC-5/5x Combo` (16), `TDC` (16), `RC6-M-20n` (15), `RC5/6 combo` (12), and 148 executors of fewer than 12 each (359 in all); and the 2,073 KeymapMaster files. **Not proven.** That a function does what its name says (§28); that a Media Center receiver acts on a frame sent with the toggle at 0 (§41); that the 25 of the mceusb remote's 94 functions that the forum's upgrades do not send are not a fault in the rule (the Xbox 360, Vista and Hauppauge remotes, 131 keys, match in full).
+
+## 43. Registering Nokia32 and Panasonic_Old
+
+The two largest groups of the JP1 upgrades that wait for a protocol after MCE: **`Nokia32`** (40 upgrades, 1,688 functions with a code) and **`Panasonic (old)`** (19 upgrades, 794), the cable and digital boxes' remotes. IrpTransmogrifier has both, with hardware captures in its own test data. They are registered through D18's three gates and **nothing reads them yet**: the corpus, the index and the bundle do not change, and the registry goes from 31 to 33 protocols. The code is `src/remote_ledger/protocols/nokia32.py` and `panasonic_old.py`, the evidence `tests/vectors/CITATIONS.md` and `tools/misc_capture_audit.py`.
+
+### D178 — What a form carries
+
+**`Nokia32`** is a pulse-position code at 36 kHz with two bits to a symbol (a 6-period mark, then a space of 10, 16, 22 or 28), every time **in periods of the file's carrier** (`1p`), so its durations follow `carrierHz`. A form's `device` is D, `subdevice` is S, and **`function` is `X * 256 + F`** (fifteen bits; a packing the ledger chose, since a form has no fourth field and X is part of the IRP's parameters). The toggle `T` is not in the file (D3b), as for RC6. **`Panasonic_Old`** is a 57.6 kHz pulse-distance frame of 833 µs units with a five-bit device and a six-bit command, each followed by its complement, and a 44 ms gap; `device` is D, `function` is F, and a `subdevice` is refused. It is **not** the ledger's `Panasonic`.
+
+### D179 — The three gates
+
+**Gate 1**: the IRPs, verbatim, at the commit the others cite and in the 1.2.14 release. **Gate 2a, on hardware**: `tools/misc_capture_audit.py` reads IrpTransmogrifier's captures with decoders written from the layouts and not from the encoders: **30 of 30 Nokia32 keys** (the odd ones with the toggle set), **4 of 4 Panasonic_Old keys** and **16 of 16 Pronto strings** of a cable box's remote (all D=27, the JP1 executor's own default device, `Device 1=27`), each decoding to the `.exp` fields and, for the captures, re-encoding to the same bit pattern. A capture carries instrument bias: the Nokia32 remote's carrier was 35,303 Hz and the strings' unit 849 µs against the IRP's 833, so none of the strings is a byte-for-byte vector. **Gate 2b**: four vectors rendered from the 1.2.14 release, two for each, whose parameters are keys of those remotes; our timings under the release's rounding reproduce each exactly and the raw words differ only in the lead-out. **Reproducible, none published**, which the suite's warning says on every run. **Gate 3**: `tests/test_nokia32.py` and `tests/test_panasonic_old.py`.
+
+### D180 — What it does to the rest, and what is not proven
+
+Nothing in the corpus moves. What the registration opens is in TODO.md: the Nokia32 and Panasonic (old) upgrades. **Not proven**: that a receiver acts on a Nokia32 frame sent with the toggle at 0; Nokia32's `X`, which no captured key uses (all have `X=0`) and which the JP1 executor takes as a parameter; and `Nokia32_endframe`, `Nokia12`, `Nokia36` and `Panasonic2`, which IrpTransmogrifier also has and the ledger does not register.

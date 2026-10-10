@@ -20,7 +20,8 @@ import (DESIGN section 18), each through the same three gates: ``NEC2``,
 ``Blaupunkt``, ``Panasonic``, ``JVC-48``, ``Fujitsu``, ``Teac-K``, ``Denon-K``
 and ``SharpDVD``. ``NEC1-f16`` and ``NEC2-f16`` joined for the codes whose
 fourth byte is not the complement of the third (DESIGN section 37), and ``MCE`` (RC-6 mode 6 with 32 bits) for Windows Media
-Center's remotes (DESIGN section 41).
+Center's remotes (DESIGN section 41), and ``Nokia32`` and ``Panasonic_Old`` for two families of set-top boxes (DESIGN
+section 43).
 
 ``Samsung32`` is **not** backlogged -- it does not exist. D18's table carried
 an IRP string for it that was written from memory during design and never
@@ -42,6 +43,8 @@ from .f12 import F12_RELAXED
 from .jvc import JVC
 from .kaseikyo import DENON_K, FUJITSU, JVC48, PANASONIC, SHARP_DVD, TEAC_K
 from .mce import MCE
+from .nokia32 import NOKIA32
+from .panasonic_old import PANASONIC_OLD
 from .nec import NEC1, NEC1_F16, NEC2, NEC2_F16, NECX1, NECX2
 from .pioneer import PIONEER_2PART
 from .proton import PROTON
@@ -60,7 +63,7 @@ _PROTOCOLS = (
     PIONEER_2PART, JVC, SHARP, DENON,
     SAMSUNG36, PROTON, F12_RELAXED, RECS80, RECS80_0068,
     AIWA, BLAUPUNKT, PANASONIC, JVC48, FUJITSU, TEAC_K, DENON_K, SHARP_DVD,
-    NEC1_F16, NEC2_F16, MCE,
+    NEC1_F16, NEC2_F16, MCE, NOKIA32, PANASONIC_OLD,
 )
 
 REGISTRY: dict[str, Protocol] = {p.name: p for p in _PROTOCOLS}

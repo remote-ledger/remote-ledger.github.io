@@ -918,3 +918,61 @@ intro; and the LIRC remotes above.
 That a Windows Media Center receiver acts on a frame the ledger writes with the toggle at 0 (a ledger file cannot set
 it); the 36 kHz carrier (LIRC's confs set none and lircd sends 38 kHz, which the file's `carrierHz` is free to say);
 `RC6-M-32` with a mode other than 6, which IrpTransmogrifier also has and the ledger does not register.
+
+---
+
+## Nokia32 and Panasonic_Old (DESIGN section 43)
+
+Two families of set-top boxes' remotes, each with hardware captures in IrpTransmogrifier's own test data.
+
+### Gate 1 — IRP strings with their source: **MET** for both
+
+- `Nokia32`: `{36k,1p,msb}<6,-10|6,-16|6,-22|6,-28>((15,-10,D:8,S:8,T:1,X:7,F:8,6,^100m)*,T=1-T) [D:0..255,S:0..255,F:0..255,T@:0..1=0,X:0..127]`.
+  `1p` is one period of the carrier, so every time follows the file's `carrierHz`. The ledger's `function` is `X * 256 + F`.
+- `Panasonic_Old`: `{57.6k,833}<1,-1|1,-3>(4,-4,D:5,F:6,~D:5,~F:6,1,-44m)* [D:0..31,F:0..63]`.
+
+Each is verbatim from IrpTransmogrifier's `IrpProtocols.xml` at `c945e76` (L1842 and L1984) and identical in the 1.2.14
+release (`list -i`). `Panasonic_Old` is **not** the ledger's `Panasonic`, the 48-bit Kaseikyo frame at 37 kHz.
+
+### Gate 2a — structural: **MET**, on hardware captures
+
+`bengtmartensson/IrpTransmogrifier @c945e76 src/test/teaserfiles/`, not vendored (a GPL-3.0 repository, the files used
+there by permission of the capture's author) and re-checked by `tools/misc_capture_audit.py --irpt DIR`:
+
+| file | what | keys | capture / encoder, every duration but the lead-out | frame period |
+|---|---|---|---|---|
+| `Nokia32` | a Nokia receiver's remote, the odd keys with the toggle set | 30 of 30 | median 0.988 (0.890-1.106) | 1.009-1.026x |
+| `Panasonic_Old` | an older Panasonic remote | 4 of 4 | median 1.007 (0.953-1.038) | 0.945x |
+| `Panasonic_Old_Pronto` | sixteen Pronto strings of a cable box's remote, all D=27 | 16 of 16 | median 1.022 (0.994-1.022) | |
+
+Every key's symbols or bits are read by a threshold decoder written from the frame layout and not from the encoder
+(Nokia32's pulse positions at the period the capture itself has; Panasonic_Old's complements checked), compared with the
+`.exp` file's fields, and the registered encoder is asked for that signal and must give the same bit pattern. **A capture
+carries instrument bias**, so this says layout, bit order, symbol order and the pulse positions, not absolute durations.
+The Nokia32 remote's carrier was measured at 35,303 Hz against the IRP's 36 kHz; the cable box's strings have a unit of
+849 us against 833 (a ratio of 1.022 in every duration), which is why none of them is a byte-for-byte vector.
+
+### Gate 2b — golden Pronto: **MET**, all four reproducible, none published
+
+| Protocol | Vector | Provenance | Our bytes differ at |
+|---|---|---|---|
+| Nokia32 | D=37 S=240 F=128 X=0 @ 36k: IrpTransmogrifier 1.2.14 release, `render -n D=37,S=240,F=128,X=0 -p Nokia32` | **reproducible** | word 39 (lead-out) |
+| Nokia32 | D=37 S=240 F=137 X=0 @ 36k: the same | **reproducible** | word 39 |
+| Panasonic_Old | D=27 F=28 @ 57.6k: `render -n D=27,F=28 -p Panasonic_Old` | **reproducible** | word 51 (lead-out) |
+| Panasonic_Old | D=0 F=36 @ 57.6k: the same | **reproducible** | word 51 |
+
+Our timings under IrpTransmogrifier's rounding rule reproduce each string exactly; the raw words differ only in the
+lead-out. The Nokia32 parameters are keys of the capture above (its toggle is not in a ledger file, so the second is the
+`T=0` form of a key whose capture has `T=1`). No Pronto string for either is published as a render.
+
+### Gate 3 — invariant tests: **MET**
+
+`tests/test_panasonic_old.py` (every one of the 2,048 devices and functions, the order and bit order of the fields, the
+44 ms gap, no intro) and `tests/test_nokia32.py` (every `X:F` for three devices, every device and subdevice for three
+functions, a seeded sample with the toggle either way, the pulse positions, and every time in periods of the carrier).
+
+### Not established
+
+That a receiver acts on a frame sent with the toggle at 0 (Nokia32: a ledger file cannot set it); Nokia32's 7-bit `X`,
+which no captured key uses (all have `X=0`); `Nokia32_endframe`, `Nokia12`, `Nokia36` and `Panasonic2`, which
+IrpTransmogrifier also has and the ledger does not register.
