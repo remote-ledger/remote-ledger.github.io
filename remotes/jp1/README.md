@@ -24,7 +24,8 @@ RemoteMaster's own `Rc5Translator`) and four combos whose functions are two OBC 
 Combo, NEC 4DEV Combo and NEC 4DEV Yamaha Combo, in its plain style (section 33); and RC-6, JVC and JVC Combo, Aiwa,
 Denon and Denon Combo, Panasonic and Panasonic Combo (section 34); and NEC 2DEV Combo, Sharp Combo
 and Sharp, Samsung36, Proton, F12, RECS80 (45) and Denon-K (section 35); and Pioneer and Pioneer MIX (variants 2 and 3),
-Panasonic Multi-Device (Hacked), RECS80 (68), JVC-48, Teac-K and the RCA family where it sends 38 kHz (section 36). Every other upgrade is counted by
+Panasonic Multi-Device (Hacked), RECS80 (68), JVC-48, Teac-K and the RCA family where it sends 38 kHz (section 36); and the
+relaxed NEC frames, NEC1-f16 and NEC2-f16: the Yamaha combo's Y1 to Y3 styles, NEC1-f16 Official and NEC1-rnc (section 39). Every other upgrade is counted by
 executor in `IMPORT.md`, with the KeymapMaster `.txt` files, which are not read.
 
 A file becomes one remote file per ledger protocol it sends, and every function a key with an `irp`

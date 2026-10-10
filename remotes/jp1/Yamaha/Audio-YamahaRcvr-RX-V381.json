@@ -1,0 +1,645 @@
+{
+  "manufacturer": "Yamaha",
+  "model": "RX-V381",
+  "aliases": [],
+  "controls": [
+    "Yamaha RX-V381"
+  ],
+  "protocol": {
+    "name": "NEC1-f16",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x2AD5",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YamahaRcvr-RX-V381.rmdu function 0 'POWER' (OBC 81 7E AB 54; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 10965"
+        }
+      ]
+    },
+    "KEY_SLEEP": {
+      "label": "SLEEP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x30CF",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YamahaRcvr-RX-V381.rmdu function 1 'SLEEP' (OBC A1 5E F3 0C; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 12495; the upgrade's note: 'cycles through all available sleep settings'"
+        }
+      ]
+    },
+    "KEY_BLUE_MINUS_TOOTH": {
+      "label": "BLUE-TOOTH",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xBEC1",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YamahaRcvr-RX-V381.rmdu function 2 'BLUE-TOOTH' (OBC A1 5E 82 7C; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 48833"
+        }
+      ]
+    },
+    "KEY_USB": {
+      "label": "USB",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x720D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YamahaRcvr-RX-V381.rmdu function 3 'USB' (OBC 01 7F B1 4F; NEC1-f16 Official, parms none): NEC1-f16 device 127 subdevice 1 function 29197"
+        }
+      ]
+    },
+    "KEY_INPUT_PLUS": {
+      "label": "INPUT +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x1F60",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YamahaRcvr-RX-V381.rmdu function 4 'INPUT +' (OBC A1 5E 07 F9; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 8032"
+        }
+      ]
+    },
+    "KEY_INPUT_MINUS": {
+      "label": "INPUT -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x235C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YamahaRcvr-RX-V381.rmdu function 5 'INPUT -' (OBC A1 5E 3B C5; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 9052"
+        }
+      ]
+    },
+    "KEY_ENHANCER": {
+      "label": "ENHANCER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x946B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YamahaRcvr-RX-V381.rmdu function 6 'ENHANCER' (OBC A1 5E D6 29; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 37995"
+        }
+      ]
+    },
+    "KEY_STRAIGHT": {
+      "label": "STRAIGHT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x56A9",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YamahaRcvr-RX-V381.rmdu function 7 'STRAIGHT' (OBC A1 5E 95 6A; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 22185"
+        }
+      ]
+    },
+    "KEY_BASS": {
+      "label": "BASS",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xBDC2",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YamahaRcvr-RX-V381.rmdu function 8 'BASS' (OBC A1 5E 42 BC; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 48578"
+        }
+      ]
+    },
+    "KEY_PROG_PLUS": {
+      "label": "PROG. +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x58A7",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YamahaRcvr-RX-V381.rmdu function 9 'PROG. +' (OBC A1 5E E5 1A; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 22695"
+        }
+      ]
+    },
+    "KEY_PROG_MINUS": {
+      "label": "PROG. -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x59A6",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YamahaRcvr-RX-V381.rmdu function 10 'PROG. -' (OBC A1 5E 65 9A; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 22950"
+        }
+      ]
+    },
+    "KEY_BD_SLASH_DVD": {
+      "label": "BD/DVD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x7F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YamahaRcvr-RX-V381.rmdu function 11 'BD/DVD' (OBC A1 5E FF 01; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 127; the upgrade's note: 'default\\: Movie Viewing (HDMI1)'"
+        }
+      ]
+    },
+    "KEY_TV": {
+      "label": "TV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x37C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YamahaRcvr-RX-V381.rmdu function 12 'TV' (OBC A1 5E 3F C1; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 892; the upgrade's note: 'default\\: Radio Listening (TUNER)'"
+        }
+      ]
+    },
+    "KEY_CD": {
+      "label": "CD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x679",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YamahaRcvr-RX-V381.rmdu function 13 'CD' (OBC A1 5E 9F 61; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 1657; the upgrade's note: 'default\\: Music Listening (AUDIO2)'"
+        }
+      ]
+    },
+    "KEY_RADIO": {
+      "label": "RADIO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x976",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YamahaRcvr-RX-V381.rmdu function 14 'RADIO' (OBC A1 5E 6F 91; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 2422; the upgrade's note: 'default\\: NET Audio Listening (NET RADIO)'"
+        }
+      ]
+    },
+    "KEY_SETUP": {
+      "label": "SETUP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x847B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YamahaRcvr-RX-V381.rmdu function 15 'SETUP' (OBC A1 5E DE 21; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 33915"
+        }
+      ]
+    },
+    "KEY_OPTION": {
+      "label": "OPTION",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x6B14",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YamahaRcvr-RX-V381.rmdu function 16 'OPTION' (OBC A1 5E 29 D7; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 27412"
+        }
+      ]
+    },
+    "KEY_TOP_MENU": {
+      "label": "TOP MENU",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xA0DF",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YamahaRcvr-RX-V381.rmdu function 17 'TOP MENU' (OBC A1 5E FA 04; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 41183; the upgrade's note: 'for external devices via HDMI Control'"
+        }
+      ]
+    },
+    "KEY_POP_MINUS_UP_MENU": {
+      "label": "POP-UP MENU",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xA4DB",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YamahaRcvr-RX-V381.rmdu function 18 'POP-UP MENU' (OBC A1 5E DA 24; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 42203; the upgrade's note: 'for external devices via HDMI Control'"
+        }
+      ]
+    },
+    "KEY_HOME": {
+      "label": "HOME",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x6699",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YamahaRcvr-RX-V381.rmdu function 19 'HOME' (OBC 01 7F 99 66; NEC1-f16 Official, parms none): NEC1-f16 device 127 subdevice 1 function 26265; the upgrade's note: 'for external devices via HDMI Control'"
+        }
+      ]
+    },
+    "KEY_CURSOR_UP": {
+      "label": "CURSOR UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x9D62",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YamahaRcvr-RX-V381.rmdu function 20 'CURSOR UP' (OBC A1 5E 46 B9; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 40290"
+        }
+      ]
+    },
+    "KEY_CURSOR_DOWN": {
+      "label": "CURSOR DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x9C63",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YamahaRcvr-RX-V381.rmdu function 21 'CURSOR DOWN' (OBC A1 5E C6 39; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 40035"
+        }
+      ]
+    },
+    "KEY_CURSOR_LEFT": {
+      "label": "CURSOR LEFT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x9F60",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YamahaRcvr-RX-V381.rmdu function 22 'CURSOR LEFT' (OBC A1 5E 06 F9; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 40800"
+        }
+      ]
+    },
+    "KEY_CURSOR_RIGHT": {
+      "label": "CURSOR RIGHT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x9E61",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YamahaRcvr-RX-V381.rmdu function 23 'CURSOR RIGHT' (OBC A1 5E 86 79; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 40545"
+        }
+      ]
+    },
+    "KEY_ENTER": {
+      "label": "ENTER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xDE21",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YamahaRcvr-RX-V381.rmdu function 24 'ENTER' (OBC A1 5E 84 7B; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 56865"
+        }
+      ]
+    },
+    "KEY_RETURN": {
+      "label": "RETURN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xAA55",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YamahaRcvr-RX-V381.rmdu function 25 'RETURN' (OBC A1 5E AA 55; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 43605"
+        }
+      ]
+    },
+    "KEY_VOLUME_UP": {
+      "label": "VOLUME UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x1AE5",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YamahaRcvr-RX-V381.rmdu function 26 'VOLUME UP' (OBC A1 5E A7 58; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 6885"
+        }
+      ]
+    },
+    "KEY_VOLUME_DOWN": {
+      "label": "VOLUME DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x1BE4",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YamahaRcvr-RX-V381.rmdu function 27 'VOLUME DOWN' (OBC A1 5E 27 D8; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 7140"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x1CE3",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YamahaRcvr-RX-V381.rmdu function 28 'MUTE' (OBC A1 5E C7 38; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 7395"
+        }
+      ]
+    },
+    "KEY_STOP": {
+      "label": "STOP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x6996",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YamahaRcvr-RX-V381.rmdu function 29 'STOP' (OBC 01 7F 69 96; NEC1-f16 Official, parms none): NEC1-f16 device 127 subdevice 1 function 27030"
+        }
+      ]
+    },
+    "KEY_PAUSE_SLASH_BAND": {
+      "label": "PAUSE/BAND",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x6798",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YamahaRcvr-RX-V381.rmdu function 30 'PAUSE/BAND' (OBC 01 7F 19 E6; NEC1-f16 Official, parms none): NEC1-f16 device 127 subdevice 1 function 26520"
+        }
+      ]
+    },
+    "KEY_PRESET_MINUS": {
+      "label": "PRESET-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x5E21",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YamahaRcvr-RX-V381.rmdu function 31 'PRESET-' (OBC 01 7F 85 7B; NEC1-f16 Official, parms none): NEC1-f16 device 127 subdevice 1 function 24097"
+        }
+      ]
+    },
+    "KEY_PRESET_PLUS": {
+      "label": "PRESET+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x5B24",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YamahaRcvr-RX-V381.rmdu function 32 'PRESET+' (OBC 01 7F 25 DB; NEC1-f16 Official, parms none): NEC1-f16 device 127 subdevice 1 function 23332"
+        }
+      ]
+    },
+    "KEY_RED": {
+      "label": "RED",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xC0BF",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YamahaRcvr-RX-V381.rmdu function 33 'RED' (OBC A1 5E FC 02; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 49343; the upgrade's note: 'for external devices via HDMI Control'"
+        }
+      ]
+    },
+    "KEY_GREEN": {
+      "label": "GREEN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xC1BE",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YamahaRcvr-RX-V381.rmdu function 34 'GREEN' (OBC A1 5E 7C 82; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 49598; the upgrade's note: 'for external devices via HDMI Control'"
+        }
+      ]
+    },
+    "KEY_YELLOW": {
+      "label": "YELLOW",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xC2BD",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YamahaRcvr-RX-V381.rmdu function 35 'YELLOW' (OBC A1 5E BC 42; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 49853; the upgrade's note: 'for external devices via HDMI Control'"
+        }
+      ]
+    },
+    "KEY_BLUE": {
+      "label": "BLUE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xC3BC",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YamahaRcvr-RX-V381.rmdu function 36 'BLUE' (OBC A1 5E 3C C2; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 50108; the upgrade's note: 'for external devices via HDMI Control'"
+        }
+      ]
+    },
+    "KEY_SEARCH_SLASH_TUNING_MINUS": {
+      "label": "SEARCH/TUNING-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x6A95",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YamahaRcvr-RX-V381.rmdu function 37 'SEARCH/TUNING-' (OBC 01 7F A9 56; NEC1-f16 Official, parms none): NEC1-f16 device 127 subdevice 1 function 27285"
+        }
+      ]
+    },
+    "KEY_SEARCH_SLASH_TUNING_PLUS": {
+      "label": "SEARCH/TUNING+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x6B94",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YamahaRcvr-RX-V381.rmdu function 38 'SEARCH/TUNING+' (OBC 01 7F 29 D6; NEC1-f16 Official, parms none): NEC1-f16 device 127 subdevice 1 function 27540"
+        }
+      ]
+    },
+    "KEY_SKIP_MINUS": {
+      "label": "SKIP-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x6C93",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YamahaRcvr-RX-V381.rmdu function 39 'SKIP-' (OBC 01 7F C9 36; NEC1-f16 Official, parms none): NEC1-f16 device 127 subdevice 1 function 27795"
+        }
+      ]
+    },
+    "KEY_SKIP_PLUS": {
+      "label": "SKIP+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x6D92",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YamahaRcvr-RX-V381.rmdu function 40 'SKIP+' (OBC 01 7F 49 B6; NEC1-f16 Official, parms none): NEC1-f16 device 127 subdevice 1 function 28050"
+        }
+      ]
+    },
+    "KEY_PLAY_SLASH_MEMORY": {
+      "label": "PLAY/MEMORY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x6897",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YamahaRcvr-RX-V381.rmdu function 41 'PLAY/MEMORY' (OBC 01 7F E9 16; NEC1-f16 Official, parms none): NEC1-f16 device 127 subdevice 1 function 26775"
+        }
+      ]
+    },
+    "KEY_AM_SLASH_FM": {
+      "label": "AM/FM",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x162A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YamahaRcvr-RX-V381.rmdu function 42 'AM/FM' (OBC A1 5E 97 AB; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 5674; the upgrade's note: 'Requires antenna'"
+        }
+      ]
+    },
+    "KEY_CUSTOMIZE_MINUS": {
+      "label": "CUSTOMIZE-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xCBB4",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YamahaRcvr-RX-V381.rmdu function 43 'CUSTOMIZE-' (OBC A1 5E 2C D2; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 52148; the upgrade's note: 'not mentioned in RX-V685 manual, seems to have same effect as PROG. -'"
+        }
+      ]
+    },
+    "KEY_CUSTOMIZE_PLUS": {
+      "label": "CUSTOMIZE+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xCAB5",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/YamahaRcvr-RX-V381.rmdu function 44 'CUSTOMIZE+' (OBC A1 5E AC 52; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 51893; the upgrade's note: 'not mentioned in RX-V685 manual, seems to have same effect as PROG. +'"
+        }
+      ]
+    }
+  }
+}

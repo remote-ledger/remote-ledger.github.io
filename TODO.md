@@ -12,8 +12,8 @@ sources have been imported under SPEC R19:
   keys, GPL-3.0 by inheritance only (DESIGN §17, §18, §38).
 - **hifi-remote.com's Sony code pages**: 151 files, 6,772 keys, a table of
   reference codes with no licence recorded (DESIGN §27).
-- **The JP1 device upgrades** of its forum: 2,566 files, 99,929 keys, read for
-  thirty-eight executors (DESIGN §28, §32, §33, §34, §35, §36).
+- **The JP1 device upgrades** of its forum: 2,595 files, 101,904 keys, read for
+  forty executors (DESIGN §28, §32, §33, §34, §35, §36, §39).
 - **Manufacturers' own IR tables**: Marantz's AV receiver charts, Anthem's IR
   hex sheet and Oppo's remote code workbooks, 189 files, 12,844 keys (DESIGN
   §29, §31).

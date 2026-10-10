@@ -166,10 +166,15 @@ RCA_56 = "RCA-56"
 RCA_38 = "RCA-38"
 RCA_38_OFFICIAL = "RCA-38 Official"
 RCA_FAMILY = (RCA, RCA_56, RCA_38, RCA_38_OFFICIAL)
+NEC1_F16_OFFICIAL = "NEC1-f16 Official"
+NEC1_RNC = "NEC1-rnc"
+#: ``NEC-Yamaha``'s styles Y1 to Y3 (IrpTransmogrifier's IRP, DESIGN D158): the fourth byte is the third with these bits
+#: complemented (``E0=(~Y:1:1)^(F:1)``, ``~F:6:1``, ``E7=(~Y:1)^(F:1:7)``).
+YAMAHA_E_XOR = {1: 0x7F, 2: 0xFE, 3: 0x7E}
 TWO_BYTE = (SONY_COMBO, NEC1_COMBO, NEC_4DEV, NEC_4DEV_YAMAHA, NEC_2DEV, JVC_COMBO, DENON_COMBO, SHARP_COMBO,
             PANASONIC_COMBO, DENON_K, PIONEER_MIX, PANASONIC_HACKED, TEAC_K)
 MAPPED = (*NEC_FAMILY, SONY_1215, SONY_20, RC5, RC6, JVC, AIWA, DENON, PANASONIC, SHARP, SAMSUNG36, PROTON, F12,
-          RECS80_45, PIONEER, RECS80_68, JVC_48, *RCA_FAMILY, *TWO_BYTE)
+          RECS80_45, PIONEER, RECS80_68, JVC_48, *RCA_FAMILY, NEC1_F16_OFFICIAL, NEC1_RNC, *TWO_BYTE)
 
 
 def signal_of(upgrade: Upgrade, function: Function) -> Signal | str:
@@ -184,6 +189,13 @@ def signal_of(upgrade: Upgrade, function: Function) -> Signal | str:
     :func:`rc5_signal`.
     """
     name, parms = upgrade.protocol_name, upgrade.parms
+    if name == NEC1_F16_OFFICIAL:
+        # four OBC bytes, ``Translator(lsb,comp,i,8,8 * i)`` each: device, sub device, F and E of the frame
+        four = obc_bytes(function.hex)
+        if four is None or len(four) != 4:
+            return "the function has no four OBC bytes"
+        device, sub, f, e = (rev8(~b & 0xFF) for b in four)
+        return Signal("NEC1-f16", device, sub, f << 8 | e)
     if name in TWO_BYTE:
         pair = obc_bytes(function.hex)
         if pair is None or len(pair) != 2:
@@ -417,8 +429,7 @@ def combo_signal(name: str, parms: list[str], first: int, second: int, fixed: li
         protocol = "Denon" if not (first >> 2) & 1 else "Sharp"
         return Signal(protocol, device, None, rev8(~second & 0xFF))
     function = rev8(~first & 0xFF)
-    if name == NEC_4DEV_YAMAHA and second & 0x06:
-        return "the Yamaha style sends a second byte that is not the complement of the first"
+    yamaha = (second >> 1) & 3 if name == NEC_4DEV_YAMAHA else 0       # YStyle: NEC, Y1, Y2, Y3 (bits 13 and 14)
     slot = second >> 7 if name == NEC_2DEV else second >> 6
     style = NEC_STYLES[((second >> 4) & 1) << 1 | second & 1]
     device, sub = parm(parms, 2 * slot), parm(parms, 2 * slot + 1)
@@ -430,6 +441,11 @@ def combo_signal(name: str, parms: list[str], first: int, second: int, fixed: li
         if style in ("NECx1", "NECx2"):
             return "the sub device parameter is missing"
         sub = ~device & 0xFF
+    if yamaha:
+        # the frame's fourth byte is not F's complement: NEC1-f16 and NEC2-f16 hold it (DESIGN D158, D164)
+        if style not in ("NEC1", "NEC2"):
+            return "the Yamaha style is sent in an NECx frame, whose relaxed form the ledger does not register"
+        return Signal(style + "-f16", device, sub, function << 8 | (function ^ YAMAHA_E_XOR[yamaha]))
     return Signal(style, device, sub, function)
 
 
@@ -501,6 +517,19 @@ def simple_signal(name: str, parms: list[str], byte: int, fixed: list[str] = ())
         if device is None or device > 7:
             return "the device parameter is missing or is not three bits"
         return Signal("RECS80", device, None, 63 - (byte >> 2))
+    if name == NEC1_RNC:
+        # Translator(lsb): the function is the OBC reversed, and the frame's fourth byte is its complement with the
+        # nibbles swapped (IrpTransmogrifier's NEC1-rnc), which NEC1-f16 holds
+        # (a ``null`` parameter is in FixedData, each byte reversed: ``80 7F`` is device 1, sub device 254)
+        device, sub = parm(parms, 0), parm(parms, 1)
+        if device is None and len(fixed) > 0 and _HEX_BYTE.match(fixed[0]):
+            device = rev8(int(fixed[0], 16))
+        if sub is None and len(fixed) > 1 and _HEX_BYTE.match(fixed[1]):
+            sub = rev8(int(fixed[1], 16))
+        if device is None or sub is None:
+            return "the device or the sub device parameter is missing"
+        f = rev8(byte)
+        return Signal("NEC1-f16", device, sub, f << 8 | ((~f & 0x0F) << 4) | ((~f >> 4) & 0x0F))
     if name == RECS80_68:
         # the device is kept complemented (Translator(0,3,2,comp)), and the ledger's frame sends what is kept
         device = parm(parms, 0)

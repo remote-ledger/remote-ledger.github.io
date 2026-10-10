@@ -183,13 +183,39 @@ def test_an_nec_4dev_combo_function_is_a_function_a_device_slot_and_a_style():
     assert signal(upgrade("NEC 4DEV Combo", "32 95", ("x", "E5 60")), 0) == "the device the function selects is not set"
 
 
-def test_the_yamaha_4dev_combo_is_nec_in_its_plain_style_and_refused_in_the_three_that_are_not():
-    """The Yamaha variant's Y style (offsets 13 and 14) is NEC, Y1, Y2 or Y3, and the last three send a second byte
-    that is not the complement of the first, a frame the ledger has no protocol for."""
-    up = upgrade("NEC 4DEV Yamaha Combo", "122 null 126 null", ("plain", "3E 21"), ("Y1", "3E 25"), ("Y2", "3E 23"), ("Y3", "3E 27"))
+def test_the_yamaha_4dev_combo_is_nec_in_its_plain_style_and_the_relaxed_form_in_the_three_that_are_not():
+    """The Yamaha variant's Y style (offsets 13 and 14, high bit first) is NEC, Y1, Y2 or Y3. The last three send a
+    fourth byte that is the third with bits complemented, which NEC1-f16 and NEC2-f16 hold (DESIGN D158, D164):
+    E = F ^ 0x7F for Y1, 0xFE for Y2 and 0x7E for Y3. F is 131 here (``3E``)."""
+    up = upgrade("NEC 4DEV Yamaha Combo", "122 133 126 null", ("plain", "3E 21"), ("Y1", "3E 23"), ("Y2", "3E 25"),
+                 ("Y3", "3E 27"), ("Y1 in NECx1", "3E 12"))
     assert signal(up, 0) == rmdu.Signal("NEC2", 122, 133, 131)
-    refused = "the Yamaha style sends a second byte that is not the complement of the first"
-    assert [signal(up, i) for i in (1, 2, 3)] == [refused] * 3
+    assert [signal(up, i) for i in (1, 2, 3)] == [
+        rmdu.Signal("NEC2-f16", 122, 133, 131 << 8 | 0xFC), rmdu.Signal("NEC2-f16", 122, 133, 131 << 8 | 0x7D),
+        rmdu.Signal("NEC2-f16", 122, 133, 131 << 8 | 0xFD)]
+    assert signal(up, 4) == ("the Yamaha style is sent in an NECx frame, whose relaxed form the ledger does not "
+                             "register")
+
+
+def test_the_yamaha_receiver_irptransmogrifier_captured_is_nec1_f16_with_e_39():
+    """FM of the captured Yamaha receiver is NEC1-Yamaha {D=127,S=1,F=88,Y=1} (NEC1-y1_nofinalA.exp), whose fourth
+    byte is 88 ^ 0x7F = 39. ``E5`` is the OBC of F = 88 (``rev8(~E5)``), and ``22`` says NEC1 and Y1."""
+    up = upgrade("NEC 4DEV Yamaha Combo", "127 1 null null", ("FM", "E5 22"))
+    assert signal(up) == rmdu.Signal("NEC1-f16", 127, 1, 88 * 256 + 39)
+
+
+def test_nec1_f16_official_is_four_obc_bytes_device_sub_device_f_and_e_and_nec1_rnc_is_the_swapped_complement():
+    """``NEC1-f16 Official``: four bytes, each complemented and reversed (``9E D8 BF F9`` is IrpTransmogrifier's
+    NEC1-f16 capture D=134, S=228, F=2, E=96). ``NEC1-rnc`` is ``Translator(lsb)``: F is the OBC reversed and E its
+    complement with the nibbles swapped (the NEC2-rnc capture's D=1, F=1 is E=239 and F=41 is E=109); a ``null``
+    parameter is in FixedData, each byte reversed."""
+    assert signal(upgrade("NEC1-f16 Official", "", ("x", "9E D8 BF F9"))) == rmdu.Signal("NEC1-f16", 134, 228, 608)
+    assert signal(upgrade("NEC1-f16 Official", "", ("x", "9E D8 BF"))) == "the function has no four OBC bytes"
+    rnc = upgrade("NEC1-rnc", "1 254", ("one", "80"), ("zero", "94"))
+    assert [signal(rnc, i) for i in (0, 1)] == [rmdu.Signal("NEC1-f16", 1, 254, 1 * 256 + 239),
+                                                rmdu.Signal("NEC1-f16", 1, 254, 41 * 256 + 109)]
+    assert signal(upgrade("NEC1-rnc", "null null", ("one", "80"), fixed="80 7F")) == rmdu.Signal("NEC1-f16", 1, 254, 495)
+    assert signal(upgrade("NEC1-rnc", "null null", ("one", "80"))) == "the device or the sub device parameter is missing"
 
 
 def test_the_one_byte_executors_keep_the_obc_as_their_translator_does():
@@ -551,7 +577,7 @@ def test_the_committed_jp1_import_keeps_r19():
     assert f"@ `{meta['commit']}`" in (ROOT / jp.IMPORT_ROOT / jp.REPORT).read_text(encoding="utf-8")
     shape = re.compile(
         rf"^jp1-device-upgrades@{meta['commit'][:7]} \S.* function (\d+) '.*' \(OBC ((?:[0-9A-F]{{2}})(?: [0-9A-F]{{2}})*); [^;]+, parms [^)]*\): "
-        r"(NEC1|NEC2|NECx1|NECx2|Sony12|Sony15|Sony20|RC5|RC6|JVC|Aiwa|Denon|Sharp|Panasonic|Samsung36|Proton|F12_relaxed|RECS80|Denon-K|Pioneer-2Part|RCA-38|RECS80-0068|JVC-48|Teac-K) device (\d+)(?: subdevice (\d+))? function (\d+)", re.S)
+        r"(NEC1|NEC2|NECx1|NECx2|Sony12|Sony15|Sony20|RC5|RC6|JVC|Aiwa|Denon|Sharp|Panasonic|Samsung36|Proton|F12_relaxed|RECS80|Denon-K|Pioneer-2Part|RCA-38|RECS80-0068|JVC-48|Teac-K|NEC1-f16|NEC2-f16) device (\d+)(?: subdevice (\d+))? function (\d+)", re.S)
 
     def num(value):
         return int(value, 0) if isinstance(value, str) else value
