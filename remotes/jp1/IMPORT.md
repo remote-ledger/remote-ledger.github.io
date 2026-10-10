@@ -14,48 +14,56 @@ silently (SPEC R19, condition 5).
 |---|---|
 | Upstream files: not read: KeymapMaster .txt | 2,073 |
 | Upstream files: skipped: no brand | 12 |
-| Upstream files: skipped: no function decodes | 3 |
+| Upstream files: skipped: no function decodes | 5 |
 | Upstream files: upgrades | 3,251 |
-| Remotes: imported | 2,184 |
-| Remotes: skipped: an authored remote wins | 5 |
+| Remotes: imported | 2,424 |
+| Remotes: skipped: an authored remote wins | 6 |
+| Keys: imported: Aiwa | 947 |
+| Keys: imported: Denon | 1,791 |
+| Keys: imported: JVC | 1,989 |
 | Keys: imported: NEC1 | 61,666 |
 | Keys: imported: NEC2 | 1,985 |
 | Keys: imported: NECx1 | 1,496 |
 | Keys: imported: NECx2 | 4,512 |
+| Keys: imported: Panasonic | 4,296 |
 | Keys: imported: RC5 | 5,648 |
+| Keys: imported: RC6 | 1,745 |
+| Keys: imported: Sharp | 195 |
 | Keys: imported: Sony12 | 2,813 |
 | Keys: imported: Sony15 | 1,705 |
 | Keys: imported: Sony20 | 2,955 |
+| Keys: skipped: the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes | 47 |
 | Keys: skipped: the Yamaha style sends a second byte that is not the complement of the first | 1,087 |
 | Keys: skipped: the command does not fit Sony's seven bits | 35 |
+| Keys: skipped: the device parameter is missing | 42 |
 | Keys: skipped: the device the function selects is not set | 40 |
-| Keys: skipped: the function has no single OBC byte | 4,269 |
-| Keys: skipped: the function has no two OBC bytes | 317 |
+| Keys: skipped: the function has no single OBC byte | 4,729 |
+| Keys: skipped: the function has no two OBC bytes | 484 |
 | Keys: skipped: the sub device parameter is missing | 97 |
+| Files by ledger protocol: Aiwa | 30 |
+| Files by ledger protocol: Denon | 38 |
+| Files by ledger protocol: JVC | 42 |
 | Files by ledger protocol: NEC1 | 1,596 |
 | Files by ledger protocol: NEC2 | 75 |
 | Files by ledger protocol: NECx1 | 38 |
 | Files by ledger protocol: NECx2 | 90 |
+| Files by ledger protocol: Panasonic | 85 |
 | Files by ledger protocol: RC5 | 147 |
+| Files by ledger protocol: RC6 | 41 |
+| Files by ledger protocol: Sharp | 4 |
 | Files by ledger protocol: Sony12 | 76 |
 | Files by ledger protocol: Sony15 | 77 |
 | Files by ledger protocol: Sony20 | 85 |
-| Brand taken from: the longest brand of the index that begins the description | 114 |
-| Brand taken from: the master index | 1,994 |
+| Brand taken from: the longest brand of the index that begins the description | 132 |
+| Brand taken from: the master index | 2,217 |
 
-## Executors this import does not read (upgrades) (187)
+## Executors this import does not read (upgrades) (179)
 
 | Executor | Files |
 |---|---|
 | `MCE` | 83 |
 | `Manual Settings` | 75 |
-| `Panasonic Combo` | 53 |
-| `RC-6` | 42 |
 | `Nokia32` | 40 |
-| `JVC` | 33 |
-| `Panasonic` | 33 |
-| `Aiwa` | 31 |
-| `Denon Combo (Official)` | 28 |
 | `Pioneer MIX` | 27 |
 | `XMP (Slingbox)` | 26 |
 | `XMP` | 22 |
@@ -67,7 +75,6 @@ silently (SPEC R19, condition 5).
 | `RC-5/5x Combo` | 16 |
 | `TDC` | 16 |
 | `RC6-M-20n` | 15 |
-| `Denon` | 14 |
 | `NEC1-f16 Official` | 13 |
 | `Proton` | 12 |
 | `RC5/6 combo` | 12 |
@@ -78,7 +85,6 @@ silently (SPEC R19, condition 5).
 | `DirecTV` | 9 |
 | `Dish Network` | 9 |
 | `F12` | 9 |
-| `JVC Combo` | 9 |
 | `Manual Settings\: 01 FF` | 9 |
 | `RCA Combo (Official)` | 9 |
 | `XMP (JP1)` | 9 |
@@ -235,7 +241,7 @@ silently (SPEC R19, condition 5).
 | `pid\: 01 61` | 1 |
 | `pid\: 01 E2` | 1 |
 
-## Upgrades of a read executor that yield nothing (15)
+## Upgrades of a read executor that yield nothing (17)
 
 | File | Reason |
 |---|---|
@@ -248,24 +254,27 @@ silently (SPEC R19, condition 5).
 | `Media Players/SuperBox S6 Max.rmdu` | `no brand: the file is not in the master index and its description begins with no brand of it` |
 | `Media Players/Vontage T9 - android tv box- URC-10820B00.rmdu` | `no brand: the file is not in the master index and its description begins with no brand of it` |
 | `Satellite/AXAS His Twin DVBS2 H.265 Satellite Receiver.rmdu` | `no brand: the file is not in the master index and its description begins with no brand of it` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | `no function decodes` |
 | `Satellite/Zodiac DZR-10DTT.rmdu` | `no function decodes` |
 | `TV Combos/Dynex-DX-26LD150A11 TV-DVD.rmdu` | `no brand: the file is not in the master index and its description begins with no brand of it` |
 | `TV/Admiral-Dynex Roku TV.rmdu` | `no brand: the file is not in the master index and its description begins with no brand of it` |
 | `TV/Beko .rmdu` | `no function decodes` |
+| `TV/Philips LED LCD HDTV 40PFL7505D.rmdu` | `no function decodes` |
 | `TV/Pionier N555 ST.rmdu` | `no brand: the file is not in the master index and its description begins with no brand of it` |
 | `TV/Samsung TV LCD Alec2.rmdu` | `no function decodes` |
 
-## Remotes skipped because an authored remote wins (R19, condition 4) (5)
+## Remotes skipped because an authored remote wins (R19, condition 4) (6)
 
 | File | Would have been |
 |---|---|
 | `CD/Hermstedt Hifidelio.rmdu` | `remotes/jp1/Hermstedt/CD-Hermstedt_Hifidelio.json` |
+| `Combo Audio Systems/Aiwa OEM remote RC-ZAS02.rmdu` | `remotes/jp1/Aiwa/Combo_Audio_Systems-Aiwa_OEM_remote_RC-ZAS02.json` |
 | `DVD (standard)/CyberHome RMC-300Z x6 (1025).rmdu` | `remotes/jp1/CyberHome/DVD__standard-CyberHome_RMC-300Z_x6__1025.json` |
 | `Minidisc & DAT/Sony DAT.rmdu` | `remotes/jp1/Sony/Minidisc___DAT-Sony_DAT.json` |
 | `Satellite/SonicView SV1000 6131.rmdu` | `remotes/jp1/Sonicview/Satellite-SonicView_SV1000_6131.json` |
 | `TV/VESTEL TV.rmdu` | `remotes/jp1/Vestel/TV-VESTEL_TV.json` |
 
-## Functions skipped (5,845)
+## Functions skipped (6,561)
 
 | File | Function | Reason |
 |---|---|---|
@@ -319,6 +328,152 @@ silently (SPEC R19, condition 5).
 | `Audio/Comcast AudioEngine A5.rmdu` | `surround` | `the function has no single OBC byte` |
 | `Audio/Comcast AudioEngine A5.rmdu` | `tv/vcr` | `the function has no single OBC byte` |
 | `Audio/Comcast AudioEngine A5.rmdu` | `up arrow` | `the function has no single OBC byte` |
+| `Audio/Denon AVR 65.rmdu` | `+100` | `the function has no two OBC bytes` |
+| `Audio/Denon AVR 65.rmdu` | 0 | `the function has no two OBC bytes` |
+| `Audio/Denon AVR 65.rmdu` | 4 | `the function has no two OBC bytes` |
+| `Audio/Denon AVR 65.rmdu` | 5 | `the function has no two OBC bytes` |
+| `Audio/Denon AVR 65.rmdu` | 6 | `the function has no two OBC bytes` |
+| `Audio/Denon AVR 65.rmdu` | 7 | `the function has no two OBC bytes` |
+| `Audio/Denon AVR 65.rmdu` | 8 | `the function has no two OBC bytes` |
+| `Audio/Denon AVR 65.rmdu` | 9 | `the function has no two OBC bytes` |
+| `Audio/Denon AVR 65.rmdu` | `X2` | `the function has no two OBC bytes` |
+| `Audio/Denon AVR 65.rmdu` | `center` | `the function has no two OBC bytes` |
+| `Audio/Denon AVR 65.rmdu` | `device button` | `the function has no two OBC bytes` |
+| `Audio/Denon AVR 65.rmdu` | `display` | `the function has no two OBC bytes` |
+| `Audio/Denon AVR 65.rmdu` | `eject` | `the function has no two OBC bytes` |
+| `Audio/Denon AVR 65.rmdu` | `enter` | `the function has no two OBC bytes` |
+| `Audio/Denon AVR 65.rmdu` | `exit` | `the function has no two OBC bytes` |
+| `Audio/Denon AVR 65.rmdu` | `fast fwd` | `the function has no two OBC bytes` |
+| `Audio/Denon AVR 65.rmdu` | `fav/scan` | `the function has no two OBC bytes` |
+| `Audio/Denon AVR 65.rmdu` | `input toggle` | `the function has no two OBC bytes` |
+| `Audio/Denon AVR 65.rmdu` | `last (prev ch)` | `the function has no two OBC bytes` |
+| `Audio/Denon AVR 65.rmdu` | `next track` | `the function has no two OBC bytes` |
+| `Audio/Denon AVR 65.rmdu` | `pause` | `the function has no two OBC bytes` |
+| `Audio/Denon AVR 65.rmdu` | `pip freeze` | `the function has no two OBC bytes` |
+| `Audio/Denon AVR 65.rmdu` | `pip move` | `the function has no two OBC bytes` |
+| `Audio/Denon AVR 65.rmdu` | `pip on/off` | `the function has no two OBC bytes` |
+| `Audio/Denon AVR 65.rmdu` | `pip swap` | `the function has no two OBC bytes` |
+| `Audio/Denon AVR 65.rmdu` | `play` | `the function has no two OBC bytes` |
+| `Audio/Denon AVR 65.rmdu` | `prev track` | `the function has no two OBC bytes` |
+| `Audio/Denon AVR 65.rmdu` | `program guide` | `the function has no two OBC bytes` |
+| `Audio/Denon AVR 65.rmdu` | `rear` | `the function has no two OBC bytes` |
+| `Audio/Denon AVR 65.rmdu` | `record` | `the function has no two OBC bytes` |
+| `Audio/Denon AVR 65.rmdu` | `rewind` | `the function has no two OBC bytes` |
+| `Audio/Denon AVR 65.rmdu` | `shift-left` | `the function has no two OBC bytes` |
+| `Audio/Denon AVR 65.rmdu` | `shift-right` | `the function has no two OBC bytes` |
+| `Audio/Denon AVR 65.rmdu` | `sleep` | `the function has no two OBC bytes` |
+| `Audio/Denon AVR 65.rmdu` | `slow` | `the function has no two OBC bytes` |
+| `Audio/Denon AVR 65.rmdu` | `slow+` | `the function has no two OBC bytes` |
+| `Audio/Denon AVR 65.rmdu` | `slow-` | `the function has no two OBC bytes` |
+| `Audio/Denon AVR 65.rmdu` | `stop` | `the function has no two OBC bytes` |
+| `Audio/Denon AVR 65.rmdu` | `surround` | `the function has no two OBC bytes` |
+| `Audio/Denon AVR 65.rmdu` | `tv/vcr` | `the function has no two OBC bytes` |
+| `Audio/Denon AVR-1603.rmdu` | 9 | `the function has no two OBC bytes` |
+| `Audio/Denon AVR-988.rmdu` | `#25` | `the function has no two OBC bytes` |
+| `Audio/Denon AVR-988.rmdu` | `#48` | `the function has no two OBC bytes` |
+| `Audio/Denon AVR-988.rmdu` | `#54` | `the function has no two OBC bytes` |
+| `Audio/Denon AVR-988.rmdu` | `#64` | `the function has no two OBC bytes` |
+| `Audio/Denon AVR-988.rmdu` | `#65` | `the function has no two OBC bytes` |
+| `Audio/Denon AVR-988.rmdu` | `#66` | `the function has no two OBC bytes` |
+| `Audio/Denon AVR-988.rmdu` | `#67` | `the function has no two OBC bytes` |
+| `Audio/Denon AVR-988.rmdu` | `#68` | `the function has no two OBC bytes` |
+| `Audio/Denon AVR-988.rmdu` | `#69` | `the function has no two OBC bytes` |
+| `Audio/Denon AVR-988.rmdu` | `#70` | `the function has no two OBC bytes` |
+| `Audio/Denon AVR-988.rmdu` | `#71` | `the function has no two OBC bytes` |
+| `Audio/Denon Receivers.rmdu` | 9 | `the function has no two OBC bytes` |
+| `Audio/Denon_AVR-3300_6131nw.rmdu` | `#42` | `the function has no two OBC bytes` |
+| `Audio/JVC RM-SR518U remote control.rmdu` | `+100` | `the function has no single OBC byte` |
+| `Audio/JVC RM-SR518U remote control.rmdu` | `CD-Disc` | `the function has no single OBC byte` |
+| `Audio/JVC RM-SR518U remote control.rmdu` | `display/info` | `the function has no single OBC byte` |
+| `Audio/JVC RM-SR518U remote control.rmdu` | `down arrow` | `the function has no single OBC byte` |
+| `Audio/JVC RM-SR518U remote control.rmdu` | `enter` | `the function has no single OBC byte` |
+| `Audio/JVC RM-SR518U remote control.rmdu` | `exit` | `the function has no single OBC byte` |
+| `Audio/JVC RM-SR518U remote control.rmdu` | `f.fwd/next track` | `the function has no single OBC byte` |
+| `Audio/JVC RM-SR518U remote control.rmdu` | `f.rew/prev track` | `the function has no single OBC byte` |
+| `Audio/JVC RM-SR518U remote control.rmdu` | `last/prev ch` | `the function has no single OBC byte` |
+| `Audio/JVC RM-SR518U remote control.rmdu` | `left arrow` | `the function has no single OBC byte` |
+| `Audio/JVC RM-SR518U remote control.rmdu` | `menu` | `the function has no single OBC byte` |
+| `Audio/JVC RM-SR518U remote control.rmdu` | `pip freeze` | `the function has no single OBC byte` |
+| `Audio/JVC RM-SR518U remote control.rmdu` | `pip move` | `the function has no single OBC byte` |
+| `Audio/JVC RM-SR518U remote control.rmdu` | `pip on/off` | `the function has no single OBC byte` |
+| `Audio/JVC RM-SR518U remote control.rmdu` | `pip swap` | `the function has no single OBC byte` |
+| `Audio/JVC RM-SR518U remote control.rmdu` | `program/guide` | `the function has no single OBC byte` |
+| `Audio/JVC RM-SR518U remote control.rmdu` | `record` | `the function has no single OBC byte` |
+| `Audio/JVC RM-SR518U remote control.rmdu` | `right arrow` | `the function has no single OBC byte` |
+| `Audio/JVC RM-SR518U remote control.rmdu` | `select` | `the function has no single OBC byte` |
+| `Audio/JVC RM-SR518U remote control.rmdu` | `sleep` | `the function has no single OBC byte` |
+| `Audio/JVC RM-SR518U remote control.rmdu` | `surr level control` | `the function has no single OBC byte` |
+| `Audio/JVC RM-SR518U remote control.rmdu` | `tv/vcr` | `the function has no single OBC byte` |
+| `Audio/JVC RM-SR518U remote control.rmdu` | `up arrow` | `the function has no single OBC byte` |
+| `Audio/JVC RX-212 All Function CD Tape Radio Amp.rmdu` | `#11` | `the function has no two OBC bytes` |
+| `Audio/JVC RX-212 All Function CD Tape Radio Amp.rmdu` | `#18` | `the function has no two OBC bytes` |
+| `Audio/JVC RX-212 All Function CD Tape Radio Amp.rmdu` | `#23` | `the function has no two OBC bytes` |
+| `Audio/JVC RX-212 All Function CD Tape Radio Amp.rmdu` | `#31` | `the function has no two OBC bytes` |
+| `Audio/JVC RX-212 All Function CD Tape Radio Amp.rmdu` | `#40` | `the function has no two OBC bytes` |
+| `Audio/JVC RX-212 All Function CD Tape Radio Amp.rmdu` | `CD is separate - JVC compatible model` | `the function has no two OBC bytes` |
+| `Audio/JVC RX-212 All Function CD Tape Radio Amp.rmdu` | `Tape is separate - JVC compatible model` | `the function has no two OBC bytes` |
+| `Audio/JVC RX-D702B Receiver (JVC Combo) for URC-8910.rmdu` | `adjust` | `the function has no two OBC bytes` |
+| `Audio/JVC RX-D702B Receiver (JVC Combo) for URC-8910.rmdu` | `channel down` | `the function has no two OBC bytes` |
+| `Audio/JVC RX-D702B Receiver (JVC Combo) for URC-8910.rmdu` | `channel up` | `the function has no two OBC bytes` |
+| `Audio/JVC RX-D702B Receiver (JVC Combo) for URC-8910.rmdu` | `dimmer` | `the function has no two OBC bytes` |
+| `Audio/JVC RX-D702B Receiver (JVC Combo) for URC-8910.rmdu` | `dvd/menu` | `the function has no two OBC bytes` |
+| `Audio/JVC RX-D702B Receiver (JVC Combo) for URC-8910.rmdu` | `fav/scan` | `the function has no two OBC bytes` |
+| `Audio/JVC RX-D702B Receiver (JVC Combo) for URC-8910.rmdu` | `l front +` | `the function has no two OBC bytes` |
+| `Audio/JVC RX-D702B Receiver (JVC Combo) for URC-8910.rmdu` | `l front -` | `the function has no two OBC bytes` |
+| `Audio/JVC RX-D702B Receiver (JVC Combo) for URC-8910.rmdu` | `l surr back +` | `the function has no two OBC bytes` |
+| `Audio/JVC RX-D702B Receiver (JVC Combo) for URC-8910.rmdu` | `l surr back -` | `the function has no two OBC bytes` |
+| `Audio/JVC RX-D702B Receiver (JVC Combo) for URC-8910.rmdu` | `menu` | `the function has no two OBC bytes` |
+| `Audio/JVC RX-D702B Receiver (JVC Combo) for URC-8910.rmdu` | `pause` | `the function has no two OBC bytes` |
+| `Audio/JVC RX-D702B Receiver (JVC Combo) for URC-8910.rmdu` | `play` | `the function has no two OBC bytes` |
+| `Audio/JVC RX-D702B Receiver (JVC Combo) for URC-8910.rmdu` | `r surr back +` | `the function has no two OBC bytes` |
+| `Audio/JVC RX-D702B Receiver (JVC Combo) for URC-8910.rmdu` | `record` | `the function has no two OBC bytes` |
+| `Audio/JVC RX-D702B Receiver (JVC Combo) for URC-8910.rmdu` | `setting` | `the function has no two OBC bytes` |
+| `Audio/JVC RX-D702B Receiver (JVC Combo) for URC-8910.rmdu` | `smart setup` | `the function has no two OBC bytes` |
+| `Audio/JVC RX-D702B Receiver (JVC Combo) for URC-8910.rmdu` | `source sirius` | `the function has no two OBC bytes` |
+| `Audio/JVC RX-D702B Receiver (JVC Combo) for URC-8910.rmdu` | `stop` | `the function has no two OBC bytes` |
+| `Audio/JVC RX-D702B Receiver (JVC Combo) for URC-8910.rmdu` | `tv vol down` | `the function has no two OBC bytes` |
+| `Audio/JVC RX-D702B Receiver (JVC Combo) for URC-8910.rmdu` | `tv vol up` | `the function has no two OBC bytes` |
+| `Audio/JVC RX-D702B Receiver (JVC Combo) for URC-8910.rmdu` | `tv/vcr` | `the function has no two OBC bytes` |
+| `Audio/JVC RX-D702B Receiver (JVC Combo) for URC-8910.rmdu` | `video input` | `the function has no two OBC bytes` |
+| `Audio/JVC Receiver RX-DV3SL Audio 2047.rmdu` | `Angle` | `the function has no single OBC byte` |
+| `Audio/JVC Receiver RX-DV3SL Audio 2047.rmdu` | `Audio (language)` | `the function has no single OBC byte` |
+| `Audio/JVC Receiver RX-DV3SL Audio 2047.rmdu` | `Choice` | `the function has no single OBC byte` |
+| `Audio/JVC Receiver RX-DV3SL Audio 2047.rmdu` | `Digest` | `the function has no single OBC byte` |
+| `Audio/JVC Receiver RX-DV3SL Audio 2047.rmdu` | `On Screen` | `the function has no single OBC byte` |
+| `Audio/JVC Receiver RX-DV3SL Audio 2047.rmdu` | `Pause (Strobe)` | `the function has no single OBC byte` |
+| `Audio/JVC Receiver RX-DV3SL Audio 2047.rmdu` | `Play` | `the function has no single OBC byte` |
+| `Audio/JVC Receiver RX-DV3SL Audio 2047.rmdu` | `Repeat` | `the function has no single OBC byte` |
+| `Audio/JVC Receiver RX-DV3SL Audio 2047.rmdu` | `Subtitle (language)` | `the function has no single OBC byte` |
+| `Audio/JVC Receiver RX-DV3SL Audio 2047.rmdu` | `TV/Video` | `the function has no single OBC byte` |
+| `Audio/JVC Receiver RX-DV3SL Audio 2047.rmdu` | `Top menu` | `the function has no single OBC byte` |
+| `Audio/JVC Receiver RX-DV3SL Audio 2047.rmdu` | `Zoom` | `the function has no single OBC byte` |
+| `Audio/JVC Receiver RX-DV3SL Audio 2047.rmdu` | `down` | `the function has no single OBC byte` |
+| `Audio/JVC Receiver RX-DV3SL DVD 1558.rmdu` | `+10  (- subwoofer)` | `the function has no single OBC byte` |
+| `Audio/JVC Receiver RX-DV3SL DVD 1558.rmdu` | 1  (effect) | `the function has no single OBC byte` |
+| `Audio/JVC Receiver RX-DV3SL DVD 1558.rmdu` | 10/0  (Surr mode) | `the function has no single OBC byte` |
+| `Audio/JVC Receiver RX-DV3SL DVD 1558.rmdu` | 2  (- center) | `the function has no single OBC byte` |
+| `Audio/JVC Receiver RX-DV3SL DVD 1558.rmdu` | 3  (+ center) | `the function has no single OBC byte` |
+| `Audio/JVC Receiver RX-DV3SL DVD 1558.rmdu` | 4  (test) | `the function has no single OBC byte` |
+| `Audio/JVC Receiver RX-DV3SL DVD 1558.rmdu` | 5  (- rear-L) | `the function has no single OBC byte` |
+| `Audio/JVC Receiver RX-DV3SL DVD 1558.rmdu` | 6  (+ rear-R) | `the function has no single OBC byte` |
+| `Audio/JVC Receiver RX-DV3SL DVD 1558.rmdu` | 7  (Surr on/off) | `the function has no single OBC byte` |
+| `Audio/JVC Receiver RX-DV3SL DVD 1558.rmdu` | 8  (- rear-R) | `the function has no single OBC byte` |
+| `Audio/JVC Receiver RX-DV3SL DVD 1558.rmdu` | 9  (+ rear-R) | `the function has no single OBC byte` |
+| `Audio/JVC Receiver RX-DV3SL DVD 1558.rmdu` | `CDR input` | `the function has no single OBC byte` |
+| `Audio/JVC Receiver RX-DV3SL DVD 1558.rmdu` | `DBS input` | `the function has no single OBC byte` |
+| `Audio/JVC Receiver RX-DV3SL DVD 1558.rmdu` | `DVD` | `the function has no single OBC byte` |
+| `Audio/JVC Receiver RX-DV3SL DVD 1558.rmdu` | `Dimmer` | `the function has no single OBC byte` |
+| `Audio/JVC Receiver RX-DV3SL DVD 1558.rmdu` | `FM/AM` | `the function has no single OBC byte` |
+| `Audio/JVC Receiver RX-DV3SL DVD 1558.rmdu` | `Input analog/digital` | `the function has no single OBC byte` |
+| `Audio/JVC Receiver RX-DV3SL DVD 1558.rmdu` | `Power on/off` | `the function has no single OBC byte` |
+| `Audio/JVC Receiver RX-DV3SL DVD 1558.rmdu` | `TV input` | `the function has no single OBC byte` |
+| `Audio/JVC Receiver RX-DV3SL DVD 1558.rmdu` | `TV/Video` | `the function has no single OBC byte` |
+| `Audio/JVC Receiver RX-DV3SL DVD 1558.rmdu` | `Tape input` | `the function has no single OBC byte` |
+| `Audio/JVC Receiver RX-DV3SL DVD 1558.rmdu` | `VCR input` | `the function has no single OBC byte` |
+| `Audio/JVC Receiver RX-DV3SL DVD 1558.rmdu` | `VFP  (+ subwoofer)` | `the function has no single OBC byte` |
+| `Audio/JVC Receiver RX-DV3SL DVD 1558.rmdu` | `sleep` | `the function has no single OBC byte` |
+| `Audio/JVC-RCVR-RX-552V.rmdu` | `CD disc` | `the function has no single OBC byte` |
+| `Audio/JVC-RCVR-RX-552V.rmdu` | `surround level` | `the function has no single OBC byte` |
 | `Audio/Kenwood VRS-7100.rmdu` | `#45` | `the function has no two OBC bytes` |
 | `Audio/Kenwood VRS-7100.rmdu` | `#46` | `the function has no two OBC bytes` |
 | `Audio/Kenwood VRS-7100.rmdu` | `#47` | `the function has no two OBC bytes` |
@@ -488,6 +643,35 @@ silently (SPEC R19, condition 5).
 | `Audio/Onkyo_TX-LR552.rmdu` | `TUN -` | `the function has no two OBC bytes` |
 | `Audio/Onkyo_TX-LR552.rmdu` | `TUN M` | `the function has no two OBC bytes` |
 | `Audio/Outlaw Audio 990 Preamp.rmdu` | `#48` | `the function has no single OBC byte` |
+| `Audio/Panasonic SA-AX25.rmdu` | `X2` | `the function has no two OBC bytes` |
+| `Audio/Panasonic SA-AX25.rmdu` | `center` | `the function has no two OBC bytes` |
+| `Audio/Panasonic SA-AX25.rmdu` | `rear` | `the function has no two OBC bytes` |
+| `Audio/Panasonic SA-AX25.rmdu` | `slow+` | `the function has no two OBC bytes` |
+| `Audio/Panasonic SA-AX25.rmdu` | `slow-` | `the function has no two OBC bytes` |
+| `Audio/Panasonic SA-HE100 v3.rmdu` | `< Don't work, testing area,use at risk >` | `the function has no two OBC bytes` |
+| `Audio/Panasonic SA-HE100 v3.rmdu` | `< These also work>` | `the function has no two OBC bytes` |
+| `Audio/Panasonic SA-HE100 v3.rmdu` | `Bass/Treble/LRbal toggle` | `the function has no two OBC bytes` |
+| `Audio/Panasonic SA-HE100 v3.rmdu` | `Bass/Treble/LRbal toggle` | `the function has no two OBC bytes` |
+| `Audio/Panasonic SA-HE100 v3.rmdu` | `Bass/Treble/LRbal toggle` | `the function has no two OBC bytes` |
+| `Audio/Panasonic SA-HE100 v3.rmdu` | `Bass/Treble/LRbal toggle` | `the function has no two OBC bytes` |
+| `Audio/Panasonic SA-HE100 v3.rmdu` | `DiscreteOff` | `the function has no two OBC bytes` |
+| `Audio/Panasonic SA-HE100 v3.rmdu` | `DiscreteOn` | `the function has no two OBC bytes` |
+| `Audio/Panasonic SA-HE100 v3.rmdu` | `audio power` | `the function has no two OBC bytes` |
+| `Audio/Panasonic SA-HE100 v3.rmdu` | `balance` | `the function has no two OBC bytes` |
+| `Audio/Panasonic SA-HE100 v3.rmdu` | `ctrDown` | `the function has no two OBC bytes` |
+| `Audio/Panasonic SA-HE100 v3.rmdu` | `ctrUp` | `the function has no two OBC bytes` |
+| `Audio/Panasonic SA-HE100 v3.rmdu` | `doctor` | `the function has no two OBC bytes` |
+| `Audio/Panasonic SA-HE100 v3.rmdu` | `dolby prologic ii` | `the function has no two OBC bytes` |
+| `Audio/Panasonic SA-HE100 v3.rmdu` | `fm/am band` | `the function has no two OBC bytes` |
+| `Audio/Panasonic SA-HE100 v3.rmdu` | `front Inputs` | `the function has no two OBC bytes` |
+| `Audio/Panasonic SA-HE100 v3.rmdu` | `input toggle` | `the function has no two OBC bytes` |
+| `Audio/Panasonic SA-HE100 v3.rmdu` | `level` | `the function has no two OBC bytes` |
+| `Audio/Panasonic SA-HE100 v3.rmdu` | `neo6/enhSurr` | `the function has no two OBC bytes` |
+| `Audio/Panasonic SA-HE100 v3.rmdu` | `neo6/enhSurr-2` | `the function has no two OBC bytes` |
+| `Audio/Panasonic SA-HE100 v3.rmdu` | `remaster` | `the function has no two OBC bytes` |
+| `Audio/Panasonic SA-HE100 v3.rmdu` | `sideDown` | `the function has no two OBC bytes` |
+| `Audio/Panasonic SA-HE100 v3.rmdu` | `sideUp` | `the function has no two OBC bytes` |
+| `Audio/Panasonic SA-HE100 v3.rmdu` | `source direct` | `the function has no two OBC bytes` |
 | `Audio/Polk 9500BT Device Upgrade.rmdu` | `#13` | `the function has no single OBC byte` |
 | `Audio/Polk 9500BT Device Upgrade.rmdu` | `+100` | `the function has no single OBC byte` |
 | `Audio/Polk 9500BT Device Upgrade.rmdu` | 0 | `the function has no single OBC byte` |
@@ -2231,6 +2415,39 @@ silently (SPEC R19, condition 5).
 | `Audio_Video Selectors/Impact Accoustics 6x2 Component Video Switcher.rmdu` | `up arrow` | `the function has no single OBC byte` |
 | `Audio_Video Selectors/Impact Accoustics 6x2 Component Video Switcher.rmdu` | `vol down` | `the function has no single OBC byte` |
 | `Audio_Video Selectors/Impact Accoustics 6x2 Component Video Switcher.rmdu` | `vol up` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/JVC JX-S900 RM-A900.rmdu` | `+100` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/JVC JX-S900 RM-A900.rmdu` | `SRC 0` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/JVC JX-S900 RM-A900.rmdu` | `X2` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/JVC JX-S900 RM-A900.rmdu` | `center` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/JVC JX-S900 RM-A900.rmdu` | `device button` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/JVC JX-S900 RM-A900.rmdu` | `display` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/JVC JX-S900 RM-A900.rmdu` | `eject` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/JVC JX-S900 RM-A900.rmdu` | `exit` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/JVC JX-S900 RM-A900.rmdu` | `fast fwd` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/JVC JX-S900 RM-A900.rmdu` | `fav/scan` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/JVC JX-S900 RM-A900.rmdu` | `input toggle` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/JVC JX-S900 RM-A900.rmdu` | `left arrow` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/JVC JX-S900 RM-A900.rmdu` | `next track` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/JVC JX-S900 RM-A900.rmdu` | `pause` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/JVC JX-S900 RM-A900.rmdu` | `pip freeze` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/JVC JX-S900 RM-A900.rmdu` | `pip move` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/JVC JX-S900 RM-A900.rmdu` | `pip on/off` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/JVC JX-S900 RM-A900.rmdu` | `pip swap` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/JVC JX-S900 RM-A900.rmdu` | `play` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/JVC JX-S900 RM-A900.rmdu` | `prev track` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/JVC JX-S900 RM-A900.rmdu` | `rear` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/JVC JX-S900 RM-A900.rmdu` | `record` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/JVC JX-S900 RM-A900.rmdu` | `rewind` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/JVC JX-S900 RM-A900.rmdu` | `right arrow` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/JVC JX-S900 RM-A900.rmdu` | `select` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/JVC JX-S900 RM-A900.rmdu` | `shift-left` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/JVC JX-S900 RM-A900.rmdu` | `shift-right` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/JVC JX-S900 RM-A900.rmdu` | `sleep` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/JVC JX-S900 RM-A900.rmdu` | `slow` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/JVC JX-S900 RM-A900.rmdu` | `slow+` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/JVC JX-S900 RM-A900.rmdu` | `slow-` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/JVC JX-S900 RM-A900.rmdu` | `stop` | `the function has no single OBC byte` |
+| `Audio_Video Selectors/JVC JX-S900 RM-A900.rmdu` | `surround` | `the function has no single OBC byte` |
 | `Audio_Video Selectors/Kinyo AV-100Gz.rmdu` | `+100` | `the function has no single OBC byte` |
 | `Audio_Video Selectors/Kinyo AV-100Gz.rmdu` | 0 | `the function has no single OBC byte` |
 | `Audio_Video Selectors/Kinyo AV-100Gz.rmdu` | 5 | `the function has no single OBC byte` |
@@ -2440,6 +2657,17 @@ silently (SPEC R19, condition 5).
 | `CD/Hermstedt Hifidelio.rmdu` | `slow` | `the function has no single OBC byte` |
 | `CD/Hermstedt Hifidelio.rmdu` | `slow+` | `the function has no single OBC byte` |
 | `CD/Hermstedt Hifidelio.rmdu` | `slow-` | `the function has no single OBC byte` |
+| `CD/JVC CD changer.rmdu` | `+100` | `the function has no single OBC byte` |
+| `CD/JVC CD changer.rmdu` | `channel down` | `the function has no single OBC byte` |
+| `CD/JVC CD changer.rmdu` | `channel up` | `the function has no single OBC byte` |
+| `CD/JVC CD changer.rmdu` | `exit` | `the function has no single OBC byte` |
+| `CD/JVC CD changer.rmdu` | `input toggle` | `the function has no single OBC byte` |
+| `CD/JVC CD changer.rmdu` | `pip move` | `the function has no single OBC byte` |
+| `CD/JVC CD changer.rmdu` | `pip on/off` | `the function has no single OBC byte` |
+| `CD/JVC CD changer.rmdu` | `pip swap` | `the function has no single OBC byte` |
+| `CD/JVC CD changer.rmdu` | `record` | `the function has no single OBC byte` |
+| `CD/JVC CD changer.rmdu` | `select` | `the function has no single OBC byte` |
+| `CD/JVC CD changer.rmdu` | `sleep` | `the function has no single OBC byte` |
 | `CD/Marantz CD-67mkIISE & PM-66SE AMP.rmdu` | `+100` | `the function has no single OBC byte` |
 | `CD/Marantz CD-67mkIISE & PM-66SE AMP.rmdu` | `X2` | `the function has no single OBC byte` |
 | `CD/Marantz CD-67mkIISE & PM-66SE AMP.rmdu` | `center` | `the function has no single OBC byte` |
@@ -2705,6 +2933,7 @@ silently (SPEC R19, condition 5).
 | `Combo Audio Systems/Norcent DP1800 HT M4.rmdu` | `discrete power on` | `the function has no single OBC byte` |
 | `Combo Audio Systems/Norcent DP1800 HT M4.rmdu` | `play mode` | `the function has no single OBC byte` |
 | `Combo Audio Systems/Norcent DP1800 HT M4.rmdu` | `return` | `the function has no single OBC byte` |
+| `Combo Audio Systems/Panasonic-SA-EN17.rmdu` | `#38` | `the function has no two OBC bytes` |
 | `Combo Audio Systems/Samsung HT DL200P DVD (DVD) 1295.rmdu` | `+100` | `the function has no single OBC byte` |
 | `Combo Audio Systems/Samsung HT DL200P DVD (DVD) 1295.rmdu` | 0 | `the function has no single OBC byte` |
 | `Combo Audio Systems/Samsung HT DL200P DVD (DVD) 1295.rmdu` | 1 | `the function has no single OBC byte` |
@@ -3074,6 +3303,10 @@ silently (SPEC R19, condition 5).
 | `DVD (standard)/Koss DVD Player KS5509-2.rmdu` | `#53` | `the function has no single OBC byte` |
 | `DVD (standard)/Koss DVD Player KS5509-2.rmdu` | `Discrete OFF` | `the function has no single OBC byte` |
 | `DVD (standard)/Koss DVD Player KS5509-2.rmdu` | `Discrete ON` | `the function has no single OBC byte` |
+| `DVD (standard)/LiteOn 5115GHC+ rev1.rmdu` | `last/prev ch` | `the function has no single OBC byte` |
+| `DVD (standard)/LiteOn 5115GHC+ rev1.rmdu` | `mute` | `the function has no single OBC byte` |
+| `DVD (standard)/LiteOn 5115GHC+ rev1.rmdu` | `vol down` | `the function has no single OBC byte` |
+| `DVD (standard)/LiteOn 5115GHC+ rev1.rmdu` | `vol up` | `the function has no single OBC byte` |
 | `DVD (standard)/Malata-N996DVD (rpl-1123).rmdu` | `#39` | `the function has no single OBC byte` |
 | `DVD (standard)/Malata-N996DVD (rpl-1123).rmdu` | `#40` | `the function has no single OBC byte` |
 | `DVD (standard)/Malata-N996DVD (rpl-1123).rmdu` | `mute` | `the function has no single OBC byte` |
@@ -3118,6 +3351,106 @@ silently (SPEC R19, condition 5).
 | `DVD (standard)/OPDV971H DVD.rmdu` | `shift-left` | `the function has no single OBC byte` |
 | `DVD (standard)/OPDV971H DVD.rmdu` | `shift-right` | `the function has no single OBC byte` |
 | `DVD (standard)/OPDV971H DVD.rmdu` | `surround` | `the function has no single OBC byte` |
+| `DVD (standard)/Panasonic DVD Recorder DMR-EH50.rmdu` | `+100` | `the function has no single OBC byte` |
+| `DVD (standard)/Panasonic DVD Recorder DMR-EH50.rmdu` | `X2` | `the function has no single OBC byte` |
+| `DVD (standard)/Panasonic DVD Recorder DMR-EH50.rmdu` | `center` | `the function has no single OBC byte` |
+| `DVD (standard)/Panasonic DVD Recorder DMR-EH50.rmdu` | `device button` | `the function has no single OBC byte` |
+| `DVD (standard)/Panasonic DVD Recorder DMR-EH50.rmdu` | `display` | `the function has no single OBC byte` |
+| `DVD (standard)/Panasonic DVD Recorder DMR-EH50.rmdu` | `eject` | `the function has no single OBC byte` |
+| `DVD (standard)/Panasonic DVD Recorder DMR-EH50.rmdu` | `exit` | `the function has no single OBC byte` |
+| `DVD (standard)/Panasonic DVD Recorder DMR-EH50.rmdu` | `fav/scan` | `the function has no single OBC byte` |
+| `DVD (standard)/Panasonic DVD Recorder DMR-EH50.rmdu` | `input toggle` | `the function has no single OBC byte` |
+| `DVD (standard)/Panasonic DVD Recorder DMR-EH50.rmdu` | `last (prev ch)` | `the function has no single OBC byte` |
+| `DVD (standard)/Panasonic DVD Recorder DMR-EH50.rmdu` | `menu` | `the function has no single OBC byte` |
+| `DVD (standard)/Panasonic DVD Recorder DMR-EH50.rmdu` | `mute` | `the function has no single OBC byte` |
+| `DVD (standard)/Panasonic DVD Recorder DMR-EH50.rmdu` | `pip freeze` | `the function has no single OBC byte` |
+| `DVD (standard)/Panasonic DVD Recorder DMR-EH50.rmdu` | `pip move` | `the function has no single OBC byte` |
+| `DVD (standard)/Panasonic DVD Recorder DMR-EH50.rmdu` | `pip on/off` | `the function has no single OBC byte` |
+| `DVD (standard)/Panasonic DVD Recorder DMR-EH50.rmdu` | `pip swap` | `the function has no single OBC byte` |
+| `DVD (standard)/Panasonic DVD Recorder DMR-EH50.rmdu` | `rear` | `the function has no single OBC byte` |
+| `DVD (standard)/Panasonic DVD Recorder DMR-EH50.rmdu` | `shift-left` | `the function has no single OBC byte` |
+| `DVD (standard)/Panasonic DVD Recorder DMR-EH50.rmdu` | `shift-right` | `the function has no single OBC byte` |
+| `DVD (standard)/Panasonic DVD Recorder DMR-EH50.rmdu` | `sleep` | `the function has no single OBC byte` |
+| `DVD (standard)/Panasonic DVD Recorder DMR-EH50.rmdu` | `slow` | `the function has no single OBC byte` |
+| `DVD (standard)/Panasonic DVD Recorder DMR-EH50.rmdu` | `slow+` | `the function has no single OBC byte` |
+| `DVD (standard)/Panasonic DVD Recorder DMR-EH50.rmdu` | `slow-` | `the function has no single OBC byte` |
+| `DVD (standard)/Panasonic DVD Recorder DMR-EH50.rmdu` | `surround` | `the function has no single OBC byte` |
+| `DVD (standard)/Panasonic DVD Recorder DMR-EH50.rmdu` | `tv/vcr` | `the function has no single OBC byte` |
+| `DVD (standard)/Panasonic DVD Recorder DMR-EH50.rmdu` | `vol down` | `the function has no single OBC byte` |
+| `DVD (standard)/Panasonic DVD Recorder DMR-EH50.rmdu` | `vol up` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips DVD Recorder DVDR 3400-37    URC-10820    DVD 0340.rmdu` | `TV MUTE` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips DVD Recorder DVDR 3400-37    URC-10820    DVD 0340.rmdu` | `VOL+` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips DVD Recorder DVDR 3400-37    URC-10820    DVD 0340.rmdu` | `VOL-` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips DVDR-3360H.rmdu` | `enter` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips DVDR-3360H.rmdu` | `last (prev ch)` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips DVDR-3360H.rmdu` | `menu` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips DVDR-3360H.rmdu` | `mute` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips DVDR-3360H.rmdu` | `tv/vcr` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips DVDR-3360H.rmdu` | `vol down` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips DVDR-3360H.rmdu` | `vol up` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips DVDR70 1125_2330.rmdu` | `#37` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips DVDR70for 8820.rmdu` | `#39` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips DVDR70for 8820.rmdu` | `#40` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips DVDR70for 8820.rmdu` | `#41` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips DVDR70for 8820.rmdu` | `#42` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips DVP642-17 for URC-8910.rmdu` | `#33` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips DVP642-17 for URC-8910.rmdu` | `#34` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips DVP642-17 for URC-8910.rmdu` | `#35` | `the function has no single OBC byte` |
+| `DVD (standard)/PhilipsDVD1538.rmdu` | `#74` | `the function has no single OBC byte` |
+| `DVD (standard)/PhilipsDVD1538.rmdu` | `#75` | `the function has no single OBC byte` |
+| `DVD (standard)/PhilipsDVD1538.rmdu` | `#76` | `the function has no single OBC byte` |
+| `DVD (standard)/PhilipsDVD1538.rmdu` | `#77` | `the function has no single OBC byte` |
+| `DVD (standard)/PhilipsDVD1538.rmdu` | `#78` | `the function has no single OBC byte` |
+| `DVD (standard)/PhilipsDVD1538.rmdu` | `#79` | `the function has no single OBC byte` |
+| `DVD (standard)/PhilipsDVD1538.rmdu` | `#80` | `the function has no single OBC byte` |
+| `DVD (standard)/PhilipsDVD1538.rmdu` | `#81` | `the function has no single OBC byte` |
+| `DVD (standard)/PhilipsDVD1538.rmdu` | `(device button)` | `the function has no single OBC byte` |
+| `DVD (standard)/PhilipsDVD1538.rmdu` | `(display)` | `the function has no single OBC byte` |
+| `DVD (standard)/PhilipsDVD1538.rmdu` | `(guide)` | `the function has no single OBC byte` |
+| `DVD (standard)/PhilipsDVD1538.rmdu` | `(pip move)` | `the function has no single OBC byte` |
+| `DVD (standard)/PhilipsDVD1538.rmdu` | `(pip on/off)` | `the function has no single OBC byte` |
+| `DVD (standard)/PhilipsDVD1538.rmdu` | `(pip swap)` | `the function has no single OBC byte` |
+| `DVD (standard)/PhilipsDVD1538.rmdu` | `(prev ch)` | `the function has no single OBC byte` |
+| `DVD (standard)/PhilipsDVD1538.rmdu` | `(shift-up)` | `the function has no single OBC byte` |
+| `DVD (standard)/PhilipsDVD1538.rmdu` | `(surround)` | `the function has no single OBC byte` |
+| `DVD (standard)/PhilipsDVD1538.rmdu` | `MUTE` | `the function has no single OBC byte` |
+| `DVD (standard)/PhilipsDVD1538.rmdu` | `RECORD` | `the function has no single OBC byte` |
+| `DVD (standard)/PhilipsDVD1538.rmdu` | `SLEEP` | `the function has no single OBC byte` |
+| `DVD (standard)/PhilipsDVD1538.rmdu` | `SP/LP` | `the function has no single OBC byte` |
+| `DVD (standard)/PhilipsDVD1538.rmdu` | `Volume DOWN` | `the function has no single OBC byte` |
+| `DVD (standard)/PhilipsDVD1538.rmdu` | `Volume UP` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips_DSX6170.rmdu` | `+100` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips_DSX6170.rmdu` | `X2` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips_DSX6170.rmdu` | `center` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips_DSX6170.rmdu` | `device button` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips_DSX6170.rmdu` | `eject` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips_DSX6170.rmdu` | `enter` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips_DSX6170.rmdu` | `fast fwd` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips_DSX6170.rmdu` | `input toggle` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips_DSX6170.rmdu` | `last (prev ch)` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips_DSX6170.rmdu` | `mute` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips_DSX6170.rmdu` | `next track` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips_DSX6170.rmdu` | `pause` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips_DSX6170.rmdu` | `pip freeze` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips_DSX6170.rmdu` | `pip move` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips_DSX6170.rmdu` | `pip on/off` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips_DSX6170.rmdu` | `pip swap` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips_DSX6170.rmdu` | `play` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips_DSX6170.rmdu` | `prev track` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips_DSX6170.rmdu` | `rear` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips_DSX6170.rmdu` | `record` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips_DSX6170.rmdu` | `rewind` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips_DSX6170.rmdu` | `shift-left` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips_DSX6170.rmdu` | `shift-right` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips_DSX6170.rmdu` | `sleep` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips_DSX6170.rmdu` | `slow` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips_DSX6170.rmdu` | `slow+` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips_DSX6170.rmdu` | `slow-` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips_DSX6170.rmdu` | `stop` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips_DSX6170.rmdu` | `surround` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips_DSX6170.rmdu` | `tv/vcr` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips_DSX6170.rmdu` | `vol down` | `the function has no single OBC byte` |
+| `DVD (standard)/Philips_DSX6170.rmdu` | `vol up` | `the function has no single OBC byte` |
 | `DVD (standard)/Polaroid PDV-0700 DVD player.rmdu` | `channel down` | `the function has no single OBC byte` |
 | `DVD (standard)/Polaroid PDV-0700 DVD player.rmdu` | `channel up` | `the function has no single OBC byte` |
 | `DVD (standard)/Polaroid PDV-0700 DVD player.rmdu` | `device button` | `the function has no single OBC byte` |
@@ -3142,6 +3475,49 @@ silently (SPEC R19, condition 5).
 | `DVD (standard)/RJTech RJ-1500DVXII.rmdu` | `pip freeze` | `the function has no single OBC byte` |
 | `DVD (standard)/RJTech RJ-1500DVXII.rmdu` | `sleep` | `the function has no single OBC byte` |
 | `DVD (standard)/RM RCA HT1000 DVD 1487.rmdu` | `#46` | `the function has no single OBC byte` |
+| `DVD (standard)/Samsung HD841.rmdu` | `+100` | `the function has no single OBC byte` |
+| `DVD (standard)/Samsung HD841.rmdu` | `center` | `the function has no single OBC byte` |
+| `DVD (standard)/Samsung HD841.rmdu` | `device button` | `the function has no single OBC byte` |
+| `DVD (standard)/Samsung HD841.rmdu` | `eject` | `the function has no single OBC byte` |
+| `DVD (standard)/Samsung HD841.rmdu` | `fav/scan` | `the function has no single OBC byte` |
+| `DVD (standard)/Samsung HD841.rmdu` | `pip freeze` | `the function has no single OBC byte` |
+| `DVD (standard)/Samsung HD841.rmdu` | `rear` | `the function has no single OBC byte` |
+| `DVD (standard)/Samsung HD841.rmdu` | `shift-left` | `the function has no single OBC byte` |
+| `DVD (standard)/Samsung HD841.rmdu` | `shift-right` | `the function has no single OBC byte` |
+| `DVD (standard)/Samsung HD841.rmdu` | `slow` | `the function has no single OBC byte` |
+| `DVD (standard)/Samsung HD841.rmdu` | `slow+` | `the function has no single OBC byte` |
+| `DVD (standard)/Samsung HD841.rmdu` | `slow-` | `the function has no single OBC byte` |
+| `DVD (standard)/Samsung HD841.rmdu` | `x2` | `the function has no single OBC byte` |
+| `DVD (standard)/Samsung dvd-r155.rmdu` | `+100` | `the function has no single OBC byte` |
+| `DVD (standard)/Samsung dvd-r155.rmdu` | `X2` | `the function has no single OBC byte` |
+| `DVD (standard)/Samsung dvd-r155.rmdu` | `center` | `the function has no single OBC byte` |
+| `DVD (standard)/Samsung dvd-r155.rmdu` | `channel down` | `the function has no single OBC byte` |
+| `DVD (standard)/Samsung dvd-r155.rmdu` | `channel up` | `the function has no single OBC byte` |
+| `DVD (standard)/Samsung dvd-r155.rmdu` | `device button` | `the function has no single OBC byte` |
+| `DVD (standard)/Samsung dvd-r155.rmdu` | `display` | `the function has no single OBC byte` |
+| `DVD (standard)/Samsung dvd-r155.rmdu` | `eject` | `the function has no single OBC byte` |
+| `DVD (standard)/Samsung dvd-r155.rmdu` | `enter` | `the function has no single OBC byte` |
+| `DVD (standard)/Samsung dvd-r155.rmdu` | `fav/scan` | `the function has no single OBC byte` |
+| `DVD (standard)/Samsung dvd-r155.rmdu` | `input toggle` | `the function has no single OBC byte` |
+| `DVD (standard)/Samsung dvd-r155.rmdu` | `last (prev ch)` | `the function has no single OBC byte` |
+| `DVD (standard)/Samsung dvd-r155.rmdu` | `mute` | `the function has no single OBC byte` |
+| `DVD (standard)/Samsung dvd-r155.rmdu` | `next track` | `the function has no single OBC byte` |
+| `DVD (standard)/Samsung dvd-r155.rmdu` | `pause` | `the function has no single OBC byte` |
+| `DVD (standard)/Samsung dvd-r155.rmdu` | `pip freeze` | `the function has no single OBC byte` |
+| `DVD (standard)/Samsung dvd-r155.rmdu` | `pip move` | `the function has no single OBC byte` |
+| `DVD (standard)/Samsung dvd-r155.rmdu` | `pip on/off` | `the function has no single OBC byte` |
+| `DVD (standard)/Samsung dvd-r155.rmdu` | `pip swap` | `the function has no single OBC byte` |
+| `DVD (standard)/Samsung dvd-r155.rmdu` | `prev track` | `the function has no single OBC byte` |
+| `DVD (standard)/Samsung dvd-r155.rmdu` | `rear` | `the function has no single OBC byte` |
+| `DVD (standard)/Samsung dvd-r155.rmdu` | `shift-left` | `the function has no single OBC byte` |
+| `DVD (standard)/Samsung dvd-r155.rmdu` | `shift-right` | `the function has no single OBC byte` |
+| `DVD (standard)/Samsung dvd-r155.rmdu` | `sleep` | `the function has no single OBC byte` |
+| `DVD (standard)/Samsung dvd-r155.rmdu` | `slow` | `the function has no single OBC byte` |
+| `DVD (standard)/Samsung dvd-r155.rmdu` | `slow+` | `the function has no single OBC byte` |
+| `DVD (standard)/Samsung dvd-r155.rmdu` | `slow-` | `the function has no single OBC byte` |
+| `DVD (standard)/Samsung dvd-r155.rmdu` | `surround` | `the function has no single OBC byte` |
+| `DVD (standard)/Samsung dvd-r155.rmdu` | `vol down` | `the function has no single OBC byte` |
+| `DVD (standard)/Samsung dvd-r155.rmdu` | `vol up` | `the function has no single OBC byte` |
 | `DVD (standard)/Sony DVP-NS903v.rmdu` | 1 | `the command does not fit Sony's seven bits` |
 | `DVD (standard)/Sony DVP-NS903v.rmdu` | 2 | `the command does not fit Sony's seven bits` |
 | `DVD (standard)/Sony DVP-S550D DVD.rmdu` | `+100` | `the function has no single OBC byte` |
@@ -3398,6 +3774,8 @@ silently (SPEC R19, condition 5).
 | `DVD _ VCR combo units/Toshiba Combo VCR DVD SD-KV550.rmdu` | `tv/vcr` | `the function has no single OBC byte` |
 | `DVD _ VCR combo units/Toshiba Combo VCR DVD SD-KV550.rmdu` | `vol down` | `the function has no single OBC byte` |
 | `DVD _ VCR combo units/Toshiba Combo VCR DVD SD-KV550.rmdu` | `vol up` | `the function has no single OBC byte` |
+| `DVR_PVR/Accurian ADR-322.rmdu` | `center` | `the function has no single OBC byte` |
+| `DVR_PVR/Accurian ADR-322.rmdu` | `rear` | `the function has no single OBC byte` |
 | `DVR_PVR/Az America F92 .rmdu` | `Custom12` | `the function has no single OBC byte` |
 | `DVR_PVR/Az America F92 .rmdu` | `Custom13` | `the function has no single OBC byte` |
 | `DVR_PVR/Az America F92 .rmdu` | `Custom14` | `the function has no single OBC byte` |
@@ -3461,6 +3839,8 @@ silently (SPEC R19, condition 5).
 | `DVR_PVR/Huawei EC2118.rmdu` | `Skip+` | `the function has no single OBC byte` |
 | `DVR_PVR/Huawei EC2118.rmdu` | `Skip-` | `the function has no single OBC byte` |
 | `DVR_PVR/Huawei EC2118.rmdu` | `White` | `the function has no single OBC byte` |
+| `DVR_PVR/LiteOn LVW-5045.rmdu` | `center` | `the function has no single OBC byte` |
+| `DVR_PVR/LiteOn LVW-5045.rmdu` | `rear` | `the function has no single OBC byte` |
 | `DVR_PVR/Manta DVB T01.rmdu` | `#47` | `the function has no single OBC byte` |
 | `DVR_PVR/Motorola VIP 1963 (2).rmdu` | `?` | `the function has no single OBC byte` |
 | `DVR_PVR/Motorola VIP 1963 (2).rmdu` | `Last_ch` | `the function has no single OBC byte` |
@@ -3469,6 +3849,33 @@ silently (SPEC R19, condition 5).
 | `DVR_PVR/Motorola VIP 1963 (2).rmdu` | `Skip-` | `the function has no single OBC byte` |
 | `DVR_PVR/Motorola VIP 1963 (2).rmdu` | `TV/Exit` | `the function has no single OBC byte` |
 | `DVR_PVR/Motorola VIP 1963 (2).rmdu` | `Video` | `the function has no single OBC byte` |
+| `DVR_PVR/Panasonic DMR-BS750.rmdu` | `#54` | `the function has no single OBC byte` |
+| `DVR_PVR/Panasonic DMR-BS750.rmdu` | `#55` | `the function has no single OBC byte` |
+| `DVR_PVR/Panasonic DMR-BS750.rmdu` | `#56` | `the function has no single OBC byte` |
+| `DVR_PVR/Panasonic DMR-BS750.rmdu` | `#57` | `the function has no single OBC byte` |
+| `DVR_PVR/Panasonic DMR-BS750.rmdu` | `#58` | `the function has no single OBC byte` |
+| `DVR_PVR/Panasonic DMR-BS750.rmdu` | `#59` | `the function has no single OBC byte` |
+| `DVR_PVR/Panasonic DMR-BS750.rmdu` | `#60` | `the function has no single OBC byte` |
+| `DVR_PVR/Philips_3576H_160GB.rmdu` | `#44` | `the function has no single OBC byte` |
+| `DVR_PVR/Philips_3576H_160GB.rmdu` | `@ 1s` | `the function has no single OBC byte` |
+| `DVR_PVR/Philips_3576H_160GB.rmdu` | `@ 2s` | `the function has no single OBC byte` |
+| `DVR_PVR/Philips_3576H_160GB.rmdu` | `@ 3s` | `the function has no single OBC byte` |
+| `DVR_PVR/Philips_3576H_160GB.rmdu` | `@ 4s` | `the function has no single OBC byte` |
+| `DVR_PVR/Philips_3576H_160GB.rmdu` | `@ surround` | `the function has no single OBC byte` |
+| `DVR_PVR/Philips_3576H_160GB.rmdu` | `\# fav/scan` | `the function has no single OBC byte` |
+| `DVR_PVR/Philips_3576H_160GB.rmdu` | `display` | `the function has no single OBC byte` |
+| `DVR_PVR/Philips_3576H_160GB.rmdu` | `enter` | `the function has no single OBC byte` |
+| `DVR_PVR/Philips_3576H_160GB.rmdu` | `exit` | `the function has no single OBC byte` |
+| `DVR_PVR/Philips_3576H_160GB.rmdu` | `last` | `the function has no single OBC byte` |
+| `DVR_PVR/Philips_3576H_160GB.rmdu` | `menu` | `the function has no single OBC byte` |
+| `DVR_PVR/Philips_3576H_160GB.rmdu` | `mute` | `the function has no single OBC byte` |
+| `DVR_PVR/Philips_3576H_160GB.rmdu` | `pip move` | `the function has no single OBC byte` |
+| `DVR_PVR/Philips_3576H_160GB.rmdu` | `pip on/off` | `the function has no single OBC byte` |
+| `DVR_PVR/Philips_3576H_160GB.rmdu` | `pip swap` | `the function has no single OBC byte` |
+| `DVR_PVR/Philips_3576H_160GB.rmdu` | `program guide` | `the function has no single OBC byte` |
+| `DVR_PVR/Philips_3576H_160GB.rmdu` | `sleep` | `the function has no single OBC byte` |
+| `DVR_PVR/Philips_3576H_160GB.rmdu` | `vol down` | `the function has no single OBC byte` |
+| `DVR_PVR/Philips_3576H_160GB.rmdu` | `vol up` | `the function has no single OBC byte` |
 | `DVR_PVR/Strong SRT 7300 CI .rmdu` | `Custom14` | `the function has no single OBC byte` |
 | `DVR_PVR/Strong SRT 7300 CI .rmdu` | `Custom15` | `the function has no single OBC byte` |
 | `DVR_PVR/Strong SRT 7300 CI .rmdu` | `Custom16` | `the function has no single OBC byte` |
@@ -4198,6 +4605,11 @@ silently (SPEC R19, condition 5).
 | `Media Players/HiMedia HD900.rmdu` | `surround` | `the function has no single OBC byte` |
 | `Media Players/Klegg MediaShare.rmdu` | `#47` | `the function has no single OBC byte` |
 | `Media Players/Netgear EVA8000.rmdu` | `#40` | `the function has no single OBC byte` |
+| `Media Players/Philips Multimedia Storage.rmdu` | `#36` | `the function has no single OBC byte` |
+| `Media Players/Philips Multimedia Storage.rmdu` | `#37` | `the function has no single OBC byte` |
+| `Media Players/Philips Multimedia Storage.rmdu` | `#38` | `the function has no single OBC byte` |
+| `Media Players/Philips Multimedia Storage.rmdu` | `#39` | `the function has no single OBC byte` |
+| `Media Players/Philips Multimedia Storage.rmdu` | `#40` | `the function has no single OBC byte` |
 | `Media Players/TViX Multimedia Player.rmdu` | `Gap in OBCs\: 18` | `the function has no single OBC byte` |
 | `Media Players/TViX Multimedia Player.rmdu` | `Gap in OBCs\: 32-36` | `the function has no single OBC byte` |
 | `Media Players/TViX Multimedia Player.rmdu` | `Gap in OBCs\: 38-63` | `the function has no single OBC byte` |
@@ -4349,6 +4761,39 @@ silently (SPEC R19, condition 5).
 | `Misc/NoonTec GV3500.rmdu` | `#38` | `the function has no single OBC byte` |
 | `Misc/NoonTec GV3500.rmdu` | `#41` | `the function has no single OBC byte` |
 | `Misc/NoonTec GV3500.rmdu` | `tv/vcr` | `the function has no single OBC byte` |
+| `Misc/Philips Streamium SL300i.rmdu` | `+100` | `the function has no single OBC byte` |
+| `Misc/Philips Streamium SL300i.rmdu` | `X2` | `the function has no single OBC byte` |
+| `Misc/Philips Streamium SL300i.rmdu` | `center` | `the function has no single OBC byte` |
+| `Misc/Philips Streamium SL300i.rmdu` | `channel down` | `the function has no single OBC byte` |
+| `Misc/Philips Streamium SL300i.rmdu` | `channel up` | `the function has no single OBC byte` |
+| `Misc/Philips Streamium SL300i.rmdu` | `device button` | `the function has no single OBC byte` |
+| `Misc/Philips Streamium SL300i.rmdu` | `display` | `the function has no single OBC byte` |
+| `Misc/Philips Streamium SL300i.rmdu` | `eject` | `the function has no single OBC byte` |
+| `Misc/Philips Streamium SL300i.rmdu` | `enter` | `the function has no single OBC byte` |
+| `Misc/Philips Streamium SL300i.rmdu` | `exit` | `the function has no single OBC byte` |
+| `Misc/Philips Streamium SL300i.rmdu` | `fav/scan` | `the function has no single OBC byte` |
+| `Misc/Philips Streamium SL300i.rmdu` | `input toggle` | `the function has no single OBC byte` |
+| `Misc/Philips Streamium SL300i.rmdu` | `last (prev ch)` | `the function has no single OBC byte` |
+| `Misc/Philips Streamium SL300i.rmdu` | `mute` | `the function has no single OBC byte` |
+| `Misc/Philips Streamium SL300i.rmdu` | `next track` | `the function has no single OBC byte` |
+| `Misc/Philips Streamium SL300i.rmdu` | `pip freeze` | `the function has no single OBC byte` |
+| `Misc/Philips Streamium SL300i.rmdu` | `pip move` | `the function has no single OBC byte` |
+| `Misc/Philips Streamium SL300i.rmdu` | `pip on/off` | `the function has no single OBC byte` |
+| `Misc/Philips Streamium SL300i.rmdu` | `pip swap` | `the function has no single OBC byte` |
+| `Misc/Philips Streamium SL300i.rmdu` | `prev track` | `the function has no single OBC byte` |
+| `Misc/Philips Streamium SL300i.rmdu` | `program guide` | `the function has no single OBC byte` |
+| `Misc/Philips Streamium SL300i.rmdu` | `rear` | `the function has no single OBC byte` |
+| `Misc/Philips Streamium SL300i.rmdu` | `record` | `the function has no single OBC byte` |
+| `Misc/Philips Streamium SL300i.rmdu` | `shift-left` | `the function has no single OBC byte` |
+| `Misc/Philips Streamium SL300i.rmdu` | `shift-right` | `the function has no single OBC byte` |
+| `Misc/Philips Streamium SL300i.rmdu` | `sleep` | `the function has no single OBC byte` |
+| `Misc/Philips Streamium SL300i.rmdu` | `slow` | `the function has no single OBC byte` |
+| `Misc/Philips Streamium SL300i.rmdu` | `slow+` | `the function has no single OBC byte` |
+| `Misc/Philips Streamium SL300i.rmdu` | `slow-` | `the function has no single OBC byte` |
+| `Misc/Philips Streamium SL300i.rmdu` | `surround` | `the function has no single OBC byte` |
+| `Misc/Philips Streamium SL300i.rmdu` | `tv/vcr` | `the function has no single OBC byte` |
+| `Misc/Philips Streamium SL300i.rmdu` | `vol down` | `the function has no single OBC byte` |
+| `Misc/Philips Streamium SL300i.rmdu` | `vol up` | `the function has no single OBC byte` |
 | `Misc/Sigma_Designs_Real_Magic.rmdu` | `#33` | `the function has no single OBC byte` |
 | `Misc/Sigma_Designs_Real_Magic.rmdu` | `#36` | `the function has no single OBC byte` |
 | `Misc/Zaaptv IPTV.rmdu` | 0 | `the function has no single OBC byte` |
@@ -4398,6 +4843,38 @@ silently (SPEC R19, condition 5).
 | `Misc/iodatanew.rmdu` | `slow` | `the function has no single OBC byte` |
 | `Misc/iodatanew.rmdu` | `slow+` | `the function has no single OBC byte` |
 | `Misc/iodatanew.rmdu` | `slow-` | `the function has no single OBC byte` |
+| `Misc/tv-0748.rmdu` | `X2` | `the function has no single OBC byte` |
+| `Misc/tv-0748.rmdu` | `center` | `the function has no single OBC byte` |
+| `Misc/tv-0748.rmdu` | `device button` | `the function has no single OBC byte` |
+| `Misc/tv-0748.rmdu` | `down arrow` | `the function has no single OBC byte` |
+| `Misc/tv-0748.rmdu` | `eject` | `the function has no single OBC byte` |
+| `Misc/tv-0748.rmdu` | `enter` | `the function has no single OBC byte` |
+| `Misc/tv-0748.rmdu` | `exit` | `the function has no single OBC byte` |
+| `Misc/tv-0748.rmdu` | `fast fwd` | `the function has no single OBC byte` |
+| `Misc/tv-0748.rmdu` | `fav/scan` | `the function has no single OBC byte` |
+| `Misc/tv-0748.rmdu` | `input toggle` | `the function has no single OBC byte` |
+| `Misc/tv-0748.rmdu` | `left arrow` | `the function has no single OBC byte` |
+| `Misc/tv-0748.rmdu` | `next track` | `the function has no single OBC byte` |
+| `Misc/tv-0748.rmdu` | `pause` | `the function has no single OBC byte` |
+| `Misc/tv-0748.rmdu` | `pip freeze` | `the function has no single OBC byte` |
+| `Misc/tv-0748.rmdu` | `pip move` | `the function has no single OBC byte` |
+| `Misc/tv-0748.rmdu` | `pip on/off` | `the function has no single OBC byte` |
+| `Misc/tv-0748.rmdu` | `pip swap` | `the function has no single OBC byte` |
+| `Misc/tv-0748.rmdu` | `play` | `the function has no single OBC byte` |
+| `Misc/tv-0748.rmdu` | `prev track` | `the function has no single OBC byte` |
+| `Misc/tv-0748.rmdu` | `rear` | `the function has no single OBC byte` |
+| `Misc/tv-0748.rmdu` | `record` | `the function has no single OBC byte` |
+| `Misc/tv-0748.rmdu` | `rewind` | `the function has no single OBC byte` |
+| `Misc/tv-0748.rmdu` | `right arrow` | `the function has no single OBC byte` |
+| `Misc/tv-0748.rmdu` | `select` | `the function has no single OBC byte` |
+| `Misc/tv-0748.rmdu` | `shift-left` | `the function has no single OBC byte` |
+| `Misc/tv-0748.rmdu` | `shift-right` | `the function has no single OBC byte` |
+| `Misc/tv-0748.rmdu` | `slow` | `the function has no single OBC byte` |
+| `Misc/tv-0748.rmdu` | `slow+` | `the function has no single OBC byte` |
+| `Misc/tv-0748.rmdu` | `slow-` | `the function has no single OBC byte` |
+| `Misc/tv-0748.rmdu` | `stop` | `the function has no single OBC byte` |
+| `Misc/tv-0748.rmdu` | `surround` | `the function has no single OBC byte` |
+| `Misc/tv-0748.rmdu` | `up arrow` | `the function has no single OBC byte` |
 | `Projectors/Apolo Vision 32k.rmdu` | `+100` | `the function has no single OBC byte` |
 | `Projectors/Apolo Vision 32k.rmdu` | 0 | `the function has no single OBC byte` |
 | `Projectors/Apolo Vision 32k.rmdu` | 1 | `the function has no single OBC byte` |
@@ -4451,6 +4928,44 @@ silently (SPEC R19, condition 5).
 | `Projectors/BenQ W1070.rmdu` | `#8` | `the function has no single OBC byte` |
 | `Projectors/BenQ W1070.rmdu` | `#9` | `the function has no single OBC byte` |
 | `Projectors/Infocus IN72.rmdu` | `#32` | `the function has no single OBC byte` |
+| `Projectors/Sharp QA-2500.rmdu` | `+100` | `the function has no single OBC byte` |
+| `Projectors/Sharp QA-2500.rmdu` | 0 | `the function has no single OBC byte` |
+| `Projectors/Sharp QA-2500.rmdu` | 9 | `the function has no single OBC byte` |
+| `Projectors/Sharp QA-2500.rmdu` | `X2` | `the function has no single OBC byte` |
+| `Projectors/Sharp QA-2500.rmdu` | `center` | `the function has no single OBC byte` |
+| `Projectors/Sharp QA-2500.rmdu` | `channel down` | `the function has no single OBC byte` |
+| `Projectors/Sharp QA-2500.rmdu` | `channel up` | `the function has no single OBC byte` |
+| `Projectors/Sharp QA-2500.rmdu` | `device button` | `the function has no single OBC byte` |
+| `Projectors/Sharp QA-2500.rmdu` | `down arrow` | `the function has no single OBC byte` |
+| `Projectors/Sharp QA-2500.rmdu` | `eject` | `the function has no single OBC byte` |
+| `Projectors/Sharp QA-2500.rmdu` | `enter` | `the function has no single OBC byte` |
+| `Projectors/Sharp QA-2500.rmdu` | `fast fwd` | `the function has no single OBC byte` |
+| `Projectors/Sharp QA-2500.rmdu` | `fav/scan` | `the function has no single OBC byte` |
+| `Projectors/Sharp QA-2500.rmdu` | `input toggle` | `the function has no single OBC byte` |
+| `Projectors/Sharp QA-2500.rmdu` | `last (prev ch)` | `the function has no single OBC byte` |
+| `Projectors/Sharp QA-2500.rmdu` | `mute` | `the function has no single OBC byte` |
+| `Projectors/Sharp QA-2500.rmdu` | `next track` | `the function has no single OBC byte` |
+| `Projectors/Sharp QA-2500.rmdu` | `pause` | `the function has no single OBC byte` |
+| `Projectors/Sharp QA-2500.rmdu` | `pip freeze` | `the function has no single OBC byte` |
+| `Projectors/Sharp QA-2500.rmdu` | `pip move` | `the function has no single OBC byte` |
+| `Projectors/Sharp QA-2500.rmdu` | `pip on/off` | `the function has no single OBC byte` |
+| `Projectors/Sharp QA-2500.rmdu` | `pip swap` | `the function has no single OBC byte` |
+| `Projectors/Sharp QA-2500.rmdu` | `play` | `the function has no single OBC byte` |
+| `Projectors/Sharp QA-2500.rmdu` | `prev track` | `the function has no single OBC byte` |
+| `Projectors/Sharp QA-2500.rmdu` | `rear` | `the function has no single OBC byte` |
+| `Projectors/Sharp QA-2500.rmdu` | `record` | `the function has no single OBC byte` |
+| `Projectors/Sharp QA-2500.rmdu` | `rewind` | `the function has no single OBC byte` |
+| `Projectors/Sharp QA-2500.rmdu` | `shift-left` | `the function has no single OBC byte` |
+| `Projectors/Sharp QA-2500.rmdu` | `shift-right` | `the function has no single OBC byte` |
+| `Projectors/Sharp QA-2500.rmdu` | `slow` | `the function has no single OBC byte` |
+| `Projectors/Sharp QA-2500.rmdu` | `slow+` | `the function has no single OBC byte` |
+| `Projectors/Sharp QA-2500.rmdu` | `slow-` | `the function has no single OBC byte` |
+| `Projectors/Sharp QA-2500.rmdu` | `stop` | `the function has no single OBC byte` |
+| `Projectors/Sharp QA-2500.rmdu` | `surround` | `the function has no single OBC byte` |
+| `Projectors/Sharp QA-2500.rmdu` | `tv/vcr` | `the function has no single OBC byte` |
+| `Projectors/Sharp QA-2500.rmdu` | `up arrow` | `the function has no single OBC byte` |
+| `Projectors/Sharp QA-2500.rmdu` | `vol down` | `the function has no single OBC byte` |
+| `Projectors/Sharp QA-2500.rmdu` | `vol up` | `the function has no single OBC byte` |
 | `Projectors/Sony Projector VH11HT.rmdu` | `+100` | `the function has no two OBC bytes` |
 | `Projectors/Sony Projector VH11HT.rmdu` | 0 | `the function has no two OBC bytes` |
 | `Projectors/Sony Projector VH11HT.rmdu` | 7 | `the function has no two OBC bytes` |
@@ -4616,6 +5131,10 @@ silently (SPEC R19, condition 5).
 | `Satellite/Humax ND-1000C Sat.rmdu` | `#51` | `the function has no single OBC byte` |
 | `Satellite/Humax ND-1000C Sat.rmdu` | `#52` | `the function has no single OBC byte` |
 | `Satellite/Limesat HD Air.rmdu` | `#52` | `the function has no single OBC byte` |
+| `Satellite/Maspro DT200.rmdu` | `mute` | `the function has no single OBC byte` |
+| `Satellite/Maspro DT200.rmdu` | `pause` | `the function has no single OBC byte` |
+| `Satellite/Maspro DT200.rmdu` | `vol down` | `the function has no single OBC byte` |
+| `Satellite/Maspro DT200.rmdu` | `vol up` | `the function has no single OBC byte` |
 | `Satellite/OpenBox S9.rmdu` | `+100` | `the function has no single OBC byte` |
 | `Satellite/OpenBox S9.rmdu` | `X2` | `the function has no single OBC byte` |
 | `Satellite/OpenBox S9.rmdu` | `center` | `the function has no single OBC byte` |
@@ -4723,6 +5242,53 @@ silently (SPEC R19, condition 5).
 | `Satellite/REDLINE SAT.rmdu` | `tv/vcr` | `the function has no single OBC byte` |
 | `Satellite/REDLINE SAT.rmdu` | `vol down` | `the function has no single OBC byte` |
 | `Satellite/REDLINE SAT.rmdu` | `vol up` | `the function has no single OBC byte` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | `+100` | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | 0 | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | 1 | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | 2 | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | 3 | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | 4 | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | 5 | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | 6 | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | 7 | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | 8 | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | 9 | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | `blue/B` | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | `channel down` | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | `channel up` | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | `day+` | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | `day-` | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | `down arrow` | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | `enter` | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | `exit` | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | `fast fwd` | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | `fav` | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | `green/D` | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | `guide` | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | `info/display` | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | `input` | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | `left arrow` | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | `list/PVR menu` | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | `menu` | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | `ok/select` | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | `option` | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | `page down` | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | `page up` | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | `pause` | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | `play` | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | `power` | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | `prev ch/last` | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | `record` | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | `red/C` | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | `rewind` | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | `right arrow` | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | `skip+/next+` | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | `skip-/next-` | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | `sleep` | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | `stop` | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | `tv/vcr` | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | `up arrow` | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky PerfecTV (Japan).rmdu` | `yellow/A` | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
 | `Satellite/SkyBox F5.rmdu` | `+100` | `the function has no single OBC byte` |
 | `Satellite/SkyBox F5.rmdu` | `X2` | `the function has no single OBC byte` |
 | `Satellite/SkyBox F5.rmdu` | `center` | `the function has no single OBC byte` |
@@ -5319,6 +5885,41 @@ silently (SPEC R19, condition 5).
 | `TV/Hyundai HLT-37V2FH .rmdu` | `#56` | `the function has no single OBC byte` |
 | `TV/Insignia NS-20LCD RC5.rmdu` | `Display` | `the function has no single OBC byte` |
 | `TV/Insignia NS-20LCD RC5.rmdu` | `OK` | `the function has no single OBC byte` |
+| `TV/JVC HD61FH97.rmdu` | `#49` | `the function has no two OBC bytes` |
+| `TV/JVC HD61FH97.rmdu` | `#76` | `the function has no two OBC bytes` |
+| `TV/JVC HD61FH97.rmdu` | `*** Codes below were taken from other JVC TVs` | `the function has no two OBC bytes` |
+| `TV/JVC Smart TV  SL42B-C .rmdu` | `#70` | `the function has no two OBC bytes` |
+| `TV/JVC Smart TV  SL42B-C .rmdu` | `#71` | `the function has no two OBC bytes` |
+| `TV/JVC Smart TV  SL42B-C .rmdu` | `#72` | `the function has no two OBC bytes` |
+| `TV/JVC Smart TV  SL42B-C .rmdu` | `#73` | `the function has no two OBC bytes` |
+| `TV/JVC Smart TV  SL42B-C .rmdu` | `#74` | `the function has no two OBC bytes` |
+| `TV/JVC Smart TV  SL42B-C .rmdu` | `#75` | `the function has no two OBC bytes` |
+| `TV/JVC Smart TV  SL42B-C .rmdu` | `#76` | `the function has no two OBC bytes` |
+| `TV/JVC Smart TV  SL42B-C .rmdu` | `#77` | `the function has no two OBC bytes` |
+| `TV/JVC Smart TV  SL42B-C .rmdu` | `#78` | `the function has no two OBC bytes` |
+| `TV/JVC Smart TV  SL42B-C .rmdu` | `#79` | `the function has no two OBC bytes` |
+| `TV/JVC Smart TV  SL42B-C .rmdu` | `#80` | `the function has no two OBC bytes` |
+| `TV/JVC Smart TV  SL42B-C .rmdu` | `#81` | `the function has no two OBC bytes` |
+| `TV/JVC Smart TV  SL42B-C .rmdu` | `#82` | `the function has no two OBC bytes` |
+| `TV/JVC Smart TV  SL42B-C .rmdu` | `#83` | `the function has no two OBC bytes` |
+| `TV/JVC Smart TV  SL42B-C .rmdu` | `#84` | `the function has no two OBC bytes` |
+| `TV/JVC Smart TV  SL42B-C .rmdu` | `#85` | `the function has no two OBC bytes` |
+| `TV/JVC Smart TV  SL42B-C .rmdu` | `#86` | `the function has no two OBC bytes` |
+| `TV/JVC Smart TV  SL42B-C .rmdu` | `#87` | `the function has no two OBC bytes` |
+| `TV/JVC Smart TV  SL42B-C .rmdu` | `#88` | `the function has no two OBC bytes` |
+| `TV/JVC Smart TV  SL42B-C .rmdu` | `#89` | `the function has no two OBC bytes` |
+| `TV/JVC Smart TV  SL42B-C .rmdu` | `#90` | `the function has no two OBC bytes` |
+| `TV/JVC Smart TV  SL42B-C .rmdu` | `#91` | `the function has no two OBC bytes` |
+| `TV/JVC Smart TV  SL42B-C .rmdu` | `#92` | `the function has no two OBC bytes` |
+| `TV/JVC Smart TV  SL42B-C .rmdu` | `#93` | `the function has no two OBC bytes` |
+| `TV/JVC Smart TV  SL42B-C .rmdu` | `#94` | `the function has no two OBC bytes` |
+| `TV/JVC Smart TV  SL42B-C .rmdu` | `#95` | `the function has no two OBC bytes` |
+| `TV/JVC Smart TV  SL42B-C .rmdu` | `#96` | `the function has no two OBC bytes` |
+| `TV/JVC Smart TV  SL42B-C .rmdu` | `#97` | `the function has no two OBC bytes` |
+| `TV/JVC Smart TV  SL42B-C .rmdu` | `#98` | `the function has no two OBC bytes` |
+| `TV/JVC Smart TV  SL42B-C .rmdu` | `#99` | `the function has no two OBC bytes` |
+| `TV/JVC-C205.rmdu` | `V-chip` | `the function has no single OBC byte` |
+| `TV/JVC_AV-27WF36_TV + Add_RS15-1994.rmdu` | `Game` | `the function has no single OBC byte` |
 | `TV/LG 60px950.rmdu` | `#62` | `the function has no single OBC byte` |
 | `TV/LG 60px950.rmdu` | `#63` | `the function has no single OBC byte` |
 | `TV/LG 65LM6200.rmdu` | `#63` | `the function has no single OBC byte` |
@@ -5390,6 +5991,120 @@ silently (SPEC R19, condition 5).
 | `TV/NEC Plasma.rmdu` | `#63` | `the function has no two OBC bytes` |
 | `TV/NEC Plasma.rmdu` | `#64` | `the function has no two OBC bytes` |
 | `TV/NEC Plasma.rmdu` | `#65` | `the function has no two OBC bytes` |
+| `TV/PANASONIC TH-42PX80U TH-50PX80U.rmdu` | `#38` | `the function has no two OBC bytes` |
+| `TV/PANASONIC TH-42PX80U TH-50PX80U.rmdu` | `#39` | `the function has no two OBC bytes` |
+| `TV/PANASONIC TH-42PX80U TH-50PX80U.rmdu` | `#40` | `the function has no two OBC bytes` |
+| `TV/PANASONIC TH-42PX80U TH-50PX80U.rmdu` | `#41` | `the function has no two OBC bytes` |
+| `TV/PANASONIC TH-42PX80U TH-50PX80U.rmdu` | `#42` | `the function has no two OBC bytes` |
+| `TV/PANASONIC TH-42PX80U TH-50PX80U.rmdu` | `#43` | `the function has no two OBC bytes` |
+| `TV/PANASONIC TH-42PX80U TH-50PX80U.rmdu` | `#44` | `the function has no two OBC bytes` |
+| `TV/PANASONIC TH-42PX80U TH-50PX80U.rmdu` | `#45` | `the function has no two OBC bytes` |
+| `TV/PANASONIC TH-42PX80U TH-50PX80U.rmdu` | `#46` | `the function has no two OBC bytes` |
+| `TV/PANASONIC TH-42PX80U TH-50PX80U.rmdu` | `#47` | `the function has no two OBC bytes` |
+| `TV/PANASONIC TH-42PX80U TH-50PX80U.rmdu` | `#48` | `the function has no two OBC bytes` |
+| `TV/Panasonic CT-27HL15 TV.rmdu` | `+100` | `the function has no single OBC byte` |
+| `TV/Panasonic CT-27HL15 TV.rmdu` | `enter` | `the function has no single OBC byte` |
+| `TV/Panasonic CT-27HL15 TV.rmdu` | `exit` | `the function has no single OBC byte` |
+| `TV/Panasonic CT-27HL15 TV.rmdu` | `f.fwd/next track` | `the function has no single OBC byte` |
+| `TV/Panasonic CT-27HL15 TV.rmdu` | `f.rew/prev track` | `the function has no single OBC byte` |
+| `TV/Panasonic CT-27HL15 TV.rmdu` | `fast fwd` | `the function has no single OBC byte` |
+| `TV/Panasonic CT-27HL15 TV.rmdu` | `pause` | `the function has no single OBC byte` |
+| `TV/Panasonic CT-27HL15 TV.rmdu` | `pip freeze` | `the function has no single OBC byte` |
+| `TV/Panasonic CT-27HL15 TV.rmdu` | `pip move` | `the function has no single OBC byte` |
+| `TV/Panasonic CT-27HL15 TV.rmdu` | `pip on/off` | `the function has no single OBC byte` |
+| `TV/Panasonic CT-27HL15 TV.rmdu` | `pip swap` | `the function has no single OBC byte` |
+| `TV/Panasonic CT-27HL15 TV.rmdu` | `play` | `the function has no single OBC byte` |
+| `TV/Panasonic CT-27HL15 TV.rmdu` | `program/guide` | `the function has no single OBC byte` |
+| `TV/Panasonic CT-27HL15 TV.rmdu` | `record` | `the function has no single OBC byte` |
+| `TV/Panasonic CT-27HL15 TV.rmdu` | `rewind` | `the function has no single OBC byte` |
+| `TV/Panasonic CT-27HL15 TV.rmdu` | `select` | `the function has no single OBC byte` |
+| `TV/Panasonic CT-27HL15 TV.rmdu` | `sleep` | `the function has no single OBC byte` |
+| `TV/Panasonic CT-27HL15 TV.rmdu` | `stop` | `the function has no single OBC byte` |
+| `TV/Panasonic TBM4G9013 TV.rmdu` | `+100` | `the function has no single OBC byte` |
+| `TV/Panasonic TBM4G9013 TV.rmdu` | `X2` | `the function has no single OBC byte` |
+| `TV/Panasonic TBM4G9013 TV.rmdu` | `center` | `the function has no single OBC byte` |
+| `TV/Panasonic TBM4G9013 TV.rmdu` | `device button` | `the function has no single OBC byte` |
+| `TV/Panasonic TBM4G9013 TV.rmdu` | `display` | `the function has no single OBC byte` |
+| `TV/Panasonic TBM4G9013 TV.rmdu` | `down arrow` | `the function has no single OBC byte` |
+| `TV/Panasonic TBM4G9013 TV.rmdu` | `eject` | `the function has no single OBC byte` |
+| `TV/Panasonic TBM4G9013 TV.rmdu` | `enter` | `the function has no single OBC byte` |
+| `TV/Panasonic TBM4G9013 TV.rmdu` | `exit` | `the function has no single OBC byte` |
+| `TV/Panasonic TBM4G9013 TV.rmdu` | `fast fwd` | `the function has no single OBC byte` |
+| `TV/Panasonic TBM4G9013 TV.rmdu` | `fav/scan` | `the function has no single OBC byte` |
+| `TV/Panasonic TBM4G9013 TV.rmdu` | `input toggle` | `the function has no single OBC byte` |
+| `TV/Panasonic TBM4G9013 TV.rmdu` | `last (prev ch)` | `the function has no single OBC byte` |
+| `TV/Panasonic TBM4G9013 TV.rmdu` | `left arrow` | `the function has no single OBC byte` |
+| `TV/Panasonic TBM4G9013 TV.rmdu` | `menu` | `the function has no single OBC byte` |
+| `TV/Panasonic TBM4G9013 TV.rmdu` | `next track` | `the function has no single OBC byte` |
+| `TV/Panasonic TBM4G9013 TV.rmdu` | `pause` | `the function has no single OBC byte` |
+| `TV/Panasonic TBM4G9013 TV.rmdu` | `pip freeze` | `the function has no single OBC byte` |
+| `TV/Panasonic TBM4G9013 TV.rmdu` | `pip move` | `the function has no single OBC byte` |
+| `TV/Panasonic TBM4G9013 TV.rmdu` | `pip on/off` | `the function has no single OBC byte` |
+| `TV/Panasonic TBM4G9013 TV.rmdu` | `pip swap` | `the function has no single OBC byte` |
+| `TV/Panasonic TBM4G9013 TV.rmdu` | `play` | `the function has no single OBC byte` |
+| `TV/Panasonic TBM4G9013 TV.rmdu` | `prev track` | `the function has no single OBC byte` |
+| `TV/Panasonic TBM4G9013 TV.rmdu` | `program guide` | `the function has no single OBC byte` |
+| `TV/Panasonic TBM4G9013 TV.rmdu` | `rear` | `the function has no single OBC byte` |
+| `TV/Panasonic TBM4G9013 TV.rmdu` | `record` | `the function has no single OBC byte` |
+| `TV/Panasonic TBM4G9013 TV.rmdu` | `rewind` | `the function has no single OBC byte` |
+| `TV/Panasonic TBM4G9013 TV.rmdu` | `right arrow` | `the function has no single OBC byte` |
+| `TV/Panasonic TBM4G9013 TV.rmdu` | `select` | `the function has no single OBC byte` |
+| `TV/Panasonic TBM4G9013 TV.rmdu` | `shift-left` | `the function has no single OBC byte` |
+| `TV/Panasonic TBM4G9013 TV.rmdu` | `shift-right` | `the function has no single OBC byte` |
+| `TV/Panasonic TBM4G9013 TV.rmdu` | `slow` | `the function has no single OBC byte` |
+| `TV/Panasonic TBM4G9013 TV.rmdu` | `slow+` | `the function has no single OBC byte` |
+| `TV/Panasonic TBM4G9013 TV.rmdu` | `slow-` | `the function has no single OBC byte` |
+| `TV/Panasonic TBM4G9013 TV.rmdu` | `stop` | `the function has no single OBC byte` |
+| `TV/Panasonic TBM4G9013 TV.rmdu` | `surround` | `the function has no single OBC byte` |
+| `TV/Panasonic TBM4G9013 TV.rmdu` | `up arrow` | `the function has no single OBC byte` |
+| `TV/Philips 32PW9308.rmdu` | `#36` | `the function has no single OBC byte` |
+| `TV/Philips 32PW9308.rmdu` | `#37` | `the function has no single OBC byte` |
+| `TV/Philips 32PW9308.rmdu` | `#38` | `the function has no single OBC byte` |
+| `TV/Philips 32PW9308.rmdu` | `#39` | `the function has no single OBC byte` |
+| `TV/Philips 32PW9308.rmdu` | `#40` | `the function has no single OBC byte` |
+| `TV/Philips 32PW9308.rmdu` | `#41` | `the function has no single OBC byte` |
+| `TV/Philips LED LCD HDTV 40PFL7505D.rmdu` | `.` | `the device parameter is missing` |
+| `TV/Philips LED LCD HDTV 40PFL7505D.rmdu` | 0 | `the device parameter is missing` |
+| `TV/Philips LED LCD HDTV 40PFL7505D.rmdu` | 1 | `the device parameter is missing` |
+| `TV/Philips LED LCD HDTV 40PFL7505D.rmdu` | 2 | `the device parameter is missing` |
+| `TV/Philips LED LCD HDTV 40PFL7505D.rmdu` | 3 | `the device parameter is missing` |
+| `TV/Philips LED LCD HDTV 40PFL7505D.rmdu` | 4 | `the device parameter is missing` |
+| `TV/Philips LED LCD HDTV 40PFL7505D.rmdu` | 5 | `the device parameter is missing` |
+| `TV/Philips LED LCD HDTV 40PFL7505D.rmdu` | 6 | `the device parameter is missing` |
+| `TV/Philips LED LCD HDTV 40PFL7505D.rmdu` | 7 | `the device parameter is missing` |
+| `TV/Philips LED LCD HDTV 40PFL7505D.rmdu` | 8 | `the device parameter is missing` |
+| `TV/Philips LED LCD HDTV 40PFL7505D.rmdu` | 9 | `the device parameter is missing` |
+| `TV/Philips LED LCD HDTV 40PFL7505D.rmdu` | `back` | `the device parameter is missing` |
+| `TV/Philips LED LCD HDTV 40PFL7505D.rmdu` | `blue` | `the device parameter is missing` |
+| `TV/Philips LED LCD HDTV 40PFL7505D.rmdu` | `channel down` | `the device parameter is missing` |
+| `TV/Philips LED LCD HDTV 40PFL7505D.rmdu` | `channel up` | `the device parameter is missing` |
+| `TV/Philips LED LCD HDTV 40PFL7505D.rmdu` | `down` | `the device parameter is missing` |
+| `TV/Philips LED LCD HDTV 40PFL7505D.rmdu` | `fast fwd` | `the device parameter is missing` |
+| `TV/Philips LED LCD HDTV 40PFL7505D.rmdu` | `fav` | `the device parameter is missing` |
+| `TV/Philips LED LCD HDTV 40PFL7505D.rmdu` | `format` | `the device parameter is missing` |
+| `TV/Philips LED LCD HDTV 40PFL7505D.rmdu` | `green` | `the device parameter is missing` |
+| `TV/Philips LED LCD HDTV 40PFL7505D.rmdu` | `info` | `the device parameter is missing` |
+| `TV/Philips LED LCD HDTV 40PFL7505D.rmdu` | `left` | `the device parameter is missing` |
+| `TV/Philips LED LCD HDTV 40PFL7505D.rmdu` | `menu/exit` | `the device parameter is missing` |
+| `TV/Philips LED LCD HDTV 40PFL7505D.rmdu` | `mode/auto` | `the device parameter is missing` |
+| `TV/Philips LED LCD HDTV 40PFL7505D.rmdu` | `mute` | `the device parameter is missing` |
+| `TV/Philips LED LCD HDTV 40PFL7505D.rmdu` | `options` | `the device parameter is missing` |
+| `TV/Philips LED LCD HDTV 40PFL7505D.rmdu` | `play/pause` | `the device parameter is missing` |
+| `TV/Philips LED LCD HDTV 40PFL7505D.rmdu` | `plus/pixel` | `the device parameter is missing` |
+| `TV/Philips LED LCD HDTV 40PFL7505D.rmdu` | `power` | `the device parameter is missing` |
+| `TV/Philips LED LCD HDTV 40PFL7505D.rmdu` | `prev. ch` | `the device parameter is missing` |
+| `TV/Philips LED LCD HDTV 40PFL7505D.rmdu` | `record` | `the device parameter is missing` |
+| `TV/Philips LED LCD HDTV 40PFL7505D.rmdu` | `red/demo` | `the device parameter is missing` |
+| `TV/Philips LED LCD HDTV 40PFL7505D.rmdu` | `rewind` | `the device parameter is missing` |
+| `TV/Philips LED LCD HDTV 40PFL7505D.rmdu` | `right` | `the device parameter is missing` |
+| `TV/Philips LED LCD HDTV 40PFL7505D.rmdu` | `select` | `the device parameter is missing` |
+| `TV/Philips LED LCD HDTV 40PFL7505D.rmdu` | `sleep` | `the device parameter is missing` |
+| `TV/Philips LED LCD HDTV 40PFL7505D.rmdu` | `source` | `the device parameter is missing` |
+| `TV/Philips LED LCD HDTV 40PFL7505D.rmdu` | `stop` | `the device parameter is missing` |
+| `TV/Philips LED LCD HDTV 40PFL7505D.rmdu` | `up` | `the device parameter is missing` |
+| `TV/Philips LED LCD HDTV 40PFL7505D.rmdu` | `vol down` | `the device parameter is missing` |
+| `TV/Philips LED LCD HDTV 40PFL7505D.rmdu` | `vol up` | `the device parameter is missing` |
+| `TV/Philips LED LCD HDTV 40PFL7505D.rmdu` | `yellow` | `the device parameter is missing` |
 | `TV/Philips_221T1.rmdu` | `#44` | `the function has no single OBC byte` |
 | `TV/Phillips-Magnavox PT2758.rmdu` | `+100` | `the function has no single OBC byte` |
 | `TV/Phillips-Magnavox PT2758.rmdu` | `down arrow` | `the function has no single OBC byte` |
@@ -5749,6 +6464,15 @@ silently (SPEC R19, condition 5).
 | `TV/Sony_Wega_0000_Replay5000.rmdu` | `surround` | `the function has no single OBC byte` |
 | `TV/Syntax Olevia LT32HV.rmdu` | `#40` | `the function has no single OBC byte` |
 | `TV/Syntax Olevia LT32HV.rmdu` | `#41` | `the function has no single OBC byte` |
+| `TV/TV Panasonic TX-32PK20 for 8820.rmdu` | `#37` | `the function has no two OBC bytes` |
+| `TV/TV Panasonic TX-32PK20 for 8820.rmdu` | `#38` | `the function has no two OBC bytes` |
+| `TV/TV Panasonic TX-32PK20 for 8820.rmdu` | `#48` | `the function has no two OBC bytes` |
+| `TV/TV Panasonic TX-32PK20 for 8820.rmdu` | `#49` | `the function has no two OBC bytes` |
+| `TV/TV Panasonic TX-32PK20 for 8820.rmdu` | `Extras` | `the function has no two OBC bytes` |
+| `TV/TV Panasonic TX-32PK20 for 8820.rmdu` | `Not this model` | `the function has no two OBC bytes` |
+| `TV/TV Panasonic TX32LMD70 .rmdu` | `#40` | `the function has no two OBC bytes` |
+| `TV/TV Panasonic TX32LMD70 .rmdu` | `rem to set dev and sub` | `the function has no two OBC bytes` |
+| `TV/TV Panasonic TX32LMD70 .rmdu` | `vcr/dvd functions` | `the function has no two OBC bytes` |
 | `TV/TV_Samsung UE40ES6300.rmdu` | `#84` | `the function has no single OBC byte` |
 | `TV/Toshiba 26DF56.rmdu` | `+100` | `the function has no single OBC byte` |
 | `TV/Toshiba 26DF56.rmdu` | `X2` | `the function has no single OBC byte` |
@@ -6113,4 +6837,5 @@ silently (SPEC R19, condition 5).
 | `VCR/RS2116 Toshiba VCR 1045.rmdu` | `vol+` | `the function has no single OBC byte` |
 | `VCR/RS2116 Toshiba VCR 1045.rmdu` | `vol-` | `the function has no single OBC byte` |
 | `VCR/VCR LG LV300.rmdu` | `a` | `the function has no single OBC byte` |
+| `VCR/jvc-vcr-LP20878-001.rmdu` | `TV` | `the function has no single OBC byte` |
 | `VCR/philips vcr500-code1081.rmdu` | `*** bottom ***` | `the function has no single OBC byte` |

@@ -12,8 +12,8 @@ sources have been imported under SPEC R19:
   keys, GPL-3.0 by inheritance only (DESIGN §17, §18).
 - **hifi-remote.com's Sony code pages**: 151 files, 6,772 keys, a table of
   reference codes with no licence recorded (DESIGN §27).
-- **The JP1 device upgrades** of its forum: 2,184 files, 82,780 keys, read for
-  twelve executors (DESIGN §28, §32, §33).
+- **The JP1 device upgrades** of its forum: 2,424 files, 93,743 keys, read for
+  twenty executors (DESIGN §28, §32, §33, §34).
 - **Manufacturers' own IR tables**: Marantz's AV receiver charts, Anthem's IR
   hex sheet and Oppo's remote code workbooks, 189 files, 12,844 keys (DESIGN
   §29, §31).
@@ -39,10 +39,13 @@ Land it in two PRs, code and then data.
       owner's decision of 2026-10-08 (D110) is that a table of reference
       remote codes needs no licence. That reasoning bears on all three; none
       has been changed.
-- [ ] **The rest of the JP1 upgrades** (DESIGN D120, D136, D140): about 1,130
-      upgrades of other executors (MCE 83, Panasonic Combo 53, RC-6 42, Nokia32
-      40, JVC 33, Panasonic 33, Aiwa 31, RC-5/5x Combo 16, RC5/6 combo 12...)
-      and 2,073 KeymapMaster files. **The Yamaha combo's Y1 to Y3 styles**
+- [ ] **The rest of the JP1 upgrades** (DESIGN D120, D136, D140, D145): about
+      890 upgrades of other executors (MCE 83, Nokia32 40, Pioneer MIX 27, XMP
+      48, GI Cable 20, RCA 20, Samsung36 19, Panasonic (old) 19, RC-5/5x Combo
+      16, RC5/6 combo 12, Sharp Combo 11, Denon-K 11, Proton 12...), 75
+      `Manual Settings` upgrades that give raw executor bytes with no protocol,
+      and 2,073 KeymapMaster files. MCE is RC6-6-32 and Nokia32 is its own
+      frame: neither is a registered protocol (D18's gate). **The Yamaha combo's Y1 to Y3 styles**
       (1,087 functions of 15 upgrades) send NEC with 16 data bits, which needs
       NEC1-f16 and NEC2-f16 registered with a cited golden vector (D18's gate). Each executor needs its
       translator found (the RemoteMaster source has the classes the

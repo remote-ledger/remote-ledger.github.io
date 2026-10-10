@@ -1,0 +1,561 @@
+{
+  "manufacturer": "Denon",
+  "model": "Receivers (Denon_AVR-3300_6131nw)",
+  "aliases": [],
+  "controls": [
+    "Denon Receivers"
+  ],
+  "protocol": {
+    "name": "Denon",
+    "carrierHz": 38000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_DISCRETE_ON": {
+      "label": "discrete on",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xE1",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon_AVR-3300_6131nw.rmdu function 0 'discrete on' (OBC B8 78; Denon Combo (Official), parms null null): Denon device 2 function 225"
+        }
+      ]
+    },
+    "KEY_DISCRETE_OFF": {
+      "label": "discrete off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xE2",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon_AVR-3300_6131nw.rmdu function 1 'discrete off' (OBC B8 B8; Denon Combo (Official), parms null null): Denon device 2 function 226"
+        }
+      ]
+    },
+    "KEY_1_DVD": {
+      "label": "1. DVD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xE3",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon_AVR-3300_6131nw.rmdu function 2 '1. DVD' (OBC B8 38; Denon Combo (Official), parms null null): Denon device 2 function 227"
+        }
+      ]
+    },
+    "KEY_2_VDP": {
+      "label": "2. VDP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xCA",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon_AVR-3300_6131nw.rmdu function 3 '2. VDP' (OBC B8 AC; Denon Combo (Official), parms null null): Denon device 2 function 202"
+        }
+      ]
+    },
+    "KEY_3_TUNER": {
+      "label": "3. Tuner",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xC5",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon_AVR-3300_6131nw.rmdu function 4 '3. Tuner' (OBC B8 5C; Denon Combo (Official), parms null null): Denon device 2 function 197"
+        }
+      ]
+    },
+    "KEY_4_TV_SLASH_DBS": {
+      "label": "4. TV/DBS",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xC9",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon_AVR-3300_6131nw.rmdu function 5 '4. TV/DBS' (OBC B8 6C; Denon Combo (Official), parms null null): Denon device 2 function 201"
+        }
+      ]
+    },
+    "KEY_5_TAPE2_SLASH_MON": {
+      "label": "5. Tape2/Mon",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xD3",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon_AVR-3300_6131nw.rmdu function 6 '5. Tape2/Mon' (OBC B8 34; Denon Combo (Official), parms null null): Denon device 2 function 211"
+        }
+      ]
+    },
+    "KEY_6_PHONO": {
+      "label": "6. Phono",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xC3",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon_AVR-3300_6131nw.rmdu function 7 '6. Phono' (OBC B8 3C; Denon Combo (Official), parms null null): Denon device 2 function 195"
+        }
+      ]
+    },
+    "KEY_7_VCR1": {
+      "label": "7. VCR1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xCD",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon_AVR-3300_6131nw.rmdu function 8 '7. VCR1' (OBC B8 4C; Denon Combo (Official), parms null null): Denon device 2 function 205"
+        }
+      ]
+    },
+    "KEY_8_CD": {
+      "label": "8. CD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xC4",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon_AVR-3300_6131nw.rmdu function 9 '8. CD' (OBC B8 DC; Denon Combo (Official), parms null null): Denon device 2 function 196"
+        }
+      ]
+    },
+    "KEY_9_MD_SLASH_TAPE1": {
+      "label": "9. MD/Tape1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xD2",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon_AVR-3300_6131nw.rmdu function 10 '9. MD/Tape1' (OBC B8 B4; Denon Combo (Official), parms null null): Denon device 2 function 210"
+        }
+      ]
+    },
+    "KEY_10_VCR2": {
+      "label": "10. VCR2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xCE",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon_AVR-3300_6131nw.rmdu function 11 '10. VCR2' (OBC B8 8C; Denon Combo (Official), parms null null): Denon device 2 function 206"
+        }
+      ]
+    },
+    "KEY_SHIFT": {
+      "label": "Shift",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xCD",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon_AVR-3300_6131nw.rmdu function 12 'Shift' (OBC C8 4C; Denon Combo (Official), parms null null): Denon device 12 function 205"
+        }
+      ]
+    },
+    "KEY_TUNER_CHANNEL_UP": {
+      "label": "tuner channel up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xD6",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon_AVR-3300_6131nw.rmdu function 13 'tuner channel up' (OBC C8 94; Denon Combo (Official), parms null null): Denon device 12 function 214"
+        }
+      ]
+    },
+    "KEY_TUNER_CHANNEL_DOWN": {
+      "label": "tuner channel down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xD5",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon_AVR-3300_6131nw.rmdu function 14 'tuner channel down' (OBC C8 54; Denon Combo (Official), parms null null): Denon device 12 function 213"
+        }
+      ]
+    },
+    "KEY_SPEAKER": {
+      "label": "Speaker",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xED",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon_AVR-3300_6131nw.rmdu function 15 'Speaker' (OBC B8 48; Denon Combo (Official), parms null null): Denon device 2 function 237"
+        }
+      ]
+    },
+    "KEY_DOLBY_SURROUND_SLASH_DTS": {
+      "label": "Dolby Surround/DTS",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xE4",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon_AVR-3300_6131nw.rmdu function 16 'Dolby Surround/DTS' (OBC B8 D8; Denon Combo (Official), parms null null): Denon device 2 function 228"
+        }
+      ]
+    },
+    "KEY_DIRECT": {
+      "label": "Direct",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0x9E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon_AVR-3300_6131nw.rmdu function 17 'Direct' (OBC C8 86; Denon Combo (Official), parms null null): Denon device 12 function 158"
+        }
+      ]
+    },
+    "KEY_DSP_SIMULATION_SLASH_SURROUND_MODE": {
+      "label": "DSP Simulation/surround mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xE6",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon_AVR-3300_6131nw.rmdu function 18 'DSP Simulation/surround mode' (OBC B8 98; Denon Combo (Official), parms null null): Denon device 2 function 230"
+        }
+      ]
+    },
+    "KEY_5_SLASH_7CH_ST": {
+      "label": "5/7CH St",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xA8",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon_AVR-3300_6131nw.rmdu function 19 '5/7CH St' (OBC C8 EA; Denon Combo (Official), parms null null): Denon device 12 function 168"
+        }
+      ]
+    },
+    "KEY_STEREO": {
+      "label": "Stereo",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0x9D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon_AVR-3300_6131nw.rmdu function 20 'Stereo' (OBC C8 46; Denon Combo (Official), parms null null): Denon device 12 function 157"
+        }
+      ]
+    },
+    "KEY_INPUT_MODE": {
+      "label": "Input Mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xB6",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon_AVR-3300_6131nw.rmdu function 21 'Input Mode' (OBC C8 92; Denon Combo (Official), parms null null): Denon device 12 function 182"
+        }
+      ]
+    },
+    "KEY_ANALOG": {
+      "label": "Analog",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xDC",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon_AVR-3300_6131nw.rmdu function 22 'Analog' (OBC B8 C4; Denon Combo (Official), parms null null): Denon device 2 function 220"
+        }
+      ]
+    },
+    "KEY_EXT_IN": {
+      "label": "Ext In",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xB5",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon_AVR-3300_6131nw.rmdu function 23 'Ext In' (OBC C8 52; Denon Combo (Official), parms null null): Denon device 12 function 181"
+        }
+      ]
+    },
+    "KEY_VOL_UP": {
+      "label": "vol up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xF1",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon_AVR-3300_6131nw.rmdu function 24 'vol up' (OBC B8 70; Denon Combo (Official), parms null null): Denon device 2 function 241"
+        }
+      ]
+    },
+    "KEY_VOL_DOWN": {
+      "label": "vol down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xF2",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon_AVR-3300_6131nw.rmdu function 25 'vol down' (OBC B8 B0; Denon Combo (Official), parms null null): Denon device 2 function 242"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xF0",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon_AVR-3300_6131nw.rmdu function 26 'mute' (OBC B8 F0; Denon Combo (Official), parms null null): Denon device 2 function 240"
+        }
+      ]
+    },
+    "KEY_TUNER_DOWN": {
+      "label": "Tuner Down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xDA",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon_AVR-3300_6131nw.rmdu function 27 'Tuner Down' (OBC C8 A4; Denon Combo (Official), parms null null): Denon device 12 function 218"
+        }
+      ]
+    },
+    "KEY_TUNER_UP": {
+      "label": "Tuner Up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xD9",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon_AVR-3300_6131nw.rmdu function 28 'Tuner Up' (OBC C8 64; Denon Combo (Official), parms null null): Denon device 12 function 217"
+        }
+      ]
+    },
+    "KEY_TUNER_MODE": {
+      "label": "Tuner Mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xD8",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon_AVR-3300_6131nw.rmdu function 29 'Tuner Mode' (OBC C8 E4; Denon Combo (Official), parms null null): Denon device 12 function 216"
+        }
+      ]
+    },
+    "KEY_TUNER_MEMORY": {
+      "label": "Tuner Memory",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xCC",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon_AVR-3300_6131nw.rmdu function 30 'Tuner Memory' (OBC C8 CC; Denon Combo (Official), parms null null): Denon device 12 function 204"
+        }
+      ]
+    },
+    "KEY_SYSTEM_SETUP": {
+      "label": "System setup",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xA0",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon_AVR-3300_6131nw.rmdu function 31 'System setup' (OBC C8 FA; Denon Combo (Official), parms null null): Denon device 12 function 160"
+        }
+      ]
+    },
+    "KEY_SURROUND_PARAMETER": {
+      "label": "Surround Parameter",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xA1",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon_AVR-3300_6131nw.rmdu function 32 'Surround Parameter' (OBC C8 7A; Denon Combo (Official), parms null null): Denon device 12 function 161"
+        }
+      ]
+    },
+    "KEY_STATUS_SLASH_PANEL": {
+      "label": "Status/Panel",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xDE",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon_AVR-3300_6131nw.rmdu function 33 'Status/Panel' (OBC B8 84; Denon Combo (Official), parms null null): Denon device 2 function 222"
+        }
+      ]
+    },
+    "KEY_ON_SCREEN_DISPLAY": {
+      "label": "On Screen Display",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xDF",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon_AVR-3300_6131nw.rmdu function 34 'On Screen Display' (OBC B8 04; Denon Combo (Official), parms null null): Denon device 2 function 223"
+        }
+      ]
+    },
+    "KEY_UP_ARROW": {
+      "label": "up arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xA3",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon_AVR-3300_6131nw.rmdu function 35 'up arrow' (OBC C8 3A; Denon Combo (Official), parms null null): Denon device 12 function 163"
+        }
+      ]
+    },
+    "KEY_DOWN_ARROW": {
+      "label": "down arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xA4",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon_AVR-3300_6131nw.rmdu function 36 'down arrow' (OBC C8 DA; Denon Combo (Official), parms null null): Denon device 12 function 164"
+        }
+      ]
+    },
+    "KEY_LEFT_ARROW": {
+      "label": "left arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0x7F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon_AVR-3300_6131nw.rmdu function 37 'left arrow' (OBC C8 01; Denon Combo (Official), parms null null): Denon device 12 function 127"
+        }
+      ]
+    },
+    "KEY_RIGHT_ARROW": {
+      "label": "right arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xDD",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon_AVR-3300_6131nw.rmdu function 38 'right arrow' (OBC B8 44; Denon Combo (Official), parms null null): Denon device 2 function 221"
+        }
+      ]
+    },
+    "KEY_CHANNEL_SELECT_SLASH_MENU_SLASH_ENTER": {
+      "label": "channel select/menu/enter",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xE0",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon_AVR-3300_6131nw.rmdu function 39 'channel select/menu/enter' (OBC B8 F8; Denon Combo (Official), parms null null): Denon device 2 function 224"
+        }
+      ]
+    },
+    "KEY_TEST_TONE": {
+      "label": "Test Tone",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xEA",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon_AVR-3300_6131nw.rmdu function 40 'Test Tone' (OBC B8 A8; Denon Combo (Official), parms null null): Denon device 2 function 234"
+        }
+      ]
+    },
+    "KEY_OUTPUT": {
+      "label": "Output",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xC5",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon_AVR-3300_6131nw.rmdu function 41 'Output' (OBC C8 5C; Denon Combo (Official), parms null null): Denon device 12 function 197"
+        }
+      ]
+    }
+  }
+}

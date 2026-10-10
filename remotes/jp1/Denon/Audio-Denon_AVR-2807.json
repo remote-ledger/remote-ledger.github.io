@@ -1,0 +1,704 @@
+{
+  "manufacturer": "Denon",
+  "model": "AVR-2807",
+  "aliases": [],
+  "controls": [
+    "Denon AVR-2807"
+  ],
+  "protocol": {
+    "name": "Denon",
+    "carrierHz": 38000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_PHONO": {
+      "label": "phono",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xC3",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 0 'phono' (OBC C3; Denon, parms 2): Denon device 2 function 195"
+        }
+      ]
+    },
+    "KEY_CD": {
+      "label": "cd",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xC4",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 1 'cd' (OBC 23; Denon, parms 2): Denon device 2 function 196"
+        }
+      ]
+    },
+    "KEY_TUNER": {
+      "label": "tuner",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xC5",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 2 'tuner' (OBC A3; Denon, parms 2): Denon device 2 function 197"
+        }
+      ]
+    },
+    "KEY_DVD": {
+      "label": "dvd",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xE3",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 3 'dvd' (OBC C7; Denon, parms 2): Denon device 2 function 227"
+        }
+      ]
+    },
+    "KEY_VDP": {
+      "label": "vdp",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xCA",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 4 'vdp' (OBC 53; Denon, parms 2): Denon device 2 function 202"
+        }
+      ]
+    },
+    "KEY_V_AUX": {
+      "label": "v. aux",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xCC",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 5 'v. aux' (OBC 33; Denon, parms 2): Denon device 2 function 204"
+        }
+      ]
+    },
+    "KEY_VCR_1": {
+      "label": "vcr 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xCD",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 6 'vcr 1' (OBC B3; Denon, parms 2): Denon device 2 function 205"
+        }
+      ]
+    },
+    "KEY_VCR_2": {
+      "label": "vcr 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xCE",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 7 'vcr 2' (OBC 73; Denon, parms 2): Denon device 2 function 206"
+        }
+      ]
+    },
+    "KEY_TV": {
+      "label": "tv",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xC9",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 8 'tv' (OBC 93; Denon, parms 2): Denon device 2 function 201"
+        }
+      ]
+    },
+    "KEY_DBS": {
+      "label": "dbs",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xC8",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 9 'dbs' (OBC 13; Denon, parms 2): Denon device 2 function 200"
+        }
+      ]
+    },
+    "KEY_CDR_SLASH_TAPE": {
+      "label": "cdr / tape",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xD2",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 10 'cdr / tape' (OBC 4B; Denon, parms 2): Denon device 2 function 210"
+        }
+      ]
+    },
+    "KEY_VOL_UP": {
+      "label": "vol up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xF1",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 11 'vol up' (OBC 8F; Denon, parms 2): Denon device 2 function 241"
+        }
+      ]
+    },
+    "KEY_VOL_DOWN": {
+      "label": "vol down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xF2",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 12 'vol down' (OBC 4F; Denon, parms 2): Denon device 2 function 242"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xF0",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 13 'mute' (OBC 0F; Denon, parms 2): Denon device 2 function 240"
+        }
+      ]
+    },
+    "KEY_CHANNEL_BANK_UP": {
+      "label": "channel bank up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xD6",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 14 'channel bank up' (OBC 6B; Denon, parms 2): Denon device 2 function 214"
+        }
+      ]
+    },
+    "KEY_CHANNEL_BANK_DOWN": {
+      "label": "channel bank down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xD5",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 15 'channel bank down' (OBC AB; Denon, parms 2): Denon device 2 function 213"
+        }
+      ]
+    },
+    "KEY_TUNING_UP": {
+      "label": "tuning up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xD9",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 16 'tuning up' (OBC 9B; Denon, parms 2): Denon device 2 function 217"
+        }
+      ]
+    },
+    "KEY_TUNING_DOWN": {
+      "label": "tuning down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xDA",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 17 'tuning down' (OBC 5B; Denon, parms 2): Denon device 2 function 218"
+        }
+      ]
+    },
+    "KEY_POWER_ON": {
+      "label": "power on",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xE1",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 18 'power on' (OBC 87; Denon, parms 2): Denon device 2 function 225"
+        }
+      ]
+    },
+    "KEY_POWER_OFF": {
+      "label": "power off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xE2",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 19 'power off' (OBC 47; Denon, parms 2): Denon device 2 function 226"
+        }
+      ]
+    },
+    "KEY_SURROUND_PARAMETER": {
+      "label": "surround parameter",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xA1",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 20 'surround parameter' (OBC 85; Denon, parms 2): Denon device 2 function 161"
+        }
+      ]
+    },
+    "KEY_SYSTEM_SETUP": {
+      "label": "system setup",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xA0",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 21 'system setup' (OBC 05; Denon, parms 2): Denon device 2 function 160"
+        }
+      ]
+    },
+    "KEY_OSD_ON_SCREEN_DISPLAY": {
+      "label": "OSD (on screen display)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xDF",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 22 'OSD (on screen display)' (OBC FB; Denon, parms 2): Denon device 2 function 223"
+        }
+      ]
+    },
+    "KEY_UP_ARROW": {
+      "label": "up arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xA3",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 23 'up arrow' (OBC C5; Denon, parms 2): Denon device 2 function 163"
+        }
+      ]
+    },
+    "KEY_DOWN_ARROW": {
+      "label": "down arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xA4",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 24 'down arrow' (OBC 25; Denon, parms 2): Denon device 2 function 164"
+        }
+      ]
+    },
+    "KEY_LEFT_ARROW": {
+      "label": "left arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x7F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 25 'left arrow' (OBC FE; Denon, parms 2): Denon device 2 function 127"
+        }
+      ]
+    },
+    "KEY_RIGHT_ARROW": {
+      "label": "right arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xDD",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 26 'right arrow' (OBC BB; Denon, parms 2): Denon device 2 function 221"
+        }
+      ]
+    },
+    "KEY_SELECT": {
+      "label": "select",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xE0",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 27 'select' (OBC 07; Denon, parms 2): Denon device 2 function 224"
+        }
+      ]
+    },
+    "KEY_MODE": {
+      "label": "mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xD8",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 28 'mode' (OBC 1B; Denon, parms 2): Denon device 2 function 216"
+        }
+      ]
+    },
+    "KEY_MEMORY": {
+      "label": "memory",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xCC",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 29 'memory' (OBC 33; Denon, parms 2): Denon device 2 function 204"
+        }
+      ]
+    },
+    "KEY_BAND": {
+      "label": "band",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xD7",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 30 'band' (OBC EB; Denon, parms 2): Denon device 2 function 215"
+        }
+      ]
+    },
+    "KEY_SHIFT": {
+      "label": "shift",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xCD",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 31 'shift' (OBC B3; Denon, parms 2): Denon device 2 function 205"
+        }
+      ]
+    },
+    "KEY_CINEMA": {
+      "label": "cinema",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x95",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 32 'cinema' (OBC A9; Denon, parms 2): Denon device 2 function 149"
+        }
+      ]
+    },
+    "KEY_MUSIC": {
+      "label": "music",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x96",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 33 'music' (OBC 69; Denon, parms 2): Denon device 2 function 150"
+        }
+      ]
+    },
+    "KEY_STANDARD": {
+      "label": "standard",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xE4",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 34 'standard' (OBC 27; Denon, parms 2): Denon device 2 function 228"
+        }
+      ]
+    },
+    "KEY_DSP_SIMULATION": {
+      "label": "dsp simulation",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xE6",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 35 'dsp simulation' (OBC 67; Denon, parms 2): Denon device 2 function 230"
+        }
+      ]
+    },
+    "KEY_PURE_DIRECT": {
+      "label": "pure direct",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x6A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 36 'pure direct' (OBC 56; Denon, parms 2): Denon device 2 function 106"
+        }
+      ]
+    },
+    "KEY_DIRECT_SLASH_STEREO": {
+      "label": "direct / stereo",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xEC",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 37 'direct / stereo' (OBC 37; Denon, parms 2): Denon device 2 function 236"
+        }
+      ]
+    },
+    "KEY_ROOM_EQ": {
+      "label": "room eq",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x9D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 38 'room eq' (OBC B9; Denon, parms 2): Denon device 2 function 157"
+        }
+      ]
+    },
+    "KEY_NIGHT": {
+      "label": "night",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x98",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 39 'night' (OBC 19; Denon, parms 2): Denon device 2 function 152"
+        }
+      ]
+    },
+    "KEY_PLAY": {
+      "label": "play",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x5C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 40 'play' (OBC 3A; Denon, parms 2): Denon device 2 function 92"
+        }
+      ]
+    },
+    "KEY_PAUSE": {
+      "label": "pause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x5D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 41 'pause' (OBC BA; Denon, parms 2): Denon device 2 function 93"
+        }
+      ]
+    },
+    "KEY_REWIND": {
+      "label": "rewind",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x5B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 42 'rewind' (OBC DA; Denon, parms 2): Denon device 2 function 91"
+        }
+      ]
+    },
+    "KEY_FAST_FWD": {
+      "label": "fast fwd",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x5A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 43 'fast fwd' (OBC 5A; Denon, parms 2): Denon device 2 function 90"
+        }
+      ]
+    },
+    "KEY_STOP": {
+      "label": "stop",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x5E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 44 'stop' (OBC 7A; Denon, parms 2): Denon device 2 function 94"
+        }
+      ]
+    },
+    "KEY_RECORD": {
+      "label": "record",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x6B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 45 'record' (OBC D6; Denon, parms 2): Denon device 2 function 107"
+        }
+      ]
+    },
+    "KEY_NEXT_TRACK": {
+      "label": "next track",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x58",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 46 'next track' (OBC 1A; Denon, parms 2): Denon device 2 function 88"
+        }
+      ]
+    },
+    "KEY_PREV_TRACK": {
+      "label": "prev track",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x59",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 47 'prev track' (OBC 9A; Denon, parms 2): Denon device 2 function 89"
+        }
+      ]
+    },
+    "KEY_ZONE_1_ON": {
+      "label": "zone 1 on",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x79",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 48 'zone 1 on' (OBC 9E; Denon, parms 2): Denon device 2 function 121"
+        }
+      ]
+    },
+    "KEY_ZONE_1_OFF": {
+      "label": "zone 1 off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x7A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 49 'zone 1 off' (OBC 5E; Denon, parms 2): Denon device 2 function 122"
+        }
+      ]
+    },
+    "KEY_ZONE_2_ON": {
+      "label": "zone 2 on",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x7B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 50 'zone 2 on' (OBC DE; Denon, parms 2): Denon device 2 function 123"
+        }
+      ]
+    },
+    "KEY_ZONE_2_OFF": {
+      "label": "zone 2 off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0x7C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 51 'zone 2 off' (OBC 3E; Denon, parms 2): Denon device 2 function 124"
+        }
+      ]
+    },
+    "KEY_SPEAKER": {
+      "label": "speaker",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x02",
+          "function": "0xED",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Denon AVR-2807.rmdu function 52 'speaker' (OBC B7; Denon, parms 2): Denon device 2 function 237"
+        }
+      ]
+    }
+  }
+}

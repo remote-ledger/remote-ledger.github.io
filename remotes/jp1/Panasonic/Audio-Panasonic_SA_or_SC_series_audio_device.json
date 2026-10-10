@@ -1,0 +1,1639 @@
+{
+  "manufacturer": "Panasonic",
+  "model": "SA or SC series audio device",
+  "aliases": [],
+  "controls": [
+    "Panasonic SA or SC series audio device"
+  ],
+  "protocol": {
+    "name": "Panasonic",
+    "carrierHz": 37000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_INPUT_MINUS_TV_MODE": {
+      "label": "(input - TV mode)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 0 '(input - TV mode)' (OBC FF 5F; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 0 function 5; the upgrade's note: 'TV inputs'"
+        }
+      ]
+    },
+    "KEY_VOLUME_PLUS": {
+      "label": "Volume +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0x20",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 1 'Volume +' (OBC FF FB; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 0 function 32"
+        }
+      ]
+    },
+    "KEY_VOLUME_MINUS": {
+      "label": "Volume -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0x21",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 2 'Volume -' (OBC FF 7B; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 0 function 33"
+        }
+      ]
+    },
+    "KEY_BALANCE": {
+      "label": "balance",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0x26",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 3 'balance' (OBC FF 9B; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 0 function 38"
+        }
+      ]
+    },
+    "KEY_SURROUND_UP": {
+      "label": "surround up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0x2C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 4 'surround up' (OBC FF CB; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 0 function 44"
+        }
+      ]
+    },
+    "KEY_SURROUND_DOWN": {
+      "label": "surround down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0x2D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 5 'surround down' (OBC FF 4B; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 0 function 45"
+        }
+      ]
+    },
+    "KEY_STEREO_DISCRETE": {
+      "label": "Stereo (discrete)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0x30",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 6 'Stereo (discrete)' (OBC FF F3; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 0 function 48; the upgrade's note: 'discrete stereo'"
+        }
+      ]
+    },
+    "KEY_SFC_MUSIC_2": {
+      "label": "SFC\\: Music (2)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0x31",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 7 'SFC\\: Music (2)' (OBC FF 73; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 0 function 49; the upgrade's note: '0/49 Duplicate for obc 20/49, both work'"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "Mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0x32",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 8 'Mute' (OBC FF B3; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 0 function 50"
+        }
+      ]
+    },
+    "KEY_HELP": {
+      "label": "help",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0x39",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 9 'help' (OBC FF 63; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 0 function 57"
+        }
+      ]
+    },
+    "KEY_POWER_MINUS_1": {
+      "label": "power-1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0x3D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 10 'power-1' (OBC FF 43; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 0 function 61; the upgrade's note: 'toggle power'"
+        }
+      ]
+    },
+    "KEY_DISCRETE_ON_MINUS_1": {
+      "label": "Discrete on-1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0x3E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 11 'Discrete on-1' (OBC FF 83; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 0 function 62"
+        }
+      ]
+    },
+    "KEY_DISCRETE_OFF_MINUS_1": {
+      "label": "Discrete off-1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0x3F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 12 'Discrete off-1' (OBC FF 03; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 0 function 63"
+        }
+      ]
+    },
+    "KEY_SOUND_EFFECT_PLUS": {
+      "label": "Sound effect+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0x60",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 13 'Sound effect+' (OBC FF F9; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 0 function 96"
+        }
+      ]
+    },
+    "KEY_SOUND_EFFECT_MINUS": {
+      "label": "Sound effect-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0x61",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 14 'Sound effect-' (OBC FF 79; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 0 function 97"
+        }
+      ]
+    },
+    "KEY_INPUT_TOGGLE": {
+      "label": "input toggle",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0x80",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 15 'input toggle' (OBC FF FE; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 0 function 128"
+        }
+      ]
+    },
+    "KEY_SOURCE_PHONO": {
+      "label": "Source\\: Phono",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0x90",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 16 'Source\\: Phono' (OBC FF F6; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 0 function 144"
+        }
+      ]
+    },
+    "KEY_SOURCE_TUNER_SLASH_BAND_SELECT": {
+      "label": "Source\\: Tuner/Band select",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0x92",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 17 'Source\\: Tuner/Band select' (OBC FF B6; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 0 function 146"
+        }
+      ]
+    },
+    "KEY_SOURCE_CD": {
+      "label": "Source\\: CD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0x94",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 18 'Source\\: CD' (OBC FF D6; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 0 function 148"
+        }
+      ]
+    },
+    "KEY_SOURCE_TAPE": {
+      "label": "Source\\: Tape",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0x96",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 19 'Source\\: Tape' (OBC FF 96; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 0 function 150"
+        }
+      ]
+    },
+    "KEY_SOURCE_DAT": {
+      "label": "Source\\: DAT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0x98",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 20 'Source\\: DAT' (OBC FF E6; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 0 function 152"
+        }
+      ]
+    },
+    "KEY_SOURCE_GAME_SLASH_AUX": {
+      "label": "Source\\: Game/aux",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0x9A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 21 'Source\\: Game/aux' (OBC FF A6; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 0 function 154; the upgrade's note: 'Discrete on and input select'"
+        }
+      ]
+    },
+    "KEY_SOURCE_IPOD": {
+      "label": "Source\\: iPod",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0x9B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 22 'Source\\: iPod' (OBC FF 26; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 0 function 155"
+        }
+      ]
+    },
+    "KEY_SOURCE_TV": {
+      "label": "Source\\: TV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0x9C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 23 'Source\\: TV' (OBC FF C6; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 0 function 156"
+        }
+      ]
+    },
+    "KEY_SOURCE_VCR": {
+      "label": "Source\\: VCR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0x9E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 24 'Source\\: VCR' (OBC FF 86; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 0 function 158"
+        }
+      ]
+    },
+    "KEY_SOURCE_DVD_RECORDER": {
+      "label": "Source\\: DVD Recorder",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0x9F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 25 'Source\\: DVD Recorder' (OBC FF 06; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 0 function 159"
+        }
+      ]
+    },
+    "KEY_SOURCE_DVD_PLAYER_SLASH_ANALOG_6CH": {
+      "label": "Source\\: DVD Player/Analog 6ch",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0xA3",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 26 'Source\\: DVD Player/Analog 6ch' (OBC FF 3A; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 0 function 163"
+        }
+      ]
+    },
+    "KEY_DIGITAL_SLASH_ANALOG": {
+      "label": "digital / analog",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0xA8",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 27 'digital / analog' (OBC FF EA; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 0 function 168; the upgrade's note: 'switches digital/analog audio'"
+        }
+      ]
+    },
+    "KEY_TAPE_MONITOR": {
+      "label": "Tape Monitor",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0xAA",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 28 'Tape Monitor' (OBC FF AA; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 0 function 170"
+        }
+      ]
+    },
+    "KEY_SURROUND_DISCRETE": {
+      "label": "Surround (discrete)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0xB2",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 29 'Surround (discrete)' (OBC FF B2; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 0 function 178; the upgrade's note: 'discrete surround'"
+        }
+      ]
+    },
+    "KEY_DOLBY_PLII": {
+      "label": "Dolby PLII",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0xB4",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 30 'Dolby PLII' (OBC FF D2; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 0 function 180"
+        }
+      ]
+    },
+    "KEY_SOURCE_DIRECT": {
+      "label": "source direct",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0xB7",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 31 'source direct' (OBC FF 12; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 0 function 183"
+        }
+      ]
+    },
+    "KEY_EFFECT_SLASH_LEVEL_PLUS_SLASH_RIGHT_2": {
+      "label": "Effect/Level +/Right (2)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0xBC",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 32 'Effect/Level +/Right (2)' (OBC FF C2; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 0 function 188; the upgrade's note: '0/188 Duplicate for 20/188, both work'"
+        }
+      ]
+    },
+    "KEY_EFFECT_SLASH_LEVEL_MINUS_SLASH_LEFT_2": {
+      "label": "Effect/Level -/Left (2)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0xBD",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 33 'Effect/Level -/Left (2)' (OBC FF 42; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 0 function 189; the upgrade's note: '0/189 Duplicate for 20/189, both work'"
+        }
+      ]
+    },
+    "KEY_UNLABELED_EXIT": {
+      "label": "??? (exit)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0xC2",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 34 '??? (exit)' (OBC FF BC; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 0 function 194"
+        }
+      ]
+    },
+    "KEY_REMASTER": {
+      "label": "remaster",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0xC8",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 35 'remaster' (OBC FF EC; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 0 function 200"
+        }
+      ]
+    },
+    "KEY_CENTER_UP": {
+      "label": "center up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0xCE",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 36 'center up' (OBC FF 8C; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 0 function 206"
+        }
+      ]
+    },
+    "KEY_CENTER_DOWN": {
+      "label": "center down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0xCF",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 37 'center down' (OBC FF 0C; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 0 function 207"
+        }
+      ]
+    },
+    "KEY_SUBWOOFER": {
+      "label": "subwoofer",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0xD5",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 38 'subwoofer' (OBC FF 54; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 0 function 213; the upgrade's note: 'toggle/cycle or follow with levels+-'"
+        }
+      ]
+    },
+    "KEY_DOCTOR": {
+      "label": "doctor",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0xDF",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 39 'doctor' (OBC FF 04; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 0 function 223"
+        }
+      ]
+    },
+    "KEY_SURROUND_TEST_2": {
+      "label": "Surround test (2)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x00",
+          "function": "0xF6",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 40 'Surround test (2)' (OBC FF 90; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 0 function 246; the upgrade's note: '0/246 Duplicate for obc 20/246, both work'"
+        }
+      ]
+    },
+    "KEY_1": {
+      "label": "1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x04",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 41 '1' (OBC DF F7; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 4 function 16; the upgrade's note: 'direct tuning digits, use +10 when needed'"
+        }
+      ]
+    },
+    "KEY_2": {
+      "label": "2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x04",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 42 '2' (OBC DF 77; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 4 function 17"
+        }
+      ]
+    },
+    "KEY_3": {
+      "label": "3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x04",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 43 '3' (OBC DF B7; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 4 function 18"
+        }
+      ]
+    },
+    "KEY_4": {
+      "label": "4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x04",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 44 '4' (OBC DF 37; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 4 function 19"
+        }
+      ]
+    },
+    "KEY_5": {
+      "label": "5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x04",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 45 '5' (OBC DF D7; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 4 function 20"
+        }
+      ]
+    },
+    "KEY_6": {
+      "label": "6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x04",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 46 '6' (OBC DF 57; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 4 function 21"
+        }
+      ]
+    },
+    "KEY_7": {
+      "label": "7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x04",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 47 '7' (OBC DF 97; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 4 function 22"
+        }
+      ]
+    },
+    "KEY_8": {
+      "label": "8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x04",
+          "function": "0x17",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 48 '8' (OBC DF 17; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 4 function 23"
+        }
+      ]
+    },
+    "KEY_9": {
+      "label": "9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x04",
+          "function": "0x18",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 49 '9' (OBC DF E7; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 4 function 24"
+        }
+      ]
+    },
+    "KEY_0": {
+      "label": "0",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x04",
+          "function": "0x19",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 50 '0' (OBC DF 67; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 4 function 25"
+        }
+      ]
+    },
+    "KEY_PLUS_10": {
+      "label": "+10",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x04",
+          "function": "0x1B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 51 '+10' (OBC DF 27; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 4 function 27"
+        }
+      ]
+    },
+    "KEY_FM_MODE": {
+      "label": "FM Mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x04",
+          "function": "0x33",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 52 'FM Mode' (OBC DF 33; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 4 function 51"
+        }
+      ]
+    },
+    "KEY_PRESET_PLUS_SLASH_CH_PLUS": {
+      "label": "preset+/Ch +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x04",
+          "function": "0x34",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 53 'preset+/Ch +' (OBC DF D3; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 4 function 52; the upgrade's note: 'tune using FM/AM up preset'"
+        }
+      ]
+    },
+    "KEY_PRESET_MINUS_SLASH_CH_MINUS": {
+      "label": "preset-/Ch -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x04",
+          "function": "0x35",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 54 'preset-/Ch -' (OBC DF 53; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 4 function 53; the upgrade's note: 'tune using FM/AM down preset'"
+        }
+      ]
+    },
+    "KEY_POWER_MINUS_2": {
+      "label": "power-2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x04",
+          "function": "0x3D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 55 'power-2' (OBC DF 43; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 4 function 61; the upgrade's note: '4/61 Duplicate for obc 0/61, both  work'"
+        }
+      ]
+    },
+    "KEY_DISCRETEON_MINUS_2": {
+      "label": "DiscreteOn-2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x04",
+          "function": "0x3E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 56 'DiscreteOn-2' (OBC DF 83; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 4 function 62"
+        }
+      ]
+    },
+    "KEY_DISCRETEOFF_MINUS_2": {
+      "label": "DiscreteOff-2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x04",
+          "function": "0x3F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 57 'DiscreteOff-2' (OBC DF 03; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 4 function 63"
+        }
+      ]
+    },
+    "KEY_10_PLUS_SLASH_ENTER": {
+      "label": "10+ / enter",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x04",
+          "function": "0x84",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 58 '10+ / enter' (OBC DF DE; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 4 function 132; the upgrade's note: 'On the HE-75, this is the same as the 10+ key'"
+        }
+      ]
+    },
+    "KEY_FM_TUNE_PLUS": {
+      "label": "FM Tune +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x04",
+          "function": "0x86",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 59 'FM Tune +' (OBC DF 9E; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 4 function 134; the upgrade's note: 'tuning by 2-Mhz steps up'"
+        }
+      ]
+    },
+    "KEY_FM_TUNE_MINUS": {
+      "label": "FM Tune -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x04",
+          "function": "0x87",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 60 'FM Tune -' (OBC DF 1E; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 4 function 135; the upgrade's note: 'tuning by 2-Mhz steps down'"
+        }
+      ]
+    },
+    "KEY_DIRECT_TUNING_SLASH_DISC": {
+      "label": "direct tuning / disc",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x04",
+          "function": "0x88",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 61 'direct tuning / disc' (OBC DF EE; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 4 function 136; the upgrade's note: 'rcvr tune/disk\\# follow with [0-9] 10+'"
+        }
+      ]
+    },
+    "KEY_TUNER_10_KEY": {
+      "label": "Tuner 10 key",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x04",
+          "function": "0x90",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 62 'Tuner 10 key' (OBC DF F6; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 4 function 144"
+        }
+      ]
+    },
+    "KEY_SLEEP": {
+      "label": "sleep",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x04",
+          "function": "0x96",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 63 'sleep' (OBC DF 96; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 4 function 150"
+        }
+      ]
+    },
+    "KEY_INPUTNEXT": {
+      "label": "InputNext",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x04",
+          "function": "0xA4",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 64 'InputNext' (OBC DF DA; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 4 function 164"
+        }
+      ]
+    },
+    "KEY_INPUT_CD": {
+      "label": "input\\: CD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x04",
+          "function": "0xC0",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 65 'input\\: CD' (OBC DF FC; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 4 function 192"
+        }
+      ]
+    },
+    "KEY_INPUT_TAPE": {
+      "label": "input\\: TAPE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x04",
+          "function": "0xC1",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 66 'input\\: TAPE' (OBC DF 7C; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 4 function 193"
+        }
+      ]
+    },
+    "KEY_INPUT_TUNER": {
+      "label": "input\\: TUNER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x04",
+          "function": "0xC2",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 67 'input\\: TUNER' (OBC DF BC; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 4 function 194"
+        }
+      ]
+    },
+    "KEY_TAPE_STOP": {
+      "label": "Tape\\: stop",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x08",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 68 'Tape\\: stop' (OBC EF FF; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 8 function 0"
+        }
+      ]
+    },
+    "KEY_TAPE_REWIND": {
+      "label": "Tape\\: rewind",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x08",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 69 'Tape\\: rewind' (OBC EF BF; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 8 function 2"
+        }
+      ]
+    },
+    "KEY_TAPE_FAST_FORWARD": {
+      "label": "Tape\\: fast forward",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x08",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 70 'Tape\\: fast forward' (OBC EF 3F; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 8 function 3"
+        }
+      ]
+    },
+    "KEY_TAPE_RECORD_PAUSE": {
+      "label": "Tape\\: record pause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x08",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 71 'Tape\\: record pause' (OBC EF EF; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 8 function 8"
+        }
+      ]
+    },
+    "KEY_TAPE_PLAY": {
+      "label": "Tape\\: play",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x08",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 72 'Tape\\: play' (OBC EF AF; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 8 function 10"
+        }
+      ]
+    },
+    "KEY_TAPE_PLAY_REVERSE": {
+      "label": "Tape\\: play reverse",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x08",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 73 'Tape\\: play reverse' (OBC EF 2F; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 8 function 11"
+        }
+      ]
+    },
+    "KEY_TAPE_DECK1_SLASH_DECK2": {
+      "label": "Tape\\: deck1/deck2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x08",
+          "function": "0x95",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 74 'Tape\\: deck1/deck2' (OBC EF 56; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 8 function 149"
+        }
+      ]
+    },
+    "KEY_CD_STOP": {
+      "label": "CD\\: stop",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x0A",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 75 'CD\\: stop' (OBC AF FF; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 10 function 0"
+        }
+      ]
+    },
+    "KEY_CD_EXIT": {
+      "label": "CD\\: exit",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x0A",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 76 'CD\\: exit' (OBC AF 7F; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 10 function 1"
+        }
+      ]
+    },
+    "KEY_CD_PAUSE": {
+      "label": "CD\\: pause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x0A",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 77 'CD\\: pause' (OBC AF 9F; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 10 function 6"
+        }
+      ]
+    },
+    "KEY_CD_PLAY": {
+      "label": "CD\\: play",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x0A",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 78 'CD\\: play' (OBC AF AF; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 10 function 10"
+        }
+      ]
+    },
+    "KEY_CD_NUM_1": {
+      "label": "CD\\: num 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x0A",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 79 'CD\\: num 1' (OBC AF F7; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 10 function 16"
+        }
+      ]
+    },
+    "KEY_CD_NUM_2": {
+      "label": "CD\\: num 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x0A",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 80 'CD\\: num 2' (OBC AF 77; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 10 function 17"
+        }
+      ]
+    },
+    "KEY_CD_NUM_3": {
+      "label": "CD\\: num 3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x0A",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 81 'CD\\: num 3' (OBC AF B7; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 10 function 18"
+        }
+      ]
+    },
+    "KEY_CD_NUM_4": {
+      "label": "CD\\: num 4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x0A",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 82 'CD\\: num 4' (OBC AF 37; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 10 function 19"
+        }
+      ]
+    },
+    "KEY_CD_NUM_5": {
+      "label": "CD\\: num 5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x0A",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 83 'CD\\: num 5' (OBC AF D7; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 10 function 20"
+        }
+      ]
+    },
+    "KEY_CD_NUM_6": {
+      "label": "CD\\: num 6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x0A",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 84 'CD\\: num 6' (OBC AF 57; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 10 function 21"
+        }
+      ]
+    },
+    "KEY_CD_NUM_7": {
+      "label": "CD\\: num 7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x0A",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 85 'CD\\: num 7' (OBC AF 97; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 10 function 22"
+        }
+      ]
+    },
+    "KEY_CD_NUM_8": {
+      "label": "CD\\: num 8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x0A",
+          "function": "0x17",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 86 'CD\\: num 8' (OBC AF 17; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 10 function 23"
+        }
+      ]
+    },
+    "KEY_CD_NUM_9": {
+      "label": "CD\\: num 9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x0A",
+          "function": "0x18",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 87 'CD\\: num 9' (OBC AF E7; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 10 function 24"
+        }
+      ]
+    },
+    "KEY_CD_NUM_0": {
+      "label": "CD\\: num 0",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x0A",
+          "function": "0x19",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 88 'CD\\: num 0' (OBC AF 67; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 10 function 25"
+        }
+      ]
+    },
+    "KEY_CD_REPEAT": {
+      "label": "CD\\: repeat",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x0A",
+          "function": "0x47",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 89 'CD\\: repeat' (OBC AF 1D; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 10 function 71"
+        }
+      ]
+    },
+    "KEY_CD_SKIP_SLASH_SCAN_BACK": {
+      "label": "CD\\: skip/scan back",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x0A",
+          "function": "0x49",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 90 'CD\\: skip/scan back' (OBC AF 6D; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 10 function 73"
+        }
+      ]
+    },
+    "KEY_CD_SKIP_SLASH_SCAN_FORWARD": {
+      "label": "CD\\: skip/scan forward",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x0A",
+          "function": "0x4A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 91 'CD\\: skip/scan forward' (OBC AF AD; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 10 function 74"
+        }
+      ]
+    },
+    "KEY_CD_PROGRAM": {
+      "label": "CD\\: program",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x0A",
+          "function": "0x8A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 92 'CD\\: program' (OBC AF AE; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 10 function 138"
+        }
+      ]
+    },
+    "KEY_CD_CANCEL": {
+      "label": "CD\\: cancel",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x0A",
+          "function": "0xA3",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 93 'CD\\: cancel' (OBC AF 3A; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 10 function 163"
+        }
+      ]
+    },
+    "KEY_SOUND_EQ_MODE": {
+      "label": "Sound (EQ mode)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x10",
+          "function": "0x83",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 94 'Sound (EQ mode)' (OBC F7 3E; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 16 function 131"
+        }
+      ]
+    },
+    "KEY_EQ_ON_SLASH_FLAT": {
+      "label": "EQ On/Flat",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x10",
+          "function": "0x8F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 95 'EQ On/Flat' (OBC F7 0E; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 16 function 143"
+        }
+      ]
+    },
+    "KEY_SPACE": {
+      "label": "Space",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x12",
+          "function": "0x31",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 96 'Space' (OBC B7 73; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 18 function 49"
+        }
+      ]
+    },
+    "KEY_DVD_6CH": {
+      "label": "dvd 6ch",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x12",
+          "function": "0x8E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 97 'dvd 6ch' (OBC B7 8E; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 18 function 142"
+        }
+      ]
+    },
+    "KEY_SURROUND": {
+      "label": "Surround",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x14",
+          "function": "0x30",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 98 'Surround' (OBC D7 F3; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 20 function 48"
+        }
+      ]
+    },
+    "KEY_SFC_MUSIC": {
+      "label": "SFC\\: Music",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x14",
+          "function": "0x31",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 99 'SFC\\: Music' (OBC D7 73; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 20 function 49; the upgrade's note: 'Cycle through Live, Pop/Rock, Vocal, Jazz, Dance, Party'"
+        }
+      ]
+    },
+    "KEY_TONE_SLASH_BALANCE": {
+      "label": "tone/balance",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x14",
+          "function": "0x88",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 100 'tone/balance' (OBC D7 EE; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 20 function 136"
+        }
+      ]
+    },
+    "KEY_DIMMER_ON_SLASH_OFF": {
+      "label": "dimmer on/off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x14",
+          "function": "0x97",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 101 'dimmer on/off' (OBC D7 16; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 20 function 151; the upgrade's note: 'toggles brightness of rcvr display'"
+        }
+      ]
+    },
+    "KEY_SFC_MOVIE": {
+      "label": "SFC\\: Movie",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x14",
+          "function": "0xA0",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 102 'SFC\\: Movie' (OBC D7 FA; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 20 function 160; the upgrade's note: 'Cycle throguh Drama, Action, Sports, Musical, Game'"
+        }
+      ]
+    },
+    "KEY_STEREO_SLASH_2CHMIX": {
+      "label": "stereo/2chmix",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x14",
+          "function": "0xAE",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 103 'stereo/2chmix' (OBC D7 8A; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 20 function 174"
+        }
+      ]
+    },
+    "KEY_STEREO_SLASH_SURROUND_SLASH_SIMSURR": {
+      "label": "Stereo/surround/SimSurr",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x14",
+          "function": "0xB0",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 104 'Stereo/surround/SimSurr' (OBC D7 F2; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 20 function 176; the upgrade's note: 'scrolls sound mode\\:stereo, srnd'"
+        }
+      ]
+    },
+    "KEY_DOLBY_PLIIX": {
+      "label": "Dolby PLIIx",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x14",
+          "function": "0xB2",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 105 'Dolby PLIIx' (OBC D7 B2; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 20 function 178; the upgrade's note: 'Cycle through Movie, Music, Dobly Digital EX, Game'"
+        }
+      ]
+    },
+    "KEY_NEO_6": {
+      "label": "NEO\\:6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x14",
+          "function": "0xB3",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 106 'NEO\\:6' (OBC D7 32; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 20 function 179; the upgrade's note: 'Cycle through Cinema, Music'"
+        }
+      ]
+    },
+    "KEY_EFFECT_SLASH_LEVEL_PLUS_SLASH_RIGHT": {
+      "label": "Effect/Level +/Right",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x14",
+          "function": "0xBC",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 107 'Effect/Level +/Right' (OBC D7 C2; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 20 function 188; the upgrade's note: 'level+ (or) balance right'"
+        }
+      ]
+    },
+    "KEY_EFFECT_SLASH_LEVEL_MINUS_SLASH_LEFT": {
+      "label": "Effect/Level -/Left",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x14",
+          "function": "0xBD",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 108 'Effect/Level -/Left' (OBC D7 42; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 20 function 189; the upgrade's note: 'level- (or) balance left'"
+        }
+      ]
+    },
+    "KEY_LEVEL": {
+      "label": "level",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x14",
+          "function": "0xBE",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 109 'level' (OBC D7 82; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 20 function 190; the upgrade's note: 'speaker selection, follow with levels+-'"
+        }
+      ]
+    },
+    "KEY_EFFECT_SLASH_DELAY": {
+      "label": "effect / delay",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x14",
+          "function": "0xBF",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 110 'effect / delay' (OBC D7 02; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 20 function 191; the upgrade's note: 'delays, follow with levels+-'"
+        }
+      ]
+    },
+    "KEY_CLEAR_VOICE": {
+      "label": "Clear Voice",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x14",
+          "function": "0xEA",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 111 'Clear Voice' (OBC D7 A8; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 20 function 234"
+        }
+      ]
+    },
+    "KEY_CENTER_FOCUS": {
+      "label": "center focus",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x14",
+          "function": "0xF3",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 112 'center focus' (OBC D7 30; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 20 function 243"
+        }
+      ]
+    },
+    "KEY_SURROUND_TEST": {
+      "label": "Surround test",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x14",
+          "function": "0xF6",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 113 'Surround test' (OBC D7 90; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 20 function 246; the upgrade's note: 'follow with level and level +- keys'"
+        }
+      ]
+    },
+    "KEY_AUDIO_POWER": {
+      "label": "audio power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x1C",
+          "function": "0x3F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 114 'audio power' (OBC C7 03; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 28 function 63"
+        }
+      ]
+    },
+    "KEY_BLUETOOTH_PAIRING": {
+      "label": "Bluetooth pairing",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA0",
+          "subdevice": "0x1C",
+          "function": "0xA0",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Panasonic SA or SC series audio device.rmdu function 115 'Bluetooth pairing' (OBC C7 FA; Panasonic Combo, parms 160 2 32): Panasonic device 160 subdevice 28 function 160"
+        }
+      ]
+    }
+  }
+}
