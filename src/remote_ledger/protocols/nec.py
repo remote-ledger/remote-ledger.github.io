@@ -18,6 +18,11 @@ each with the IRP string it was taken from beside its ``Protocol``:
 * ``NEC2`` -- NEC1's frame, repeating the whole frame instead of a ditto.
 * ``NECx1`` -- NECx2's 8-unit lead-in, repeating with a short frame that
   carries a single bit, the complement of D's low bit.
+* ``NEC1-f16`` and ``NEC2-f16`` -- NEC1's and NEC2's frame whose fourth byte
+  ``E`` is a field of its own instead of the complement of ``F``. A ledger
+  ``function`` is the sixteen bits ``F:E``, the two bytes in the order they are
+  sent (``F * 256 + E``), because a form has no fourth field; when ``E`` is
+  ``~F`` the frame is NEC1's or NEC2's.
 """
 
 from __future__ import annotations
@@ -69,15 +74,19 @@ def _pad_to_extent(durations: list[int], unit_us: int, what: str,
 
 
 def _frame(device: int, subdevice: int, function: int, unit: int,
-           lead_units: int, name: str, proto: str = "NEC1") -> list[int]:
+           lead_units: int, name: str, proto: str = "NEC1",
+           fourth: int | None = None) -> list[int]:
     """The NEC family's common frame: lead-in, four LSB-first bytes, stop mark.
 
     NEC1, NEC2, NECx1 and NECx2 differ only in the lead-in width -- 16 units
     against 8 -- and in what repeats, so the frame itself is shared rather
-    than copied.
+    than copied. The fourth byte is the complement of the third unless the
+    caller gives one (the ``-f16`` variants' ``E``).
     """
     frame: list[int] = [lead_units * unit, 8 * unit]
-    for byte in (device, subdevice, function, (~function) & 0xFF):
+    if fourth is None:
+        fourth = (~function) & 0xFF
+    for byte in (device, subdevice, function, fourth):
         for bit in _bits_lsb_first(byte, 8):
             frame += [unit, 3 * unit] if bit else [unit, unit]
     frame.append(unit)  # the stop mark, before ^108m pads the sequence
@@ -121,6 +130,69 @@ def encode(
     return IrSignal(
         carrier_hz=carrier_hz, intro=tuple(intro), repeat=tuple(repeat)
     )
+
+
+def _check_params_f16(device, subdevice, function, name: str):
+    """The ``-f16`` variants' parameters: ``function`` is ``F:E``, sixteen bits."""
+    if not 0 <= device <= 0xFF:
+        raise EncodeError(f"{name} device is {device}; D:8 holds 0-255")
+    if subdevice is None:
+        raise EncodeError(
+            f"{name} requires an explicit subdevice (S:8). IrpTransmogrifier "
+            "gives S the default 255-D; the value is stated here rather than "
+            "assumed"
+        )
+    if not 0 <= subdevice <= 0xFF:
+        raise EncodeError(f"{name} subdevice is {subdevice}; S:8 holds 0-255")
+    if not 0 <= function <= 0xFFFF:
+        raise EncodeError(
+            f"{name} function is {function}; it is the pair F:E, two bytes "
+            "(F * 256 + E), 0-65535"
+        )
+
+
+def encode_nec1_f16(
+    *,
+    device: int,
+    subdevice: int | None,
+    function: int,
+    carrier_hz: int,
+    unit_us: int | None = None,
+) -> IrSignal:
+    """NEC1-f16: NEC1's frame and ditto repeat, with ``E`` a field of its own.
+
+    ``function`` is ``F * 256 + E``; ``E = ~F`` gives exactly NEC1's signal.
+    """
+    unit = _UNIT_US if unit_us is None else unit_us
+    check_bounds("unitUs", unit, UNIT_US_MIN, UNIT_US_MAX)
+    _check_params_f16(device, subdevice, function, "NEC1-f16")
+    intro = _frame(device, subdevice, function >> 8, unit, 16, "intro",
+                   "NEC1-f16", function & 0xFF)
+    repeat = _pad_to_extent([16 * unit, 4 * unit, unit], unit, "repeat",
+                            "NEC1-f16")
+    return IrSignal(
+        carrier_hz=carrier_hz, intro=tuple(intro), repeat=tuple(repeat)
+    )
+
+
+def encode_nec2_f16(
+    *,
+    device: int,
+    subdevice: int | None,
+    function: int,
+    carrier_hz: int,
+    unit_us: int | None = None,
+) -> IrSignal:
+    """NEC2-f16: NEC2's whole-frame repeat, with ``E`` a field of its own.
+
+    ``function`` is ``F * 256 + E``; ``E = ~F`` gives exactly NEC2's signal.
+    """
+    unit = _UNIT_US if unit_us is None else unit_us
+    check_bounds("unitUs", unit, UNIT_US_MIN, UNIT_US_MAX)
+    _check_params_f16(device, subdevice, function, "NEC2-f16")
+    frame = _frame(device, subdevice, function >> 8, unit, 16, "frame",
+                   "NEC2-f16", function & 0xFF)
+    return IrSignal(carrier_hz=carrier_hz, repeat=tuple(frame))
 
 
 def encode_necx2(
@@ -227,6 +299,43 @@ NEC2 = Protocol(
     extent_us=_EXTENT_US,
     bits=_BITS,
     encode=encode_nec2,
+)
+
+
+_F16_SOURCE = (
+    "IrpTransmogrifier's IrpProtocols.xml (bengtmartensson/"
+    "IrpTransmogrifier), the 1.2.14 release (`list -i {name}`) and @c945e76 "
+    "{line}, which give this IRP string verbatim (its parameter list "
+    "`[D:0..255,S:0..255=255-D,F:0..255,E:0..255=255-F]` is not part of the "
+    "IRP). The ledger's `function` is `F * 256 + E`, the two bytes in the "
+    "order they are sent: a packing the ledger chose, since a form has no "
+    "fourth field. Hardware captures of remotes that send it are in "
+    "IrpTransmogrifier's own test data (see tests/vectors/CITATIONS.md). "
+    "nominal_carrier_hz follows IrpTransmogrifier, as NEC1's does. It is "
+    "informational either way (D3)."
+)
+
+NEC1_F16 = Protocol(
+    name="NEC1-f16",
+    irp="{38.4k,564}<1,-1|1,-3>(16,-8,D:8,S:8,F:8,E:8,1,^108m,(16,-4,1,^108m)*)",
+    irp_source=_F16_SOURCE.format(name="NEC1-f16", line="L1597"),
+    unit_us=_UNIT_US,
+    nominal_carrier_hz=38_400,
+    extent_us=_EXTENT_US,
+    bits=_BITS,
+    encode=encode_nec1_f16,
+)
+
+
+NEC2_F16 = Protocol(
+    name="NEC2-f16",
+    irp="{38.4k,564}<1,-1|1,-3>(16,-8,D:8,S:8,F:8,E:8,1,^108m)*",
+    irp_source=_F16_SOURCE.format(name="NEC2-f16", line="L1693"),
+    unit_us=_UNIT_US,
+    nominal_carrier_hz=38_400,
+    extent_us=_EXTENT_US,
+    bits=_BITS,
+    encode=encode_nec2_f16,
 )
 
 

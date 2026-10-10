@@ -802,3 +802,68 @@ wrong; they land 3 % either side of 512, and every unit-length run differs.
   D1). The ledger drops it as IrpTransmogrifier's own Pronto does, which warns.
 - Fujitsu `E`, Teac-K `X` and SharpDVD `E` are IRP parameters a remote file
   cannot name; the encoders fix them at the IRP default and say so.
+
+---
+
+## NEC1-f16 and NEC2-f16 (DESIGN section 37)
+
+The relaxed forms of NEC1 and NEC2, whose fourth byte `E` is a field of its own instead of the complement of `F`.
+The ledger's `function` is the pair `F * 256 + E`, the two bytes in the order they are sent.
+
+### Gate 1 — IRP strings with their source: **MET** for both
+
+- `NEC1-f16`: `{38.4k,564}<1,-1|1,-3>(16,-8,D:8,S:8,F:8,E:8,1,^108m,(16,-4,1,^108m)*)`
+- `NEC2-f16`: `{38.4k,564}<1,-1|1,-3>(16,-8,D:8,S:8,F:8,E:8,1,^108m)*`
+
+Each is verbatim from IrpTransmogrifier's `IrpProtocols.xml` at `c945e76` (L1597 and L1693) and identical in the 1.2.14
+release (`list -i NEC1-f16`, `list -i NEC2-f16`); its parameter list `[D:0..255,S:0..255=255-D,F:0..255,
+E:0..255=255-F]` is not part of the IRP. The documentation there says byte 3 and byte 4 are independent, that the
+protocol is "used in some real devices", and that `NEC1-Yamaha` and `NEC2-Yamaha` (a style parameter `Y` of 1 to 3) are
+special cases of it.
+
+### Gate 2a — structural: **MET**, on hardware captures
+
+`bengtmartensson/IrpTransmogrifier @c945e76 src/test/teaserfiles/`, five files of real IrScope captures with the decode
+IrpTransmogrifier's own test expects, not vendored (a GPL-3.0 repository, the files used there by permission of the
+capture's author) and re-checked by `tools/misc_capture_audit.py --irpt DIR`:
+
+| file | what | keys | capture / encoder, every duration but the lead-out | frame period |
+|---|---|---|---|---|
+| `NEC-f16` | an NEC1-f16 remote (`E` independent of `F`) | 32 of 32 | median 1.009 (0.959-1.074) | 0.998-1.000x |
+| `NEC1-y1_nofinalA` | a Yamaha receiver, NEC1-Yamaha Y1 | 6 of 6 | median 1.006 (0.924-1.074) | 0.998x |
+| `NEC1-y1_nofinal_B` | a Yamaha receiver, NEC1-Yamaha Y1 | 4 of 4 | median 1.002 (0.926-1.073) | 0.998x |
+| `NEC2-f16` | an NEC2-f16 remote (and plain NEC2 keys of it) | 31 of 31 | median 0.890 (0.787-1.011) | 0.927x |
+| `NEC2-rnc` | an NEC1-rnc remote, also decoded as NEC2-f16 | 11 of 11 | median 0.987 (0.894-1.057) | 0.991x |
+
+Every key's bits are read straight off the capture by a threshold decoder written from the frame layout (not from the
+encoder), compared with the `.exp` file's fields (for a Yamaha line `E` is the IRP's `E0=(~Y:1:1)^(F:1)`, `~F:6:1`,
+`E7=(~Y:1)^(F:1:7)`, for an rnc line the complement with its nibbles swapped), and the registered encoder is asked for
+that signal and must give the same bit pattern. One capture of `NEC2-f16` (`Left`) is glitched and has no decode in
+IrpTransmogrifier's own test, and is left out. **A capture carries instrument bias**, so this verifies layout, bit
+order, framing and the rules for `E`, not absolute durations: the NEC2-f16 remote's unit is nearer 504 us than 564.
+
+### Gate 2b — golden Pronto: **MET**, all four reproducible, none published
+
+| Protocol | Vector | Provenance | Our bytes differ at |
+|---|---|---|---|
+| NEC1-f16 | D=134 S=228 F=2 E=96 @ 38.4k: IrpTransmogrifier 1.2.14 release, `render -n D=134,S=228,F=2,E=96 -p NEC1-f16` | **reproducible** | words 4, 71, 72, 75 (lead-in mark and both gaps, as NEC1's) |
+| NEC1-f16 | D=127 S=1 F=88 E=39 @ 38.4k: the same, and **byte for byte the release's `render -n D=127,S=1,F=88,Y=1 -p NEC1-Yamaha`** | **reproducible** | words 4, 71, 72, 75 |
+| NEC2-f16 | D=248 S=199 F=56 E=7 @ 38.4k: `render -n D=248,S=199,F=56,E=7 -p NEC2-f16` | **reproducible** | words 4, 71 (as NEC2's) |
+| NEC2-f16 | D=1 S=254 F=41 E=109 @ 38.4k: `render -n D=1,S=254,F=41,E=109 -p NEC2-f16` | **reproducible** | words 4, 71 |
+
+Our timings under IrpTransmogrifier's own rounding rule reproduce each string exactly; the raw words differ only where
+the two rounding rules split a half differently, at the same words as NEC1 and NEC2. The parameters of the vectors are
+the capture decodes above (`Export`, FM and `0`) and `Power`, so each is a key a real remote sends. No Pronto string
+for either is published.
+
+### Gate 3 — invariant tests: **MET**
+
+`tests/test_nec_f16.py`: a decoder written from the frame layout, every one of the 65,536 `F:E` pairs for both
+protocols, a seeded sample of 2,000 devices and subdevices, the packing order (F is the third byte sent), the extent,
+what repeats, the Yamaha styles' `E` rules, and `E = ~F` giving exactly NEC1's and NEC2's signal for every F.
+
+### Not established
+
+That a receiver acts on a frame whose `E` is not `~F` (the captures show remotes send it, not what a device needs);
+the IRP's carrier of 38.4 kHz (the captures measure 37.8 to 38.4 kHz; the file's `carrierHz` is authoritative, D3);
+`NECx1-f16`, `NECx2-f16` and `NEC-f16`, which IrpTransmogrifier also has and the ledger does not register.

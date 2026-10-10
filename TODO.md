@@ -49,8 +49,9 @@ Land it in two PRs, code and then data.
       3DEV, 4DEV and DVD (18) need the executors' code read (D155),
       and 2,073 KeymapMaster files. MCE is RC6-6-32 and Nokia32 is its own
       frame: neither is a registered protocol (D18's gate). **The Yamaha combo's Y1 to Y3 styles**
-      (1,087 functions of 15 upgrades) send NEC with 16 data bits, which needs
-      NEC1-f16 and NEC2-f16 registered with a cited golden vector (D18's gate). Each executor needs its
+      (1,087 functions of 15 upgrades) send NEC with 16 data bits, which
+      NEC1-f16 and NEC2-f16 now carry (registered, DESIGN §37); no importer
+      reads them yet. Each executor needs its
       translator found (the RemoteMaster source has the classes the
       `protocols.ini` expressions name) and checked against the ledger's codes
       first, as RC-5 was. The forum's file section holds about

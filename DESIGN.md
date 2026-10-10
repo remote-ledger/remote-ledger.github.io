@@ -1,6 +1,6 @@
 # Remote Ledger — Design & Build Plan
 
-**Draft v2.1** · Status: v1 complete; all three seed remotes authored; LIRC, SmartIR and IR Blaster imports built (§14, §15, §17); 28 protocols (§18) · Implements [SPEC.md](SPEC.md) v0.11
+**Draft v2.1** · Status: v1 complete; all three seed remotes authored; LIRC, SmartIR and IR Blaster imports built (§14, §15, §17); 30 protocols (§18, §37) · Implements [SPEC.md](SPEC.md) v0.11
 
 SPEC.md says *what* the format has to hold and why. This says *how it gets
 built*: the resolved open decisions, the one intermediate representation
@@ -267,8 +267,9 @@ the v1 protocols' and the table in §12 says which.
 3. An invariant test — framing, bit count, total extent.
 
 Backlog, each blocked on that gate and none scheduled: `NEC` (`S` defaulted
-to `~D`), and the relaxed `NEC1-f16` and `NEC2-f16`, which would hold 635 of
-the database's codes that no registered NEC variant can (D67). `RC5` left the
+to `~D`). The relaxed `NEC1-f16` and `NEC2-f16`, which hold 635 of the
+database's codes that no other registered NEC variant can (D67), joined in §37.
+`RC5` left the
 backlog in §16, and `NEC2`, `Sony12`, `Sony15` and `RC6` in §18, each through
 the gate.
 
@@ -340,7 +341,7 @@ Two conditional rules the validator enforces:
   *and* `name` is omitted or its registry entry has `extent_us = None`. All
   three v1 protocols declared an extent, so in practice this only bit
   raw-only files — which is exactly where truncation is most likely. Since §18
-  fifteen of the 28 protocols declare none (D3), so it now bites a file that
+  fifteen of the 30 protocols declare none (D3), so it now bites a file that
   names one of them as well. A truncated form with neither an extent nor
   `defaultGapUs` is a validation error, never a guess (D4a).
 
@@ -1341,7 +1342,7 @@ remote-ledger/
 ├── src/remote_ledger/
 │   ├── signal.py      IrSignal, cycle quantization        D1
 │   ├── pronto.py      encode / decode                     D5 D6
-│   ├── protocols/     one module per family (28 protocols) D3 D18 §18
+│   ├── protocols/     one module per family (30 protocols) D3 D18 §18 §37
 │   ├── irblaster/     importer + six hex_*.py maps        §17 §18
 │   ├── lirc/ smartir/ importers                           §14 §15
 │   ├── forms.py       form → IrSignal, precedence         D7
@@ -2050,7 +2051,7 @@ note rather than a live contract.
 
 ## 12. Implementation status
 
-Phases 0-6 are implemented: 3525 tests, `jsonschema` the only runtime
+Phases 0-6 are implemented: 3568 tests, `jsonschema` the only runtime
 dependency. Phase 2 landed its nine SPEC edits *before* its code, per §9 --
 the spec change is what authorises the implementation. (That count is asserted by the suite itself -- see
 `test_documented_test_count_is_current` -- so it cannot drift the way the
@@ -2059,7 +2060,7 @@ added 1,367; it moves again whenever a test is added, and the figure here
 has to be re-fixed with it.) Post-v1 work has landed outside the phases: RC5
 (§16), the LIRC and SmartIR imports (§14, §15), and the IR Blaster importer
 with the 24 protocols it needed (§17, §18), and the canonical key vocabulary
-(§22). The registry holds 28 protocols.
+(§22). The registry held 28 protocols then, and holds 30 since §37.
 `rl encode --protocol NEC1 --device 0x88 --subdevice 0x77
 --function 0x18 --carrier 38000` emits the Topping RC-15A Power key. Until
 the RC-15A was corrected this read `0x11 / 0xEE`: the capture's MSB-first
@@ -6303,3 +6304,23 @@ The corpus is **16,124 remote files and 644,641 keys**, 5,422 brands (1 more), 2
 **Not read**: **719 upgrades of 161 executor names**, counted in `IMPORT.md`: `MCE` (83) and `Nokia32` (40), which need protocols admitted through D18's gate (D145), `Manual Settings` (75 and 31 more of its spellings), `XMP` and `XMP (Slingbox)` (48), `GI Cable` (20), `Panasonic (old)` (19), `RC-5/5x Combo` (16), `TDC` (16), `RC6-M-20n` (15), `NEC1-f16 Official` (13), `RC5/6 combo` (12), and 149 executors of fewer than 12 each (362 in all); and the 2,073 KeymapMaster files. Of the registered-protocol executors I looked at and did not read: `Pioneer 3DEV` (6) and `4DEV` (8), whose translators pick the device with a bit of each of two bytes and need the executor's code read; `Pioneer DVD` (4); `Pioneer MIX`'s variants 4 and 5 (6 upgrades); the Panasonic MIX, Mixed and VCR combos (16); `Panasonic Combo2` (6), the old name of `Panasonic Multi-Device (Hacked)` in `protocols.ini`, five of whose upgrades are a variant (2) that file does not define while the sixth matches 34 of 34 of the ledger's codes and adds none; `Thomson` and `Thomson7` (12), whose rule matched only the two upgrades with parameter 3 (43 of 160 keys); `Blaupunkt` (3), whose codes match under every mapping of the function I tried, so nothing checks the rule; `Fujitsu` (2), whose `FixedData` starts with `03`, which would be an `E` of 3 the ledger's frame cannot carry (not checked); and `RCA` at 56 kHz (D152).
 
 **Not proven.** That a function does what its name says (§28); that Pioneer's 53.9% is the ledger's thinner coverage of laser disc and tape codes and not a fault (its CD player upgrade matches 23 of 25 and the other seven upgrades 149 of 294); that a single Pioneer frame written as two equal parts sends what the executor sends, which sends it once and repeats it (the IR Blaster import makes the same choice); that `RCA-38`'s 38.7 kHz is near enough to the upgrades' 38 kHz; D153's two single-upgrade rules, RECS80 (68) and Teac-K.
+
+## 37. Registering NEC1-f16 and NEC2-f16
+
+NEC1 and NEC2 send a fourth byte that is the complement of the third, and every importer so far has refused a code whose fourth byte is anything else: 635 of the IR Blaster database's codes (D67), 1,087 functions of the JP1 Yamaha combo's Y1 to Y3 styles (D140), and the upgrades of the `NEC1-f16 Official` executor (13). IrpTransmogrifier has the relaxed forms, `NEC1-f16` and `NEC2-f16`, in which that byte, `E`, is a field of its own. **They are registered here and nothing reads them yet**: this is D18's three gates for two protocols, and the importers that need them are separate changes. The code is `src/remote_ledger/protocols/nec.py`, the evidence `tests/vectors/CITATIONS.md` and `tools/misc_capture_audit.py`.
+
+### D156 — What a ledger form carries
+
+The IRPs are `{38.4k,564}<1,-1|1,-3>(16,-8,D:8,S:8,F:8,E:8,1,^108m,(16,-4,1,^108m)*)` for `NEC1-f16`, with NEC1's ditto repeat, and the same frame repeated whole (`)*`) for `NEC2-f16`, verbatim from IrpTransmogrifier's database at the commit the other NEC protocols cite and in its 1.2.14 release. A form has a device, a subdevice and a function and no fourth field, so **`function` is the sixteen bits `F * 256 + E`, the two bytes in the order they are sent** (a packing the ledger chose, as for Samsung36's `E:F` and Pioneer's `D0:D`; the pair is 0 to 65,535). A code whose `E` is `~F` is the plain protocol, and the encoder gives exactly NEC1's or NEC2's signal for it: a test holds that for every F.
+
+### D157 — The three gates
+
+**Gate 1**: the IRP strings and where they came from (above). **Gate 2a, on hardware**: IrpTransmogrifier's own test data holds IrScope captures of five remotes, and the audit tool decodes **84 keys** from them by a threshold decoder written from the frame layout, compares the fields with the decode IrpTransmogrifier's own test expects, and re-encodes each to the same bit pattern: 32 keys of an NEC1-f16 remote, 6 and 4 of two Yamaha receivers (NEC1-Yamaha Y1), 31 of an NEC2-f16 remote (one more, glitched, has no decode and is left out) and 11 of a remote whose frames are NEC1-rnc and also NEC2-f16. A capture carries instrument bias, so this says layout, bit order and framing, not durations; the NEC2-f16 remote's unit is nearer 504 µs than 564. **Gate 2b**: four vectors rendered from the 1.2.14 release, two for each protocol, whose parameters are keys those remotes send; our timings under the release's own rounding reproduce each exactly and the raw words differ at the places NEC1's and NEC2's do (4, 71, 72 and 75; 4 and 71). All four are **reproducible, none published**, which the test suite's warning says on every run. **Gate 3**: `tests/test_nec_f16.py`, with every `F:E` pair of both protocols round-tripped through a decoder written from the layout.
+
+### D158 — What `E` is in the styles that matter
+
+The Yamaha styles and the `rnc` style are rules for `E`, and the captures and the release both say what they are. **NEC1-Yamaha** (IrpTransmogrifier's own protocol, style `Y` 1 to 3): `E = F ^ 0x7F` for Y1 (bits 0 to 6 of F complemented), `F ^ 0xFE` for Y2 (bits 1 to 7) and `F ^ 0x7E` for Y3 (bits 1 to 6). **IrpTransmogrifier's render of `NEC1-Yamaha {D=127,S=1,F=88,Y=1}`, a key of one of the captured receivers, is byte for byte its render of `NEC1-f16` with `E = 88 ^ 0x7F = 39`**, which is what the ledger would write as function `88 * 256 + 39`. **NEC1-rnc**: `E` is F's complement with its nibbles swapped; the `NEC2-rnc` capture's 11 keys are that, as NEC2-f16.
+
+### D159 — What it does to the rest, and what is not proven
+
+Nothing changes in the corpus, the index or the bundle: the registry holds **30 protocols** instead of 28. What the registration opens is in TODO.md: D67's 635 IR Blaster codes (406 NEC1, 229 NEC2), the JP1 Yamaha styles (D140, 1,087 functions) and the `NEC1-f16 Official` upgrades. **Not proven**: that a receiver acts on a frame whose `E` is not `~F` (the captures show that remotes send them, not that a device needs them), the 38.4 kHz carrier (the captures measure 37.8 to 38.4 kHz, and a file's `carrierHz` is authoritative, D3), and `NECx1-f16`, `NECx2-f16` and `NEC-f16`, which IrpTransmogrifier also has and the ledger does not register.
