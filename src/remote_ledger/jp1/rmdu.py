@@ -147,8 +147,18 @@ DENON = "Denon"
 DENON_COMBO = "Denon Combo (Official)"
 PANASONIC = "Panasonic"
 PANASONIC_COMBO = "Panasonic Combo"
-TWO_BYTE = (SONY_COMBO, NEC1_COMBO, NEC_4DEV, NEC_4DEV_YAMAHA, JVC_COMBO, DENON_COMBO, PANASONIC_COMBO)
-MAPPED = (*NEC_FAMILY, SONY_1215, SONY_20, RC5, RC6, JVC, AIWA, DENON, PANASONIC, *TWO_BYTE)
+SHARP = "Sharp"
+SHARP_COMBO = "Sharp Combo (Official)"      # the executor of Denon Combo (Official): the same PID, 00 9C
+SAMSUNG36 = "Samsung36"
+PROTON = "Proton"
+F12 = "F12"
+RECS80_45 = "RECS80 (45)"
+DENON_K = "Denon-K"
+NEC_2DEV = "NEC 2DEV Combo"
+TWO_BYTE = (SONY_COMBO, NEC1_COMBO, NEC_4DEV, NEC_4DEV_YAMAHA, NEC_2DEV, JVC_COMBO, DENON_COMBO, SHARP_COMBO,
+            PANASONIC_COMBO, DENON_K)
+MAPPED = (*NEC_FAMILY, SONY_1215, SONY_20, RC5, RC6, JVC, AIWA, DENON, PANASONIC, SHARP, SAMSUNG36, PROTON, F12,
+          RECS80_45, *TWO_BYTE)
 
 
 def signal_of(upgrade: Upgrade, function: Function) -> Signal | str:
@@ -199,7 +209,7 @@ def signal_of(upgrade: Upgrade, function: Function) -> Signal | str:
         return Signal("Sony20", device, sub, command)
     if name == RC5:
         return rc5_signal(parms, byte)
-    return simple_signal(name, parms, byte)
+    return simple_signal(name, parms, byte, upgrade.fields.get("FixedData", "").split())
 
 
 def rc5_signal(parms: list[str], byte: int) -> Signal | str:
@@ -283,14 +293,28 @@ def combo_signal(name: str, parms: list[str], first: int, second: int, fixed: li
         if why:
             return why
         return Signal("Panasonic", device, rev8(~first & 0xFF), rev8(~second & 0xFF))
-    if name == DENON_COMBO:
+    if name == DENON_K:
+        # Translator(lsb,comp,0,4) Translator(lsb,comp,1,12,4): a 4-bit field, then the 12-bit function; the OEM
+        # bytes are parameters 1 and 2, and the ledger's frame fixes them at 84 and 50, the executor's defaults
+        device = parm(parms, 0)
+        if device is None and len(fixed) > 2 and _HEX_BYTE.match(fixed[2]):
+            device = rev_bits(~int(fixed[2], 16) & 0xF, 4)      # Translator(lsb,comp,0,4,20): FD is 4, the default
+        if device is None or device > 15:
+            return "the device parameter is missing or is not four bits"
+        for index, want in ((1, 84), (2, 50)):
+            got = parm(parms, index)
+            if got is not None and got != want:
+                return f"the OEM byte {got} is not Denon's {want}, which the ledger's frame fixes"
+        return Signal("Denon-K", device, rev_bits(~(first >> 4) & 0xF, 4),
+                      rev_bits(~(((first & 0xF) << 8) | second) & 0xFFF, 12))
+    if name in (DENON_COMBO, SHARP_COMBO):
         device = rev_bits(~(first >> 3) & 0x1F, 5)
         protocol = "Denon" if not (first >> 2) & 1 else "Sharp"
         return Signal(protocol, device, None, rev8(~second & 0xFF))
     function = rev8(~first & 0xFF)
     if name == NEC_4DEV_YAMAHA and second & 0x06:
         return "the Yamaha style sends a second byte that is not the complement of the first"
-    slot = second >> 6
+    slot = second >> 7 if name == NEC_2DEV else second >> 6
     style = NEC_STYLES[((second >> 4) & 1) << 1 | second & 1]
     device, sub = parm(parms, 2 * slot), parm(parms, 2 * slot + 1)
     if device is None and len(fixed) > 2 * slot and _HEX_BYTE.match(fixed[2 * slot]):
@@ -318,7 +342,7 @@ def _panasonic_oem(parms: list[str], first: int) -> str | None:
     return None
 
 
-def simple_signal(name: str, parms: list[str], byte: int) -> Signal | str:
+def simple_signal(name: str, parms: list[str], byte: int, fixed: list[str] = ()) -> Signal | str:
     """The executors with one OBC byte and one translator each (DESIGN D141): the device is a parameter, the
     function the OBC as the executor's ``CmdTranslator`` keeps it: ``Translator()`` plain for RC-6,
     ``Translator(lsb)`` reversed for Aiwa and Denon, ``Translator(lsb,comp)`` reversed and complemented for
@@ -341,6 +365,37 @@ def simple_signal(name: str, parms: list[str], byte: int) -> Signal | str:
         if device is None or device > 31:
             return "the device parameter is missing or is not five bits"
         return Signal("Denon", device, None, rev8(byte))
+    if name == SHARP:
+        device = parm(parms, 0)
+        if device is None or device > 31:
+            return "the device parameter is missing or is not five bits"
+        return Signal("Sharp", device, None, rev8(byte))
+    if name == SAMSUNG36:
+        device, sub, extra = parm(parms, 0), parm(parms, 1), parm(parms, 2)
+        # a null parameter is in FixedData (Translator(lsb,0) Translator(lsb,1,8,8) Translator(lsb,2,4,16,0))
+        if device is None and len(fixed) > 0 and _HEX_BYTE.match(fixed[0]):
+            device = rev8(int(fixed[0], 16))
+        if sub is None and len(fixed) > 1 and _HEX_BYTE.match(fixed[1]):
+            sub = rev8(int(fixed[1], 16))
+        if extra is None and len(fixed) > 2 and _HEX_BYTE.match(fixed[2]):
+            extra = rev_bits(int(fixed[2], 16) >> 4, 4)
+        if device is None or sub is None:
+            return "the device or the sub device parameter is missing"
+        # the ledger holds Samsung36's four-bit E in the high bits of the function (D65)
+        return Signal("Samsung36", device, sub, ((extra or 0) & 15) << 8 | rev8(byte))
+    if name == PROTON:
+        device = parm(parms, 0)
+        return Signal("Proton", device, None, rev8(~byte & 0xFF)) if device is not None else "the device parameter is missing"
+    if name == F12:
+        device = parm(parms, 0)
+        if device is None or device > 15:
+            return "the device parameter is missing or is not four bits"
+        return Signal("F12_relaxed", device & 7, device >> 3, rev8(byte))
+    if name == RECS80_45:
+        device = parm(parms, 0)
+        if device is None or device > 7:
+            return "the device parameter is missing or is not three bits"
+        return Signal("RECS80", device, None, 63 - (byte >> 2))
     if name == PANASONIC:
         device, sub = parm(parms, 0), parm(parms, 1)
         if device is None:

@@ -12,8 +12,8 @@ sources have been imported under SPEC R19:
   keys, GPL-3.0 by inheritance only (DESIGN §17, §18).
 - **hifi-remote.com's Sony code pages**: 151 files, 6,772 keys, a table of
   reference codes with no licence recorded (DESIGN §27).
-- **The JP1 device upgrades** of its forum: 2,424 files, 93,743 keys, read for
-  twenty executors (DESIGN §28, §32, §33, §34).
+- **The JP1 device upgrades** of its forum: 2,518 files, 97,701 keys, read for
+  twenty-eight executors (DESIGN §28, §32, §33, §34, §35).
 - **Manufacturers' own IR tables**: Marantz's AV receiver charts, Anthem's IR
   hex sheet and Oppo's remote code workbooks, 189 files, 12,844 keys (DESIGN
   §29, §31).
@@ -39,11 +39,11 @@ Land it in two PRs, code and then data.
       owner's decision of 2026-10-08 (D110) is that a table of reference
       remote codes needs no licence. That reasoning bears on all three; none
       has been changed.
-- [ ] **The rest of the JP1 upgrades** (DESIGN D120, D136, D140, D145): about
-      890 upgrades of other executors (MCE 83, Nokia32 40, Pioneer MIX 27, XMP
-      48, GI Cable 20, RCA 20, Samsung36 19, Panasonic (old) 19, RC-5/5x Combo
-      16, RC5/6 combo 12, Sharp Combo 11, Denon-K 11, Proton 12...), 75
-      `Manual Settings` upgrades that give raw executor bytes with no protocol,
+- [ ] **The rest of the JP1 upgrades** (DESIGN D120, D136, D140, D145, D150):
+      792 upgrades of 171 other executors (MCE 83, XMP 48, Nokia32 40,
+      Pioneer MIX 27, GI Cable 20, RCA 20, Panasonic (old) 19, RC-5/5x Combo 16,
+      TDC 16, RC6-M-20n 15, NEC1-f16 Official 13, RC5/6 combo 12...), among them
+      106 `Manual Settings` upgrades that give raw executor bytes with no protocol,
       and 2,073 KeymapMaster files. MCE is RC6-6-32 and Nokia32 is its own
       frame: neither is a registered protocol (D18's gate). **The Yamaha combo's Y1 to Y3 styles**
       (1,087 functions of 15 upgrades) send NEC with 16 data bits, which needs
@@ -143,6 +143,19 @@ deliberate skips, each reported with its reason.
 - [ ] Protocol `NEC` (`S` = `~D`). It needs an independently cited golden
       vector. `NEC2`, `Sony12`, `Sony15`, `RC5` and `RC6` have since landed
       (DESIGN §16, §18).
+
+## 6. Matching
+
+- [ ] **A model whose name repeats its brand hides the exact model typed after
+      it** (DESIGN D99, D150). `PHILIPS BDP 3390` finds `Philips BDP3300`, a JP1
+      model, and not the catalog's `BDP 3390`: the whole text is one edit from
+      the JP1 model's key and rule 4 of D96 then does not try the run inside it.
+      Given as brand and model, or without the brand, the exact model comes
+      first. Of the 2,351 models that only JP1 has, 2,061 begin with their
+      brand, and so do all 151 of hifi-remote.com's and all 96 of the
+      manufacturers' (the IR Blaster's: 1,580 of 271,250), so this grows with
+      each import of that kind. A change to the matcher changes its
+      vectors (D97): its own pull request.
 
 ## Not planned
 

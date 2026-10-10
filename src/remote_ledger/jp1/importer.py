@@ -30,7 +30,7 @@ from ..errors import ValidationError
 from ..fmt import format_document
 from ..import_common import authored_names as _authored_names
 from ..import_common import form_compiles
-from ..irblaster.importer import fold_label
+from ..irblaster.importer import PROTOCOL_EXTRAS, fold_label
 from ..protocols import REGISTRY
 from ..serialize import dumps
 from . import rmdu
@@ -239,13 +239,18 @@ class Importer:
                                     "function": signal.function, "confidence": TIER, "source": "probe"}
             if signal.subdevice is not None:
                 form["subdevice"] = signal.subdevice
-            self._compiles[key] = form_compiles(IMPORT_ROOT, self.block(signal.protocol), "K", form)
+            probe_block = {k: v for k, v in self.block(signal.protocol).items() if k != "claims"}
+            self._compiles[key] = form_compiles(IMPORT_ROOT, probe_block, "K", form)
         return self._compiles[key]
 
     @staticmethod
     def block(protocol: str) -> dict[str, Any]:
-        return {"name": protocol, "carrierHz": REGISTRY[protocol].nominal_carrier_hz,
-                "minSends": MIN_SENDS.get(protocol, DEFAULT_MIN_SENDS)}
+        """What a remote file's ``protocol`` carries: the IR Blaster import's own extras (Samsung36's unit of
+        500 us, D65) apply here too, so one code compiles to one signal whichever source it came from."""
+        block: dict[str, Any] = {"name": protocol, "carrierHz": REGISTRY[protocol].nominal_carrier_hz,
+                                 "minSends": MIN_SENDS.get(protocol, DEFAULT_MIN_SENDS)}
+        block.update(PROTOCOL_EXTRAS.get(protocol, {}))
+        return block
 
     def names_of(self, upgrade: rmdu.Upgrade, rel: Path) -> tuple[str, str, str] | None:
         """``(brand, model, description)`` of an upgrade, or None (reported) when it has no brand."""

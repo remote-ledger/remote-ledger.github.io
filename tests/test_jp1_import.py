@@ -228,6 +228,57 @@ def test_the_jvc_and_denon_combos_put_the_device_in_the_first_byte_and_the_funct
     assert signal(upgrade("Denon Combo (Official)", "", ("x", "E8"))) == "the function has no two OBC bytes"
 
 
+def test_sharp_samsung36_proton_f12_and_recs80_keep_the_obc_as_their_translators_do():
+    """Sharp ``Translator(lsb)``; Samsung36 ``Translator(lsb,0)`` with its four-bit E in the high bits of the
+    function (D65); Proton ``Translator(lsb,comp)``; F12 ``Translator(lsb)`` with a four-bit device whose low
+    three bits are D and the next S; RECS80 (45) the top six bits of the byte, complemented."""
+    assert signal(upgrade("Sharp", "8", ("x", "80"))) == rmdu.Signal("Sharp", 8, None, 1)
+    assert signal(upgrade("Sharp", "32", ("x", "80"))) == "the device parameter is missing or is not five bits"
+    assert signal(upgrade("Samsung36", "48 15 0", ("POWER", "0E"))) == rmdu.Signal("Samsung36", 48, 15, 112)
+    assert signal(upgrade("Samsung36", "48 15 1", ("POWER", "0E"))) == rmdu.Signal("Samsung36", 48, 15, 256 + 112)
+    # null parameters are in FixedData: 0C is 48 reversed, F0 is 15, and the high nibble of the third byte is E
+    assert signal(upgrade("Samsung36", "null null null", ("POWER", "0E"), fixed="0C F0 00")) == rmdu.Signal("Samsung36", 48, 15, 112)
+    assert signal(upgrade("Samsung36", "null null null", ("POWER", "0E"))) == "the device or the sub device parameter is missing"
+    assert signal(upgrade("Proton", "5", ("x", "3F"))) == rmdu.Signal("Proton", 5, None, 3)
+    f12 = upgrade("F12", "7", ("x", "01"))
+    assert signal(f12) == rmdu.Signal("F12_relaxed", 7, 0, 128)
+    assert signal(upgrade("F12", "12", ("x", "01"))) == rmdu.Signal("F12_relaxed", 4, 1, 128)
+    assert signal(upgrade("F12", "16", ("x", "01"))) == "the device parameter is missing or is not four bits"
+    recs = upgrade("RECS80 (45)", "3", ("a", "00"), ("b", "FC"))
+    assert [signal(recs, i) for i in (0, 1)] == [rmdu.Signal("RECS80", 3, None, 63), rmdu.Signal("RECS80", 3, None, 0)]
+    assert signal(upgrade("RECS80 (45)", "8", ("a", "00"))) == "the device parameter is missing or is not three bits"
+
+
+def test_denon_k_is_a_four_bit_field_and_a_twelve_bit_function_with_oem_bytes_84_and_50():
+    """``Translator(lsb,comp,0,4) Translator(lsb,comp,1,12,4)`` over two bytes: the top nibble is the sub device, the
+    other twelve bits the function, each complemented and reversed. The ledger's frame fixes the OEM bytes at 84
+    and 50, the executor's defaults; a null device is in FixedData (FD is 4)."""
+    assert signal(upgrade("Denon-K", "4 84 50", ("x", "77 FF"))) == rmdu.Signal("Denon-K", 4, 1, 1)
+    assert signal(upgrade("Denon-K", "4 null null", ("x", "77 FF"))) == rmdu.Signal("Denon-K", 4, 1, 1)
+    assert signal(upgrade("Denon-K", "null null null", ("x", "77 FF"), fixed="D5 B3 FD")) == rmdu.Signal("Denon-K", 4, 1, 1)
+    assert signal(upgrade("Denon-K", "4 85 50", ("x", "77 FF"))) == "the OEM byte 85 is not Denon's 84, which the ledger's frame fixes"
+    assert signal(upgrade("Denon-K", "16 84 50", ("x", "77 FF"))) == "the device parameter is missing or is not four bits"
+    assert signal(upgrade("Denon-K", "4 84 50", ("x", "83"))) == "the function has no two OBC bytes"
+
+
+def test_the_nec_2dev_combo_is_the_4dev_with_a_one_bit_device_slot_and_sharp_combo_is_the_denon_combo():
+    two = upgrade("NEC 2DEV Combo", "32 95 2 null", ("a", "E5 20"), ("b", "E5 A0"), ("c", "E5 21"))
+    assert [signal(two, i) for i in range(3)] == [
+        rmdu.Signal("NEC1", 32, 95, 88), rmdu.Signal("NEC1", 2, 253, 88), rmdu.Signal("NEC2", 32, 95, 88)]
+    sharp = upgrade("Sharp Combo (Official)", "", ("d", "E8 7F"), ("s", "EC 7F"))
+    assert [signal(sharp, i) for i in (0, 1)] == [rmdu.Signal("Denon", 8, None, 1), rmdu.Signal("Sharp", 8, None, 1)]
+
+
+def test_a_protocol_the_ioblaster_import_gives_extras_gets_them_here_too():
+    """Samsung36's unit is 500 us in the ledger (D52), so a JP1 Samsung36 file carries the block the IR Blaster
+    ones do, and one code compiles to one signal whichever source it came from."""
+    from remote_ledger.irblaster.importer import PROTOCOL_EXTRAS
+
+    block = jp.Importer.block("Samsung36")
+    assert block["unitUs"] == 500 and block["claims"] == PROTOCOL_EXTRAS["Samsung36"]["claims"]
+    assert "unitUs" not in jp.Importer.block("NEC1")
+
+
 def test_an_executor_not_read_and_a_function_with_no_single_byte_are_said_so():
     assert "not read by this import" in signal(upgrade("MCE", "28 0 null", ("power", "C4")))
     assert signal(upgrade("NEC1", "6 null null", ("Power", "FF BF"))) == "the function has no single OBC byte"
@@ -420,7 +471,7 @@ def test_the_committed_jp1_import_keeps_r19():
     assert f"@ `{meta['commit']}`" in (ROOT / jp.IMPORT_ROOT / jp.REPORT).read_text(encoding="utf-8")
     shape = re.compile(
         rf"^jp1-device-upgrades@{meta['commit'][:7]} \S.* function (\d+) '.*' \(OBC ((?:[0-9A-F]{{2}})(?: [0-9A-F]{{2}})*); [^;]+, parms [^)]*\): "
-        r"(NEC1|NEC2|NECx1|NECx2|Sony12|Sony15|Sony20|RC5|RC6|JVC|Aiwa|Denon|Sharp|Panasonic) device (\d+)(?: subdevice (\d+))? function (\d+)", re.S)
+        r"(NEC1|NEC2|NECx1|NECx2|Sony12|Sony15|Sony20|RC5|RC6|JVC|Aiwa|Denon|Sharp|Panasonic|Samsung36|Proton|F12_relaxed|RECS80|Denon-K) device (\d+)(?: subdevice (\d+))? function (\d+)", re.S)
 
     def num(value):
         return int(value, 0) if isinstance(value, str) else value
@@ -496,3 +547,13 @@ def test_a_sony_combo_upgrade_sends_every_verified_key_of_the_authored_rmt_b118p
     assert files and all(load(f)["keys"] for f in files)
     sent = set().union(*(triples(f) for f in files))
     assert authored <= sent
+
+
+def test_a_jp1_samsung36_key_compiles_to_the_signal_the_ir_blaster_import_has_for_the_same_code():
+    """The same code is one signal whichever source it came from. The forum's Samsung HW-F355 upgrade and the IR
+    Blaster database's remote 1952 both send Samsung36 `POWER` as device 0x30, sub device 0x0F, function 0x70; the
+    files compile to the same Pronto string only because the JP1 file carries the IR Blaster one's 500 us unit."""
+    mine = load_remote(ROOT / jp.IMPORT_ROOT / "Samsung" / "Audio-Samsung_HW-F355.json")
+    theirs = load_remote(next((ROOT / "remotes" / "irblaster").glob("*/1952-Samsung36.json")))
+    assert mine.keys["KEY_POWER"][0].function == theirs.keys["KEY_POWER"][0].function == 0x70
+    assert mine.compile_group("KEY_POWER", "primary") == theirs.compile_group("KEY_POWER", "primary")
