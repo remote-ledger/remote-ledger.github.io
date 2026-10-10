@@ -23,6 +23,8 @@ V1_REGISTRY = {
     "NEC1-f16", "NEC2-f16",
     # Windows Media Center's RC-6 mode 6 (DESIGN section 41).
     "MCE",
+    # Two set-top-box families (DESIGN section 43).
+    "Nokia32", "Panasonic_Old",
 }
 BACKLOG = {"NEC"}
 #: Not backlogged -- `Samsung32` does not exist in any consulted source, and

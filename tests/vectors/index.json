@@ -1032,5 +1032,49 @@
     "gate2b_byte_divergence": [
       67
     ]
+  },
+  "Nokia32": {
+    "gate1_irp_source": "IrpTransmogrifier IrpProtocols.xml @c945e76 L1842 (verbatim; identical in the 1.2.14 release, `list -i Nokia32`). The `1p` unit is one period of the carrier; the ledger's `function` is `X * 256 + F`, a packing it chose",
+    "regression_snapshot": null,
+    "snapshot_is_evidence": false,
+    "gate2a_structural_vector": "bengtmartensson/IrpTransmogrifier @c945e76 src/test/teaserfiles/Nokia32.ict and Nokia32.exp: thirty captures of a Nokia receiver's remote (Teaser, hifi-remote.com forum), each with the decode IrpTransmogrifier's own test expects, the odd keys with the toggle set. Not vendored (a GPL-3.0 repository, the files used there by permission of the capture's author); tools/misc_capture_audit.py --irpt DIR re-runs the comparison. All 30 keys' symbols decode, by a threshold decoder written from the frame layout, to the .exp fields (D, S, T, X and F) and re-encode to the same bit pattern. A capture carries instrument bias, so this verifies layout, symbol order and the pulse positions, not absolute durations: capture durations are 0.89-1.11x the encoder's (median 0.99) and its carrier was measured at 35,303 Hz",
+    "gate2a_pending_reason": null,
+    "gate2b_golden_pronto": "irpt_nokia32_D37_S240_F128_X0.pronto",
+    "gate2b_pending_reason": null,
+    "gate2b_vector_source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "gate2b_vector_params": {
+      "device": 37,
+      "subdevice": 240,
+      "function": 128,
+      "carrier_hz": 36000
+    },
+    "gate2b_vector_quantization": "irpt-nominal-carrier",
+    "gate2b_vector_provenance": "reproducible",
+    "gate2b_vector_reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=37,S=240,F=128,X=0 -p Nokia32",
+    "gate2b_byte_divergence": [
+      39
+    ]
+  },
+  "Panasonic_Old": {
+    "gate1_irp_source": "IrpTransmogrifier IrpProtocols.xml @c945e76 L1984 (verbatim; identical in the 1.2.14 release, `list -i Panasonic_Old`)",
+    "regression_snapshot": null,
+    "snapshot_is_evidence": false,
+    "gate2a_structural_vector": "bengtmartensson/IrpTransmogrifier @c945e76 src/test/teaserfiles/Panasonic_Old.ict and Panasonic_Old.exp (four captures of an older Panasonic remote) and Panasonic_Old_Pronto.txt with its .exp (sixteen Pronto strings of a cable box's remote, all D=27), each with the decode IrpTransmogrifier's own test expects. Not vendored (a GPL-3.0 repository, the files used there by permission of the capture's author); tools/misc_capture_audit.py --irpt DIR re-runs the comparison. All 4 captures and all 16 strings decode, by a threshold decoder written from the frame layout (the complements checked), to the .exp fields and the captures re-encode to the same bit pattern. A capture carries instrument bias, so this verifies layout, bit order and framing, not absolute durations: the captures are 0.95-1.04x the encoder's, and the strings, from a device with a unit of 849 us, 1.022x in every duration",
+    "gate2a_pending_reason": null,
+    "gate2b_golden_pronto": "irpt_panasonic_old_D27_F28.pronto",
+    "gate2b_pending_reason": null,
+    "gate2b_vector_source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "gate2b_vector_params": {
+      "device": 27,
+      "subdevice": null,
+      "function": 28,
+      "carrier_hz": 57600
+    },
+    "gate2b_vector_quantization": "irpt-nominal-carrier",
+    "gate2b_vector_provenance": "reproducible",
+    "gate2b_vector_reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=27,F=28 -p Panasonic_Old",
+    "gate2b_byte_divergence": [
+      51
+    ]
   }
 }

@@ -566,5 +566,77 @@
     "byteDivergence": [
       71
     ]
+  },
+  {
+    "file": "irpt_nokia32_D37_S240_F128_X0.pronto",
+    "protocol": "Nokia32",
+    "params": {
+      "device": 37,
+      "subdevice": 240,
+      "function": 128,
+      "carrier_hz": 36000
+    },
+    "quantization": "irpt-nominal-carrier",
+    "provenance": "reproducible",
+    "source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=37,S=240,F=128,X=0 -p Nokia32",
+    "note": "Key 0 of the Nokia receiver's remote whose capture IrpTransmogrifier's own test data holds (Nokia32.exp: `0` decodes as Nokia32 {D=37,S=240,F=128,X=0}; `function` is the ledger's X:F packing, 0*256 + 128). No Pronto string for Nokia32 is published, so this is a render of the pinned release.",
+    "byteDivergence": [
+      39
+    ]
+  },
+  {
+    "file": "irpt_nokia32_D37_S240_F137_X0.pronto",
+    "protocol": "Nokia32",
+    "params": {
+      "device": 37,
+      "subdevice": 240,
+      "function": 137,
+      "carrier_hz": 36000
+    },
+    "quantization": "irpt-nominal-carrier",
+    "provenance": "reproducible",
+    "source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=37,S=240,F=137,X=0 -p Nokia32",
+    "note": "Key 9 of the same remote ({D=37,S=240,F=137,T=1,X=0}): the toggle is not in a ledger file, so this is its T=0 form, which differs from the capture's in the toggle bit alone.",
+    "byteDivergence": [
+      39
+    ]
+  },
+  {
+    "file": "irpt_panasonic_old_D27_F28.pronto",
+    "protocol": "Panasonic_Old",
+    "params": {
+      "device": 27,
+      "subdevice": null,
+      "function": 28,
+      "carrier_hz": 57600
+    },
+    "quantization": "irpt-nominal-carrier",
+    "provenance": "reproducible",
+    "source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=27,F=28 -p Panasonic_Old",
+    "note": "`Power Off` of the cable box's remote whose sixteen Pronto strings IrpTransmogrifier's own test data holds (Panasonic_Old_Pronto.exp: D=27, F=28). **That string is not this vector**: it comes from a device with a unit of 849 us against the IRP's 833 (a ratio of 1.022 in every duration), so it cannot be a byte-for-byte vector; it decodes to the same D and F, and tools/misc_capture_audit.py reads it. This is a render of the pinned release.",
+    "byteDivergence": [
+      51
+    ]
+  },
+  {
+    "file": "irpt_panasonic_old_D0_F36.pronto",
+    "protocol": "Panasonic_Old",
+    "params": {
+      "device": 0,
+      "subdevice": null,
+      "function": 36,
+      "carrier_hz": 57600
+    },
+    "quantization": "irpt-nominal-carrier",
+    "provenance": "reproducible",
+    "source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=0,F=36 -p Panasonic_Old",
+    "note": "`Vol+` of the older Panasonic remote whose capture IrpTransmogrifier's own test data holds (Panasonic_Old.exp: D=0, F=36).",
+    "byteDivergence": [
+      51
+    ]
   }
 ]
