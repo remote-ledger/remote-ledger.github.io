@@ -47,8 +47,9 @@ Land it in two PRs, code and then data.
       executors that yield nothing: 18 RCA at 56 kHz, which needs a protocol of
       its own (D152, D18's gate), and 6 Pioneer MIX of variants 4 and 5. Pioneer
       3DEV, 4DEV and DVD (18) need the executors' code read (D155),
-      and 2,073 KeymapMaster files. MCE is RC6-6-32 and Nokia32 is its own
-      frame: neither is a registered protocol (D18's gate). **The Yamaha combo's Y1 to Y3 styles**
+      and 2,073 KeymapMaster files. MCE is registered now (DESIGN §41, 83 upgrades
+      no importer reads yet); Nokia32 is its own frame and is not a registered
+      protocol (D18's gate). **The Yamaha combo's Y1 to Y3 styles**
       (1,087 functions of 15 upgrades) send NEC with 16 data bits, which
       NEC1-f16 and NEC2-f16 now carry (registered, DESIGN §37); no importer
       reads them yet. Each executor needs its

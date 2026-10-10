@@ -530,5 +530,41 @@
       4,
       71
     ]
+  },
+  {
+    "file": "irpt_mce_D116_S15_F40.pronto",
+    "protocol": "MCE",
+    "params": {
+      "device": 116,
+      "subdevice": 15,
+      "function": 40,
+      "carrier_hz": 36000
+    },
+    "quantization": "irpt-nominal-carrier",
+    "provenance": "reproducible",
+    "source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=116,S=15,F=40 -p MCE",
+    "note": "OPEN of the Xbox 360 media remote in the LIRC project's database (remotes/microsoft/Xbox360.lircd.conf, committed as remotes/lirc/microsoft/Xbox360.json): its frame reads 800F7428 (mode 6, OEM1 0x80, S 0x0F, device 0x74 = 116, F 0x28 = 40, toggle 0), and the forum's upgrade for that remote has parameters `116 15`. No Pronto string for MCE is published, so this is a render of the pinned release.",
+    "byteDivergence": [
+      67
+    ]
+  },
+  {
+    "file": "irpt_mce_D4_S15_F128.pronto",
+    "protocol": "MCE",
+    "params": {
+      "device": 4,
+      "subdevice": 15,
+      "function": 128,
+      "carrier_hz": 36000
+    },
+    "quantization": "irpt-nominal-carrier",
+    "provenance": "reproducible",
+    "source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=4,S=15,F=128 -p MCE",
+    "note": "`Media` of the LIRC project's mceusb remote (remotes/mceusb/mceusb.lircd.conf, committed as remotes/lirc/mceusb/mceusb.mceusb.json): its frame reads 800F0480 (device 4, S 15, F 0x80 = 128), the executor's own default device and second OEM byte (`Device:7=4`, `OEM2:8=15`).",
+    "byteDivergence": [
+      71
+    ]
   }
 ]
