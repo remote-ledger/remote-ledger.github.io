@@ -1,6 +1,6 @@
 # Remote Ledger — Design & Build Plan
 
-**Draft v2.1** · Status: v1 complete; all three seed remotes authored; LIRC, SmartIR and IR Blaster imports built (§14, §15, §17); 30 protocols (§18, §37) · Implements [SPEC.md](SPEC.md) v0.11
+**Draft v2.1** · Status: v1 complete; all three seed remotes authored; LIRC, SmartIR and IR Blaster imports built (§14, §15, §17); 31 protocols (§18, §37, §41) · Implements [SPEC.md](SPEC.md) v0.11
 
 SPEC.md says *what* the format has to hold and why. This says *how it gets
 built*: the resolved open decisions, the one intermediate representation
@@ -341,7 +341,7 @@ Two conditional rules the validator enforces:
   *and* `name` is omitted or its registry entry has `extent_us = None`. All
   three v1 protocols declared an extent, so in practice this only bit
   raw-only files — which is exactly where truncation is most likely. Since §18
-  fifteen of the 30 protocols declare none (D3), so it now bites a file that
+  fifteen of the 31 protocols declare none (D3), so it now bites a file that
   names one of them as well. A truncated form with neither an extent nor
   `defaultGapUs` is a validation error, never a guess (D4a).
 
@@ -1342,7 +1342,7 @@ remote-ledger/
 ├── src/remote_ledger/
 │   ├── signal.py      IrSignal, cycle quantization        D1
 │   ├── pronto.py      encode / decode                     D5 D6
-│   ├── protocols/     one module per family (30 protocols) D3 D18 §18 §37
+│   ├── protocols/     one module per family (31 protocols) D3 D18 §18 §37 §41
 │   ├── irblaster/     importer + six hex_*.py maps        §17 §18
 │   ├── lirc/ smartir/ importers                           §14 §15
 │   ├── forms.py       form → IrSignal, precedence         D7
@@ -2051,7 +2051,7 @@ note rather than a live contract.
 
 ## 12. Implementation status
 
-Phases 0-6 are implemented: 3579 tests, `jsonschema` the only runtime
+Phases 0-6 are implemented: 3608 tests, `jsonschema` the only runtime
 dependency. Phase 2 landed its nine SPEC edits *before* its code, per §9 --
 the spec change is what authorises the implementation. (That count is asserted by the suite itself -- see
 `test_documented_test_count_is_current` -- so it cannot drift the way the
@@ -2060,7 +2060,7 @@ added 1,367; it moves again whenever a test is added, and the figure here
 has to be re-fixed with it.) Post-v1 work has landed outside the phases: RC5
 (§16), the LIRC and SmartIR imports (§14, §15), and the IR Blaster importer
 with the 24 protocols it needed (§17, §18), and the canonical key vocabulary
-(§22). The registry held 28 protocols then, and holds 30 since §37.
+(§22). The registry held 28 protocols then, and holds 31 since §41 (30 after §37).
 `rl encode --protocol NEC1 --device 0x88 --subdevice 0x77
 --function 0x18 --carrier 38000` emits the Topping RC-15A Power key. Until
 the RC-15A was corrected this read `0x11 / 0xEE`: the capture's MSB-first
@@ -6392,3 +6392,21 @@ A run inside a longer run that gave a candidate **by the exact rule** is not tri
 ### D169 — The vectors a port is held to, and what is not proven
 
 `tests/vectors/matching_vectors.json` gains **three catalog entries and two queries and loses nothing** (71 lines added, none removed; the first 41 queries are unchanged): a model that repeats its brand beside one an edit away and another brand's part of it, asked once as `ZED ZX 7790` (the exact `ZX 7790` first, the repeating model second, the other brand's `7790` out) and once as the repeating model itself (exact, and everything inside it hidden). The old matcher answers the first with the repeating model alone. `suggest_vectors.json` carries the same catalog and gains the three entries, and ZED's list goes from 3 models to 5. A port of the matcher must add the rule: nothing else of the vectors moves. **Not proven**: that this is the right trade on real typing, which has still not been measured (D98); the matcher was changed on generated queries and checked on the same ones, and a change that fixes one of them and moves two is a small sample.
+
+## 41. Registering MCE
+
+The JP1 upgrades of the `MCE` executor are the largest group the importer had not read: 83, which D145 said needed a protocol the ledger did not have. **`MCE` is Windows Media Center's remote protocol, RC-6 mode 6 with a 32-bit payload**, and IrpTransmogrifier has it by that name. It is registered here through D18's three gates and **nothing reads it yet**: the corpus, the index and the bundle do not change, and the registry goes from 30 to 31 protocols. The code is `src/remote_ledger/protocols/mce.py`, the evidence `tests/vectors/CITATIONS.md` and `tests/test_mce.py`.
+
+### D170 — What a form carries
+
+The IRP is `{36k,444,msb}<-1,1|1,-1>((6,-2,1:1,6:3,-2,2,OEM1:8,S:8,T:1,D:7,F:8,^107m)*,T=1-T) {OEM1=128}[D:0..127,S:0..255,F:0..255,T@:0..1=0]`, verbatim from IrpTransmogrifier's database at the commit the other protocols cite and in its 1.2.14 release. **`device` is D (7 bits), `subdevice` is S (the second OEM byte, 8 bits) and `function` is F**; the first OEM byte is the IRP's 128 and the frame's mode is 6. The toggle `T` is not in the file (D3b), as for RC6: everything compiled has `T=0`, the IRP's default, and `encode` takes `toggle` for the tests. Microsoft's remotes send `S = 15` (`0x800F` is their code), and a form states it, as NEC's forms state a subdevice.
+
+The shape is RC6's (`rc6.py`) with a longer payload: a 6-unit mark and 2-unit space, a start bit, the mode `110`, a double-width trailer that is a fixed 0, the 32 bits, and the `^107m` extent measured from the first mark. `RC6-M-32`, the generic form with another first OEM byte and other modes, is not registered: nothing here sends one.
+
+### D171 — The three gates
+
+**Gate 1**: the IRP and where it came from; RemoteMaster's own `MCE` executor has the same widths from another source (`Device:7=4`, `OEM2:8=15`, OEM1 128 in its fixed data). **Gate 2a**: IrpTransmogrifier's test data holds no MCE capture (its `OrtekMCE` files are another protocol), so the evidence is the LIRC project's: **225 keys of four MCE remotes' confs**, already in this repository as raw forms, which `tests/test_mce.py` reads with a decoder written from the frame layout (not from the encoder) at the unit each has: every one is mode 6, trailer 0, OEM1 128 and second OEM byte 15, and re-encodes, with its toggle, to the same sequence of levels. The Xbox 360 remote is device 116, which is the `116 15` of the forum's upgrade for it. **They are remotes' confs expanded by lircd and not hardware captures**, and say layout and bit order, not absolute durations (their bits are 427 to 455 µs, 0.96 to 1.03 of the IRP's 444). **Gate 2b**: two vectors rendered from the 1.2.14 release for keys of those remotes (the Xbox 360's OPEN, `800F7428`, and the mceusb remote's Media, `800F0480`); our timings under the release's rounding reproduce each exactly and the raw words differ only in the lead-out, as RC6's do. **Reproducible, none published**, which the suite's warning says on every run. **Gate 3**: `tests/test_mce.py`: every D and F for three values of S, every S for four devices, a seeded sample with the toggle either way, the order of the fields, the extent and the LIRC remotes.
+
+### D172 — What it does to the rest, and what is not proven
+
+Nothing in the corpus moves. What the registration opens is in TODO.md: the 83 JP1 `MCE` upgrades. **Not proven**: that a Media Center receiver acts on a frame sent with the toggle at 0 (a file cannot set it); the 36 kHz carrier (LIRC's confs set none and lircd sends 38 kHz, and a file's `carrierHz` is authoritative, D3); and **that the LIRC data is evidence of the protocol and not of itself**: its confs were written by people who read the same remotes, so it corroborates the layout, not the timings.

@@ -1010,5 +1010,27 @@
       4,
       71
     ]
+  },
+  "MCE": {
+    "gate1_irp_source": "IrpTransmogrifier IrpProtocols.xml @c945e76 (verbatim; identical in the 1.2.14 release, `list -i MCE`), whose documentation calls it RC6-6-32 with the standard toggle bit zero, OEM1 equal to 128 and a nonstandard toggle bit added. RemoteMaster's own `MCE` executor (hifiremote/Protocols protocols.ini) has the same widths: `Device:7`, `OEM2:8`, OEM1 128 in its fixed data",
+    "regression_snapshot": null,
+    "snapshot_is_evidence": false,
+    "gate2a_structural_vector": "The LIRC project's remotes database, lirc-remotes@291b40f: remotes/mceusb/mceusb.lircd.conf (the `mceusb`, `mceusb_hauppauge` and `vista_mce` blocks) and remotes/microsoft/Xbox360.lircd.conf, committed in this repository as remotes/lirc/mceusb/*.json and remotes/lirc/microsoft/Xbox360.json: 225 keys of four MCE remotes, each a conf (a leader of 6 and 2 units, bits of 427 to 455 us, a pre_data and a code) that lircd expanded to raw durations. tests/test_mce.py reads each at the unit its leader has with a decoder written from the frame layout: every one is mode 6, trailer 0, OEM1 128 and second OEM byte 15, and re-encodes, with the toggle the key has, to the same sequence of levels. These are remotes' confs and not hardware captures, and they say layout and bit order, not absolute durations: their bits are 427 to 455 us (444 in the mceusb block), a ratio of 0.96 to 1.03 to the IRP's 444. Independently, the Xbox 360 remote is device 116, the `116 15` of the forum's upgrade for it",
+    "gate2a_pending_reason": null,
+    "gate2b_golden_pronto": "irpt_mce_D116_S15_F40.pronto",
+    "gate2b_pending_reason": null,
+    "gate2b_vector_source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "gate2b_vector_params": {
+      "device": 116,
+      "subdevice": 15,
+      "function": 40,
+      "carrier_hz": 36000
+    },
+    "gate2b_vector_quantization": "irpt-nominal-carrier",
+    "gate2b_vector_provenance": "reproducible",
+    "gate2b_vector_reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=116,S=15,F=40 -p MCE",
+    "gate2b_byte_divergence": [
+      67
+    ]
   }
 }

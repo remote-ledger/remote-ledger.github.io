@@ -867,3 +867,54 @@ what repeats, the Yamaha styles' `E` rules, and `E = ~F` giving exactly NEC1's a
 That a receiver acts on a frame whose `E` is not `~F` (the captures show remotes send it, not what a device needs);
 the IRP's carrier of 38.4 kHz (the captures measure 37.8 to 38.4 kHz; the file's `carrierHz` is authoritative, D3);
 `NECx1-f16`, `NECx2-f16` and `NEC-f16`, which IrpTransmogrifier also has and the ledger does not register.
+
+---
+
+## MCE (DESIGN section 41)
+
+Windows Media Center's remote protocol: RC-6 mode 6 with a 32-bit payload (RC6-6-32). A ledger form's `device` is D
+(7 bits), `subdevice` is S (the second OEM byte, 8 bits) and `function` is F; the first OEM byte is the IRP's 128.
+
+### Gate 1 — IRP string with its source: **MET**
+
+`{36k,444,msb}<-1,1|1,-1>((6,-2,1:1,6:3,-2,2,OEM1:8,S:8,T:1,D:7,F:8,^107m)*,T=1-T) {OEM1=128}[D:0..127,S:0..255,F:0..255,T@:0..1=0]`,
+verbatim from IrpTransmogrifier's `IrpProtocols.xml` at `c945e76` and identical in the 1.2.14 release
+(`list -i MCE`). Its documentation says MCE is RC6-6-32 with the standard toggle bit zero, with OEM1 equal to 128 and
+with a nonstandard toggle bit added. RemoteMaster's own `MCE` executor (hifiremote/Protocols `protocols.ini`) gives the
+same widths from another source: `Device:7=4`, `OEM2:8=15`, OEM1 128 in its fixed data.
+
+### Gate 2a — structural: **MET**, on the LIRC project's remotes
+
+IrpTransmogrifier's own test data holds no MCE capture (its `OrtekMCE` files are another protocol). The LIRC project's
+remotes database (`lirc-remotes@291b40f`) does hold four MCE remotes' confs, committed in this repository as
+`remotes/lirc/mceusb/mceusb.mceusb.json`, `mceusb.mceusb_hauppauge.json`, `mceusb.vista_mce.json` and
+`remotes/lirc/microsoft/Xbox360.json`: **225 keys**, each a conf (a leader of 6 and 2 units, bits of 427 to 455 us, a
+`pre_data` and a code) that lircd expanded to raw durations. `tests/test_mce.py` reads each at the unit its leader has (442 to 446
+us) with a decoder written from the frame layout and not from the encoder: every key is mode 6, trailer 0, OEM1 128 and
+second OEM byte 15, and re-encodes, with the toggle the key has, to the same sequence of levels. The Xbox 360 remote is
+device 116, which is the `116 15` of the forum's JP1 upgrade for it. **These are remotes' confs and not hardware
+captures**, and they say layout and bit order, not absolute durations: the confs' bits are 427 to 455 us (444 in the `mceusb` block), a ratio of 0.96 to 1.03 to
+the IRP's 444.
+
+### Gate 2b — golden Pronto: **MET**, both reproducible, none published
+
+| Protocol | Vector | Provenance | Our bytes differ at |
+|---|---|---|---|
+| MCE | D=116 S=15 F=40 @ 36k: IrpTransmogrifier 1.2.14 release, `render -n D=116,S=15,F=40 -p MCE` | **reproducible** | word 67 (lead-out) |
+| MCE | D=4 S=15 F=128 @ 36k: the same release, `render -n D=4,S=15,F=128 -p MCE` | **reproducible** | word 71 (lead-out) |
+
+Our timings under IrpTransmogrifier's rounding rule reproduce each string exactly; the raw words differ only in the
+lead-out, as RC6's do. The parameters are keys of the LIRC remotes above (the Xbox 360's OPEN, 800F7428, and the
+mceusb remote's Media, 800F0480). No Pronto string for MCE is published.
+
+### Gate 3 — invariant tests: **MET**
+
+`tests/test_mce.py`: a decoder written from the frame layout; every D and F for S of 0, 15 and 255; every S for four
+devices; a seeded sample of 3,000 with the toggle either way; the order of the fields; the extent and the absence of an
+intro; and the LIRC remotes above.
+
+### Not established
+
+That a Windows Media Center receiver acts on a frame the ledger writes with the toggle at 0 (a ledger file cannot set
+it); the 36 kHz carrier (LIRC's confs set none and lircd sends 38 kHz, which the file's `carrierHz` is free to say);
+`RC6-M-32` with a mode other than 6, which IrpTransmogrifier also has and the ledger does not register.

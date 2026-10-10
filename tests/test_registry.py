@@ -21,6 +21,8 @@ V1_REGISTRY = {
     "Aiwa", "Blaupunkt", "Panasonic", "JVC-48", "Fujitsu", "Teac-K", "Denon-K", "SharpDVD",
     # Codes whose fourth byte is not the complement of the third (DESIGN section 37).
     "NEC1-f16", "NEC2-f16",
+    # Windows Media Center's RC-6 mode 6 (DESIGN section 41).
+    "MCE",
 }
 BACKLOG = {"NEC"}
 #: Not backlogged -- `Samsung32` does not exist in any consulted source, and
