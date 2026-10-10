@@ -1,14 +1,18 @@
 #!/usr/bin/env python3
-"""Audit the misc-family encoders against IrpTransmogrifier's hardware captures.
+"""Audit the misc-family and NEC-f16 encoders against IrpTransmogrifier's hardware captures.
 
 IrpTransmogrifier's test data (``src/test/teaserfiles/``, "used with
 permission of the author", from the hifi-remote.com forum thread cited in its
-README) holds real IrScope captures of remotes for three of the protocols
-registered here, each with the decode IrpTransmogrifier's own test expects:
+README) holds real IrScope captures of remotes for protocols registered here,
+each with the decode IrpTransmogrifier's own test expects:
 
     Samsung36.ict / .exp   a Samsung Blu-ray remote, 8 keys
     Proton.ict    / .exp   a Proton-protocol remote, 9 keys
     F12.ict       / .exp   a strict-F12 remote, 11 keys
+    NEC-f16.ict   / .exp   an NEC1-f16 remote, whose fourth byte is its own field
+    NEC2-f16.ict  / .exp   an NEC2-f16 remote (and four plain NEC2 keys of it)
+    NEC1-y1_nofinalA / _B  two Yamaha receivers' NEC1-Yamaha, style Y1
+    NEC2-rnc.ict  / .exp   an NEC1-rnc remote, NEC2-f16 with E the nibble-swapped complement
 
 They are **cited, not vendored**: the repository is GPL-3.0 and the files are
 used there by permission of a third party. Check it out at the pinned commit
@@ -74,14 +78,16 @@ def first_frame(signed: list[int]) -> list[int]:
 
 
 def read_expected(path: Path) -> dict[str, dict[str, int]]:
-    """``{key: {D:.., S:.., F:.., E:..}}`` from the ``.exp`` file."""
+    """``{key: {D:.., S:.., F:.., E:..}}`` from the ``.exp`` file; a ``_protocol`` entry names the first
+    decode's protocol (``NEC1-rnc``, ``NEC1-Yamaha``), whose own parameters are not ``E``'s."""
     out = {}
     for line in path.read_text().splitlines():
-        m = re.match(r"(.+?):\s+\w+: \{(.*?)\}", line)
+        m = re.match(r"(.+?):\s+([\w-]+): \{(.*?)\}", line)
         if m:
             out[m.group(1)] = {
-                k: int(v) for k, v in (kv.split("=") for kv in m.group(2).split(","))
+                k: int(v) for k, v in (kv.split("=") for kv in m.group(3).split(","))
             }
+            out[m.group(1)]["_protocol"] = m.group(2)
     return out
 
 
@@ -129,8 +135,46 @@ def decode_f12(frame: list[int]):
     return {"D": _lsb(bits[:3]), "S": bits[3], "F": _lsb(bits[4:12])}
 
 
+def yamaha_e(f: int, y: int) -> int:
+    """The fourth byte of ``NEC1-Yamaha``'s IRP, ``E0=(~Y:1:1)^(F:1)``, ``~F:6:1``, ``E7=(~Y:1)^(F:1:7)``."""
+    e0 = (~(y >> 1) & 1) ^ (f & 1)
+    e7 = (~y & 1) ^ ((f >> 7) & 1)
+    return e0 | (~f & 0x7E) | (e7 << 7)
+
+
+def rnc_e(f: int) -> int:
+    """``NEC1-rnc``'s fourth byte, ``~F:4:4,~F:4``: the complement with its nibbles swapped."""
+    return ((~f & 0x0F) << 4) | ((~f >> 4) & 0x0F)
+
+
+def nec_expected(raw: dict[str, int]) -> dict[str, int]:
+    """The four bytes an ``.exp`` line says: ``S`` defaults to ``255-D`` and ``E`` to ``255-F`` unless the line is
+    a Yamaha or an rnc decode, which say how ``E`` follows ``F``."""
+    d, f = raw["D"], raw["F"]
+    kind = raw["_protocol"]
+    if "Y" in raw:
+        e = yamaha_e(f, raw["Y"])
+    elif kind.endswith("rnc"):
+        e = rnc_e(f)
+    else:
+        e = raw.get("E", 255 - f)
+    return {"D": d, "S": raw.get("S", 255 - d), "F": f, "E": e}
+
+
+def decode_nec_family(frame: list[int]):
+    """The 16-unit lead-in, then thirty-two bits, a zero a short space and a one a long one: D, S, F and E."""
+    pairs = list(zip(frame[0::2], frame[1::2]))
+    header, body = pairs[0], pairs[1:]
+    assert header[0] > 7000 and header[1] > 3500, "not a 16-unit NEC lead-in"
+    bits = [_bit(m, s, wide_mark=False) for m, s in body[:32]]
+    return {"D": _lsb(bits[:8]), "S": _lsb(bits[8:16]), "F": _lsb(bits[16:24]), "E": _lsb(bits[24:32])}
+
+
 def encode_like(proto: str, p: dict[str, int], carrier: int):
     entry = REGISTRY[proto]
+    if proto in ("NEC1-f16", "NEC2-f16"):
+        return entry.encode(device=p["D"], subdevice=p["S"], function=(p["F"] << 8) | p["E"],
+                            carrier_hz=carrier)
     if proto == "Samsung36":
         return entry.encode(device=p["D"], subdevice=p["S"],
                             function=(p["E"] << 8) | p["F"], carrier_hz=carrier)
@@ -145,7 +189,18 @@ CASES = (
     ("Samsung36", "Samsung36", decode_samsung36),
     ("Proton", "Proton", decode_proton),
     ("F12", "F12_relaxed", decode_f12),
+    ("NEC-f16", "NEC1-f16", decode_nec_family),
+    ("NEC1-y1_nofinalA", "NEC1-f16", decode_nec_family),
+    ("NEC1-y1_nofinal_B", "NEC1-f16", decode_nec_family),
+    ("NEC2-f16", "NEC2-f16", decode_nec_family),
+    ("NEC2-rnc", "NEC2-f16", decode_nec_family),
 )
+
+
+def the_signal_frame(proto: str, signal) -> tuple[int, ...]:
+    """The sequence that holds the first frame: NEC1-f16 sends it as the intro and the whole-frame repeaters
+    as the repeat."""
+    return signal.intro if proto == "NEC1-f16" else signal.repeat
 
 
 def audit(root: Path) -> int:
@@ -156,15 +211,23 @@ def audit(root: Path) -> int:
         expected = read_expected(data / f"{stem}.exp")
         marks, spaces, gaps, ratios, carriers = [], [], [], [], []
         ok = 0
+        skipped = [key for key in captures if key not in expected]
         for key, (carrier, signed) in captures.items():
+            if key in skipped:
+                # IrpTransmogrifier's own test has no decode for it (a glitched capture: NEC2-f16's `Left`)
+                continue
             frame = first_frame(signed)
             fields = decode(frame)
-            want = {k: v for k, v in expected[key].items() if k in fields}
+            if decode is decode_nec_family:
+                want = nec_expected(expected[key])
+            else:
+                want = {k: v for k, v in expected[key].items() if k in fields}
             if fields != want:
                 failures += 1
                 print(f"  FAIL {stem}/{key}: capture reads {fields}, .exp says {want}")
                 continue
-            ours = encode_like(proto, fields, carrier).repeat
+            ours = the_signal_frame(proto, encode_like(proto, fields, carrier))
+            ours = ours[:len(frame)]
             if len(ours) != len(frame):
                 failures += 1
                 print(f"  FAIL {stem}/{key}: encoder has {len(ours)} durations, "
@@ -180,8 +243,9 @@ def audit(root: Path) -> int:
             spaces += [b for i, b in enumerate(frame[:-1]) if i % 2 == 1]
             if frame[-1] < 200_000:       # not the capture's last, truncated frame
                 gaps.append((sum(ours), sum(frame)))
-        print(f"{stem} ({proto}): {ok}/{len(captures)} keys decode to the .exp "
-              f"fields and re-encode to the same bit pattern")
+        print(f"{stem} ({proto}): {ok}/{len(captures) - len(skipped)} keys decode to the .exp "
+              f"fields and re-encode to the same bit pattern"
+              + (f" ({len(skipped)} capture without a decode left out)" if skipped else ""))
         if ratios:
             print(f"  capture / encoder, every duration but the lead-out: "
                   f"median {statistics.median(ratios):.3f}, "

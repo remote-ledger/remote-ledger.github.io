@@ -19,6 +19,8 @@ V1_REGISTRY = {
     "Pioneer-2Part", "JVC", "Sharp", "Denon",
     "Samsung36", "Proton", "F12_relaxed", "RECS80", "RECS80-0068",
     "Aiwa", "Blaupunkt", "Panasonic", "JVC-48", "Fujitsu", "Teac-K", "Denon-K", "SharpDVD",
+    # Codes whose fourth byte is not the complement of the third (DESIGN section 37).
+    "NEC1-f16", "NEC2-f16",
 }
 BACKLOG = {"NEC"}
 #: Not backlogged -- `Samsung32` does not exist in any consulted source, and

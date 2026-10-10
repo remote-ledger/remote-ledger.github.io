@@ -962,5 +962,53 @@
     "gate2b_vector_provenance": "reproducible",
     "gate2b_vector_reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=8,S=48,F=1 -p SharpDVD",
     "gate2b_byte_divergence": []
+  },
+  "NEC1-f16": {
+    "gate1_irp_source": "IrpTransmogrifier IrpProtocols.xml @c945e76 L1597 (verbatim; identical in the 1.2.14 release, `list -i NEC1-f16`). The documentation says byte 3 and byte 4 are independent and that NEC1-Yamaha, with a style parameter Y1 to Y3, is a special case",
+    "regression_snapshot": null,
+    "snapshot_is_evidence": false,
+    "gate2a_structural_vector": "bengtmartensson/IrpTransmogrifier @c945e76 src/test/teaserfiles/NEC-f16.ict/.exp, NEC1-y1_nofinalA.ict/.exp and NEC1-y1_nofinal_B.ict/.exp: forty-two captures of an NEC1-f16 remote and of two Yamaha receivers' NEC1-Yamaha Y1, each with the decode IrpTransmogrifier's own test expects. Not vendored (a GPL-3.0 repository, the files used there by permission of the capture's author); tools/misc_capture_audit.py --irpt DIR re-runs the comparison. All 42 keys' bits decode, by a threshold decoder written from the frame layout, to the .exp fields (a Yamaha line's E from the IRP's Y1 rule) and re-encode to the same bit pattern. A capture carries instrument bias, so this verifies layout, bit order and framing and the Yamaha and rnc rules for E, not absolute durations: capture durations are 0.92-1.07x the encoder's (median 1.01) and the frame period 0.998-1.000x (108 ms).",
+    "gate2a_pending_reason": null,
+    "gate2b_golden_pronto": "irpt_nec1f16_D134_S228_F2_E96.pronto",
+    "gate2b_pending_reason": null,
+    "gate2b_vector_source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "gate2b_vector_params": {
+      "device": 134,
+      "subdevice": 228,
+      "function": 608,
+      "carrier_hz": 38400
+    },
+    "gate2b_vector_quantization": "irpt-nominal-carrier",
+    "gate2b_vector_provenance": "reproducible",
+    "gate2b_vector_reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=134,S=228,F=2,E=96 -p NEC1-f16",
+    "gate2b_byte_divergence": [
+      4,
+      71,
+      72,
+      75
+    ]
+  },
+  "NEC2-f16": {
+    "gate1_irp_source": "IrpTransmogrifier IrpProtocols.xml @c945e76 L1693 (verbatim; identical in the 1.2.14 release, `list -i NEC2-f16`). The documentation says byte 3 and byte 4 are independent and that NEC1-Yamaha, with a style parameter Y1 to Y3, is a special case",
+    "regression_snapshot": null,
+    "snapshot_is_evidence": false,
+    "gate2a_structural_vector": "bengtmartensson/IrpTransmogrifier @c945e76 src/test/teaserfiles/NEC2-f16.ict/.exp and NEC2-rnc.ict/.exp: forty-two captures (31 of an NEC2-f16 remote, one more glitched and left out, and 11 of an NEC1-rnc remote whose frames IrpTransmogrifier also decodes as NEC2-f16), each with the decode IrpTransmogrifier's own test expects. Not vendored (a GPL-3.0 repository, the files used there by permission of the capture's author); tools/misc_capture_audit.py --irpt DIR re-runs the comparison. All 42 keys' bits decode, by a threshold decoder written from the frame layout, to the .exp fields (an rnc line's E from the nibble-swapped complement) and re-encode to the same bit pattern. A capture carries instrument bias, so this verifies layout, bit order and framing and the Yamaha and rnc rules for E, not absolute durations: the NEC2-f16 remote's durations are 0.79-1.01x the encoder's (median 0.89: its unit is nearer 504 us than 564) and the rnc remote's 0.89-1.06x (median 0.99).",
+    "gate2a_pending_reason": null,
+    "gate2b_golden_pronto": "irpt_nec2f16_D248_S199_F56_E7.pronto",
+    "gate2b_pending_reason": null,
+    "gate2b_vector_source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "gate2b_vector_params": {
+      "device": 248,
+      "subdevice": 199,
+      "function": 14343,
+      "carrier_hz": 38400
+    },
+    "gate2b_vector_quantization": "irpt-nominal-carrier",
+    "gate2b_vector_provenance": "reproducible",
+    "gate2b_vector_reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=248,S=199,F=56,E=7 -p NEC2-f16",
+    "gate2b_byte_divergence": [
+      4,
+      71
+    ]
   }
 }
