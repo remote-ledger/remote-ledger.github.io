@@ -155,10 +155,21 @@ F12 = "F12"
 RECS80_45 = "RECS80 (45)"
 DENON_K = "Denon-K"
 NEC_2DEV = "NEC 2DEV Combo"
+PIONEER = "Pioneer"
+PIONEER_MIX = "Pioneer MIX"
+PANASONIC_HACKED = "Panasonic Multi-Device (Hacked)"
+RECS80_68 = "RECS80 (68)"
+JVC_48 = "JVC-48"
+TEAC_K = "Teac-K"
+RCA = "RCA"
+RCA_56 = "RCA-56"
+RCA_38 = "RCA-38"
+RCA_38_OFFICIAL = "RCA-38 Official"
+RCA_FAMILY = (RCA, RCA_56, RCA_38, RCA_38_OFFICIAL)
 TWO_BYTE = (SONY_COMBO, NEC1_COMBO, NEC_4DEV, NEC_4DEV_YAMAHA, NEC_2DEV, JVC_COMBO, DENON_COMBO, SHARP_COMBO,
-            PANASONIC_COMBO, DENON_K)
+            PANASONIC_COMBO, DENON_K, PIONEER_MIX, PANASONIC_HACKED, TEAC_K)
 MAPPED = (*NEC_FAMILY, SONY_1215, SONY_20, RC5, RC6, JVC, AIWA, DENON, PANASONIC, SHARP, SAMSUNG36, PROTON, F12,
-          RECS80_45, *TWO_BYTE)
+          RECS80_45, PIONEER, RECS80_68, JVC_48, *RCA_FAMILY, *TWO_BYTE)
 
 
 def signal_of(upgrade: Upgrade, function: Function) -> Signal | str:
@@ -177,10 +188,14 @@ def signal_of(upgrade: Upgrade, function: Function) -> Signal | str:
         pair = obc_bytes(function.hex)
         if pair is None or len(pair) != 2:
             return "the function has no two OBC bytes"
+        if name == PIONEER_MIX:
+            return pioneer_mix_signal(upgrade, pair[0], pair[1])
         return combo_signal(name, parms, pair[0], pair[1], upgrade.fields.get("FixedData", "").split())
     byte = obc_byte(function.hex)
     if byte is None:
         return "the function has no single OBC byte"
+    if name in RCA_FAMILY:
+        return rca_signal(upgrade, byte)
     if name in NEC_FAMILY:
         device = parm(parms, 0)
         if device is None:
@@ -235,6 +250,72 @@ def rc5_signal(parms: list[str], byte: int) -> Signal | str:
     if parm(parms, 2 * slot + 1):
         command |= 64
     return Signal("RC5", device, None, command)
+
+
+def fixed_byte(fixed: list[str], index: int) -> int | None:
+    """A device parameter the executor keeps in byte ``index`` of ``FixedData`` as ``Translator(lsb,comp,...,8)``
+    does (complemented, then reversed): the value it has where the upgrade says ``null``."""
+    if index < len(fixed) and _HEX_BYTE.match(fixed[index]):
+        return rev8(~int(fixed[index], 16) & 0xFF)
+    return None
+
+
+def rca_signal(upgrade: Upgrade, byte: int) -> Signal | str:
+    """The RCA executors, read only where they send the 38 kHz the ledger's ``RCA-38`` has (DESIGN D152).
+
+    ``RCA-38`` and ``RCA-38 Official`` are ``Translator()``: the function is the OBC as it is. ``RCA`` (its
+    second variant) and ``RCA-56`` are ``Translator(comp)``, the function the OBC complemented, and say their
+    carrier in parameter 1 (1 is 38 kHz, 0 is 57 or 56 kHz); the first variant of ``RCA`` has no such
+    parameter and sends 56 kHz. The device is the four-bit parameter 0: a ``null`` one is not read, because the
+    one upgrade that has it (``RCA-38 Official``, 84 functions) matches none of the ledger's codes under the
+    executor's default."""
+    name, parms = upgrade.protocol_name, upgrade.parms
+    variant = upgrade.fields.get("Protocol.variantName", "").strip()
+    if name == RCA and variant != "2":
+        return "the carrier is not 38 kHz, which the ledger's RCA-38 has"
+    complemented = name in (RCA, RCA_56)
+    if complemented and parm(parms, 1) != 1:
+        return "the carrier is not 38 kHz, which the ledger's RCA-38 has"
+    device = parm(parms, 0)
+    if device is None or device > 15:
+        return "the device parameter is missing or is not four bits"
+    return Signal("RCA-38", device, None, ~byte & 0xFF if complemented else byte)
+
+
+#: Where ``FixedData`` keeps each parameter of ``Pioneer MIX``'s variants 2 and 3 (``Device 1, Device 2, Cmd1 (OBC),
+#: Cmd2 (OBC)`` and two more commands in variant 3), as the ``DeviceTranslator`` offsets say.
+PIONEER_MIX_FIXED = {"2": (0, 2, 1, 3), "3": (0, 5, 1, 2, 3, 4)}
+
+
+def pioneer_mix_signal(upgrade: Upgrade, first: int, second: int) -> Signal | str:
+    """``Pioneer MIX``, variants 2 and 3 (DESIGN D151): ``Translator(lsb,comp,3) PioneerMixTranslator()``.
+
+    The first byte is the function, ``rev8(~OBC)``; the second is a flag byte (``PioneerMixTranslator``'s
+    ``mask`` of 7): its lowest bit says a two-part signal, and then its next two pick which of the upgrade's
+    prefix commands is the first part's. A one-part signal is ``Device 1`` and the function; a two-part one is
+    ``Device 1`` and the prefix command, then ``Device 2`` and the function, which is the ledger's
+    ``Pioneer-2Part`` as ``D0:D`` and ``F0:F``. A parameter that is ``null`` is in ``FixedData``."""
+    layout = PIONEER_MIX_FIXED.get(upgrade.fields.get("Protocol.variantName", "").strip())
+    if layout is None:
+        return "the variant is not read (its devices are chosen by more flag bits)"
+    if second > 7:
+        return "the flag byte has bits the variant does not use"
+    fixed = upgrade.fields.get("FixedData", "").split()
+    values = [parm(upgrade.parms, i) if parm(upgrade.parms, i) is not None else fixed_byte(fixed, at)
+              for i, at in enumerate(layout)]
+    function = rev8(~first & 0xFF)
+    if values[0] is None:
+        return "the device parameter is missing"
+    if any(v is not None and v > 255 for v in values):
+        return "a parameter is not a byte"
+    if not second & 1:
+        return Signal("Pioneer-2Part", values[0] << 8 | values[0], None, function << 8 | function)
+    slot = 2 + ((second >> 1) & 3)
+    if slot >= len(values):
+        return "the function selects a prefix command the variant does not have"
+    if values[1] is None or values[slot] is None:
+        return "the device or the prefix command parameter is missing"
+    return Signal("Pioneer-2Part", values[0] << 8 | values[1], None, values[slot] << 8 | function)
 
 
 #: The ledger protocol of the four styles an NEC 4DEV combo function names.
@@ -307,6 +388,30 @@ def combo_signal(name: str, parms: list[str], first: int, second: int, fixed: li
                 return f"the OEM byte {got} is not Denon's {want}, which the ledger's frame fixes"
         return Signal("Denon-K", device, rev_bits(~(first >> 4) & 0xF, 4),
                       rev_bits(~(((first & 0xF) << 8) | second) & 0xFFF, 12))
+    if name == PANASONIC_HACKED:
+        # Translator(lsb,comp,0,8,8) Translator(lsb,comp,1): the sub device is the second byte and the function
+        # the first, the reverse of the Panasonic Combo; the OEM bytes are parameters 2 and 3
+        device = parm(parms, 0)
+        if device is None:
+            device = fixed_byte(fixed, 2)
+        if device is None:
+            return "the device parameter is missing"
+        why = _panasonic_oem(parms, 2)
+        if why:
+            return why
+        return Signal("Panasonic", device, rev8(~second & 0xFF), rev8(~first & 0xFF))
+    if name == TEAC_K:
+        # Translator(lsb,comp,0,8,0): the function is the first byte; the second is not part of it
+        device, sub = parm(parms, 0), parm(parms, 1)
+        if sub is None:
+            sub = fixed_byte(fixed, 3)
+        if device is None or sub is None or device > 15:
+            return "the device parameter is missing or is not four bits"
+        for index, want in ((2, 67), (3, 83)):
+            got = parm(parms, index)
+            if got is not None and got != want:
+                return f"the OEM byte {got} is not Teac's {want}, which the ledger's frame fixes"
+        return Signal("Teac-K", device, sub, rev8(~first & 0xFF))
     if name in (DENON_COMBO, SHARP_COMBO):
         device = rev_bits(~(first >> 3) & 0x1F, 5)
         protocol = "Denon" if not (first >> 2) & 1 else "Sharp"
@@ -396,6 +501,26 @@ def simple_signal(name: str, parms: list[str], byte: int, fixed: list[str] = ())
         if device is None or device > 7:
             return "the device parameter is missing or is not three bits"
         return Signal("RECS80", device, None, 63 - (byte >> 2))
+    if name == RECS80_68:
+        # the device is kept complemented (Translator(0,3,2,comp)), and the ledger's frame sends what is kept
+        device = parm(parms, 0)
+        if device is None or device > 7:
+            return "the device parameter is missing or is not three bits"
+        return Signal("RECS80-0068", 7 - device, None, 63 - (byte >> 2))
+    if name == JVC_48:
+        device, sub = parm(parms, 0), parm(parms, 1)
+        if device is None or sub is None or device > 255 or sub > 255:
+            return "the device or the sub device parameter is missing"
+        return Signal("JVC-48", device, sub, rev8(~byte & 0xFF))
+    if name == PIONEER:
+        # Translator(lsb,comp) for both: a single frame, which the ledger writes as its two parts equal (D = D0)
+        device = parm(parms, 0)
+        if device is None:
+            device = fixed_byte(fixed, 0)
+        if device is None or device > 255:
+            return "the device parameter is missing"
+        function = rev8(~byte & 0xFF)
+        return Signal("Pioneer-2Part", device << 8 | device, None, function << 8 | function)
     if name == PANASONIC:
         device, sub = parm(parms, 0), parm(parms, 1)
         if device is None:
