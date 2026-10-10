@@ -1,0 +1,93 @@
+{
+  "manufacturer": "Daimatsu",
+  "model": "Air Condition",
+  "aliases": [],
+  "controls": [
+    "Daimatsu Air Condition"
+  ],
+  "protocol": {
+    "name": "Proton",
+    "carrierHz": 38500,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER": {
+      "label": "power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0A",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 A_C/Daimatsu AC.rmdu function 0 'power' (OBC B7; Proton, parms 10): Proton device 10 function 18"
+        }
+      ]
+    },
+    "KEY_FUNCTION_1": {
+      "label": "Function",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0A",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 A_C/Daimatsu AC.rmdu function 1 'Function' (OBC D7; Proton, parms 10): Proton device 10 function 20"
+        }
+      ]
+    },
+    "KEY_DEMOIST": {
+      "label": "DeMoist",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0A",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 A_C/Daimatsu AC.rmdu function 2 'DeMoist' (OBC 57; Proton, parms 10): Proton device 10 function 21"
+        }
+      ]
+    },
+    "KEY_TIMER": {
+      "label": "Timer",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0A",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 A_C/Daimatsu AC.rmdu function 3 'Timer' (OBC A7; Proton, parms 10): Proton device 10 function 26"
+        }
+      ]
+    },
+    "KEY_TIMER_OFF": {
+      "label": "Timer off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0A",
+          "function": "0x18",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 A_C/Daimatsu AC.rmdu function 4 'Timer off' (OBC E7; Proton, parms 10): Proton device 10 function 24"
+        }
+      ]
+    },
+    "KEY_SWAY": {
+      "label": "Sway",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0A",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 A_C/Daimatsu AC.rmdu function 5 'Sway' (OBC 97; Proton, parms 10): Proton device 10 function 22"
+        }
+      ]
+    }
+  }
+}

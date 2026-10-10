@@ -1,0 +1,806 @@
+{
+  "manufacturer": "Samsung",
+  "model": "SH 895",
+  "aliases": [],
+  "controls": [
+    "Samsung SH 895"
+  ],
+  "protocol": {
+    "name": "Samsung36",
+    "carrierHz": 37900,
+    "unitUs": 500,
+    "minSends": 1,
+    "claims": {
+      "unitUs": {
+        "reason": "the IRP says 560 us; SwiftRemote's own encoder, eight real captures and IRremoteESP8266 all say about 500 us (marks 512, spaces 490/1468), so the compiled signal follows them and not the IRP's unit",
+        "source": "https://github.com/bengtmartensson/IrpTransmogrifier/tree/c945e76/src/test/teaserfiles Samsung36.ict (eight keys of a Samsung Blu-ray remote, median unit about 496 us; tools/misc_capture_audit.py); https://github.com/crankyoldgit/IRremoteESP8266/blob/1e2f0f3/src/ir_Samsung.cpp#L59-L63 and #L175-L190 (sendSamsung36, 'Works on real devices'); tests/vectors/CITATIONS.md, section 'The misc family'"
+      }
+    }
+  },
+  "keys": {
+    "KEY_0": {
+      "label": "0",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x880",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 0 '0' (OBC 01; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2176"
+        }
+      ]
+    },
+    "KEY_1": {
+      "label": "1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x881",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 1 '1' (OBC 81; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2177"
+        }
+      ]
+    },
+    "KEY_2": {
+      "label": "2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x882",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 2 '2' (OBC 41; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2178"
+        }
+      ]
+    },
+    "KEY_3": {
+      "label": "3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x883",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 3 '3' (OBC C1; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2179"
+        }
+      ]
+    },
+    "KEY_4": {
+      "label": "4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x884",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 4 '4' (OBC 21; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2180"
+        }
+      ]
+    },
+    "KEY_5": {
+      "label": "5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x885",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 5 '5' (OBC A1; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2181"
+        }
+      ]
+    },
+    "KEY_6": {
+      "label": "6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x886",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 6 '6' (OBC 61; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2182"
+        }
+      ]
+    },
+    "KEY_7": {
+      "label": "7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x887",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 7 '7' (OBC E1; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2183"
+        }
+      ]
+    },
+    "KEY_8": {
+      "label": "8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x888",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 8 '8' (OBC 11; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2184"
+        }
+      ]
+    },
+    "KEY_9": {
+      "label": "9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x889",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 9 '9' (OBC 91; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2185"
+        }
+      ]
+    },
+    "KEY_CHANNEL_UP": {
+      "label": "channel up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x8C5",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 10 'channel up' (OBC A3; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2245"
+        }
+      ]
+    },
+    "KEY_CHANNEL_DOWN": {
+      "label": "channel down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x8C6",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 11 'channel down' (OBC 63; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2246"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x891",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 12 'power' (OBC 89; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2193"
+        }
+      ]
+    },
+    "KEY_HDD": {
+      "label": "HDD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x800",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 13 'HDD' (OBC 00; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2048"
+        }
+      ]
+    },
+    "KEY_ANALOG_SLASH_DTV": {
+      "label": "ANALOG/DTV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x8E4",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 14 'ANALOG/DTV' (OBC 27; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2276"
+        }
+      ]
+    },
+    "KEY_MENU": {
+      "label": "menu",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x88B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 15 'menu' (OBC D1; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2187"
+        }
+      ]
+    },
+    "KEY_PROGRAM_GUIDE": {
+      "label": "program guide",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x847",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 16 'program guide' (OBC E2; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2119"
+        }
+      ]
+    },
+    "KEY_UP_ARROW": {
+      "label": "up arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x897",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 17 'up arrow' (OBC E9; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2199"
+        }
+      ]
+    },
+    "KEY_DOWN_ARROW": {
+      "label": "down arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x898",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 18 'down arrow' (OBC 19; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2200"
+        }
+      ]
+    },
+    "KEY_LEFT_ARROW": {
+      "label": "left arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x89A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 19 'left arrow' (OBC 59; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2202"
+        }
+      ]
+    },
+    "KEY_RIGHT_ARROW": {
+      "label": "right arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x899",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 20 'right arrow' (OBC 99; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2201"
+        }
+      ]
+    },
+    "KEY_SELECT": {
+      "label": "select",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x89B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 21 'select' (OBC D9; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2203"
+        }
+      ]
+    },
+    "KEY_INFO": {
+      "label": "Info",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x841",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 22 'Info' (OBC 82; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2113"
+        }
+      ]
+    },
+    "KEY_PLAY": {
+      "label": "play",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x8A0",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 23 'play' (OBC 05; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2208"
+        }
+      ]
+    },
+    "KEY_PAUSE": {
+      "label": "pause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x8A3",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 24 'pause' (OBC C5; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2211"
+        }
+      ]
+    },
+    "KEY_REWIND": {
+      "label": "rewind",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x89C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 25 'rewind' (OBC 39; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2204"
+        }
+      ]
+    },
+    "KEY_FAST_FWD": {
+      "label": "fast fwd",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x89E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 26 'fast fwd' (OBC 79; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2206"
+        }
+      ]
+    },
+    "KEY_STOP": {
+      "label": "stop",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x8A2",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 27 'stop' (OBC 45; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2210"
+        }
+      ]
+    },
+    "KEY_RECORD": {
+      "label": "record",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x8C2",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 28 'record' (OBC 43; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2242"
+        }
+      ]
+    },
+    "KEY_EXIT": {
+      "label": "exit",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x805",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 29 'exit' (OBC A0; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2053"
+        }
+      ]
+    },
+    "KEY_REPEAT": {
+      "label": "repeat",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x8A9",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 30 'repeat' (OBC 95; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2217"
+        }
+      ]
+    },
+    "KEY_F_REW": {
+      "label": "F Rew",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x89F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 31 'F Rew' (OBC F9; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2207"
+        }
+      ]
+    },
+    "KEY_SOURCE": {
+      "label": "SOURCE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x8DF",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 32 'SOURCE' (OBC FB; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2271"
+        }
+      ]
+    },
+    "KEY_COPY": {
+      "label": "COPY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x844",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 33 'COPY' (OBC 22; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2116"
+        }
+      ]
+    },
+    "KEY_TITLE_LIST": {
+      "label": "TITLE LIST",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x894",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 34 'TITLE LIST' (OBC 29; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2196"
+        }
+      ]
+    },
+    "KEY_B": {
+      "label": "B",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x8C0",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 35 'B' (OBC 03; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2240"
+        }
+      ]
+    },
+    "KEY_D": {
+      "label": "D",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x842",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 36 'D' (OBC 42; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2114"
+        }
+      ]
+    },
+    "KEY_C": {
+      "label": "C",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x876",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 37 'C' (OBC 6E; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2166"
+        }
+      ]
+    },
+    "KEY_A": {
+      "label": "A",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x890",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 38 'A' (OBC 09; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2192"
+        }
+      ]
+    },
+    "KEY_TIMER": {
+      "label": "TIMER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x8A6",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 39 'TIMER' (OBC 65; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2214"
+        }
+      ]
+    },
+    "KEY_RETURN": {
+      "label": "RETURN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x895",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 40 'RETURN' (OBC A9; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2197"
+        }
+      ]
+    },
+    "KEY_USB": {
+      "label": "USB",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x804",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 41 'USB' (OBC 20; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2052"
+        }
+      ]
+    },
+    "KEY_DVD": {
+      "label": "DVD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x8E3",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 42 'DVD' (OBC C7; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2275"
+        }
+      ]
+    },
+    "KEY_TV_SLASH_DVD": {
+      "label": "TV/DVD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x846",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 43 'TV/DVD' (OBC 62; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2118"
+        }
+      ]
+    },
+    "KEY_REC_MODE": {
+      "label": "REC MODE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x807",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 44 'REC MODE' (OBC E0; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2055"
+        }
+      ]
+    },
+    "KEY_PAUSE_SLASH_TIME_SHIFT": {
+      "label": "PAUSE / TIME SHIFT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x89B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 45 'PAUSE / TIME SHIFT' (OBC D9; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2203"
+        }
+      ]
+    },
+    "KEY_TV_SLASH_RADIO": {
+      "label": "TV/RADIO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x808",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 46 'TV/RADIO' (OBC 10; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2056"
+        }
+      ]
+    },
+    "KEY_FAV_LIST": {
+      "label": "FAV LIST",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x8E2",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 47 'FAV LIST' (OBC 47; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2274"
+        }
+      ]
+    },
+    "KEY_TEXT": {
+      "label": "TEXT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x88F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 48 'TEXT' (OBC F1; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2191"
+        }
+      ]
+    },
+    "KEY_PLAY_LISTS": {
+      "label": "PLAY LISTS",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x893",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 49 'PLAY LISTS' (OBC C9; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2195"
+        }
+      ]
+    },
+    "KEY_MARKER": {
+      "label": "MARKER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x801",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 50 'MARKER' (OBC 80; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2049"
+        }
+      ]
+    },
+    "KEY_F_FWD": {
+      "label": "F FWD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x8A1",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 51 'F FWD' (OBC 85; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2209"
+        }
+      ]
+    },
+    "KEY_NEXT_INPUT": {
+      "label": "Next Input",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x8DF",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 52 'Next Input' (OBC FB; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2271"
+        }
+      ]
+    },
+    "KEY_INPUT_DVD": {
+      "label": "Input DVD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x8E3",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 53 'Input DVD' (OBC C7; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2275"
+        }
+      ]
+    },
+    "KEY_INPUT_HDD": {
+      "label": "Input HDD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x800",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 54 'Input HDD' (OBC 00; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2048"
+        }
+      ]
+    },
+    "KEY_INPUT_USB": {
+      "label": "Input USB",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x804",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (standard)/Samsung SH 895.rmdu function 55 'Input USB' (OBC 20; Samsung36, parms 32 0 8): Samsung36 device 32 subdevice 0 function 2052"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "manufacturer": "Psyclone",
+  "model": "Switch",
+  "aliases": [],
+  "controls": [
+    "Psyclone Switch"
+  ],
+  "protocol": {
+    "name": "F12_relaxed",
+    "carrierHz": 37900,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_SOURCE_NEXT_PLUS": {
+      "label": "Source Next (+)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "subdevice": "0x00",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio_Video Selectors/PsycloneSwitch_PSC01.rmdu function 0 'Source Next (+)' (OBC 10; F12, parms 7): F12_relaxed device 7 subdevice 0 function 8; the upgrade's note: 'Source Next (+)'"
+        }
+      ]
+    },
+    "KEY_SOURCE_PREV_MINUS": {
+      "label": "Source Prev (-)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "subdevice": "0x00",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio_Video Selectors/PsycloneSwitch_PSC01.rmdu function 1 'Source Prev (-)' (OBC 20; F12, parms 7): F12_relaxed device 7 subdevice 0 function 4; the upgrade's note: 'Source Prev (-)'"
+        }
+      ]
+    },
+    "KEY_POWER_TOGGLE": {
+      "label": "Power Toggle",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "subdevice": "0x00",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio_Video Selectors/PsycloneSwitch_PSC01.rmdu function 2 'Power Toggle' (OBC 08; F12, parms 7): F12_relaxed device 7 subdevice 0 function 16; the upgrade's note: 'Power Toggle'"
+        }
+      ]
+    }
+  }
+}

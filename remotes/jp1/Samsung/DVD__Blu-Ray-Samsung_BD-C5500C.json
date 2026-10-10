@@ -1,0 +1,666 @@
+{
+  "manufacturer": "Samsung",
+  "model": "BD-C5500C",
+  "aliases": [],
+  "controls": [
+    "Samsung BD-C5500C"
+  ],
+  "protocol": {
+    "name": "Samsung36",
+    "carrierHz": 37900,
+    "unitUs": 500,
+    "minSends": 1,
+    "claims": {
+      "unitUs": {
+        "reason": "the IRP says 560 us; SwiftRemote's own encoder, eight real captures and IRremoteESP8266 all say about 500 us (marks 512, spaces 490/1468), so the compiled signal follows them and not the IRP's unit",
+        "source": "https://github.com/bengtmartensson/IrpTransmogrifier/tree/c945e76/src/test/teaserfiles Samsung36.ict (eight keys of a Samsung Blu-ray remote, median unit about 496 us; tools/misc_capture_audit.py); https://github.com/crankyoldgit/IRremoteESP8266/blob/1e2f0f3/src/ir_Samsung.cpp#L59-L63 and #L175-L190 (sendSamsung36, 'Works on real devices'); tests/vectors/CITATIONS.md, section 'The misc family'"
+      }
+    }
+  },
+  "keys": {
+    "KEY_POWER": {
+      "label": "power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x700",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 0 'power' (OBC 00; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1792"
+        }
+      ]
+    },
+    "KEY_0": {
+      "label": "0",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x70B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 1 '0' (OBC D0; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1803"
+        }
+      ]
+    },
+    "KEY_1": {
+      "label": "1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x702",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 2 '1' (OBC 40; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1794"
+        }
+      ]
+    },
+    "KEY_2": {
+      "label": "2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x703",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 3 '2' (OBC C0; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1795"
+        }
+      ]
+    },
+    "KEY_3": {
+      "label": "3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x704",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 4 '3' (OBC 20; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1796"
+        }
+      ]
+    },
+    "KEY_4": {
+      "label": "4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x705",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 5 '4' (OBC A0; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1797"
+        }
+      ]
+    },
+    "KEY_5": {
+      "label": "5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x706",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 6 '5' (OBC 60; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1798"
+        }
+      ]
+    },
+    "KEY_6": {
+      "label": "6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x707",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 7 '6' (OBC E0; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1799"
+        }
+      ]
+    },
+    "KEY_7": {
+      "label": "7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x708",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 8 '7' (OBC 10; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1800"
+        }
+      ]
+    },
+    "KEY_8": {
+      "label": "8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x709",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 9 '8' (OBC 90; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1801"
+        }
+      ]
+    },
+    "KEY_9": {
+      "label": "9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x70A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 10 '9' (OBC 50; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1802"
+        }
+      ]
+    },
+    "KEY_CHANNEL_UP": {
+      "label": "channel up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x711",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 11 'channel up' (OBC 88; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1809"
+        }
+      ]
+    },
+    "KEY_CHANNEL_DOWN": {
+      "label": "channel down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x70D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 12 'channel down' (OBC B0; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1805"
+        }
+      ]
+    },
+    "KEY_EXIT": {
+      "label": "exit",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x72B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 13 'exit' (OBC D4; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1835"
+        }
+      ]
+    },
+    "KEY_MENU": {
+      "label": "menu",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x716",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 14 'menu' (OBC 68; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1814"
+        }
+      ]
+    },
+    "KEY_DISPLAY": {
+      "label": "display",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x71E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 15 'display' (OBC 78; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1822"
+        }
+      ]
+    },
+    "KEY_UP_ARROW": {
+      "label": "up arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x718",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 16 'up arrow' (OBC 18; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1816"
+        }
+      ]
+    },
+    "KEY_DOWN_ARROW": {
+      "label": "down arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x719",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 17 'down arrow' (OBC 98; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1817"
+        }
+      ]
+    },
+    "KEY_LEFT_ARROW": {
+      "label": "left arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x71B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 18 'left arrow' (OBC D8; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1819"
+        }
+      ]
+    },
+    "KEY_RIGHT_ARROW": {
+      "label": "right arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x71A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 19 'right arrow' (OBC 58; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1818"
+        }
+      ]
+    },
+    "KEY_SELECT": {
+      "label": "select",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x71C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 20 'select' (OBC 38; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1820"
+        }
+      ]
+    },
+    "KEY_PLAY": {
+      "label": "play",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x714",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 21 'play' (OBC 28; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1812"
+        }
+      ]
+    },
+    "KEY_PAUSE": {
+      "label": "pause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x732",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 22 'pause' (OBC 4C; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1842"
+        }
+      ]
+    },
+    "KEY_REWIND": {
+      "label": "rewind",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x712",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 23 'rewind' (OBC 48; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1810"
+        }
+      ]
+    },
+    "KEY_FAST_FWD": {
+      "label": "fast fwd",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x715",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 24 'fast fwd' (OBC A8; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1813"
+        }
+      ]
+    },
+    "KEY_STOP": {
+      "label": "stop",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x713",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 25 'stop' (OBC C8; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1811"
+        }
+      ]
+    },
+    "KEY_RED": {
+      "label": "red",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x721",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 26 'red' (OBC 84; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1825"
+        }
+      ]
+    },
+    "KEY_GREEN": {
+      "label": "green",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x722",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 27 'green' (OBC 44; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1826"
+        }
+      ]
+    },
+    "KEY_YELLOW": {
+      "label": "yellow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x723",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 28 'yellow' (OBC C4; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1827"
+        }
+      ]
+    },
+    "KEY_BLUE": {
+      "label": "blue",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x724",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 29 'blue' (OBC 24; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1828"
+        }
+      ]
+    },
+    "KEY_SKIP_PLUS": {
+      "label": "skip+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x711",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 30 'skip+' (OBC 88; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1809"
+        }
+      ]
+    },
+    "KEY_SKIP_MINUS": {
+      "label": "skip-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x70D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 31 'skip-' (OBC B0; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1805"
+        }
+      ]
+    },
+    "KEY_REPEAT": {
+      "label": "repeat",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x727",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 32 'repeat' (OBC E4; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1831"
+        }
+      ]
+    },
+    "KEY_EJECT": {
+      "label": "eject",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x701",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 33 'eject' (OBC 80; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1793"
+        }
+      ]
+    },
+    "KEY_AUDIO": {
+      "label": "audio",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x725",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 34 'audio' (OBC A4; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1829"
+        }
+      ]
+    },
+    "KEY_BONUSVIDEO": {
+      "label": "bonusvideo",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x733",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 35 'bonusvideo' (OBC CC; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1843"
+        }
+      ]
+    },
+    "KEY_CANCEL": {
+      "label": "cancel",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x71F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 36 'cancel' (OBC F8; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1823"
+        }
+      ]
+    },
+    "KEY_DISCMENU": {
+      "label": "discmenu",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x71D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 37 'discmenu' (OBC B8; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1821"
+        }
+      ]
+    },
+    "KEY_REPEATA": {
+      "label": "repeatA",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x728",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 38 'repeatA' (OBC 14; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1832"
+        }
+      ]
+    },
+    "KEY_RETURN": {
+      "label": "return",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x717",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 39 'return' (OBC E8; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1815"
+        }
+      ]
+    },
+    "KEY_SUBTITLE": {
+      "label": "subtitle",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x726",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 40 'subtitle' (OBC 64; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1830"
+        }
+      ]
+    },
+    "KEY_TITLEMENU": {
+      "label": "titlemenu",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x720",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 41 'titlemenu' (OBC 04; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1824"
+        }
+      ]
+    },
+    "KEY_FULLSCREEN": {
+      "label": "fullscreen",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x739",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 42 'fullscreen' (OBC 9C; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1849"
+        }
+      ]
+    },
+    "KEY_INTERNET": {
+      "label": "internet",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x738",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 43 'internet' (OBC 1C; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1848"
+        }
+      ]
+    },
+    "KEY_NETFLIX": {
+      "label": "netflix",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x73E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 44 'netflix' (OBC 7C; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1854"
+        }
+      ]
+    },
+    "KEY_TOOLS": {
+      "label": "tools",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x73A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-C5500C.rmdu function 45 'tools' (OBC 5C; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1850"
+        }
+      ]
+    }
+  }
+}

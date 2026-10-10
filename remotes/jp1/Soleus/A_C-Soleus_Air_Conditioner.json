@@ -1,0 +1,67 @@
+{
+  "manufacturer": "Soleus",
+  "model": "Air Conditioner",
+  "aliases": [],
+  "controls": [
+    "Soleus Air Conditioner"
+  ],
+  "protocol": {
+    "name": "Proton",
+    "carrierHz": 38500,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER": {
+      "label": "power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD7",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 A_C/Soleus_Air_Conditioner.rmdu function 0 'power' (OBC 2F; Proton, parms 215): Proton device 215 function 11"
+        }
+      ]
+    },
+    "KEY_MODE": {
+      "label": "mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD7",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 A_C/Soleus_Air_Conditioner.rmdu function 1 'mode' (OBC FF; Proton, parms 215): Proton device 215 function 0"
+        }
+      ]
+    },
+    "KEY_SWING": {
+      "label": "swing",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD7",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 A_C/Soleus_Air_Conditioner.rmdu function 2 'swing' (OBC AF; Proton, parms 215): Proton device 215 function 10"
+        }
+      ]
+    },
+    "KEY_FAN_SPEED": {
+      "label": "fan speed",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD7",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 A_C/Soleus_Air_Conditioner.rmdu function 3 'fan speed' (OBC 7F; Proton, parms 215): Proton device 215 function 1"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "manufacturer": "GC_Electronics",
+  "model": "For GC Electronics Model 32-3221 Remote A/B Coax Switch",
+  "aliases": [],
+  "controls": [
+    "For GC Electronics Model 32-3221 Remote A/B Coax Switch"
+  ],
+  "protocol": {
+    "name": "F12_relaxed",
+    "carrierHz": 37900,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_SELECT_A": {
+      "label": "Select A",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x03",
+          "subdevice": "0x00",
+          "function": "0x20",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio_Video Selectors/GC_Electronics_AB_Switch_32-3221.rmdu function 55 'Select A' (OBC 04; F12, parms 3): F12_relaxed device 3 subdevice 0 function 32"
+        }
+      ]
+    },
+    "KEY_SELECT_B": {
+      "label": "Select B",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x03",
+          "subdevice": "0x00",
+          "function": "0x40",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio_Video Selectors/GC_Electronics_AB_Switch_32-3221.rmdu function 56 'Select B' (OBC 02; F12, parms 3): F12_relaxed device 3 subdevice 0 function 64"
+        }
+      ]
+    }
+  }
+}

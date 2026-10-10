@@ -1,0 +1,750 @@
+{
+  "manufacturer": "Samsung",
+  "model": "STB-E7500M",
+  "aliases": [],
+  "controls": [
+    "Samsung STB-E7500M"
+  ],
+  "protocol": {
+    "name": "Samsung36",
+    "carrierHz": 37900,
+    "unitUs": 500,
+    "minSends": 1,
+    "claims": {
+      "unitUs": {
+        "reason": "the IRP says 560 us; SwiftRemote's own encoder, eight real captures and IRremoteESP8266 all say about 500 us (marks 512, spaces 490/1468), so the compiled signal follows them and not the IRP's unit",
+        "source": "https://github.com/bengtmartensson/IrpTransmogrifier/tree/c945e76/src/test/teaserfiles Samsung36.ict (eight keys of a Samsung Blu-ray remote, median unit about 496 us; tools/misc_capture_audit.py); https://github.com/crankyoldgit/IRremoteESP8266/blob/1e2f0f3/src/ir_Samsung.cpp#L59-L63 and #L175-L190 (sendSamsung36, 'Works on real devices'); tests/vectors/CITATIONS.md, section 'The misc family'"
+      }
+    }
+  },
+  "keys": {
+    "KEY_POWER": {
+      "label": "Power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x91",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 0 'Power' (OBC 89; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 145"
+        }
+      ]
+    },
+    "KEY_NUM_0": {
+      "label": "num_0",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x80",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 1 'num_0' (OBC 01; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 128"
+        }
+      ]
+    },
+    "KEY_NUM_1": {
+      "label": "num_1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x81",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 2 'num_1' (OBC 81; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 129"
+        }
+      ]
+    },
+    "KEY_NUM_2": {
+      "label": "num_2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x82",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 3 'num_2' (OBC 41; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 130"
+        }
+      ]
+    },
+    "KEY_NUM_3": {
+      "label": "num_3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x83",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 4 'num_3' (OBC C1; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 131"
+        }
+      ]
+    },
+    "KEY_NUM_4": {
+      "label": "num_4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x84",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 5 'num_4' (OBC 21; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 132"
+        }
+      ]
+    },
+    "KEY_NUM_5": {
+      "label": "num_5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x85",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 6 'num_5' (OBC A1; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 133"
+        }
+      ]
+    },
+    "KEY_NUM_6": {
+      "label": "num_6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x86",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 7 'num_6' (OBC 61; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 134"
+        }
+      ]
+    },
+    "KEY_NUM_7": {
+      "label": "num_7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x87",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 8 'num_7' (OBC E1; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 135"
+        }
+      ]
+    },
+    "KEY_NUM_8": {
+      "label": "num_8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x88",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 9 'num_8' (OBC 11; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 136"
+        }
+      ]
+    },
+    "KEY_NUM_9": {
+      "label": "num_9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x89",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 10 'num_9' (OBC 91; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 137"
+        }
+      ]
+    },
+    "KEY_CH_PLUS": {
+      "label": "CH+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0xC5",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 11 'CH+' (OBC A3; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 197"
+        }
+      ]
+    },
+    "KEY_CH_MINUS": {
+      "label": "CH-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0xC6",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 12 'CH-' (OBC 63; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 198"
+        }
+      ]
+    },
+    "KEY_EXIT": {
+      "label": "exit",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 13 'exit' (OBC A0; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 5"
+        }
+      ]
+    },
+    "KEY_MENU": {
+      "label": "Menu",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x94",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 14 'Menu' (OBC 29; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 148"
+        }
+      ]
+    },
+    "KEY_GUIDE": {
+      "label": "Guide",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x47",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 15 'Guide' (OBC E2; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 71"
+        }
+      ]
+    },
+    "KEY_INFO": {
+      "label": "Info",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x41",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 16 'Info' (OBC 82; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 65"
+        }
+      ]
+    },
+    "KEY_UP_ARROW": {
+      "label": "up_arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x97",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 17 'up_arrow' (OBC E9; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 151"
+        }
+      ]
+    },
+    "KEY_DOWN_ARROW": {
+      "label": "down_arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x98",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 18 'down_arrow' (OBC 19; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 152"
+        }
+      ]
+    },
+    "KEY_LEFT_ARROW": {
+      "label": "left_arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x9A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 19 'left_arrow' (OBC 59; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 154"
+        }
+      ]
+    },
+    "KEY_RIGHT_ARROW": {
+      "label": "right_arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x99",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 20 'right_arrow' (OBC 99; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 153"
+        }
+      ]
+    },
+    "KEY_SELECT": {
+      "label": "Select",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x9B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 21 'Select' (OBC D9; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 155"
+        }
+      ]
+    },
+    "KEY_PLAY": {
+      "label": "Play",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0xA0",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 22 'Play' (OBC 05; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 160"
+        }
+      ]
+    },
+    "KEY_PAUSE": {
+      "label": "Pause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0xA3",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 23 'Pause' (OBC C5; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 163"
+        }
+      ]
+    },
+    "KEY_REWIND": {
+      "label": "rewind",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x9C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 24 'rewind' (OBC 39; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 156"
+        }
+      ]
+    },
+    "KEY_FFWD": {
+      "label": "ffwd",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x9E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 25 'ffwd' (OBC 79; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 158"
+        }
+      ]
+    },
+    "KEY_STOP": {
+      "label": "Stop",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0xA2",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 26 'Stop' (OBC 45; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 162"
+        }
+      ]
+    },
+    "KEY_RECORD": {
+      "label": "Record",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0xC2",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 27 'Record' (OBC 43; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 194"
+        }
+      ]
+    },
+    "KEY_RED": {
+      "label": "Red",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x90",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 28 'Red' (OBC 09; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 144"
+        }
+      ]
+    },
+    "KEY_GREEN": {
+      "label": "Green",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0xC0",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 29 'Green' (OBC 03; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 192"
+        }
+      ]
+    },
+    "KEY_YELLOW": {
+      "label": "Yellow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x76",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 30 'Yellow' (OBC 6E; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 118"
+        }
+      ]
+    },
+    "KEY_SKIP_PLUS": {
+      "label": "Skip+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0xA1",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 31 'Skip+' (OBC 85; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 161"
+        }
+      ]
+    },
+    "KEY_SKIP_MINUS": {
+      "label": "Skip-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x9F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 32 'Skip-' (OBC F9; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 159"
+        }
+      ]
+    },
+    "KEY_AUDIO": {
+      "label": "Audio",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0xCA",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 33 'Audio' (OBC 53; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 202"
+        }
+      ]
+    },
+    "KEY_AD_SLASH_SUBTITLE": {
+      "label": "AD/Subtitle",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0xC9",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 34 'AD/Subtitle' (OBC 93; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 201"
+        }
+      ]
+    },
+    "KEY_BLUE": {
+      "label": "Blue",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x42",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 35 'Blue' (OBC 42; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 66"
+        }
+      ]
+    },
+    "KEY_CH_LIST": {
+      "label": "Ch List",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 36 'Ch List' (OBC C0; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 3"
+        }
+      ]
+    },
+    "KEY_FULL_SCREEN": {
+      "label": "Full Screen",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 37 'Full Screen' (OBC D0; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 11"
+        }
+      ]
+    },
+    "KEY_HOME": {
+      "label": "Home",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x8B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 38 'Home' (OBC D1; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 139"
+        }
+      ]
+    },
+    "KEY_PIP": {
+      "label": "PIP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0xCB",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 39 'PIP' (OBC D3; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 203"
+        }
+      ]
+    },
+    "KEY_RECORDPAUSE": {
+      "label": "RecordPause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0xC4",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 40 'RecordPause' (OBC 23; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 196"
+        }
+      ]
+    },
+    "KEY_RETURN": {
+      "label": "Return",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x95",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 41 'Return' (OBC A9; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 149"
+        }
+      ]
+    },
+    "KEY_SOCIAL_TV": {
+      "label": "Social TV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0xCD",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 42 'Social TV' (OBC B3; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 205"
+        }
+      ]
+    },
+    "KEY_WWW": {
+      "label": "WWW",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0xCC",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 43 'WWW' (OBC 33; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 204"
+        }
+      ]
+    },
+    "KEY_TELETEXT": {
+      "label": "Teletext",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x8F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 44 'Teletext' (OBC F1; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 143"
+        }
+      ]
+    },
+    "KEY_SMART_HUB": {
+      "label": "Smart Hub",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 45 'Smart Hub' (OBC 10; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 8"
+        }
+      ]
+    },
+    "KEY_TOOLS": {
+      "label": "Tools",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 46 'Tools' (OBC 90; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 9"
+        }
+      ]
+    },
+    "KEY_2D_MINUS_3D": {
+      "label": "2D-3D",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0xC7",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 47 '2D-3D' (OBC E3; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 199"
+        }
+      ]
+    },
+    "KEY_EJECT": {
+      "label": "Eject",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x8C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 50 'Eject' (OBC 31; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 140"
+        }
+      ]
+    },
+    "KEY_POPUP": {
+      "label": "PopUp",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x93",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 51 'PopUp' (OBC C9; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 147"
+        }
+      ]
+    },
+    "KEY_SEARCH": {
+      "label": "Search",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0xC8",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 52 'Search' (OBC 13; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 200"
+        }
+      ]
+    },
+    "KEY_TITLEMENU": {
+      "label": "TitleMenu",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x1A",
+          "function": "0x93",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVR_PVR/Samsung STB-E7500M.rmdu function 53 'TitleMenu' (OBC C9; Samsung36, parms 48 26 null): Samsung36 device 48 subdevice 26 function 147"
+        }
+      ]
+    }
+  }
+}
