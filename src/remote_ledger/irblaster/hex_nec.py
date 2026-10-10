@@ -30,14 +30,17 @@ Bit reversal maps ``x ^ 0xFF`` to ``rev8(x) ^ 0xFF``, so "byte 4 is the
 complement of byte 3" holds in the hex exactly when it holds on the wire; the
 validity check needs no knowledge of the bit order, and the reversal does.
 
-**What the ledger can hold.** All four ledger protocols spell the fourth byte
+**What the ledger can hold.** NEC1, NEC2, NECx1 and NECx2 spell the fourth byte
 ``~F:8``. A code whose fourth byte is not the complement of its third is none
-of NEC1, NEC2, NECx1 or NECx2, and the only members of the IRP database that
-can hold it are the relaxed ``-f16`` forms (``E:8``, independent), which are
-not in the registry. Such a code raises ``ValueError``. The reason says which
-pattern the fourth byte follows, using DecodeIR's own list of the variants
-(hifi-remote.com/johnsfine/DecodeIR.html, "Variant IRstreams in NEC
-protocols"):
+of them, and the only members of the IRP database that can hold it are the
+relaxed ``-f16`` forms (``E:8``, independent). **``NEC1-f16`` and ``NEC2-f16``
+are registered (DESIGN section 37), so a ``NEC`` or ``NEC2`` code with any
+fourth byte maps to them, its ``function`` the pair ``F * 256 + E``.** The
+database has no such code under ``NECx1`` or ``NECx2``, and their ``-f16`` forms
+are not registered: such a code would raise ``ValueError``, and the reason says
+which pattern the fourth byte follows, using DecodeIR's own list of the
+variants (hifi-remote.com/johnsfine/DecodeIR.html, "Variant IRstreams in NEC
+protocols"), which the ``NEC`` and ``NEC2`` codes follow too:
 
 * ``y1``  ``D,S,F,~F:7,F:1:7``        complement all of F except the MSB
 * ``y2``  ``D,S,F,F:1,~F:7:1``        complement all of F except the LSB
@@ -99,18 +102,23 @@ def _fourth_byte_style(f: int, e: int) -> str:
     return "other"
 
 
-def _make(ledger_name: str) -> Callable[[str], tuple[str, int, int | None, int]]:
+def _make(ledger_name: str, f16_name: str | None = None
+          ) -> Callable[[str], tuple[str, int, int | None, int]]:
+    """The map of one DB protocol. ``f16_name`` is the registered relaxed form that holds a code whose fourth byte
+    is not the complement of the third, or None where there is none (the code is then refused)."""
     def from_db_hex(hexcode: str) -> tuple[str, int, int | None, int]:
         if len(hexcode) != 8 or not set(hexcode) <= _HEX_DIGITS:
             raise ValueError("the hexcode is not exactly 8 hex digits")
         d, s, f, e = (_REV[b] for b in bytes.fromhex(hexcode))
         style = _fourth_byte_style(f, e)
-        if style != "ok":
-            raise ValueError(
-                f"byte 4 is not the complement of byte 3: {_STYLE_TEXT[style]}; "
-                f"only the unregistered {ledger_name}-f16 can hold it"
-            )
-        return (ledger_name, d, s, f)
+        if style == "ok":
+            return (ledger_name, d, s, f)
+        if f16_name is not None:
+            return (f16_name, d, s, (f << 8) | e)
+        raise ValueError(
+            f"byte 4 is not the complement of byte 3: {_STYLE_TEXT[style]}; "
+            f"only the unregistered {ledger_name}-f16 can hold it"
+        )
 
     from_db_hex.__name__ = f"from_db_hex_{ledger_name.lower()}"
     return from_db_hex
@@ -118,8 +126,8 @@ def _make(ledger_name: str) -> Callable[[str], tuple[str, int, int | None, int]]
 
 #: DB protocol name -> function(hexcode) -> (ledger protocol, D, S, F).
 FROM_DB_HEX: dict[str, Callable[[str], tuple[str, int, int | None, int]]] = {
-    "NEC": _make("NEC1"),
-    "NEC2": _make("NEC2"),
+    "NEC": _make("NEC1", "NEC1-f16"),
+    "NEC2": _make("NEC2", "NEC2-f16"),
     "NECx1": _make("NECx1"),
     "NECx2": _make("NECx2"),
 }

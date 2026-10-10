@@ -29,7 +29,7 @@ importer's own parser (``importer.parse_citation``), every brand and model from
 on the worker count or on the order a worker finishes in (R12).
 
 The ledger's per-key facts are those the importer wrote, so a key the importer
-could not represent (2,066 of the database's 413,331) is not in the tree and
+could not represent (556 of the database's 413,331) is not in the tree and
 not in the API; ``rl app`` prints the count from ``IMPORT.md``.
 """
 

@@ -1,0 +1,75 @@
+{
+  "manufacturer": "YAMAHA",
+  "model": "IR Blaster DB 517 (NEC1-f16)",
+  "aliases": [],
+  "controls": [
+    "YAMAHA | RAV 326",
+    "YAMAHA | RAV 326 - WJ 19440 US",
+    "YAMAHA | RX - V 461",
+    "YAMAHA | RX - V 661",
+    "YAMAHA | RX-V861"
+  ],
+  "protocol": {
+    "name": "NEC1-f16",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_SCENE_1": {
+      "label": "SCENE 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x7F",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 517, 'SCENE 1' 5EA100FE NEC: 32 wire bits, bytes bit-reversed as NEC1-f16"
+        }
+      ]
+    },
+    "KEY_SCENE_2": {
+      "label": "SCENE 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x37C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 517, 'SCENE 2' 5EA1C03E NEC: 32 wire bits, bytes bit-reversed as NEC1-f16"
+        }
+      ]
+    },
+    "KEY_SCENE_3": {
+      "label": "SCENE 3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x679",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 517, 'SCENE 3' 5EA1609E NEC: 32 wire bits, bytes bit-reversed as NEC1-f16"
+        }
+      ]
+    },
+    "KEY_SCENE_4": {
+      "label": "SCENE 4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x976",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 517, 'SCENE 4' 5EA1906E NEC: 32 wire bits, bytes bit-reversed as NEC1-f16"
+        }
+      ]
+    }
+  }
+}

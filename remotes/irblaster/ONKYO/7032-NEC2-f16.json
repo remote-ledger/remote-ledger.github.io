@@ -1,0 +1,42 @@
+{
+  "manufacturer": "ONKYO",
+  "model": "IR Blaster DB 7032 (NEC2-f16)",
+  "aliases": [],
+  "controls": [
+    "ONKYO | RC - 911 R",
+    "ONKYO | RC-911R",
+    "ONKYO | RC-934R",
+    "ONKYO | TX - NR 676",
+    "ONKYO | TX - RZ 720",
+    "ONKYO | TX-L20D",
+    "ONKYO | TX-NR555",
+    "ONKYO | TX-NR575E",
+    "ONKYO | TX-NR656",
+    "ONKYO | TX-NR676E",
+    "ONKYO | TX-NR757",
+    "ONKYO | TX-RZ620",
+    "ONKYO | TX-RZ820",
+    "ONKYO | TX-RZ920"
+  ],
+  "protocol": {
+    "name": "NEC2-f16",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_INPUT_BLUETOOTH": {
+      "label": "INPUT BLUETOOTH",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x500E",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7032, 'INPUT BLUETOOTH' 4B780A70 NEC2: 32 wire bits, bytes bit-reversed as NEC2-f16"
+        }
+      ]
+    }
+  }
+}

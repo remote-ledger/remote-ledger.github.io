@@ -1,0 +1,65 @@
+{
+  "manufacturer": "NAD",
+  "model": "IR Blaster DB 3661 (NEC1-f16)",
+  "aliases": [],
+  "controls": [
+    "BRAVO | A 720",
+    "BRAVO | A 721",
+    "NAD | AV3",
+    "NAD | AVR3",
+    "NAD | T741",
+    "NAD | T747",
+    "NAD | T748",
+    "NAD | T757",
+    "NAD | VISOTHREE"
+  ],
+  "protocol": {
+    "name": "NEC1-f16",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_TUNER_DELETE": {
+      "label": "TUNER DELETE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x7C",
+          "function": "0xF6F9",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3661, 'TUNER DELETE' E13E6F9F NEC: 32 wire bits, bytes bit-reversed as NEC1-f16"
+        }
+      ]
+    },
+    "KEY_TUNER_MEMORY": {
+      "label": "TUNER MEMORY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x7C",
+          "function": "0xF5FA",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3661, 'TUNER MEMORY' E13EAF5F NEC: 32 wire bits, bytes bit-reversed as NEC1-f16"
+        }
+      ]
+    },
+    "KEY_TUNER_MODE": {
+      "label": "TUNER MODE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x87",
+          "subdevice": "0x7C",
+          "function": "0x3738",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3661, 'TUNER MODE' E13EEC1C NEC: 32 wire bits, bytes bit-reversed as NEC1-f16"
+        }
+      ]
+    }
+  }
+}

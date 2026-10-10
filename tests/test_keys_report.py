@@ -242,7 +242,7 @@ def real():
 def test_the_real_corpus_is_the_one_the_report_describes(real):
     sources = real["sources"]
     assert list(sources) == [*SOURCES, "all"]
-    assert sources["irblaster"]["remotes"] == 10013 and sources["irblaster"]["keys"] == 411265
+    assert sources["irblaster"]["remotes"] == 10084 and sources["irblaster"]["keys"] == 412775
     assert sources["all"]["remotes"] == sum(sources[s]["remotes"] for s in SOURCES)
     assert sources["all"]["keys"] == sum(sources[s]["keys"] for s in SOURCES)
     for row in sources.values():

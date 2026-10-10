@@ -94,7 +94,7 @@ def test_report_totals_reads_the_committed_report():
 
 @needs_data
 def test_parse_citation_round_trips_over_every_key_of_the_real_tree():
-    """All of them (411,265 on the import of 6aafd15)."""
+    """All of them (412,775 on the import of 6aafd15)."""
     facts, failures = read_real_tree()
     assert failures[:5] == []
     assert facts["keys"] > 400_000 and len(facts["rows"]) == facts["keys"]

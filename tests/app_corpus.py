@@ -73,14 +73,14 @@ REMOTES: dict[int, dict] = {
         "keys": [("OK", "00FF609F", "NEC"), ("OK", "00FFE01F", "NEC"),
                  ("ok", "00FFE01F", "NEC"), ("Ok", "00FF609F", "NEC"),
                  ("VOL +", "00FFA05F", "NEC"), ("VOL+", "00FF50AF", "NEC")]},
-    # A key the NEC map refuses (byte 4 is not the complement of byte 3) beside
+    # A key the NEC map refuses (a hexcode of seven digits) beside
     # three it holds: the id stays, the key goes
     8: {"models": [("HALF", "H")],
-        "keys": [("POWER", "00FF609F", "NEC"), ("BROKEN", "20DF10EE", "NEC"),
+        "keys": [("POWER", "00FF609F", "NEC"), ("BROKEN", "0DF1EB0", "NEC"),
                  ("VOL+", "00FFE01F", "NEC")]},
     # Nothing representable: no file, and the brand it alone lists is not in the API
     9: {"models": [("VANISH", "V1"), ("ACME", "LOST")],
-        "keys": [("BROKEN", "20DF10EE", "NEC")]},
+        "keys": [("BROKEN", "0DF1EB0", "NEC")]},
 }
 
 

@@ -45,7 +45,7 @@ def selected(real_selected):
 
 
 def test_the_dedupe_numbers_the_design_quotes(real):
-    """411,265 keys of the IR Blaster import share 57,709 compiled signals; the whole ledger's
+    """412,775 keys of the IR Blaster import share 58,344 compiled signals; the whole ledger's
     599,285 keys share 167,172."""
     records, _ = real
     keys: Counter = Counter()
@@ -54,12 +54,12 @@ def test_the_dedupe_numbers_the_design_quotes(real):
         for key in record.keys:
             keys[record.source] += 1
             distinct.setdefault(record.source, set()).add(key[4])
-    assert (keys["irblaster"], len(distinct["irblaster"])) == (411_265, 57_709)
+    assert (keys["irblaster"], len(distinct["irblaster"])) == (412_775, 58_344)
     assert (keys["lirc"], keys["smartir"], keys["authored"]) == (112_789, 914, 128)
-    assert sum(keys.values()) == 644_641 and len(records) == 16_124
-    assert len(set().union(*distinct.values())) == 171_210
+    assert sum(keys.values()) == 646_151 and len(records) == 16_195
+    assert len(set().union(*distinct.values())) == 171_845
     # the IR Blaster signals as blobs, with their two-byte counts: 8.8 MB of binary words
-    assert sum(len(b) for b in distinct["irblaster"]) == 8_793_390
+    assert sum(len(b) for b in distinct["irblaster"]) == 8_889_348
 
 
 def test_no_remote_has_a_second_candidate_group(real):
@@ -76,9 +76,9 @@ def test_the_selected_profile_carries_every_brand_and_has_neither_a_budget_nor_a
     assert select.MIN_MODELS == 0 and select.MIN_MAPPED_SHARE == 0.0
     assembled, data = selected
     carried = {row[2] for row in assembled.brands}
-    assert carried == set(real[1].brands) and len(carried) == 5_422 and assembled.excluded == []
+    assert carried == set(real[1].brands) and len(carried) == 5_424 and assembled.excluded == []
     assert len(selection.curated) == 112 and selection.skipped == [] and selection.unresolved == []
-    assert len(selection.proxy_added) == 5_310
+    assert len(selection.proxy_added) == 5_312
     assert {"sanyo", "loewe", "haier", "integra", "skyworth", "westinghouse", "topping"} <= carried
     kept = {row[0] for row in assembled.remote_refs}
     assert kept == {merge.ref_of(r) for r in real[0]}
@@ -155,14 +155,14 @@ def test_design_quotes_the_numbers_of_the_real_build(real, selected, selection):
         f"{len(records):,} | {len(kept):,}",                                  # the remote files
         f"{len(records) - collected.folded.folded:,} | {len(assembled.remotes):,}",   # the remotes, D103
         f"{keys:,} | {len(assembled.keys):,}",
-        f"171,210 | {len(assembled.signals):,}",
+        f"171,845 | {len(assembled.signals):,}",
         f"{len(assembled.excluded):,} brands, {len(left_out):,} remotes, "
         f"{sum(len(r.keys) for r in left_out):,} keys",
         f"{len(selection.curated)} brands of the list and {len(selection.proxy_added):,} by the proxy",
         f"{len(selection.skipped)} brands of the list are left out",
         f"{sum(1 for r in left_out if r.source != 'irblaster'):,} remotes of LIRC and SmartIR",
         f"{len(select.read_curated(select.CURATED_FILE.read_text(encoding='utf-8')))} well-known brands",
-        "411,265 keys but only 57,709 distinct compiled signals",
+        "412,775 keys but only 58,344 distinct compiled signals",
     ]
     for fact in quoted:
         assert fact in section, f"DESIGN section 23 no longer says {fact!r}"

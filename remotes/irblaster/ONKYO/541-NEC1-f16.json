@@ -1,0 +1,102 @@
+{
+  "manufacturer": "ONKYO",
+  "model": "IR Blaster DB 541 (NEC1-f16)",
+  "aliases": [],
+  "controls": [
+    "ONKYO | RC-710M",
+    "ONKYO | RC-738M",
+    "ONKYO | TXSR606",
+    "ONKYO | TXSR607"
+  ],
+  "protocol": {
+    "name": "NEC1-f16",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_FWD": {
+      "label": "FWD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x4880",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 541, 'FWD' 4B781201 NEC: 32 wire bits, bytes bit-reversed as NEC1-f16"
+        }
+      ]
+    },
+    "KEY_PAUSE": {
+      "label": "PAUSE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x4886",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 541, 'PAUSE' 4B781261 NEC: 32 wire bits, bytes bit-reversed as NEC1-f16"
+        }
+      ]
+    },
+    "KEY_PLAY": {
+      "label": "PLAY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x4884",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 541, 'PLAY' 4B781221 NEC: 32 wire bits, bytes bit-reversed as NEC1-f16"
+        }
+      ]
+    },
+    "KEY_REW": {
+      "label": "REW",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x4881",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 541, 'REW' 4B781281 NEC: 32 wire bits, bytes bit-reversed as NEC1-f16"
+        }
+      ]
+    },
+    "KEY_SKIP_NEXT": {
+      "label": "SKIP NEXT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x4887",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 541, 'SKIP NEXT' 4B7812E1 NEC: 32 wire bits, bytes bit-reversed as NEC1-f16"
+        }
+      ]
+    },
+    "KEY_SKIP_PREV": {
+      "label": "SKIP PREV.",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x4888",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 541, 'SKIP PREV.' 4B781211 NEC: 32 wire bits, bytes bit-reversed as NEC1-f16"
+        }
+      ]
+    }
+  }
+}
