@@ -8,8 +8,8 @@ sources have been imported under SPEC R19:
 - **LIRC**: 3,138 remotes, 112,789 keys (DESIGN §14).
 - **SmartIR**: `media_player` and `fan` only, 62 remotes, 914 keys
   (DESIGN §15).
-- **IR Blaster**, as shipped in SwiftRemote: 10,013 remote files, 411,265
-  keys, GPL-3.0 by inheritance only (DESIGN §17, §18).
+- **IR Blaster**, as shipped in SwiftRemote: 10,084 remote files, 412,775
+  keys, GPL-3.0 by inheritance only (DESIGN §17, §18, §38).
 - **hifi-remote.com's Sony code pages**: 151 files, 6,772 keys, a table of
   reference codes with no licence recorded (DESIGN §27).
 - **The JP1 device upgrades** of its forum: 2,566 files, 99,929 keys, read for

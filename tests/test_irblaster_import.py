@@ -52,7 +52,7 @@ REMOTES = {
     # single brand, three NEC keys and one the NEC1 encoder cannot hold
     1: {"models": [("ACME", "TV-1"), ("ACME", "TV-2")],
         "keys": [("POWER", "20DF10EF", "NEC"), ("VOL+", "20DF40BF", "NEC"),
-                 ("VOL-", "20DFC03F", "NEC"), ("BROKEN", "20DF10EE", "NEC")]},
+                 ("VOL-", "20DFC03F", "NEC"), ("BROKEN", "0DF1EB0", "NEC")]},
     # several brands: ACME has the most models; Sony12 power
     2: {"models": [("ZED", "Z1"), ("ACME", "A1"), ("ACME", "A2")],
         "keys": [("POWER", "A90", "SONY12")]},
@@ -73,7 +73,7 @@ REMOTES = {
                  ("A-B", "20DF48B7", "NEC"), ("A B", "20DFC837", "NEC")]},
     # nothing representable: a code the map refuses, a protocol with no map
     6: {"models": [("BAD", "B")],
-        "keys": [("X", "20DF10EE", "NEC"), ("Y", "ABC", "FOO")]},
+        "keys": [("X", "0DF1EB0", "NEC"), ("Y", "ABC", "FOO")]},
     # Samsung36 carries a unitUs claim
     7: {"models": [("SAM", "S")], "keys": [("UP", "0400E18", "Samsung36")]},
     # a brand that is no directory name
@@ -564,7 +564,7 @@ def test_a_code_no_map_can_hold_is_skipped_with_its_reason(imported):
     ledger, report = imported
     assert "KEY_BROKEN" not in load(ledger, "ACME/1-NEC1.json")["keys"]
     reasons = {row[0] for row in report.skipped_keys}
-    assert any(r.startswith("byte 4 is not the complement of byte 3") for r in reasons)
+    assert "the hexcode is not exactly 8 hex digits" in reasons
     assert "REC80 Panasonic frame: check byte is not D^S^F" in reasons
     assert "no hex map for the DB protocol FOO" in reasons
     assert len(report.skipped_keys) == 4        # BROKEN, BADP, X, Y

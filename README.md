@@ -34,8 +34,8 @@ under `remotes/lirc/`, republished under GPL-2.0-or-later; SmartIR's
 `media_player`/`fan` codes, 62 remotes and 914 keys under
 `remotes/smartir/`, republished under MIT (DESIGN.md §15 — `climate` and
 `light` are state matrices, not buttons, and stay out of scope for now);
-and the IR Blaster code database as shipped in SwiftRemote, 10,013 remote
-files and 411,265 keys under `remotes/irblaster/`, republished under GPL-3.0
+and the IR Blaster code database as shipped in SwiftRemote, 10,084 remote
+files and 412,775 keys under `remotes/irblaster/`, republished under GPL-3.0
 by inheritance and nothing more, since nobody in its lineage says where the
 codes came from (DESIGN.md §17); and hifi-remote.com's Sony code pages, 151
 files and 6,772 keys under `remotes/hifi-remote/`, which are a table of
@@ -43,7 +43,7 @@ reference codes and so carry no licence (DESIGN.md §27); and the JP1 device
 upgrades of hifi-remote.com's forum, 2,566 files and 99,929 keys under
 `remotes/jp1/`, likewise (DESIGN.md §28); and the manufacturers' own IR code
 tables, Marantz's, Anthem's and Oppo's, 189 files and 12,844 keys under
-`remotes/official/`, likewise (DESIGN.md §29, §31). That makes 16,124 remote files with
+`remotes/official/`, likewise (DESIGN.md §29, §31). That makes 16,195 remote files with
 the five authored ones. Data whose licence is unclear is not here: it is kept in
 a private repository in the same layout, which the tools read through
 `--extra-root` (DESIGN.md §30). The IR Blaster database stores each code as a hexcode, and for
@@ -150,7 +150,7 @@ remote per protocol, and a fragment with no key a person could be asked to try
 fragment into a sibling of the same device that has one and plays the same
 way, and never folds two fragments that both can be tried; the remote files do
 not change, and `remote_refs` still maps every ref of the ledger to the remote
-that carries its keys (315 of the 1,225 fragments of split devices in the full
+that carries its keys (357 of the 1,320 fragments of split devices in the full
 bundle; DESIGN.md §26).
 
 ## Try it

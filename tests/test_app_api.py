@@ -62,7 +62,7 @@ SIGNAL_PROTOCOLS = {
     "Thomson7": (2, 2, "ledger"), "Proton": (1, 1, "ledger"), "RCC2026": (1, 1, "ledger"),
 }
 #: A key the NEC map refuses: the importer skips it.
-REFUSED = {("20DF10EE", "NEC")}
+REFUSED = {("0DF1EB0", "NEC")}
 
 
 @pytest.fixture(autouse=True)
@@ -331,7 +331,7 @@ def test_that_id_is_two_files_of_the_tree(synth):
 
 def test_the_key_the_hex_map_refuses_is_not_in_the_api(api):
     everything = b"".join(api.files.values())
-    assert b"20DF10EE" not in everything and b"BROKEN" not in everything
+    assert b"0DF1EB0" not in everything and b"BROKEN" not in everything
     # id 8 stays with the keys that were representable; id 9 and its brand are gone
     assert api.stats["remotes"] == 8
     assert b'"VANISH"' not in api.files["brands.json"]

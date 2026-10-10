@@ -172,9 +172,11 @@ def _bad_byte4(f, e):
         (0x00, 0x00, "unrelated to byte 3"),
     ],
 )
-def test_each_variant_of_byte_4_gets_its_own_stable_reason(f, e, fragment):
+def test_each_variant_of_byte_4_gets_its_own_stable_reason_where_no_f16_form_is_registered(f, e, fragment):
+    """NECx1 and NECx2 have relaxed forms in IrpTransmogrifier that the ledger does not register, and the database
+    holds no such code under either: it would be refused, with the pattern named."""
     hexcode = _bad_byte4(f, e)
-    for db, name in (("NEC", "NEC1"), ("NEC2", "NEC2"), ("NECx1", "NECx1"), ("NECx2", "NECx2")):
+    for db, name in (("NECx1", "NECx1"), ("NECx2", "NECx2")):
         with pytest.raises(ValueError) as caught:
             FROM_DB_HEX[db](hexcode)
         text = str(caught.value)
@@ -183,11 +185,21 @@ def test_each_variant_of_byte_4_gets_its_own_stable_reason(f, e, fragment):
         assert hexcode not in text, "a reason must not carry the hexcode, or it cannot be grouped"
 
 
+@pytest.mark.parametrize("f,e", [(0x00, 0x7F), (0x00, 0xFE), (0x00, 0x7E), (0x12, 0xDE), (0x12, 0x12), (0x00, 0x00),
+                                 (0xFF, 0xFF), (0x58, 0x27)])
+def test_a_nec_or_nec2_code_with_another_fourth_byte_is_held_by_the_f16_form(f, e):
+    """The fourth byte is E and the ledger's function is ``F * 256 + E`` (DESIGN section 37). 0x58 and 0x27 are
+    Yamaha's FM, F=88, whose E under style y1 is 88 ^ 0x7F = 39."""
+    hexcode = _bad_byte4(f, e)
+    assert FROM_DB_HEX["NEC"](hexcode) == ("NEC1-f16", 0, 0, (f << 8) | e)
+    assert FROM_DB_HEX["NEC2"](hexcode) == ("NEC2-f16", 0, 0, (f << 8) | e)
+
+
 def test_the_refusal_text_is_the_same_for_every_code_of_a_kind():
     seen = set()
     for f in (0x00, 0x33, 0x44):
         with pytest.raises(ValueError) as caught:
-            FROM_DB_HEX["NEC"](_bad_byte4(f, f))
+            FROM_DB_HEX["NECx2"](_bad_byte4(f, f))
         seen.add(str(caught.value))
     assert len(seen) == 1
 
@@ -221,12 +233,14 @@ def test_fixture_rows_are_what_the_app_produced(db):
 
 
 @pytest.mark.parametrize("db", DB_PROTOCOLS)
-def test_every_code_with_a_complement_matches_the_apps_waveform(db):
+def test_every_code_the_ledger_holds_matches_the_apps_waveform(db):
+    """Every code of NEC and NEC2, whatever its fourth byte: the f16 forms hold the ones with no complement, and the
+    app's own waveform for them is the independent check of that reading. NECx1 and NECx2 have no f16 form here."""
     rows = _rows(db)
     matched = 0
     for row in rows:
         verdict, info = TOOL.compare(row, db)
-        if _complement_holds(row["hex"]):
+        if _complement_holds(row["hex"]) or db in ("NEC", "NEC2"):
             assert verdict == "matched", f"{row['hex']}: {info}"
             matched += 1
         else:
@@ -234,11 +248,12 @@ def test_every_code_with_a_complement_matches_the_apps_waveform(db):
     assert matched >= 25
 
 
-def test_the_fixtures_include_codes_the_ledger_cannot_hold():
-    """NEC and NEC2 are the two with bad fourth bytes in the real DB."""
-    for db in ("NEC", "NEC2"):
-        refused = [r for r in _rows(db) if not _complement_holds(r["hex"])]
-        assert len(refused) >= 5
+def test_the_fixtures_include_codes_only_the_f16_forms_hold():
+    """NEC and NEC2 are the two with bad fourth bytes in the real DB, and the f16 forms hold them."""
+    for db, name in (("NEC", "NEC1-f16"), ("NEC2", "NEC2-f16")):
+        relaxed = [r for r in _rows(db) if not _complement_holds(r["hex"])]
+        assert len(relaxed) >= 5
+        assert {FROM_DB_HEX[db](r["hex"])[0] for r in relaxed} == {name}
     for db in ("NECx1", "NECx2"):
         assert all(_complement_holds(r["hex"]) for r in _rows(db))
 

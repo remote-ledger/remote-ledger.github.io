@@ -369,7 +369,10 @@ def test_a_pipe_in_the_dump_is_reported(world, tmp_path):
 def test_a_skipped_row_the_report_does_not_list_is_reported(world, broken):
     report = broken / IMPORT_ROOT / "IMPORT.md"
     text = report.read_text()
-    row = re.search(r"^\| \d+ \| NEC \| [0-9A-F]+ \| .*\|$", text, re.M).group(0)
+    # a skipped row of any protocol: the NEC family's relaxed codes are held since D160, and what is still refused
+    # in this world is another family's frame
+    _, _, skipped = text.partition("## Keys skipped, by reason")
+    row = re.search(r"^\| \d+ \| \w+ \| [0-9A-F]+ \| .*\|$", skipped, re.M).group(0)
     report.write_text(text.replace(row + "\n", "", 1))
     assert any("was skipped and IMPORT.md does not list it" in p for p in _problems(world, broken))
 
