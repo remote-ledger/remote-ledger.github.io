@@ -14,10 +14,10 @@ silently (SPEC R19, condition 5).
 |---|---|
 | Upstream files: not read: KeymapMaster .txt | 2,073 |
 | Upstream files: skipped: no brand | 12 |
-| Upstream files: skipped: no function decodes | 34 |
+| Upstream files: skipped: no function decodes | 35 |
 | Upstream files: skipped: no functions | 1 |
 | Upstream files: upgrades | 3,251 |
-| Remotes: imported | 2,676 |
+| Remotes: imported | 2,734 |
 | Remotes: skipped: an authored remote wins | 6 |
 | Keys: imported: Aiwa | 947 |
 | Keys: imported: Denon | 1,791 |
@@ -31,7 +31,9 @@ silently (SPEC R19, condition 5).
 | Keys: imported: NEC2 | 1,995 |
 | Keys: imported: NECx1 | 1,635 |
 | Keys: imported: NECx2 | 4,512 |
+| Keys: imported: Nokia32 | 1,648 |
 | Keys: imported: Panasonic | 4,656 |
+| Keys: imported: Panasonic_Old | 794 |
 | Keys: imported: Pioneer-2Part | 1,320 |
 | Keys: imported: Proton | 256 |
 | Keys: imported: RC5 | 5,648 |
@@ -53,8 +55,9 @@ silently (SPEC R19, condition 5).
 | Keys: skipped: the device parameter is missing or is not four bits | 88 |
 | Keys: skipped: the device the function selects is not set | 40 |
 | Keys: skipped: the flag byte has bits the variant does not use | 1 |
-| Keys: skipped: the function has no single OBC byte | 5,279 |
+| Keys: skipped: the function has no single OBC byte | 5,338 |
 | Keys: skipped: the function has no two OBC bytes | 671 |
+| Keys: skipped: the high X bit is sent at release, which a form cannot say | 40 |
 | Keys: skipped: the sub device parameter is missing | 97 |
 | Keys: skipped: the variant is not read (its devices are chosen by more flag bits) | 268 |
 | Files by ledger protocol: Aiwa | 30 |
@@ -69,7 +72,9 @@ silently (SPEC R19, condition 5).
 | Files by ledger protocol: NEC2 | 76 |
 | Files by ledger protocol: NECx1 | 42 |
 | Files by ledger protocol: NECx2 | 90 |
+| Files by ledger protocol: Nokia32 | 39 |
 | Files by ledger protocol: Panasonic | 93 |
+| Files by ledger protocol: Panasonic_Old | 19 |
 | Files by ledger protocol: Pioneer-2Part | 29 |
 | Files by ledger protocol: Proton | 12 |
 | Files by ledger protocol: RC5 | 147 |
@@ -84,18 +89,16 @@ silently (SPEC R19, condition 5).
 | Files by ledger protocol: Sony20 | 85 |
 | Files by ledger protocol: Teac-K | 2 |
 | Brand taken from: the longest brand of the index that begins the description | 148 |
-| Brand taken from: the master index | 2,436 |
+| Brand taken from: the master index | 2,494 |
 
-## Executors this import does not read (upgrades) (158)
+## Executors this import does not read (upgrades) (156)
 
 | Executor | Files |
 |---|---|
 | `Manual Settings` | 75 |
-| `Nokia32` | 40 |
 | `XMP (Slingbox)` | 26 |
 | `XMP` | 22 |
 | `GI Cable` | 20 |
-| `Panasonic (old)` | 19 |
 | `RC-5/5x Combo` | 16 |
 | `TDC` | 16 |
 | `RC6-M-20n` | 15 |
@@ -249,7 +252,7 @@ silently (SPEC R19, condition 5).
 | `pid\: 01 61` | 1 |
 | `pid\: 01 E2` | 1 |
 
-## Upgrades of a read executor that yield nothing (47)
+## Upgrades of a read executor that yield nothing (48)
 
 | File | Reason |
 |---|---|
@@ -280,6 +283,7 @@ silently (SPEC R19, condition 5).
 | `Misc/DX Antenna DTA-3500.rmdu` | `no function decodes` |
 | `Misc/RCARTD3133HomeTheater.rmdu` | `no function decodes` |
 | `Satellite/AXAS His Twin DVBS2 H.265 Satellite Receiver.rmdu` | `no brand: the file is not in the master index and its description begins with no brand of it` |
+| `Satellite/Foxtel IQ.rmdu` | `no function decodes` |
 | `Satellite/Sky PerfecTV (Japan).rmdu` | `no function decodes` |
 | `Satellite/Zodiac DZR-10DTT.rmdu` | `no function decodes` |
 | `TV Combos/Dynex-DX-26LD150A11 TV-DVD.rmdu` | `no brand: the file is not in the master index and its description begins with no brand of it` |
@@ -312,7 +316,7 @@ silently (SPEC R19, condition 5).
 | `Satellite/SonicView SV1000 6131.rmdu` | `remotes/jp1/Sonicview/Satellite-SonicView_SV1000_6131.json` |
 | `TV/VESTEL TV.rmdu` | `remotes/jp1/Vestel/TV-VESTEL_TV.json` |
 
-## Functions skipped (7,195)
+## Functions skipped (7,294)
 
 | File | Function | Reason |
 |---|---|---|
@@ -2045,6 +2049,7 @@ silently (SPEC R19, condition 5).
 | `Cable/Amstrad STU200 Cable.rmdu` | `surround` | `the function has no single OBC byte` |
 | `Cable/Amstrad STU200 Cable.rmdu` | `tv/vcr` | `the function has no single OBC byte` |
 | `Cable/Amstrad STU200 Cable.rmdu` | `x2` | `the function has no single OBC byte` |
+| `Cable/Cisco CIS-430.rmdu` | `#45` | `the function has no single OBC byte` |
 | `Cable/Cisco STB.rmdu` | `+100` | `the function has no single OBC byte` |
 | `Cable/Cisco STB.rmdu` | `X2` | `the function has no single OBC byte` |
 | `Cable/Cisco STB.rmdu` | `center` | `the function has no single OBC byte` |
@@ -2128,9 +2133,52 @@ silently (SPEC R19, condition 5).
 | `Cable/Huawei DC211.rmdu` | `skip-` | `the function has no single OBC byte` |
 | `Cable/Huawei DC211.rmdu` | `stop` | `the function has no single OBC byte` |
 | `Cable/Huawei DC211.rmdu` | `yellow` | `the function has no single OBC byte` |
+| `Cable/Pace DC550P STB.rmdu` | `+100` | `the function has no single OBC byte` |
+| `Cable/Pace DC550P STB.rmdu` | `X2` | `the function has no single OBC byte` |
+| `Cable/Pace DC550P STB.rmdu` | `center` | `the function has no single OBC byte` |
+| `Cable/Pace DC550P STB.rmdu` | `device button` | `the function has no single OBC byte` |
+| `Cable/Pace DC550P STB.rmdu` | `display` | `the function has no single OBC byte` |
+| `Cable/Pace DC550P STB.rmdu` | `eject` | `the function has no single OBC byte` |
+| `Cable/Pace DC550P STB.rmdu` | `fast fwd` | `the function has no single OBC byte` |
+| `Cable/Pace DC550P STB.rmdu` | `fav/scan` | `the function has no single OBC byte` |
+| `Cable/Pace DC550P STB.rmdu` | `input toggle` | `the function has no single OBC byte` |
+| `Cable/Pace DC550P STB.rmdu` | `mute` | `the function has no single OBC byte` |
+| `Cable/Pace DC550P STB.rmdu` | `next track` | `the function has no single OBC byte` |
+| `Cable/Pace DC550P STB.rmdu` | `pause` | `the function has no single OBC byte` |
+| `Cable/Pace DC550P STB.rmdu` | `pip freeze` | `the function has no single OBC byte` |
+| `Cable/Pace DC550P STB.rmdu` | `pip move` | `the function has no single OBC byte` |
+| `Cable/Pace DC550P STB.rmdu` | `pip on/off` | `the function has no single OBC byte` |
+| `Cable/Pace DC550P STB.rmdu` | `pip swap` | `the function has no single OBC byte` |
+| `Cable/Pace DC550P STB.rmdu` | `play` | `the function has no single OBC byte` |
+| `Cable/Pace DC550P STB.rmdu` | `power` | `the function has no single OBC byte` |
+| `Cable/Pace DC550P STB.rmdu` | `prev track` | `the function has no single OBC byte` |
+| `Cable/Pace DC550P STB.rmdu` | `rear` | `the function has no single OBC byte` |
+| `Cable/Pace DC550P STB.rmdu` | `record` | `the function has no single OBC byte` |
+| `Cable/Pace DC550P STB.rmdu` | `rewind` | `the function has no single OBC byte` |
+| `Cable/Pace DC550P STB.rmdu` | `shift-left` | `the function has no single OBC byte` |
+| `Cable/Pace DC550P STB.rmdu` | `shift-right` | `the function has no single OBC byte` |
+| `Cable/Pace DC550P STB.rmdu` | `sleep` | `the function has no single OBC byte` |
+| `Cable/Pace DC550P STB.rmdu` | `slow` | `the function has no single OBC byte` |
+| `Cable/Pace DC550P STB.rmdu` | `slow+` | `the function has no single OBC byte` |
+| `Cable/Pace DC550P STB.rmdu` | `slow-` | `the function has no single OBC byte` |
+| `Cable/Pace DC550P STB.rmdu` | `stop` | `the function has no single OBC byte` |
+| `Cable/Pace DC550P STB.rmdu` | `surround` | `the function has no single OBC byte` |
+| `Cable/Pace DC550P STB.rmdu` | `vol down` | `the function has no single OBC byte` |
+| `Cable/Pace DC550P STB.rmdu` | `vol up` | `the function has no single OBC byte` |
 | `Cable/Pace DCR-712.rmdu` | `#43` | `the function has no single OBC byte` |
 | `Cable/Pace DCR-712.rmdu` | `#44` | `the function has no single OBC byte` |
+| `Cable/Philips DCR7101-03 HDMI UPC NL.rmdu` | `Shift` | `the function has no single OBC byte` |
 | `Cable/Philips DCX-6171.rmdu` | `Serv` | `the function has no single OBC byte` |
+| `Cable/Scientific-Atlanta 2000HD.rmdu` | `+100` | `the function has no single OBC byte` |
+| `Cable/Scientific-Atlanta 2000HD.rmdu` | `device button` | `the function has no single OBC byte` |
+| `Cable/Scientific-Atlanta 2000HD.rmdu` | `fav/scan` | `the function has no single OBC byte` |
+| `Cable/Scientific-Atlanta 2000HD.rmdu` | `freeze` | `the function has no single OBC byte` |
+| `Cable/Wow Explorer 4250HDC.rmdu` | `#54` | `the function has no single OBC byte` |
+| `Cable/Wow Explorer 4250HDC.rmdu` | `#55` | `the function has no single OBC byte` |
+| `Cable/Wow Explorer 4250HDC.rmdu` | `#56` | `the function has no single OBC byte` |
+| `Cable/Wow Explorer 4250HDC.rmdu` | `#57` | `the function has no single OBC byte` |
+| `Cable/Wow Explorer 4250HDC.rmdu` | `#58` | `the function has no single OBC byte` |
+| `Cable/Wow Explorer 4250HDC.rmdu` | `Ondemand` | `the function has no single OBC byte` |
 | `Combo Audio Systems/Durabrand HT-395.rmdu` | `+100` | `the function has no single OBC byte` |
 | `Combo Audio Systems/Durabrand HT-395.rmdu` | 0 | `the function has no single OBC byte` |
 | `Combo Audio Systems/Durabrand HT-395.rmdu` | 1 | `the function has no single OBC byte` |
@@ -4008,6 +4056,10 @@ silently (SPEC R19, condition 5).
 | `Digital STBs/LG LST-5100P.rmdu` | `Size` | `the function has no single OBC byte` |
 | `Digital STBs/LG LST-5100P.rmdu` | `Subpage` | `the function has no single OBC byte` |
 | `Digital STBs/LG LST-5100P.rmdu` | `Text` | `the function has no single OBC byte` |
+| `Digital STBs/Pace DC-621KU STB.rmdu` | `enter` | `the function has no single OBC byte` |
+| `Digital STBs/Pace DC-621KU STB.rmdu` | `tv/vcr` | `the function has no single OBC byte` |
+| `Digital STBs/Pace DCR 7111.rmdu` | `enter` | `the function has no single OBC byte` |
+| `Digital STBs/Pace DCR 7111.rmdu` | `tv/vcr` | `the function has no single OBC byte` |
 | `Digital STBs/Pace DSR7141 .rmdu` | `Audio` | `the function has no single OBC byte` |
 | `Digital STBs/Pace DSR7141 .rmdu` | `Blue` | `the function has no single OBC byte` |
 | `Digital STBs/Pace DSR7141 .rmdu` | `Fav` | `the function has no single OBC byte` |
@@ -5215,6 +5267,57 @@ silently (SPEC R19, condition 5).
 | `Satellite/Fortec Star DVB-786V3.rmdu` | `stop` | `the function has no single OBC byte` |
 | `Satellite/Fortec Star DVB-786V3.rmdu` | `surround` | `the function has no single OBC byte` |
 | `Satellite/Fortec Star DVB-786V3.rmdu` | `up arrow` | `the function has no single OBC byte` |
+| `Satellite/Foxtel IQ.rmdu` | `+100` | `the function has no single OBC byte` |
+| `Satellite/Foxtel IQ.rmdu` | 0 | `the high X bit is sent at release, which a form cannot say` |
+| `Satellite/Foxtel IQ.rmdu` | 1 | `the high X bit is sent at release, which a form cannot say` |
+| `Satellite/Foxtel IQ.rmdu` | 2 | `the high X bit is sent at release, which a form cannot say` |
+| `Satellite/Foxtel IQ.rmdu` | 3 | `the high X bit is sent at release, which a form cannot say` |
+| `Satellite/Foxtel IQ.rmdu` | 4 | `the high X bit is sent at release, which a form cannot say` |
+| `Satellite/Foxtel IQ.rmdu` | 5 | `the high X bit is sent at release, which a form cannot say` |
+| `Satellite/Foxtel IQ.rmdu` | 6 | `the high X bit is sent at release, which a form cannot say` |
+| `Satellite/Foxtel IQ.rmdu` | 7 | `the high X bit is sent at release, which a form cannot say` |
+| `Satellite/Foxtel IQ.rmdu` | 8 | `the high X bit is sent at release, which a form cannot say` |
+| `Satellite/Foxtel IQ.rmdu` | 9 | `the high X bit is sent at release, which a form cannot say` |
+| `Satellite/Foxtel IQ.rmdu` | `Active` | `the high X bit is sent at release, which a form cannot say` |
+| `Satellite/Foxtel IQ.rmdu` | `BoxOffice` | `the high X bit is sent at release, which a form cannot say` |
+| `Satellite/Foxtel IQ.rmdu` | `Foxtel` | `the high X bit is sent at release, which a form cannot say` |
+| `Satellite/Foxtel IQ.rmdu` | `Planner` | `the high X bit is sent at release, which a form cannot say` |
+| `Satellite/Foxtel IQ.rmdu` | `Setup` | `the high X bit is sent at release, which a form cannot say` |
+| `Satellite/Foxtel IQ.rmdu` | `blue` | `the high X bit is sent at release, which a form cannot say` |
+| `Satellite/Foxtel IQ.rmdu` | `channel down` | `the high X bit is sent at release, which a form cannot say` |
+| `Satellite/Foxtel IQ.rmdu` | `channel up` | `the high X bit is sent at release, which a form cannot say` |
+| `Satellite/Foxtel IQ.rmdu` | `display/info` | `the high X bit is sent at release, which a form cannot say` |
+| `Satellite/Foxtel IQ.rmdu` | `down arrow` | `the high X bit is sent at release, which a form cannot say` |
+| `Satellite/Foxtel IQ.rmdu` | `enter` | `the function has no single OBC byte` |
+| `Satellite/Foxtel IQ.rmdu` | `exit` | `the function has no single OBC byte` |
+| `Satellite/Foxtel IQ.rmdu` | `f.fwd/next track` | `the function has no single OBC byte` |
+| `Satellite/Foxtel IQ.rmdu` | `f.rew/prev track` | `the function has no single OBC byte` |
+| `Satellite/Foxtel IQ.rmdu` | `fast fwd` | `the high X bit is sent at release, which a form cannot say` |
+| `Satellite/Foxtel IQ.rmdu` | `green` | `the high X bit is sent at release, which a form cannot say` |
+| `Satellite/Foxtel IQ.rmdu` | `last/prev ch` | `the high X bit is sent at release, which a form cannot say` |
+| `Satellite/Foxtel IQ.rmdu` | `left arrow` | `the high X bit is sent at release, which a form cannot say` |
+| `Satellite/Foxtel IQ.rmdu` | `menu` | `the function has no single OBC byte` |
+| `Satellite/Foxtel IQ.rmdu` | `mute` | `the high X bit is sent at release, which a form cannot say` |
+| `Satellite/Foxtel IQ.rmdu` | `pause` | `the high X bit is sent at release, which a form cannot say` |
+| `Satellite/Foxtel IQ.rmdu` | `pip freeze` | `the function has no single OBC byte` |
+| `Satellite/Foxtel IQ.rmdu` | `pip move` | `the function has no single OBC byte` |
+| `Satellite/Foxtel IQ.rmdu` | `pip on/off` | `the function has no single OBC byte` |
+| `Satellite/Foxtel IQ.rmdu` | `pip swap` | `the function has no single OBC byte` |
+| `Satellite/Foxtel IQ.rmdu` | `play` | `the high X bit is sent at release, which a form cannot say` |
+| `Satellite/Foxtel IQ.rmdu` | `power` | `the high X bit is sent at release, which a form cannot say` |
+| `Satellite/Foxtel IQ.rmdu` | `program/guide` | `the high X bit is sent at release, which a form cannot say` |
+| `Satellite/Foxtel IQ.rmdu` | `record` | `the high X bit is sent at release, which a form cannot say` |
+| `Satellite/Foxtel IQ.rmdu` | `red` | `the high X bit is sent at release, which a form cannot say` |
+| `Satellite/Foxtel IQ.rmdu` | `rewind` | `the high X bit is sent at release, which a form cannot say` |
+| `Satellite/Foxtel IQ.rmdu` | `right arrow` | `the high X bit is sent at release, which a form cannot say` |
+| `Satellite/Foxtel IQ.rmdu` | `select` | `the high X bit is sent at release, which a form cannot say` |
+| `Satellite/Foxtel IQ.rmdu` | `sleep` | `the function has no single OBC byte` |
+| `Satellite/Foxtel IQ.rmdu` | `stop` | `the high X bit is sent at release, which a form cannot say` |
+| `Satellite/Foxtel IQ.rmdu` | `tv/vcr` | `the high X bit is sent at release, which a form cannot say` |
+| `Satellite/Foxtel IQ.rmdu` | `up arrow` | `the high X bit is sent at release, which a form cannot say` |
+| `Satellite/Foxtel IQ.rmdu` | `vol down` | `the high X bit is sent at release, which a form cannot say` |
+| `Satellite/Foxtel IQ.rmdu` | `vol up` | `the high X bit is sent at release, which a form cannot say` |
+| `Satellite/Foxtel IQ.rmdu` | `yellow` | `the high X bit is sent at release, which a form cannot say` |
 | `Satellite/GM Spark Triplex.rmdu` | `X2` | `the function has no single OBC byte` |
 | `Satellite/GM Spark Triplex.rmdu` | `center` | `the function has no single OBC byte` |
 | `Satellite/GM Spark Triplex.rmdu` | `device button` | `the function has no single OBC byte` |

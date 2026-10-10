@@ -394,8 +394,37 @@ def test_mce_is_the_obc_as_it_is_with_a_seven_bit_device_and_the_second_oem_byte
     assert signal(upgrade("MCE", "null 15", ("x", "0C"))) == "the device or the second OEM byte parameter is missing"
 
 
+def test_nokia32_is_the_obc_as_it_is_with_the_device_sub_device_and_the_low_seven_bits_of_x():
+    """``Translator()``: F is the OBC; the parameters are Device, Sub Device, X and the ``High X-bit`` mode, and a
+    ``null`` one is the byte of FixedData the device translators give it (mode, device, sub device, X). The top bit of
+    X is the toggle's place: 166 is 0x80 | 38, read with the mode Toggle as X = 38; with the mode Constant it is a
+    toggle bit that a form cannot send, and the mode Release is not read."""
+    assert signal(upgrade("Nokia32", "33 160 38 0", ("a", "80"))) == rmdu.Signal("Nokia32", 33, 160, 38 << 8 | 0x80)
+    assert signal(upgrade("Nokia32", "36 128 166 1", ("a", "0C"))) == rmdu.Signal("Nokia32", 36, 128, 38 << 8 | 12)
+    assert signal(upgrade("Nokia32", "36 128 166 0", ("a", "0C"))) == (
+        "the high X bit is set and constant, which a form cannot send (its toggle is not in a file)")
+    assert signal(upgrade("Nokia32", "36 128 38 2", ("a", "0C"))) == "the high X bit is sent at release, which a form cannot say"
+    assert signal(upgrade("Nokia32", "null null null null", ("a", "80"), fixed="00 21 A0 26")) == \
+        rmdu.Signal("Nokia32", 33, 160, 38 << 8 | 0x80)
+    assert signal(upgrade("Nokia32", "null 160 38 0", ("a", "80"))) == "the device, sub device, X or high X-bit parameter is missing"
+
+
+def test_panasonic_old_is_f_reversed_in_the_top_six_bits_and_the_device_the_low_two_bits_select():
+    """``Translator(comp,0,2,6) Translator(lsb,1,6,0)``: ``9B`` is F = 25 (the key 0 of the cable box IrpTransmogrifier
+    holds Pronto strings of, D=27, F=25) and ``0B`` is 16 (the key 1), both for Device 1; low bits 10 and 01 pick Device
+    2 and 3 and 00 is OBC/2. A null device is in FixedData (``90`` is 27)."""
+    up = upgrade("Panasonic (old)", "27 28 30", ("0", "9B"), ("1", "0B"), ("on 2", "0A"), ("on 3", "09"), ("half", "08"))
+    assert [signal(up, i) for i in range(5)] == [
+        rmdu.Signal("Panasonic_Old", 27, None, 25), rmdu.Signal("Panasonic_Old", 27, None, 16),
+        rmdu.Signal("Panasonic_Old", 28, None, 16), rmdu.Signal("Panasonic_Old", 30, None, 16),
+        "the function sends OBC/2, which is not read"]
+    assert signal(upgrade("Panasonic (old)", "null null null", ("0", "9B"), fixed="90 90 90")) == \
+        rmdu.Signal("Panasonic_Old", 27, None, 25)
+    assert signal(upgrade("Panasonic (old)", "32 null null", ("0", "9B"))) == "the device is not five bits"
+
+
 def test_an_executor_not_read_and_a_function_with_no_single_byte_are_said_so():
-    assert "not read by this import" in signal(upgrade("Nokia32", "28 0 null", ("power", "C4")))
+    assert "not read by this import" in signal(upgrade("XMP", "28 0 null", ("power", "C4")))
     assert signal(upgrade("NEC1", "6 null null", ("Power", "FF BF"))) == "the function has no single OBC byte"
     assert signal(upgrade("NEC1", "6 null null", ("Guide", None))) == "the function has no single OBC byte"
 
@@ -451,7 +480,7 @@ FILES = {
                            "Function.0.name=Power\r\nFunction.0.hex=AF\r\n"),
     "Misc/Nobody Box.rmdu": ("Description=Nobody Box\r\nProtocol.name=NEC1\r\nProtocolParms=6 null null\r\n"
                              "Function.0.name=Power\r\nFunction.0.hex=AF\r\n"),
-    "Audio/Mce Box.rmdu": ("Description=Acme MCE\r\nProtocol.name=Nokia32\r\nProtocolParms=10 0\r\n"
+    "Audio/Mce Box.rmdu": ("Description=Acme MCE\r\nProtocol.name=XMP\r\nProtocolParms=10 0\r\n"
                            "Function.0.name=power\r\nFunction.0.hex=CC\r\n"),
     "TV/Keymap Master.txt": "not read\r\n",
     "Audio/Empty.rmdu": "Description=Acme Empty\r\nProtocol.name=NEC1\r\nProtocolParms=6 null null\r\n",
@@ -498,7 +527,7 @@ def test_a_checkout_becomes_one_file_per_protocol_and_every_function_a_key(small
     assert samsung["protocol"]["name"] == "NECx2" and samsung["protocol"]["minSends"] == 1
     assert set(samsung["keys"]) == {"KEY_POWER"}      # `Guide` has no OBC byte
     assert (report.files["upgrades"], report.remotes["imported"]) == (8, 6)
-    assert report.unread == {"Nokia32": 1} and report.files["not read: KeymapMaster .txt"] == 1
+    assert report.unread == {"XMP": 1} and report.files["not read: KeymapMaster .txt"] == 1
     assert dict(report.protocols) == {"Sony12": 1, "Sony15": 1, "Sony20": 1, "NECx2": 2, "NEC1": 1}
 
 
@@ -586,7 +615,7 @@ def test_the_committed_jp1_import_keeps_r19():
     assert f"@ `{meta['commit']}`" in (ROOT / jp.IMPORT_ROOT / jp.REPORT).read_text(encoding="utf-8")
     shape = re.compile(
         rf"^jp1-device-upgrades@{meta['commit'][:7]} \S.* function (\d+) '.*' \(OBC ((?:[0-9A-F]{{2}})(?: [0-9A-F]{{2}})*); [^;]+, parms [^)]*\): "
-        r"(NEC1|NEC2|NECx1|NECx2|Sony12|Sony15|Sony20|RC5|RC6|JVC|Aiwa|Denon|Sharp|Panasonic|Samsung36|Proton|F12_relaxed|RECS80|Denon-K|Pioneer-2Part|RCA-38|RECS80-0068|JVC-48|Teac-K|NEC1-f16|NEC2-f16|MCE) device (\d+)(?: subdevice (\d+))? function (\d+)", re.S)
+        r"(NEC1|NEC2|NECx1|NECx2|Sony12|Sony15|Sony20|RC5|RC6|JVC|Aiwa|Denon|Sharp|Panasonic|Samsung36|Proton|F12_relaxed|RECS80|Denon-K|Pioneer-2Part|RCA-38|RECS80-0068|JVC-48|Teac-K|NEC1-f16|NEC2-f16|MCE|Nokia32|Panasonic_Old) device (\d+)(?: subdevice (\d+))? function (\d+)", re.S)
 
     def num(value):
         return int(value, 0) if isinstance(value, str) else value
@@ -715,3 +744,52 @@ def test_the_jp1_mce_upgrades_send_the_functions_the_lirc_remotes_of_four_mce_de
     for key in ((20, 15), (36, 15), (116, 15)):
         assert lirc[key] <= sent[key], key
     assert len(lirc[(4, 15)] & sent[(4, 15)]) == 69
+
+
+def test_the_jp1_nokia32_upgrades_send_the_functions_the_lirc_remotes_of_four_boxes_send():
+    """An independent check of the Nokia32 rule, from another project. The LIRC remotes of a Foxtel box (device 33,
+    sub device 160), a Motorola VIP (35, 64), a Pace box (35, 128) and a Galaxis one (13, 80) are decoded by
+    tests/test_nokia32.py's layout decoder (154 keys). The forum's upgrades for the same device and sub device, read
+    through the Nokia32 executor, send 29 of the Foxtel remote's 30 (device, sub device, X and F), 40 of 41 and 40 of 40:
+    109 of 111. The Galaxis remote's X is 8 where the upgrades for device 13 have 45, another box, and 30 of its 43
+    functions are among theirs when X is left out."""
+    from test_nokia32 import LIRC_NOKIA32, decode_lirc
+    from remote_ledger.remote import load_remote
+
+    lirc: dict[tuple[int, int], set[tuple[int, int]]] = {}
+    for name in LIRC_NOKIA32:
+        for key, forms in load_remote(ROOT / "remotes" / name).keys.items():
+            form = forms[0]
+            got = decode_lirc(list(form.repeat or form.intro or ())) if form.type == "raw" else None
+            if got:
+                lirc.setdefault((got[0], got[1]), set()).add((got[3], got[4]))
+    sent: dict[tuple[int, int], set[tuple[int, int]]] = {}
+    for path in (ROOT / jp.IMPORT_ROOT).rglob("*.json"):
+        doc = load(path)
+        if doc.get("protocol", {}).get("name") != "Nokia32":
+            continue
+        for spec in doc["keys"].values():
+            for form in spec["forms"]:
+                function = int(form["function"], 0)
+                sent.setdefault((int(form["device"], 0), int(form["subdevice"], 0)), set()).add((function >> 8, function & 0xFF))
+    assert {k: len(v) for k, v in lirc.items()} == {(33, 160): 30, (35, 64): 41, (35, 128): 40, (13, 80): 43}
+    assert [len(lirc[k] & sent[k]) for k in ((33, 160), (35, 64), (35, 128))] == [29, 40, 40]
+    assert not lirc[(13, 80)] & sent[(13, 80)]
+    assert len({f for _, f in lirc[(13, 80)]} & {f for _, f in sent[(13, 80)]}) == 30
+
+
+def test_the_jp1_panasonic_old_upgrades_send_the_cable_boxs_digits_irptransmogrifier_decoded():
+    """An independent check of the Panasonic (old) rule. IrpTransmogrifier's test data holds sixteen Pronto strings of
+    a cable box's remote, decoded as Panasonic_Old D=27 with the keys 1 to 9 and 0 as F = 16 to 24 and 25. Seventeen of
+    the nineteen forum upgrades name their ten digit keys, and every one of them, the Technics audio ones (device 9 and
+    12) included, sends exactly those functions."""
+    digits = [f"KEY_{i}" for i in (1, 2, 3, 4, 5, 6, 7, 8, 9, 0)]
+    wanted = [16, 17, 18, 19, 20, 21, 22, 23, 24, 25]
+    named = 0
+    for path in (ROOT / jp.IMPORT_ROOT).rglob("*.json"):
+        doc = load(path)
+        if doc.get("protocol", {}).get("name") != "Panasonic_Old" or not set(digits) <= set(doc["keys"]):
+            continue
+        assert [int(doc["keys"][k]["forms"][0]["function"], 0) for k in digits] == wanted, path.name
+        named += 1
+    assert named == 17

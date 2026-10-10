@@ -95,3 +95,53 @@ def test_out_of_range_fields_are_refused(kwargs, match):
     args.update(kwargs)
     with pytest.raises(EncodeError, match=match):
         NOKIA32.encode(**args)
+
+
+# --- the LIRC project's remotes of Nokia32 boxes: an independent reading of the frame ---------------------------------
+
+LIRC_NOKIA32 = ("lirc/foxtel/Digital_Satellite_STB.json", "lirc/motorola/VIP_1200.json", "lirc/pace/TDS460NNZ.json",
+                "lirc/galaxis/RCMM.json")
+
+
+def decode_lirc(durations):
+    """``(D, S, T, X, F)`` of a LIRC raw frame, at the period its own symbols' marks have (a mark is 6 periods)."""
+    pairs = list(zip(durations[0::2], durations[1::2]))
+    if len(pairs) < 18:
+        return None
+    lead, symbols = pairs[0], pairs[1:17]
+    period = sum(m for m, _ in symbols) / 16 / 6
+    if not (13 < lead[0] / period < 17 and 8 < lead[1] / period < 12):
+        return None
+    word = 0
+    for _, space in symbols:
+        steps = round((space / period - 10) / 6)
+        if not 0 <= steps <= 3:
+            return None
+        word = word << 2 | steps
+    return word >> 24, word >> 16 & 0xFF, word >> 15 & 1, word >> 8 & 0x7F, word & 0xFF
+
+
+def test_the_lirc_remotes_of_four_nokia32_boxes_decode_to_frames_the_encoder_builds():
+    """154 keys of the LIRC project's remotes for a Foxtel box, a Motorola VIP, a Pace box and a Galaxis one, decoded
+    by the layout decoder at the period each has, re-encode (with their toggle, at the carrier their period gives) to
+    the same sequence of symbols. They are confs expanded by lircd, not hardware captures."""
+    from pathlib import Path
+
+    from remote_ledger.remote import load_remote
+
+    root = Path(__file__).resolve().parent.parent / "remotes"
+    seen = 0
+    for name in LIRC_NOKIA32:
+        remote = load_remote(root / name)
+        for key, forms in remote.keys.items():
+            form = forms[0]
+            durations = list(form.repeat or form.intro or ())
+            got = decode_lirc(durations) if form.type == "raw" and durations else None
+            if got is None:
+                continue
+            d, s, t, x, f = got
+            period = sum(m for m, _ in list(zip(durations[0::2], durations[1::2]))[1:17]) / 16 / 6
+            ours = _encode(d, s, x << 8 | f, carrier_hz=round(1_000_000 / period), toggle=t).repeat
+            assert _decode(ours, carrier_hz=round(1_000_000 / period)) == got, (name, key)
+            seen += 1
+    assert seen == 154
