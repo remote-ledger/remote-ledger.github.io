@@ -166,6 +166,7 @@ RCA_56 = "RCA-56"
 RCA_38 = "RCA-38"
 RCA_38_OFFICIAL = "RCA-38 Official"
 RCA_FAMILY = (RCA, RCA_56, RCA_38, RCA_38_OFFICIAL)
+MCE = "MCE"
 NEC1_F16_OFFICIAL = "NEC1-f16 Official"
 NEC1_RNC = "NEC1-rnc"
 #: ``NEC-Yamaha``'s styles Y1 to Y3 (IrpTransmogrifier's IRP, DESIGN D158): the fourth byte is the third with these bits
@@ -174,7 +175,7 @@ YAMAHA_E_XOR = {1: 0x7F, 2: 0xFE, 3: 0x7E}
 TWO_BYTE = (SONY_COMBO, NEC1_COMBO, NEC_4DEV, NEC_4DEV_YAMAHA, NEC_2DEV, JVC_COMBO, DENON_COMBO, SHARP_COMBO,
             PANASONIC_COMBO, DENON_K, PIONEER_MIX, PANASONIC_HACKED, TEAC_K)
 MAPPED = (*NEC_FAMILY, SONY_1215, SONY_20, RC5, RC6, JVC, AIWA, DENON, PANASONIC, SHARP, SAMSUNG36, PROTON, F12,
-          RECS80_45, PIONEER, RECS80_68, JVC_48, *RCA_FAMILY, NEC1_F16_OFFICIAL, NEC1_RNC, *TWO_BYTE)
+          RECS80_45, PIONEER, RECS80_68, JVC_48, *RCA_FAMILY, NEC1_F16_OFFICIAL, NEC1_RNC, MCE, *TWO_BYTE)
 
 
 def signal_of(upgrade: Upgrade, function: Function) -> Signal | str:
@@ -517,6 +518,15 @@ def simple_signal(name: str, parms: list[str], byte: int, fixed: list[str] = ())
         if device is None or device > 7:
             return "the device parameter is missing or is not three bits"
         return Signal("RECS80", device, None, 63 - (byte >> 2))
+    if name == MCE:
+        # Translator(0): the function is the OBC as it is; the device is seven bits and the second OEM byte eight, both
+        # parameters (``Device:7=4``, ``OEM2:8=15``); the first OEM byte is the executor's 128
+        device, oem2 = parm(parms, 0), parm(parms, 1)
+        if device is None or oem2 is None:
+            return "the device or the second OEM byte parameter is missing"
+        if device > 127 or oem2 > 255:
+            return "the device is not seven bits"
+        return Signal("MCE", device, oem2, byte)
     if name == NEC1_RNC:
         # Translator(lsb): the function is the OBC reversed, and the frame's fourth byte is its complement with the
         # nibbles swapped (IrpTransmogrifier's NEC1-rnc), which NEC1-f16 holds

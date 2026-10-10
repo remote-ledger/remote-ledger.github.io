@@ -12,8 +12,8 @@ sources have been imported under SPEC R19:
   keys, GPL-3.0 by inheritance only (DESIGN §17, §18, §38).
 - **hifi-remote.com's Sony code pages**: 151 files, 6,772 keys, a table of
   reference codes with no licence recorded (DESIGN §27).
-- **The JP1 device upgrades** of its forum: 2,595 files, 101,904 keys, read for
-  forty executors (DESIGN §28, §32, §33, §34, §35, §36, §39).
+- **The JP1 device upgrades** of its forum: 2,676 files, 105,295 keys, read for
+  forty-one executors (DESIGN §28, §32, §33, §34, §35, §36, §39, §42).
 - **Manufacturers' own IR tables**: Marantz's AV receiver charts, Anthem's IR
   hex sheet and Oppo's remote code workbooks, 189 files, 12,844 keys (DESIGN
   §29, §31).
@@ -40,15 +40,14 @@ Land it in two PRs, code and then data.
       remote codes needs no licence. That reasoning bears on all three; none
       has been changed.
 - [ ] **The rest of the JP1 upgrades** (DESIGN D120, D136, D140, D145, D155):
-      719 upgrades of 161 other executors (MCE 83, XMP 48, Nokia32 40, GI Cable
-      20, Panasonic (old) 19, RC-5/5x Combo 16, TDC 16, RC6-M-20n 15, NEC1-f16
-      Official 13, RC5/6 combo 12...), among them 106 `Manual Settings` upgrades
+      620 upgrades of 158 other executors (XMP 48, Nokia32 40, GI Cable 20,
+      Panasonic (old) 19, RC-5/5x Combo 16, TDC 16, RC6-M-20n 15, RC5/6 combo
+      12...), among them 106 `Manual Settings` upgrades
       that give raw executor bytes with no protocol, and 25 upgrades of read
       executors that yield nothing: 18 RCA at 56 kHz, which needs a protocol of
       its own (D152, D18's gate), and 6 Pioneer MIX of variants 4 and 5. Pioneer
       3DEV, 4DEV and DVD (18) need the executors' code read (D155),
-      and 2,073 KeymapMaster files. MCE is registered now (DESIGN §41, 83 upgrades
-      no importer reads yet); Nokia32 is its own frame and is not a registered
+      and 2,073 KeymapMaster files. Nokia32 is its own frame and is not a registered
       protocol (D18's gate). **The Yamaha combo's Y1 to Y3 styles**
       (1,087 functions of 15 upgrades) send NEC with 16 data bits, which
       NEC1-f16 and NEC2-f16 now carry (registered, DESIGN §37); no importer

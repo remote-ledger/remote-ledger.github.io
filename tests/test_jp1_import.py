@@ -385,8 +385,17 @@ def test_rca_is_read_only_where_it_sends_the_38_khz_of_the_ledgers_rca_38():
     assert signal(upgrade("RCA-38 Official", "null", ("a", "4A"), fixed="00")) == "the device parameter is missing or is not four bits"
 
 
+def test_mce_is_the_obc_as_it_is_with_a_seven_bit_device_and_the_second_oem_byte():
+    """``Translator(0)``: the function is the OBC as it is (``0C`` is Power, ``28`` the Xbox 360 remote's OPEN);
+    ``Device:7`` and ``OEM2:8`` are parameters 0 and 1, and the first OEM byte is the executor's 128."""
+    assert signal(upgrade("MCE", "116 15", ("OPEN", "28"), ("Power", "0C"))) == rmdu.Signal("MCE", 116, 15, 0x28)
+    assert signal(upgrade("MCE", "4 15", ("Power", "0C"))) == rmdu.Signal("MCE", 4, 15, 12)
+    assert signal(upgrade("MCE", "128 15", ("x", "0C"))) == "the device is not seven bits"
+    assert signal(upgrade("MCE", "null 15", ("x", "0C"))) == "the device or the second OEM byte parameter is missing"
+
+
 def test_an_executor_not_read_and_a_function_with_no_single_byte_are_said_so():
-    assert "not read by this import" in signal(upgrade("MCE", "28 0 null", ("power", "C4")))
+    assert "not read by this import" in signal(upgrade("Nokia32", "28 0 null", ("power", "C4")))
     assert signal(upgrade("NEC1", "6 null null", ("Power", "FF BF"))) == "the function has no single OBC byte"
     assert signal(upgrade("NEC1", "6 null null", ("Guide", None))) == "the function has no single OBC byte"
 
@@ -442,7 +451,7 @@ FILES = {
                            "Function.0.name=Power\r\nFunction.0.hex=AF\r\n"),
     "Misc/Nobody Box.rmdu": ("Description=Nobody Box\r\nProtocol.name=NEC1\r\nProtocolParms=6 null null\r\n"
                              "Function.0.name=Power\r\nFunction.0.hex=AF\r\n"),
-    "Audio/Mce Box.rmdu": ("Description=Acme MCE\r\nProtocol.name=MCE\r\nProtocolParms=10 0\r\n"
+    "Audio/Mce Box.rmdu": ("Description=Acme MCE\r\nProtocol.name=Nokia32\r\nProtocolParms=10 0\r\n"
                            "Function.0.name=power\r\nFunction.0.hex=CC\r\n"),
     "TV/Keymap Master.txt": "not read\r\n",
     "Audio/Empty.rmdu": "Description=Acme Empty\r\nProtocol.name=NEC1\r\nProtocolParms=6 null null\r\n",
@@ -489,7 +498,7 @@ def test_a_checkout_becomes_one_file_per_protocol_and_every_function_a_key(small
     assert samsung["protocol"]["name"] == "NECx2" and samsung["protocol"]["minSends"] == 1
     assert set(samsung["keys"]) == {"KEY_POWER"}      # `Guide` has no OBC byte
     assert (report.files["upgrades"], report.remotes["imported"]) == (8, 6)
-    assert report.unread == {"MCE": 1} and report.files["not read: KeymapMaster .txt"] == 1
+    assert report.unread == {"Nokia32": 1} and report.files["not read: KeymapMaster .txt"] == 1
     assert dict(report.protocols) == {"Sony12": 1, "Sony15": 1, "Sony20": 1, "NECx2": 2, "NEC1": 1}
 
 
@@ -577,7 +586,7 @@ def test_the_committed_jp1_import_keeps_r19():
     assert f"@ `{meta['commit']}`" in (ROOT / jp.IMPORT_ROOT / jp.REPORT).read_text(encoding="utf-8")
     shape = re.compile(
         rf"^jp1-device-upgrades@{meta['commit'][:7]} \S.* function (\d+) '.*' \(OBC ((?:[0-9A-F]{{2}})(?: [0-9A-F]{{2}})*); [^;]+, parms [^)]*\): "
-        r"(NEC1|NEC2|NECx1|NECx2|Sony12|Sony15|Sony20|RC5|RC6|JVC|Aiwa|Denon|Sharp|Panasonic|Samsung36|Proton|F12_relaxed|RECS80|Denon-K|Pioneer-2Part|RCA-38|RECS80-0068|JVC-48|Teac-K|NEC1-f16|NEC2-f16) device (\d+)(?: subdevice (\d+))? function (\d+)", re.S)
+        r"(NEC1|NEC2|NECx1|NECx2|Sony12|Sony15|Sony20|RC5|RC6|JVC|Aiwa|Denon|Sharp|Panasonic|Samsung36|Proton|F12_relaxed|RECS80|Denon-K|Pioneer-2Part|RCA-38|RECS80-0068|JVC-48|Teac-K|NEC1-f16|NEC2-f16|MCE) device (\d+)(?: subdevice (\d+))? function (\d+)", re.S)
 
     def num(value):
         return int(value, 0) if isinstance(value, str) else value
@@ -678,3 +687,31 @@ def test_two_committed_pioneer_upgrades_send_the_signal_irptransmogrifier_decode
         assert doc["protocol"]["name"] == "Pioneer-2Part"
         form = doc["keys"][key]["forms"][0]
         assert (int(form["device"], 16), int(form["function"], 16)) == expected, (name, key)
+
+
+def test_the_jp1_mce_upgrades_send_the_functions_the_lirc_remotes_of_four_mce_devices_send():
+    """An independent check of the MCE rule, from another project. The LIRC remotes of four MCE devices (225 keys,
+    decoded by tests/test_mce.py's layout decoder at the unit each has) are device 4, 20, 36 and 116 with second OEM
+    byte 15. The forum's upgrades with the same device and second OEM byte, read through the MCE executor, send
+    every function of the Xbox 360, Vista and Hauppauge remotes (devices 116, 20 and 36: 131 keys) and 69 of the 94
+    of the mceusb remote (device 4), whose upgrades differ in what they keep. The functions are the upgrades' OBC
+    bytes as they are."""
+    from test_mce import decode, lirc_frames
+
+    lirc: dict[tuple[int, int], set[int]] = {}
+    for _, _, durations in lirc_frames():
+        mode, trailer, oem1, s, toggle, d, f = decode(durations, unit=durations[0] / 6)
+        assert (mode, trailer, oem1) == (6, 0, 128)
+        lirc.setdefault((d, s), set()).add(f)
+    assert {k: len(v) for k, v in lirc.items()} == {(4, 15): 94, (20, 15): 43, (36, 15): 43, (116, 15): 45}
+    sent: dict[tuple[int, int], set[int]] = {}
+    for path in (ROOT / jp.IMPORT_ROOT).rglob("*.json"):
+        doc = load(path)
+        if doc.get("protocol", {}).get("name") != "MCE":
+            continue
+        for spec in doc["keys"].values():
+            for form in spec["forms"]:
+                sent.setdefault((int(form["device"], 0), int(form["subdevice"], 0)), set()).add(int(form["function"], 0))
+    for key in ((20, 15), (36, 15), (116, 15)):
+        assert lirc[key] <= sent[key], key
+    assert len(lirc[(4, 15)] & sent[(4, 15)]) == 69
