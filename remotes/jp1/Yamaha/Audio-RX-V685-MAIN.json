@@ -1,0 +1,2745 @@
+{
+  "manufacturer": "Yamaha",
+  "model": "Receiver Main",
+  "aliases": [],
+  "controls": [
+    "Receiver Main"
+  ],
+  "protocol": {
+    "name": "NEC1-f16",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_MAIN_POWER": {
+      "label": "MAIN POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x2AD5",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 0 'MAIN POWER' (OBC 81 7E AB 54; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 10965"
+        }
+      ]
+    },
+    "KEY_MAIN_SLEEP": {
+      "label": "MAIN SLEEP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x30CF",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 1 'MAIN SLEEP' (OBC A1 5E F3 0C; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 12495; the upgrade's note: 'cycles through all available sleep settings'"
+        }
+      ]
+    },
+    "KEY_BLUE_MINUS_TOOTH": {
+      "label": "BLUE-TOOTH",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xBEC1",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 2 'BLUE-TOOTH' (OBC A1 5E 82 7C; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 48833"
+        }
+      ]
+    },
+    "KEY_USB": {
+      "label": "USB",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x720D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 3 'USB' (OBC 01 7F B1 4F; NEC1-f16 Official, parms none): NEC1-f16 device 127 subdevice 1 function 29197"
+        }
+      ]
+    },
+    "KEY_NET": {
+      "label": "NET",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x3FC0",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 4 'NET' (OBC 01 7F 03 FC; NEC1-f16 Official, parms none): NEC1-f16 device 127 subdevice 1 function 16320"
+        }
+      ]
+    },
+    "KEY_TUNER": {
+      "label": "TUNER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x16E9",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 5 'TUNER' (OBC A1 5E 97 68; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 5865"
+        }
+      ]
+    },
+    "KEY_INPUT_PLUS": {
+      "label": "INPUT +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x1F60",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 6 'INPUT +' (OBC A1 5E 07 F9; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 8032"
+        }
+      ]
+    },
+    "KEY_INPUT_MINUS": {
+      "label": "INPUT -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x235C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 7 'INPUT -' (OBC A1 5E 3B C5; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 9052"
+        }
+      ]
+    },
+    "KEY_HDMI_OUT": {
+      "label": "HDMI OUT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x35CA",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 8 'HDMI OUT' (OBC A1 5E 53 AC; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 13770"
+        }
+      ]
+    },
+    "KEY_ENHANCE": {
+      "label": "ENHANCE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x946B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 9 'ENHANCE' (OBC A1 5E D6 29; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 37995"
+        }
+      ]
+    },
+    "KEY_STRGHT": {
+      "label": "STRGHT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x56A9",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 10 'STRGHT' (OBC A1 5E 95 6A; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 22185"
+        }
+      ]
+    },
+    "KEY_PURE_DIRECT": {
+      "label": "PURE DIRECT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xDD22",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 11 'PURE DIRECT' (OBC A1 5E 44 BB; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 56610; the upgrade's note: 'no OSD, use discrete codes'"
+        }
+      ]
+    },
+    "KEY_SUR_DECODE": {
+      "label": "SUR. DECODE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x8D72",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 12 'SUR. DECODE' (OBC A1 5E 4E B1; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 36210; the upgrade's note: 'cycles through available decoders'"
+        }
+      ]
+    },
+    "KEY_SUR_AI": {
+      "label": "SUR. AI",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x13EC",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 13 'SUR. AI' (OBC 81 7E 37 C8; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 5100; the upgrade's note: 'no OSD, but also no discrete codes'"
+        }
+      ]
+    },
+    "KEY_BASS": {
+      "label": "BASS",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xBDC2",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 14 'BASS' (OBC A1 5E 42 BC; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 48578"
+        }
+      ]
+    },
+    "KEY_PROG_PLUS": {
+      "label": "PROG. +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x58A7",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 15 'PROG. +' (OBC A1 5E E5 1A; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 22695"
+        }
+      ]
+    },
+    "KEY_PROG_MINUS": {
+      "label": "PROG. -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x59A6",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 16 'PROG. -' (OBC A1 5E 65 9A; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 22950"
+        }
+      ]
+    },
+    "KEY_SCENE_1": {
+      "label": "SCENE 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x7F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 17 'SCENE 1' (OBC A1 5E FF 01; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 127; the upgrade's note: 'default\\: Movie Viewing (HDMI1)'"
+        }
+      ]
+    },
+    "KEY_SCENE_2": {
+      "label": "SCENE 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x37C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 18 'SCENE 2' (OBC A1 5E 3F C1; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 892; the upgrade's note: 'default\\: Radio Listening (TUNER)'"
+        }
+      ]
+    },
+    "KEY_SCENE_3": {
+      "label": "SCENE 3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x679",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 19 'SCENE 3' (OBC A1 5E 9F 61; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 1657; the upgrade's note: 'default\\: Music Listening (AUDIO2)'"
+        }
+      ]
+    },
+    "KEY_SCENE_4": {
+      "label": "SCENE 4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x976",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 20 'SCENE 4' (OBC A1 5E 6F 91; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 2422; the upgrade's note: 'default\\: NET Audio Listening (NET RADIO)'"
+        }
+      ]
+    },
+    "KEY_SCENE_5": {
+      "label": "SCENE 5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x90EF",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 21 'SCENE 5' (OBC A1 5E F6 08; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 37103; the upgrade's note: 'default\\: STB Viewing (HDMI2)'"
+        }
+      ]
+    },
+    "KEY_SCENE_6": {
+      "label": "SCENE 6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x91EE",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 22 'SCENE 6' (OBC A1 5E 76 88; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 37358; the upgrade's note: 'default\\: Game Playing (HDMI3)'"
+        }
+      ]
+    },
+    "KEY_SCENE_7": {
+      "label": "SCENE 7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x92ED",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 23 'SCENE 7' (OBC A1 5E B6 48; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 37613; the upgrade's note: 'default\\: TV Viewing (AUDIO1)'"
+        }
+      ]
+    },
+    "KEY_SCENE_8": {
+      "label": "SCENE 8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x93EC",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 24 'SCENE 8' (OBC A1 5E 36 C8; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 37868; the upgrade's note: 'default\\: Media Server Listening (SERVER)'"
+        }
+      ]
+    },
+    "KEY_SETUP": {
+      "label": "SETUP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x847B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 25 'SETUP' (OBC A1 5E DE 21; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 33915"
+        }
+      ]
+    },
+    "KEY_OPTION": {
+      "label": "OPTION",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x6B14",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 26 'OPTION' (OBC A1 5E 29 D7; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 27412"
+        }
+      ]
+    },
+    "KEY_SCENE_MENU": {
+      "label": "SCENE MENU",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xE49B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 27 'SCENE MENU' (OBC A1 5E D8 26; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 58523"
+        }
+      ]
+    },
+    "KEY_TOP_MENU": {
+      "label": "TOP MENU",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xA0DF",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 28 'TOP MENU' (OBC A1 5E FA 04; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 41183; the upgrade's note: 'for external devices via HDMI Control'"
+        }
+      ]
+    },
+    "KEY_POP_MINUS_UP_MENU": {
+      "label": "POP-UP MENU",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xA4DB",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 29 'POP-UP MENU' (OBC A1 5E DA 24; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 42203; the upgrade's note: 'for external devices via HDMI Control'"
+        }
+      ]
+    },
+    "KEY_HOME": {
+      "label": "HOME",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x6699",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 30 'HOME' (OBC 01 7F 99 66; NEC1-f16 Official, parms none): NEC1-f16 device 127 subdevice 1 function 26265; the upgrade's note: 'for external devices via HDMI Control'"
+        }
+      ]
+    },
+    "KEY_CURSOR_UP": {
+      "label": "CURSOR UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x9D62",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 31 'CURSOR UP' (OBC A1 5E 46 B9; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 40290"
+        }
+      ]
+    },
+    "KEY_CURSOR_DOWN": {
+      "label": "CURSOR DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x9C63",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 32 'CURSOR DOWN' (OBC A1 5E C6 39; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 40035"
+        }
+      ]
+    },
+    "KEY_CURSOR_LEFT": {
+      "label": "CURSOR LEFT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x9F60",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 33 'CURSOR LEFT' (OBC A1 5E 06 F9; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 40800"
+        }
+      ]
+    },
+    "KEY_CURSOR_RIGHT": {
+      "label": "CURSOR RIGHT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x9E61",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 34 'CURSOR RIGHT' (OBC A1 5E 86 79; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 40545"
+        }
+      ]
+    },
+    "KEY_ENTER": {
+      "label": "ENTER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xDE21",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 35 'ENTER' (OBC A1 5E 84 7B; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 56865"
+        }
+      ]
+    },
+    "KEY_RETURN": {
+      "label": "RETURN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xAA55",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 36 'RETURN' (OBC A1 5E AA 55; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 43605"
+        }
+      ]
+    },
+    "KEY_LEVEL": {
+      "label": "LEVEL",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x8679",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 37 'LEVEL' (OBC A1 5E 9E 61; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 34425; the upgrade's note: 'function unclear, not mentioned in RX-V685 manual'"
+        }
+      ]
+    },
+    "KEY_VOLUME_UP": {
+      "label": "VOLUME UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x1AE5",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 38 'VOLUME UP' (OBC A1 5E A7 58; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 6885"
+        }
+      ]
+    },
+    "KEY_VOLUME_DOWN": {
+      "label": "VOLUME DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x1BE4",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 39 'VOLUME DOWN' (OBC A1 5E 27 D8; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 7140"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x1CE3",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 40 'MUTE' (OBC A1 5E C7 38; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 7395"
+        }
+      ]
+    },
+    "KEY_HELP": {
+      "label": "HELP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0xAAD5",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 41 'HELP' (OBC 01 7F AA 54; NEC1-f16 Official, parms none): NEC1-f16 device 127 subdevice 1 function 43733; the upgrade's note: 'only works within options or setup'"
+        }
+      ]
+    },
+    "KEY_INFO": {
+      "label": "INFO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x2758",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 42 'INFO' (OBC A1 5E 1B E5; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 10072; the upgrade's note: 'front-panel INFO key, not on Yamaha remote'"
+        }
+      ]
+    },
+    "KEY_STOP": {
+      "label": "STOP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x6996",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 43 'STOP' (OBC 01 7F 69 96; NEC1-f16 Official, parms none): NEC1-f16 device 127 subdevice 1 function 27030"
+        }
+      ]
+    },
+    "KEY_PAUSE_SLASH_BAND": {
+      "label": "PAUSE/BAND",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x6798",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 44 'PAUSE/BAND' (OBC 01 7F 19 E6; NEC1-f16 Official, parms none): NEC1-f16 device 127 subdevice 1 function 26520"
+        }
+      ]
+    },
+    "KEY_PLAY_SLASH_MEMORY": {
+      "label": "PLAY/MEMORY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x6897",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 45 'PLAY/MEMORY' (OBC 01 7F E9 16; NEC1-f16 Official, parms none): NEC1-f16 device 127 subdevice 1 function 26775"
+        }
+      ]
+    },
+    "KEY_SEARCH_SLASH_TUNING_MINUS": {
+      "label": "SEARCH/TUNING-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x6A95",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 46 'SEARCH/TUNING-' (OBC 01 7F A9 56; NEC1-f16 Official, parms none): NEC1-f16 device 127 subdevice 1 function 27285"
+        }
+      ]
+    },
+    "KEY_SEARCH_SLASH_TUNING_PLUS": {
+      "label": "SEARCH/TUNING+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x6B94",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 47 'SEARCH/TUNING+' (OBC 01 7F 29 D6; NEC1-f16 Official, parms none): NEC1-f16 device 127 subdevice 1 function 27540"
+        }
+      ]
+    },
+    "KEY_SKIP_MINUS": {
+      "label": "SKIP-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x6C93",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 48 'SKIP-' (OBC 01 7F C9 36; NEC1-f16 Official, parms none): NEC1-f16 device 127 subdevice 1 function 27795"
+        }
+      ]
+    },
+    "KEY_SKIP_PLUS": {
+      "label": "SKIP+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x6D92",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 49 'SKIP+' (OBC 01 7F 49 B6; NEC1-f16 Official, parms none): NEC1-f16 device 127 subdevice 1 function 28050"
+        }
+      ]
+    },
+    "KEY_PRESET_MINUS": {
+      "label": "PRESET-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x5E21",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 50 'PRESET-' (OBC 01 7F 85 7B; NEC1-f16 Official, parms none): NEC1-f16 device 127 subdevice 1 function 24097"
+        }
+      ]
+    },
+    "KEY_PRESET_PLUS": {
+      "label": "PRESET+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x5B24",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 51 'PRESET+' (OBC 01 7F 25 DB; NEC1-f16 Official, parms none): NEC1-f16 device 127 subdevice 1 function 23332"
+        }
+      ]
+    },
+    "KEY_FM": {
+      "label": "FM",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x5827",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 52 'FM' (OBC 01 7F E5 1B; NEC1-f16 Official, parms none): NEC1-f16 device 127 subdevice 1 function 22567; the upgrade's note: 'works on cable'"
+        }
+      ]
+    },
+    "KEY_AM": {
+      "label": "AM",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x552A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 53 'AM' (OBC 01 7F 55 AB; NEC1-f16 Official, parms none): NEC1-f16 device 127 subdevice 1 function 21802; the upgrade's note: 'Requires antenna'"
+        }
+      ]
+    },
+    "KEY_TUNING_MINUS": {
+      "label": "TUNING-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x641B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 54 'TUNING-' (OBC 01 7F D9 27; NEC1-f16 Official, parms none): NEC1-f16 device 127 subdevice 1 function 25627"
+        }
+      ]
+    },
+    "KEY_TUNING_PLUS": {
+      "label": "TUNING+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x611E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 55 'TUNING+' (OBC 01 7F 79 87; NEC1-f16 Official, parms none): NEC1-f16 device 127 subdevice 1 function 24862"
+        }
+      ]
+    },
+    "KEY_CUSTOMIZE_MINUS": {
+      "label": "CUSTOMIZE-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xCBB4",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 56 'CUSTOMIZE-' (OBC A1 5E 2C D2; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 52148; the upgrade's note: 'not mentioned in RX-V685 manual, seems to have same effect as PROG. -'"
+        }
+      ]
+    },
+    "KEY_CUSTOMIZE_PLUS": {
+      "label": "CUSTOMIZE+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xCAB5",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 57 'CUSTOMIZE+' (OBC A1 5E AC 52; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 51893; the upgrade's note: 'not mentioned in RX-V685 manual, seems to have same effect as PROG. +'"
+        }
+      ]
+    },
+    "KEY_RED": {
+      "label": "RED",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xC0BF",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 58 'RED' (OBC A1 5E FC 02; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 49343; the upgrade's note: 'for external devices via HDMI Control'"
+        }
+      ]
+    },
+    "KEY_GREEN": {
+      "label": "GREEN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xC1BE",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 59 'GREEN' (OBC A1 5E 7C 82; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 49598; the upgrade's note: 'for external devices via HDMI Control'"
+        }
+      ]
+    },
+    "KEY_YELLOW": {
+      "label": "YELLOW",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xC2BD",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 60 'YELLOW' (OBC A1 5E BC 42; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 49853; the upgrade's note: 'for external devices via HDMI Control'"
+        }
+      ]
+    },
+    "KEY_BLUE": {
+      "label": "BLUE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xC3BC",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 61 'BLUE' (OBC A1 5E 3C C2; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 50108; the upgrade's note: 'for external devices via HDMI Control'"
+        }
+      ]
+    },
+    "KEY_MAIN_ON": {
+      "label": "MAIN ON",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x7E81",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 62 'MAIN ON' (OBC 81 7E 81 7E; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 32385"
+        }
+      ]
+    },
+    "KEY_MAIN_OFF": {
+      "label": "MAIN OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x7F80",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 63 'MAIN OFF' (OBC 81 7E 01 FE; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 32640"
+        }
+      ]
+    },
+    "KEY_SLEEP_ON": {
+      "label": "SLEEP ON",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x1669",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 64 'SLEEP ON' (OBC 81 7E 97 69; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 5737"
+        }
+      ]
+    },
+    "KEY_SLEEP_OFF": {
+      "label": "SLEEP OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x1B64",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 65 'SLEEP OFF' (OBC 81 7E 27 D9; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 7012"
+        }
+      ]
+    },
+    "KEY_AUTO": {
+      "label": "AUTO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xA659",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 66 'AUTO' (OBC 81 7E 9A 65; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 42585; the upgrade's note: 'not implemented in RX-V685'"
+        }
+      ]
+    },
+    "KEY_HDMI": {
+      "label": "HDMI",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xDA25",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 67 'HDMI' (OBC 81 7E A4 5B; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 55845; the upgrade's note: 'not implemented in RX-V685'"
+        }
+      ]
+    },
+    "KEY_COAX_SLASH_OPT": {
+      "label": "COAX/OPT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xA956",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 68 'COAX/OPT' (OBC 81 7E 6A 95; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 43350; the upgrade's note: 'not implemented in RX-V685'"
+        }
+      ]
+    },
+    "KEY_ANALOG": {
+      "label": "ANALOG",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xAA55",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 69 'ANALOG' (OBC 81 7E AA 55; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 43605; the upgrade's note: 'not implemented in RX-V685'"
+        }
+      ]
+    },
+    "KEY_HDMI_MINUS_1": {
+      "label": "HDMI-1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x4738",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 70 'HDMI-1' (OBC A1 5E 1D E3; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 18232"
+        }
+      ]
+    },
+    "KEY_HDMI_MINUS_2": {
+      "label": "HDMI-2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x4A35",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 71 'HDMI-2' (OBC A1 5E AD 53; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 18997"
+        }
+      ]
+    },
+    "KEY_HDMI_MINUS_3": {
+      "label": "HDMI-3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x4D32",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 72 'HDMI-3' (OBC A1 5E 4D B3; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 19762"
+        }
+      ]
+    },
+    "KEY_HDMI_MINUS_4": {
+      "label": "HDMI-4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x502F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 73 'HDMI-4' (OBC A1 5E F5 0B; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 20527"
+        }
+      ]
+    },
+    "KEY_HDMI_MINUS_5": {
+      "label": "HDMI-5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x700F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 74 'HDMI-5' (OBC A1 5E F1 0F; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 28687"
+        }
+      ]
+    },
+    "KEY_HDMI_MINUS_6": {
+      "label": "HDMI-6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x730C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 75 'HDMI-6' (OBC A1 5E 31 CF; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 29452; the upgrade's note: 'not implemented in RX-V685'"
+        }
+      ]
+    },
+    "KEY_HDMI_MINUS_7": {
+      "label": "HDMI-7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x98E7",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 76 'HDMI-7' (OBC A1 5E E6 18; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 39143; the upgrade's note: 'not implemented in RX-V685'"
+        }
+      ]
+    },
+    "KEY_AV_MINUS_1": {
+      "label": "AV-1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x532C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 77 'AV-1' (OBC A1 5E 35 CB; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 21292"
+        }
+      ]
+    },
+    "KEY_AV_MINUS_2": {
+      "label": "AV-2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x5629",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 78 'AV-2' (OBC A1 5E 95 6B; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 22057"
+        }
+      ]
+    },
+    "KEY_AV_MINUS_3": {
+      "label": "AV-3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x5926",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 79 'AV-3' (OBC A1 5E 65 9B; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 22822; the upgrade's note: 'not implemented in RX-V685'"
+        }
+      ]
+    },
+    "KEY_AV_MINUS_4": {
+      "label": "AV-4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x5C23",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 80 'AV-4' (OBC A1 5E C5 3B; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 23587; the upgrade's note: 'not implemented in RX-V685'"
+        }
+      ]
+    },
+    "KEY_AV_MINUS_5": {
+      "label": "AV-5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x5F20",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 81 'AV-5' (OBC A1 5E 05 FB; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 24352; the upgrade's note: 'not implemented in RX-V685'"
+        }
+      ]
+    },
+    "KEY_AV_MINUS_6": {
+      "label": "AV-6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x621D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 82 'AV-6' (OBC A1 5E B9 47; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 25117; the upgrade's note: 'not implemented in RX-V685'"
+        }
+      ]
+    },
+    "KEY_AV_MINUS_7": {
+      "label": "AV-7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x7609",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 83 'AV-7' (OBC A1 5E 91 6F; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 30217; the upgrade's note: 'not implemented in RX-V685'"
+        }
+      ]
+    },
+    "KEY_AUDIO": {
+      "label": "AUDIO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x9BE4",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 84 'AUDIO' (OBC A1 5E 26 D8; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 39908"
+        }
+      ]
+    },
+    "KEY_AUDIO_MINUS_1": {
+      "label": "AUDIO-1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x651A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 85 'AUDIO-1' (OBC A1 5E 59 A7; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 25882"
+        }
+      ]
+    },
+    "KEY_AUDIO_MINUS_2": {
+      "label": "AUDIO-2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x6817",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 86 'AUDIO-2' (OBC A1 5E E9 17; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 26647"
+        }
+      ]
+    },
+    "KEY_AUDIO_MINUS_3": {
+      "label": "AUDIO-3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x7C03",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 87 'AUDIO-3' (OBC A1 5E C1 3F; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 31747"
+        }
+      ]
+    },
+    "KEY_AUDIO_MINUS_4": {
+      "label": "AUDIO-4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x7F00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 88 'AUDIO-4' (OBC A1 5E 01 FF; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 32512"
+        }
+      ]
+    },
+    "KEY_AUDIO_MINUS_5": {
+      "label": "AUDIO-5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xACD3",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 89 'AUDIO-5' (OBC A1 5E CA 34; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 44243"
+        }
+      ]
+    },
+    "KEY_AUX": {
+      "label": "AUX",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x55AA",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 90 'AUX' (OBC A1 5E 55 AA; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 21930"
+        }
+      ]
+    },
+    "KEY_PHONO": {
+      "label": "PHONO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x14EB",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 91 'PHONO' (OBC A1 5E D7 28; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 5355"
+        }
+      ]
+    },
+    "KEY_SERVER": {
+      "label": "SERVER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x6C13",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 92 'SERVER' (OBC 01 7F C9 37; NEC1-f16 Official, parms none): NEC1-f16 device 127 subdevice 1 function 27667"
+        }
+      ]
+    },
+    "KEY_NET_RADIO": {
+      "label": "NET RADIO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x6F10",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 93 'NET RADIO' (OBC 01 7F 09 F7; NEC1-f16 Official, parms none): NEC1-f16 device 127 subdevice 1 function 28432"
+        }
+      ]
+    },
+    "KEY_RHAPSODY_SLASH_NAPSTER": {
+      "label": "Rhapsody/Napster",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x750A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 94 'Rhapsody/Napster' (OBC 01 7F 51 AF; NEC1-f16 Official, parms none): NEC1-f16 device 127 subdevice 1 function 29962"
+        }
+      ]
+    },
+    "KEY_PANDORA": {
+      "label": "Pandora",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x85FA",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 95 'Pandora' (OBC 01 7F 5E A0; NEC1-f16 Official, parms none): NEC1-f16 device 127 subdevice 1 function 34298"
+        }
+      ]
+    },
+    "KEY_SIRIUSXM": {
+      "label": "SiriusXM",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x81FE",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 96 'SiriusXM' (OBC 01 7F 7E 80; NEC1-f16 Official, parms none): NEC1-f16 device 127 subdevice 1 function 33278"
+        }
+      ]
+    },
+    "KEY_SPOTIFY_STAR_EXCEPT_TK": {
+      "label": "Spotify *Except TK",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x8DF2",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 97 'Spotify *Except TK' (OBC 01 7F 4E B0; NEC1-f16 Official, parms none): NEC1-f16 device 127 subdevice 1 function 36338"
+        }
+      ]
+    },
+    "KEY_JUKE_STAR_G": {
+      "label": "JUKE*G",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x95EA",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 98 'JUKE*G' (OBC 01 7F 56 A8; NEC1-f16 Official, parms none): NEC1-f16 device 127 subdevice 1 function 38378"
+        }
+      ]
+    },
+    "KEY_RADIKO_STAR_J": {
+      "label": "Radiko*J",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x9AE5",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 99 'Radiko*J' (OBC 01 7F A6 58; NEC1-f16 Official, parms none): NEC1-f16 device 127 subdevice 1 function 39653"
+        }
+      ]
+    },
+    "KEY_QOBUZ_STAR_BG": {
+      "label": "Qobuz*BG",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x9EE1",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 100 'Qobuz*BG' (OBC 01 7F 86 78; NEC1-f16 Official, parms none): NEC1-f16 device 127 subdevice 1 function 40673"
+        }
+      ]
+    },
+    "KEY_AIRPLAY": {
+      "label": "AirPlay",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x91EE",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 101 'AirPlay' (OBC 01 7F 76 88; NEC1-f16 Official, parms none): NEC1-f16 device 127 subdevice 1 function 37358"
+        }
+      ]
+    },
+    "KEY_TIDAL": {
+      "label": "TIDAL",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0xA6D9",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 102 'TIDAL' (OBC 01 7F 9A 64; NEC1-f16 Official, parms none): NEC1-f16 device 127 subdevice 1 function 42713"
+        }
+      ]
+    },
+    "KEY_DEEZER": {
+      "label": "Deezer",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0xA2DD",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 103 'Deezer' (OBC 01 7F BA 44; NEC1-f16 Official, parms none): NEC1-f16 device 127 subdevice 1 function 41693"
+        }
+      ]
+    },
+    "KEY_MC_LINK": {
+      "label": "MC Link",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xD5AA",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 104 'MC Link' (OBC A1 5E 54 AA; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 54698"
+        }
+      ]
+    },
+    "KEY_MUTE_ON_FULL": {
+      "label": "MUTE ON (FULL)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xA25D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 105 'MUTE ON (FULL)' (OBC 81 7E BA 45; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 41565"
+        }
+      ]
+    },
+    "KEY_MUTE_ON_MINUS_40DB": {
+      "label": "MUTE ON (-40dB)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x631C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 106 'MUTE ON (-40dB)' (OBC 81 7E 39 C7; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 25372"
+        }
+      ]
+    },
+    "KEY_MUTE_ON_MINUS_20DB": {
+      "label": "MUTE ON (-20dB)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xDF20",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 107 'MUTE ON (-20dB)' (OBC 81 7E 04 FB; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 57120"
+        }
+      ]
+    },
+    "KEY_MUTE_OFF": {
+      "label": "MUTE OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xA35C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 108 'MUTE OFF' (OBC 81 7E 3A C5; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 41820"
+        }
+      ]
+    },
+    "KEY_MOVIE": {
+      "label": "MOVIE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x8877",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 109 'MOVIE' (OBC A1 5E EE 11; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 34935"
+        }
+      ]
+    },
+    "KEY_MUSIC": {
+      "label": "MUSIC",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x8976",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 110 'MUSIC' (OBC A1 5E 6E 91; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 35190"
+        }
+      ]
+    },
+    "KEY_CLASSICAL": {
+      "label": "CLASSICAL",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x8A75",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 111 'CLASSICAL' (OBC A1 5E AE 51; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 35445"
+        }
+      ]
+    },
+    "KEY_LIVE_SLASH_CLUB": {
+      "label": "LIVE/CLUB",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x8B74",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 112 'LIVE/CLUB' (OBC A1 5E 2E D1; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 35700"
+        }
+      ]
+    },
+    "KEY_ENTERTAIN": {
+      "label": "ENTERTAIN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x8C73",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 113 'ENTERTAIN' (OBC A1 5E CE 31; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 35955"
+        }
+      ]
+    },
+    "KEY_MOVIE_THEATER": {
+      "label": "MOVIE THEATER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x8E71",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 114 'MOVIE THEATER' (OBC A1 5E 8E 71; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 36465"
+        }
+      ]
+    },
+    "KEY_STEREO": {
+      "label": "STEREO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x8F70",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 115 'STEREO' (OBC A1 5E 0E F1; NEC1-f16 Official, parms none): NEC1-f16 device 122 subdevice 133 function 36720"
+        }
+      ]
+    },
+    "KEY_DIRECT_ON": {
+      "label": "DIRECT ON",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x807F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 116 'DIRECT ON' (OBC 81 7E FE 01; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 32895; the upgrade's note: 'use in preference to toggle as no OSD'"
+        }
+      ]
+    },
+    "KEY_DIRECT_OFF": {
+      "label": "DIRECT OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x827D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 117 'DIRECT OFF' (OBC 81 7E BE 41; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 33405; the upgrade's note: 'use in preference to toggle as no OSD'"
+        }
+      ]
+    },
+    "KEY_STRAIGHT_ON": {
+      "label": "STRAIGHT ON",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xE01F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 118 'STRAIGHT ON' (OBC 81 7E F8 07; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 57375"
+        }
+      ]
+    },
+    "KEY_STRAIGHT_OFF": {
+      "label": "STRAIGHT OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x27D8",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 119 'STRAIGHT OFF' (OBC 81 7E 1B E4; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 10200"
+        }
+      ]
+    },
+    "KEY_PROGRAM_HALL_IN_MUNICH_A": {
+      "label": "PROGRAM\\: Hall in Munich A",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xE11E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 120 'PROGRAM\\: Hall in Munich A' (OBC 81 7E 78 87; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 57630"
+        }
+      ]
+    },
+    "KEY_PROGRAM_HALL_IN_MUNICH_B": {
+      "label": "PROGRAM\\: Hall in Munich B",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xE21D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 121 'PROGRAM\\: Hall in Munich B' (OBC 81 7E B8 47; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 57885"
+        }
+      ]
+    },
+    "KEY_PROGRAM_HALL_IN_FRANKFURT": {
+      "label": "PROGRAM\\: Hall in Frankfurt",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xE31C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 122 'PROGRAM\\: Hall in Frankfurt' (OBC 81 7E 38 C7; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 58140"
+        }
+      ]
+    },
+    "KEY_PROGRAM_HALL_IN_STUTTGART": {
+      "label": "PROGRAM\\: Hall in Stuttgart",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xE41B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 123 'PROGRAM\\: Hall in Stuttgart' (OBC 81 7E D8 27; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 58395"
+        }
+      ]
+    },
+    "KEY_PROGRAM_HALL_IN_VIENNA": {
+      "label": "PROGRAM\\: Hall in Vienna",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xE51A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 124 'PROGRAM\\: Hall in Vienna' (OBC 81 7E 58 A7; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 58650"
+        }
+      ]
+    },
+    "KEY_PROGRAM_HALL_IN_AMSTERDAM": {
+      "label": "PROGRAM\\: Hall in Amsterdam",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xE619",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 125 'PROGRAM\\: Hall in Amsterdam' (OBC 81 7E 98 67; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 58905"
+        }
+      ]
+    },
+    "KEY_PROGRAM_HALL_IN_USA_A": {
+      "label": "PROGRAM\\: Hall in USA A",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xC43B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 126 'PROGRAM\\: Hall in USA A' (OBC 81 7E DC 23; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 50235"
+        }
+      ]
+    },
+    "KEY_PROGRAM_HALL_IN_USA_B": {
+      "label": "PROGRAM\\: Hall in USA B",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xC53A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 127 'PROGRAM\\: Hall in USA B' (OBC 81 7E 5C A3; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 50490"
+        }
+      ]
+    },
+    "KEY_PROGRAM_CHURCH_IN_TOKYO": {
+      "label": "PROGRAM\\: Church in Tokyo",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xE718",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 128 'PROGRAM\\: Church in Tokyo' (OBC 81 7E 18 E7; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 59160"
+        }
+      ]
+    },
+    "KEY_PROGRAM_CHURCH_IN_FREIBURG": {
+      "label": "PROGRAM\\: Church in Freiburg",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xE817",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 129 'PROGRAM\\: Church in Freiburg' (OBC 81 7E E8 17; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 59415"
+        }
+      ]
+    },
+    "KEY_PROGRAM_CHURCH_IN_ROYAUMONT": {
+      "label": "PROGRAM\\: Church in Royaumont",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xE916",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 130 'PROGRAM\\: Church in Royaumont' (OBC 81 7E 68 97; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 59670"
+        }
+      ]
+    },
+    "KEY_PROGRAM_CHAMBER": {
+      "label": "PROGRAM\\: Chamber",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xAF50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 131 'PROGRAM\\: Chamber' (OBC 81 7E 0A F5; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 44880"
+        }
+      ]
+    },
+    "KEY_PROGRAM_VILLAGE_GATE": {
+      "label": "PROGRAM\\: Village Gate",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xEA15",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 132 'PROGRAM\\: Village Gate' (OBC 81 7E A8 57; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 59925"
+        }
+      ]
+    },
+    "KEY_PROGRAM_VILLAGE_VANGUARD": {
+      "label": "PROGRAM\\: Village Vanguard",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xEB14",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 133 'PROGRAM\\: Village Vanguard' (OBC 81 7E 28 D7; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 60180"
+        }
+      ]
+    },
+    "KEY_PROGRAM_WAREHOUSE_LOFT": {
+      "label": "PROGRAM\\: Warehouse Loft",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xEE11",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 134 'PROGRAM\\: Warehouse Loft' (OBC 81 7E 88 77; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 60945"
+        }
+      ]
+    },
+    "KEY_PROGRAM_CELLAR_CLUB": {
+      "label": "PROGRAM\\: Cellar Club",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xCD32",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 135 'PROGRAM\\: Cellar Club' (OBC 81 7E 4C B3; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 52530"
+        }
+      ]
+    },
+    "KEY_PROGRAM_THE_ROXY_THEATRE": {
+      "label": "PROGRAM\\: The Roxy Theatre",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xED12",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 136 'PROGRAM\\: The Roxy Theatre' (OBC 81 7E 48 B7; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 60690"
+        }
+      ]
+    },
+    "KEY_PROGRAM_THE_BOTTOM_LINE": {
+      "label": "PROGRAM\\: The Bottom Line",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xEC13",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 137 'PROGRAM\\: The Bottom Line' (OBC 81 7E C8 37; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 60435"
+        }
+      ]
+    },
+    "KEY_PROGRAM_ARENA": {
+      "label": "PROGRAM\\: Arena",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xEF10",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 138 'PROGRAM\\: Arena' (OBC 81 7E 08 F7; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 61200"
+        }
+      ]
+    },
+    "KEY_PROGRAM_SPORTS": {
+      "label": "PROGRAM\\: Sports",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xF807",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 139 'PROGRAM\\: Sports' (OBC 81 7E E0 1F; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 63495"
+        }
+      ]
+    },
+    "KEY_PROGRAM_ACTION_GAME": {
+      "label": "PROGRAM\\: Action Game",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xF20D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 140 'PROGRAM\\: Action Game' (OBC 81 7E B0 4F; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 61965"
+        }
+      ]
+    },
+    "KEY_PROGRAM_ROLEPLAYING_GAME": {
+      "label": "PROGRAM\\: Roleplaying Game",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xCE31",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 141 'PROGRAM\\: Roleplaying Game' (OBC 81 7E 8C 73; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 52785"
+        }
+      ]
+    },
+    "KEY_PROGRAM_MUSIC_VIDEO": {
+      "label": "PROGRAM\\: Music Video",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xF30C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 142 'PROGRAM\\: Music Video' (OBC 81 7E 30 CF; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 62220"
+        }
+      ]
+    },
+    "KEY_PROGRAM_RECITAL_SLASH_OPERA": {
+      "label": "PROGRAM\\: Recital/Opera",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xF50A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 143 'PROGRAM\\: Recital/Opera' (OBC 81 7E 50 AF; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 62730"
+        }
+      ]
+    },
+    "KEY_PROGRAM_PAVILION": {
+      "label": "PROGRAM\\: Pavilion",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xF609",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 144 'PROGRAM\\: Pavilion' (OBC 81 7E 90 6F; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 62985"
+        }
+      ]
+    },
+    "KEY_PROGRAM_DISCO": {
+      "label": "PROGRAM\\: Disco",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xF00F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 145 'PROGRAM\\: Disco' (OBC 81 7E F0 0F; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 61455"
+        }
+      ]
+    },
+    "KEY_PROGRAM_STANDARD": {
+      "label": "PROGRAM\\: Standard",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xFE01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 146 'PROGRAM\\: Standard' (OBC 81 7E 80 7F; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 65025"
+        }
+      ]
+    },
+    "KEY_PROGRAM_SPECTACLE": {
+      "label": "PROGRAM\\: Spectacle",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xF906",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 147 'PROGRAM\\: Spectacle' (OBC 81 7E 60 9F; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 63750"
+        }
+      ]
+    },
+    "KEY_PROGRAM_SCI_MINUS_FI": {
+      "label": "PROGRAM\\: Sci-Fi",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xFA05",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 148 'PROGRAM\\: Sci-Fi' (OBC 81 7E A0 5F; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 64005"
+        }
+      ]
+    },
+    "KEY_PROGRAM_ADVENTURE": {
+      "label": "PROGRAM\\: Adventure",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xFB04",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 149 'PROGRAM\\: Adventure' (OBC 81 7E 20 DF; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 64260"
+        }
+      ]
+    },
+    "KEY_PROGRAM_DRAMA": {
+      "label": "PROGRAM\\: Drama",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xFC03",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 150 'PROGRAM\\: Drama' (OBC 81 7E C0 3F; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 64515"
+        }
+      ]
+    },
+    "KEY_PROGRAM_MONO_MOVIE": {
+      "label": "PROGRAM\\: Mono Movie",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xF708",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 151 'PROGRAM\\: Mono Movie' (OBC 81 7E 10 EF; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 63240"
+        }
+      ]
+    },
+    "KEY_PROGRAM_ENHANCED": {
+      "label": "PROGRAM\\: Enhanced",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x9B64",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 152 'PROGRAM\\: Enhanced' (OBC 81 7E 26 D9; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 39780"
+        }
+      ]
+    },
+    "KEY_PROGRAM_2CH_STEREO": {
+      "label": "PROGRAM\\: 2ch Stereo",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xC03F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 153 'PROGRAM\\: 2ch Stereo' (OBC 81 7E FC 03; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 49215"
+        }
+      ]
+    },
+    "KEY_PROGRAM_XCH_STEREO": {
+      "label": "PROGRAM\\: Xch Stereo",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xFF00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 154 'PROGRAM\\: Xch Stereo' (OBC 81 7E 00 FF; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 65280"
+        }
+      ]
+    },
+    "KEY_SUR_DECODE_ON": {
+      "label": "SUR. DECODE ON",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xFD02",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 155 'SUR. DECODE ON' (OBC 81 7E 40 BF; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 64770"
+        }
+      ]
+    },
+    "KEY_ENHANCER_ON": {
+      "label": "ENHANCER ON",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xD827",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 156 'ENHANCER ON' (OBC 81 7E E4 1B; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 55335"
+        }
+      ]
+    },
+    "KEY_ENHANCER_OFF": {
+      "label": "ENHANCER OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xD926",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 157 'ENHANCER OFF' (OBC 81 7E 64 9B; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 55590"
+        }
+      ]
+    },
+    "KEY_SUR_DOLBY_SURROUND": {
+      "label": "SUR. DOLBY SURROUND",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xB8C7",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 158 'SUR. DOLBY SURROUND' (OBC 81 7E E2 1C; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 47303"
+        }
+      ]
+    },
+    "KEY_SUR_NEO_6_CINEMA": {
+      "label": "SUR. NEO\\:6 CINEMA",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x6996",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 159 'SUR. NEO\\:6 CINEMA' (OBC 81 7E 69 96; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 27030"
+        }
+      ]
+    },
+    "KEY_SUR_NEO_6_MUSIC": {
+      "label": "SUR. NEO\\:6 MUSIC",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x6A95",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 160 'SUR. NEO\\:6 MUSIC' (OBC 81 7E A9 56; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 27285"
+        }
+      ]
+    },
+    "KEY_SUR_NEURAL_X": {
+      "label": "SUR. Neural\\:X",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xCC33",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 161 'SUR. Neural\\:X' (OBC 81 7E CC 33; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 52275"
+        }
+      ]
+    },
+    "KEY_SUR_AUTO": {
+      "label": "SUR. Auto",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xFF0",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 162 'SUR. Auto' (OBC 81 7E 0F F0; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 4080"
+        }
+      ]
+    },
+    "KEY_HDMI_AUTO_LIPSYNC_ON": {
+      "label": "HDMI Auto Lipsync ON",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x83FC",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 163 'HDMI Auto Lipsync ON' (OBC 81 7E 3E C0; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 33788"
+        }
+      ]
+    },
+    "KEY_HDMI_AUTO_LIPSYNC_OFF_MANUAL": {
+      "label": "HDMI Auto Lipsync OFF(MANUAL)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x84FB",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 164 'HDMI Auto Lipsync OFF(MANUAL)' (OBC 81 7E DE 20; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 34043"
+        }
+      ]
+    },
+    "KEY_DUAL_MONO_MAIN": {
+      "label": "DUAL MONO MAIN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x936C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 165 'DUAL MONO MAIN' (OBC 81 7E 36 C9; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 37740; the upgrade's note: 'only on Japanese models'"
+        }
+      ]
+    },
+    "KEY_DUAL_MONO_SUB": {
+      "label": "DUAL MONO SUB",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x946B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 166 'DUAL MONO SUB' (OBC 81 7E D6 29; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 37995; the upgrade's note: 'only on Japanese models'"
+        }
+      ]
+    },
+    "KEY_DUAL_MONO_ALL": {
+      "label": "DUAL MONO ALL",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x956A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 167 'DUAL MONO ALL' (OBC 81 7E 56 A9; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 38250; the upgrade's note: 'only on Japanese models'"
+        }
+      ]
+    },
+    "KEY_ADAPTIVE_DRC_ON": {
+      "label": "ADAPTIVE DRC ON",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x740B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 168 'ADAPTIVE DRC ON' (OBC 81 7E D1 2F; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 29707; the upgrade's note: 'loudness compensation, requires YPAO'"
+        }
+      ]
+    },
+    "KEY_ADAPTIVE_DRC_OFF": {
+      "label": "ADAPTIVE DRC OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x750A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 169 'ADAPTIVE DRC OFF' (OBC 81 7E 51 AF; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 29962; the upgrade's note: 'loudness compensation, requires YPAO'"
+        }
+      ]
+    },
+    "KEY_ADAPTIVE_DSP_ON": {
+      "label": "ADAPTIVE DSP ON",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x7609",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 170 'ADAPTIVE DSP ON' (OBC 81 7E 91 6F; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 30217"
+        }
+      ]
+    },
+    "KEY_ADAPTIVE_DSP_OFF": {
+      "label": "ADAPTIVE DSP OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x7708",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 171 'ADAPTIVE DSP OFF' (OBC 81 7E 11 EF; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 30472"
+        }
+      ]
+    },
+    "KEY_DIALOGUE_LEVEL_0": {
+      "label": "DIALOGUE LEVEL 0",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xB4CB",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 172 'DIALOGUE LEVEL 0' (OBC 81 7E D2 2C; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 46283"
+        }
+      ]
+    },
+    "KEY_DIALOGUE_LEVEL_1": {
+      "label": "DIALOGUE LEVEL 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xB5CA",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 173 'DIALOGUE LEVEL 1' (OBC 81 7E 52 AC; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 46538"
+        }
+      ]
+    },
+    "KEY_DIALOGUE_LEVEL_2": {
+      "label": "DIALOGUE LEVEL 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xB6C9",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 174 'DIALOGUE LEVEL 2' (OBC 81 7E 92 6C; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 46793"
+        }
+      ]
+    },
+    "KEY_DIALOGUE_LEVEL_3": {
+      "label": "DIALOGUE LEVEL 3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xB7C8",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 175 'DIALOGUE LEVEL 3' (OBC 81 7E 12 EC; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 47048"
+        }
+      ]
+    },
+    "KEY_MEMORY": {
+      "label": "MEMORY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x6718",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 176 'MEMORY' (OBC 01 7F 19 E7; NEC1-f16 Official, parms none): NEC1-f16 device 127 subdevice 1 function 26392"
+        }
+      ]
+    },
+    "KEY_VOLUME_MEMORY_1": {
+      "label": "VOLUME MEMORY 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x6B94",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 177 'VOLUME MEMORY 1' (OBC 81 7E 29 D6; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 27540"
+        }
+      ]
+    },
+    "KEY_VOLUME_MEMORY_2": {
+      "label": "VOLUME MEMORY 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x6C93",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 178 'VOLUME MEMORY 2' (OBC 81 7E C9 36; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 27795"
+        }
+      ]
+    },
+    "KEY_VOLUME_MEMORY_3": {
+      "label": "VOLUME MEMORY 3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x6D92",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 179 'VOLUME MEMORY 3' (OBC 81 7E 49 B6; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 28050"
+        }
+      ]
+    },
+    "KEY_VOLUME_MEMORY_4": {
+      "label": "VOLUME MEMORY 4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x6E91",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 180 'VOLUME MEMORY 4' (OBC 81 7E 89 76; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 28305"
+        }
+      ]
+    },
+    "KEY_VOLUME_MEMORY_5": {
+      "label": "VOLUME MEMORY 5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x6F90",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 181 'VOLUME MEMORY 5' (OBC 81 7E 09 F6; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 28560"
+        }
+      ]
+    },
+    "KEY_VOLUME_MEMORY_6": {
+      "label": "VOLUME MEMORY 6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x708F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 182 'VOLUME MEMORY 6' (OBC 81 7E F1 0E; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 28815"
+        }
+      ]
+    },
+    "KEY_VOLUME_RECALL_1": {
+      "label": "VOLUME RECALL 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x758A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 183 'VOLUME RECALL 1' (OBC 81 7E 51 AE; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 30090"
+        }
+      ]
+    },
+    "KEY_VOLUME_RECALL_2": {
+      "label": "VOLUME RECALL 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x7689",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 184 'VOLUME RECALL 2' (OBC 81 7E 91 6E; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 30345"
+        }
+      ]
+    },
+    "KEY_VOLUME_RECALL_3": {
+      "label": "VOLUME RECALL 3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x7788",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 185 'VOLUME RECALL 3' (OBC 81 7E 11 EE; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 30600"
+        }
+      ]
+    },
+    "KEY_VOLUME_RECALL_4": {
+      "label": "VOLUME RECALL 4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x7887",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 186 'VOLUME RECALL 4' (OBC 81 7E E1 1E; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 30855"
+        }
+      ]
+    },
+    "KEY_VOLUME_RECALL_5": {
+      "label": "VOLUME RECALL 5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x7986",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 187 'VOLUME RECALL 5' (OBC 81 7E 61 9E; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 31110"
+        }
+      ]
+    },
+    "KEY_VOLUME_RECALL_6": {
+      "label": "VOLUME RECALL 6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0x7A85",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 188 'VOLUME RECALL 6' (OBC 81 7E A1 5E; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 31365"
+        }
+      ]
+    },
+    "KEY_VIDEO_PRESET_1": {
+      "label": "VIDEO PRESET 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xA4DB",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 189 'VIDEO PRESET 1' (OBC 81 7E DA 24; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 42203"
+        }
+      ]
+    },
+    "KEY_VIDEO_PRESET_2": {
+      "label": "VIDEO PRESET 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xA5DA",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 190 'VIDEO PRESET 2' (OBC 81 7E 5A A4; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 42458"
+        }
+      ]
+    },
+    "KEY_VIDEO_PRESET_3": {
+      "label": "VIDEO PRESET 3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xA6D9",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 191 'VIDEO PRESET 3' (OBC 81 7E 9A 64; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 42713"
+        }
+      ]
+    },
+    "KEY_VIDEO_PRESET_4": {
+      "label": "VIDEO PRESET 4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xA7D8",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 192 'VIDEO PRESET 4' (OBC 81 7E 1A E4; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 42968"
+        }
+      ]
+    },
+    "KEY_VIDEO_PRESET_5": {
+      "label": "VIDEO PRESET 5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xA8D7",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 193 'VIDEO PRESET 5' (OBC 81 7E EA 14; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 43223"
+        }
+      ]
+    },
+    "KEY_VIDEO_PRESET_6": {
+      "label": "VIDEO PRESET 6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7E",
+          "subdevice": "0x81",
+          "function": "0xA9D6",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/RX-V685-MAIN.rmdu function 194 'VIDEO PRESET 6' (OBC 81 7E 6A 94; NEC1-f16 Official, parms none): NEC1-f16 device 126 subdevice 129 function 43478"
+        }
+      ]
+    }
+  }
+}
