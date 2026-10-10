@@ -2051,7 +2051,7 @@ note rather than a live contract.
 
 ## 12. Implementation status
 
-Phases 0-6 are implemented: 3568 tests, `jsonschema` the only runtime
+Phases 0-6 are implemented: 3576 tests, `jsonschema` the only runtime
 dependency. Phase 2 landed its nine SPEC edits *before* its code, per §9 --
 the spec change is what authorises the implementation. (That count is asserted by the suite itself -- see
 `test_documented_test_count_is_current` -- so it cannot drift the way the
@@ -5375,27 +5375,27 @@ All remotes:
 
 source       remotes     keys      keys mapped  >=90% of keys   >=75% of keys   >=50% of keys
 -----------  -------  -------  ---------------  -------------  --------------  --------------
-irblaster     10,013  411,265  81.9% (337,172)  44.8% (4,491)   69.9% (7,008)   93.1% (9,323)
+irblaster     10,084  412,775  81.9% (338,239)  44.7% (4,509)   69.7% (7,034)   92.9% (9,377)
 lirc           3,138  112,789   58.3% (65,819)    18.8% (593)   49.6% (1,557)   79.9% (2,508)
 smartir           62      914      81.7% (747)     54.8% (34)      67.7% (42)      79.0% (49)
 hifi-remote      151    6,772    43.5% (2,951)       3.9% (6)      14.5% (22)      39.7% (60)
 jp1            2,566   99,929   71.5% (71,539)    20.3% (521)   62.0% (1,591)   87.1% (2,235)
 official         189   12,844    21.6% (2,776)       3.1% (6)      11.1% (21)      11.6% (22)
 authored           5      128       77.3% (99)      40.0% (2)       60.0% (3)       60.0% (3)
-all           16,124  644,641  74.6% (481,103)  35.0% (5,653)  63.5% (10,244)  88.0% (14,200)
+all           16,195  646,151  74.6% (482,170)  35.0% (5,671)  63.4% (10,270)  88.0% (14,254)
 
 Remotes with at least 10 keys:
 
 source       remotes     keys      keys mapped  >=90% of keys  >=75% of keys   >=50% of keys
 -----------  -------  -------  ---------------  -------------  -------------  --------------
-irblaster      9,415  408,466  82.0% (335,226)  44.8% (4,224)  70.6% (6,653)   94.2% (8,877)
+irblaster      9,454  409,858  82.0% (336,226)  44.7% (4,230)  70.4% (6,665)   94.2% (8,912)
 lirc           2,867  111,431   58.2% (64,915)    17.3% (496)  49.3% (1,415)   80.9% (2,320)
 smartir           39      786      84.3% (663)     58.9% (23)     76.9% (30)      94.8% (37)
 hifi-remote      128    6,653    43.7% (2,908)       3.9% (5)     14.8% (19)      42.1% (54)
 jp1            2,422   99,051   71.6% (70,966)    19.6% (477)  62.7% (1,521)   88.3% (2,140)
 official         179   12,802    21.4% (2,745)       0.0% (0)      8.3% (15)       8.9% (16)
 authored           4      120       75.8% (91)      25.0% (1)      50.0% (2)       50.0% (2)
-all           15,054  639,309  74.6% (477,514)  34.7% (5,226)  64.1% (9,655)  89.3% (13,446)
+all           15,093  640,701  74.6% (478,514)  34.6% (5,232)  64.0% (9,667)  89.3% (13,481)
 ```
 
 (The `official` row is the import of §29 and §31 (D123 to D127, D131 to D133): 189 files of Marantz's, Anthem's and Oppo's own tables. **Its keys map the least of any source, 21.6%, and only 6 of its 189 remotes reach 90%**, because a receiver's chart is the whole command set of a receiver (tuner presets and frequency steps, surround modes, Pure Direct, discrete `Audio Mute On` and `Off`, a source key for each input), which the 156 keys of D84 do not cover: 10,068 of its 12,844 keys are unmapped, under 584 different names, and what does map is volume, power, the cursor, bass, treble and sleep. Oppo's player tables are the exception, and are why the share is not lower: 750 of its 864 keys (86.8%) map. Widening the vocabulary to the receiver commands is the owner's call (D84 is theirs) and is in TODO.md, not done here. The `jp1` row is the import of §28 (D118 to D122), §32 (D134 to D136), §33 (D137 to D140) and §34 (D141 to D145), added after the same figures; the combos of §33 map less of their keys (52.5% of the 9,715) and lower the row from 76.8% to 74.0%, §34's executors (61.8% of 10,963) to 72.5%, §35's (54.6% of 3,958) to 71.8% and §36's (59.3% of 2,228) to 71.5%. The `hifi-remote` row is the import of §27 (D109 to D117), added after the figures in D85 to D87's prose were measured; those figures are the corpus without it. Its keys map less than the others' because the pages describe commands of one kind of device: `Index Mark`, `Disc +`, `Scan Reverse`, and `Select`, which D84 does not map.)
@@ -5514,7 +5514,7 @@ FTS5 is not in every Android SQLite, so the search is ordinary columns and one p
 
 ### D91 — Signals: shared, binary, sorted
 
-**The data-size reasoning.** The IR Blaster data has **411,265 keys but only 57,709 distinct compiled signals** (14%): the whole ledger has 644,641 keys and 171,210 (27%); LIRC alone shares little (112,789 keys, 97,775 signals, the raw captures). A key row is 20 bytes and a signal is 129 on average (the longest, a LIRC capture, 628 words), so storing each signal once is what makes the catalog small: the signals are 20.1 MB of blobs for 155,964, where one blob per key would be 72.9 MB. The key rows are the other half, and the reason `keys` has no text where the canonical key says it (D89).
+**The data-size reasoning.** The IR Blaster data has **412,775 keys but only 58,344 distinct compiled signals** (14%): the whole ledger has 646,151 keys and 171,845 (27%); LIRC alone shares little (112,789 keys, 97,775 signals, the raw captures). A key row is 20 bytes and a signal is 129 on average (the longest, a LIRC capture, 628 words), so storing each signal once is what makes the catalog small: the signals are 20.1 MB of blobs for 155,964, where one blob per key would be 72.9 MB. The key rows are the other half, and the reason `keys` has no text where the canonical key says it (D89).
 
 **The blob** is `signals.words`: a big-endian `uint16` **count of words**, then the words, each a big-endian `uint16`. The words are exactly those of the Pronto Hex string the ledger compiled the key to (`pronto.encode`): word 0 is `0000`, word 1 the frequency word, word 2 the number of burst pairs of the intro and word 3 of the repeat sequence, then the durations in carrier cycles, a mark then a space, first the intro and then the repeat (D6, D25, D78). The count is redundant with the length of the blob and with words 2 and 3 (`count = 4 + 2 x (n1 + n2)`); it is there so that a reader can reject a damaged blob without trusting anything else. One SQLite row per signal, `id` from 1 in the **sorted order of the blobs** as bytes: the length prefix makes that order by length first, then by content, so signals of one protocol and of one remote's family sit together, which is what compresses (D95). **Microseconds** are `round_half_up(cycles x period)` with `period = word1 x 0.241246 us` (D25: lossy in this direction by under half a cycle); the **carrier** is the catalog's (`remotes.carrier_hz`, what the file declared, `38000`) and the frequency word says another number (`006D` is 38,029 Hz): which an output transmits is its own decision, and both are in the vectors.
 
@@ -5531,7 +5531,7 @@ A remote is carried when **any** of its brands is chosen (its maker or a brand o
 
 **Everything not in the subset is recorded**: `excluded_brands` holds each left-out brand (`name`, `norm`) and `api_key`, the ten hex digits (SHA-1 of the exact name, D76) of the shard of the app API (§21) that has its remotes, comma-separated when the import spells it two ways; **NULL where the app API has none**, because the API serves the IR Blaster import only. Since D117 nothing is left out of the selected bundle, so the table is empty and **0 brands, 0 remotes, 0 keys** are missing from it, and **0 remotes of LIRC and SmartIR** are in no static file of the ledger that the bundle does not hold. Before it, 4,992 brands were left out, 228 of them with no shard, and 1,794 remotes of LIRC and SmartIR (the authored ones counted with them) were in no static file of the ledger at all until the full bundle was published; that finding is why `full` exists, and the selected bundle no longer has it.
 
-**What the numbers said** (D95, at a 20 MB cap; D117 removed the cap and these are history): the list did not fit. Samsung, LG, Sony, Panasonic and Philips, the first five lines, are 11.6 MB of the 19 by the estimate (Sony alone has 1,061 remotes, and most of the bytes of a brand with old equipment are LIRC raw captures: 5.0 MB of signals for 1,375 of the 4,394 remotes); the bundle carries **35 brands of the list and one by the proxy**, and **77 brands of the list are left out for lack of room** (the first are JVC, Grundig, Thomson, Telefunken, Loewe Opta, Beko, Vestel...). Levers the owner has, none taken here: reorder the list so the brands that matter most come first (the cheap ones are taken wherever the budget allows), shorten it, raise the cap, or drop what is bulkiest per remote (the LIRC raw captures, about 6 MB of the 19). **The owner signs off on the list**; until then it is a proposal. *Since D117:* nothing is skipped (0 brands of the list are left out) and nothing is left out of the bundle. The profile carries 112 brands of the list and 5,310 by the proxy, 5,422 in all, with 16,124 remote files, and its file is the size of `full`.
+**What the numbers said** (D95, at a 20 MB cap; D117 removed the cap and these are history): the list did not fit. Samsung, LG, Sony, Panasonic and Philips, the first five lines, are 11.6 MB of the 19 by the estimate (Sony alone has 1,061 remotes, and most of the bytes of a brand with old equipment are LIRC raw captures: 5.0 MB of signals for 1,375 of the 4,394 remotes); the bundle carries **35 brands of the list and one by the proxy**, and **77 brands of the list are left out for lack of room** (the first are JVC, Grundig, Thomson, Telefunken, Loewe Opta, Beko, Vestel...). Levers the owner has, none taken here: reorder the list so the brands that matter most come first (the cheap ones are taken wherever the budget allows), shorten it, raise the cap, or drop what is bulkiest per remote (the LIRC raw captures, about 6 MB of the 19). **The owner signs off on the list**; until then it is a proposal. *Since D117:* nothing is skipped (0 brands of the list are left out) and nothing is left out of the bundle. The profile carries 112 brands of the list and 5,312 by the proxy, 5,424 in all, with 16,195 remote files, and its file is the size of `full`.
 
 ### D93 — The manifest, `dataVersion` and the signature
 
@@ -5563,19 +5563,19 @@ Measured on the 64-core development machine (eight workers), `gzip -9` as the co
 
 | | `full` | `selected` |
 |---|---|---|
-| file | 56,676,352 B | 56,676,352 B |
-| `gzip -9` | 14,404,071 B | 14,404,272 B |
-| brands | 5,422 | 5,422 |
-| models | 281,214 | 281,214 |
-| remote files | 16,124 | 16,124 |
-| remotes, the fragments of D103 folded | 15,809 | 15,809 |
-| keys | 644,641 | 644,641 |
-| signals | 171,210 | 171,210 |
+| file | 56,832,000 B | 56,832,000 B |
+| `gzip -9` | 14,430,011 B | 14,430,222 B |
+| brands | 5,424 | 5,424 |
+| models | 281,322 | 281,322 |
+| remote files | 16,195 | 16,195 |
+| remotes, the fragments of D103 folded | 15,838 | 15,838 |
+| keys | 646,151 | 646,151 |
+| signals | 171,845 | 171,845 |
 | left out | none | none: 0 brands, 0 remotes, 0 keys |
 | `rl bundle` (read, build, write) | 26 s, 0.88 GB peak | 27 s, 0.89 GB peak |
 | `rl bundle --verify` | 23 s | 23 s |
 
-Where the bytes are, `full` (selected is the same shape): signals 22.4 MB (44.5%), keys 10.8 (21.5%), models 6.9 (13.8%), ngram 5.2 (10.2%), controls 3.4 (6.7%), remotes 1.3 (2.7%). For the app API (§21) the same catalog was 57 MB and 9,817 files, and 12.9 MB gzipped; the whole ledger's compiled corpus is 358 MB. The IR Blaster signals alone are 8,793,390 bytes as blobs (8.8 MB of binary words) and 280,511 bytes gzipped on their own (all 155,964: 20.1 MB, 892,095 gzipped, 23 times smaller). Sorted, the signals compress far better than the rest of the file (the other 28 MB gzip to about 11.8 MB), so **on the wire the catalog is its rows and not its signals**.
+Where the bytes are, `full` (selected is the same shape): signals 22.4 MB (44.5%), keys 10.8 (21.5%), models 6.9 (13.8%), ngram 5.2 (10.2%), controls 3.4 (6.7%), remotes 1.3 (2.7%). For the app API (§21) the same catalog was 57 MB and 9,817 files, and 12.9 MB gzipped; the whole ledger's compiled corpus is 358 MB. The IR Blaster signals alone are 8,889,348 bytes as blobs (8.9 MB of binary words) and 284,114 bytes gzipped on their own (measured again at §38; when the whole ledger had 155,964 signals they were 20.1 MB, 892,095 gzipped, 23 times smaller). Sorted, the signals compress far better than the rest of the file (the other 28 MB gzip to about 11.8 MB), so **on the wire the catalog is its rows and not its signals**.
 
 **What `--verify` checks** (21 s on `full`, no check repaired): the manifest's sizes and hashes; `application_id`, `user_version`, `page_size`, `quick_check`; every count against `meta` and the manifest; `dataVersion` recomputed from the rows; every reference between tables; a brand's models are its range; the grams recomputed from the models' names; every remote is a file of the tree and that remote, with the files folded into it (D103: id in path order, carrier, protocol, tier, play numbers, and every key's canonical id, text, confidence and blob); `remote_refs` is the refs of the files the profile carries, each to its carrier (D105); the full profile has every remote of the tree and the selected one every remote of a brand it carries; 150 remotes (chosen by hash) compiled again from `build/pronto/` where it has them, the compile stage's own output, and their Pronto strings compared with the blobs; a sample of models and remotes linked both ways; and **every `(signal, carrier)` decoded by the ledger's decoder and encoded back to the same words** (155,964 of them on `full`). `tests/test_bundle_verify.py` breaks a good bundle in 24 ways at the row level and in several at the file level (a changed byte, a wrong size, a missing file, a stale tree, a stale compile artifact) and requires each to be reported.
 
@@ -5627,23 +5627,23 @@ Written by `rl bundle matching-vectors --file tests/vectors/matching_vectors.jso
 
 ### D99 — What was measured, and what is not proven
 
-Seed 1, 40 devices a class. **Selected bundle** (5,422 brands, 281,214 models: the same as the full one since D117) and **full bundle** (5,422 brands, 281,214 models):
+Seed 1, 40 devices a class. **Selected bundle** (5,424 brands, 281,322 models: the same as the full one since D117) and **full bundle** (5,424 brands, 281,322 models):
 
 | class | selected top-1 | selected top-5 | full top-1 | full top-5 |
 |---|---|---|---|---|
-| exact | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) |
+| exact | 39 (97.5%) | 39 (97.5%) | 39 (97.5%) | 39 (97.5%) |
 | case | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) |
-| punctuation | 39 (97.5%) | 40 (100.0%) | 39 (97.5%) | 40 (100.0%) |
-| dropped-suffix | 37 (92.5%) | 38 (95.0%) | 37 (92.5%) | 38 (95.0%) |
-| typo | 28 (70.0%) | 38 (95.0%) | 28 (70.0%) | 38 (95.0%) |
-| brand-partial | 25 (62.5%) | 36 (90.0%) | 25 (62.5%) | 36 (90.0%) |
+| punctuation | 38 (95.0%) | 38 (95.0%) | 38 (95.0%) | 38 (95.0%) |
+| dropped-suffix | 34 (85.0%) | 40 (100.0%) | 34 (85.0%) | 40 (100.0%) |
+| typo | 23 (57.5%) | 36 (90.0%) | 23 (57.5%) | 36 (90.0%) |
+| brand-partial | 21 (52.5%) | 33 (82.5%) | 21 (52.5%) | 33 (82.5%) |
 | model-only | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) |
-| reversed | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) |
-| **all (320)** | **289 (90.3%)** | **312 (97.5%)** | **289 (90.3%)** | **312 (97.5%)** |
+| reversed | 39 (97.5%) | 40 (100.0%) | 39 (97.5%) | 40 (100.0%) |
+| **all (320)** | **274 (85.6%)** | **306 (95.6%)** | **274 (85.6%)** | **306 (95.6%)** |
 
-**Read it as the upper bound it is** (D98). **A partial name is ambiguous**: `PHILIPS 4822 218 1` is the start of the `4822 218 1xxxx` part numbers of which Philips has 374, and `LOEWE OPTA CONTU` of every `CONTUR` model; an earlier draw's `LORENZEN ART. NR` was the start of `ART. NR. 3845`, `3846`, `3883` and more. The eight misses of the first five, the same in both bundles, are four such partial names (`PHILIPS Philips DVD/HDD Recor`, `PHILIPS 4822 218 1`, `JVC AV 32 T 4`, `LOEWE OPTA CONTU`), two typo queries (`SONY KDL - 73 P 3030`, `AKAI CPT 28 NTF`) and two dropped suffixes whose siblings differ by a digit or a letter (`GRUNDIG T51-140`, `EPSON MOVIEMATE 30`). **No exact query misses in this draw**, where one did in the last (D150). A person typing half a model number has to be shown a list, which the answer is: five candidates, and the brand's models when none matches.
+**Read it as the upper bound it is** (D98). **A partial name is ambiguous**: `LOEWE OPTA CONTUR 1` is the start of every `CONTUR 1xxx` model, `TOSHIBA 2312 - 0` of the `2312 - 00xx` part numbers and `SONY REMCON` of the `REMCON nnn` remote codes; an earlier draw's `LORENZEN ART. NR` was the start of `ART. NR. 3845`, `3846`, `3883` and more. The fourteen misses of the first five, the same in both bundles, are seven such partial names (`PHILIPS PHILETTA`, `LOEWE OPTA CONTUR 1`, `TOSHIBA 2312 - 0`, `SONY REMCON`, `Eurovox Eurovox`, `SAVE ROUND BIFONIC 2 C`, `HUMAX IR - HD 51`), four typo queries (`SONY KDL - 36 XH 855`, `JVC LT 32 N 30 A`, `PREMIER PRS 3200 D`, `AKAI CPT 28 NTF`), two punctuation queries (`MAGNAVOX 00T187BGPA01EASYFUNCTIONS`, `SONY SonyReceiverdevicecode 1632`) and **one exact query, `DIGIQUEST DGQ 600 HD`, which is D150's weakness again**: typed with the brand it is answered with `Digiquest DG3600 HD`, a JP1 model whose name repeats its brand, and not with `DGQ 600 HD`, which comes first as a brand and a model or without the brand. A person typing half a model number has to be shown a list, which the answer is: five candidates, and the brand's models when none matches.
 
-**Why the rates are not the ones D99 first printed (91.2% and 97.8%), and why they move.** The generator ranks devices by a hash of the seed, the brand and the model's id, and an id is a place in the catalog's sorted list of models, so a catalog that gains models shifts the ids after them and the draw of 40 devices a class is a different draw. Eight draws of the same matcher now stand in this section: 91.2%, 89.7% (§29), 93.1% (§31), 87.5% (§32), 90.3% (§33), 89.7% (§34), 90.6% (§35) and 90.3% (§36) at the first answer, a spread of about two points about 90.3%, which is what a fresh draw of 320 queries gives (its standard error is 1.7 points). Nothing in the matcher changed. **None of the eight misses is a device of §36's 48 files, and none of its answers holds one**; each expected device was checked (`search_eval.generate`'s `expect`) and every remote of every answer compared with the new files: seven expected devices are IR Blaster remotes and one, `Philips DVD/HDD Recorder HDRW720/17`, is a JP1 file of an earlier import. Three of the eight have a JP1 model among their five answers (`SONY KDL - 73 P 3030` all five, `PHILIPS Philips DVD/HDD Recor` four, `EPSON MOVIEMATE 30` one). The table is the bound of 320 queries it was. The 95% target is not established by this: it needs real queries.
+**Why the rates are not the ones D99 first printed (91.2% and 97.8%), and why they move.** The generator ranks devices by a hash of the seed, the brand and the model's id, and an id is a place in the catalog's sorted list of models, so a catalog that gains models shifts the ids after them and the draw of 40 devices a class is a different draw. Nine draws of the same matcher now stand in this section: 91.2%, 89.7% (§29), 93.1% (§31), 87.5% (§32), 90.3% (§33), 89.7% (§34), 90.6% (§35), 90.3% (§36) and **85.6% (§38)** at the first answer, about 89.8% on average. **The last is the lowest by two points and 2.5 standard errors (1.7 points) below that average**, which a fresh draw of 320 queries gives in fewer than one of a hundred; nothing in the matcher changed, and I did not find what makes it so, beyond one miss that is D150's weakness and the fact that a bad draw is a draw. **None of the fourteen misses is a device of §38's 71 files, and none of its answers holds one**; each expected device was checked (`search_eval.generate`'s `expect`) and every remote of every answer compared with the new files: twelve expected devices are IR Blaster remotes, one (`Eurovox`) is a JP1 file of an earlier import and one (`rcvr-16.32`) a file of hifi-remote.com's. The table is the bound of 320 queries it was. The 95% target is not established by this: it needs real queries.
 
 **Not proven.**
 
@@ -5809,30 +5809,30 @@ The IR Blaster import writes one file per database id and ledger protocol (D47):
 3. The sibling must have **the same carrier and the same play rule**: `carrier_hz`, `repeat_passes`, `helper_repeat_passes`, `intro_empty` and `rule` (D89, D78), so that a key that moves is played by its new remote exactly as its own played it.
 4. When several siblings qualify, the one whose **test key is best in the order** (Power, Power off, Power on, Volume up, Mute) takes it, and where two have the same, the **lowest remote id** (the first in path order). A folded fragment is never a target, so nothing chains.
 
-**The data, both profiles, the rule as it stands** (`merge.fold` over the whole ledger; `selected` counts the files its brands carry, D92):
+**The data, both profiles, the rule as it stands** (`merge.fold` over the whole ledger; `selected` counts the files its brands carry, D92; since D117 the selected profile carries every brand, so its column is what it was before and the full column is both, remeasured at §38):
 
 | | full | selected |
 |---|---|---|
-| IR Blaster devices | 9,361 | 2,549 |
-| devices with two or more fragments, and their fragments | 573, 1,225 | 364, 798 |
-| fragments with no test key, and with one | 479, 746 | 348, 450 |
-| fragments with no test key that **can be folded** | **315** | **298** |
+| IR Blaster devices | 9,381 | 2,549 |
+| devices with two or more fragments, and their fragments | 617, 1,320 | 364, 798 |
+| fragments with no test key, and with one | 524, 796 | 348, 450 |
+| fragments with no test key that **can be folded** | **357** | **298** |
 | of those, with more than one qualifying sibling (best key decides in 8 and the lowest id in 4, both profiles) | 12 | 12 |
-| fragments with no test key that **cannot** | 164 | 50 |
+| fragments with no test key that **cannot** | 167 | 50 |
 | no sibling with a test key | 21 (10 devices) | 13 (6 devices) |
-| only siblings at another carrier | 64 | 27 |
-| only siblings with the same carrier and another play rule | 79 | 10 |
-| pairs of testable fragments | 183 | 92 |
+| only siblings at another carrier | 65 | 27 |
+| only siblings with the same carrier and another play rule | 81 | 10 |
+| pairs of testable fragments | 189 | 92 |
 | of those, with the same carrier and play rule (a full merge would join them) | 36 | 32 |
 | of those, with the same test key and different signals | 10 | 8 |
-| rows a **full** merge (every fragment of one carrier and rule into one remote) would remove | 357 | 336 |
-| rows the rule removes | 315 | 298 |
+| rows a **full** merge (every fragment of one carrier and rule into one remote) would remove | 400 | 336 |
+| rows the rule removes | 357 | 298 |
 
-In words: 9,361 devices are in the ledger as IR Blaster remotes, and 573 have two or more fragments (1,225 fragments). 479 fragments have no test key and 746 have one. 315 of them can be folded, 12 have more than one qualifying sibling and 164 cannot: 21 have no sibling with a test key, 64 only siblings at another carrier and 79 only siblings with another play rule (the NEC family: an NEC1 fragment beside an NEC2 one has the same carrier and a different intro; Sony fragments nearly always share both). Of the 183 pairs of testable fragments, 36 pairs of testable fragments share a carrier and a play rule, and 10 of them have the same test key with different signals: a Power in two Sony protocols for one device in seven, a Power in RC5 and another in RC6, and a Power in NEC1 and another in NECx1 (twice). The other 26 are a Power in one fragment and a Volume up (22) or a Mute (4) in the other. A full merge would remove 357 remotes, 42 more than the rule does (36 are those pairs, 6 are fragments none of which has a test key, so that the merged remote could still not be tried).
+In words: 9,381 devices are in the ledger as IR Blaster remotes, and 617 have two or more fragments (1,320 fragments). 524 fragments have no test key and 796 have one. 357 of them can be folded, 12 have more than one qualifying sibling and 167 cannot: 21 have no sibling with a test key, 65 only siblings at another carrier and 81 only siblings with another play rule (the NEC family: an NEC1 fragment beside an NEC2 one has the same carrier and a different intro; Sony fragments nearly always share both). Of the 189 pairs of testable fragments, 36 pairs of testable fragments share a carrier and a play rule, and 10 of them have the same test key with different signals: a Power in two Sony protocols for one device in seven, a Power in RC5 and another in RC6, and a Power in NEC1 and another in NECx1 (twice). The other 26 are a Power in one fragment and a Volume up (22) or a Mute (4) in the other. A full merge would remove 400 remotes, 43 more than the rule does (36 are those pairs, 7 are fragments none of which has a test key, so that the merged remote could still not be tried).
 
-**Why the conservative rule, and why the data does not say it is wrong.** The physical remote has both sets of keys, so a fragment with no test key loses nothing when it rides on a sibling: the sibling's test key is still the one tried, and its keys are all there. Two fragments that each have a test key may be **two encodings of one key**, and a device may answer to only one of them: 10 devices have a Power in two protocols with different signals, and a full merge would join 36 pairs, 26 of which put a Volume up or a Mute in the shadow of a Power in the other encoding. Folding them would remove a signal that a person could try, and the device may answer only to the other. The data shows the case is real, and mostly Sony, so the rule keeps each of them a row; that costs 42 rows the full merge would remove, which the table counts so the owner can see them. The measurement does not show the rule is wrong in the other direction either: a folded fragment has no key to try, so folding it takes no row a person could try away (the 12,018 remotes that can be tried before can be tried after, with the same test key and signal; a test holds this over the whole ledger).
+**Why the conservative rule, and why the data does not say it is wrong.** The physical remote has both sets of keys, so a fragment with no test key loses nothing when it rides on a sibling: the sibling's test key is still the one tried, and its keys are all there. Two fragments that each have a test key may be **two encodings of one key**, and a device may answer to only one of them: 10 devices have a Power in two protocols with different signals, and a full merge would join 36 pairs, 26 of which put a Volume up or a Mute in the shadow of a Power in the other encoding. Folding them would remove a signal that a person could try, and the device may answer only to the other. The data shows the case is real, and mostly Sony, so the rule keeps each of them a row; that costs 43 rows the full merge would remove, which the table counts so the owner can see them. The measurement does not show the rule is wrong in the other direction either: a folded fragment has no key to try, so folding it takes no row a person could try away (the 12,018 remotes that can be tried before can be tried after, with the same test key and signal; a test holds this over the whole ledger).
 
-**What it leaves, and why.** 164 fragments stay a row that cannot be tried (143 of them with a testable sibling that plays differently). They need a remote that has a carrier and a play rule **per key**, which the format does not have: that is a change of format and not of this rule. 21 have no sibling with a test key at all, and a wider test key rule (Volume down, Channel up, Play, Stop) would reach some of them; that is a different question from folding and is not touched here.
+**What it leaves, and why.** 167 fragments stay a row that cannot be tried (146 of them with a testable sibling that plays differently). They need a remote that has a carrier and a play rule **per key**, which the format does not have: that is a change of format and not of this rule. 21 have no sibling with a test key at all, and a wider test key rule (Volume down, Channel up, Play, Stop) would reach some of them; that is a different question from folding and is not touched here.
 
 **To widen the rule**: line 2 is the only one that keeps testable fragments apart, and it is in `fold` as the two lines that skip a fragment that has a test key and take only the testable ones as targets. Letting every fragment of one carrier and play rule fold into the best-keyed one is that change; `test_design_quotes_the_numbers_of_the_measurement` recomputes the table above, so the numbers are then re-measured and not guessed. To make the choice among several siblings different, line 4 is one `min` over `(position of the test key, id)`.
 
@@ -6324,3 +6324,25 @@ The Yamaha styles and the `rnc` style are rules for `E`, and the captures and th
 ### D159 — What it does to the rest, and what is not proven
 
 Nothing changes in the corpus, the index or the bundle: the registry holds **30 protocols** instead of 28. What the registration opens is in TODO.md: D67's 635 IR Blaster codes (406 NEC1, 229 NEC2), the JP1 Yamaha styles (D140, 1,087 functions) and the `NEC1-f16 Official` upgrades. **Not proven**: that a receiver acts on a frame whose `E` is not `~F` (the captures show that remotes send them, not that a device needs them), the 38.4 kHz carrier (the captures measure 37.8 to 38.4 kHz, and a file's `carrierHz` is authoritative, D3), and `NECx1-f16`, `NECx2-f16` and `NEC-f16`, which IrpTransmogrifier also has and the ledger does not register.
+
+## 38. The IR Blaster import reads the relaxed NEC codes
+
+§37 registered `NEC1-f16` and `NEC2-f16`. The IR Blaster import (§17, §18) is the first reader: it had refused **964 distinct codes** (2,066 keys) of the database for want of a frame to hold them (D54), and 635 of those codes, 1,510 keys, are NEC and NEC2 frames whose fourth byte is not the complement of the third (D67). `src/remote_ledger/irblaster/hex_nec.py` and its tests change; the JP1 Yamaha styles are the next change.
+
+### D160 — What the map does now
+
+A `NEC` or `NEC2` code of the database whose fourth byte is not the complement of its third maps to **`NEC1-f16` or `NEC2-f16`**, its `function` the pair `F * 256 + E` (D156). A `NEC` code is NEC1's frame, one frame and no ditto, so it lands on `NEC1-f16` whatever its pattern; D61's lead-out finding is unchanged. `NECx1` and `NECx2` have no such code in the database and their relaxed forms are not registered, so a code of theirs with another fourth byte would still be refused, with the pattern named. The four patterns D67 counted (Yamaha y1, y2, y3 and rnc) and the "unrelated" ones are all held: the file does not say which a key is, since a form has no field for it (D158 has the rules).
+
+**The import adds 71 files and 1,510 keys**: 53 files and 1,076 keys of `NEC1-f16`, 18 files and 434 keys of `NEC2-f16`, each in a file of its own beside the remote's NEC1 or NEC2 file (R3: one protocol a file), so no existing file changes. Ids split over several files go from 573 to 617, ids with no file from 27 to 7, and **the keys skipped from 2,066 to 556**: 329 distinct codes, which is 964 less the 635, all of them Aiwa and REC80 frames (Fujitsu, SharpDVD, Teac-K, Panasonic), none NEC.
+
+### D161 — Checked against the app's own waveform
+
+`tests/test_irblaster_hex_nec.py` holds a fixture of the app's own output for 140 NEC-family codes (`tools/irblaster_oracle_nec.py`, from SwiftRemote's own Dart code), and 24 of them, 16 NEC and 8 NEC2, have a fourth byte that is not the complement: they were "unrepresentable" and are now **matched**, every duration within the oracle's tolerance and the carrier within its own. The app sends these frames verbatim, so this is the independent check that the f16 reading is the frame the app plays. The signals the ledger holds rise by **635, the number D67 counted, to the code**.
+
+### D162 — What it does to the rest
+
+The corpus is **16,195 remote files and 646,151 keys**, 5,424 brands (2 more), 281,322 models (108 more) and 171,845 signals (635 more); the IR Blaster source is 10,084 files and 412,775 keys. Both bundle profiles are 56,832,000 bytes and `rl bundle --verify` passes on each. **70.7% of the new keys map to the vocabulary** (§22, 1,067 of 1,510): the `irblaster` row stays at 81.9%. The fold of D103 is measured again, over 9,381 devices: **357 fragments fold** (42 more), and the table there is updated. The search evaluation's draw moved again (D99).
+
+### D163 — Not proven
+
+That these are real devices' codes: D67 noted the "unrelated" ones may be mis-conversions, and the app and the database cannot say. That a device acts on a code whose fourth byte is not the complement (§37). That the 329 distinct codes still refused are all unrepresentable: they are other families' frames (D54).

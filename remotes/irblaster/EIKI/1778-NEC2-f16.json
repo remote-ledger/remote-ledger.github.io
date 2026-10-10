@@ -1,0 +1,29 @@
+{
+  "manufacturer": "EIKI",
+  "model": "IR Blaster DB 1778 (NEC2-f16)",
+  "aliases": [],
+  "controls": [
+    "EIKI | EIP-10V"
+  ],
+  "protocol": {
+    "name": "NEC2-f16",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_DVD_YPBPR": {
+      "label": "DVD YPbPr",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x24BD",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 1778, 'DVD YPbPr' 00FF24BD NEC2: 32 wire bits, bytes bit-reversed as NEC2-f16"
+        }
+      ]
+    }
+  }
+}

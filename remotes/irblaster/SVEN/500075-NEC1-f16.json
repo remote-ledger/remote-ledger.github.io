@@ -1,0 +1,29 @@
+{
+  "manufacturer": "SVEN",
+  "model": "IR Blaster DB 500075 (NEC1-f16)",
+  "aliases": [],
+  "controls": [
+    "SVEN | MC-20"
+  ],
+  "protocol": {
+    "name": "NEC1-f16",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_SAVE": {
+      "label": "SAVE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xBF",
+          "function": "0xBF",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 500075, 'SAVE' 00FD00FD NEC: 32 wire bits, bytes bit-reversed as NEC1-f16"
+        }
+      ]
+    }
+  }
+}

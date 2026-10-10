@@ -1,0 +1,106 @@
+{
+  "manufacturer": "YAMAHA",
+  "model": "IR Blaster DB 3821 (NEC1-f16)",
+  "aliases": [],
+  "controls": [
+    "YAMAHA | DSP - Z 7",
+    "YAMAHA | RAV 386",
+    "YAMAHA | RAV 386 - WN 38400 U",
+    "YAMAHA | RAV 391",
+    "YAMAHA | RAV 391 - WN 98450 EX",
+    "YAMAHA | RX - V 3900",
+    "YAMAHA | WN 38400 U",
+    "YAMAHA | WN 98450 EX"
+  ],
+  "protocol": {
+    "name": "NEC1-f16",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_INFO": {
+      "label": "INFO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x2758",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3821, 'INFO' 5EA1E41A NEC: 32 wire bits, bytes bit-reversed as NEC1-f16"
+        }
+      ]
+    },
+    "KEY_STATUS_SLASH_TITLE_SLASH_BAND": {
+      "label": "STATUS / TITLE / BAND",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x433C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3821, 'STATUS / TITLE / BAND' 5EA1C23C NEC: 32 wire bits, bytes bit-reversed as NEC1-f16"
+        }
+      ]
+    },
+    "KEY_SYSTEM_MEMORY_1": {
+      "label": "SYSTEM MEMORY 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x7F",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3821, 'SYSTEM MEMORY 1' 5EA100FE NEC: 32 wire bits, bytes bit-reversed as NEC1-f16"
+        }
+      ]
+    },
+    "KEY_SYSTEM_MEMORY_2": {
+      "label": "SYSTEM MEMORY 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x37C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3821, 'SYSTEM MEMORY 2' 5EA1C03E NEC: 32 wire bits, bytes bit-reversed as NEC1-f16"
+        }
+      ]
+    },
+    "KEY_SYSTEM_MEMORY_3": {
+      "label": "SYSTEM MEMORY 3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x679",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3821, 'SYSTEM MEMORY 3' 5EA1609E NEC: 32 wire bits, bytes bit-reversed as NEC1-f16"
+        }
+      ]
+    },
+    "KEY_SYSTEM_MEMORY_4": {
+      "label": "SYSTEM MEMORY 4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x976",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3821, 'SYSTEM MEMORY 4' 5EA1906E NEC: 32 wire bits, bytes bit-reversed as NEC1-f16"
+        }
+      ]
+    }
+  }
+}

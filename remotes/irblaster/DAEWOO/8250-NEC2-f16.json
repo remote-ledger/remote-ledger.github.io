@@ -1,0 +1,127 @@
+{
+  "manufacturer": "DAEWOO",
+  "model": "IR Blaster DB 8250 (NEC2-f16)",
+  "aliases": [],
+  "controls": [
+    "DAEWOO | RC-DWT01-V01"
+  ],
+  "protocol": {
+    "name": "NEC2-f16",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_EXIT": {
+      "label": "EXIT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x53",
+          "subdevice": "0xAC",
+          "function": "0x3550",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8250, 'EXIT' CA35AC0A NEC2: 32 wire bits, bytes bit-reversed as NEC2-f16"
+        }
+      ]
+    },
+    "KEY_SLASH_04FBAC0A": {
+      "label": "/\\",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0xDF",
+          "function": "0x3550",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8250, '/\\' 04FBAC0A NEC2: 32 wire bits, bytes bit-reversed as NEC2-f16"
+        }
+      ]
+    },
+    "KEY_SLASH_847BAC0A": {
+      "label": "\\/",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x21",
+          "subdevice": "0xDE",
+          "function": "0x3550",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8250, '\\/' 847BAC0A NEC2: 32 wire bits, bytes bit-reversed as NEC2-f16"
+        }
+      ]
+    },
+    "KEY_SOURCE": {
+      "label": "SOURCE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x52",
+          "subdevice": "0xAD",
+          "function": "0x3550",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8250, 'SOURCE' 4AB5AC0A NEC2: 32 wire bits, bytes bit-reversed as NEC2-f16"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA2",
+          "subdevice": "0x5D",
+          "function": "0x3550",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8250, 'VOL-' 45BAAC0A NEC2: 32 wire bits, bytes bit-reversed as NEC2-f16"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xA1",
+          "subdevice": "0x5E",
+          "function": "0x3550",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8250, 'VOL+' 857AAC0A NEC2: 32 wire bits, bytes bit-reversed as NEC2-f16"
+        }
+      ]
+    },
+    "KEY__44BBAC0A": {
+      "label": "◄",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x22",
+          "subdevice": "0xDD",
+          "function": "0x3550",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8250, '◄' 44BBAC0A NEC2: 32 wire bits, bytes bit-reversed as NEC2-f16"
+        }
+      ]
+    },
+    "KEY__C43BAC0A": {
+      "label": "►",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x23",
+          "subdevice": "0xDC",
+          "function": "0x3550",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 8250, '►' C43BAC0A NEC2: 32 wire bits, bytes bit-reversed as NEC2-f16"
+        }
+      ]
+    }
+  }
+}

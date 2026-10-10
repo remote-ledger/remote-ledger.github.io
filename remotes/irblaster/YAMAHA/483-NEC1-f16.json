@@ -1,0 +1,29 @@
+{
+  "manufacturer": "YAMAHA",
+  "model": "IR Blaster DB 483 (NEC1-f16)",
+  "aliases": [],
+  "controls": [
+    "YAMAHA | DVRS120"
+  ],
+  "protocol": {
+    "name": "NEC1-f16",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_INPUT_NEXT": {
+      "label": "INPUT NEXT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xF0",
+          "subdevice": "0x0E",
+          "function": "0xBDA2",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 483, 'INPUT NEXT' 0F70BD45 NEC: 32 wire bits, bytes bit-reversed as NEC1-f16"
+        }
+      ]
+    }
+  }
+}

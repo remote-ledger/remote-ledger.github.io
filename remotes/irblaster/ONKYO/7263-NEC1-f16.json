@@ -1,0 +1,44 @@
+{
+  "manufacturer": "ONKYO",
+  "model": "IR Blaster DB 7263 (NEC1-f16)",
+  "aliases": [],
+  "controls": [
+    "ONKYO | RC-896M",
+    "ONKYO | TX-SR444"
+  ],
+  "protocol": {
+    "name": "NEC1-f16",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_BLUETOOTH": {
+      "label": "BLUETOOTH",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x500E",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7263, 'BLUETOOTH' 4B780A70 NEC: 32 wire bits, bytes bit-reversed as NEC1-f16"
+        }
+      ]
+    },
+    "KEY_MUSIC_OPT": {
+      "label": "MUSIC OPT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x508A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7263, 'MUSIC OPT' 4B780A51 NEC: 32 wire bits, bytes bit-reversed as NEC1-f16"
+        }
+      ]
+    }
+  }
+}

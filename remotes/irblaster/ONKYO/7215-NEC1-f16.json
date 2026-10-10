@@ -1,0 +1,59 @@
+{
+  "manufacturer": "ONKYO",
+  "model": "IR Blaster DB 7215 (NEC1-f16)",
+  "aliases": [],
+  "controls": [
+    "ONKYO | RC 875 S",
+    "ONKYO | TX-8020B",
+    "ONKYO | TX-8020S"
+  ],
+  "protocol": {
+    "name": "NEC1-f16",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_PLAY": {
+      "label": "PLAY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x4884",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7215, 'PLAY' 4B781221 NEC: 32 wire bits, bytes bit-reversed as NEC1-f16"
+        }
+      ]
+    },
+    "KEY__4B781211": {
+      "label": "|⏪",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x4888",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7215, '|⏪' 4B781211 NEC: 32 wire bits, bytes bit-reversed as NEC1-f16"
+        }
+      ]
+    },
+    "KEY__4B7812E1": {
+      "label": "⏩|",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0xD2",
+          "subdevice": "0x1E",
+          "function": "0x4887",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7215, '⏩|' 4B7812E1 NEC: 32 wire bits, bytes bit-reversed as NEC1-f16"
+        }
+      ]
+    }
+  }
+}

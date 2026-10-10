@@ -1,0 +1,29 @@
+{
+  "manufacturer": "SVEN",
+  "model": "IR Blaster DB 500104 (NEC1-f16)",
+  "aliases": [],
+  "controls": [
+    "SVEN | SPS-615"
+  ],
+  "protocol": {
+    "name": "NEC1-f16",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_AUX": {
+      "label": "AUX",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x44DD",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 500104, 'AUX' 00FF22BB NEC: 32 wire bits, bytes bit-reversed as NEC1-f16"
+        }
+      ]
+    }
+  }
+}

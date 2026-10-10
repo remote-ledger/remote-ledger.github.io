@@ -1,0 +1,29 @@
+{
+  "manufacturer": "SVEN",
+  "model": "IR Blaster DB 500116 (NEC1-f16)",
+  "aliases": [],
+  "controls": [
+    "SVEN | HR-986"
+  ],
+  "protocol": {
+    "name": "NEC1-f16",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_VCD_SLASH_TV": {
+      "label": "VCD/TV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0xDF",
+          "function": "0xBAF5",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 500116, 'VCD/TV' 04FB5DAF NEC: 32 wire bits, bytes bit-reversed as NEC1-f16"
+        }
+      ]
+    }
+  }
+}

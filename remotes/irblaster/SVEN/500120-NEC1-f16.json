@@ -1,0 +1,45 @@
+{
+  "manufacturer": "SVEN",
+  "model": "IR Blaster DB 500120 (NEC1-f16)",
+  "aliases": [],
+  "controls": [
+    "IRC 138F | 339",
+    "SVEN | HA-620W / 630W",
+    "SVEN | HR-945"
+  ],
+  "protocol": {
+    "name": "NEC1-f16",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_MIC_TREB_MINUS": {
+      "label": "MIC TREB-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0x7E",
+          "function": "0x122D",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 500120, 'MIC TREB-' 807E48B4 NEC: 32 wire bits, bytes bit-reversed as NEC1-f16"
+        }
+      ]
+    },
+    "KEY_MIC_TREB_PLUS": {
+      "label": "MIC TREB+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0x7E",
+          "function": "0x8A5A",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 500120, 'MIC TREB+' 807E515A NEC: 32 wire bits, bytes bit-reversed as NEC1-f16"
+        }
+      ]
+    }
+  }
+}

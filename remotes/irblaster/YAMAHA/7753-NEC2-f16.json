@@ -1,0 +1,73 @@
+{
+  "manufacturer": "YAMAHA",
+  "model": "IR Blaster DB 7753 (NEC2-f16)",
+  "aliases": [],
+  "controls": [
+    "YAMAHA | RX-V1800",
+    "YAMAHA | RX-V3800",
+    "YAMAHA | RX-V4600"
+  ],
+  "protocol": {
+    "name": "NEC2-f16",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_1_SLASH_SYSTEM_MEMORY_1": {
+      "label": "1 / SYSTEM MEMORY 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x7F",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7753, '1 / SYSTEM MEMORY 1' 5EA100FE NEC2: 32 wire bits, bytes bit-reversed as NEC2-f16"
+        }
+      ]
+    },
+    "KEY_2_SLASH_SYSTEM_MEMORY_2": {
+      "label": "2 / SYSTEM MEMORY 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x37C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7753, '2 / SYSTEM MEMORY 2' 5EA1C03E NEC2: 32 wire bits, bytes bit-reversed as NEC2-f16"
+        }
+      ]
+    },
+    "KEY_3_SLASH_SYSTEM_MEMORY_3": {
+      "label": "3 / SYSTEM MEMORY 3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x679",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7753, '3 / SYSTEM MEMORY 3' 5EA1609E NEC2: 32 wire bits, bytes bit-reversed as NEC2-f16"
+        }
+      ]
+    },
+    "KEY_4_SLASH_SYSTEM_MEMORY_4": {
+      "label": "4 / SYSTEM MEMORY 4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x976",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 7753, '4 / SYSTEM MEMORY 4' 5EA1906E NEC2: 32 wire bits, bytes bit-reversed as NEC2-f16"
+        }
+      ]
+    }
+  }
+}

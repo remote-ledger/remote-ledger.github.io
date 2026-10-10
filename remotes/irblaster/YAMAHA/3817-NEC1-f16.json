@@ -1,0 +1,102 @@
+{
+  "manufacturer": "YAMAHA",
+  "model": "IR Blaster DB 3817 (NEC1-f16)",
+  "aliases": [],
+  "controls": [
+    "YAMAHA | R - N 303",
+    "YAMAHA | RAX 35",
+    "YAMAHA | RAX 35 - ZX 22830",
+    "YAMAHA | ZX 22830"
+  ],
+  "protocol": {
+    "name": "NEC1-f16",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_BLUETOOTH": {
+      "label": "BLUETOOTH",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0xBEC1",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3817, 'BLUETOOTH' 5EA17D83 NEC: 32 wire bits, bytes bit-reversed as NEC1-f16"
+        }
+      ]
+    },
+    "KEY_FWD_SLASH_SKIP_PREV": {
+      "label": "FWD / SKIP PREV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x641B",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3817, 'FWD / SKIP PREV' FE8026D8 NEC: 32 wire bits, bytes bit-reversed as NEC1-f16"
+        }
+      ]
+    },
+    "KEY_OPTICAL": {
+      "label": "OPTICAL",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7A",
+          "subdevice": "0x85",
+          "function": "0x532C",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3817, 'OPTICAL' 5EA1CA34 NEC: 32 wire bits, bytes bit-reversed as NEC1-f16"
+        }
+      ]
+    },
+    "KEY_PANDORA": {
+      "label": "PANDORA",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x85FA",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3817, 'PANDORA' FE80A15F NEC: 32 wire bits, bytes bit-reversed as NEC1-f16"
+        }
+      ]
+    },
+    "KEY_PLAY_SLASH_PAUSE": {
+      "label": "PLAY / PAUSE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x99E6",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3817, 'PLAY / PAUSE' FE809967 NEC: 32 wire bits, bytes bit-reversed as NEC1-f16"
+        }
+      ]
+    },
+    "KEY_REW_SLASH_SKIP_NEXT": {
+      "label": "REW / SKIP NEXT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x7F",
+          "subdevice": "0x01",
+          "function": "0x611E",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 3817, 'REW / SKIP NEXT' FE808678 NEC: 32 wire bits, bytes bit-reversed as NEC1-f16"
+        }
+      ]
+    }
+  }
+}

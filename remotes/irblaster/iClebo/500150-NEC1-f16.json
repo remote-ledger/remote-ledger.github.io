@@ -1,0 +1,45 @@
+{
+  "manufacturer": "iClebo",
+  "model": "IR Blaster DB 500150 (NEC1-f16)",
+  "aliases": [],
+  "controls": [
+    "iClebo | Arte",
+    "iClebo | Omega",
+    "iClebo | Pop"
+  ],
+  "protocol": {
+    "name": "NEC1-f16",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_SPOT": {
+      "label": "Spot",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x21",
+          "subdevice": "0x7F",
+          "function": "0x9007",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 500150, 'Spot' 84FE09E0 NEC: 32 wire bits, bytes bit-reversed as NEC1-f16"
+        }
+      ]
+    },
+    "KEY_TURBO": {
+      "label": "Turbo",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x01",
+          "subdevice": "0xFE",
+          "function": "0x778",
+          "confidence": "plausible",
+          "source": "irblaster-db@6aafd15 remote 500150, 'Turbo' 807FE01E NEC: 32 wire bits, bytes bit-reversed as NEC1-f16"
+        }
+      ]
+    }
+  }
+}
