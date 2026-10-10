@@ -148,19 +148,6 @@ deliberate skips, each reported with its reason.
       vector. `NEC2`, `Sony12`, `Sony15`, `RC5` and `RC6` have since landed
       (DESIGN §16, §18).
 
-## 6. Matching
-
-- [ ] **A model whose name repeats its brand hides the exact model typed after
-      it** (DESIGN D99, D150). `PHILIPS BDP 3390` finds `Philips BDP3300`, a JP1
-      model, and not the catalog's `BDP 3390`: the whole text is one edit from
-      the JP1 model's key and rule 4 of D96 then does not try the run inside it.
-      Given as brand and model, or without the brand, the exact model comes
-      first. Of the 2,351 models that only JP1 has, 2,061 begin with their
-      brand, and so do all 151 of hifi-remote.com's and all 96 of the
-      manufacturers' (the IR Blaster's: 1,580 of 271,250), so this grows with
-      each import of that kind. A change to the matcher changes its
-      vectors (D97): its own pull request.
-
 ## Not planned
 
 Capturing from hardware (SPEC §4), unmodulated signals (D1a), and a

@@ -679,7 +679,7 @@ def _both(found: Suggestions) -> tuple[list, list]:
 def test_the_vectors_leave_what_they_held_before_the_hint_as_it_was(vectors):
     assert set(vectors) == {"about", "aliases", "catalog", "constants", "format", "prefer", "suggest", "suggestModels"}
     assert vectors["catalog"] == suggest_vectors.CATALOG and vectors["aliases"] == suggest_vectors.ALIASES
-    assert (len(vectors["catalog"]), len(vectors["aliases"]), len(vectors["suggest"]), len(vectors["suggestModels"])) == (79, 14, 238, 26)
+    assert (len(vectors["catalog"]), len(vectors["aliases"]), len(vectors["suggest"]), len(vectors["suggestModels"])) == (82, 14, 238, 26)
 
 
 def test_design_quotes_the_size_of_the_vectors_of_the_hint(vectors):

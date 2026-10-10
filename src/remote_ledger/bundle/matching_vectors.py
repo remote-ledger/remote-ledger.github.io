@@ -74,6 +74,11 @@ CATALOG: list[dict[str, Any]] = [
     # one company the catalog spells two ways, with Chinese names that both spellings share (D101)
     {"brand": "WESTERN DIGITAL", "model": "WDTV LIVE", "remotes": [1701, 1702]},
     {"brand": "WD", "model": "WDTV HUB", "remotes": [1703]},
+    # a model that repeats its brand, one edit from another model of the brand, and another brand's model that is a
+    # part of it (D168); under brands of the catalog, so that no brand id of the suggest vectors moves
+    {"brand": "ZED", "model": "Zed ZX7710", "remotes": [1003, 1801]},
+    {"brand": "ZED", "model": "ZX 7790", "remotes": [1802]},
+    {"brand": "WZRD", "model": "7790", "remotes": [1901]},
 ]
 
 #: Brand aliases (D101): ``brand`` is a brand of the catalog above, ``alias`` another name a
@@ -185,6 +190,9 @@ def build() -> dict[str, Any]:
     ask("西部數據", None, [], "the same given as the brand: both at 1000")
     ask(None, None, ["西部数据 WDTV LIVE"], "a shared alias and a model of one of its brands: that model, from the brand it belongs to")
     ask("西部数据", "WDTV HUB", [], "a shared alias given with a model: the model of the brand that has it, the other brand's models not")
+    # D168: a long run one edit from a model that repeats its brand hid every run inside it, including the exact model
+    ask(None, None, ["ZED ZX 7790"], "a long run one edit from a model that repeats its brand hides nothing of the brand's exact model; the other brand's 7790 stays out")
+    ask(None, None, ["ZED ZX7710"], "the repeating model typed as it is: the exact long run hides every run inside it")
     return {
         "format": FORMAT,
         "about": "Cross-language vectors of the matcher (DESIGN.md D97): a port gives these "

@@ -274,6 +274,21 @@
       "brand": "WD",
       "model": "WDTV HUB",
       "remotes": [1703]
+    },
+    {
+      "brand": "ZED",
+      "model": "Zed ZX7710",
+      "remotes": [1003, 1801]
+    },
+    {
+      "brand": "ZED",
+      "model": "ZX 7790",
+      "remotes": [1802]
+    },
+    {
+      "brand": "WZRD",
+      "model": "7790",
+      "remotes": [1901]
     }
   ],
   "constants": {
@@ -2074,6 +2089,62 @@
       "model": "WDTV HUB",
       "note": "a shared alias given with a model: the model of the brand that has it, the other brand's models not",
       "texts": []
+    },
+    {
+      "answer": [
+        {
+          "brand": "ZED",
+          "evidence": [
+            "model:exact",
+            "via:text",
+            "brand:text"
+          ],
+          "model": "ZX 7790",
+          "models": [],
+          "permille": 900,
+          "remoteIds": [1802]
+        },
+        {
+          "brand": "ZED",
+          "evidence": [
+            "model:prefix",
+            "via:text",
+            "brand:text"
+          ],
+          "model": "Zed ZX7710",
+          "models": [],
+          "permille": 819,
+          "remoteIds": [1003, 1801]
+        }
+      ],
+      "brand": null,
+      "model": null,
+      "note": "a long run one edit from a model that repeats its brand hides nothing of the brand's exact model; the other brand's 7790 stays out",
+      "texts": [
+        "ZED ZX 7790"
+      ]
+    },
+    {
+      "answer": [
+        {
+          "brand": "ZED",
+          "evidence": [
+            "model:exact",
+            "via:text",
+            "brand:text"
+          ],
+          "model": "Zed ZX7710",
+          "models": [],
+          "permille": 900,
+          "remoteIds": [1003, 1801]
+        }
+      ],
+      "brand": null,
+      "model": null,
+      "note": "the repeating model typed as it is: the exact long run hides every run inside it",
+      "texts": [
+        "ZED ZX7710"
+      ]
     }
   ],
   "similarity": [
