@@ -271,6 +271,25 @@ def test_a_run_that_matched_well_hides_what_is_inside_it_and_one_that_only_start
     assert ("WZRD", "PANASONIC") in [(b, m) for b, m, _ in got]
 
 
+def test_a_run_one_edit_from_a_model_that_repeats_its_brand_hides_only_the_other_brands_and_the_near_matches():
+    """D168. ``philips bdp 3390`` is ``philipsbdp3300`` at 928, the model of a catalog that repeats its brand; the
+    exact ``bdp3390`` inside the run is the brand's own model and must still be found. What the match hides stays
+    hidden: another brand's ``7790``, and a near match of the part (``MX 7712`` for ``mx7711``)."""
+    entries = [
+        {"brand": "NORDIC", "model": "Nordic MX7710", "remotes": [1]}, {"brand": "NORDIC", "model": "MX 7790", "remotes": [2]},
+        {"brand": "NORDIC", "model": "MX 7712", "remotes": [3]}, {"brand": "KAPPA", "model": "7790", "remotes": [4]},
+    ]
+    nordic = MatchIndex.from_entries(entries)
+    # the long run 'nordicmx7790' is one edit from 'nordicmx7710' (916), and 'mx7790' is exact inside it
+    assert ask(nordic, texts=["NORDIC MX 7790"]) == [("NORDIC", "MX 7790", 900), ("NORDIC", "Nordic MX7710", 824)]
+    # an exact long run hides everything inside it, as it did
+    assert ask(nordic, texts=["NORDIC MX7710"]) == [("NORDIC", "Nordic MX7710", 900)]
+    # 'mx7711' is a near match of MX 7712 (833), not an exact one: the long run's cover still hides it
+    assert ask(nordic, texts=["NORDIC MX 7711"]) == [("NORDIC", "Nordic MX7710", 824)]
+    # with no brand named there is no brand to look inside, so the run is hidden as before
+    assert [(b, m) for b, m, _ in ask(nordic, texts=["MX 7790"])][0] == ("NORDIC", "MX 7790")
+
+
 def test_a_part_number_is_a_candidate_with_its_kind_in_the_evidence(index):
     got = index.match(None, None, ["bn59-01199f"])
     assert got[0].model == "BN59-01199F" and "kind:remote" in got[0].evidence

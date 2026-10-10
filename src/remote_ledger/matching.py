@@ -60,10 +60,14 @@ a float. ``Candidate.score`` is that integer over 1000.
    is tried only among the models of the named brands, and never when it is itself a key of a brand
    or of an alias (so ``roku ultra`` finds Roku's Ultra, and ``samsung`` is not a model). The first 60
    keys are kept, in the order of the lines and then of the runs, and tried **longest first**;
-   a run that lies inside a longer run that gave a candidate by the exact or the edit rule at a
-   similarity of 900 or more (rule 6) is not tried, so ``bdp-s360`` is the model ``bdps360`` and
-   not also the other brand's ``s360``, while a poor match of the long run, or a short entry that
-   is only the start of it, does not hide an exact match of a part of it.
+   a run that lies inside a longer run that gave a candidate **by the exact rule** is not tried, so
+   ``bdp-s360`` is the model ``bdps360`` and not also the other brand's ``s360``. A run inside a longer
+   run that gave a candidate **by the edit rule at a similarity of 900 or more** (rule 6) is tried only
+   among the models of the named brands, and only an exact match of it counts: the long run may have
+   matched a model whose name repeats its brand and is one edit from what was typed (``philips bdp 3390``
+   is ``philipsbdp3300``, 928), and the exact ``bdp3390`` of the named brand must not be hidden by it, while
+   another brand's ``3390`` and the part's own near matches are still kept out. A poor match of the long
+   run, or a short entry that is only the start of it, hides nothing.
 5. *Candidates.* A model key's grams (D90) give the models that share at least 40% of them,
    the 40 sharing the most (ties to the lower id). If a brand is named, the same is done
    inside each named brand's models, so a brand's models that a global top 40 would miss are
@@ -188,7 +192,8 @@ FACTOR_NAMED, FACTOR_NONE, FACTOR_OTHER = 1000, 950, 600
 #: Runs of adjacent tokens: at most this many; and the lengths a run of a text may have.
 MAX_RUN = 8
 TEXT_KEY_MIN, TEXT_KEY_MAX = 4, 24
-#: A run inside a longer run that gave a candidate at this similarity is not tried.
+#: A run inside a longer run that gave a candidate at this similarity is not tried, except for an exact match among
+#: the named brands' models (not even that, if the candidate was exact).
 COVER_MIN = 900
 #: At most this many model keys of one query, and tokens of one line looked at.
 MAX_KEYS = 60
@@ -669,12 +674,16 @@ class MatchIndex:
         keyed = self.model_keys(model, texts)
         order = sorted(range(len(keyed)), key=lambda i: (-len(keyed[i][0].key), i))
         found: dict[int, tuple[int, int, int, str, str, str]] = {}   # id -> score, sim, length, rule, via, why
-        covered: list[Run] = []
+        covered: list[tuple[Run, bool]] = []        # a run that matched at COVER_MIN or more, and whether exactly
         for i in order:
             run, weight, via, within = keyed[i]
-            if any(c.line == run.line and c.start <= run.start and run.end <= c.end
-                   and (c.start, c.end) != (run.start, run.end) for c in covered):
+            inside = [exact for c, exact in covered
+                      if c.line == run.line and c.start <= run.start and run.end <= c.end
+                      and (c.start, c.end) != (run.start, run.end)]
+            if any(inside):
                 continue
+            exact_only = bool(inside)               # an edit cover leaves it only an exact match, in the named brands
+            within = within or exact_only
             spans = [(first, first + count - 1) for brand_id in sorted(named)
                      for _, _, first, count in [self.brands[brand_id]] if count]
             pool: set[int] = set()
@@ -688,7 +697,7 @@ class MatchIndex:
                 pool.update(self._best(eligible))
                 for span in spans:
                     pool.update(self._best(eligible, span))
-            gave = False
+            gave = gave_exact = False
             for model_id in sorted(pool):
                 brand_id, name, flag = self._model(model_id)
                 entry = search_norm(name)
@@ -705,12 +714,15 @@ class MatchIndex:
                 if total < MIN_SCORE:
                     continue
                 rule = kind(score, run.key, entry)
+                if exact_only and rule != "exact":
+                    continue
                 gave = gave or (score >= COVER_MIN and rule != "prefix")
+                gave_exact = gave_exact or rule == "exact"
                 best = found.get(model_id)
                 if best is None or (total, score) > (best[0], best[1]):
                     found[model_id] = (total, score, len(entry), rule, via, why)
             if gave:
-                covered.append(run)
+                covered.append((run, gave_exact))
         ranked = sorted(found.items(), key=lambda kv: (
             -kv[1][0], -kv[1][1], -kv[1][2], self.brands[self._model(kv[0])[0]][0],
             self._model(kv[0])[1], kv[0]))
