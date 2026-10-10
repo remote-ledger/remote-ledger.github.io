@@ -976,3 +976,91 @@ functions, a seeded sample with the toggle either way, the pulse positions, and 
 That a receiver acts on a frame sent with the toggle at 0 (Nokia32: a ledger file cannot set it); Nokia32's 7-bit `X`,
 which no captured key uses (all have `X=0`); `Nokia32_endframe`, `Nokia12`, `Nokia36` and `Panasonic2`, which
 IrpTransmogrifier also has and the ledger does not register.
+
+---
+
+## RCA, TDC-38, TDC-56 and GI_Cable (DESIGN section 45)
+
+Four more families of set-top boxes' and TVs' remotes, each with hardware captures in IrpTransmogrifier's own test data.
+`RCA` is the 58 kHz original of the ledger's `RCA-38` and shares its encoder; `TDC-38` and `TDC-56` are one frame at two
+carriers; `GI_Cable` is IrpTransmogrifier's `G.I.Cable` (a name with dots the ledger does not use).
+
+### Gate 1 — IRP strings with their source: **MET** for all four
+
+- `RCA`: `{58k,460,msb}<1,-2|1,-4>(8,-8,D:4,F:8,~D:4,~F:8,1,-16)*[D:0..15,F:0..255]`. `RCA(Old)`, which the same database
+  holds beside it, has a first lead-in of 40 units, a stop mark of two and a `+` repeat, and is **not** registered.
+- `TDC-38`: `{38k,315,msb}<-1,1|1,-1>(1,-1,D:5,S:5,F:7,-89m)*[D:0..31,S:0..31,F:0..127]`.
+- `TDC-56`: `{56.3k,213,msb}<-1,1|1,-1>(1,-1,D:5,S:5,F:7,-89m)*[D:0..31,S:0..31,F:0..127]`. The database says the two have "the
+  same number of carrier cycles in each burst" (12), so the unit follows the carrier.
+- `GI_Cable`: `{38.7k,490}<1,-4.5|1,-9>(18,-9,F:8,D:4,C:4,1,-84,(18,-4.5,1,-178)*){C = -(D + F:4 + F:4:4)} [D:0..15,F:0..255]`.
+
+Each is verbatim from IrpTransmogrifier's `IrpProtocols.xml` at `c945e76` (`RCA` L2231, `TDC-38` L2821, `TDC-56` L2835,
+`G.I.Cable` L1013) and identical in the 1.2.14 release (`list -i`). The ledger's `function` is F throughout, `device` is D,
+`subdevice` is S for TDC (required) and an error for the other two.
+
+### Gate 2a — structural: **MET**, on hardware captures
+
+`bengtmartensson/IrpTransmogrifier @c945e76 src/test/teaserfiles/`, not vendored (a GPL-3.0 repository, the files used
+there by permission of the capture's author) and re-checked by `tools/misc_capture_audit.py --irpt DIR`:
+
+| file | what | keys | capture / encoder, every duration but the lead-out | frame period |
+|---|---|---|---|---|
+| `RCA_Old` | an RCA(Old) remote, 57.3 kHz | 13 of 13 | median 1.089 (1.064-1.133), over the 48 durations of bits | |
+| `RCA-38` | an RCA-38 remote, 38.1 kHz | 31 of 31 | median 1.085 (1.039-1.154) | 1.082-1.083x |
+| `TDC-38_6_10` | a TDC IPTV remote | 9 of 9 | median 1.002 (0.933-1.073) | 0.999-1.000x |
+| `TDC-56_14_10` | an ALICE Home TV remote | 7 of 7 | median 0.995 (0.948-1.080) | 1.039-1.040x |
+| `GI_Cable` | a General Instrument cable box's remote | 9 of 9 (4 captures have no decode) | median 1.014 (0.971-1.037) | see below |
+
+Every key's bits are read by a threshold decoder written from the frame layout and not from the encoder (the RCA
+complement half and the G.I.Cable check nibble verified, TDC's biphase polarity and start), compared with the `.exp` file's
+fields, and **the registered encoder's own frame is decoded again and must read the same fields**. The audit's comparison
+of every duration says layout, bit order and the half-unit spaces, not absolute durations: a capture carries instrument
+bias. The audit found four things the encoders do not say, **recorded here and not corrected**:
+
+- **RCA's unit is about 500 us in both captures, not the IRP's 460**: the bits of the RCA(Old) remote at 57.3 kHz are 1.089x
+  the encoder's, as the RCA-38 remote's are (1.085x, D63's finding), so the second remote at a second carrier agrees with the
+  first. The encoder follows the IRP; a file's `unitUs` can say 500 with a `claims` entry (D27), and none does.
+- **RCA(Old)'s first send has a 40-unit lead-in (19,956 us mark) and every stop mark is two units**, as the database says of
+  `RCA(Old)`; only its bits are compared with `RCA`'s encoder. `RCA-38`'s capture, whose stop mark is one unit and whose
+  lead-in is 8, **is** `RCA`'s frame at 38.1 kHz in full.
+- **G.I.Cable's capture pads every frame to one period of about 98.95 ms**, intro and repeat alike (frame sums 98,948 to
+  98,978 us whatever the key; the intro's gap is 41,472 us for F=0 and 30,322 us for F=1), where the IRP's gap is a fixed
+  84 units. The encoder follows the IRP, so its intro is 98,000 us plus 2,205 us for every one bit (98.0 to 113.4 ms), and
+  that is not what the remote sends. The repeat, 18 / 4.5 / 1 / 178 units, is 98.95 ms in both. Whether a receiver minds a
+  frame that is up to 15 % longer is not established.
+- **TDC-56's remote measured 56,456 Hz** against the IRP's 56.3 kHz and its frame period is 1.04x the encoder's.
+
+### Gate 2b — golden Pronto: **MET**, all eight reproducible, none published
+
+| Protocol | Vector | Provenance | Our bytes differ at |
+|---|---|---|---|
+| RCA | D=15 F=48 @ 58k: IrpTransmogrifier 1.2.14 release, `render -n D=15,F=48 -p RCA` | **reproducible** | words 4, 5, 15, 17, 23... (15 in all) |
+| RCA | D=15 F=47 @ 58k: the same | **reproducible** | 15 words |
+| TDC-38 | D=6 S=10 F=2 @ 38k: `render -n D=6,S=10,F=2 -p TDC-38` (ends on a mark) | **reproducible** | word 31 (lead-out) |
+| TDC-38 | D=6 S=10 F=5 @ 38k: the same (ends on a space) | **reproducible** | word 29 |
+| TDC-56 | D=14 S=10 F=3 @ 56.3k: `render -n D=14,S=10,F=3 -p TDC-56` (ends on a space) | **reproducible** | word 31 |
+| TDC-56 | D=14 S=10 F=22 @ 56.3k: the same (ends on a mark) | **reproducible** | word 29 |
+| GI_Cable | D=0 F=1 @ 38.7k: `render -n D=0,F=1 -p G.I.Cable` | **reproducible** | words 4, 39, 40, 43 |
+| GI_Cable | D=0 F=53 @ 38.7k: the same | **reproducible** | words 4, 39, 40, 43 |
+
+Our timings under IrpTransmogrifier's rounding rule reproduce each string exactly. **RCA's bytes differ in fifteen words**,
+not in the lead-in alone as RCA-38's do: at 58 kHz the word is 71, which is 58,384 Hz, and D6 rule 4 quantizes against that
+period where the tool quantizes against the nominal 58 kHz, so the 920 us space is 53.36 cycles by the tool's rule (53) and
+53.71 by ours (54), the 3,680 us lead-in 213.44 against 214.85 (213 and 215), and the words that sit near a half flip. The parameters are keys of the captures above; those of RCA are the
+RCA(Old) remote's, rendered as the plain frame. No Pronto string for any of the four is published.
+
+### Gate 3 — invariant tests: **MET**
+
+`tests/test_rca.py` (all 4,096 frames, RCA-38's durations frame for frame, the bit order, the complement), `tests/test_tdc.py`
+(every function of five addresses and every address of four functions for both variants, a seeded sample of 3,000, a
+frame ending on a mark and on a space, the start merging with a leading zero's space, the two variants one frame at two
+units, twelve cycles to a burst) and `tests/test_gicable.py` (all 4,096 frames with the check nibble, the intro's period
+following the bits, the repeat, the half-unit rounding).
+
+### Not established
+
+That a receiver acts on RCA at 58 kHz with the IRP's 460 us unit when the remotes measured send about 500 us (the carrier is
+the same question: the captured RCA(Old) is 57.3 kHz and the JP1 `RCA` executor 56 kHz); that a receiver minds G.I.Cable's
+variable intro period; TDC's seven-bit `F` in remotes whose bit 0 is not the complement of bit 1 (the database says
+there are such implementations; the captured keys all follow the pattern); and `RCA(Old)`, `RCA-38(Old)`, which
+IrpTransmogrifier also has and the ledger does not register.

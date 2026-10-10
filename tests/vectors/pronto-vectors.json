@@ -638,5 +638,183 @@
     "byteDivergence": [
       51
     ]
+  },
+  {
+    "file": "irpt_rca_D15_F48.pronto",
+    "protocol": "RCA",
+    "params": {
+      "device": 15,
+      "subdevice": null,
+      "function": 48,
+      "carrier_hz": 58000
+    },
+    "quantization": "irpt-nominal-carrier",
+    "provenance": "reproducible",
+    "source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=15,F=48 -p RCA",
+    "note": "Key `0` of the RCA(Old) remote whose capture IrpTransmogrifier's own test data holds (RCA_Old.exp: `0` decodes as RCA(Old) {D=15,F=48}). This is the plain RCA frame for the same parameters, which differs from the capture's first send in its lead-in and its stop mark (tests/vectors/CITATIONS.md). No Pronto string for RCA at 58 kHz is published, so this is a render of the pinned release.",
+    "byteDivergence": [
+      4,
+      5,
+      15,
+      17,
+      23,
+      25,
+      27,
+      29,
+      31,
+      33,
+      35,
+      37,
+      43,
+      45,
+      55
+    ]
+  },
+  {
+    "file": "irpt_rca_D15_F47.pronto",
+    "protocol": "RCA",
+    "params": {
+      "device": 15,
+      "subdevice": null,
+      "function": 47,
+      "carrier_hz": 58000
+    },
+    "quantization": "irpt-nominal-carrier",
+    "provenance": "reproducible",
+    "source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=15,F=47 -p RCA",
+    "note": "`Vol+` of the same RCA(Old) remote (RCA_Old.exp: D=15, F=47), rendered as the plain RCA frame.",
+    "byteDivergence": [
+      4,
+      5,
+      15,
+      17,
+      21,
+      31,
+      33,
+      35,
+      37,
+      43,
+      47,
+      49,
+      51,
+      53,
+      55
+    ]
+  },
+  {
+    "file": "irpt_tdc38_D6_S10_F2.pronto",
+    "protocol": "TDC-38",
+    "params": {
+      "device": 6,
+      "subdevice": 10,
+      "function": 2,
+      "carrier_hz": 38000
+    },
+    "quantization": "irpt-nominal-carrier",
+    "provenance": "reproducible",
+    "source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=6,S=10,F=2 -p TDC-38",
+    "note": "Key `1` of the TDC-38 remote whose capture IrpTransmogrifier's own test data holds (TDC-38_6_10.exp: `1` decodes as TDC-38 {D=6,S=10,F=2}). F's last bit is 0, so the frame ends on a mark and the 89 ms gap is a space of its own. No Pronto string for TDC-38 is published, so this is a render of the pinned release.",
+    "byteDivergence": [
+      31
+    ]
+  },
+  {
+    "file": "irpt_tdc38_D6_S10_F5.pronto",
+    "protocol": "TDC-38",
+    "params": {
+      "device": 6,
+      "subdevice": 10,
+      "function": 5,
+      "carrier_hz": 38000
+    },
+    "quantization": "irpt-nominal-carrier",
+    "provenance": "reproducible",
+    "source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=6,S=10,F=5 -p TDC-38",
+    "note": "Key `2` of the same remote (TDC-38_6_10.exp: {D=6,S=10,F=5}). F's last bit is 1, so the frame ends on a space and the gap lengthens it: one space of a unit and 89 ms, which is how the pinned release renders it.",
+    "byteDivergence": [
+      29
+    ]
+  },
+  {
+    "file": "irpt_tdc56_D14_S10_F3.pronto",
+    "protocol": "TDC-56",
+    "params": {
+      "device": 14,
+      "subdevice": 10,
+      "function": 3,
+      "carrier_hz": 56300
+    },
+    "quantization": "irpt-nominal-carrier",
+    "provenance": "reproducible",
+    "source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=14,S=10,F=3 -p TDC-56",
+    "note": "Key `2` of the TDC-56 remote whose capture IrpTransmogrifier's own test data holds (TDC-56_14_10.exp: `2` decodes as TDC-56 {D=14,S=10,F=3}). F's last bit is 1, so the frame ends on a space and the gap lengthens it. No Pronto string for TDC-56 is published, so this is a render of the pinned release.",
+    "byteDivergence": [
+      31
+    ]
+  },
+  {
+    "file": "irpt_tdc56_D14_S10_F22.pronto",
+    "protocol": "TDC-56",
+    "params": {
+      "device": 14,
+      "subdevice": 10,
+      "function": 22,
+      "carrier_hz": 56300
+    },
+    "quantization": "irpt-nominal-carrier",
+    "provenance": "reproducible",
+    "source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=14,S=10,F=22 -p TDC-56",
+    "note": "`Left` of the same remote (TDC-56_14_10.exp: {D=14,S=10,F=22}). F's last bit is 0, so the frame ends on a mark and the gap is a space of its own.",
+    "byteDivergence": [
+      29
+    ]
+  },
+  {
+    "file": "irpt_gicable_D0_F1.pronto",
+    "protocol": "GI_Cable",
+    "params": {
+      "device": 0,
+      "subdevice": null,
+      "function": 1,
+      "carrier_hz": 38700
+    },
+    "quantization": "irpt-nominal-carrier",
+    "provenance": "reproducible",
+    "source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=0,F=1 -p G.I.Cable",
+    "note": "Key `1` of the General Instrument cable box remote whose capture IrpTransmogrifier's own test data holds (GI_Cable.exp: `1` decodes as G.I.Cable {D=0,F=1}). The render is an intro of 18 pairs and a repeat of two, and its gap is the IRP's fixed 84 units, where the capture pads every frame to one period (CITATIONS.md). No Pronto string for it is published, so this is a render of the pinned release.",
+    "byteDivergence": [
+      4,
+      39,
+      40,
+      43
+    ]
+  },
+  {
+    "file": "irpt_gicable_D0_F53.pronto",
+    "protocol": "GI_Cable",
+    "params": {
+      "device": 0,
+      "subdevice": null,
+      "function": 53,
+      "carrier_hz": 38700
+    },
+    "quantization": "irpt-nominal-carrier",
+    "provenance": "reproducible",
+    "source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=0,F=53 -p G.I.Cable",
+    "note": "`down` of the same General Instrument remote (GI_Cable.exp: {D=0,F=53}), rendered the same way: an intro of 18 pairs and a repeat of two.",
+    "byteDivergence": [
+      4,
+      39,
+      40,
+      43
+    ]
   }
 ]

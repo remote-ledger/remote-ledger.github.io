@@ -43,8 +43,9 @@ Land it in two PRs, code and then data.
       561 upgrades of 156 other executors (XMP 48, GI Cable 20, RC-5/5x Combo
       16, TDC 16, RC6-M-20n 15, RC5/6 combo 12...), among them 106 `Manual Settings` upgrades
       that give raw executor bytes with no protocol, and 25 upgrades of read
-      executors that yield nothing: 18 RCA at 56 kHz, which needs a protocol of
-      its own (D152, D18's gate), and 6 Pioneer MIX of variants 4 and 5. Pioneer
+      executors that yield nothing: 18 RCA at 56 kHz, which the registered `RCA`
+      (DESIGN §45) now carries and no importer reads, and 6 Pioneer MIX of variants 4 and 5. GI Cable (20) and
+      TDC (16) are registered the same way (§45). Pioneer
       3DEV, 4DEV and DVD (18) need the executors' code read (D155),
       and 2,073 KeymapMaster files. **The Yamaha combo's Y1 to Y3 styles**
       (1,087 functions of 15 upgrades) send NEC with 16 data bits, which
