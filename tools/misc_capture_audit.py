@@ -16,6 +16,10 @@ each with the decode IrpTransmogrifier's own test expects:
     Nokia32.ict   / .exp   a Nokia receiver's remote, whose symbols are pulse positions
     Panasonic_Old.ict / .exp   an older Panasonic remote
     Panasonic_Old_Pronto.txt / .exp   sixteen Pronto strings of a cable box's remote
+    RCA_Old.ict   / .exp   an RCA(Old) remote: RCA's bits, a longer first lead-in and a double stop mark
+    RCA-38.ict    / .exp   an RCA-38 remote: RCA's frame at another carrier
+    TDC-38_6_10.ict / TDC-56_14_10.ict   two IPTV remotes whose bits are biphase
+    GI_Cable.ict  / .exp   a General Instrument cable box's remote: an intro and a short repeat
 
 They are **cited, not vendored**: the repository is GPL-3.0 and the files are
 used there by permission of a third party. Check it out at the pinned commit
@@ -70,12 +74,12 @@ def load_ict(path: Path) -> dict[str, tuple[int, list[int]]]:
     return out
 
 
-def first_frame(signed: list[int]) -> list[int]:
+def first_frame(signed: list[int], gap_us: int = FRAME_GAP_US) -> list[int]:
     """Unsigned durations of the first frame, ending on its lead-out gap."""
     frame: list[int] = []
     for d in signed:
         frame.append(abs(d))
-        if d < 0 and abs(d) >= FRAME_GAP_US:
+        if d < 0 and abs(d) >= gap_us:
             break
     return frame
 
@@ -85,7 +89,7 @@ def read_expected(path: Path) -> dict[str, dict[str, int]]:
     decode's protocol (``NEC1-rnc``, ``NEC1-Yamaha``), whose own parameters are not ``E``'s."""
     out = {}
     for line in path.read_text().splitlines():
-        m = re.match(r"(.+?):\s+([\w-]+): \{(.*?)\}", line)
+        m = re.match(r"(.+?):\s+([^\s:]+): \{(.*?)\}", line)
         if m:
             out[m.group(1)] = {
                 k: int(v) for k, v in (kv.split("=") for kv in m.group(3).split(","))
@@ -201,12 +205,68 @@ def decode_panasonic_old(frame: list[int]):
     return {"D": d, "F": f}
 
 
+def decode_rca(frame: list[int]):
+    """A long lead-in (RCA's 8,8 units, or RCA(Old)'s longer first one), 24 bits most significant first (D:4, F:8, ~D:4,
+    ~F:8, a one-unit mark then a space of two units for a 0 and four for a 1) and a stop mark. The complements are
+    checked."""
+    pairs = list(zip(frame[0::2], frame[1::2]))
+    assert len(pairs) >= 26, "too short for an RCA frame"
+    lead, body = pairs[0], pairs[1:25]
+    unit = statistics.median(m for m, _ in body)
+    assert lead[0] > 6 * unit and 6 < lead[1] / unit < 10, "no long lead-in"
+    bits = [int(s > 3 * unit) for _, s in body]               # 2 and 4 units: 3 is the midpoint
+    word = 0
+    for b in bits:
+        word = word << 1 | b
+    d, f, nd, nf = word >> 20, word >> 12 & 0xFF, word >> 8 & 0xF, word & 0xFF
+    assert nd == (~d & 0xF) and nf == (~f & 0xFF), "the complements are not complements"
+    return {"D": d, "F": f}
+
+
+def decode_tdc(frame: list[int]):
+    """Biphase (a 1 is a mark then a space, a 0 a space then a mark), a one-unit mark and space to start, then D:5,
+    S:5 and F:7 most significant first. The unit is the mean of the durations that are one unit (the shortest, within
+    40 %), a duration is that many half-bits, and the frame's last space is the gap, which swallows the last bit's
+    space when that bit is a 1."""
+    body = frame[:-1]
+    shortest = min(body)
+    unit = statistics.mean(d for d in body if d < 1.4 * shortest)
+    halves: list[int] = []
+    for i, d in enumerate(body):
+        run = round(d / unit)
+        assert run in (1, 2), "a duration that is neither one half-bit nor two"
+        halves += [1 - i % 2] * run                             # even index: a mark (1), odd: a space (0)
+    if len(halves) == 35:                                       # the last bit's space is in the gap
+        halves.append(0)
+    assert len(halves) == 36, f"{len(halves)} half-bits, not the start and 17 bits"
+    assert halves[:2] == [1, 0], "no one-unit mark and space to start"
+    word = 0
+    for hi, lo in zip(halves[2::2], halves[3::2]):
+        assert (hi, lo) in ((1, 0), (0, 1)), "a bit that is not biphase"
+        word = word << 1 | hi
+    return {"D": word >> 12, "S": word >> 7 & 0x1F, "F": word & 0x7F}
+
+
+def decode_gicable(frame: list[int]):
+    """An 18-unit mark and a 9-unit space, then 16 bits least significant first (F:8, D:4, C:4; a one-unit mark and a
+    space of 4.5 units for a 0 and 9 for a 1), the stop mark and the gap. The check nibble is -(D + F:4 + F:4:4)."""
+    pairs = list(zip(frame[0::2], frame[1::2]))
+    assert len(pairs) >= 18, "too short for a G.I.Cable intro"
+    lead, body = pairs[0], pairs[1:17]
+    unit = statistics.median(m for m, _ in body)
+    assert 15 < lead[0] / unit < 21 and 7 < lead[1] / unit < 11, "no 18,9 lead-in"
+    bits = [int(s > 6.75 * unit) for _, s in body]            # 4.5 and 9 units: 6.75 is the midpoint
+    f, d, c = _lsb(bits[:8]), _lsb(bits[8:12]), _lsb(bits[12:16])
+    assert c == (-(d + (f & 15) + (f >> 4))) & 15, "the check nibble is not -(D + F:4 + F:4:4)"
+    return {"D": d, "F": f}
+
+
 def encode_like(proto: str, p: dict[str, int], carrier: int):
     entry = REGISTRY[proto]
     if proto == "Nokia32":
         return entry.encode(device=p["D"], subdevice=p["S"], function=(p["X"] << 8) | p["F"], carrier_hz=carrier,
                             toggle=p["T"])
-    if proto == "Panasonic_Old":
+    if proto in ("Panasonic_Old", "RCA", "GI_Cable"):
         return entry.encode(device=p["D"], subdevice=None, function=p["F"], carrier_hz=carrier)
     if proto in ("NEC1-f16", "NEC2-f16"):
         return entry.encode(device=p["D"], subdevice=p["S"], function=(p["F"] << 8) | p["E"],
@@ -232,13 +292,25 @@ CASES = (
     ("NEC2-rnc", "NEC2-f16", decode_nec_family),
     ("Nokia32", "Nokia32", decode_nokia32),
     ("Panasonic_Old", "Panasonic_Old", decode_panasonic_old),
+    ("RCA_Old", "RCA", decode_rca),
+    ("RCA-38", "RCA", decode_rca),
+    ("TDC-38_6_10", "TDC-38", decode_tdc),
+    ("TDC-56_14_10", "TDC-56", decode_tdc),
+    ("GI_Cable", "GI_Cable", decode_gicable),
 )
+
+#: The gap that ends a frame where the default would run through the repeats (RCA's is 8 ms).
+FRAME_GAPS = {"RCA_Old": 6_000, "RCA-38": 6_000}
+#: The durations compared with the encoder's where the capture's frame is not the registered one's all through: RCA(Old)'s
+#: lead-in and stop mark are longer, so only its 48 durations of bits (the two of the lead-in and one pair of the stop
+#: mark left out) are.
+SPANS = {"RCA_Old": (2, 50)}
 
 
 def the_signal_frame(proto: str, signal) -> tuple[int, ...]:
-    """The sequence that holds the first frame: NEC1-f16 sends it as the intro and the whole-frame repeaters
+    """The sequence that holds the first frame: NEC1-f16 and GI_Cable send it as the intro and the repeaters
     as the repeat."""
-    return signal.intro if proto == "NEC1-f16" else signal.repeat
+    return signal.intro if proto in ("NEC1-f16", "GI_Cable") else signal.repeat
 
 
 def audit_pronto_panasonic_old(data: Path) -> int:
@@ -287,7 +359,7 @@ def audit(root: Path) -> int:
             if key in skipped:
                 # IrpTransmogrifier's own test has no decode for it (a glitched capture: NEC2-f16's `Left`)
                 continue
-            frame = first_frame(signed)
+            frame = first_frame(signed, FRAME_GAPS.get(stem, FRAME_GAP_US))
             fields = decode(frame)
             if decode is decode_nec_family:
                 want = nec_expected(expected[key])
@@ -306,11 +378,16 @@ def audit(root: Path) -> int:
                 print(f"  FAIL {stem}/{key}: encoder has {len(ours)} durations, "
                       f"capture {len(frame)}")
                 continue
+            if decode(list(ours)) != fields:
+                failures += 1
+                print(f"  FAIL {stem}/{key}: the encoder's own frame reads {decode(list(ours))}, not {fields}")
+                continue
             ok += 1
             carriers.append(carrier)
             # Compare every duration but the lead-out, which a capture
             # truncates or pads at will.
-            for i, (a, b) in enumerate(zip(ours[:-1], frame[:-1])):
+            lo, hi = SPANS.get(stem, (0, len(frame) - 1))
+            for i, (a, b) in enumerate(zip(ours[lo:hi], frame[lo:hi])):
                 ratios.append(b / a)
             marks += [b for i, b in enumerate(frame[:-1]) if i % 2 == 0]
             spaces += [b for i, b in enumerate(frame[:-1]) if i % 2 == 1]

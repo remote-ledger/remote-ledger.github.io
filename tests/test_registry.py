@@ -25,6 +25,8 @@ V1_REGISTRY = {
     "MCE",
     # Two set-top-box families (DESIGN section 43).
     "Nokia32", "Panasonic_Old",
+    # The 58 kHz RCA, two TDC IPTV remotes and General Instrument cable boxes (DESIGN section 45).
+    "RCA", "TDC-38", "TDC-56", "GI_Cable",
 }
 BACKLOG = {"NEC"}
 #: Not backlogged -- `Samsung32` does not exist in any consulted source, and

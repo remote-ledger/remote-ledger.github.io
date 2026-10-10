@@ -1076,5 +1076,110 @@
     "gate2b_byte_divergence": [
       51
     ]
+  },
+  "RCA": {
+    "gate1_irp_source": "IrpTransmogrifier IrpProtocols.xml @c945e76 L2231 (verbatim; identical in the 1.2.14 release, `list -i RCA`). The database's documentation says RCA and RCA(Old) differ only in the lead-in and the stop mark, and that RCA-38 differs from RCA only in the frequency",
+    "regression_snapshot": null,
+    "snapshot_is_evidence": false,
+    "gate2a_structural_vector": "bengtmartensson/IrpTransmogrifier @c945e76 src/test/teaserfiles/RCA_Old.ict and RCA_Old.exp (thirteen captures of an RCA(Old) remote at 57.3 kHz; its first send has a 40-unit lead-in and every stop mark is two units, which the IRP of RCA(Old) says and RCA's does not) and RCA-38.ict and RCA-38.exp (31 captures of an RCA-38 remote, whose frame is RCA's at another carrier), each with the decode IrpTransmogrifier's own test expects. Not vendored (a GPL-3.0 repository, the files used there by permission of the capture's author); tools/misc_capture_audit.py --irpt DIR re-runs the comparison. All 13 and all 31 keys decode, by a threshold decoder written from the frame layout (the complements checked), to the .exp fields, and the encoder's own frame decodes to the same fields. A capture carries instrument bias, so this verifies layout, bit order and the complement half, not absolute durations: the captures' bits are 1.09x the IRP's 460 us unit (the 500 us unit D63 found for RCA-38, here in a second remote at a second carrier), and RCA(Old)'s lead-in and stop mark are not compared (the audit compares its 48 durations of bits)",
+    "gate2a_pending_reason": null,
+    "gate2b_golden_pronto": "irpt_rca_D15_F48.pronto",
+    "gate2b_pending_reason": null,
+    "gate2b_vector_source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "gate2b_vector_params": {
+      "device": 15,
+      "subdevice": null,
+      "function": 48,
+      "carrier_hz": 58000
+    },
+    "gate2b_vector_quantization": "irpt-nominal-carrier",
+    "gate2b_vector_provenance": "reproducible",
+    "gate2b_vector_reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=15,F=48 -p RCA",
+    "gate2b_byte_divergence": [
+      4,
+      5,
+      15,
+      17,
+      23,
+      25,
+      27,
+      29,
+      31,
+      33,
+      35,
+      37,
+      43,
+      45,
+      55
+    ]
+  },
+  "TDC-38": {
+    "gate1_irp_source": "IrpTransmogrifier IrpProtocols.xml @c945e76 L2821 (verbatim; identical in the 1.2.14 release, `list -i TDC-38`). The database says TDC-38 is used by Danish TDC IPTV and shares its frame with TDC-56",
+    "regression_snapshot": null,
+    "snapshot_is_evidence": false,
+    "gate2a_structural_vector": "bengtmartensson/IrpTransmogrifier @c945e76 src/test/teaserfiles/TDC-38_6_10.ict and TDC-38_6_10.exp: nine captures of a TDC IPTV remote (Teaser, hifi-remote.com forum), each with the decode IrpTransmogrifier's own test expects. Not vendored (a GPL-3.0 repository, the files used there by permission of the capture's author); tools/misc_capture_audit.py --irpt DIR re-runs the comparison. All 9 keys decode, by a biphase decoder written from the frame layout, to the .exp fields (D=6, S=10, F as the key says) and the encoder's own frame decodes to the same fields. A capture carries instrument bias, so this verifies layout, biphase polarity and bit order, not absolute durations: capture durations are 0.93-1.07x the encoder's (median 1.00), its carrier was measured at 37,919 Hz, and its frame period is 1.000x the encoder's",
+    "gate2a_pending_reason": null,
+    "gate2b_golden_pronto": "irpt_tdc38_D6_S10_F2.pronto",
+    "gate2b_pending_reason": null,
+    "gate2b_vector_source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "gate2b_vector_params": {
+      "device": 6,
+      "subdevice": 10,
+      "function": 2,
+      "carrier_hz": 38000
+    },
+    "gate2b_vector_quantization": "irpt-nominal-carrier",
+    "gate2b_vector_provenance": "reproducible",
+    "gate2b_vector_reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=6,S=10,F=2 -p TDC-38",
+    "gate2b_byte_divergence": [
+      31
+    ]
+  },
+  "TDC-56": {
+    "gate1_irp_source": "IrpTransmogrifier IrpProtocols.xml @c945e76 L2835 (verbatim; identical in the 1.2.14 release, `list -i TDC-56`). The database says TDC-56 is used by the Italian ALICE Home TV box and shares its frame with TDC-38",
+    "regression_snapshot": null,
+    "snapshot_is_evidence": false,
+    "gate2a_structural_vector": "bengtmartensson/IrpTransmogrifier @c945e76 src/test/teaserfiles/TDC-56_14_10.ict and TDC-56_14_10.exp: seven captures of an ALICE Home TV remote (Teaser, hifi-remote.com forum), each with the decode IrpTransmogrifier's own test expects. Not vendored (a GPL-3.0 repository, the files used there by permission of the capture's author); tools/misc_capture_audit.py --irpt DIR re-runs the comparison. All 7 keys decode, by a biphase decoder written from the frame layout, to the .exp fields (D=14, S=10, F as the key says) and the encoder's own frame decodes to the same fields. A capture carries instrument bias, so this verifies layout, biphase polarity and bit order, not absolute durations: capture durations are 0.95-1.08x the encoder's (median 0.995), its carrier was measured at 56,456 Hz, and its frame period is 1.04x the encoder's",
+    "gate2a_pending_reason": null,
+    "gate2b_golden_pronto": "irpt_tdc56_D14_S10_F3.pronto",
+    "gate2b_pending_reason": null,
+    "gate2b_vector_source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "gate2b_vector_params": {
+      "device": 14,
+      "subdevice": 10,
+      "function": 3,
+      "carrier_hz": 56300
+    },
+    "gate2b_vector_quantization": "irpt-nominal-carrier",
+    "gate2b_vector_provenance": "reproducible",
+    "gate2b_vector_reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=14,S=10,F=3 -p TDC-56",
+    "gate2b_byte_divergence": [
+      31
+    ]
+  },
+  "GI_Cable": {
+    "gate1_irp_source": "IrpTransmogrifier IrpProtocols.xml @c945e76 L1013 (verbatim; identical in the 1.2.14 release, `list -i G.I.Cable`). The ledger's name is `GI_Cable`, the database's `alt_name` being `GI Cable`; the check nibble is the IRP's own `C = -(D + F:4 + F:4:4)`",
+    "regression_snapshot": null,
+    "snapshot_is_evidence": false,
+    "gate2a_structural_vector": "bengtmartensson/IrpTransmogrifier @c945e76 src/test/teaserfiles/GI_Cable.ict and GI_Cable.exp: thirteen captures of a General Instrument cable box's remote (Teaser, hifi-remote.com forum), nine of them with a decode in the .exp (four are blank there). Not vendored (a GPL-3.0 repository, the files used there by permission of the capture's author); tools/misc_capture_audit.py --irpt DIR re-runs the comparison. All 9 keys' intros decode, by a threshold decoder written from the frame layout (the check nibble verified), to the .exp fields (D=0 and F), and the encoder's own intro decodes to the same fields. A capture carries instrument bias, so this verifies layout, bit order and the check nibble, not absolute durations: capture durations are 0.97-1.04x the encoder's (median 1.01), and the repeat frames follow the IRP's 18 / 4.5 / 1 units. **One disagreement with the IRP is recorded in CITATIONS.md**: the capture pads every frame to one period of about 98.95 ms, where the IRP's gap is a fixed 84 units, so the encoder's intro is 98.0 to 113.4 ms by the number of one bits",
+    "gate2a_pending_reason": null,
+    "gate2b_golden_pronto": "irpt_gicable_D0_F1.pronto",
+    "gate2b_pending_reason": null,
+    "gate2b_vector_source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "gate2b_vector_params": {
+      "device": 0,
+      "subdevice": null,
+      "function": 1,
+      "carrier_hz": 38700
+    },
+    "gate2b_vector_quantization": "irpt-nominal-carrier",
+    "gate2b_vector_provenance": "reproducible",
+    "gate2b_vector_reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=0,F=1 -p G.I.Cable",
+    "gate2b_byte_divergence": [
+      4,
+      39,
+      40,
+      43
+    ]
   }
 }

@@ -59,7 +59,8 @@ def _bits_msb_first(value: int, count: int) -> list[int]:
     return [(value >> i) & 1 for i in range(count - 1, -1, -1)]
 
 
-def encode(
+def encode_frame(
+    name: str,
     *,
     device: int,
     subdevice: int | None,
@@ -67,18 +68,19 @@ def encode(
     carrier_hz: int,
     unit_us: int | None = None,
 ) -> IrSignal:
+    """The frame ``RCA-38`` and ``RCA`` share (``rca.py``); ``name`` is for the error messages."""
     unit = _UNIT_US if unit_us is None else unit_us
     check_bounds("unitUs", unit, UNIT_US_MIN, UNIT_US_MAX)
 
     if subdevice is not None:
         raise EncodeError(
-            f"RCA-38 has no subdevice but one was given ({subdevice}); the "
+            f"{name} has no subdevice but one was given ({subdevice}); the "
             "address is the four-bit device alone"
         )
     if not 0 <= device <= 0xF:
-        raise EncodeError(f"RCA-38 device is {device}; D:4 holds 0-15")
+        raise EncodeError(f"{name} device is {device}; D:4 holds 0-15")
     if not 0 <= function <= 0xFF:
-        raise EncodeError(f"RCA-38 function is {function}; F:8 holds 0-255")
+        raise EncodeError(f"{name} function is {function}; F:8 holds 0-255")
 
     bits = (
         _bits_msb_first(device, 4)
@@ -94,6 +96,18 @@ def encode(
     frame += [unit, _GAP_UNITS * unit]
 
     return IrSignal(carrier_hz=carrier_hz, repeat=tuple(frame))
+
+
+def encode(
+    *,
+    device: int,
+    subdevice: int | None,
+    function: int,
+    carrier_hz: int,
+    unit_us: int | None = None,
+) -> IrSignal:
+    return encode_frame("RCA-38", device=device, subdevice=subdevice, function=function,
+                        carrier_hz=carrier_hz, unit_us=unit_us)
 
 
 RCA38 = Protocol(

@@ -1,6 +1,6 @@
 # Remote Ledger — Design & Build Plan
 
-**Draft v2.1** · Status: v1 complete; all three seed remotes authored; LIRC, SmartIR and IR Blaster imports built (§14, §15, §17); 33 protocols (§18, §37, §41, §43) · Implements [SPEC.md](SPEC.md) v0.11
+**Draft v2.1** · Status: v1 complete; all three seed remotes authored; LIRC, SmartIR and IR Blaster imports built (§14, §15, §17); 37 protocols (§18, §37, §41, §43, §45) · Implements [SPEC.md](SPEC.md) v0.11
 
 SPEC.md says *what* the format has to hold and why. This says *how it gets
 built*: the resolved open decisions, the one intermediate representation
@@ -341,7 +341,7 @@ Two conditional rules the validator enforces:
   *and* `name` is omitted or its registry entry has `extent_us = None`. All
   three v1 protocols declared an extent, so in practice this only bit
   raw-only files — which is exactly where truncation is most likely. Since §18
-  fifteen of the 33 protocols declare none (D3), so it now bites a file that
+  twenty of the 37 protocols declare none (D3), so it now bites a file that
   names one of them as well. A truncated form with neither an extent nor
   `defaultGapUs` is a validation error, never a guess (D4a).
 
@@ -1342,7 +1342,7 @@ remote-ledger/
 ├── src/remote_ledger/
 │   ├── signal.py      IrSignal, cycle quantization        D1
 │   ├── pronto.py      encode / decode                     D5 D6
-│   ├── protocols/     one module per family (33 protocols) D3 D18 §18 §37 §41 §43
+│   ├── protocols/     one module per family (37 protocols) D3 D18 §18 §37 §41 §43 §45
 │   ├── irblaster/     importer + six hex_*.py maps        §17 §18
 │   ├── lirc/ smartir/ importers                           §14 §15
 │   ├── forms.py       form → IrSignal, precedence         D7
@@ -2051,7 +2051,7 @@ note rather than a live contract.
 
 ## 12. Implementation status
 
-Phases 0-6 are implemented: 3661 tests, `jsonschema` the only runtime
+Phases 0-6 are implemented: 3756 tests, `jsonschema` the only runtime
 dependency. Phase 2 landed its nine SPEC edits *before* its code, per §9 --
 the spec change is what authorises the implementation. (That count is asserted by the suite itself -- see
 `test_documented_test_count_is_current` -- so it cannot drift the way the
@@ -2060,7 +2060,7 @@ added 1,367; it moves again whenever a test is added, and the figure here
 has to be re-fixed with it.) Post-v1 work has landed outside the phases: RC5
 (§16), the LIRC and SmartIR imports (§14, §15), and the IR Blaster importer
 with the 24 protocols it needed (§17, §18), and the canonical key vocabulary
-(§22). The registry held 28 protocols then, and holds 33 since §43 (30 after §37, 31 after §41).
+(§22). The registry held 28 protocols then, and holds 37 since §45 (30 after §37, 31 after §41, 33 after §43).
 `rl encode --protocol NEC1 --device 0x88 --subdevice 0x77
 --function 0x18 --carrier 38000` emits the Topping RC-15A Power key. Until
 the RC-15A was corrected this read `0x11 / 0xEE`: the capture's MSB-first
@@ -6475,3 +6475,23 @@ One Nokia32 upgrade yields nothing: its mode is Release and its 40 functions are
 The corpus is **16,363 remote files and 653,959 keys**, 5,446 brands (8 more), 281,604 models (99 more) and 175,271 signals (966 more). Both bundle profiles are 57,544,704 bytes and `rl bundle --verify` passes on each. **81.5% of the new keys map to the vocabulary** (§22, 1,990 of 2,442), so the `jp1` row goes from 71.1% to 71.3%. The search evaluation's draw moved again (D99): none of its seven misses is a device of this import.
 
 **Not read**: **561 upgrades of 156 executor names**, counted in `IMPORT.md`: `Manual Settings` (75 and 31 more of its spellings), `XMP` and `XMP (Slingbox)` (48), `GI Cable` (20), `RC-5/5x Combo` (16), `TDC` (16), `RC6-M-20n` (15), `RC5/6 combo` (12), and 148 executors of fewer than 12 each (359 in all); and the 2,073 KeymapMaster files. **Not proven.** That a function does what its name says (§28); that a Nokia receiver acts on a frame sent with the toggle at 0 (§43); that the Galaxis remote's functions are the Thomson upgrade's with another X, which is what 30 of 43 say and not proof; that the executors' `OBC/2` and Release modes are what I took them to be, since I read neither.
+
+## 45. Registering RCA, TDC-38, TDC-56 and GI_Cable
+
+Four more families of the JP1 upgrades that wait for a protocol, each with hardware captures in IrpTransmogrifier's own test data: **`RCA`** at 56 kHz (the 18 upgrades of the executor's first variant that D152 left unread, and the `RCA Combo` ones), **`TDC`** (16 upgrades; the executor's variant chooses `TDC-38` or `TDC-56`) and **`GI Cable`** (20). They are registered through D18's three gates and **nothing reads them yet**: the corpus, the index and the bundle do not change, and the registry goes from 33 to 37 protocols. The code is `src/remote_ledger/protocols/rca.py`, `tdc.py` and `gicable.py` (and `rca38.py`, whose frame `RCA` shares), the evidence `tests/vectors/CITATIONS.md` and `tools/misc_capture_audit.py`.
+
+### D186 — What a form carries
+
+**`RCA`** is `RCA-38`'s frame (`rca38.py`'s `encode_frame`, so the two cannot drift apart) at the IRP's **58 kHz**; `device` is D, `function` is F, a `subdevice` is refused. The database holds four RCA entries and only this one and `RCA-38` are registered: `RCA(Old)` (a 40-unit first lead-in, a two-unit stop mark, a `+` repeat) and `RCA-38(Old)` are not, so a remote that needs them is still unread. **`TDC-38`** (38 kHz, 315 µs) and **`TDC-56`** (56.3 kHz, 213 µs) are one frame, biphase with a start of a mark and a space, a five-bit device, a five-bit subdevice and a seven-bit command, and an 89 ms gap: `device` is D, `subdevice` is S (required) and `function` is F as the IRP has it, so the remotes whose bit 0 is the complement of bit 1 and those whose is not are both carried. A last bit of 1 ends the frame on a space and the gap lengthens it (the tool renders one space of a unit and 89 ms). **`GI_Cable`** (the database's `G.I.Cable`, whose dots a ledger name does not take) is an intro of an 18,9-unit lead-in, F, D and a check nibble `C = -(D + F:4 + F:4:4)` least significant first, a stop mark and an 84-unit gap, and a repeat of 18, 4.5, 1 and 178 units; `device` is D, `function` is F, `C` is computed. None declares an extent: the gaps are gaps (D3).
+
+**RCA's nominal carrier is the IRP's 58 kHz**, and that is a choice between neighbours: the captured RCA(Old) remote measured 57.3 kHz, the JP1 `RCA` executor sends 56 kHz and `RCA-38` is 38.7. `nominal_carrier_hz` is informational and a file's `carrierHz` is authoritative (D3); the JP1 reading, which comes next, will say which carrier it writes and why. D152's concern, that a 56 kHz code filed under a 38.7 kHz protocol names the wrong carrier, is what this removes.
+
+### D187 — The three gates, and four things the audit found
+
+**Gate 1**: the IRPs, verbatim, at the commit the others cite and in the 1.2.14 release. **Gate 2a, on hardware**: `tools/misc_capture_audit.py` reads the captures with decoders written from the layouts and not from the encoders: **13 of 13 RCA(Old) keys** and **31 of 31 RCA-38 keys** against `RCA` (the complements checked), **9 of 9 TDC-38** and **7 of 7 TDC-56 keys** (a biphase decoder), and **9 of 9 G.I.Cable keys** (the check nibble verified; four captures have no decode in the `.exp`), each decoding to the `.exp` fields; the audit also now **decodes the encoder's own frame again and requires the same fields**, for every protocol it covers, which makes "re-encodes to the same bit pattern" a check and not only a count of durations. **Gate 2b**: eight vectors rendered from the 1.2.14 release, two for each protocol, whose parameters are keys of those remotes; our timings under the release's rounding reproduce each exactly. **Reproducible, none published**, which the suite's warning says on every run (31 now, from 27). **Gate 3**: `tests/test_rca.py`, `test_tdc.py` and `test_gicable.py`.
+
+The audit found four things the encoders do not say, **recorded in CITATIONS.md and not corrected**: (1) **RCA's unit is about 500 µs in both captures, not 460**: the RCA(Old) remote's bits are 1.089× the encoder's, as the RCA-38 remote's are (1.085×, D63), so a second remote at a second carrier agrees with the first; the encoder follows the IRP. (2) RCA(Old)'s first send has a 40-unit lead-in and every stop mark is two units, which is why only its bits are compared with `RCA`; the RCA-38 capture is `RCA`'s frame in full. (3) **G.I.Cable's capture pads every frame to one period of about 98.95 ms** (intro and repeat), where the IRP's gap is a fixed 84 units: the encoder's intro is 98.0 to 113.4 ms by the number of one bits, and the remote sends one length. Whether a receiver minds is not known. (4) TDC-56's remote measured 56,456 Hz against 56.3 kHz. RCA's byte differences from the tool are fifteen words and not the lead-in's two, because 58 kHz is a frequency word of 71, which is 58,384 Hz: the arithmetic is in the citation.
+
+### D188 — What it does to the rest, and what is not proven
+
+Nothing in the corpus moves. What the registration opens is in TODO.md: the `RCA` upgrades of 56 kHz and the `RCA Combo` ones, the `TDC` upgrades and the `GI Cable` ones. **Not proven**: that a receiver acts on RCA at 58 kHz with a 460 µs unit when the remotes measured send about 500; that a receiver minds G.I.Cable's variable intro period; TDC's `F` in remotes that do not follow the complement pattern (the database says there are some; the captured keys all follow it); and `RCA(Old)` and `RCA-38(Old)`, which IrpTransmogrifier also has and the ledger does not register.
