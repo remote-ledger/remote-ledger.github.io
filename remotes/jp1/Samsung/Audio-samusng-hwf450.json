@@ -1,0 +1,344 @@
+{
+  "manufacturer": "Samsung",
+  "model": "SoundBar HW-F450",
+  "aliases": [],
+  "controls": [
+    "Samsung SoundBar HW-F450"
+  ],
+  "protocol": {
+    "name": "Samsung36",
+    "carrierHz": 37900,
+    "unitUs": 500,
+    "minSends": 1,
+    "claims": {
+      "unitUs": {
+        "reason": "the IRP says 560 us; SwiftRemote's own encoder, eight real captures and IRremoteESP8266 all say about 500 us (marks 512, spaces 490/1468), so the compiled signal follows them and not the IRP's unit",
+        "source": "https://github.com/bengtmartensson/IrpTransmogrifier/tree/c945e76/src/test/teaserfiles Samsung36.ict (eight keys of a Samsung Blu-ray remote, median unit about 496 us; tools/misc_capture_audit.py); https://github.com/crankyoldgit/IRremoteESP8266/blob/1e2f0f3/src/ir_Samsung.cpp#L59-L63 and #L175-L190 (sendSamsung36, 'Works on real devices'); tests/vectors/CITATIONS.md, section 'The misc family'"
+      }
+    }
+  },
+  "keys": {
+    "KEY_POWER": {
+      "label": "Power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x70",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/samusng-hwf450.rmdu function 0 'Power' (OBC 0E; Samsung36, parms 48 15 0): Samsung36 device 48 subdevice 15 function 112"
+        }
+      ]
+    },
+    "KEY_SOURCE": {
+      "label": "Source",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x75",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/samusng-hwf450.rmdu function 1 'Source' (OBC AE; Samsung36, parms 48 15 0): Samsung36 device 48 subdevice 15 function 117"
+        }
+      ]
+    },
+    "KEY_AUTOPOWER": {
+      "label": "AutoPower",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x79",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/samusng-hwf450.rmdu function 2 'AutoPower' (OBC 9E; Samsung36, parms 48 15 0): Samsung36 device 48 subdevice 15 function 121"
+        }
+      ]
+    },
+    "KEY_SPEAKER": {
+      "label": "Speaker",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x88",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/samusng-hwf450.rmdu function 3 'Speaker' (OBC 11; Samsung36, parms 48 15 0): Samsung36 device 48 subdevice 15 function 136"
+        }
+      ]
+    },
+    "KEY_REPEAT": {
+      "label": "Repeat",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x89",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/samusng-hwf450.rmdu function 4 'Repeat' (OBC 91; Samsung36, parms 48 15 0): Samsung36 device 48 subdevice 15 function 137"
+        }
+      ]
+    },
+    "KEY_ANYNET": {
+      "label": "Anynet",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x87",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/samusng-hwf450.rmdu function 5 'Anynet' (OBC E1; Samsung36, parms 48 15 0): Samsung36 device 48 subdevice 15 function 135"
+        }
+      ]
+    },
+    "KEY_SOUNDSHARE": {
+      "label": "SoundShare",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x91",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/samusng-hwf450.rmdu function 6 'SoundShare' (OBC 89; Samsung36, parms 48 15 0): Samsung36 device 48 subdevice 15 function 145"
+        }
+      ]
+    },
+    "KEY_AUDIOSYNCH_PLUS": {
+      "label": "AudioSynch+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x84",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/samusng-hwf450.rmdu function 7 'AudioSynch+' (OBC 21; Samsung36, parms 48 15 0): Samsung36 device 48 subdevice 15 function 132"
+        }
+      ]
+    },
+    "KEY_AUDIOSYNCH_MINUS": {
+      "label": "AudioSynch-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x85",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/samusng-hwf450.rmdu function 8 'AudioSynch-' (OBC A1; Samsung36, parms 48 15 0): Samsung36 device 48 subdevice 15 function 133"
+        }
+      ]
+    },
+    "KEY_DIMMER": {
+      "label": "Dimmer",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x86",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/samusng-hwf450.rmdu function 9 'Dimmer' (OBC 61; Samsung36, parms 48 15 0): Samsung36 device 48 subdevice 15 function 134"
+        }
+      ]
+    },
+    "KEY_SKIP_BACK": {
+      "label": "Skip_back",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x8B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/samusng-hwf450.rmdu function 10 'Skip_back' (OBC D1; Samsung36, parms 48 15 0): Samsung36 device 48 subdevice 15 function 139"
+        }
+      ]
+    },
+    "KEY_STOP": {
+      "label": "Stop",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x8D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/samusng-hwf450.rmdu function 11 'Stop' (OBC B1; Samsung36, parms 48 15 0): Samsung36 device 48 subdevice 15 function 141"
+        }
+      ]
+    },
+    "KEY_PLAY_SLASH_PAUSE": {
+      "label": "Play / Pause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x8A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/samusng-hwf450.rmdu function 12 'Play / Pause' (OBC 51; Samsung36, parms 48 15 0): Samsung36 device 48 subdevice 15 function 138"
+        }
+      ]
+    },
+    "KEY_SKIP_FORWARD": {
+      "label": "Skip_forward",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x8C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/samusng-hwf450.rmdu function 13 'Skip_forward' (OBC 31; Samsung36, parms 48 15 0): Samsung36 device 48 subdevice 15 function 140"
+        }
+      ]
+    },
+    "KEY_SOUND_EFFECT": {
+      "label": "Sound Effect",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x7B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/samusng-hwf450.rmdu function 14 'Sound Effect' (OBC DE; Samsung36, parms 48 15 0): Samsung36 device 48 subdevice 15 function 123"
+        }
+      ]
+    },
+    "KEY_3D_SOUND_PLUS": {
+      "label": "3D Sound Plus",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x81",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/samusng-hwf450.rmdu function 15 '3D Sound Plus' (OBC 81; Samsung36, parms 48 15 0): Samsung36 device 48 subdevice 15 function 129"
+        }
+      ]
+    },
+    "KEY_SMART_VOLUME": {
+      "label": "Smart Volume",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x7C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/samusng-hwf450.rmdu function 16 'Smart Volume' (OBC 3E; Samsung36, parms 48 15 0): Samsung36 device 48 subdevice 15 function 124"
+        }
+      ]
+    },
+    "KEY_DRC": {
+      "label": "Drc",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x7D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/samusng-hwf450.rmdu function 17 'Drc' (OBC BE; Samsung36, parms 48 15 0): Samsung36 device 48 subdevice 15 function 125"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "Vol+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x77",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/samusng-hwf450.rmdu function 18 'Vol+' (OBC EE; Samsung36, parms 48 15 0): Samsung36 device 48 subdevice 15 function 119"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "Vol-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x78",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/samusng-hwf450.rmdu function 19 'Vol-' (OBC 1E; Samsung36, parms 48 15 0): Samsung36 device 48 subdevice 15 function 120"
+        }
+      ]
+    },
+    "KEY_SUB_PLUS": {
+      "label": "Sub+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x82",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/samusng-hwf450.rmdu function 20 'Sub+' (OBC 41; Samsung36, parms 48 15 0): Samsung36 device 48 subdevice 15 function 130"
+        }
+      ]
+    },
+    "KEY_SUB_MINUS": {
+      "label": "Sub-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x83",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/samusng-hwf450.rmdu function 21 'Sub-' (OBC C1; Samsung36, parms 48 15 0): Samsung36 device 48 subdevice 15 function 131"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "Mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x71",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/samusng-hwf450.rmdu function 22 'Mute' (OBC 8E; Samsung36, parms 48 15 0): Samsung36 device 48 subdevice 15 function 113"
+        }
+      ]
+    }
+  }
+}

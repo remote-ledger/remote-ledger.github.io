@@ -1,0 +1,85 @@
+{
+  "manufacturer": "Go_Video",
+  "model": "GoVideo DV2140 DVD/VCR Combo [NEC1]",
+  "aliases": [],
+  "controls": [
+    "GoVideo DV2140 DVD/VCR Combo"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_TV_SLASH_VCR": {
+      "label": "TV/VCR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD _ VCR combo units/GoVideo DV2140-2116.rmdu function 11 'TV/VCR' (OBC 57 A0; NEC 2DEV Combo, parms 45 45 110 null): NEC1 device 110 subdevice 145 function 21"
+        }
+      ]
+    },
+    "KEY_VCR": {
+      "label": "VCR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0xF1",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD _ VCR combo units/GoVideo DV2140-2116.rmdu function 13 'VCR' (OBC 70 A0; NEC 2DEV Combo, parms 45 45 110 null): NEC1 device 110 subdevice 145 function 241"
+        }
+      ]
+    },
+    "KEY_INPUT": {
+      "label": "Input",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0x56",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD _ VCR combo units/GoVideo DV2140-2116.rmdu function 14 'Input' (OBC 95 A0; NEC 2DEV Combo, parms 45 45 110 null): NEC1 device 110 subdevice 145 function 86"
+        }
+      ]
+    },
+    "KEY_RECORD": {
+      "label": "record",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD _ VCR combo units/GoVideo DV2140-2116.rmdu function 27 'record' (OBC 6F A0; NEC 2DEV Combo, parms 45 45 110 null): NEC1 device 110 subdevice 145 function 9"
+        }
+      ]
+    },
+    "KEY_LAST_CH": {
+      "label": "Last Ch",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0xB2",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD _ VCR combo units/GoVideo DV2140-2116.rmdu function 40 'Last Ch' (OBC B2 A0; NEC 2DEV Combo, parms 45 45 110 null): NEC1 device 110 subdevice 145 function 178"
+        }
+      ]
+    }
+  }
+}

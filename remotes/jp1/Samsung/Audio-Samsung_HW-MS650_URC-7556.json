@@ -1,0 +1,260 @@
+{
+  "manufacturer": "Samsung",
+  "model": "HW-MS650",
+  "aliases": [],
+  "controls": [
+    "Samsung HW-MS650"
+  ],
+  "protocol": {
+    "name": "Samsung36",
+    "carrierHz": 37900,
+    "unitUs": 500,
+    "minSends": 1,
+    "claims": {
+      "unitUs": {
+        "reason": "the IRP says 560 us; SwiftRemote's own encoder, eight real captures and IRremoteESP8266 all say about 500 us (marks 512, spaces 490/1468), so the compiled signal follows them and not the IRP's unit",
+        "source": "https://github.com/bengtmartensson/IrpTransmogrifier/tree/c945e76/src/test/teaserfiles Samsung36.ict (eight keys of a Samsung Blu-ray remote, median unit about 496 us; tools/misc_capture_audit.py); https://github.com/crankyoldgit/IRremoteESP8266/blob/1e2f0f3/src/ir_Samsung.cpp#L59-L63 and #L175-L190 (sendSamsung36, 'Works on real devices'); tests/vectors/CITATIONS.md, section 'The misc family'"
+      }
+    }
+  },
+  "keys": {
+    "KEY_POWER": {
+      "label": "Power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x70",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Samsung HW-MS650 URC-7556.rmdu function 0 'Power' (OBC 0E; Samsung36, parms 48 15 null): Samsung36 device 48 subdevice 15 function 112"
+        }
+      ]
+    },
+    "KEY_SOUND_CONTROL": {
+      "label": "Sound Control",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0xA6",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Samsung HW-MS650 URC-7556.rmdu function 1 'Sound Control' (OBC 65; Samsung36, parms 48 15 null): Samsung36 device 48 subdevice 15 function 166"
+        }
+      ]
+    },
+    "KEY_SOURCE": {
+      "label": "Source",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x75",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Samsung HW-MS650 URC-7556.rmdu function 2 'Source' (OBC AE; Samsung36, parms 48 15 null): Samsung36 device 48 subdevice 15 function 117"
+        }
+      ]
+    },
+    "KEY_UP": {
+      "label": "Up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x8A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Samsung HW-MS650 URC-7556.rmdu function 3 'Up' (OBC 51; Samsung36, parms 48 15 null): Samsung36 device 48 subdevice 15 function 138"
+        }
+      ]
+    },
+    "KEY_DOWN": {
+      "label": "Down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0xB5",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Samsung HW-MS650 URC-7556.rmdu function 4 'Down' (OBC AD; Samsung36, parms 48 15 null): Samsung36 device 48 subdevice 15 function 181"
+        }
+      ]
+    },
+    "KEY_LEFT": {
+      "label": "Left",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0xB0",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Samsung HW-MS650 URC-7556.rmdu function 5 'Left' (OBC 0D; Samsung36, parms 48 15 null): Samsung36 device 48 subdevice 15 function 176"
+        }
+      ]
+    },
+    "KEY_RIGHT": {
+      "label": "Right",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0xB1",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Samsung HW-MS650 URC-7556.rmdu function 6 'Right' (OBC 8D; Samsung36, parms 48 15 null): Samsung36 device 48 subdevice 15 function 177"
+        }
+      ]
+    },
+    "KEY_PLAY_SLASH_PAUSE": {
+      "label": "Play/Pause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x8A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Samsung HW-MS650 URC-7556.rmdu function 7 'Play/Pause' (OBC 51; Samsung36, parms 48 15 null): Samsung36 device 48 subdevice 15 function 138"
+        }
+      ]
+    },
+    "KEY_SURROUND": {
+      "label": "Surround",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x81",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Samsung HW-MS650 URC-7556.rmdu function 8 'Surround' (OBC 81; Samsung36, parms 48 15 null): Samsung36 device 48 subdevice 15 function 129"
+        }
+      ]
+    },
+    "KEY_SOUND_MODE": {
+      "label": "Sound Mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x7B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Samsung HW-MS650 URC-7556.rmdu function 9 'Sound Mode' (OBC DE; Samsung36, parms 48 15 null): Samsung36 device 48 subdevice 15 function 123"
+        }
+      ]
+    },
+    "KEY_SMART_MODE": {
+      "label": "Smart Mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0xB6",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Samsung HW-MS650 URC-7556.rmdu function 10 'Smart Mode' (OBC 6D; Samsung36, parms 48 15 null): Samsung36 device 48 subdevice 15 function 182"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "Vol +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x77",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Samsung HW-MS650 URC-7556.rmdu function 11 'Vol +' (OBC EE; Samsung36, parms 48 15 null): Samsung36 device 48 subdevice 15 function 119"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "Vol -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x78",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Samsung HW-MS650 URC-7556.rmdu function 12 'Vol -' (OBC 1E; Samsung36, parms 48 15 null): Samsung36 device 48 subdevice 15 function 120"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "Mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x71",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Samsung HW-MS650 URC-7556.rmdu function 13 'Mute' (OBC 8E; Samsung36, parms 48 15 null): Samsung36 device 48 subdevice 15 function 113"
+        }
+      ]
+    },
+    "KEY_BASS_PLUS": {
+      "label": "Bass +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x82",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Samsung HW-MS650 URC-7556.rmdu function 14 'Bass +' (OBC 41; Samsung36, parms 48 15 null): Samsung36 device 48 subdevice 15 function 130"
+        }
+      ]
+    },
+    "KEY_BASS_MINUS": {
+      "label": "Bass -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x83",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Samsung HW-MS650 URC-7556.rmdu function 15 'Bass -' (OBC C1; Samsung36, parms 48 15 null): Samsung36 device 48 subdevice 15 function 131"
+        }
+      ]
+    },
+    "KEY_BASS_RESET": {
+      "label": "Bass Reset",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x30",
+          "subdevice": "0x0F",
+          "function": "0x7A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Samsung HW-MS650 URC-7556.rmdu function 16 'Bass Reset' (OBC 5E; Samsung36, parms 48 15 null): Samsung36 device 48 subdevice 15 function 122"
+        }
+      ]
+    }
+  }
+}

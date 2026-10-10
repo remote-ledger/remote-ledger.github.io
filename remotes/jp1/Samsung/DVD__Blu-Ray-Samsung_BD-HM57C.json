@@ -1,0 +1,582 @@
+{
+  "manufacturer": "Samsung",
+  "model": "Blu Ray BD-HM57C",
+  "aliases": [],
+  "controls": [
+    "Samsung Blu Ray BD-HM57C"
+  ],
+  "protocol": {
+    "name": "Samsung36",
+    "carrierHz": 37900,
+    "unitUs": 500,
+    "minSends": 1,
+    "claims": {
+      "unitUs": {
+        "reason": "the IRP says 560 us; SwiftRemote's own encoder, eight real captures and IRremoteESP8266 all say about 500 us (marks 512, spaces 490/1468), so the compiled signal follows them and not the IRP's unit",
+        "source": "https://github.com/bengtmartensson/IrpTransmogrifier/tree/c945e76/src/test/teaserfiles Samsung36.ict (eight keys of a Samsung Blu-ray remote, median unit about 496 us; tools/misc_capture_audit.py); https://github.com/crankyoldgit/IRremoteESP8266/blob/1e2f0f3/src/ir_Samsung.cpp#L59-L63 and #L175-L190 (sendSamsung36, 'Works on real devices'); tests/vectors/CITATIONS.md, section 'The misc family'"
+      }
+    }
+  },
+  "keys": {
+    "KEY_DISC_MENU": {
+      "label": "Disc menu",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x71D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-HM57C.rmdu function 0 'Disc menu' (OBC B8; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1821"
+        }
+      ]
+    },
+    "KEY_POPUP_SLASH_TITLE_MENU": {
+      "label": "Popup/Title menu",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x720",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-HM57C.rmdu function 1 'Popup/Title menu' (OBC 04; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1824"
+        }
+      ]
+    },
+    "KEY_SKIP_BACK": {
+      "label": "Skip back",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x70D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-HM57C.rmdu function 2 'Skip back' (OBC B0; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1805"
+        }
+      ]
+    },
+    "KEY_SKIP_FWD": {
+      "label": "Skip fwd",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x711",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-HM57C.rmdu function 3 'Skip fwd' (OBC 88; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1809"
+        }
+      ]
+    },
+    "KEY_SEARCH_BACK": {
+      "label": "Search back",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x712",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-HM57C.rmdu function 4 'Search back' (OBC 48; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1810"
+        }
+      ]
+    },
+    "KEY_SEARCH_FWD": {
+      "label": "Search fwd",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x715",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-HM57C.rmdu function 5 'Search fwd' (OBC A8; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1813"
+        }
+      ]
+    },
+    "KEY_STOP": {
+      "label": "Stop",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x713",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-HM57C.rmdu function 6 'Stop' (OBC C8; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1811"
+        }
+      ]
+    },
+    "KEY_PLAY": {
+      "label": "Play",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x714",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-HM57C.rmdu function 7 'Play' (OBC 28; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1812; the upgrade's note: 'Also powers on.  Can be used as a discrete on'"
+        }
+      ]
+    },
+    "KEY_PAUSE": {
+      "label": "Pause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x732",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-HM57C.rmdu function 8 'Pause' (OBC 4C; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1842"
+        }
+      ]
+    },
+    "KEY_UP": {
+      "label": "Up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x718",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-HM57C.rmdu function 9 'Up' (OBC 18; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1816"
+        }
+      ]
+    },
+    "KEY_INFO": {
+      "label": "Info",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x71E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-HM57C.rmdu function 10 'Info' (OBC 78; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1822"
+        }
+      ]
+    },
+    "KEY_LEFT": {
+      "label": "Left",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x71B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-HM57C.rmdu function 11 'Left' (OBC D8; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1819"
+        }
+      ]
+    },
+    "KEY_SELECT": {
+      "label": "Select",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x71C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-HM57C.rmdu function 12 'Select' (OBC 38; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1820"
+        }
+      ]
+    },
+    "KEY_RIGHT": {
+      "label": "Right",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x71A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-HM57C.rmdu function 13 'Right' (OBC 58; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1818"
+        }
+      ]
+    },
+    "KEY_DOWN": {
+      "label": "Down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x719",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-HM57C.rmdu function 14 'Down' (OBC 98; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1817"
+        }
+      ]
+    },
+    "KEY_EXIT": {
+      "label": "Exit",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x72B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-HM57C.rmdu function 15 'Exit' (OBC D4; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1835"
+        }
+      ]
+    },
+    "KEY_OPEN_SLASH_CLOSE_TRAY": {
+      "label": "Open/Close tray",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x701",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-HM57C.rmdu function 16 'Open/Close tray' (OBC 80; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1793"
+        }
+      ]
+    },
+    "KEY_1": {
+      "label": "1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x702",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-HM57C.rmdu function 17 '1' (OBC 40; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1794"
+        }
+      ]
+    },
+    "KEY_2": {
+      "label": "2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x703",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-HM57C.rmdu function 18 '2' (OBC C0; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1795"
+        }
+      ]
+    },
+    "KEY_3": {
+      "label": "3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x704",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-HM57C.rmdu function 19 '3' (OBC 20; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1796"
+        }
+      ]
+    },
+    "KEY_4": {
+      "label": "4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x705",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-HM57C.rmdu function 20 '4' (OBC A0; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1797"
+        }
+      ]
+    },
+    "KEY_5": {
+      "label": "5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x706",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-HM57C.rmdu function 21 '5' (OBC 60; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1798"
+        }
+      ]
+    },
+    "KEY_6": {
+      "label": "6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x707",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-HM57C.rmdu function 22 '6' (OBC E0; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1799"
+        }
+      ]
+    },
+    "KEY_7": {
+      "label": "7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x708",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-HM57C.rmdu function 23 '7' (OBC 10; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1800"
+        }
+      ]
+    },
+    "KEY_8": {
+      "label": "8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x709",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-HM57C.rmdu function 24 '8' (OBC 90; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1801"
+        }
+      ]
+    },
+    "KEY_9": {
+      "label": "9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x70A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-HM57C.rmdu function 25 '9' (OBC 50; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1802"
+        }
+      ]
+    },
+    "KEY_0": {
+      "label": "0",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x70B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-HM57C.rmdu function 26 '0' (OBC D0; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1803"
+        }
+      ]
+    },
+    "KEY_AUDIO": {
+      "label": "Audio",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x725",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-HM57C.rmdu function 27 'Audio' (OBC A4; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1829"
+        }
+      ]
+    },
+    "KEY_HOME": {
+      "label": "Home",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x716",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-HM57C.rmdu function 28 'Home' (OBC 68; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1814"
+        }
+      ]
+    },
+    "KEY_SUBTITLE": {
+      "label": "Subtitle",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x726",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-HM57C.rmdu function 29 'Subtitle' (OBC 64; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1830"
+        }
+      ]
+    },
+    "KEY_TOOLS": {
+      "label": "Tools",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x73A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-HM57C.rmdu function 30 'Tools' (OBC 5C; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1850"
+        }
+      ]
+    },
+    "KEY_A": {
+      "label": "A",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x721",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-HM57C.rmdu function 31 'A' (OBC 84; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1825"
+        }
+      ]
+    },
+    "KEY_B": {
+      "label": "B",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x722",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-HM57C.rmdu function 32 'B' (OBC 44; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1826"
+        }
+      ]
+    },
+    "KEY_C": {
+      "label": "C",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x723",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-HM57C.rmdu function 33 'C' (OBC C4; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1827"
+        }
+      ]
+    },
+    "KEY_D": {
+      "label": "D",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x724",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-HM57C.rmdu function 34 'D' (OBC 24; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1828"
+        }
+      ]
+    },
+    "KEY_BONUS_SLASH_VIEW": {
+      "label": "Bonus/View",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x733",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-HM57C.rmdu function 35 'Bonus/View' (OBC CC; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1843"
+        }
+      ]
+    },
+    "KEY_REPEAT_A_MINUS_B": {
+      "label": "Repeat A-B",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x728",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-HM57C.rmdu function 36 'Repeat A-B' (OBC 14; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1832"
+        }
+      ]
+    },
+    "KEY_REPEAT": {
+      "label": "Repeat",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x727",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-HM57C.rmdu function 37 'Repeat' (OBC E4; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1831"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "Power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x700",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-HM57C.rmdu function 38 'Power' (OBC 00; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1792; the upgrade's note: 'Use only to power off in conjunction with Play for discrete on'"
+        }
+      ]
+    },
+    "KEY_RETURN": {
+      "label": "Return",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x00",
+          "function": "0x717",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 DVD (Blu-Ray)/Samsung BD-HM57C.rmdu function 39 'Return' (OBC E8; Samsung36, parms 32 0 7): Samsung36 device 32 subdevice 0 function 1815"
+        }
+      ]
+    }
+  }
+}

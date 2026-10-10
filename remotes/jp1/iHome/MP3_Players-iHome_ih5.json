@@ -1,0 +1,141 @@
+{
+  "manufacturer": "iHome",
+  "model": "Ipod Alarm Clock",
+  "aliases": [],
+  "controls": [
+    "Ipod Alarm Clock"
+  ],
+  "protocol": {
+    "name": "F12_relaxed",
+    "carrierHz": 37900,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_VOL_UP": {
+      "label": "vol up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x03",
+          "subdevice": "0x00",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 MP3 Players/iHome ih5.rmdu function 0 'vol up' (OBC 10; F12, parms 3): F12_relaxed device 3 subdevice 0 function 8"
+        }
+      ]
+    },
+    "KEY_VOL_DOWN": {
+      "label": "vol down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x03",
+          "subdevice": "0x00",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 MP3 Players/iHome ih5.rmdu function 1 'vol down' (OBC 20; F12, parms 3): F12_relaxed device 3 subdevice 0 function 4"
+        }
+      ]
+    },
+    "KEY_POWER": {
+      "label": "power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x03",
+          "subdevice": "0x00",
+          "function": "0x21",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 MP3 Players/iHome ih5.rmdu function 2 'power' (OBC 84; F12, parms 3): F12_relaxed device 3 subdevice 0 function 33; the upgrade's note: 'will reset alarm when its going off'"
+        }
+      ]
+    },
+    "KEY_AM_SLASH_FM_RADIO_TOGGLE": {
+      "label": "am / fm radio toggle",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x03",
+          "subdevice": "0x00",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 MP3 Players/iHome ih5.rmdu function 3 'am / fm radio toggle' (OBC 08; F12, parms 3): F12_relaxed device 3 subdevice 0 function 16; the upgrade's note: 'am / fm'"
+        }
+      ]
+    },
+    "KEY_RADIO_ACTIVATION": {
+      "label": "radio activation",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x03",
+          "subdevice": "0x00",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 MP3 Players/iHome ih5.rmdu function 4 'radio activation' (OBC 88; F12, parms 3): F12_relaxed device 3 subdevice 0 function 17"
+        }
+      ]
+    },
+    "KEY_BRIGHTNESS_SLASH_SNOOZE": {
+      "label": "brightness / snooze",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x03",
+          "subdevice": "0x00",
+          "function": "0x41",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 MP3 Players/iHome ih5.rmdu function 5 'brightness / snooze' (OBC 82; F12, parms 3): F12_relaxed device 3 subdevice 0 function 65; the upgrade's note: 'snooze dimmer'"
+        }
+      ]
+    },
+    "KEY_IPOD_PLAY_SLASH_PAUSE": {
+      "label": "Ipod play / pause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x03",
+          "subdevice": "0x00",
+          "function": "0x20",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 MP3 Players/iHome ih5.rmdu function 6 'Ipod play / pause' (OBC 04; F12, parms 3): F12_relaxed device 3 subdevice 0 function 32; the upgrade's note: 'ipod activation and plays track'"
+        }
+      ]
+    },
+    "KEY_BACK_BUTTON": {
+      "label": "back button",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x03",
+          "subdevice": "0x00",
+          "function": "0x40",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 MP3 Players/iHome ih5.rmdu function 7 'back button' (OBC 02; F12, parms 3): F12_relaxed device 3 subdevice 0 function 64; the upgrade's note: 'prev track / hold to scan /  tune radio station'"
+        }
+      ]
+    },
+    "KEY_FORWARD_BUTTON": {
+      "label": "forward button",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x03",
+          "subdevice": "0x00",
+          "function": "0x80",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 MP3 Players/iHome ih5.rmdu function 8 'forward button' (OBC 01; F12, parms 3): F12_relaxed device 3 subdevice 0 function 128; the upgrade's note: 'next track / hold to scan / tune radio station'"
+        }
+      ]
+    }
+  }
+}
