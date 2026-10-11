@@ -157,6 +157,8 @@ DENON_K = "Denon-K"
 NEC_2DEV = "NEC 2DEV Combo"
 PIONEER = "Pioneer"
 PIONEER_MIX = "Pioneer MIX"
+PIONEER_3DEV = "Pioneer 3DEV"
+PIONEER_4DEV = "Pioneer 4DEV"
 PANASONIC_HACKED = "Panasonic Multi-Device (Hacked)"
 RECS80_68 = "RECS80 (68)"
 JVC_48 = "JVC-48"
@@ -179,7 +181,7 @@ NEC1_RNC = "NEC1-rnc"
 #: complemented (``E0=(~Y:1:1)^(F:1)``, ``~F:6:1``, ``E7=(~Y:1)^(F:1:7)``).
 YAMAHA_E_XOR = {1: 0x7F, 2: 0xFE, 3: 0x7E}
 TWO_BYTE = (SONY_COMBO, NEC1_COMBO, NEC_4DEV, NEC_4DEV_YAMAHA, NEC_2DEV, JVC_COMBO, DENON_COMBO, SHARP_COMBO,
-            PANASONIC_COMBO, DENON_K, PIONEER_MIX, PANASONIC_HACKED, TEAC_K, RCA_COMBO)
+            PANASONIC_COMBO, DENON_K, PIONEER_MIX, PANASONIC_HACKED, TEAC_K, RCA_COMBO, PIONEER_3DEV, PIONEER_4DEV)
 MAPPED = (*NEC_FAMILY, SONY_1215, SONY_20, RC5, RC6, JVC, AIWA, DENON, PANASONIC, SHARP, SAMSUNG36, PROTON, F12,
           RECS80_45, PIONEER, RECS80_68, JVC_48, *RCA_FAMILY, NEC1_F16_OFFICIAL, NEC1_RNC, MCE, NOKIA32, PANASONIC_OLD, TDC, GI_CABLE, RC6_M_20N,
           *TWO_BYTE)
@@ -212,6 +214,8 @@ def signal_of(upgrade: Upgrade, function: Function) -> Signal | str:
             return pioneer_mix_signal(upgrade, pair[0], pair[1])
         if name == RCA_COMBO:
             return rca_combo_signal(upgrade, pair[0], pair[1])
+        if name in (PIONEER_3DEV, PIONEER_4DEV):
+            return pioneer_multi_signal(upgrade, pair[0], pair[1])
         return combo_signal(name, parms, pair[0], pair[1], upgrade.fields.get("FixedData", "").split())
     byte = obc_byte(function.hex)
     if byte is None:
@@ -414,6 +418,43 @@ def pioneer_mix_signal(upgrade: Upgrade, first: int, second: int) -> Signal | st
     if values[1] is None or values[slot] is None:
         return "the device or the prefix command parameter is missing"
     return Signal("Pioneer-2Part", values[0] << 8 | values[1], None, values[slot] << 8 | function)
+
+
+def pioneer_multi_signal(upgrade: Upgrade, first: int, second: int) -> Signal | str:
+    """``Pioneer 3DEV`` and ``Pioneer 4DEV`` (DESIGN D200): two hex bytes the executors' ``Pioneer3DevXlator`` and
+    ``Pioneer4DevXlator`` read, and a signal of two parts, which the ledger's ``Pioneer-2Part`` carries as ``D0:D`` and
+    ``F0:F`` (a one-part signal is the two parts equal). The devices are the parameters, one byte each, or where ``null``
+    the byte ``FixedData`` keeps reversed (``Translator(lsb,...)``, no complement).
+
+    **3DEV:** the first byte is the OBC reversed. The top three bits of the second say which device the function uses (4 is
+    Device 1, 2 is Device 2, anything else Device 3) and its low five, reversed, are the second part's OBC 2, which with
+    ``OBC & 0x80`` and ``OBC & 0x40`` clear add ``0x80`` and ``0x40`` (``adjust``); 0 says no second part. **4DEV:** each
+    byte is an OBC reversed with bit 5 (the device bit) set or clear: the device is ``2 * (first & 4 != 0) + (second & 4
+    != 0)`` of the four, and the OBCs are the bytes reversed with that bit cleared. Both parts are sent with the chosen
+    device, and the function is the OBC as it is."""
+    four = upgrade.protocol_name == PIONEER_4DEV
+    fixed = upgrade.fields.get("FixedData", "").split()
+
+    def device(index: int) -> int | None:
+        given = parm(upgrade.parms, index)
+        if given is not None:
+            return given
+        return rev8(int(fixed[index], 16)) if index < len(fixed) and _HEX_BYTE.match(fixed[index]) else None
+
+    if four:
+        index = (2 if first & 4 else 0) + (1 if second & 4 else 0)
+        one, two = rev8(first) & 0xDF, rev8(second) & 0xDF
+    else:
+        index = {4: 0, 2: 1}.get(second >> 5, 2)
+        one = rev8(first)
+        extra = rev_bits(second & 0x1F, 5)
+        two = one if extra == 0 else extra + (0x80 if one & 0x80 else 0) + (0x40 if not one & 0x40 else 0)
+    chosen = device(index)
+    if chosen is None:
+        return "the device the function selects is not set"
+    if chosen > 255:
+        return "a parameter is not a byte"
+    return Signal("Pioneer-2Part", chosen << 8 | chosen, None, one << 8 | two)
 
 
 #: The ledger protocol of the four styles an NEC 4DEV combo function names.

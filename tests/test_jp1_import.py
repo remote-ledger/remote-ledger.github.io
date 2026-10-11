@@ -596,6 +596,70 @@ def test_the_jp1_tdc_upgrades_for_device_6_and_sub_device_10_send_the_keys_irptr
     assert any(row[2:4] == (14, 10) for row in _committed_jp1_keys("TDC-56")) is False
 
 
+def test_pioneer_3dev_and_4dev_are_two_parts_with_the_device_the_function_selects():
+    """``Pioneer3DevXlator``: the first byte is the OBC reversed (``38`` is 28); the top three bits of the second pick the
+    device (``80`` Device 1, ``40`` Device 2, ``00`` Device 3) and its low five, reversed, are the second part's OBC 2,
+    which gets ``0x80`` if the OBC has bit 7 and ``0x40`` if it lacks bit 6 (``01 94``: OBC 0x80, five bits 20 reversed to
+    5, so 5 + 0x80 + 0x40 = 0xC5). A null device is the byte of FixedData reversed (``25`` is 164). ``Pioneer4DevXlator``:
+    two bytes, each an OBC reversed with the device bit (0x04 of the byte) set or clear; the device is 2 * the first's bit
+    and the second's, of the four, and the OBCs are the bytes reversed with bit 5 cleared (``3C 38`` is Device 3 and 28 twice).
+    Both parts use the chosen device, and the ledger writes a one-part signal as its two parts equal."""
+    up = upgrade("Pioneer 3DEV", "165 164 null", ("a", "38 80"), ("b", "38 40"), ("c", "38 00"), ("d", "01 94"),
+                 ("e", "38 20"), fixed="a5 25 25")
+    assert [signal(up, i) for i in range(5)] == [
+        rmdu.Signal("Pioneer-2Part", 165 << 8 | 165, None, 28 << 8 | 28),
+        rmdu.Signal("Pioneer-2Part", 164 << 8 | 164, None, 28 << 8 | 28),
+        rmdu.Signal("Pioneer-2Part", 164 << 8 | 164, None, 28 << 8 | 28),
+        rmdu.Signal("Pioneer-2Part", 165 << 8 | 165, None, 0x80 << 8 | 0xC5),
+        rmdu.Signal("Pioneer-2Part", 164 << 8 | 164, None, 28 << 8 | 28)]
+    four = upgrade("Pioneer 4DEV", "165 164 null null", ("a", "38 38"), ("b", "38 3C"), ("c", "3C 38"), ("d", "3C 3C"),
+                   ("e", "5A 5E"), fixed="A5 25 25 05")
+    assert [signal(four, i) for i in range(5)] == [
+        rmdu.Signal("Pioneer-2Part", 165 << 8 | 165, None, 28 << 8 | 28),
+        rmdu.Signal("Pioneer-2Part", 164 << 8 | 164, None, 28 << 8 | 28),
+        rmdu.Signal("Pioneer-2Part", 164 << 8 | 164, None, 28 << 8 | 28),
+        rmdu.Signal("Pioneer-2Part", 160 << 8 | 160, None, 28 << 8 | 28),
+        rmdu.Signal("Pioneer-2Part", 164 << 8 | 164, None, 90 << 8 | 90)]               # 5A 5E: Device 2, both OBCs 90
+    assert signal(upgrade("Pioneer 4DEV", "null null null null", ("a", "38 38"))) == "the device the function selects is not set"
+    assert signal(upgrade("Pioneer 3DEV", "300 164 null", ("a", "38 80"))) == "a parameter is not a byte"
+    assert signal(upgrade("Pioneer 3DEV", "165 164 null", ("a", "38"))) == "the function has no two OBC bytes"
+
+
+def test_the_jp1_pioneer_3dev_and_4dev_upgrades_send_the_codes_the_ir_blaster_database_has():
+    """An independent check of the two rules, from another source. The IR Blaster import holds 1,673 distinct Pioneer-2Part
+    codes in 132 files. The six 3DEV upgrades send **267 of their 292 keys** among them (91.4%) and the eight 4DEV
+    upgrades **507 of 675** (75.1%), five of them 270 of 280 (96.4%) and the other three (``VSX-D901S``, ``Pioneer Master List``,
+    ``PD-TM2``) 237 of 395, the last two being catalogues of many devices whose codes the database lacks. A wrong rule would fail: the OBCs
+    complemented send 0 and 0, bit-reversed 66 and 105."""
+    irblaster: set[tuple[int, int]] = set()
+    for path in (ROOT / "remotes" / "irblaster").rglob("*.json"):
+        doc = load(path)
+        if doc.get("protocol", {}).get("name") == "Pioneer-2Part":
+            for spec in doc["keys"].values():
+                irblaster |= {(int(f["device"], 0), int(f["function"], 0)) for f in spec["forms"] if f.get("type") == "irp"}
+    assert len(irblaster) == 1_673
+    counts: Counter = Counter()
+    per: Counter = Counter()
+    for executor, _, device, _, function, name in _committed_jp1_keys("Pioneer-2Part"):
+        if executor not in ("Pioneer 3DEV", "Pioneer 4DEV"):
+            continue
+        hi, lo = function >> 8, function & 0xFF
+        counts[executor] += 1
+        counts[executor, "plain"] += (device, function) in irblaster
+        counts[executor, "complemented"] += (device, (~hi & 0xFF) << 8 | (~lo & 0xFF)) in irblaster
+        counts[executor, "reversed"] += (device, rev8(hi) << 8 | rev8(lo)) in irblaster
+        per[name] += (device, function) in irblaster
+        per[name, "n"] += 1
+    for executor, expected in (("Pioneer 3DEV", [292, 267, 0, 66]), ("Pioneer 4DEV", [675, 507, 0, 105])):
+        assert [counts[executor], counts[executor, "plain"], counts[executor, "complemented"],
+                counts[executor, "reversed"]] == expected, executor
+    faithful = ("Audio-Pioneer_Elite_VSX-40__2011.12.24a.json", "Audio-Pioneer_Receiver_SX-315.json",
+                "Audio-Pioneer_Receiver_VSX-C100.json", "Audio-Pioneer_VSX-521.json", "Audio-Pioneer_VSX-818V.json")
+    assert (sum(per[n] for n in faithful), sum(per[n, "n"] for n in faithful)) == (270, 280)
+    others = ("Audio-Pioneer_VSX-D901S.json", "Audio-Pioneer_Master_List.json", "CD-Pioneer_PD-TM2.json")
+    assert (sum(per[n] for n in others), sum(per[n, "n"] for n in others)) == (237, 395)
+
+
 def test_an_executor_not_read_and_a_function_with_no_single_byte_are_said_so():
     assert "not read by this import" in signal(upgrade("XMP", "28 0 null", ("power", "C4")))
     assert signal(upgrade("NEC1", "6 null null", ("Power", "FF BF"))) == "the function has no single OBC byte"
