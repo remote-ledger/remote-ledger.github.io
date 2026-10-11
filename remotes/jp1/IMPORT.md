@@ -17,7 +17,7 @@ silently (SPEC R19, condition 5).
 | Upstream files: skipped: no function decodes | 17 |
 | Upstream files: skipped: no functions | 1 |
 | Upstream files: upgrades | 3,251 |
-| Remotes: imported | 2,796 |
+| Remotes: imported | 2,811 |
 | Remotes: skipped: an authored remote wins | 7 |
 | Keys: imported: Aiwa | 947 |
 | Keys: imported: Denon | 1,791 |
@@ -39,6 +39,7 @@ silently (SPEC R19, condition 5).
 | Keys: imported: Proton | 256 |
 | Keys: imported: RC5 | 5,648 |
 | Keys: imported: RC6 | 1,745 |
+| Keys: imported: RC6-6-20 | 535 |
 | Keys: imported: RCA | 1,104 |
 | Keys: imported: RCA-38 | 328 |
 | Keys: imported: RECS80 | 467 |
@@ -59,7 +60,7 @@ silently (SPEC R19, condition 5).
 | Keys: skipped: the device the function selects is not set | 40 |
 | Keys: skipped: the first byte's low four bits are not the executor's fixed 15 | 1 |
 | Keys: skipped: the flag byte has bits the variant does not use | 1 |
-| Keys: skipped: the function has no single OBC byte | 5,393 |
+| Keys: skipped: the function has no single OBC byte | 5,442 |
 | Keys: skipped: the function has no two OBC bytes | 688 |
 | Keys: skipped: the high X bit is sent at release, which a form cannot say | 40 |
 | Keys: skipped: the sub device parameter is missing | 97 |
@@ -84,6 +85,7 @@ silently (SPEC R19, condition 5).
 | Files by ledger protocol: Proton | 12 |
 | Files by ledger protocol: RC5 | 147 |
 | Files by ledger protocol: RC6 | 41 |
+| Files by ledger protocol: RC6-6-20 | 15 |
 | Files by ledger protocol: RCA | 26 |
 | Files by ledger protocol: RCA-38 | 6 |
 | Files by ledger protocol: RECS80 | 17 |
@@ -97,9 +99,9 @@ silently (SPEC R19, condition 5).
 | Files by ledger protocol: TDC-56 | 3 |
 | Files by ledger protocol: Teac-K | 2 |
 | Brand taken from: the longest brand of the index that begins the description | 149 |
-| Brand taken from: the master index | 2,556 |
+| Brand taken from: the master index | 2,571 |
 
-## Executors this import does not read (upgrades) (153)
+## Executors this import does not read (upgrades) (152)
 
 | Executor | Files |
 |---|---|
@@ -107,7 +109,6 @@ silently (SPEC R19, condition 5).
 | `XMP (Slingbox)` | 26 |
 | `XMP` | 22 |
 | `RC-5/5x Combo` | 16 |
-| `RC6-M-20n` | 15 |
 | `RC5/6 combo` | 12 |
 | `PID 01 FF` | 11 |
 | `Roku Official` | 10 |
@@ -304,7 +305,7 @@ silently (SPEC R19, condition 5).
 | `Satellite/SonicView SV1000 6131.rmdu` | `remotes/jp1/Sonicview/Satellite-SonicView_SV1000_6131.json` |
 | `TV/VESTEL TV.rmdu` | `remotes/jp1/Vestel/TV-VESTEL_TV.json` |
 
-## Functions skipped (6,788)
+## Functions skipped (6,837)
 
 | File | Function | Reason |
 |---|---|---|
@@ -2135,6 +2136,26 @@ silently (SPEC R19, condition 5).
 | `Cable/Cisco Z368DVB.rmdu` | `tv/vcr` | `the function has no single OBC byte` |
 | `Cable/Cisco Z368DVB.rmdu` | `vol down` | `the function has no single OBC byte` |
 | `Cable/Cisco Z368DVB.rmdu` | `vol up` | `the function has no single OBC byte` |
+| `Cable/Foxtel Digital.rmdu` | `+100` | `the function has no single OBC byte` |
+| `Cable/Foxtel Digital.rmdu` | `device button` | `the function has no single OBC byte` |
+| `Cable/Foxtel Digital.rmdu` | `eject` | `the function has no single OBC byte` |
+| `Cable/Foxtel Digital.rmdu` | `enter` | `the function has no single OBC byte` |
+| `Cable/Foxtel Digital.rmdu` | `exit` | `the function has no single OBC byte` |
+| `Cable/Foxtel Digital.rmdu` | `input toggle` | `the function has no single OBC byte` |
+| `Cable/Foxtel Digital.rmdu` | `mute` | `the function has no single OBC byte` |
+| `Cable/Foxtel Digital.rmdu` | `next track` | `the function has no single OBC byte` |
+| `Cable/Foxtel Digital.rmdu` | `pip freeze` | `the function has no single OBC byte` |
+| `Cable/Foxtel Digital.rmdu` | `prev track` | `the function has no single OBC byte` |
+| `Cable/Foxtel Digital.rmdu` | `rear` | `the function has no single OBC byte` |
+| `Cable/Foxtel Digital.rmdu` | `record` | `the function has no single OBC byte` |
+| `Cable/Foxtel Digital.rmdu` | `shift-left` | `the function has no single OBC byte` |
+| `Cable/Foxtel Digital.rmdu` | `shift-right` | `the function has no single OBC byte` |
+| `Cable/Foxtel Digital.rmdu` | `sleep` | `the function has no single OBC byte` |
+| `Cable/Foxtel Digital.rmdu` | `slow` | `the function has no single OBC byte` |
+| `Cable/Foxtel Digital.rmdu` | `slow+` | `the function has no single OBC byte` |
+| `Cable/Foxtel Digital.rmdu` | `surround` | `the function has no single OBC byte` |
+| `Cable/Foxtel Digital.rmdu` | `vol down` | `the function has no single OBC byte` |
+| `Cable/Foxtel Digital.rmdu` | `vol up` | `the function has no single OBC byte` |
 | `Cable/Huawei DC211.rmdu` | `audio` | `the function has no single OBC byte` |
 | `Cable/Huawei DC211.rmdu` | `blue` | `the function has no single OBC byte` |
 | `Cable/Huawei DC211.rmdu` | `enter` | `the function has no single OBC byte` |
@@ -4953,6 +4974,9 @@ silently (SPEC R19, condition 5).
 | `Satellite/AZBox Bravissimo Twin.rmdu` | `#61` | `the function has no single OBC byte` |
 | `Satellite/AZBox Bravissimo Twin.rmdu` | `#62` | `the function has no single OBC byte` |
 | `Satellite/AZBox Bravissimo Twin.rmdu` | `#63` | `the function has no single OBC byte` |
+| `Satellite/Amstrad DRX780.rmdu` | `#37` | `the function has no single OBC byte` |
+| `Satellite/Amstrad DRX780.rmdu` | `#38` | `the function has no single OBC byte` |
+| `Satellite/Amstrad DRX780.rmdu` | `#39` | `the function has no single OBC byte` |
 | `Satellite/Cloud Ibox 2+.rmdu` | `#30` | `the function has no single OBC byte` |
 | `Satellite/Cloud Ibox 2+.rmdu` | `#31` | `the function has no single OBC byte` |
 | `Satellite/Cloud Ibox 2+.rmdu` | `#50` | `the function has no single OBC byte` |
@@ -5229,6 +5253,26 @@ silently (SPEC R19, condition 5).
 | `Satellite/REDLINE SAT.rmdu` | `tv/vcr` | `the function has no single OBC byte` |
 | `Satellite/REDLINE SAT.rmdu` | `vol down` | `the function has no single OBC byte` |
 | `Satellite/REDLINE SAT.rmdu` | `vol up` | `the function has no single OBC byte` |
+| `Satellite/Sky Digibox UK on URC8060.rmdu` | `#51` | `the function has no single OBC byte` |
+| `Satellite/Sky Digibox UK on URC8060.rmdu` | `+100` | `the function has no single OBC byte` |
+| `Satellite/Sky Digibox UK on URC8060.rmdu` | `enter` | `the function has no single OBC byte` |
+| `Satellite/Sky Digibox UK on URC8060.rmdu` | `exit` | `the function has no single OBC byte` |
+| `Satellite/Sky Digibox UK on URC8060.rmdu` | `fav/scan` | `the function has no single OBC byte` |
+| `Satellite/Sky Digibox UK on URC8060.rmdu` | `input toggle` | `the function has no single OBC byte` |
+| `Satellite/Sky Digibox UK on URC8060.rmdu` | `last (prev ch)` | `the function has no single OBC byte` |
+| `Satellite/Sky Digibox UK on URC8060.rmdu` | `mute` | `the function has no single OBC byte` |
+| `Satellite/Sky Digibox UK on URC8060.rmdu` | `next track` | `the function has no single OBC byte` |
+| `Satellite/Sky Digibox UK on URC8060.rmdu` | `pip move` | `the function has no single OBC byte` |
+| `Satellite/Sky Digibox UK on URC8060.rmdu` | `pip swap` | `the function has no single OBC byte` |
+| `Satellite/Sky Digibox UK on URC8060.rmdu` | `pp` | `the function has no single OBC byte` |
+| `Satellite/Sky Digibox UK on URC8060.rmdu` | `prev track` | `the function has no single OBC byte` |
+| `Satellite/Sky Digibox UK on URC8060.rmdu` | `shift-left` | `the function has no single OBC byte` |
+| `Satellite/Sky Digibox UK on URC8060.rmdu` | `shift-right` | `the function has no single OBC byte` |
+| `Satellite/Sky Digibox UK on URC8060.rmdu` | `sleep` | `the function has no single OBC byte` |
+| `Satellite/Sky Digibox UK on URC8060.rmdu` | `slow+` | `the function has no single OBC byte` |
+| `Satellite/Sky Digibox UK on URC8060.rmdu` | `surround` | `the function has no single OBC byte` |
+| `Satellite/Sky Digibox UK on URC8060.rmdu` | `vol down` | `the function has no single OBC byte` |
+| `Satellite/Sky Digibox UK on URC8060.rmdu` | `vol up` | `the function has no single OBC byte` |
 | `Satellite/Sky PerfecTV (Japan).rmdu` | `+100` | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
 | `Satellite/Sky PerfecTV (Japan).rmdu` | 0 | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
 | `Satellite/Sky PerfecTV (Japan).rmdu` | 1 | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
@@ -5276,6 +5320,12 @@ silently (SPEC R19, condition 5).
 | `Satellite/Sky PerfecTV (Japan).rmdu` | `tv/vcr` | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
 | `Satellite/Sky PerfecTV (Japan).rmdu` | `up arrow` | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
 | `Satellite/Sky PerfecTV (Japan).rmdu` | `yellow/A` | `the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes` |
+| `Satellite/Sky+ Remote.rmdu` | `mute` | `the function has no single OBC byte` |
+| `Satellite/Sky+ Remote.rmdu` | `vol down` | `the function has no single OBC byte` |
+| `Satellite/Sky+ Remote.rmdu` | `vol up` | `the function has no single OBC byte` |
+| `Satellite/Sky+(HD) Remote.rmdu` | `Mute` | `the function has no single OBC byte` |
+| `Satellite/Sky+(HD) Remote.rmdu` | `Vol down` | `the function has no single OBC byte` |
+| `Satellite/Sky+(HD) Remote.rmdu` | `Vol up` | `the function has no single OBC byte` |
 | `Satellite/SkyBox F5.rmdu` | `+100` | `the function has no single OBC byte` |
 | `Satellite/SkyBox F5.rmdu` | `X2` | `the function has no single OBC byte` |
 | `Satellite/SkyBox F5.rmdu` | `center` | `the function has no single OBC byte` |
