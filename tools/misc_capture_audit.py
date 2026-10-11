@@ -21,6 +21,7 @@ each with the decode IrpTransmogrifier's own test expects:
     TDC-38_6_10.ict / TDC-56_14_10.ict   two IPTV remotes whose bits are biphase
     GI_Cable.ict  / .exp   a General Instrument cable box's remote: an intro and a short repeat
     RC6-6-20.ict  / .exp   a Sky+ remote: RC-6 mode 6 with a 20-bit payload
+    XMP-1.ict     / .exp   a set-top box's remote that sends XMP-1 with its final frame (XMPff-1)
 
 They are **cited, not vendored**: the repository is GPL-3.0 and the files are
 used there by permission of a third party. Check it out at the pinned commit
@@ -300,11 +301,48 @@ def decode_rc6_6_20(frame: list[int]):
     return {"D": field(8), "S": field(4), "F": field(8), "T": toggle}
 
 
+#: XMP-1's spaces by the value of the nibble they stand for (the IRP's own figures).
+NIBBLE_SPACES = (760, 896, 1032, 1168, 1304, 1449, 1576, 1712, 1848, 1984, 2120, 2256, 2392, 2528, 2664, 2800)
+
+
+def decode_xmp1(frame: list[int]):
+    """XMP-1's first transmission: two subframes of eight nibbles (a 210 us mark and a space of 760 us plus 136 us a unit of
+    the nibble's value, read as the nearest of the sixteen after the capture's own scale is taken off by the fixed nibble 15), each followed by a mark and a gap (13.8 ms, 80.4 ms). Subframe 1 is S's high nibble, C1, S's low
+    nibble, 15, OEM and D; subframe 2 S's high nibble, C2, the toggle nibble, S's low nibble, F and two zero nibbles. Both
+    checksums are verified and the OEM must be 68."""
+    assert len(frame) == 36, "not two subframes of eight nibbles and a stop mark each"
+    scale = frame[1 + 2 * 3] / NIBBLE_SPACES[15]       # a capture's clock runs a few percent slow: the fixed nibble 15 says by how much
+    assert 0.9 < scale < 1.1, "the fixed nibble 15 is not about 2.8 ms"
+    nibbles = []
+    for start in (0, 18):
+        part = frame[start:start + 18]
+        assert part[17] > 8_000, "no gap after the subframe"
+        values = []
+        for mark, space in zip(part[0:16:2], part[1:16:2]):
+            n = min(range(16), key=lambda i: abs(space / scale - NIBBLE_SPACES[i]))
+            assert abs(space / scale - NIBBLE_SPACES[n]) < 60, "a space that is not a nibble"
+            values.append(n)
+        nibbles.append(values)
+    first, second = nibbles
+    s = first[0] << 4 | first[2]
+    assert second[0] << 4 | second[3] == s, "the subframes disagree on S"
+    assert first[3] == 15, "no fixed nibble 15"
+    oem, d = first[4] << 4 | first[5], first[6] << 4 | first[7]
+    assert oem == 68, f"the OEM is {oem}, not 68"
+    assert -(s + (s >> 4) + 15 + oem + (oem >> 4) + d + (d >> 4)) & 15 == first[1], "C1 is not the checksum"
+    f, toggle = second[4] << 4 | second[5], second[2]
+    assert second[6] == second[7] == 0, "XMP-1's F has no low byte"
+    assert -(s + (s >> 4) + toggle + f + (f >> 4)) & 15 == second[1], "C2 is not the checksum"
+    return {"D": d, "S": s, "F": f, "T": toggle}
+
+
 def encode_like(proto: str, p: dict[str, int], carrier: int):
     entry = REGISTRY[proto]
     if proto == "Nokia32":
         return entry.encode(device=p["D"], subdevice=p["S"], function=(p["X"] << 8) | p["F"], carrier_hz=carrier,
                             toggle=p["T"])
+    if proto == "XMP-1":
+        return entry.encode(device=p["D"], subdevice=p["S"], function=p["F"], carrier_hz=carrier)
     if proto == "RC6-6-20":
         return entry.encode(device=p["D"], subdevice=p["S"], function=p["F"], carrier_hz=carrier, toggle=p["T"])
     if proto in ("Panasonic_Old", "RCA", "GI_Cable"):
@@ -339,6 +377,7 @@ CASES = (
     ("TDC-56_14_10", "TDC-56", decode_tdc),
     ("GI_Cable", "GI_Cable", decode_gicable),
     ("RC6-6-20", "RC6-6-20", decode_rc6_6_20),
+    ("XMP-1", "XMP-1", decode_xmp1),
 )
 
 #: The gap that ends a frame where the default would run through the repeats (RCA's is 8 ms).
@@ -352,7 +391,7 @@ SPANS = {"RCA_Old": (2, 50)}
 def the_signal_frame(proto: str, signal) -> tuple[int, ...]:
     """The sequence that holds the first frame: NEC1-f16 and GI_Cable send it as the intro and the repeaters
     as the repeat."""
-    return signal.intro if proto in ("NEC1-f16", "GI_Cable") else signal.repeat
+    return signal.intro if proto in ("NEC1-f16", "GI_Cable", "XMP-1") else signal.repeat
 
 
 def audit_pronto_panasonic_old(data: Path) -> int:
@@ -395,7 +434,7 @@ def audit(root: Path) -> int:
         captures = load_ict(data / f"{stem}.ict")
         expected = read_expected(data / f"{stem}.exp")
         marks, spaces, gaps, ratios, carriers = [], [], [], [], []
-        ok = 0
+        ok = repeats = 0
         skipped = [key for key in captures if key not in expected]
         for key, (carrier, signed) in captures.items():
             if key in skipped:
@@ -405,6 +444,8 @@ def audit(root: Path) -> int:
             fields = decode(frame)
             if decode is decode_nec_family:
                 want = nec_expected(expected[key])
+            elif decode is decode_xmp1:
+                want = {"T": 0} | {k: v for k, v in expected[key].items() if k in fields}
             elif decode is decode_rc6_6_20:
                 want = {"T": fields["T"]} | {k: v for k, v in expected[key].items() if k in fields}
             elif decode is decode_nokia32:
@@ -422,6 +463,14 @@ def audit(root: Path) -> int:
                 print(f"  FAIL {stem}/{key}: encoder has {len(ours)} durations, "
                       f"capture {len(frame)}")
                 continue
+            if proto == "XMP-1":
+                # the second transmission of a capture is the repeat: the same fields with the toggle nibble 8
+                again = decode(first_frame(signed[len(frame):], FRAME_GAPS.get(stem, FRAME_GAP_US)))
+                if again != fields | {"T": 8}:
+                    failures += 1
+                    print(f"  FAIL {stem}/{key}: the second transmission reads {again}, not {fields | {'T': 8}}")
+                    continue
+                repeats += 1
             if decode(list(ours)) != fields:
                 failures += 1
                 print(f"  FAIL {stem}/{key}: the encoder's own frame reads {decode(list(ours))}, not {fields}")
@@ -440,6 +489,8 @@ def audit(root: Path) -> int:
         print(f"{stem} ({proto}): {ok}/{len(captures) - len(skipped)} keys decode to the .exp "
               f"fields and re-encode to the same bit pattern"
               + (f" ({len(skipped)} capture without a decode left out)" if skipped else ""))
+        if repeats:
+            print(f"  the second transmission, the repeat, reads the same fields with the toggle nibble 8 in {repeats} of {ok} keys")
         if ratios:
             print(f"  capture / encoder, every duration but the lead-out: "
                   f"median {statistics.median(ratios):.3f}, "

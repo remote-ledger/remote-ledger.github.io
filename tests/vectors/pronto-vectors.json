@@ -870,5 +870,68 @@
     "byteDivergence": [
       51
     ]
+  },
+  {
+    "file": "irpt_xmp1_D84_S0_F84.pronto",
+    "protocol": "XMP-1",
+    "params": {
+      "device": 84,
+      "subdevice": 0,
+      "function": 84,
+      "carrier_hz": 38000
+    },
+    "quantization": "irpt-nominal-carrier",
+    "provenance": "reproducible",
+    "source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=84,S=0,F=84 -p XMP-1",
+    "note": "Key `App` of the set-top box remote whose capture IrpTransmogrifier's own test data holds (XMP-1.exp: `App` decodes as XMPff-1 {D=84,S=0,F=84}; the capture's two transmissions are XMP-1's intro and repeat). The render has the two sequences, each of two subframes, and the 13.8 and 80.4 ms gaps are explicit. No Pronto string for XMP-1 is published, so this is a render of the pinned release.",
+    "byteDivergence": [
+      21,
+      39,
+      57,
+      75
+    ]
+  },
+  {
+    "file": "irpt_xmp1_D84_S0_F33.pronto",
+    "protocol": "XMP-1",
+    "params": {
+      "device": 84,
+      "subdevice": 0,
+      "function": 33,
+      "carrier_hz": 38000
+    },
+    "quantization": "irpt-nominal-carrier",
+    "provenance": "reproducible",
+    "source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=84,S=0,F=33 -p XMP-1",
+    "note": "`DirectionUp` of the same remote (XMP-1.exp: D=84, S=0, F=33).",
+    "byteDivergence": [
+      21,
+      39,
+      57,
+      75
+    ]
+  },
+  {
+    "file": "irpt_xmp1_D84_S0_F2.pronto",
+    "protocol": "XMP-1",
+    "params": {
+      "device": 84,
+      "subdevice": 0,
+      "function": 2,
+      "carrier_hz": 38000
+    },
+    "quantization": "irpt-nominal-carrier",
+    "provenance": "reproducible",
+    "source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=84,S=0,F=2 -p XMP-1",
+    "note": "Key `2` of the same remote (XMP-1.exp: D=84, S=0, F=2), rendered the same way: an intro and a repeat of two subframes each.",
+    "byteDivergence": [
+      21,
+      39,
+      57,
+      75
+    ]
   }
 ]

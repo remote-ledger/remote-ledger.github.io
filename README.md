@@ -11,16 +11,16 @@ lookup and a static site (which also serves the SwiftRemote app's API under
 `site/app/v1/`), with CI gating the whole generated tree for drift *and*
 orphans.
 
-38 protocols (NEC1, NECx2, RC5 and Sony20, then 24 more added to read the
+39 protocols (NEC1, NECx2, RC5 and Sony20, then 24 more added to read the
 IR Blaster database, DESIGN.md §18, NEC1-f16 and NEC2-f16 for the codes
 whose fourth byte is not the complement of the third, §37, MCE for Windows
 Media Center's remotes, §41, Nokia32 and Panasonic_Old for two families of
-set-top boxes, §43, and RCA, TDC-38, TDC-56 and GI_Cable for four more, §45, and RC6-6-20 for Sky's remotes, §47) and **all three seed remotes
+set-top boxes, §43, and RCA, TDC-38, TDC-56 and GI_Cable for four more, §45, RC6-6-20 for Sky's remotes, §47, and XMP-1 for Comcast's and others' set-top boxes, §52) and **all three seed remotes
 authored** — the Sony with all 38 functions cross-checked across independent
 sources, zero mismatches. Every protocol's timings are
 verified against another encoder's Pronto output: six against published
-vectors, and 32 against a pinned IrpTransmogrifier release because no
-published vector exists. For those 32 that checks our encoder against the same
+vectors, and 33 against a pinned IrpTransmogrifier release because no
+published vector exists. For those 33 that checks our encoder against the same
 IRP the tool holds, not the IRP itself, and three (RECS80-0068, JVC-48,
 SharpDVD) have no capture behind the IRP either (DESIGN.md D68). The bytes
 differ in a few words, by design, because the tools round microseconds to

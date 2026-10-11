@@ -1128,3 +1128,69 @@ That a receiver acts on a frame the ledger writes with the toggle at 0 (a ledger
 executors do not toggle it); that a receiver minds a 100 ms gap where the remote's period is 150 ms; the other modes of the
 RC-6 family (`RC6-M-16`, `RC6-M-24`, `RC6-M-28`, `RC6-M-56`), which IrpTransmogrifier also has and the ledger does not
 register.
+
+---
+
+## XMP-1 (DESIGN section 52)
+
+The 38 kHz nibble code of Comcast's, Dish's, Dreambox's and other set-top boxes' remotes, with hardware captures in
+IrpTransmogrifier's own test data. The ledger registers `XMP-1`, the first of the database's family.
+
+### Gate 1 — IRP string with its source: **MET**
+
+`{38k,136,msb}<210u,-760u|210u,-896u|...|210u,-2800u>([T=0][T=8],S:4:4,C1:4,S:4,15:4,OEM:8,D:8,210u,-13.8m,S:4:4,C2:4,T:4,S:4,(F*256):16,210u,-80.4m)+{ C1=-(S+S::4+15+OEM+OEM::4+D+D::4),C2=-(S + S::4 + T + 256*F + 16*F + F + F::4) }[D:0..255, S:0..255, F:0..255, OEM:0..255=68]`,
+verbatim from IrpTransmogrifier's `IrpProtocols.xml` at `c945e76` (L3023) and identical in the 1.2.14 release (`list -i XMP-1`);
+the sixteen spaces are in the registered module as the database has them (the sixth is 1,449 us). The ledger's `device` is D,
+`subdevice` is S (required) and `function` is F; the toggle nibble is the intro (0) and the repeat (8). **Two things a form
+does not carry**: OEM, which is the IRP's own 68, and the final frame some remotes send on release (the database's
+`XMPff-1`: a third transmission with the toggle nibble 9), which `IrSignal` has no place for (its `ending` is reserved, D1).
+`XMP-2` (a 16-bit F), `XMPff`, `XMPff-1`, `XMPff-2` and `XMP`, which the database also has, are not registered.
+
+### Gate 2a — structural: **MET**, on hardware captures
+
+`bengtmartensson/IrpTransmogrifier @c945e76 src/test/teaserfiles/XMP-1.ict` and `.exp`, not vendored (a GPL-3.0 repository, the
+files used there by permission of the capture's author) and re-checked by `tools/misc_capture_audit.py --irpt DIR`:
+
+| file | what | keys | capture / encoder, every duration but the lead-out | frame period |
+|---|---|---|---|---|
+| `XMP-1` | a set-top box's remote, 38,491 Hz | 42 of 42 (2 without a decode) | median 0.998 (0.833-1.119) | 0.980-1.019x |
+
+Every key's first transmission is read by a nibble decoder written from the frame layout and not from the encoder (both
+checksums verified, the fixed nibble 15, the OEM 68, the toggle nibble 0), compared with the `.exp` file's fields (all D=84,
+S=0, F as the key says), and the registered encoder's own intro must decode to the same fields. **Each capture is exactly two
+transmissions and the second, the repeat, reads the same fields with the toggle nibble 8 in 42 of 42 keys.** The `.exp` file
+names the decode `XMPff-1`, the family's variant with a final frame, but **these captures hold no third transmission**: what
+there is of them is `XMP-1`'s intro and repeat. **A capture carries instrument bias**, and this one's spaces run 2 to 3 percent
+long (65 us at the 2,528 us space), which put a nibble at the boundary of two: the decoder takes the capture's own scale off
+with the fixed nibble 15, which a first version without it got wrong on three keys. So this says layout, nibble order and
+checksums, not absolute durations.
+
+The LIRC project's remotes carry the frame too, and `tests/test_xmp.py` decodes them with the layout decoder: **166 sequences
+of ten files** (Comcast, Cisco, Motorola, Pace, Thomson and Scientific Atlanta boxes at device 62 and sub device 16, a Pace at
+49 and 16, a Panasat at 72 and 18 and 71 and 17, a Telenet at 42 and 17), 72 distinct codes, all with the OEM 68, each
+re-encoding to a transmission that decodes to the same fields. The Panasat and Telenet confs have marks of 250 to 300 us
+where the IRP has 210; the nibbles are read from the spaces. They are confs expanded by lircd, not captures.
+
+### Gate 2b — golden Pronto: **MET**, all three reproducible, none published
+
+| Protocol | Vector | Provenance | Our bytes differ at |
+|---|---|---|---|
+| XMP-1 | D=84 S=0 F=84 @ 38k: IrpTransmogrifier 1.2.14 release, `render -n D=84,S=0,F=84 -p XMP-1` | **reproducible** | words 21, 39, 57, 75 (the gaps) |
+| XMP-1 | D=84 S=0 F=33 @ 38k: the same | **reproducible** | the same four |
+| XMP-1 | D=84 S=0 F=2 @ 38k: the same | **reproducible** | the same four |
+
+Our timings under IrpTransmogrifier's rounding rule reproduce each string exactly (an intro and a repeat of 18 pairs); the
+raw words differ only in the 13.8 and 80.4 ms gaps. The parameters are keys of the capture above. No Pronto string for it is
+published.
+
+### Gate 3 — invariant tests: **MET**
+
+`tests/test_xmp.py` (every function of six addresses with the intro and the repeat, every device of three sub devices and
+every sub device of three devices, a seeded sample of 4,000, the toggle nibbles and no final frame, the marks, gaps and
+spaces, the order of the fields, the refusal of a unit, and the LIRC remotes). The checksums are written in the test from the
+IRP's formulas, not taken from the encoder.
+
+### Not established
+
+That a receiver acts on a transmission without the final frame, for the remotes that send one (the captures here do not);
+the OEM other than 68, which a form cannot carry; and `XMP-2`, `XMPff-1` and the rest of the family.
