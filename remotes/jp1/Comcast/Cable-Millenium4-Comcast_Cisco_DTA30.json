@@ -1,0 +1,613 @@
+{
+  "manufacturer": "Comcast",
+  "model": "Cisco DTA30",
+  "aliases": [],
+  "controls": [
+    "Comcast Cisco DTA30"
+  ],
+  "protocol": {
+    "name": "GI_Cable",
+    "carrierHz": 38700,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 3 'POWER' (OBC 50; GI Cable, parms none): GI_Cable device 0 function 10"
+        }
+      ]
+    },
+    "KEY_ONDEMAND": {
+      "label": "OnDemand",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 6 'OnDemand' (OBC 58; GI Cable, parms none): GI_Cable device 0 function 26"
+        }
+      ]
+    },
+    "KEY_REW": {
+      "label": "REW <<",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x1E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 7 'REW <<' (OBC 78; GI Cable, parms none): GI_Cable device 0 function 30"
+        }
+      ]
+    },
+    "KEY_PLAY": {
+      "label": "Play >",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x1B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 8 'Play >' (OBC D8; GI Cable, parms none): GI_Cable device 0 function 27; the upgrade's note: 'SKP\\=play, DKP\\=Adv.Listing by Day'"
+        }
+      ]
+    },
+    "KEY_FF": {
+      "label": "FF >>",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x1D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 9 'FF >>' (OBC B8; GI Cable, parms none): GI_Cable device 0 function 29"
+        }
+      ]
+    },
+    "KEY_STOP": {
+      "label": "Stop",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x1C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 10 'Stop' (OBC 38; GI Cable, parms none): GI_Cable device 0 function 28"
+        }
+      ]
+    },
+    "KEY_PAUSE": {
+      "label": "PAUSE ||",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x1F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 11 'PAUSE ||' (OBC F8; GI Cable, parms none): GI_Cable device 0 function 31"
+        }
+      ]
+    },
+    "KEY_RECORD": {
+      "label": "RECORD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x31",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 12 'RECORD' (OBC 8C; GI Cable, parms none): GI_Cable device 0 function 49"
+        }
+      ]
+    },
+    "KEY_REPLAY": {
+      "label": "Replay",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x3C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 13 'Replay' (OBC 3C; GI Cable, parms none): GI_Cable device 0 function 60"
+        }
+      ]
+    },
+    "KEY_MYDVR": {
+      "label": "MyDVR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x3D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 14 'MyDVR' (OBC BC; GI Cable, parms none): GI_Cable device 0 function 61"
+        }
+      ]
+    },
+    "KEY_LIVE": {
+      "label": "LIVE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x3E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 15 'LIVE' (OBC 7C; GI Cable, parms none): GI_Cable device 0 function 62"
+        }
+      ]
+    },
+    "KEY_A_AND_LOCK": {
+      "label": "A and Lock",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 16 'A and Lock' (OBC 68; GI Cable, parms none): GI_Cable device 0 function 22"
+        }
+      ]
+    },
+    "KEY_B_AND_DAY_MINUS": {
+      "label": "B and Day-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x39",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 17 'B and Day-' (OBC 9C; GI Cable, parms none): GI_Cable device 0 function 57; the upgrade's note: 'day- code obc40 is wrong'"
+        }
+      ]
+    },
+    "KEY_C_AND_DAY_PLUS": {
+      "label": "C and Day+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x38",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 18 'C and Day+' (OBC 1C; GI Cable, parms none): GI_Cable device 0 function 56; the upgrade's note: 'day+ code obc39 is wrong'"
+        }
+      ]
+    },
+    "KEY_PAGE_UP": {
+      "label": "Page up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x3A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 19 'Page up' (OBC 5C; GI Cable, parms none): GI_Cable device 0 function 58"
+        }
+      ]
+    },
+    "KEY_PAGE_DOWN": {
+      "label": "Page down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x3B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 20 'Page down' (OBC DC; GI Cable, parms none): GI_Cable device 0 function 59"
+        }
+      ]
+    },
+    "KEY_UP": {
+      "label": "UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x34",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 21 'UP' (OBC 2C; GI Cable, parms none): GI_Cable device 0 function 52"
+        }
+      ]
+    },
+    "KEY_DOWN": {
+      "label": "DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x35",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 22 'DOWN' (OBC AC; GI Cable, parms none): GI_Cable device 0 function 53"
+        }
+      ]
+    },
+    "KEY_LEFT": {
+      "label": "LEFT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x36",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 23 'LEFT' (OBC 6C; GI Cable, parms none): GI_Cable device 0 function 54"
+        }
+      ]
+    },
+    "KEY_RIGHT": {
+      "label": "RIGHT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x37",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 24 'RIGHT' (OBC EC; GI Cable, parms none): GI_Cable device 0 function 55"
+        }
+      ]
+    },
+    "KEY_OK_SLASH_SELECT": {
+      "label": "OK/Select",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 25 'OK/Select' (OBC 88; GI Cable, parms none): GI_Cable device 0 function 17"
+        }
+      ]
+    },
+    "KEY_GUIDE": {
+      "label": "Guide",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x30",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 26 'Guide' (OBC 0C; GI Cable, parms none): GI_Cable device 0 function 48"
+        }
+      ]
+    },
+    "KEY_INFO": {
+      "label": "Info",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x33",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 27 'Info' (OBC CC; GI Cable, parms none): GI_Cable device 0 function 51; the upgrade's note: 'DKP while watch,SKP in menu'"
+        }
+      ]
+    },
+    "KEY_MENU": {
+      "label": "Menu",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x19",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 28 'Menu' (OBC 98; GI Cable, parms none): GI_Cable device 0 function 25"
+        }
+      ]
+    },
+    "KEY_EXIT": {
+      "label": "Exit",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 29 'Exit' (OBC 48; GI Cable, parms none): GI_Cable device 0 function 18; the upgrade's note: 'menus or reminders'"
+        }
+      ]
+    },
+    "KEY_HELP": {
+      "label": "Help",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x32",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 30 'Help' (OBC 4C; GI Cable, parms none): GI_Cable device 0 function 50"
+        }
+      ]
+    },
+    "KEY_LAST_CH_OR_MENU": {
+      "label": "Last ch or menu",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 31 'Last ch or menu' (OBC C8; GI Cable, parms none): GI_Cable device 0 function 19"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "Vol+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 32 'Vol+' (OBC B0; GI Cable, parms none): GI_Cable device 0 function 13"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "Vol-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x0E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 33 'Vol-' (OBC 70; GI Cable, parms none): GI_Cable device 0 function 14"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "Mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 34 'Mute' (OBC F0; GI Cable, parms none): GI_Cable device 0 function 15"
+        }
+      ]
+    },
+    "KEY_FAV_ON_CBL": {
+      "label": "FAV on CBL",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 35 'FAV on CBL' (OBC A8; GI Cable, parms none): GI_Cable device 0 function 21"
+        }
+      ]
+    },
+    "KEY_CH_PLUS": {
+      "label": "Ch+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 36 'Ch+' (OBC D0; GI Cable, parms none): GI_Cable device 0 function 11"
+        }
+      ]
+    },
+    "KEY_CH_MINUS": {
+      "label": "Ch-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 37 'Ch-' (OBC 30; GI Cable, parms none): GI_Cable device 0 function 12"
+        }
+      ]
+    },
+    "KEY_NUM0": {
+      "label": "num0",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 38 'num0' (OBC 00; GI Cable, parms none): GI_Cable device 0 function 0"
+        }
+      ]
+    },
+    "KEY_NUM1": {
+      "label": "num1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 39 'num1' (OBC 80; GI Cable, parms none): GI_Cable device 0 function 1"
+        }
+      ]
+    },
+    "KEY_NUM2": {
+      "label": "num2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 40 'num2' (OBC 40; GI Cable, parms none): GI_Cable device 0 function 2"
+        }
+      ]
+    },
+    "KEY_NUM3": {
+      "label": "num3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 41 'num3' (OBC C0; GI Cable, parms none): GI_Cable device 0 function 3"
+        }
+      ]
+    },
+    "KEY_NUM4": {
+      "label": "num4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 42 'num4' (OBC 20; GI Cable, parms none): GI_Cable device 0 function 4"
+        }
+      ]
+    },
+    "KEY_NUM5": {
+      "label": "num5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 43 'num5' (OBC A0; GI Cable, parms none): GI_Cable device 0 function 5"
+        }
+      ]
+    },
+    "KEY_NUM6": {
+      "label": "num6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 44 'num6' (OBC 60; GI Cable, parms none): GI_Cable device 0 function 6"
+        }
+      ]
+    },
+    "KEY_NUM7": {
+      "label": "num7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 45 'num7' (OBC E0; GI Cable, parms none): GI_Cable device 0 function 7"
+        }
+      ]
+    },
+    "KEY_NUM8": {
+      "label": "num8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 46 'num8' (OBC 10; GI Cable, parms none): GI_Cable device 0 function 8"
+        }
+      ]
+    },
+    "KEY_NUM9": {
+      "label": "num9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 47 'num9' (OBC 90; GI Cable, parms none): GI_Cable device 0 function 9"
+        }
+      ]
+    },
+    "KEY_TV_SLASH_VCR_TV_OR_AMP_INPUTS": {
+      "label": "TV/VCR(TV or AMP inputs)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 48 'TV/VCR(TV or AMP inputs)' (OBC 28; GI Cable, parms none): GI_Cable device 0 function 20; the upgrade's note: 'TV or AMP inputs'"
+        }
+      ]
+    },
+    "KEY_ENTER_AND_HD_ZOOM_SLASH_ASPECT": {
+      "label": "Enter and HD zoom/aspect",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x40",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 49 'Enter and HD zoom/aspect' (OBC 02; GI Cable, parms none): GI_Cable device 0 function 64"
+        }
+      ]
+    },
+    "KEY_PINP_SWAP": {
+      "label": "PinP swap",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x23",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Cable/Millenium4-Comcast Cisco DTA30.rmdu function 51 'PinP swap' (OBC C4; GI Cable, parms none): GI_Cable device 0 function 35"
+        }
+      ]
+    }
+  }
+}
