@@ -214,7 +214,9 @@ def decode_rca(frame: list[int]):
     lead, body = pairs[0], pairs[1:25]
     unit = statistics.median(m for m, _ in body)
     assert lead[0] > 6 * unit and 6 < lead[1] / unit < 10, "no long lead-in"
-    bits = [int(s > 3 * unit) for _, s in body]               # 2 and 4 units: 3 is the midpoint
+    ratios = [s / unit for _, s in body]
+    assert all(1.5 < r < 2.7 or 3.3 < r < 4.7 for r in ratios), "a space that is neither two units nor four"
+    bits = [int(r > 3) for r in ratios]
     word = 0
     for b in bits:
         word = word << 1 | b
@@ -255,7 +257,9 @@ def decode_gicable(frame: list[int]):
     lead, body = pairs[0], pairs[1:17]
     unit = statistics.median(m for m, _ in body)
     assert 15 < lead[0] / unit < 21 and 7 < lead[1] / unit < 11, "no 18,9 lead-in"
-    bits = [int(s > 6.75 * unit) for _, s in body]            # 4.5 and 9 units: 6.75 is the midpoint
+    ratios = [s / unit for _, s in body]
+    assert all(3.5 < r < 5.5 or 7.5 < r < 10.5 for r in ratios), "a space that is neither 4.5 units nor 9"
+    bits = [int(r > 6.75) for r in ratios]
     f, d, c = _lsb(bits[:8]), _lsb(bits[8:12]), _lsb(bits[12:16])
     assert c == (-(d + (f & 15) + (f >> 4))) & 15, "the check nibble is not -(D + F:4 + F:4:4)"
     return {"D": d, "F": f}

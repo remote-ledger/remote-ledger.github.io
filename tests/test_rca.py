@@ -98,3 +98,70 @@ def test_out_of_range_fields_are_refused_in_its_own_name(kwargs, match):
 def test_a_subdevice_is_refused_not_ignored():
     with pytest.raises(EncodeError, match="RCA has no subdevice"):
         RCA.encode(device=15, subdevice=3, function=48, carrier_hz=CARRIER)
+
+
+# --- the LIRC project's remotes, from another source ----------------------------------------------------------------
+
+#: The files of ``remotes/lirc`` whose raw keys are RCA frames by the layout decoder below (878 keys). They are confs
+#: expanded by lircd, not hardware captures, and the claim is only that the frame has the layout.
+LIRC_RCA = (
+    "lirc/ge/UNIVERSAL.json", "lirc/ge/VKFS0938.json", "lirc/microsoft/Xbox_MCE.json",
+    "lirc/one_for_all/URC-4220.One4All_URC-4220_pvr.json", "lirc/one_for_all/URC-4220.One4All_URC-4220_tv.json",
+    "lirc/one_for_all/URC-8910.json", "lirc/panasonic/RCR_195_DC1.json", "lirc/rca/CRK76CA2.json",
+    "lirc/rca/DSS_RG_RH.json", "lirc/rca/DTA800B1.RCA_DTA800B1.json", "lirc/rca/R130A1.json", "lirc/rca/RCA312W.json",
+    "lirc/rca/RCR311TCM1.json", "lirc/rca/RCR504BR.json", "lirc/rca/RCR815.json", "lirc/rca/RCU600RS.json",
+    "lirc/rca/RS2300.json", "lirc/rca/VR637HF.json", "lirc/scientific_atlanta/3250.SA_3250_TV_VCR.json",
+    "lirc/scientific_atlanta/E940.json", "lirc/scientific_atlanta/Explorer_2000.json",
+    "lirc/thomson/ROC85.THOMSON_ROC85_CAB.json",
+)
+
+
+def decode_lirc(durations):
+    """``(D, F)`` of a raw frame that has RCA's layout at the unit its own marks have, or None: a lead-in of about
+    eight units' mark and eight of space, 24 bits (a space of two units for a 0 and four for a 1, nothing else), and
+    the second twelve the complement of the first."""
+    pairs = list(zip(durations[0::2], durations[1::2]))
+    if len(pairs) < 26:
+        return None
+    lead, body = pairs[0], pairs[1:25]
+    unit = sorted(m for m, _ in body)[len(body) // 2]
+    if not (lead[0] > 6 * unit and 6 < lead[1] / unit < 10):
+        return None
+    ratios = [s / unit for _, s in body]
+    if not all(1.5 < r < 2.7 or 3.3 < r < 4.7 for r in ratios):
+        return None
+    word = 0
+    for r in ratios:
+        word = word << 1 | (r > 3)
+    d, f = word >> 20, word >> 12 & 0xFF
+    return (d, f) if word >> 8 & 0xF == ~d & 0xF and word & 0xFF == ~f & 0xFF else None
+
+
+def lirc_codes() -> dict[tuple[int, int], set[str]]:
+    """``{(D, F): {files}}`` of the LIRC remotes' RCA frames (the first frame of each raw key)."""
+    from pathlib import Path
+
+    from remote_ledger.remote import load_remote
+
+    root = Path(__file__).resolve().parent.parent / "remotes"
+    found: dict[tuple[int, int], set[str]] = {}
+    keys = 0
+    for name in LIRC_RCA:
+        for forms in load_remote(root / name).keys.values():
+            form = forms[0]
+            for sequence in (form.intro, form.repeat):
+                got = decode_lirc(list(sequence)) if form.type == "raw" and sequence else None
+                if got is not None:
+                    found.setdefault(got, set()).add(name)
+                    keys += 1
+    assert keys == 878
+    return found
+
+
+def test_the_lirc_remotes_of_rca_devices_decode_to_frames_the_encoder_builds():
+    """878 keys of 22 LIRC remotes (devices 5, 7, 8, 9, 11, 12, 13, 14 and 15) decode by the layout decoder at the unit
+    each has, and the encoder builds the same frame at that unit."""
+    codes = lirc_codes()
+    assert len(codes) == 290 and sorted({d for d, _ in codes}) == [5, 7, 8, 9, 11, 12, 13, 14, 15]
+    for (device, function) in codes:
+        assert _decode(_encode(device, function).repeat) == (device, function)

@@ -12,8 +12,8 @@ sources have been imported under SPEC R19:
   keys, GPL-3.0 by inheritance only (DESIGN §17, §18, §38).
 - **hifi-remote.com's Sony code pages**: 151 files, 6,772 keys, a table of
   reference codes with no licence recorded (DESIGN §27).
-- **The JP1 device upgrades** of its forum: 2,734 files, 107,737 keys, read for
-  forty-three executors (DESIGN §28, §32, §33, §34, §35, §36, §39, §42, §44).
+- **The JP1 device upgrades** of its forum: 2,796 files, 110,465 keys, read for
+  forty-six executors (DESIGN §28, §32, §33, §34, §35, §36, §39, §42, §44, §46).
 - **Manufacturers' own IR tables**: Marantz's AV receiver charts, Anthem's IR
   hex sheet and Oppo's remote code workbooks, 189 files, 12,844 keys (DESIGN
   §29, §31).
@@ -39,21 +39,19 @@ Land it in two PRs, code and then data.
       owner's decision of 2026-10-08 (D110) is that a table of reference
       remote codes needs no licence. That reasoning bears on all three; none
       has been changed.
-- [ ] **The rest of the JP1 upgrades** (DESIGN D120, D136, D140, D145, D155):
-      561 upgrades of 156 other executors (XMP 48, GI Cable 20, RC-5/5x Combo
-      16, TDC 16, RC6-M-20n 15, RC5/6 combo 12...), among them 106 `Manual Settings` upgrades
-      that give raw executor bytes with no protocol, and 25 upgrades of read
-      executors that yield nothing: 18 RCA at 56 kHz, which the registered `RCA`
-      (DESIGN §45) now carries and no importer reads, and 6 Pioneer MIX of variants 4 and 5. GI Cable (20) and
-      TDC (16) are registered the same way (§45). Pioneer
-      3DEV, 4DEV and DVD (18) need the executors' code read (D155),
-      and 2,073 KeymapMaster files. **The Yamaha combo's Y1 to Y3 styles**
-      (1,087 functions of 15 upgrades) send NEC with 16 data bits, which
-      NEC1-f16 and NEC2-f16 now carry (registered, DESIGN §37); no importer
-      reads them yet. Each executor needs its
-      translator found (the RemoteMaster source has the classes the
-      `protocols.ini` expressions name) and checked against the ledger's codes
-      first, as RC-5 was. The forum's file section holds about
+- [ ] **The rest of the JP1 upgrades** (DESIGN D120, D136, D140, D145, D155, D192):
+      516 upgrades of 153 other executors (XMP 48, RC-5/5x Combo 16, RC6-M-20n
+      15, RC5/6 combo 12...), among them 106 `Manual Settings` upgrades that
+      give raw executor bytes with no protocol, and 30 upgrades of read executors that
+      yield nothing (`IMPORT.md` lists them: files with no brand, 6 Pioneer MIX
+      of variants 4 and 5, `RCA-38 Official`...). Pioneer 3DEV, 4DEV and DVD (18)
+      need the executors' code read (D155), and there are 2,073 KeymapMaster
+      files. Each executor needs its translator found (the RemoteMaster source
+      has the classes the `protocols.ini` expressions name), a protocol
+      registered through D18's gate where the ledger has none (XMP, RC6-M-20n and
+      the RC-5 extensions are the next candidates; IrpTransmogrifier has XMP-1 and its
+      captures), and the rule checked against another project's data first, as RC-5 and, last, RCA,
+      TDC and GI Cable were (§46). The forum's file section holds about
       2,000 more upgrades than the GitHub copy, behind a free login.
 - [ ] **Data whose licence is unclear goes to the private repository**, not
       here (DESIGN D130). RemoteCentral's Infrared Hex Code Database, learned

@@ -109,3 +109,71 @@ def test_out_of_range_fields_are_refused(kwargs, match):
 def test_a_subdevice_is_refused_not_ignored():
     with pytest.raises(EncodeError, match="no subdevice"):
         GI_CABLE.encode(device=0, subdevice=1, function=1, carrier_hz=CARRIER)
+
+
+# --- the LIRC project's remotes, from another source ----------------------------------------------------------------
+
+#: The files of ``remotes/lirc`` whose raw keys are G.I.Cable intros by the layout decoder below (777 keys). They are
+#: confs expanded by lircd, not hardware captures.
+LIRC_GI_CABLE = (
+    "lirc/cox/ATLAS_DVR_PVR_5-DEVICE.Cox_ATLAS_DVR_PVR_5-DEVICE.json", "lirc/cox/DCT2224.Motorola_DCT2224.json",
+    "lirc/general_instrument/XRC-200.XRC-200.json", "lirc/general_instrument/XRC-200.lircd.conf.XRC-200.json",
+    "lirc/jerrold/CFT2000.json", "lirc/jerrold/RC-OSD.json", "lirc/jerrold/RC_55-OSD.json",
+    "lirc/motorola/DCH3200.Motorola_DCH3200.json", "lirc/motorola/DCH3416.json", "lirc/motorola/DCT2000.json",
+    "lirc/motorola/DCT2224.Motorola_DCT2224.json", "lirc/motorola/DCT2244.json", "lirc/motorola/DCT2524.json",
+    "lirc/motorola/DRC800.json", "lirc/motorola/DVi2030.json", "lirc/motorola/DigitalCable.json",
+    "lirc/motorola/Millenium_4_Universal.json", "lirc/motorola/QIP2500.json",
+    "lirc/motorola/QIP6200-2.Motorola_QIP6200-2.json", "lirc/motorola/RC1445302-00B-REV2.json",
+    "lirc/one_for_all/URC-10820.json", "lirc/one_for_all/URC-4220.One4All_URC-4220_cable.json",
+    "lirc/uei/DVR-1055.ATLAS_DVR-1055_CBL.json",
+)
+
+
+def decode_lirc(durations):
+    """``(D, F)`` of a raw intro that has G.I.Cable's layout at the unit its own marks have, or None: an 18,9-unit
+    lead-in, sixteen bits least significant first (a space of 4.5 units for a 0 and 9 for a 1, nothing else) and the
+    check nibble ``-(D + F:4 + F:4:4)``."""
+    pairs = list(zip(durations[0::2], durations[1::2]))
+    if len(pairs) < 18:
+        return None
+    lead, body = pairs[0], pairs[1:17]
+    unit = sorted(m for m, _ in body)[len(body) // 2]
+    if not (15 < lead[0] / unit < 21 and 7 < lead[1] / unit < 11):
+        return None
+    ratios = [s / unit for _, s in body]
+    if not all(3.5 < r < 5.5 or 7.5 < r < 10.5 for r in ratios):
+        return None
+    bits = [int(r > 6.75) for r in ratios]
+    f = sum(b << i for i, b in enumerate(bits[:8]))
+    d = sum(b << i for i, b in enumerate(bits[8:12]))
+    c = sum(b << i for i, b in enumerate(bits[12:16]))
+    return (d, f) if c == (-(d + (f & 15) + (f >> 4))) & 15 else None
+
+
+def lirc_codes() -> set[tuple[int, int]]:
+    from pathlib import Path
+
+    from remote_ledger.remote import load_remote
+
+    root = Path(__file__).resolve().parent.parent / "remotes"
+    found: set[tuple[int, int]] = set()
+    keys = 0
+    for name in LIRC_GI_CABLE:
+        for forms in load_remote(root / name).keys.values():
+            form = forms[0]
+            for sequence in (form.intro, form.repeat):
+                got = decode_lirc(list(sequence)) if form.type == "raw" and sequence else None
+                if got is not None:
+                    found.add(got)
+                    keys += 1
+    assert keys == 777
+    return found
+
+
+def test_the_lirc_remotes_of_cable_boxes_decode_to_intros_the_encoder_builds():
+    """777 keys of 23 LIRC remotes (devices 0 and, twice, 4) decode by the layout decoder at the unit each has, and the
+    encoder builds the same intro at that unit."""
+    codes = lirc_codes()
+    assert {d for d, _ in codes} == {0, 4} and len({f for _, f in codes}) == 68
+    for device, function in codes:
+        assert _decode(_encode(device, function).intro) == (device, function)
