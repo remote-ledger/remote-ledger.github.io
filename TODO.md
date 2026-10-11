@@ -48,9 +48,10 @@ Land it in two PRs, code and then data.
       need the executors' code read (D155), and there are 2,073 KeymapMaster
       files. Each executor needs its translator found (the RemoteMaster source
       has the classes the `protocols.ini` expressions name), a protocol
-      registered through D18's gate where the ledger has none (XMP, RC6-M-20n and
-      the RC-5 extensions are the next candidates; IrpTransmogrifier has XMP-1 and its
-      captures), and the rule checked against another project's data first, as RC-5 and, last, RCA,
+      registered through D18's gate where the ledger has none (XMP and the RC-5
+      extensions are the next candidates; IrpTransmogrifier has XMP-1 and its
+      captures; RC6-M-20n's frame, RC6-6-20, is registered now, DESIGN §47, and no
+      importer reads it yet), and the rule checked against another project's data first, as RC-5 and, last, RCA,
       TDC and GI Cable were (§46). The forum's file section holds about
       2,000 more upgrades than the GitHub copy, behind a free login.
 - [ ] **Data whose licence is unclear goes to the private repository**, not

@@ -816,5 +816,59 @@
       40,
       43
     ]
+  },
+  {
+    "file": "irpt_rc6_6_20_D0_S12_F0.pronto",
+    "protocol": "RC6-6-20",
+    "params": {
+      "device": 0,
+      "subdevice": 12,
+      "function": 0,
+      "carrier_hz": 36000
+    },
+    "quantization": "irpt-nominal-carrier",
+    "provenance": "reproducible",
+    "source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=0,S=12,F=0 -p RC6-6-20",
+    "note": "Key `0` of the Sky+ remote whose capture IrpTransmogrifier's own test data holds (RC6-6-20.exp: `0` decodes as RC6-6-20 {D=0,S=12,F=0}). Its toggle is not in a ledger file, so this is the T=0 form. F's last bit is 0, so the frame ends on a mark and the 100 ms gap is a space of its own. No Pronto string for RC6-6-20 is published, so this is a render of the pinned release.",
+    "byteDivergence": [
+      53
+    ]
+  },
+  {
+    "file": "irpt_rc6_6_20_D0_S12_F88.pronto",
+    "protocol": "RC6-6-20",
+    "params": {
+      "device": 0,
+      "subdevice": 12,
+      "function": 88,
+      "carrier_hz": 36000
+    },
+    "quantization": "irpt-nominal-carrier",
+    "provenance": "reproducible",
+    "source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=0,S=12,F=88 -p RC6-6-20",
+    "note": "`Up` of the same Sky+ remote (RC6-6-20.exp: D=0, S=12, F=88); F's last bit is 0, so the gap is a space of its own.",
+    "byteDivergence": [
+      49
+    ]
+  },
+  {
+    "file": "irpt_rc6_6_20_D0_S12_F3.pronto",
+    "protocol": "RC6-6-20",
+    "params": {
+      "device": 0,
+      "subdevice": 12,
+      "function": 3,
+      "carrier_hz": 36000
+    },
+    "quantization": "irpt-nominal-carrier",
+    "provenance": "reproducible",
+    "source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=0,S=12,F=3 -p RC6-6-20",
+    "note": "Key `3` of the same Sky+ remote (RC6-6-20.exp: D=0, S=12, F=3). F's last bit is 1, so the frame ends on a space and the 100 ms gap lengthens it: one space of a unit and 100 ms, which is how the pinned release renders it.",
+    "byteDivergence": [
+      51
+    ]
   }
 ]
