@@ -1181,5 +1181,27 @@
       40,
       43
     ]
+  },
+  "RC6-6-20": {
+    "gate1_irp_source": "IrpTransmogrifier IrpProtocols.xml @c945e76 L2158 (verbatim; identical in the 1.2.14 release, `list -i RC6-6-20`). The database's documentation says the no-toggle version is commonly used in Sky and Sky+ remotes",
+    "regression_snapshot": null,
+    "snapshot_is_evidence": false,
+    "gate2a_structural_vector": "bengtmartensson/IrpTransmogrifier @c945e76 src/test/teaserfiles/RC6-6-20.ict and RC6-6-20.exp: nine captures of a Sky+ remote (Teaser, hifi-remote.com forum), each with the decode IrpTransmogrifier's own test expects. Not vendored (a GPL-3.0 repository, the files used there by permission of the capture's author); tools/misc_capture_audit.py --irpt DIR re-runs the comparison. All 9 keys decode, by a biphase decoder written from the frame layout (leader, start bit, mode 110, the toggle at double width, D:8, S:4, F:8), to the .exp fields (D=0, S=12 and F) and the encoder's own frame decodes to the same fields. A capture carries instrument bias, so this verifies layout, bit order and the toggle's place, not absolute durations: capture durations are 0.98-1.05x the encoder's (median 0.99) and its carrier was measured at 35,984 Hz. **One disagreement with the IRP is recorded in CITATIONS.md**: the capture's frames repeat at a constant 150 ms (a gap of 123.3 to 123.9 ms), where the IRP's gap is a fixed 100 ms. The LIRC project's Sky and Pace remotes carry the frame too: 451 keys of nine files, all device 0 (tests/test_rc6_6_20.py)",
+    "gate2a_pending_reason": null,
+    "gate2b_golden_pronto": "irpt_rc6_6_20_D0_S12_F0.pronto",
+    "gate2b_pending_reason": null,
+    "gate2b_vector_source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "gate2b_vector_params": {
+      "device": 0,
+      "subdevice": 12,
+      "function": 0,
+      "carrier_hz": 36000
+    },
+    "gate2b_vector_quantization": "irpt-nominal-carrier",
+    "gate2b_vector_provenance": "reproducible",
+    "gate2b_vector_reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=0,S=12,F=0 -p RC6-6-20",
+    "gate2b_byte_divergence": [
+      53
+    ]
   }
 }

@@ -1,6 +1,6 @@
 # Remote Ledger — Design & Build Plan
 
-**Draft v2.1** · Status: v1 complete; all three seed remotes authored; LIRC, SmartIR and IR Blaster imports built (§14, §15, §17); 37 protocols (§18, §37, §41, §43, §45) · Implements [SPEC.md](SPEC.md) v0.11
+**Draft v2.1** · Status: v1 complete; all three seed remotes authored; LIRC, SmartIR and IR Blaster imports built (§14, §15, §17); 38 protocols (§18, §37, §41, §43, §45, §47) · Implements [SPEC.md](SPEC.md) v0.11
 
 SPEC.md says *what* the format has to hold and why. This says *how it gets
 built*: the resolved open decisions, the one intermediate representation
@@ -341,7 +341,7 @@ Two conditional rules the validator enforces:
   *and* `name` is omitted or its registry entry has `extent_us = None`. All
   three v1 protocols declared an extent, so in practice this only bit
   raw-only files — which is exactly where truncation is most likely. Since §18
-  twenty of the 37 protocols declare none (D3), so it now bites a file that
+  twenty-one of the 38 protocols declare none (D3), so it now bites a file that
   names one of them as well. A truncated form with neither an extent nor
   `defaultGapUs` is a validation error, never a guess (D4a).
 
@@ -1342,7 +1342,7 @@ remote-ledger/
 ├── src/remote_ledger/
 │   ├── signal.py      IrSignal, cycle quantization        D1
 │   ├── pronto.py      encode / decode                     D5 D6
-│   ├── protocols/     one module per family (37 protocols) D3 D18 §18 §37 §41 §43 §45
+│   ├── protocols/     one module per family (38 protocols) D3 D18 §18 §37 §41 §43 §45 §47
 │   ├── irblaster/     importer + six hex_*.py maps        §17 §18
 │   ├── lirc/ smartir/ importers                           §14 §15
 │   ├── forms.py       form → IrSignal, precedence         D7
@@ -2051,7 +2051,7 @@ note rather than a live contract.
 
 ## 12. Implementation status
 
-Phases 0-6 are implemented: 3764 tests, `jsonschema` the only runtime
+Phases 0-6 are implemented: 3796 tests, `jsonschema` the only runtime
 dependency. Phase 2 landed its nine SPEC edits *before* its code, per §9 --
 the spec change is what authorises the implementation. (That count is asserted by the suite itself -- see
 `test_documented_test_count_is_current` -- so it cannot drift the way the
@@ -2060,7 +2060,7 @@ added 1,367; it moves again whenever a test is added, and the figure here
 has to be re-fixed with it.) Post-v1 work has landed outside the phases: RC5
 (§16), the LIRC and SmartIR imports (§14, §15), and the IR Blaster importer
 with the 24 protocols it needed (§17, §18), and the canonical key vocabulary
-(§22). The registry held 28 protocols then, and holds 37 since §45 (30 after §37, 31 after §41, 33 after §43).
+(§22). The registry held 28 protocols then, and holds 38 since §47 (30 after §37, 31 after §41, 33 after §43, 37 after §45).
 `rl encode --protocol NEC1 --device 0x88 --subdevice 0x77
 --function 0x18 --carrier 38000` emits the Topping RC-15A Power key. Until
 the RC-15A was corrected this read `0x11 / 0xEE`: the capture's MSB-first
@@ -6526,4 +6526,22 @@ Of 2,884 functions of the 63 upgrades 156 are skipped: **128 are blank** (RCA 56
 The corpus is **16,425 remote files and 656,687 keys**, 5,451 brands (5 more), 281,716 models (112 more) and 175,991 signals (720 more). Both bundle profiles are 57,708,544 bytes and `rl bundle --verify` passes on each. **76.0% of the new keys map to the vocabulary** (§22, 2,073 of 2,728): a cable box's remote is the vocabulary's, and the `jp1` row goes from 71.3% to 71.4%. No new build warnings (157 as before), no file renamed. The search evaluation's draw moved again (D99): first answer **88.4%**, first five 99.4%, the thirteenth draw (about 89.4% on average); **neither of the two misses is a device of this import** and none of their answers holds one (`YAMAHA YAMAHA` expects a Yamaha tape deck of the JP1 source that is not among the 62; `SUNSTECH TL - X 19` an IR Blaster remote).
 
 **Not read**: **516 upgrades of 153 executor names**, counted in `IMPORT.md`: `Manual Settings` (75 and 31 more of its spellings), `XMP` and `XMP (Slingbox)` (48), `RC-5/5x Combo` (16), `RC6-M-20n` (15), `RC5/6 combo` (12), and 147 executors of fewer than 12 each; and the 2,073 KeymapMaster files. **Not proven.** That a function does what its name says (§28); that the RCA files' 58 kHz is the carrier of the 56 kHz executor (D186) or that a receiver acts on RCA at 460 µs when the remotes measured use about 500 (§45); that `RCA Combo`'s 73% is not a fault in its rule (the same devices match in full in the first variant); and `TDC-56` (above).
+
+## 47. Registering RC6-6-20
+
+The Sky and Sky+ remotes' frame, which **`RC6-M-20n`** (15 JP1 upgrades: Sky, Sky+, Sky+ HD, Foxtel and Pace boxes) sends: RC-6 mode 6 with a 20-bit payload. IrpTransmogrifier has it with a hardware capture of a Sky+ remote in its own test data. It is registered through D18's three gates and **nothing reads it yet**: the corpus, the index and the bundle do not change, and the registry goes from 37 to 38 protocols. The code is `src/remote_ledger/protocols/rc6_6_20.py`, the evidence `tests/vectors/CITATIONS.md` and `tools/misc_capture_audit.py`.
+
+### D193 — What a form carries
+
+`{36k,444,msb}<-1,1|1,-1>((6,-2,1:1,6:3,<-2,2|2,-2>(T:1),D:8,S:4,F:8,-100m)*,T=1-T)`: a leader, a start bit, the fixed mode 6, the toggle `T` at double width (RC-6's place for it) and the payload, every other bit biphase. **`device` is D, `subdevice` is S (required) and `function` is F**; the toggle is not in the file (D3b), as for `RC6` and `MCE`, and the database says the executors do not toggle it. Two things differ from `MCE`'s frame, which `rc6_6_20.py` is modelled on: the gap is a gap and not an extent (`-100m`, so `extent_us` is `None`: a last bit of 1 ends the frame on a space that the gap lengthens, a 0 on a mark that gets a space of its own), and the toggle is in RC-6's place between the mode and the payload.
+
+### D194 — The three gates, and one thing the audit found
+
+**Gate 1**: the IRP verbatim at the commit the others cite and in the 1.2.14 release. **Gate 2a, on hardware**: `tools/misc_capture_audit.py` decodes **9 of 9 keys** of the Sky+ remote's capture with a decoder written from the layout, each to the `.exp` fields (D=0, S=12 and F), and the encoder's own frame must decode to the same fields (with the capture's toggle). The LIRC project's Sky, Pace, Foxtel and One For All remotes carry the frame too: `tests/test_rc6_6_20.py` decodes **451 keys of nine files** (all device 0, sub devices 0, 3 and 12, 197 distinct codes) by the layout decoder. They are confs expanded by lircd, not captures. **Gate 2b**: three vectors rendered from the 1.2.14 release, for keys of the capture (two ending on a mark, one on a space); our timings under its rounding reproduce each exactly. **Reproducible, none published** (32 now, from 31). **Gate 3**: `tests/test_rc6_6_20.py`.
+
+**The audit found one thing the encoder does not say, recorded and not corrected: the capture's frames repeat at a constant 150 ms** whatever the key (the gap is 123.3 to 123.9 ms), where the IRP's gap is a fixed 100 ms. The encoder follows the IRP; the remote pads, as G.I.Cable's does (§45).
+
+### D195 — What it does to the rest, and what is not proven
+
+Nothing in the corpus moves. What the registration opens is in TODO.md: the 15 `RC6-M-20n` upgrades. **Not proven**: that a receiver acts on the frame with the toggle at 0; that a receiver minds a 100 ms gap where the remote's period is 150 ms; and the other modes of the RC-6 family (`RC6-M-16`, `RC6-M-24`, `RC6-M-28`, `RC6-M-56`), which IrpTransmogrifier also has and the ledger does not register.
 

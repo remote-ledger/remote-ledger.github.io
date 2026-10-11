@@ -1064,3 +1064,67 @@ the same question: the captured RCA(Old) is 57.3 kHz and the JP1 `RCA` executor 
 variable intro period; TDC's seven-bit `F` in remotes whose bit 0 is not the complement of bit 1 (the database says
 there are such implementations; the captured keys all follow the pattern); and `RCA(Old)`, `RCA-38(Old)`, which
 IrpTransmogrifier also has and the ledger does not register.
+
+---
+
+## RC6-6-20 (DESIGN section 47)
+
+RC-6 mode 6 with a 20-bit payload, the frame of Sky and Sky+ remotes, with a hardware capture in IrpTransmogrifier's own test
+data.
+
+### Gate 1 — IRP string with its source: **MET**
+
+`{36k,444,msb}<-1,1|1,-1>((6,-2,1:1,6:3,<-2,2|2,-2>(T:1),D:8,S:4,F:8,-100m)*,T=1-T)[D:0..255,S:0..15,F:0..255,T@:0..1=0]`,
+verbatim from IrpTransmogrifier's `IrpProtocols.xml` at `c945e76` (L2158) and identical in the 1.2.14 release
+(`list -i RC6-6-20`). The database says "the executors for this protocol do not toggle T. This no-toggle version is commonly
+used in Sky and Sky+ remotes." The ledger's `device` is D, `subdevice` is S (required) and `function` is F; the toggle is
+not in a file (D3b). It is **not** the ledger's `RC6` (mode 0) nor its `MCE` (mode 6, 32 bits).
+
+### Gate 2a — structural: **MET**, on a hardware capture
+
+`bengtmartensson/IrpTransmogrifier @c945e76 src/test/teaserfiles/RC6-6-20.ict` and `.exp`, not vendored (a GPL-3.0 repository,
+the files used there by permission of the capture's author) and re-checked by `tools/misc_capture_audit.py --irpt DIR`:
+
+| file | what | keys | capture / encoder, every duration but the lead-out | frame period |
+|---|---|---|---|---|
+| `RC6-6-20` | a Sky+ remote, 35,984 Hz | 9 of 9 | median 0.993 (0.975-1.050) | 1.184-1.185x |
+
+Every key's bits are read by a biphase decoder written from the frame layout and not from the encoder (leader, start bit,
+the mode 110, the toggle at double width, D:8, S:4, F:8), compared with the `.exp` file's fields (D=0, S=12, F = 0 to 3 and
+88 to 92), and the registered encoder is asked for that signal with the capture's own toggle and **its frame must decode
+to the same fields**. **A capture carries instrument bias**, so this says layout, bit order and the toggle's place, not
+absolute durations. The audit found one thing the encoder does not say, **recorded here and not corrected**:
+
+- **The capture's frames repeat at a constant 150 ms**, whatever the key (frame sums 149,972 to 150,084 us; the gap is 123.3
+  to 123.9 ms for the 44 to 50 durations of its nine keys), where the IRP's gap is a fixed 100 ms. The encoder follows the
+  IRP, so its frame is 26.6 ms and its period 126.6 ms. Whether a receiver minds is not established.
+
+The LIRC project's Sky and Pace remotes carry the frame too, and `tests/test_rc6_6_20.py` decodes them with the layout
+decoder: **451 keys of nine files** (`sky`, `pace`, `foxtel` and `one_for_all`), all device 0 with sub devices 0, 3 and 12,
+197 distinct codes, each re-encoding to a frame that decodes to the same fields. They are confs expanded by lircd, not
+captures.
+
+### Gate 2b — golden Pronto: **MET**, all three reproducible, none published
+
+| Protocol | Vector | Provenance | Our bytes differ at |
+|---|---|---|---|
+| RC6-6-20 | D=0 S=12 F=0 @ 36k: IrpTransmogrifier 1.2.14 release, `render -n D=0,S=12,F=0 -p RC6-6-20` (ends on a mark) | **reproducible** | word 53 (lead-out) |
+| RC6-6-20 | D=0 S=12 F=88 @ 36k: the same (ends on a mark) | **reproducible** | word 49 |
+| RC6-6-20 | D=0 S=12 F=3 @ 36k: the same (ends on a space) | **reproducible** | word 51 |
+
+Our timings under IrpTransmogrifier's rounding rule reproduce each string exactly; the raw words differ only in the lead-out.
+The parameters are keys of the capture above (its toggle is not in a ledger file, so each is the `T=0` form). No Pronto string
+for it is published.
+
+### Gate 3 — invariant tests: **MET**
+
+`tests/test_rc6_6_20.py` (every function of five addresses with the toggle either way, every address of several functions, a
+seeded sample of 3,000, the leader, the gap after a mark and after a space, the toggle's place and width, the order of the
+fields, the unit, and the LIRC remotes).
+
+### Not established
+
+That a receiver acts on a frame the ledger writes with the toggle at 0 (a ledger file cannot set it; the database says the
+executors do not toggle it); that a receiver minds a 100 ms gap where the remote's period is 150 ms; the other modes of the
+RC-6 family (`RC6-M-16`, `RC6-M-24`, `RC6-M-28`, `RC6-M-56`), which IrpTransmogrifier also has and the ledger does not
+register.

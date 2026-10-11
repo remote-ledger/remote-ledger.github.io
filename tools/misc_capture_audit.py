@@ -20,6 +20,7 @@ each with the decode IrpTransmogrifier's own test expects:
     RCA-38.ict    / .exp   an RCA-38 remote: RCA's frame at another carrier
     TDC-38_6_10.ict / TDC-56_14_10.ict   two IPTV remotes whose bits are biphase
     GI_Cable.ict  / .exp   a General Instrument cable box's remote: an intro and a short repeat
+    RC6-6-20.ict  / .exp   a Sky+ remote: RC-6 mode 6 with a 20-bit payload
 
 They are **cited, not vendored**: the repository is GPL-3.0 and the files are
 used there by permission of a third party. Check it out at the pinned commit
@@ -265,11 +266,47 @@ def decode_gicable(frame: list[int]):
     return {"D": d, "F": f}
 
 
+def decode_rc6_6_20(frame: list[int]):
+    """RC-6 mode 6, 20 bits: a 6,2-unit leader, a start bit, the mode ``110``, the toggle at double width and D:8, S:4 and
+    F:8, every other bit biphase at one unit a half (a 1 is a mark then a space). The unit is the leader mark over 6 and
+    the frame's last duration, the gap, is not read."""
+    unit = frame[0] / 6
+    assert 300 < unit < 600 and round(frame[1] / unit) == 2, "no 6,2 leader"
+    levels: list[int] = []
+    for i, d in enumerate(frame[:-1]):
+        levels += [1 - i % 2] * max(1, round(d / unit))
+    levels = levels[8:]
+    if len(levels) % 2:
+        levels.append(0)                                    # the last bit's space, inside the gap
+    position = 0
+
+    def bit(width=1):
+        nonlocal position
+        first, second = levels[position:position + width], levels[position + width:position + 2 * width]
+        assert len(first) == len(second) == width and len(set(first)) == len(set(second)) == 1 and first[0] != second[0], \
+            "a bit that is not biphase"
+        position += 2 * width
+        return int(first[0] == 1)
+
+    def field(count):
+        value = 0
+        for _ in range(count):
+            value = value << 1 | bit()
+        return value
+
+    assert bit() == 1, "no start bit"
+    assert field(3) == 6, "the mode is not 6"
+    toggle = bit(2)
+    return {"D": field(8), "S": field(4), "F": field(8), "T": toggle}
+
+
 def encode_like(proto: str, p: dict[str, int], carrier: int):
     entry = REGISTRY[proto]
     if proto == "Nokia32":
         return entry.encode(device=p["D"], subdevice=p["S"], function=(p["X"] << 8) | p["F"], carrier_hz=carrier,
                             toggle=p["T"])
+    if proto == "RC6-6-20":
+        return entry.encode(device=p["D"], subdevice=p["S"], function=p["F"], carrier_hz=carrier, toggle=p["T"])
     if proto in ("Panasonic_Old", "RCA", "GI_Cable"):
         return entry.encode(device=p["D"], subdevice=None, function=p["F"], carrier_hz=carrier)
     if proto in ("NEC1-f16", "NEC2-f16"):
@@ -301,6 +338,7 @@ CASES = (
     ("TDC-38_6_10", "TDC-38", decode_tdc),
     ("TDC-56_14_10", "TDC-56", decode_tdc),
     ("GI_Cable", "GI_Cable", decode_gicable),
+    ("RC6-6-20", "RC6-6-20", decode_rc6_6_20),
 )
 
 #: The gap that ends a frame where the default would run through the repeats (RCA's is 8 ms).
@@ -367,6 +405,8 @@ def audit(root: Path) -> int:
             fields = decode(frame)
             if decode is decode_nec_family:
                 want = nec_expected(expected[key])
+            elif decode is decode_rc6_6_20:
+                want = {"T": fields["T"]} | {k: v for k, v in expected[key].items() if k in fields}
             elif decode is decode_nokia32:
                 want = {"D": 0, "S": 0, "F": 0, "X": 0, "T": 0} | {k: v for k, v in expected[key].items() if k in fields}
             else:
