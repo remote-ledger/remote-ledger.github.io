@@ -660,6 +660,75 @@ def test_the_jp1_pioneer_3dev_and_4dev_upgrades_send_the_codes_the_ir_blaster_da
     assert (sum(per[n] for n in others), sum(per[n, "n"] for n in others)) == (237, 395)
 
 
+def test_rc5_6_combo_is_rc5_or_rc6_by_the_low_bit_of_the_second_byte():
+    """``Translator(0,1,15) Translator(1,5,3,comp) Translator(1,1,0,6) Translator(2,6,8,comp) Translator(2,1,1,6)
+    Translator(3,2,13) Translator(4,8,0)``: the type is the second byte's low bit (0 is RC-5). RC-5: the device is the low
+    five bits of the first byte complemented, the command the six bits of the second above its low two complemented, and
+    the seventh the first byte's ``0x40`` as it is (``5F BC`` is device 0 and 16 + 64 = 80, Philips's Up; ``1F FC`` is 0 and
+    0). RC-6: the first byte is the OBC and the second's bits 1 and 2 pick one of the three RC-6 devices, which are the
+    parameters or the doubled bytes of FixedData (``56 66`` is 21)."""
+    fixed = "95 30 56 55 56 66 56 66"
+    up = upgrade("RC5/6 combo", "16 21 null", ("Up", "5F BC"), ("0", "1F FC"), ("6a", "10 F9"), ("6b", "10 FB"),
+                 ("6c", "10 FD"), ("6d", "10 FF"), fixed=fixed, variant="2")
+    assert [signal(up, i) for i in range(6)] == [
+        rmdu.Signal("RC5", 0, None, 80), rmdu.Signal("RC5", 0, None, 0),
+        rmdu.Signal("RC6", 16, None, 0x10), rmdu.Signal("RC6", 21, None, 0x10), rmdu.Signal("RC6", 21, None, 0x10),
+        "the function selects no RC-6 device"]
+    assert signal(upgrade("RC5/6 combo", "16 21 null", ("a", "3F BC"), variant="2")) == "the RC-5 device is not five bits"
+    assert signal(upgrade("RC5/6 combo", "16 21 null", ("a", "1F BE"), variant="2")) == "the function sets a bit RC-5 does not use"
+    assert signal(upgrade("RC5/6 combo", "null null null", ("a", "10 F9"), variant="2")) == "the RC-6 device is not set"
+    assert signal(upgrade("RC5/6 combo", "16 21 null", ("a", "10 F9"))) == "the variant is not read"
+    assert signal(upgrade("RC5/6 combo", "16 300 null", ("a", "10 FB"), variant="2")) == "a parameter is not a byte"
+
+
+def test_the_jp1_rc5_6_combo_upgrades_send_the_codes_the_other_sources_have_and_philips_cursor_keys_by_name():
+    """An independent check of the RC5/6 combo rules, from the ledger's other sources (IR Blaster, LIRC, SmartIR, hifi-remote
+    and the manufacturers' tables: 2,428 distinct RC-5 codes and 1,237 RC-6). The twelve upgrades send **219 of their 228 RC-5
+    keys and 257 of 273 RC-6 keys among them** (95.0%). The seventh command bit is the first byte's ``0x40``: 34 functions
+    have it (a function above 63) and 26 of them are among the other sources' codes, which cannot tell it from the six bits
+    alone (227 of 228 are among them without it); **what tells them apart is the names**: the Philips 47PFL7422D upgrade's
+    Up, Down, Menu, Left, Right and OK send RC-5 device 0 and functions 80, 81, 82, 85, 86 and 87, which the other sources
+    label KEY_UP, KEY_DOWN, KEY_MENU, KEY_LEFT, KEY_RIGHT and KEY_OK more often than anything else."""
+    codes: dict[str, set[tuple[int, int]]] = {"RC5": set(), "RC6": set()}
+    labels: dict[int, Counter] = {}
+    for source in ("irblaster", "lirc", "smartir", "hifi-remote", "official", "authored"):
+        base = ROOT / "remotes" / source
+        if not base.exists():
+            continue
+        for path in base.rglob("*.json"):
+            doc = load(path)
+            protocol = doc.get("protocol", {}).get("name")
+            if protocol not in codes:
+                continue
+            for key, spec in doc["keys"].items():
+                for form in spec["forms"]:
+                    if form.get("type") == "irp":
+                        device, function = int(form["device"], 0), int(form["function"], 0)
+                        codes[protocol].add((device, function))
+                        if protocol == "RC5" and device == 0:
+                            labels.setdefault(function, Counter())[key] += 1
+    assert (len(codes["RC5"]), len(codes["RC6"])) == (2_428, 1_237)
+    counts: Counter = Counter()
+    cursor: dict[str, int] = {}
+    for protocol in ("RC5", "RC6"):
+        for executor, label, device, _, function, name in _committed_jp1_keys(protocol):
+            if executor != "RC5/6 combo":
+                continue
+            counts[protocol] += 1
+            counts[protocol, "hit"] += (device, function) in codes[protocol]
+            if protocol == "RC5":
+                counts["flagged"] += function > 63
+                counts["flagged hit"] += function > 63 and (device, function) in codes["RC5"]
+                counts["six bits hit"] += (device, function & 63) in codes["RC5"]
+                if "Nevo" in name and device == 0 and label in ("Up", "Down", "Menu", "Left", "Right", "OK"):
+                    cursor[label] = function
+    assert [counts["RC5"], counts["RC5", "hit"], counts["RC6"], counts["RC6", "hit"]] == [228, 219, 273, 257]
+    assert [counts["flagged"], counts["flagged hit"], counts["six bits hit"]] == [34, 26, 227]
+    assert cursor == {"Up": 80, "Down": 81, "Menu": 82, "Left": 85, "Right": 86, "OK": 87}
+    for key, function in zip(("KEY_UP", "KEY_DOWN", "KEY_MENU", "KEY_LEFT", "KEY_RIGHT", "KEY_OK"), (80, 81, 82, 85, 86, 87)):
+        assert labels[function].most_common(1)[0][0] == key, function
+
+
 def test_an_executor_not_read_and_a_function_with_no_single_byte_are_said_so():
     assert "not read by this import" in signal(upgrade("XMP", "28 0 null", ("power", "C4")))
     assert signal(upgrade("NEC1", "6 null null", ("Power", "FF BF"))) == "the function has no single OBC byte"

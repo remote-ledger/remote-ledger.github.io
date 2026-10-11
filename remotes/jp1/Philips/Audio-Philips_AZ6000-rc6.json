@@ -1,0 +1,106 @@
+{
+  "manufacturer": "Philips",
+  "model": "AZ6000 [RC6]",
+  "aliases": [],
+  "controls": [
+    "Philips AZ6000"
+  ],
+  "protocol": {
+    "name": "RC6",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_DAB": {
+      "label": "DAB",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x3A",
+          "function": "0x3F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Philips AZ6000.rmdu function 3 'DAB' (OBC 3F F9; RC5/6 combo, parms 58 null null): RC6 device 58 function 63"
+        }
+      ]
+    },
+    "KEY_MENU": {
+      "label": "Menu",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x3A",
+          "function": "0x54",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Philips AZ6000.rmdu function 4 'Menu' (OBC 54 FD; RC5/6 combo, parms 58 null null): RC6 device 58 function 84"
+        }
+      ]
+    },
+    "KEY_MODE": {
+      "label": "Mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x3A",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Philips AZ6000.rmdu function 6 'Mode' (OBC 0F FD; RC5/6 combo, parms 58 null null): RC6 device 58 function 15"
+        }
+      ]
+    },
+    "KEY_ENTER": {
+      "label": "Enter",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x3A",
+          "function": "0x5C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Philips AZ6000.rmdu function 16 'Enter' (OBC 5C FD; RC5/6 combo, parms 58 null null): RC6 device 58 function 92"
+        }
+      ]
+    },
+    "KEY_SMARTSCAN": {
+      "label": "SmartScan",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x3A",
+          "function": "0x8A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Philips AZ6000.rmdu function 17 'SmartScan' (OBC 8A FD; RC5/6 combo, parms 58 null null): RC6 device 58 function 138"
+        }
+      ]
+    },
+    "KEY_PRESET_MINUS": {
+      "label": "Preset-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x3A",
+          "function": "0x21",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Philips AZ6000.rmdu function 19 'Preset-' (OBC 21 FD; RC5/6 combo, parms 58 null null): RC6 device 58 function 33"
+        }
+      ]
+    },
+    "KEY_PRESET_PLUS": {
+      "label": "Preset+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x3A",
+          "function": "0x20",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Philips AZ6000.rmdu function 20 'Preset+' (OBC 20 FD; RC5/6 combo, parms 58 null null): RC6 device 58 function 32"
+        }
+      ]
+    }
+  }
+}

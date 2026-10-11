@@ -1,0 +1,67 @@
+{
+  "manufacturer": "Philips",
+  "model": "DVD LX 3900SA [RC5]",
+  "aliases": [],
+  "controls": [
+    "Philips DVD LX 3900SA"
+  ],
+  "protocol": {
+    "name": "RC5",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_TV": {
+      "label": "TV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x3F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Combo Audio Systems/Philips DVD LX 3900SA.rmdu function 2 'TV' (OBC 1F 00; RC5/6 combo, parms 4 16 21): RC5 device 0 function 63"
+        }
+      ]
+    },
+    "KEY_TUNER": {
+      "label": "Tuner",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "function": "0x3F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Combo Audio Systems/Philips DVD LX 3900SA.rmdu function 3 'Tuner' (OBC 0E 00; RC5/6 combo, parms 4 16 21): RC5 device 17 function 63"
+        }
+      ]
+    },
+    "KEY_TV_VOL_PLUS": {
+      "label": "TV Vol+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Combo Audio Systems/Philips DVD LX 3900SA.rmdu function 53 'TV Vol+' (OBC 1F BC; RC5/6 combo, parms 4 16 21): RC5 device 0 function 16"
+        }
+      ]
+    },
+    "KEY_TV_VOL_MINUS": {
+      "label": "TV Vol-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Combo Audio Systems/Philips DVD LX 3900SA.rmdu function 54 'TV Vol-' (OBC 1F B8; RC5/6 combo, parms 4 16 21): RC5 device 0 function 17"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,197 @@
+{
+  "manufacturer": "Philips",
+  "model": "AZ6000 [RC5]",
+  "aliases": [],
+  "controls": [
+    "Philips AZ6000"
+  ],
+  "protocol": {
+    "name": "RC5",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER": {
+      "label": "Power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Philips AZ6000.rmdu function 0 'Power' (OBC 0B CC; RC5/6 combo, parms 58 null null): RC5 device 20 function 12"
+        }
+      ]
+    },
+    "KEY_CD": {
+      "label": "CD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x3F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Philips AZ6000.rmdu function 1 'CD' (OBC 0B 00; RC5/6 combo, parms 58 null null): RC5 device 20 function 63"
+        }
+      ]
+    },
+    "KEY_FM": {
+      "label": "FM",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "function": "0x3F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Philips AZ6000.rmdu function 2 'FM' (OBC 0E 00; RC5/6 combo, parms 58 null null): RC5 device 17 function 63"
+        }
+      ]
+    },
+    "KEY_PROG": {
+      "label": "Prog",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x24",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Philips AZ6000.rmdu function 5 'Prog' (OBC 0B 6C; RC5/6 combo, parms 58 null null): RC5 device 20 function 36"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "Mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Philips AZ6000.rmdu function 7 'Mute' (OBC 0F C8; RC5/6 combo, parms 58 null null): RC5 device 16 function 13"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "Vol-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Philips AZ6000.rmdu function 8 'Vol-' (OBC 0F B8; RC5/6 combo, parms 58 null null): RC5 device 16 function 17"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "Vol+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Philips AZ6000.rmdu function 9 'Vol+' (OBC 0F BC; RC5/6 combo, parms 58 null null): RC5 device 16 function 16"
+        }
+      ]
+    },
+    "KEY_PREV": {
+      "label": "Prev",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x21",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Philips AZ6000.rmdu function 10 'Prev' (OBC 0B 78; RC5/6 combo, parms 58 null null): RC5 device 20 function 33"
+        }
+      ]
+    },
+    "KEY_NEXT": {
+      "label": "Next",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x20",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Philips AZ6000.rmdu function 11 'Next' (OBC 0B 7C; RC5/6 combo, parms 58 null null): RC5 device 20 function 32"
+        }
+      ]
+    },
+    "KEY_STOP": {
+      "label": "Stop",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x36",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Philips AZ6000.rmdu function 12 'Stop' (OBC 0B 24; RC5/6 combo, parms 58 null null): RC5 device 20 function 54"
+        }
+      ]
+    },
+    "KEY_PLAYPAUSE": {
+      "label": "PlayPause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x35",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Philips AZ6000.rmdu function 13 'PlayPause' (OBC 0B 28; RC5/6 combo, parms 58 null null): RC5 device 20 function 53"
+        }
+      ]
+    },
+    "KEY_TUNING_MINUS": {
+      "label": "Tuning-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "function": "0x1F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Philips AZ6000.rmdu function 14 'Tuning-' (OBC 0E 80; RC5/6 combo, parms 58 null null): RC5 device 17 function 31"
+        }
+      ]
+    },
+    "KEY_TUNING_PLUS": {
+      "label": "Tuning+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "function": "0x1E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Philips AZ6000.rmdu function 15 'Tuning+' (OBC 0E 84; RC5/6 combo, parms 58 null null): RC5 device 17 function 30"
+        }
+      ]
+    },
+    "KEY_DBB": {
+      "label": "DBB",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x46",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Philips AZ6000.rmdu function 18 'DBB' (OBC 4F E4; RC5/6 combo, parms 58 null null): RC5 device 16 function 70"
+        }
+      ]
+    }
+  }
+}

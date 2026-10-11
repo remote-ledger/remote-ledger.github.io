@@ -12,8 +12,8 @@ sources have been imported under SPEC R19:
   keys, GPL-3.0 by inheritance only (DESIGN §17, §18, §38).
 - **hifi-remote.com's Sony code pages**: 151 files, 6,772 keys, a table of
   reference codes with no licence recorded (DESIGN §27).
-- **The JP1 device upgrades** of its forum: 2,825 files, 111,967 keys, read for
-  forty-nine executors (DESIGN §28, §32, §33, §34, §35, §36, §39, §42, §44, §46, §48, §49).
+- **The JP1 device upgrades** of its forum: 2,845 files, 112,468 keys, read for
+  fifty executors (DESIGN §28, §32, §33, §34, §35, §36, §39, §42, §44, §46, §48, §49, §51).
 - **Manufacturers' own IR tables**: Marantz's AV receiver charts, Anthem's IR
   hex sheet and Oppo's remote code workbooks, 189 files, 12,844 keys (DESIGN
   §29, §31).
@@ -40,8 +40,7 @@ Land it in two PRs, code and then data.
       remote codes needs no licence. That reasoning bears on all three; none
       has been changed.
 - [ ] **The rest of the JP1 upgrades** (DESIGN D120, D136, D140, D145, D155, D192):
-      487 upgrades of 150 other executors (XMP 48, RC-5/5x Combo 16, RC5/6 combo
-      12...), among them 106 `Manual Settings` upgrades that
+      475 upgrades of 149 other executors (XMP 48, RC-5/5x Combo 16...), among them 106 `Manual Settings` upgrades that
       give raw executor bytes with no protocol, and 30 upgrades of read executors that
       yield nothing (`IMPORT.md` lists them: files with no brand, 6 Pioneer MIX
       of variants 4 and 5, `RCA-38 Official`...). Pioneer DVD (4) has three flag bits in

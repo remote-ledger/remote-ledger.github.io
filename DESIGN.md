@@ -2051,7 +2051,7 @@ note rather than a live contract.
 
 ## 12. Implementation status
 
-Phases 0-6 are implemented: 3801 tests, `jsonschema` the only runtime
+Phases 0-6 are implemented: 3803 tests, `jsonschema` the only runtime
 dependency. Phase 2 landed its nine SPEC edits *before* its code, per §9 --
 the spec change is what authorises the implementation. (That count is asserted by the suite itself -- see
 `test_documented_test_count_is_current` -- so it cannot drift the way the
@@ -5379,10 +5379,10 @@ irblaster     10,084  412,775  81.9% (338,239)  44.7% (4,509)   69.7% (7,034)   
 lirc           3,138  112,789   58.3% (65,819)    18.8% (593)   49.6% (1,557)   79.9% (2,508)
 smartir           62      914      81.7% (747)     54.8% (34)      67.7% (42)      79.0% (49)
 hifi-remote      151    6,772    43.5% (2,951)       3.9% (6)      14.5% (22)      39.7% (60)
-jp1            2,825  111,967   71.1% (79,719)    20.5% (580)   62.1% (1,755)   87.4% (2,470)
+jp1            2,845  112,468   71.1% (80,069)    20.4% (582)   62.0% (1,765)   87.3% (2,484)
 official         189   12,844    21.6% (2,776)       3.1% (6)      11.1% (21)      11.6% (22)
 authored           5      128       77.3% (99)      40.0% (2)       60.0% (3)       60.0% (3)
-all           16,454  658,189  74.4% (490,350)  34.8% (5,730)  63.4% (10,434)  88.0% (14,489)
+all           16,474  658,690  74.4% (490,700)  34.7% (5,732)  63.3% (10,444)  88.0% (14,503)
 
 Remotes with at least 10 keys:
 
@@ -5392,10 +5392,10 @@ irblaster      9,454  409,858  82.0% (336,226)  44.7% (4,230)  70.4% (6,665)   9
 lirc           2,867  111,431   58.2% (64,915)    17.3% (496)  49.3% (1,415)   80.9% (2,320)
 smartir           39      786      84.3% (663)     58.9% (23)     76.9% (30)      94.8% (37)
 hifi-remote      128    6,653    43.7% (2,908)       3.9% (5)     14.8% (19)      42.1% (54)
-jp1            2,680  111,085   71.2% (79,146)    20.0% (536)  62.8% (1,685)   88.6% (2,375)
+jp1            2,694  111,556   71.2% (79,481)    19.9% (538)  62.9% (1,695)   88.5% (2,385)
 official         179   12,802    21.4% (2,745)       0.0% (0)      8.3% (15)       8.9% (16)
 authored           4      120       75.8% (91)      25.0% (1)      50.0% (2)       50.0% (2)
-all           15,351  652,735  74.5% (486,694)  34.4% (5,291)  64.0% (9,831)  89.3% (13,716)
+all           15,365  653,206  74.5% (487,029)  34.4% (5,293)  64.0% (9,841)  89.3% (13,726)
 ```
 
 (The `official` row is the import of §29 and §31 (D123 to D127, D131 to D133): 189 files of Marantz's, Anthem's and Oppo's own tables. **Its keys map the least of any source, 21.6%, and only 6 of its 189 remotes reach 90%**, because a receiver's chart is the whole command set of a receiver (tuner presets and frequency steps, surround modes, Pure Direct, discrete `Audio Mute On` and `Off`, a source key for each input), which the 156 keys of D84 do not cover: 10,068 of its 12,844 keys are unmapped, under 584 different names, and what does map is volume, power, the cursor, bass, treble and sleep. Oppo's player tables are the exception, and are why the share is not lower: 750 of its 864 keys (86.8%) map. Widening the vocabulary to the receiver commands is the owner's call (D84 is theirs) and is in TODO.md, not done here. The `jp1` row is the import of §28 (D118 to D122), §32 (D134 to D136), §33 (D137 to D140) and §34 (D141 to D145), added after the same figures; the combos of §33 map less of their keys (52.5% of the 9,715) and lower the row from 76.8% to 74.0%, §34's executors (61.8% of 10,963) to 72.5%, §35's (54.6% of 3,958) to 71.8%, §36's (59.3% of 2,228) to 71.5%, §39's (31.7% of 1,975) to 70.8%, §42's (80.0% of 3,391) to 71.1% and §44's (81.5% of 2,442) to 71.3%. The `hifi-remote` row is the import of §27 (D109 to D117), added after the figures in D85 to D87's prose were measured; those figures are the corpus without it. Its keys map less than the others' because the pages describe commands of one kind of device: `Index Mark`, `Disc +`, `Scan Reverse`, and `Select`, which D84 does not map.)
@@ -5531,7 +5531,7 @@ A remote is carried when **any** of its brands is chosen (its maker or a brand o
 
 **Everything not in the subset is recorded**: `excluded_brands` holds each left-out brand (`name`, `norm`) and `api_key`, the ten hex digits (SHA-1 of the exact name, D76) of the shard of the app API (§21) that has its remotes, comma-separated when the import spells it two ways; **NULL where the app API has none**, because the API serves the IR Blaster import only. Since D117 nothing is left out of the selected bundle, so the table is empty and **0 brands, 0 remotes, 0 keys** are missing from it, and **0 remotes of LIRC and SmartIR** are in no static file of the ledger that the bundle does not hold. Before it, 4,992 brands were left out, 228 of them with no shard, and 1,794 remotes of LIRC and SmartIR (the authored ones counted with them) were in no static file of the ledger at all until the full bundle was published; that finding is why `full` exists, and the selected bundle no longer has it.
 
-**What the numbers said** (D95, at a 20 MB cap; D117 removed the cap and these are history): the list did not fit. Samsung, LG, Sony, Panasonic and Philips, the first five lines, are 11.6 MB of the 19 by the estimate (Sony alone has 1,061 remotes, and most of the bytes of a brand with old equipment are LIRC raw captures: 5.0 MB of signals for 1,375 of the 4,394 remotes); the bundle carries **35 brands of the list and one by the proxy**, and **77 brands of the list are left out for lack of room** (the first are JVC, Grundig, Thomson, Telefunken, Loewe Opta, Beko, Vestel...). Levers the owner has, none taken here: reorder the list so the brands that matter most come first (the cheap ones are taken wherever the budget allows), shorten it, raise the cap, or drop what is bulkiest per remote (the LIRC raw captures, about 6 MB of the 19). **The owner signs off on the list**; until then it is a proposal. *Since D117:* nothing is skipped (0 brands of the list are left out) and nothing is left out of the bundle. The profile carries 112 brands of the list and 5,339 by the proxy, 5,451 in all, with 16,454 remote files, and its file is the size of `full`.
+**What the numbers said** (D95, at a 20 MB cap; D117 removed the cap and these are history): the list did not fit. Samsung, LG, Sony, Panasonic and Philips, the first five lines, are 11.6 MB of the 19 by the estimate (Sony alone has 1,061 remotes, and most of the bytes of a brand with old equipment are LIRC raw captures: 5.0 MB of signals for 1,375 of the 4,394 remotes); the bundle carries **35 brands of the list and one by the proxy**, and **77 brands of the list are left out for lack of room** (the first are JVC, Grundig, Thomson, Telefunken, Loewe Opta, Beko, Vestel...). Levers the owner has, none taken here: reorder the list so the brands that matter most come first (the cheap ones are taken wherever the budget allows), shorten it, raise the cap, or drop what is bulkiest per remote (the LIRC raw captures, about 6 MB of the 19). **The owner signs off on the list**; until then it is a proposal. *Since D117:* nothing is skipped (0 brands of the list are left out) and nothing is left out of the bundle. The profile carries 112 brands of the list and 5,339 by the proxy, 5,451 in all, with 16,474 remote files, and its file is the size of `full`.
 
 ### D93 — The manifest, `dataVersion` and the signature
 
@@ -5563,14 +5563,14 @@ Measured on the 64-core development machine (eight workers), `gzip -9` as the co
 
 | | `full` | `selected` |
 |---|---|---|
-| file | 57,819,136 B | 57,819,136 B |
+| file | 57,835,520 B | 57,835,520 B |
 | `gzip -9` | 14,554,089 B | 14,553,938 B |
 | brands | 5,451 | 5,451 |
-| models | 281,763 | 281,763 |
-| remote files | 16,454 | 16,454 |
-| remotes, the fragments of D103 folded | 16,097 | 16,097 |
-| keys | 658,189 | 658,189 |
-| signals | 176,227 | 176,227 |
+| models | 281,795 | 281,795 |
+| remote files | 16,474 | 16,474 |
+| remotes, the fragments of D103 folded | 16,117 | 16,117 |
+| keys | 658,690 | 658,690 |
+| signals | 176,245 | 176,245 |
 | left out | none | none: 0 brands, 0 remotes, 0 keys |
 | `rl bundle` (read, build, write) | 27 s, 0.89 GB peak | 27 s, 0.89 GB peak |
 | `rl bundle --verify` | 23 s | 23 s |
@@ -5627,23 +5627,23 @@ Written by `rl bundle matching-vectors --file tests/vectors/matching_vectors.jso
 
 ### D99 — What was measured, and what is not proven
 
-Seed 1, 40 devices a class. **Selected bundle** (5,451 brands, 281,763 models: the same as the full one since D117) and **full bundle** (5,451 brands, 281,763 models):
+Seed 1, 40 devices a class. **Selected bundle** (5,451 brands, 281,795 models: the same as the full one since D117) and **full bundle** (5,451 brands, 281,795 models):
 
 | class | selected top-1 | selected top-5 | full top-1 | full top-5 |
 |---|---|---|---|---|
 | exact | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) |
 | case | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) |
-| punctuation | 39 (97.5%) | 39 (97.5%) | 39 (97.5%) | 39 (97.5%) |
-| dropped-suffix | 37 (92.5%) | 40 (100.0%) | 37 (92.5%) | 40 (100.0%) |
-| typo | 26 (65.0%) | 37 (92.5%) | 26 (65.0%) | 37 (92.5%) |
-| brand-partial | 24 (60.0%) | 36 (90.0%) | 24 (60.0%) | 36 (90.0%) |
+| punctuation | 37 (92.5%) | 38 (95.0%) | 37 (92.5%) | 38 (95.0%) |
+| dropped-suffix | 35 (87.5%) | 40 (100.0%) | 35 (87.5%) | 40 (100.0%) |
+| typo | 26 (65.0%) | 38 (95.0%) | 26 (65.0%) | 38 (95.0%) |
+| brand-partial | 26 (65.0%) | 37 (92.5%) | 26 (65.0%) | 37 (92.5%) |
 | model-only | 38 (95.0%) | 40 (100.0%) | 38 (95.0%) | 40 (100.0%) |
 | reversed | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) |
-| **all (320)** | **284 (88.8%)** | **312 (97.5%)** | **284 (88.8%)** | **312 (97.5%)** |
+| **all (320)** | **282 (88.1%)** | **313 (97.8%)** | **282 (88.1%)** | **313 (97.8%)** |
 
 **Read it as the upper bound it is** (D98). **A partial name is ambiguous**: `LOEWE OPTA CONCEPT 5` is the start of the `CONCEPT 5xx` models, `TOSHIBA 37 AV 5` of every `37 AV 50x` and `LORENZEN ART. NR` of `ART. NR. 3845`, `3846`, `3883` and more. The seven misses of the first five, the same in both bundles, are four such partial names (`LOEWE OPTA CONCEPT 5`, `TOSHIBA 37 AV 5`, `SCHNEIDER SCREENLAND`, `LORENZEN ART. NR`), two typo queries (`SONY KDL-3S22520`, `XSAT CDT 410`) and a model-only query for a name many brands share (`MV - 255 AA`). **No exact query misses in this draw.** A person typing half a model number has to be shown a list, which the answer is: five candidates, and the brand's models when none matches.
 
-**Why the rates are not the ones D99 first printed (91.2% and 97.8%), and why they move.** The generator ranks devices by a hash of the seed, the brand and the model's id, and an id is a place in the catalog's sorted list of models, so a catalog that gains models shifts the ids after them and the draw of 40 devices a class is a different draw. Fifteen draws now stand in this section: 91.2%, 89.7% (§29), 93.1% (§31), 87.5% (§32), 90.3% (§33), 89.7% (§34), 90.6% (§35), 90.3% (§36), 85.6% (§38), 87.5% (§39), 89.7% (§42), 89.1% (§44), 88.4% (§46), 88.4% (§48) and **88.8% (§49)** at the first answer, about 89.3% on average. The matcher changed once among them, at §40 (D168). **None of the eight misses of the first five is a device of §49's 14 new files, and none of its answers holds one**; each expected device was checked (`search_eval.generate`'s `expect`) and every remote of every answer compared with the new files: all eight expected devices are IR Blaster remotes. One of the eight has a JP1 model among its answers (`SONY DVP - SR 501 H`, one), not a new one. The table is the bound of 320 queries it was. The 95% target is not established by this: it needs real queries.
+**Why the rates are not the ones D99 first printed (91.2% and 97.8%), and why they move.** The generator ranks devices by a hash of the seed, the brand and the model's id, and an id is a place in the catalog's sorted list of models, so a catalog that gains models shifts the ids after them and the draw of 40 devices a class is a different draw. Sixteen draws now stand in this section: 91.2%, 89.7% (§29), 93.1% (§31), 87.5% (§32), 90.3% (§33), 89.7% (§34), 90.6% (§35), 90.3% (§36), 85.6% (§38), 87.5% (§39), 89.7% (§42), 89.1% (§44), 88.4% (§46), 88.4% (§48), 88.8% (§49) and **88.1% (§51)** at the first answer, about 89.3% on average. The matcher changed twice among them, at §40 (D168) and at §50 (D204, which changed none of the 320 answers of §49's catalog). **None of the seven misses of the first five is a device of §51's 20 new files, and none of its answers holds one**; each expected device was checked (`search_eval.generate`'s `expect`) and every remote of every answer compared with the new files: all seven expected devices are IR Blaster remotes. One of the seven has JP1 models among its answers (`SONY STR-D8B40`, five), none of them new. The table is the bound of 320 queries it was. The 95% target is not established by this: it needs real queries.
 
 **Not proven.**
 
@@ -6608,3 +6608,24 @@ The cost was large, because the catalog is full of these. The JP1 source's model
 
 **The 320 queries of D99 give the same table on the same catalog** (284 first answers of 320, 312 in the first five): none of their answers changes. The matching vectors gain **two queries and three catalog entries** (a repeating model, the bare model beside it and another brand's part, under brands the vector catalog already had, so that no brand id of the suggest vectors moves) and lose nothing but the wording of one note; the suggest vectors gain the same three entries (25 lines). **A port of the matcher must add the rule**; nothing else of the vectors moves. A test with a small catalog holds the rule and its limits (`tests/test_matching.py`). **Not proven**: the effect on real typing, which D98 says has not been measured; and aliases of a brand, which the rule does not count as its key (a model that begins with an alias of its brand is still an exact cover).
 
+## 51. More JP1 upgrades: RC5/6 combo
+
+**`RC5/6 combo`** (12 upgrades, all of its second variant): Philips and Krell audio and video gear, whose every function is a code of RC-5 or of RC-6, both registered protocols. **All 12 are read: 20 files, 501 keys, all Plausible** (228 RC-5 and 273 RC-6; eight upgrades send both and become two files each, with the `-rc5` and `-rc6` suffix the importer gives an upgrade that sends two protocols); the JP1 source is now **2,845 files and 112,468 keys**. The reader's new piece is `rc56_combo_signal` in `src/remote_ledger/jp1/rmdu.py`. Two of the upgrades are the same file twice under two names (`PhilipsFR965HomeTheater` and `Philips_FR965_Home_Theater`), and the importer, which keys files by name, keeps both.
+
+### D206 — The rule
+
+The function is two bytes and `CmdTranslator` is `Translator(0,1,15) Translator(1,5,3,comp) Translator(1,1,0,6) Translator(1,1,2,5) Translator(2,6,8,comp) Translator(2,1,1,6) Translator(3,2,13) Translator(4,8,0)`, so **the second byte's low bit is the type** (0 is RC-5). **RC-5:** the device is the low five bits of the first byte complemented, the command the six bits of the second byte above its low two complemented, and its seventh bit the first byte's `0x40` as it is, so `5F BC` is device 0 and function 80 (a device above 31, the two bits above, and a set bit 1 of the second byte are not read). **RC-6:** the first byte is the OBC as it is, and bits 1 and 2 of the second pick one of the upgrade's three RC-6 devices (3 is none): the parameters, or where `null` the eight bits `FixedData` keeps doubled as the bit and its complement from the third byte on (`BitDoubler`). The ledger's `RC5` (seven-bit command) and `RC6` (mode 0).
+
+### D207 — The rule checked against the ledger's other sources
+
+The ledger's other sources (IR Blaster, LIRC, SmartIR, hifi-remote and the manufacturers' tables) hold 2,428 distinct RC-5 codes and 1,237 RC-6. **The twelve upgrades send 219 of their 228 RC-5 keys and 257 of their 273 RC-6 keys among them: 476 of 501 (95.0%).** The measurement is a test over the committed files. **The seventh command bit needs more than the hit rate**: 34 RC-5 functions have the first byte's `0x40` (a function above 63) and 26 of them are among the other sources' codes, but without the bit 227 of the 228 are too, because the ledger has both a Philips code and the one 64 above it. **What tells them apart is the names**: the Philips 47PFL7422D upgrade's Up, Down, Menu, Left, Right and OK send RC-5 device 0 and functions 80, 81, 82, 85, 86 and 87, which the other sources label KEY_UP, KEY_DOWN, KEY_MENU, KEY_LEFT, KEY_RIGHT and KEY_OK more often than anything else (58, 59, 123, 53, 54 and 48 times); read as 16 and 17 the first two would be the volume keys (326 and 354 times). The first reading I tried (the seventh bit inverted) sent 61.6%.
+
+### D208 — What is skipped
+
+35 functions: 33 blank, one whose device is above 31 and one with a bit RC-5 does not use set.
+
+### D209 — What it does to the rest, what is not read, and what is not proven
+
+The corpus is **16,474 remote files and 658,690 keys**, 5,451 brands, 281,795 models (32 more) and 176,245 signals (18 more). Both bundle profiles are 57,835,520 bytes and `rl bundle --verify` passes on each. **69.9% of the new keys map to the vocabulary** (§22, 350 of 501), and the `jp1` row stays at 71.1%. No new build warnings (157 as before). The search evaluation's draw moved again (D99): first answer **88.1%**, first five 97.8%; none of its seven misses is a device of this import.
+
+**Not read**: **475 upgrades of 149 executor names**, counted in `IMPORT.md`: `Manual Settings` (75 and 31 more of its spellings), `XMP` and `XMP (Slingbox)` (48), `RC-5/5x Combo` (16), `Pioneer DVD` (4), and 144 executors of fewer than 12 each; and the 2,073 KeymapMaster files. **Not proven.** That a function does what its name says (§28); that the seventh bit is the first byte's `0x40` for the 28 functions that have it besides the Up, Down, Menu, Left, Right and OK the names confirm (they rest on the translator); that a receiver acts on an RC-5 or RC-6 frame sent with the toggle at 0 (§16, D3b).

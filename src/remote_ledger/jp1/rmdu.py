@@ -159,6 +159,7 @@ PIONEER = "Pioneer"
 PIONEER_MIX = "Pioneer MIX"
 PIONEER_3DEV = "Pioneer 3DEV"
 PIONEER_4DEV = "Pioneer 4DEV"
+RC56_COMBO = "RC5/6 combo"
 PANASONIC_HACKED = "Panasonic Multi-Device (Hacked)"
 RECS80_68 = "RECS80 (68)"
 JVC_48 = "JVC-48"
@@ -181,7 +182,7 @@ NEC1_RNC = "NEC1-rnc"
 #: complemented (``E0=(~Y:1:1)^(F:1)``, ``~F:6:1``, ``E7=(~Y:1)^(F:1:7)``).
 YAMAHA_E_XOR = {1: 0x7F, 2: 0xFE, 3: 0x7E}
 TWO_BYTE = (SONY_COMBO, NEC1_COMBO, NEC_4DEV, NEC_4DEV_YAMAHA, NEC_2DEV, JVC_COMBO, DENON_COMBO, SHARP_COMBO,
-            PANASONIC_COMBO, DENON_K, PIONEER_MIX, PANASONIC_HACKED, TEAC_K, RCA_COMBO, PIONEER_3DEV, PIONEER_4DEV)
+            PANASONIC_COMBO, DENON_K, PIONEER_MIX, PANASONIC_HACKED, TEAC_K, RCA_COMBO, PIONEER_3DEV, PIONEER_4DEV, RC56_COMBO)
 MAPPED = (*NEC_FAMILY, SONY_1215, SONY_20, RC5, RC6, JVC, AIWA, DENON, PANASONIC, SHARP, SAMSUNG36, PROTON, F12,
           RECS80_45, PIONEER, RECS80_68, JVC_48, *RCA_FAMILY, NEC1_F16_OFFICIAL, NEC1_RNC, MCE, NOKIA32, PANASONIC_OLD, TDC, GI_CABLE, RC6_M_20N,
           *TWO_BYTE)
@@ -216,6 +217,8 @@ def signal_of(upgrade: Upgrade, function: Function) -> Signal | str:
             return rca_combo_signal(upgrade, pair[0], pair[1])
         if name in (PIONEER_3DEV, PIONEER_4DEV):
             return pioneer_multi_signal(upgrade, pair[0], pair[1])
+        if name == RC56_COMBO:
+            return rc56_combo_signal(upgrade, pair[0], pair[1])
         return combo_signal(name, parms, pair[0], pair[1], upgrade.fields.get("FixedData", "").split())
     byte = obc_byte(function.hex)
     if byte is None:
@@ -455,6 +458,40 @@ def pioneer_multi_signal(upgrade: Upgrade, first: int, second: int) -> Signal | 
     if chosen > 255:
         return "a parameter is not a byte"
     return Signal("Pioneer-2Part", chosen << 8 | chosen, None, one << 8 | two)
+
+
+def rc56_combo_signal(upgrade: Upgrade, first: int, second: int) -> Signal | str:
+    """``RC5/6 combo``, its variant 2 (DESIGN D204): two bytes, a function of RC-5 or of RC-6.
+
+    ``CmdTranslator`` is ``Translator(0,1,15) Translator(1,5,3,comp) Translator(1,1,0,6) Translator(1,1,2,5)
+    Translator(2,6,8,comp) Translator(2,1,1,6) Translator(3,2,13) Translator(4,8,0)``, so the low bit of the second byte
+    is the type (0 is RC-5). **RC-5:** the device is the low five bits of the first byte complemented (the two bits above,
+    a device above 31, are not read), the command the six bits of the second byte above its low two complemented, and the
+    seventh the first byte's ``0x40`` as it is (``5F BC`` is device 0 and 16 + 64 = 80, Philips's Up). **RC-6:** the first
+    byte is the OBC as it is and bits 1 and 2 of the second pick one of the upgrade's three RC-6 devices (3 is none), which
+    are the parameters, or where ``null`` the eight bits ``FixedData`` keeps doubled as the bit and its complement from the
+    third byte on (``BitDoubler``). The ledger's ``RC5`` and ``RC6`` (mode 0)."""
+    if upgrade.fields.get("Protocol.variantName", "").strip() != "2":
+        return "the variant is not read"
+    if not second & 1:
+        if first & 0xA0:
+            return "the RC-5 device is not five bits"
+        if second & 2:
+            return "the function sets a bit RC-5 does not use"
+        return Signal("RC5", ~first & 0x1F, None, (~(second >> 2) & 0x3F) | (first & 0x40))
+    chosen = (second >> 1) & 3
+    if chosen == 3:
+        return "the function selects no RC-6 device"
+    device = parm(upgrade.parms, chosen)
+    if device is None:
+        bits = "".join(f"{int(b, 16):08b}" for b in upgrade.fields.get("FixedData", "").split() if _HEX_BYTE.match(b))
+        at = 16 + 16 * chosen
+        if len(bits) < at + 16:
+            return "the RC-6 device is not set"
+        device = int(bits[at:at + 16:2], 2)
+    if device > 255:
+        return "a parameter is not a byte"
+    return Signal("RC6", device, None, first)
 
 
 #: The ledger protocol of the four styles an NEC 4DEV combo function names.

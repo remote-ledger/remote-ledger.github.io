@@ -1,0 +1,41 @@
+{
+  "manufacturer": "Philips",
+  "model": "HT Amp FR965 [RC6]",
+  "aliases": [],
+  "controls": [
+    "Philips HT Amp FR965"
+  ],
+  "protocol": {
+    "name": "RC6",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_SELECT_SAT": {
+      "label": "Select SAT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x27",
+          "function": "0x3F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Philips_FR965_Home_Theater.rmdu function 15 'Select SAT' (OBC 3F 01; RC5/6 combo, parms 39 4 4): RC6 device 39 function 63"
+        }
+      ]
+    },
+    "KEY_SELECT_DVD": {
+      "label": "Select DVD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "function": "0x3F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Philips_FR965_Home_Theater.rmdu function 16 'Select DVD' (OBC 3F 03; RC5/6 combo, parms 39 4 4): RC6 device 4 function 63"
+        }
+      ]
+    }
+  }
+}
