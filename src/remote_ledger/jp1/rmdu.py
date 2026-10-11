@@ -169,6 +169,7 @@ RCA_FAMILY = (RCA, RCA_56, RCA_38, RCA_38_OFFICIAL)
 RCA_COMBO = "RCA Combo (Official)"
 TDC = "TDC"
 GI_CABLE = "GI Cable"
+RC6_M_20N = "RC6-M-20n"
 MCE = "MCE"
 NOKIA32 = "Nokia32"
 PANASONIC_OLD = "Panasonic (old)"
@@ -180,7 +181,7 @@ YAMAHA_E_XOR = {1: 0x7F, 2: 0xFE, 3: 0x7E}
 TWO_BYTE = (SONY_COMBO, NEC1_COMBO, NEC_4DEV, NEC_4DEV_YAMAHA, NEC_2DEV, JVC_COMBO, DENON_COMBO, SHARP_COMBO,
             PANASONIC_COMBO, DENON_K, PIONEER_MIX, PANASONIC_HACKED, TEAC_K, RCA_COMBO)
 MAPPED = (*NEC_FAMILY, SONY_1215, SONY_20, RC5, RC6, JVC, AIWA, DENON, PANASONIC, SHARP, SAMSUNG36, PROTON, F12,
-          RECS80_45, PIONEER, RECS80_68, JVC_48, *RCA_FAMILY, NEC1_F16_OFFICIAL, NEC1_RNC, MCE, NOKIA32, PANASONIC_OLD, TDC, GI_CABLE,
+          RECS80_45, PIONEER, RECS80_68, JVC_48, *RCA_FAMILY, NEC1_F16_OFFICIAL, NEC1_RNC, MCE, NOKIA32, PANASONIC_OLD, TDC, GI_CABLE, RC6_M_20N,
           *TWO_BYTE)
 
 
@@ -221,6 +222,8 @@ def signal_of(upgrade: Upgrade, function: Function) -> Signal | str:
         return tdc_signal(upgrade, byte)
     if name == GI_CABLE:
         return Signal("GI_Cable", 0, None, rev8(byte))
+    if name == RC6_M_20N:
+        return rc6_m_20n_signal(upgrade, byte)
     if name in NEC_FAMILY:
         device = parm(parms, 0)
         if device is None:
@@ -329,6 +332,37 @@ def rca_combo_signal(upgrade: Upgrade, first: int, second: int) -> Signal | str:
             return "the function sends a prefix code first or sets a bit the variant does not use"
         return Signal("RCA", ~(first >> 4) & 0x0F, None, ~second & 0xFF)
     return "the variant is not read"
+
+
+def rc6_m_20n_signal(upgrade: Upgrade, byte: int) -> Signal | str:
+    """``RC6-M-20n`` (DESIGN D196): ``DevParms`` is ``M=6, Device, Sub Device`` (the ``short`` variant adds ``T``) and the
+    function is ``Translator()``, the OBC as it is. A ``null`` parameter is the value ``FixedData`` keeps for it, as for
+    the other executors, in the layout of the variant: the first variant is ``Translator(0,3,1) Translator(1,8,8)
+    Translator(2,4,4)`` (M in bits 1 to 3 of the first byte, the device the second byte, the sub device the low nibble of
+    the first), the ``short`` one doubles every bit as the bit and its complement (``BitDoubler``), M at offset 2, the
+    device at 12 and the sub device's low two bits at 36 and its high two at 28 and 30. The ledger's ``RC6-6-20`` is mode 6
+    alone; the toggle ``T`` is not in a file. The third variant (a 33.6 kHz option) is not read."""
+    variant = upgrade.fields.get("Protocol.variantName", "").strip()
+    fixed = upgrade.fields.get("FixedData", "").split()
+    bits = "".join(f"{int(b, 16):08b}" for b in fixed if _HEX_BYTE.match(b))
+    given = [parm(upgrade.parms, i) for i in range(3)]
+    if variant == "":
+        if len(bits) < 16 and None in given:
+            return "FixedData is too short for the null parameters"
+        kept = (int(bits[1:4], 2), int(bits[8:16], 2), int(bits[4:8], 2)) if len(bits) >= 16 else (None,) * 3
+    elif variant == "short":
+        if len(bits) < 40 and None in given:
+            return "FixedData is too short for the null parameters"
+        kept = ((int(bits[2:8:2], 2), int(bits[12:28:2], 2),
+                 int(bits[28] + bits[30] + bits[36] + bits[38], 2)) if len(bits) >= 40 else (None,) * 3)
+    else:
+        return "the variant is not read"
+    mode, device, sub = (g if g is not None else k for g, k in zip(given, kept))
+    if mode != 6:
+        return "the mode is not 6, which the ledger's RC6-6-20 fixes"
+    if device > 255 or sub > 15:
+        return "the device is not eight bits or the sub device not four"
+    return Signal("RC6-6-20", device, sub, byte)
 
 
 def tdc_signal(upgrade: Upgrade, byte: int) -> Signal | str:

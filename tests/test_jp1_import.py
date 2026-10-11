@@ -500,6 +500,60 @@ def test_the_jp1_rca_upgrades_send_the_codes_the_lirc_remotes_of_rca_devices_sen
     assert [counts["RCA Combo (Official)"], counts["RCA Combo (Official)", "plain"]] == [552, 403]
 
 
+def test_rc6_m_20n_is_the_obc_as_it_is_with_mode_6_a_device_and_a_four_bit_sub_device():
+    """``Translator()``: F is the OBC (``58`` is 88, the Sky+ remote's Up). ``M=6, Device, Sub Device`` are parameters 0 to
+    2 and a ``null`` one is the value FixedData keeps, in the layout of the variant: the first variant has M in bits 1 to
+    3 of the first byte, the sub device in its low nibble and the device in the second byte (``EC 05``: 6, 12, 5); the
+    ``short`` variant doubles every bit as the bit and its complement (``A9 35 56 6A 05 00`` is 6, 5, 12, ``A9 35 55 55
+    05 00`` is 6, 0, 0). The mode must be 6, which the ledger's frame fixes."""
+    assert signal(upgrade("RC6-M-20n", "6 0 12", ("Up", "58"))) == rmdu.Signal("RC6-6-20", 0, 12, 88)
+    assert signal(upgrade("RC6-M-20n", "6 5 12 null", ("Up", "58"), variant="short")) == rmdu.Signal("RC6-6-20", 5, 12, 88)
+    assert signal(upgrade("RC6-M-20n", "null null null", ("Up", "58"), fixed="EC 05")) == rmdu.Signal("RC6-6-20", 5, 12, 88)
+    assert signal(upgrade("RC6-M-20n", "null null null", ("Up", "58"), fixed="E0 00")) == rmdu.Signal("RC6-6-20", 0, 0, 88)
+    assert signal(upgrade("RC6-M-20n", "null null null null", ("Up", "58"), fixed="A9 35 56 6A 05 00", variant="short")) == \
+        rmdu.Signal("RC6-6-20", 5, 12, 88)
+    assert signal(upgrade("RC6-M-20n", "null null null null", ("Up", "58"), fixed="a9 35 55 55 05 00", variant="short")) == \
+        rmdu.Signal("RC6-6-20", 0, 0, 88)
+    assert signal(upgrade("RC6-M-20n", "null 7 3 null", ("Up", "58"), fixed="a9 35 55 55 05 00", variant="short")) == \
+        rmdu.Signal("RC6-6-20", 7, 3, 88)
+    assert signal(upgrade("RC6-M-20n", "5 0 12", ("Up", "58"))) == "the mode is not 6, which the ledger's RC6-6-20 fixes"
+    assert signal(upgrade("RC6-M-20n", "6 0 16", ("Up", "58"))) == "the device is not eight bits or the sub device not four"
+    assert signal(upgrade("RC6-M-20n", "6 0 12", ("Up", "58"), variant="2")) == "the variant is not read"
+    assert signal(upgrade("RC6-M-20n", "null null null", ("Up", "58"))) == "FixedData is too short for the null parameters"
+
+
+def test_the_jp1_rc6_m_20n_upgrades_send_the_codes_of_the_lirc_sky_remotes_and_the_keys_irptransmogrifier_captured():
+    """An independent check of the RC6-M-20n rule, from two projects. The LIRC remotes of Sky and Pace boxes (451 keys of
+    nine files, tests/test_rc6_6_20.py's layout decoder) hold 38 codes of device 0 and sub device 0 and 38 of sub device 12
+    (and 121 of sub device 3, which no upgrade has). The 15 upgrades send **262 of their 278 keys for device 0 and sub
+    device 0 and 179 of 181 for sub device 12** among them: 441 of 535, where the 76 keys of device 5 (two upgrades)
+    have no LIRC remote. And IrpTransmogrifier's capture of a Sky+ remote (device 0, sub device 12) has the keys 0 to 3
+    as functions 0 to 3 and Up, Down, Left, Right and OK as 88 to 92: **every one of the 15 upgrades names those keys
+    and sends those functions** (135 of 135)."""
+    from test_rc6_6_20 import lirc_frames
+
+    lirc: dict[tuple[int, int], set[int]] = {}
+    for _, _, (_, device, subdevice, function) in lirc_frames():
+        lirc.setdefault((device, subdevice), set()).add(function)
+    assert {k: len(v) for k, v in lirc.items()} == {(0, 0): 38, (0, 3): 121, (0, 12): 38}
+    rows = list(_committed_jp1_keys("RC6-6-20"))
+    assert len(rows) == 535 and {row[0] for row in rows} == {"RC6-M-20n"}
+    hits: Counter = Counter()
+    for _, _, device, subdevice, function, _ in rows:
+        hits[device, subdevice] += 1
+        hits[device, subdevice, "lirc"] += function in lirc.get((device, subdevice), ())
+    assert [hits[k] for k in ((0, 0), (0, 0, "lirc"), (0, 12), (0, 12, "lirc"), (5, 12), (5, 12, "lirc"))] == \
+        [278, 262, 181, 179, 76, 0]
+    captured = {"0": 0, "1": 1, "2": 2, "3": 3, "up": 88, "down": 89, "left": 90, "right": 91, "ok": 92}
+    agree: Counter = Counter()
+    for _, label, _, _, function, _ in rows:
+        name = re.sub(r"(?i)^(num_|direction|arrow )|[ _]?arrow$|/ok$", "", label.strip()).lower()
+        name = {"select": "ok"}.get(name, name)
+        if name in captured:
+            agree[function == captured[name]] += 1
+    assert agree == {True: 135}
+
+
 def test_the_jp1_gi_cable_upgrades_send_the_codes_of_the_lirc_remotes_and_the_keys_irptransmogrifier_names():
     """An independent check of the G.I.Cable rule (device 0, the function the OBC reversed), from two projects. The LIRC
     remotes of cable boxes (777 keys: tests/test_gicable.py's layout decoder) hold 68 functions of device 0 (and two
@@ -734,7 +788,7 @@ def test_the_committed_jp1_import_keeps_r19():
     assert f"@ `{meta['commit']}`" in (ROOT / jp.IMPORT_ROOT / jp.REPORT).read_text(encoding="utf-8")
     shape = re.compile(
         rf"^jp1-device-upgrades@{meta['commit'][:7]} \S.* function (\d+) '.*' \(OBC ((?:[0-9A-F]{{2}})(?: [0-9A-F]{{2}})*); [^;]+, parms [^)]*\): "
-        r"(NEC1|NEC2|NECx1|NECx2|Sony12|Sony15|Sony20|RC5|RC6|JVC|Aiwa|Denon|Sharp|Panasonic|Samsung36|Proton|F12_relaxed|RECS80|Denon-K|Pioneer-2Part|RCA-38|RECS80-0068|JVC-48|Teac-K|NEC1-f16|NEC2-f16|MCE|Nokia32|Panasonic_Old|RCA|TDC-38|TDC-56|GI_Cable) device (\d+)(?: subdevice (\d+))? function (\d+)", re.S)
+        r"(NEC1|NEC2|NECx1|NECx2|Sony12|Sony15|Sony20|RC5|RC6|JVC|Aiwa|Denon|Sharp|Panasonic|Samsung36|Proton|F12_relaxed|RECS80|Denon-K|Pioneer-2Part|RCA-38|RECS80-0068|JVC-48|Teac-K|NEC1-f16|NEC2-f16|MCE|Nokia32|Panasonic_Old|RCA|TDC-38|TDC-56|GI_Cable|RC6-6-20) device (\d+)(?: subdevice (\d+))? function (\d+)", re.S)
 
     def num(value):
         return int(value, 0) if isinstance(value, str) else value
