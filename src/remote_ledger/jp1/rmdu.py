@@ -160,6 +160,7 @@ PIONEER_MIX = "Pioneer MIX"
 PIONEER_3DEV = "Pioneer 3DEV"
 PIONEER_4DEV = "Pioneer 4DEV"
 RC56_COMBO = "RC5/6 combo"
+XMP_FAMILY = ("XMP", "XMP (JP1)", "XMP (Slingbox)", "XMP (Slingbox)(No repeat)", "XMP (UEI)")
 PANASONIC_HACKED = "Panasonic Multi-Device (Hacked)"
 RECS80_68 = "RECS80 (68)"
 JVC_48 = "JVC-48"
@@ -185,7 +186,7 @@ TWO_BYTE = (SONY_COMBO, NEC1_COMBO, NEC_4DEV, NEC_4DEV_YAMAHA, NEC_2DEV, JVC_COM
             PANASONIC_COMBO, DENON_K, PIONEER_MIX, PANASONIC_HACKED, TEAC_K, RCA_COMBO, PIONEER_3DEV, PIONEER_4DEV, RC56_COMBO)
 MAPPED = (*NEC_FAMILY, SONY_1215, SONY_20, RC5, RC6, JVC, AIWA, DENON, PANASONIC, SHARP, SAMSUNG36, PROTON, F12,
           RECS80_45, PIONEER, RECS80_68, JVC_48, *RCA_FAMILY, NEC1_F16_OFFICIAL, NEC1_RNC, MCE, NOKIA32, PANASONIC_OLD, TDC, GI_CABLE, RC6_M_20N,
-          *TWO_BYTE)
+          *XMP_FAMILY, *TWO_BYTE)
 
 
 def signal_of(upgrade: Upgrade, function: Function) -> Signal | str:
@@ -200,6 +201,8 @@ def signal_of(upgrade: Upgrade, function: Function) -> Signal | str:
     :func:`rc5_signal`.
     """
     name, parms = upgrade.protocol_name, upgrade.parms
+    if name in XMP_FAMILY:
+        return xmp_signal(upgrade, function)
     if name == NEC1_F16_OFFICIAL:
         # four OBC bytes, ``Translator(lsb,comp,i,8,8 * i)`` each: device, sub device, F and E of the frame
         four = obc_bytes(function.hex)
@@ -370,6 +373,50 @@ def rc6_m_20n_signal(upgrade: Upgrade, byte: int) -> Signal | str:
     if device > 255 or sub > 15:
         return "the device is not eight bits or the sub device not four"
     return Signal("RC6-6-20", device, sub, byte)
+
+
+def xmp_signal(upgrade: Upgrade, function: Function) -> Signal | str:
+    """The ``XMP`` executors (DESIGN D213): ``Device, Subdevice, OEM Code, Final Frame Toggle`` and, in the variants of
+    five parameters, ``XMP Type``; the function is one OBC byte (two in variant 2 and ``XMP (UEI)``, whose second byte
+    is the low byte of XMP-2's 16-bit command).
+
+    A ``null`` parameter is the value ``FixedData`` keeps: the subdevice as its high nibble at the top of byte 0 and its
+    low nibble at the top of byte 1, the OEM byte 2 and the device byte 3, then in the five-parameter variants the final
+    frame the top bit of byte 6 and the type the complement of its next bit, in variant 2 the final frame the complement
+    of bit 3 of byte 1. The ledger's ``XMP-1`` has the device, the subdevice and one function byte; **the OEM must be its
+    68, the final frame (a third transmission when the key is released, which an ``IrSignal`` has no place for) must be
+    off, and the type must be 0 (XMP-1; 1 is XMP-2)**, and the function is the OBC as it is."""
+    variant = upgrade.fields.get("Protocol.variantName", "").strip()
+    five = len(upgrade.parms) == 5
+    if (five and variant not in ("JP1", "JP1Slingbox")) or (not five and variant not in ("2", "")):
+        return "the variant is not read"
+    fixed = [int(b, 16) for b in upgrade.fields.get("FixedData", "").split() if _HEX_BYTE.match(b)]
+    if len(fixed) < (7 if five else 4):
+        return "FixedData is too short for the null parameters"
+    given = [parm(upgrade.parms, i) for i in range(len(upgrade.parms))]
+    device = given[0] if given[0] is not None else fixed[3]
+    sub = given[1] if given[1] is not None else (fixed[0] >> 4) << 4 | fixed[1] >> 4
+    oem = given[2] if given[2] is not None else fixed[2]
+    if five:
+        final = given[3] if given[3] is not None else fixed[6] >> 7
+        xmp_type = given[4] if given[4] is not None else 1 - (fixed[6] >> 6 & 1)
+    else:
+        final = given[3] if given[3] is not None else 1 - (fixed[1] >> 3 & 1)
+        xmp_type = 0
+    if oem != 68:
+        return "the OEM code is not 68, which the ledger's XMP-1 fixes"
+    if final:
+        return "the function sends a final frame, which the ledger's XMP-1 has no place for"
+    if xmp_type != 0:
+        return "the type is XMP-2, which the ledger does not register"
+    if device > 255 or sub > 255:
+        return "a parameter is not a byte"
+    obc = obc_bytes(function.hex)
+    if obc is None or len(obc) != (1 if five else 2):
+        return "the function has no OBC bytes of the executor's shape"
+    if not five and obc[1] != 0:
+        return "the second OBC byte is not 0, which XMP-1 has no place for"
+    return Signal("XMP-1", device, sub, obc[0])
 
 
 def tdc_signal(upgrade: Upgrade, byte: int) -> Signal | str:
