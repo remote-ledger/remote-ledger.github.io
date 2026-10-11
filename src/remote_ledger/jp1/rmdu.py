@@ -166,6 +166,9 @@ RCA_56 = "RCA-56"
 RCA_38 = "RCA-38"
 RCA_38_OFFICIAL = "RCA-38 Official"
 RCA_FAMILY = (RCA, RCA_56, RCA_38, RCA_38_OFFICIAL)
+RCA_COMBO = "RCA Combo (Official)"
+TDC = "TDC"
+GI_CABLE = "GI Cable"
 MCE = "MCE"
 NOKIA32 = "Nokia32"
 PANASONIC_OLD = "Panasonic (old)"
@@ -175,9 +178,10 @@ NEC1_RNC = "NEC1-rnc"
 #: complemented (``E0=(~Y:1:1)^(F:1)``, ``~F:6:1``, ``E7=(~Y:1)^(F:1:7)``).
 YAMAHA_E_XOR = {1: 0x7F, 2: 0xFE, 3: 0x7E}
 TWO_BYTE = (SONY_COMBO, NEC1_COMBO, NEC_4DEV, NEC_4DEV_YAMAHA, NEC_2DEV, JVC_COMBO, DENON_COMBO, SHARP_COMBO,
-            PANASONIC_COMBO, DENON_K, PIONEER_MIX, PANASONIC_HACKED, TEAC_K)
+            PANASONIC_COMBO, DENON_K, PIONEER_MIX, PANASONIC_HACKED, TEAC_K, RCA_COMBO)
 MAPPED = (*NEC_FAMILY, SONY_1215, SONY_20, RC5, RC6, JVC, AIWA, DENON, PANASONIC, SHARP, SAMSUNG36, PROTON, F12,
-          RECS80_45, PIONEER, RECS80_68, JVC_48, *RCA_FAMILY, NEC1_F16_OFFICIAL, NEC1_RNC, MCE, NOKIA32, PANASONIC_OLD, *TWO_BYTE)
+          RECS80_45, PIONEER, RECS80_68, JVC_48, *RCA_FAMILY, NEC1_F16_OFFICIAL, NEC1_RNC, MCE, NOKIA32, PANASONIC_OLD, TDC, GI_CABLE,
+          *TWO_BYTE)
 
 
 def signal_of(upgrade: Upgrade, function: Function) -> Signal | str:
@@ -205,12 +209,18 @@ def signal_of(upgrade: Upgrade, function: Function) -> Signal | str:
             return "the function has no two OBC bytes"
         if name == PIONEER_MIX:
             return pioneer_mix_signal(upgrade, pair[0], pair[1])
+        if name == RCA_COMBO:
+            return rca_combo_signal(upgrade, pair[0], pair[1])
         return combo_signal(name, parms, pair[0], pair[1], upgrade.fields.get("FixedData", "").split())
     byte = obc_byte(function.hex)
     if byte is None:
         return "the function has no single OBC byte"
     if name in RCA_FAMILY:
         return rca_signal(upgrade, byte)
+    if name == TDC:
+        return tdc_signal(upgrade, byte)
+    if name == GI_CABLE:
+        return Signal("GI_Cable", 0, None, rev8(byte))
     if name in NEC_FAMILY:
         device = parm(parms, 0)
         if device is None:
@@ -276,25 +286,64 @@ def fixed_byte(fixed: list[str], index: int) -> int | None:
 
 
 def rca_signal(upgrade: Upgrade, byte: int) -> Signal | str:
-    """The RCA executors, read only where they send the 38 kHz the ledger's ``RCA-38`` has (DESIGN D152).
+    """The RCA executors (DESIGN D152, D189).
 
-    ``RCA-38`` and ``RCA-38 Official`` are ``Translator()``: the function is the OBC as it is. ``RCA`` (its
-    second variant) and ``RCA-56`` are ``Translator(comp)``, the function the OBC complemented, and say their
-    carrier in parameter 1 (1 is 38 kHz, 0 is 57 or 56 kHz); the first variant of ``RCA`` has no such
-    parameter and sends 56 kHz. The device is the four-bit parameter 0: a ``null`` one is not read, because the
-    one upgrade that has it (``RCA-38 Official``, 84 functions) matches none of the ledger's codes under the
-    executor's default."""
+    ``RCA-38`` and ``RCA-38 Official`` are ``Translator()``, the function the OBC as it is, at 38 kHz: the
+    ledger's ``RCA-38``. The first variant of ``RCA`` is ``Translator()`` too and sends 56 kHz, which the ledger's
+    ``RCA`` carries. ``RCA`` (its second variant) and ``RCA-56`` are ``Translator(comp)``, the function the OBC
+    complemented, and say their carrier in parameter 1: 1 is 38 kHz (``RCA-38``), 0 is 57 or 56 kHz (``RCA``). The device
+    is the four-bit parameter 0: a ``null`` one is not read, because the one upgrade that has it (``RCA-38 Official``,
+    84 functions) matches none of the ledger's codes under the executor's default."""
     name, parms = upgrade.protocol_name, upgrade.parms
     variant = upgrade.fields.get("Protocol.variantName", "").strip()
-    if name == RCA and variant != "2":
-        return "the carrier is not 38 kHz, which the ledger's RCA-38 has"
-    complemented = name in (RCA, RCA_56)
-    if complemented and parm(parms, 1) != 1:
-        return "the carrier is not 38 kHz, which the ledger's RCA-38 has"
     device = parm(parms, 0)
     if device is None or device > 15:
         return "the device parameter is missing or is not four bits"
-    return Signal("RCA-38", device, None, ~byte & 0xFF if complemented else byte)
+    if name in (RCA_38, RCA_38_OFFICIAL):
+        return Signal("RCA-38", device, None, byte)
+    if name == RCA and variant == "":
+        return Signal("RCA", device, None, byte)
+    if name == RCA_56 or (name == RCA and variant == "2"):
+        carrier = parm(parms, 1)
+        if carrier not in (0, 1):
+            return "the carrier parameter is missing"
+        return Signal("RCA-38" if carrier == 1 else "RCA", device, None, ~byte & 0xFF)
+    return "the variant is not read"
+
+
+def rca_combo_signal(upgrade: Upgrade, first: int, second: int) -> Signal | str:
+    """``RCA Combo (Official)``: two OBC bytes, the device and the function (DESIGN D189).
+
+    The first variant is ``Translator(0,4,0) Translator(1,8,8)``: the device is the top four bits of the first byte,
+    whose low four are the executor's fixed 15 (``DefaultCmd`` ``0f 00``), and the function the second byte as it is. The
+    second is ``Translator(0,4,0,comp) Translator(1,2,6) Translator(2,8,8,comp)``: the device complemented in the top
+    four bits, a two-bit prefix choice in the lowest two (0 is none; the others send another code first, which one signal
+    cannot say) and the function complemented. Neither says its carrier; the family's is the ledger's ``RCA``."""
+    variant = upgrade.fields.get("Protocol.variantName", "").strip()
+    if variant == "":
+        if first & 0x0F != 0x0F:
+            return "the first byte's low four bits are not the executor's fixed 15"
+        return Signal("RCA", first >> 4, None, second)
+    if variant == "2":
+        if first & 0x0F:
+            return "the function sends a prefix code first or sets a bit the variant does not use"
+        return Signal("RCA", ~(first >> 4) & 0x0F, None, ~second & 0xFF)
+    return "the variant is not read"
+
+
+def tdc_signal(upgrade: Upgrade, byte: int) -> Signal | str:
+    """``TDC`` (DESIGN D189): ``DevParms`` is ``Variant:TDC-38|TDC-56, Device:5=10, Sub Device:5=26`` and the function
+    is ``Translator(0,7)``, the seven bits of the OBC byte from the top, so the command is ``OBC >> 1`` (the lowest bit of
+    the byte is not part of it). The variant chooses the ledger's ``TDC-38`` (0) or ``TDC-56`` (1); a ``null`` parameter is
+    not read."""
+    variant, device, sub = (parm(upgrade.parms, i) for i in range(3))
+    if variant not in (0, 1) or device is None or sub is None:
+        return "the variant, device or sub device parameter is missing"
+    if device > 31 or sub > 31:
+        return "the device or the sub device is not five bits"
+    if byte & 1:
+        return "the OBC byte has its lowest bit set, which a seven-bit command does not use"
+    return Signal("TDC-56" if variant else "TDC-38", device, sub, byte >> 1)
 
 
 #: Where ``FixedData`` keeps each parameter of ``Pioneer MIX``'s variants 2 and 3 (``Device 1, Device 2, Cmd1 (OBC),

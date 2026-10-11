@@ -14,15 +14,16 @@ silently (SPEC R19, condition 5).
 |---|---|
 | Upstream files: not read: KeymapMaster .txt | 2,073 |
 | Upstream files: skipped: no brand | 12 |
-| Upstream files: skipped: no function decodes | 35 |
+| Upstream files: skipped: no function decodes | 17 |
 | Upstream files: skipped: no functions | 1 |
 | Upstream files: upgrades | 3,251 |
-| Remotes: imported | 2,734 |
-| Remotes: skipped: an authored remote wins | 6 |
+| Remotes: imported | 2,796 |
+| Remotes: skipped: an authored remote wins | 7 |
 | Keys: imported: Aiwa | 947 |
 | Keys: imported: Denon | 1,791 |
 | Keys: imported: Denon-K | 1,246 |
 | Keys: imported: F12_relaxed | 62 |
+| Keys: imported: GI_Cable | 982 |
 | Keys: imported: JVC | 1,989 |
 | Keys: imported: JVC-48 | 44 |
 | Keys: imported: MCE | 3,391 |
@@ -38,6 +39,7 @@ silently (SPEC R19, condition 5).
 | Keys: imported: Proton | 256 |
 | Keys: imported: RC5 | 5,648 |
 | Keys: imported: RC6 | 1,745 |
+| Keys: imported: RCA | 1,104 |
 | Keys: imported: RCA-38 | 328 |
 | Keys: imported: RECS80 | 467 |
 | Keys: imported: RECS80-0068 | 55 |
@@ -46,17 +48,19 @@ silently (SPEC R19, condition 5).
 | Keys: imported: Sony12 | 2,813 |
 | Keys: imported: Sony15 | 1,705 |
 | Keys: imported: Sony20 | 2,955 |
+| Keys: imported: TDC-38 | 522 |
+| Keys: imported: TDC-56 | 120 |
 | Keys: imported: Teac-K | 121 |
 | Keys: skipped: the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes | 47 |
-| Keys: skipped: the carrier is not 38 kHz, which the ledger's RCA-38 has | 579 |
 | Keys: skipped: the command does not fit Sony's seven bits | 35 |
 | Keys: skipped: the device or the second OEM byte parameter is missing | 48 |
 | Keys: skipped: the device parameter is missing | 42 |
 | Keys: skipped: the device parameter is missing or is not four bits | 88 |
 | Keys: skipped: the device the function selects is not set | 40 |
+| Keys: skipped: the first byte's low four bits are not the executor's fixed 15 | 1 |
 | Keys: skipped: the flag byte has bits the variant does not use | 1 |
-| Keys: skipped: the function has no single OBC byte | 5,338 |
-| Keys: skipped: the function has no two OBC bytes | 671 |
+| Keys: skipped: the function has no single OBC byte | 5,393 |
+| Keys: skipped: the function has no two OBC bytes | 688 |
 | Keys: skipped: the high X bit is sent at release, which a form cannot say | 40 |
 | Keys: skipped: the sub device parameter is missing | 97 |
 | Keys: skipped: the variant is not read (its devices are chosen by more flag bits) | 268 |
@@ -64,6 +68,7 @@ silently (SPEC R19, condition 5).
 | Files by ledger protocol: Denon | 38 |
 | Files by ledger protocol: Denon-K | 9 |
 | Files by ledger protocol: F12_relaxed | 8 |
+| Files by ledger protocol: GI_Cable | 20 |
 | Files by ledger protocol: JVC | 42 |
 | Files by ledger protocol: JVC-48 | 1 |
 | Files by ledger protocol: MCE | 81 |
@@ -79,6 +84,7 @@ silently (SPEC R19, condition 5).
 | Files by ledger protocol: Proton | 12 |
 | Files by ledger protocol: RC5 | 147 |
 | Files by ledger protocol: RC6 | 41 |
+| Files by ledger protocol: RCA | 26 |
 | Files by ledger protocol: RCA-38 | 6 |
 | Files by ledger protocol: RECS80 | 17 |
 | Files by ledger protocol: RECS80-0068 | 2 |
@@ -87,20 +93,20 @@ silently (SPEC R19, condition 5).
 | Files by ledger protocol: Sony12 | 76 |
 | Files by ledger protocol: Sony15 | 77 |
 | Files by ledger protocol: Sony20 | 85 |
+| Files by ledger protocol: TDC-38 | 13 |
+| Files by ledger protocol: TDC-56 | 3 |
 | Files by ledger protocol: Teac-K | 2 |
-| Brand taken from: the longest brand of the index that begins the description | 148 |
-| Brand taken from: the master index | 2,494 |
+| Brand taken from: the longest brand of the index that begins the description | 149 |
+| Brand taken from: the master index | 2,556 |
 
-## Executors this import does not read (upgrades) (156)
+## Executors this import does not read (upgrades) (153)
 
 | Executor | Files |
 |---|---|
 | `Manual Settings` | 75 |
 | `XMP (Slingbox)` | 26 |
 | `XMP` | 22 |
-| `GI Cable` | 20 |
 | `RC-5/5x Combo` | 16 |
-| `TDC` | 16 |
 | `RC6-M-20n` | 15 |
 | `RC5/6 combo` | 12 |
 | `PID 01 FF` | 11 |
@@ -108,7 +114,6 @@ silently (SPEC R19, condition 5).
 | `DirecTV` | 9 |
 | `Dish Network` | 9 |
 | `Manual Settings\: 01 FF` | 9 |
-| `RCA Combo (Official)` | 9 |
 | `XMP (JP1)` | 9 |
 | `pid\: 00 A0` | 9 |
 | `Pioneer 4DEV` | 8 |
@@ -252,7 +257,7 @@ silently (SPEC R19, condition 5).
 | `pid\: 01 61` | 1 |
 | `pid\: 01 E2` | 1 |
 
-## Upgrades of a read executor that yield nothing (48)
+## Upgrades of a read executor that yield nothing (30)
 
 | File | Reason |
 |---|---|
@@ -265,23 +270,14 @@ silently (SPEC R19, condition 5).
 | `Audio_Video Selectors/7 Port HMDI Switch XDF7HDMI.rmdu` | `no brand: the file is not in the master index and its description begins with no brand of it` |
 | `DVD (Blu-Ray)/Pioneer BDP-450 BluRay Player.rmdu` | `no function decodes` |
 | `DVD (standard)/Daewoo-DVDS151.rmdu` | `no brand: the file is not in the master index and its description begins with no brand of it` |
-| `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `no function decodes` |
-| `DVD (standard)/Microsoft Xbox.rmdu` | `no function decodes` |
 | `DVD (standard)/P-DV-410V-S-Fd.rmdu` | `no function decodes` |
 | `DVD (standard)/Pioneer DV-565A VXX2865.rmdu` | `no function decodes` |
-| `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `no function decodes` |
-| `DVD (standard)/RCA DVD RC5220P.rmdu` | `no function decodes` |
 | `DVD _ VCR combo units/Pioneer DVR RT400 VCR-DVD-R-RW 6440.rmdu` | `no function decodes` |
-| `Digital STBs/RCA ATSC 11.rmdu` | `no function decodes` |
-| `Digital STBs/RCA DTA-800B DTA.rmdu` | `no function decodes` |
-| `Digital STBs/RCA Digital TV Converter Box.rmdu` | `no function decodes` |
-| `HTPC - Media Centers/Media_Extender_for_XBox 8811.rmdu` | `no function decodes` |
 | `HTPC - Media Centers/Windows_Media_Center.rmdu` | `no function decodes` |
 | `MP3 Players/Chinese MP3 player DY-001 remote.rmdu` | `no brand: the file is not in the master index and its description begins with no brand of it` |
 | `Media Players/SuperBox S6 Max.rmdu` | `no brand: the file is not in the master index and its description begins with no brand of it` |
 | `Media Players/Vontage T9 - android tv box- URC-10820B00.rmdu` | `no brand: the file is not in the master index and its description begins with no brand of it` |
 | `Misc/DX Antenna DTA-3500.rmdu` | `no function decodes` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | `no function decodes` |
 | `Satellite/AXAS His Twin DVBS2 H.265 Satellite Receiver.rmdu` | `no brand: the file is not in the master index and its description begins with no brand of it` |
 | `Satellite/Foxtel IQ.rmdu` | `no function decodes` |
 | `Satellite/Sky PerfecTV (Japan).rmdu` | `no function decodes` |
@@ -289,34 +285,26 @@ silently (SPEC R19, condition 5).
 | `TV Combos/Dynex-DX-26LD150A11 TV-DVD.rmdu` | `no brand: the file is not in the master index and its description begins with no brand of it` |
 | `TV/Admiral-Dynex Roku TV.rmdu` | `no brand: the file is not in the master index and its description begins with no brand of it` |
 | `TV/Beko .rmdu` | `no function decodes` |
-| `TV/GE TV 35GT720.rmdu` | `no function decodes` |
 | `TV/HP 5880 Discrete Upgrade on HTPro - 041006-1.rmdu` | `no functions` |
 | `TV/Philips LED LCD HDTV 40PFL7505D.rmdu` | `no function decodes` |
 | `TV/Pioneer PRO-920-1120HD.rmdu` | `no function decodes` |
 | `TV/Pionier N555 ST.rmdu` | `no brand: the file is not in the master index and its description begins with no brand of it` |
-| `TV/Proscan TV.rmdu` | `no function decodes` |
-| `TV/RCA F20681D6 ColorTrak 2000 Stereo Monitor.rmdu` | `no function decodes` |
-| `TV/RCA F38310.rmdu` | `no function decodes` |
-| `TV/RCA Scenium Plasma HDTV Monitor.rmdu` | `no function decodes` |
-| `TV/RCA TV upgrade from Cox URC 7820B.rmdu` | `no function decodes` |
 | `TV/RCA-38 TV Master File.rmdu` | `no function decodes` |
 | `TV/Samsung TV LCD Alec2.rmdu` | `no function decodes` |
-| `TV/Sears TV.rmdu` | `no function decodes` |
-| `TV/rca discrete pronto codes upgrade.rmdu` | `no function decodes` |
-| `VCR/RCA VCR Proscan PSVR82.rmdu` | `no function decodes` |
 
-## Remotes skipped because an authored remote wins (R19, condition 4) (6)
+## Remotes skipped because an authored remote wins (R19, condition 4) (7)
 
 | File | Would have been |
 |---|---|
 | `CD/Hermstedt Hifidelio.rmdu` | `remotes/jp1/Hermstedt/CD-Hermstedt_Hifidelio.json` |
 | `Combo Audio Systems/Aiwa OEM remote RC-ZAS02.rmdu` | `remotes/jp1/Aiwa/Combo_Audio_Systems-Aiwa_OEM_remote_RC-ZAS02.json` |
 | `DVD (standard)/CyberHome RMC-300Z x6 (1025).rmdu` | `remotes/jp1/CyberHome/DVD__standard-CyberHome_RMC-300Z_x6__1025.json` |
+| `DVD (standard)/Microsoft Xbox.rmdu` | `remotes/jp1/Microsoft/DVD__standard-Microsoft_Xbox.json` |
 | `Minidisc & DAT/Sony DAT.rmdu` | `remotes/jp1/Sony/Minidisc___DAT-Sony_DAT.json` |
 | `Satellite/SonicView SV1000 6131.rmdu` | `remotes/jp1/Sonicview/Satellite-SonicView_SV1000_6131.json` |
 | `TV/VESTEL TV.rmdu` | `remotes/jp1/Vestel/TV-VESTEL_TV.json` |
 
-## Functions skipped (7,294)
+## Functions skipped (6,788)
 
 | File | Function | Reason |
 |---|---|---|
@@ -931,6 +919,21 @@ silently (SPEC R19, condition 5).
 | `Audio/Polk 9500BT Device Upgrade.rmdu` | `stop` | `the function has no single OBC byte` |
 | `Audio/Polk 9500BT Device Upgrade.rmdu` | `surround` | `the function has no single OBC byte` |
 | `Audio/Polk 9500BT Device Upgrade.rmdu` | `tv/vcr` | `the function has no single OBC byte` |
+| `Audio/RCA RT2390 receiver (8910).rmdu` | `power toggle` | `the first byte's low four bits are not the executor's fixed 15` |
+| `Audio/RCA-receiver test.rmdu` | `*** bottom ***` | `the function has no two OBC bytes` |
+| `Audio/RCA-receiver test.rmdu` | `display` | `the function has no two OBC bytes` |
+| `Audio/RCA-receiver test.rmdu` | `exit` | `the function has no two OBC bytes` |
+| `Audio/RCA-receiver test.rmdu` | `input toggle` | `the function has no two OBC bytes` |
+| `Audio/RCA-receiver test.rmdu` | `last (prev ch)` | `the function has no two OBC bytes` |
+| `Audio/RCA-receiver test.rmdu` | `menu` | `the function has no two OBC bytes` |
+| `Audio/RCA-receiver test.rmdu` | `pause` | `the function has no two OBC bytes` |
+| `Audio/RCA-receiver test.rmdu` | `pip move` | `the function has no two OBC bytes` |
+| `Audio/RCA-receiver test.rmdu` | `pip on/off` | `the function has no two OBC bytes` |
+| `Audio/RCA-receiver test.rmdu` | `pip swap` | `the function has no two OBC bytes` |
+| `Audio/RCA-receiver test.rmdu` | `play` | `the function has no two OBC bytes` |
+| `Audio/RCA-receiver test.rmdu` | `program guide` | `the function has no two OBC bytes` |
+| `Audio/RCA-receiver test.rmdu` | `record` | `the function has no two OBC bytes` |
+| `Audio/RCA-receiver test.rmdu` | `stop` | `the function has no two OBC bytes` |
 | `Audio/RME ADI-2 DAC FS.rmdu` | `#50` | `the function has no single OBC byte` |
 | `Audio/Scott Remote RS500 for Scott tuner RS50.rmdu` | `+100` | `the function has no single OBC byte` |
 | `Audio/Scott Remote RS500 for Scott tuner RS50.rmdu` | 0 | `the function has no single OBC byte` |
@@ -1991,6 +1994,22 @@ silently (SPEC R19, condition 5).
 | `CD/Pioneer PD-M59 CD.rmdu` | `vol down` | `the function has no single OBC byte` |
 | `CD/Pioneer PD-M59 CD.rmdu` | `vol up` | `the function has no single OBC byte` |
 | `CD/Sony CDP-CX335 (CD1).rmdu` | `*** bottom ***` | `the function has no single OBC byte` |
+| `Cable/Airties Air7130.rmdu` | `#12` | `the function has no single OBC byte` |
+| `Cable/Airties Air7130.rmdu` | `#16` | `the function has no single OBC byte` |
+| `Cable/Airties Air7130.rmdu` | `#20` | `the function has no single OBC byte` |
+| `Cable/Airties Air7130.rmdu` | `#22` | `the function has no single OBC byte` |
+| `Cable/Airties Air7130.rmdu` | `#28` | `the function has no single OBC byte` |
+| `Cable/Airties Air7130.rmdu` | `#35` | `the function has no single OBC byte` |
+| `Cable/Airties Air7130.rmdu` | `#40` | `the function has no single OBC byte` |
+| `Cable/Airties Air7130.rmdu` | `#42` | `the function has no single OBC byte` |
+| `Cable/Airties Air7130.rmdu` | `#57` | `the function has no single OBC byte` |
+| `Cable/Airties Air7130.rmdu` | `Enter` | `the function has no single OBC byte` |
+| `Cable/Airties Air7130.rmdu` | `dot/clear/_+` | `the function has no single OBC byte` |
+| `Cable/Airties Air7130.rmdu` | `exit` | `the function has no single OBC byte` |
+| `Cable/Airties Air7130.rmdu` | `input toggle` | `the function has no single OBC byte` |
+| `Cable/Airties Air7130.rmdu` | `live` | `the function has no single OBC byte` |
+| `Cable/Airties Air7130.rmdu` | `page down` | `the function has no single OBC byte` |
+| `Cable/Airties Air7130.rmdu` | `pageup` | `the function has no single OBC byte` |
 | `Cable/Allied Telesis AT001-SD Cable Box Remote.rmdu` | `+100` | `the function has no single OBC byte` |
 | `Cable/Allied Telesis AT001-SD Cable Box Remote.rmdu` | `X2` | `the function has no single OBC byte` |
 | `Cable/Allied Telesis AT001-SD Cable Box Remote.rmdu` | `center` | `the function has no single OBC byte` |
@@ -2133,6 +2152,42 @@ silently (SPEC R19, condition 5).
 | `Cable/Huawei DC211.rmdu` | `skip-` | `the function has no single OBC byte` |
 | `Cable/Huawei DC211.rmdu` | `stop` | `the function has no single OBC byte` |
 | `Cable/Huawei DC211.rmdu` | `yellow` | `the function has no single OBC byte` |
+| `Cable/Millenium4-Comcast Cisco DTA30.rmdu` | `ALL ON macro key` | `the function has no single OBC byte` |
+| `Cable/Millenium4-Comcast Cisco DTA30.rmdu` | `AUX` | `the function has no single OBC byte` |
+| `Cable/Millenium4-Comcast Cisco DTA30.rmdu` | `CABLE` | `the function has no single OBC byte` |
+| `Cable/Millenium4-Comcast Cisco DTA30.rmdu` | `PinP ch+` | `the function has no single OBC byte` |
+| `Cable/Millenium4-Comcast Cisco DTA30.rmdu` | `PinP ch-` | `the function has no single OBC byte` |
+| `Cable/Millenium4-Comcast Cisco DTA30.rmdu` | `PinP move` | `the function has no single OBC byte` |
+| `Cable/Millenium4-Comcast Cisco DTA30.rmdu` | `PinP on-off` | `the function has no single OBC byte` |
+| `Cable/Millenium4-Comcast Cisco DTA30.rmdu` | `Setup` | `the function has no single OBC byte` |
+| `Cable/Millenium4-Comcast Cisco DTA30.rmdu` | `TV/VCR(orAMPinputs)` | `the function has no single OBC byte` |
+| `Cable/Motorola DCT-3412 CBL.rmdu` | `+100` | `the function has no single OBC byte` |
+| `Cable/Motorola DCT-3412 CBL.rmdu` | `X2` | `the function has no single OBC byte` |
+| `Cable/Motorola DCT-3412 CBL.rmdu` | `center` | `the function has no single OBC byte` |
+| `Cable/Motorola DCT-3412 CBL.rmdu` | `device button` | `the function has no single OBC byte` |
+| `Cable/Motorola DCT-3412 CBL.rmdu` | `eject` | `the function has no single OBC byte` |
+| `Cable/Motorola DCT-3412 CBL.rmdu` | `fav/scan` | `the function has no single OBC byte` |
+| `Cable/Motorola DCT-3412 CBL.rmdu` | `input toggle` | `the function has no single OBC byte` |
+| `Cable/Motorola DCT-3412 CBL.rmdu` | `pip freeze` | `the function has no single OBC byte` |
+| `Cable/Motorola DCT-3412 CBL.rmdu` | `pip move` | `the function has no single OBC byte` |
+| `Cable/Motorola DCT-3412 CBL.rmdu` | `pip on/off` | `the function has no single OBC byte` |
+| `Cable/Motorola DCT-3412 CBL.rmdu` | `rear` | `the function has no single OBC byte` |
+| `Cable/Motorola DCT-3412 CBL.rmdu` | `shift-left` | `the function has no single OBC byte` |
+| `Cable/Motorola DCT-3412 CBL.rmdu` | `shift-right` | `the function has no single OBC byte` |
+| `Cable/Motorola DCT-3412 CBL.rmdu` | `sleep` | `the function has no single OBC byte` |
+| `Cable/Motorola DCT-3412 CBL.rmdu` | `slow` | `the function has no single OBC byte` |
+| `Cable/Motorola DCT-3412 CBL.rmdu` | `slow+` | `the function has no single OBC byte` |
+| `Cable/Motorola DCT-3412 CBL.rmdu` | `slow-` | `the function has no single OBC byte` |
+| `Cable/Motorola DCT-3412 CBL.rmdu` | `surround` | `the function has no single OBC byte` |
+| `Cable/MotorolaDCTandDCH(setup1376)forComcast1067Bx3.rmdu` | `ALL ON macro key` | `the function has no single OBC byte` |
+| `Cable/MotorolaDCTandDCH(setup1376)forComcast1067Bx3.rmdu` | `AUX` | `the function has no single OBC byte` |
+| `Cable/MotorolaDCTandDCH(setup1376)forComcast1067Bx3.rmdu` | `CABLE` | `the function has no single OBC byte` |
+| `Cable/MotorolaDCTandDCH(setup1376)forComcast1067Bx3.rmdu` | `PinP ch+` | `the function has no single OBC byte` |
+| `Cable/MotorolaDCTandDCH(setup1376)forComcast1067Bx3.rmdu` | `PinP ch-` | `the function has no single OBC byte` |
+| `Cable/MotorolaDCTandDCH(setup1376)forComcast1067Bx3.rmdu` | `PinP move` | `the function has no single OBC byte` |
+| `Cable/MotorolaDCTandDCH(setup1376)forComcast1067Bx3.rmdu` | `PinP on-off` | `the function has no single OBC byte` |
+| `Cable/MotorolaDCTandDCH(setup1376)forComcast1067Bx3.rmdu` | `Setup` | `the function has no single OBC byte` |
+| `Cable/MotorolaDCTandDCH(setup1376)forComcast1067Bx3.rmdu` | `TV/VCR(orAMPinputs)` | `the function has no single OBC byte` |
 | `Cable/Pace DC550P STB.rmdu` | `+100` | `the function has no single OBC byte` |
 | `Cable/Pace DC550P STB.rmdu` | `X2` | `the function has no single OBC byte` |
 | `Cable/Pace DC550P STB.rmdu` | `center` | `the function has no single OBC byte` |
@@ -2729,87 +2784,32 @@ silently (SPEC R19, condition 5).
 | `DVD (standard)/Malata-N996DVD (rpl-1123).rmdu` | `vol down` | `the function has no single OBC byte` |
 | `DVD (standard)/Malata-N996DVD (rpl-1123).rmdu` | `vol up` | `the function has no single OBC byte` |
 | `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `+100` | `the function has no single OBC byte` |
-| `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | 0 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | 1 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | 2 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | 3 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | 4 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | 5 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | 6 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | 7 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | 8 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | 9 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
 | `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `X2` | `the function has no single OBC byte` |
 | `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `center` | `the function has no single OBC byte` |
 | `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `channel down` | `the function has no single OBC byte` |
 | `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `channel up` | `the function has no single OBC byte` |
-| `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `device button` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
 | `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `display` | `the function has no single OBC byte` |
-| `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `down arrow` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
 | `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `eject` | `the function has no single OBC byte` |
-| `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `enter` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
 | `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `exit` | `the function has no single OBC byte` |
-| `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `fast fwd` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
 | `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `fav/scan` | `the function has no single OBC byte` |
 | `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `input toggle` | `the function has no single OBC byte` |
-| `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `last (prev ch)` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `left arrow` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `menu` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
 | `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `mute` | `the function has no single OBC byte` |
-| `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `next track` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `pause` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
 | `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `pip freeze` | `the function has no single OBC byte` |
 | `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `pip move` | `the function has no single OBC byte` |
 | `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `pip on/off` | `the function has no single OBC byte` |
 | `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `pip swap` | `the function has no single OBC byte` |
-| `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `play` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
 | `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `power` | `the function has no single OBC byte` |
-| `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `prev track` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `program guide` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
 | `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `rear` | `the function has no single OBC byte` |
 | `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `record` | `the function has no single OBC byte` |
-| `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `rewind` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `right arrow` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `select` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
 | `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `shift-left` | `the function has no single OBC byte` |
 | `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `shift-right` | `the function has no single OBC byte` |
 | `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `sleep` | `the function has no single OBC byte` |
 | `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `slow` | `the function has no single OBC byte` |
 | `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `slow+` | `the function has no single OBC byte` |
 | `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `slow-` | `the function has no single OBC byte` |
-| `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `stop` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
 | `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `surround` | `the function has no single OBC byte` |
-| `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `tv/vcr` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `up arrow` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
 | `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `vol down` | `the function has no single OBC byte` |
 | `DVD (standard)/Microsoft Xbox DVD Remote.rmdu` | `vol up` | `the function has no single OBC byte` |
-| `DVD (standard)/Microsoft Xbox.rmdu` | 0 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/Microsoft Xbox.rmdu` | 1 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/Microsoft Xbox.rmdu` | 2 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/Microsoft Xbox.rmdu` | 3 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/Microsoft Xbox.rmdu` | 4 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/Microsoft Xbox.rmdu` | 5 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/Microsoft Xbox.rmdu` | 6 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/Microsoft Xbox.rmdu` | 7 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/Microsoft Xbox.rmdu` | 8 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/Microsoft Xbox.rmdu` | 9 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/Microsoft Xbox.rmdu` | `Back` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/Microsoft Xbox.rmdu` | `Display` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/Microsoft Xbox.rmdu` | `Down` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/Microsoft Xbox.rmdu` | `Forward` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/Microsoft Xbox.rmdu` | `Info` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/Microsoft Xbox.rmdu` | `Left` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/Microsoft Xbox.rmdu` | `Menu` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/Microsoft Xbox.rmdu` | `Pause` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/Microsoft Xbox.rmdu` | `Play` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/Microsoft Xbox.rmdu` | `Reverse` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/Microsoft Xbox.rmdu` | `Right` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/Microsoft Xbox.rmdu` | `Select` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/Microsoft Xbox.rmdu` | `Skip +` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/Microsoft Xbox.rmdu` | `Skip -` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/Microsoft Xbox.rmdu` | `Stop` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/Microsoft Xbox.rmdu` | `Title` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/Microsoft Xbox.rmdu` | `Up` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
 | `DVD (standard)/Mintek DVD 1400.rmdu` | 0 | `the function has no single OBC byte` |
 | `DVD (standard)/Mintek DVD 1400.rmdu` | `channel down` | `the function has no single OBC byte` |
 | `DVD (standard)/Mintek DVD 1400.rmdu` | `channel up` | `the function has no single OBC byte` |
@@ -3044,100 +3044,29 @@ silently (SPEC R19, condition 5).
 | `DVD (standard)/Polaroid PDV-0700 DVD player.rmdu` | `vol down` | `the function has no single OBC byte` |
 | `DVD (standard)/Polaroid PDV-0700 DVD player.rmdu` | `vol up` | `the function has no single OBC byte` |
 | `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `+100` | `the function has no single OBC byte` |
-| `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | 0 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | 1 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | 2 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | 3 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | 4 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | 5 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | 6 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | 7 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | 8 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | 9 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
 | `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `X2` | `the function has no single OBC byte` |
 | `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `center` | `the function has no single OBC byte` |
-| `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `channel down` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `channel up` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
 | `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `device button` | `the function has no single OBC byte` |
-| `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `display` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `down arrow` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
 | `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `eject` | `the function has no single OBC byte` |
-| `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `enter` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `exit` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `fast fwd` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
 | `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `fav/scan` | `the function has no single OBC byte` |
-| `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `input toggle` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
 | `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `last (prev ch)` | `the function has no single OBC byte` |
-| `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `left arrow` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `menu` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
 | `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `mute` | `the function has no single OBC byte` |
-| `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `next track` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `pause` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
 | `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `pip freeze` | `the function has no single OBC byte` |
 | `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `pip move` | `the function has no single OBC byte` |
 | `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `pip on/off` | `the function has no single OBC byte` |
 | `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `pip swap` | `the function has no single OBC byte` |
-| `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `play` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `power` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `prev track` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `program guide` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
 | `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `rear` | `the function has no single OBC byte` |
-| `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `record` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `rewind` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `right arrow` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `select` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
 | `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `shift-left` | `the function has no single OBC byte` |
 | `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `shift-right` | `the function has no single OBC byte` |
 | `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `sleep` | `the function has no single OBC byte` |
 | `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `slow` | `the function has no single OBC byte` |
 | `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `slow+` | `the function has no single OBC byte` |
 | `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `slow-` | `the function has no single OBC byte` |
-| `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `stop` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
 | `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `surround` | `the function has no single OBC byte` |
 | `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `tv/vcr` | `the function has no single OBC byte` |
-| `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `up arrow` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
 | `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `vol down` | `the function has no single OBC byte` |
 | `DVD (standard)/RCA DRC8052Nx DVD Recorder.rmdu` | `vol up` | `the function has no single OBC byte` |
 | `DVD (standard)/RCA DVD RC5220P.rmdu` | `#39` | `the function has no single OBC byte` |
-| `DVD (standard)/RCA DVD RC5220P.rmdu` | 0 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DVD RC5220P.rmdu` | 1 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DVD RC5220P.rmdu` | 2 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DVD RC5220P.rmdu` | 3 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DVD RC5220P.rmdu` | 4 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DVD RC5220P.rmdu` | 5 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DVD RC5220P.rmdu` | 6 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DVD RC5220P.rmdu` | 7 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DVD RC5220P.rmdu` | 8 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DVD RC5220P.rmdu` | 9 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DVD RC5220P.rmdu` | `Angle` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DVD RC5220P.rmdu` | `Antenna` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DVD RC5220P.rmdu` | `Audio` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DVD RC5220P.rmdu` | `Ch +` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DVD RC5220P.rmdu` | `Ch -` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DVD RC5220P.rmdu` | `Clear` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DVD RC5220P.rmdu` | `Down` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DVD RC5220P.rmdu` | `Eject` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DVD RC5220P.rmdu` | `Forward` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DVD RC5220P.rmdu` | `Frame` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DVD RC5220P.rmdu` | `Go Back` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DVD RC5220P.rmdu` | `Guide` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DVD RC5220P.rmdu` | `Info` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DVD RC5220P.rmdu` | `Input` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DVD RC5220P.rmdu` | `Left` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DVD RC5220P.rmdu` | `Menu` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DVD RC5220P.rmdu` | `Pause` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DVD RC5220P.rmdu` | `Play` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DVD RC5220P.rmdu` | `Play Mode` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DVD RC5220P.rmdu` | `Power` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DVD RC5220P.rmdu` | `Power Off` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DVD RC5220P.rmdu` | `Power On` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DVD RC5220P.rmdu` | `Repeat` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DVD RC5220P.rmdu` | `Rewind` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DVD RC5220P.rmdu` | `Right` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DVD RC5220P.rmdu` | `Select` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DVD RC5220P.rmdu` | `Stop` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DVD RC5220P.rmdu` | `Subtitle` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `DVD (standard)/RCA DVD RC5220P.rmdu` | `Up` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
 | `DVD (standard)/RJTech RJ-1500DVXII.rmdu` | `+100` | `the function has no single OBC byte` |
 | `DVD (standard)/RJTech RJ-1500DVXII.rmdu` | `pip freeze` | `the function has no single OBC byte` |
 | `DVD (standard)/RJTech RJ-1500DVXII.rmdu` | `sleep` | `the function has no single OBC byte` |
@@ -4132,76 +4061,10 @@ silently (SPEC R19, condition 5).
 | `Digital STBs/Polaroid POSTB-1.rmdu` | `White` | `the function has no single OBC byte` |
 | `Digital STBs/Polaroid POSTB-1.rmdu` | `ffwd` | `the function has no single OBC byte` |
 | `Digital STBs/Polaroid POSTB-1.rmdu` | `rewind` | `the function has no single OBC byte` |
-| `Digital STBs/RCA ATSC 11.rmdu` | `CH+` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA ATSC 11.rmdu` | `CH-` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA ATSC 11.rmdu` | `Guide` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA ATSC 11.rmdu` | `Info` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA ATSC 11.rmdu` | `InputNext` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA ATSC 11.rmdu` | `Last_ch` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA ATSC 11.rmdu` | `Menu` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA ATSC 11.rmdu` | `Power` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA ATSC 11.rmdu` | `Select` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA ATSC 11.rmdu` | `down_arrow` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA ATSC 11.rmdu` | `exit` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA ATSC 11.rmdu` | `left_arrow` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA ATSC 11.rmdu` | `num_0` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA ATSC 11.rmdu` | `num_1` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA ATSC 11.rmdu` | `num_2` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA ATSC 11.rmdu` | `num_3` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA ATSC 11.rmdu` | `num_4` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA ATSC 11.rmdu` | `num_5` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA ATSC 11.rmdu` | `num_6` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA ATSC 11.rmdu` | `num_7` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA ATSC 11.rmdu` | `num_8` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA ATSC 11.rmdu` | `num_9` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA ATSC 11.rmdu` | `right_arrow` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA ATSC 11.rmdu` | `up_arrow` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
 | `Digital STBs/RCA DTA-800B DTA.rmdu` | `#21` | `the function has no single OBC byte` |
 | `Digital STBs/RCA DTA-800B DTA.rmdu` | `#22` | `the function has no single OBC byte` |
 | `Digital STBs/RCA DTA-800B DTA.rmdu` | `#23` | `the function has no single OBC byte` |
 | `Digital STBs/RCA DTA-800B DTA.rmdu` | `#24` | `the function has no single OBC byte` |
-| `Digital STBs/RCA DTA-800B DTA.rmdu` | `DTA Chn Down` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA DTA-800B DTA.rmdu` | `DTA Chn Up` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA DTA-800B DTA.rmdu` | `DTA Dash/CC` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA DTA-800B DTA.rmdu` | `DTA Down` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA DTA-800B DTA.rmdu` | `DTA Info` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA DTA-800B DTA.rmdu` | `DTA Left` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA DTA-800B DTA.rmdu` | `DTA Menu` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA DTA-800B DTA.rmdu` | `DTA Num 0` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA DTA-800B DTA.rmdu` | `DTA Num 1` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA DTA-800B DTA.rmdu` | `DTA Num 2` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA DTA-800B DTA.rmdu` | `DTA Num 3` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA DTA-800B DTA.rmdu` | `DTA Num 4` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA DTA-800B DTA.rmdu` | `DTA Num 5` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA DTA-800B DTA.rmdu` | `DTA Num 6` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA DTA-800B DTA.rmdu` | `DTA Num 7` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA DTA-800B DTA.rmdu` | `DTA Num 8` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA DTA-800B DTA.rmdu` | `DTA Num 9` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA DTA-800B DTA.rmdu` | `DTA OK` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA DTA-800B DTA.rmdu` | `DTA Power` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA DTA-800B DTA.rmdu` | `DTA Right` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA DTA-800B DTA.rmdu` | `DTA UP` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA Digital TV Converter Box.rmdu` | 0 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA Digital TV Converter Box.rmdu` | 1 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA Digital TV Converter Box.rmdu` | 2 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA Digital TV Converter Box.rmdu` | 3 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA Digital TV Converter Box.rmdu` | 4 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA Digital TV Converter Box.rmdu` | 5 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA Digital TV Converter Box.rmdu` | 6 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA Digital TV Converter Box.rmdu` | 7 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA Digital TV Converter Box.rmdu` | 8 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA Digital TV Converter Box.rmdu` | 9 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA Digital TV Converter Box.rmdu` | `channel down` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA Digital TV Converter Box.rmdu` | `channel up` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA Digital TV Converter Box.rmdu` | `down arrow` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA Digital TV Converter Box.rmdu` | `guide` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA Digital TV Converter Box.rmdu` | `info/display` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA Digital TV Converter Box.rmdu` | `left arrow` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA Digital TV Converter Box.rmdu` | `menu` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA Digital TV Converter Box.rmdu` | `ok/select` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA Digital TV Converter Box.rmdu` | `power` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA Digital TV Converter Box.rmdu` | `right arrow` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Digital STBs/RCA Digital TV Converter Box.rmdu` | `up arrow` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
 | `Digital STBs/Samsung SIR-T151 HDTV Tuner.rmdu` | `mute` | `the function has no single OBC byte` |
 | `Digital STBs/Samsung SIR-T151 HDTV Tuner.rmdu` | `vol down` | `the function has no single OBC byte` |
 | `Digital STBs/Samsung SIR-T151 HDTV Tuner.rmdu` | `vol up` | `the function has no single OBC byte` |
@@ -4221,6 +4084,9 @@ silently (SPEC R19, condition 5).
 | `Digital STBs/Sony KDF-E42A10 for RS 15-2104.rmdu` | `#40` | `the function has no single OBC byte` |
 | `Digital STBs/Strong PVR SRT 5490.rmdu` | `#53` | `the function has no single OBC byte` |
 | `Digital STBs/Strong PVR SRT 5490.rmdu` | `#54` | `the function has no single OBC byte` |
+| `Digital STBs/Swisscom Tatung STB3120DVRA.rmdu` | `#43` | `the function has no single OBC byte` |
+| `Digital STBs/Swisscom Tatung STB3120DVRA.rmdu` | `#44` | `the function has no single OBC byte` |
+| `Digital STBs/Swisscom Tatung STB3120DVRA.rmdu` | `#45` | `the function has no single OBC byte` |
 | `Digital STBs/TVPad 2 M233 .rmdu` | `Custom17` | `the function has no single OBC byte` |
 | `Digital STBs/TVPad 2 M233 .rmdu` | `Custom18` | `the function has no single OBC byte` |
 | `Digital STBs/TVPad 2 M233 .rmdu` | `Custom19` | `the function has no single OBC byte` |
@@ -4513,50 +4379,6 @@ silently (SPEC R19, condition 5).
 | `HTPC - Media Centers/HP laptop.rmdu` | `surround` | `the function has no single OBC byte` |
 | `HTPC - Media Centers/HP laptop.rmdu` | `tv/vcr` | `the function has no single OBC byte` |
 | `HTPC - Media Centers/Linksys DMA2100.rmdu` | `pip move` | `the function has no single OBC byte` |
-| `HTPC - Media Centers/Media_Extender_for_XBox 8811.rmdu` | `*` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `HTPC - Media Centers/Media_Extender_for_XBox 8811.rmdu` | 0 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `HTPC - Media Centers/Media_Extender_for_XBox 8811.rmdu` | 1 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `HTPC - Media Centers/Media_Extender_for_XBox 8811.rmdu` | 2 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `HTPC - Media Centers/Media_Extender_for_XBox 8811.rmdu` | 3 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `HTPC - Media Centers/Media_Extender_for_XBox 8811.rmdu` | 4 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `HTPC - Media Centers/Media_Extender_for_XBox 8811.rmdu` | 5 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `HTPC - Media Centers/Media_Extender_for_XBox 8811.rmdu` | 6 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `HTPC - Media Centers/Media_Extender_for_XBox 8811.rmdu` | 7 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `HTPC - Media Centers/Media_Extender_for_XBox 8811.rmdu` | 8 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `HTPC - Media Centers/Media_Extender_for_XBox 8811.rmdu` | 9 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `HTPC - Media Centers/Media_Extender_for_XBox 8811.rmdu` | `\#` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `HTPC - Media Centers/Media_Extender_for_XBox 8811.rmdu` | `back` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `HTPC - Media Centers/Media_Extender_for_XBox 8811.rmdu` | `ch+` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `HTPC - Media Centers/Media_Extender_for_XBox 8811.rmdu` | `ch-` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `HTPC - Media Centers/Media_Extender_for_XBox 8811.rmdu` | `clear` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `HTPC - Media Centers/Media_Extender_for_XBox 8811.rmdu` | `down arrow` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `HTPC - Media Centers/Media_Extender_for_XBox 8811.rmdu` | `dvd menu (menu)` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `HTPC - Media Centers/Media_Extender_for_XBox 8811.rmdu` | `fast fwd` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `HTPC - Media Centers/Media_Extender_for_XBox 8811.rmdu` | `guide` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `HTPC - Media Centers/Media_Extender_for_XBox 8811.rmdu` | `left arrow` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `HTPC - Media Centers/Media_Extender_for_XBox 8811.rmdu` | `live tv` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `HTPC - Media Centers/Media_Extender_for_XBox 8811.rmdu` | `more (info)` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `HTPC - Media Centers/Media_Extender_for_XBox 8811.rmdu` | `mute` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `HTPC - Media Centers/Media_Extender_for_XBox 8811.rmdu` | `my music` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `HTPC - Media Centers/Media_Extender_for_XBox 8811.rmdu` | `my pictures` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `HTPC - Media Centers/Media_Extender_for_XBox 8811.rmdu` | `my tv` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `HTPC - Media Centers/Media_Extender_for_XBox 8811.rmdu` | `my videos` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `HTPC - Media Centers/Media_Extender_for_XBox 8811.rmdu` | `ok/enter (select)` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `HTPC - Media Centers/Media_Extender_for_XBox 8811.rmdu` | `pause` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `HTPC - Media Centers/Media_Extender_for_XBox 8811.rmdu` | `play` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `HTPC - Media Centers/Media_Extender_for_XBox 8811.rmdu` | `power` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `HTPC - Media Centers/Media_Extender_for_XBox 8811.rmdu` | `record` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `HTPC - Media Centers/Media_Extender_for_XBox 8811.rmdu` | `recorded tv` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `HTPC - Media Centers/Media_Extender_for_XBox 8811.rmdu` | `replay (skip -)` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `HTPC - Media Centers/Media_Extender_for_XBox 8811.rmdu` | `rewind` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `HTPC - Media Centers/Media_Extender_for_XBox 8811.rmdu` | `right arrow` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `HTPC - Media Centers/Media_Extender_for_XBox 8811.rmdu` | `skip (skip +)` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `HTPC - Media Centers/Media_Extender_for_XBox 8811.rmdu` | `start` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `HTPC - Media Centers/Media_Extender_for_XBox 8811.rmdu` | `stop` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `HTPC - Media Centers/Media_Extender_for_XBox 8811.rmdu` | `up arrow` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `HTPC - Media Centers/Media_Extender_for_XBox 8811.rmdu` | `vol+` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `HTPC - Media Centers/Media_Extender_for_XBox 8811.rmdu` | `vol-` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `HTPC - Media Centers/Media_Extender_for_XBox 8811.rmdu` | `xbox (display)` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
 | `HTPC - Media Centers/Microsoft Windows MCE.rmdu` | `#48` | `the function has no single OBC byte` |
 | `HTPC - Media Centers/Microsoft Windows MCE.rmdu` | `#60` | `the function has no single OBC byte` |
 | `HTPC - Media Centers/Windows_Media_Center.rmdu` | 0 | `the device or the second OEM byte parameter is missing` |
@@ -4905,60 +4727,7 @@ silently (SPEC R19, condition 5).
 | `Misc/Philips Streamium SL300i.rmdu` | `tv/vcr` | `the function has no single OBC byte` |
 | `Misc/Philips Streamium SL300i.rmdu` | `vol down` | `the function has no single OBC byte` |
 | `Misc/Philips Streamium SL300i.rmdu` | `vol up` | `the function has no single OBC byte` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | 0 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | 1 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | 2 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | 3 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | 4 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | 5 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | 6 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | 7 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | 8 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | 9 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | `Input Audio In` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | `Input Aux` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | `Input Coaxial` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | `Input DVD` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | `Input Digital` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | `Input Optical` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | `Input Tuner` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | `Return` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | `Speaker level` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | `SubWoofer` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | `Surround` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | `Zoom` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | `angle` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | `audio` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | `clear` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | `down arrow` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
 | `Misc/RCARTD3133HomeTheater.rmdu` | `eject` | `the function has no single OBC byte` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | `fast fwd` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | `hdmi` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | `left arrow` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | `memory` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | `menu` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | `mute` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | `next preset` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | `next track` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | `pause` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | `play` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | `power` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | `prev preset` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | `prev track` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | `random` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | `repeat` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | `return` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | `rewind` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | `right arrow` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | `select` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | `setuo` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | `slow` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | `stop` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | `subtitle` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | `title` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | `up arrow` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | `vol down` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `Misc/RCARTD3133HomeTheater.rmdu` | `vol up` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
 | `Misc/Sigma_Designs_Real_Magic.rmdu` | `#33` | `the function has no single OBC byte` |
 | `Misc/Sigma_Designs_Real_Magic.rmdu` | `#36` | `the function has no single OBC byte` |
 | `Misc/Zaaptv IPTV.rmdu` | 0 | `the function has no single OBC byte` |
@@ -6142,38 +5911,6 @@ silently (SPEC R19, condition 5).
 | `TV/Digital Research DLCD32.rmdu` | `#35` | `the function has no single OBC byte` |
 | `TV/Digital Research DLCD32.rmdu` | `#36` | `the function has no single OBC byte` |
 | `TV/Digital Research DLCD32.rmdu` | `#37` | `the function has no single OBC byte` |
-| `TV/GE TV 35GT720.rmdu` | 0 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/GE TV 35GT720.rmdu` | 1 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/GE TV 35GT720.rmdu` | 2 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/GE TV 35GT720.rmdu` | 3 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/GE TV 35GT720.rmdu` | 4 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/GE TV 35GT720.rmdu` | 5 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/GE TV 35GT720.rmdu` | 6 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/GE TV 35GT720.rmdu` | 7 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/GE TV 35GT720.rmdu` | 8 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/GE TV 35GT720.rmdu` | 9 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/GE TV 35GT720.rmdu` | `Antenna` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/GE TV 35GT720.rmdu` | `Arrow DOWN` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/GE TV 35GT720.rmdu` | `Arrow LEFT` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/GE TV 35GT720.rmdu` | `Arrow RIGHT` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/GE TV 35GT720.rmdu` | `Arrow UP` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/GE TV 35GT720.rmdu` | `Channel DOWN` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/GE TV 35GT720.rmdu` | `Channel UP` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/GE TV 35GT720.rmdu` | `EXIT` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/GE TV 35GT720.rmdu` | `GUIDE` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/GE TV 35GT720.rmdu` | `INFO` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/GE TV 35GT720.rmdu` | `MENU` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/GE TV 35GT720.rmdu` | `MUTE` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/GE TV 35GT720.rmdu` | `POWER` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/GE TV 35GT720.rmdu` | `PREV` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/GE TV 35GT720.rmdu` | `Power Off` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/GE TV 35GT720.rmdu` | `Power On` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/GE TV 35GT720.rmdu` | `SELECT` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/GE TV 35GT720.rmdu` | `Skiip` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/GE TV 35GT720.rmdu` | `Sound` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/GE TV 35GT720.rmdu` | `TV/VID` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/GE TV 35GT720.rmdu` | `Vol DOWN` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/GE TV 35GT720.rmdu` | `Vol UP` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
 | `TV/HP LC3700N Discrete Codes_JP12.rmdu` | `#31` | `the function has no single OBC byte` |
 | `TV/HP LC3700N Discrete Codes_JP12.rmdu` | `#35` | `the function has no single OBC byte` |
 | `TV/HP LC3700N Discrete Codes_JP12.rmdu` | `#36` | `the function has no single OBC byte` |
@@ -6524,45 +6261,6 @@ silently (SPEC R19, condition 5).
 | `TV/Pioneer PRO-920-1120HD.rmdu` | `Vol+` | `the variant is not read (its devices are chosen by more flag bits)` |
 | `TV/Pioneer PRO-920-1120HD.rmdu` | `Vol-` | `the variant is not read (its devices are chosen by more flag bits)` |
 | `TV/Pioneer TV PDP-435-XDE for URC-8910.rmdu` | `Format` | `the flag byte has bits the variant does not use` |
-| `TV/Proscan TV.rmdu` | `+100` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Proscan TV.rmdu` | 0 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Proscan TV.rmdu` | 1 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Proscan TV.rmdu` | 2 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Proscan TV.rmdu` | 3 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Proscan TV.rmdu` | 4 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Proscan TV.rmdu` | 5 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Proscan TV.rmdu` | 6 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Proscan TV.rmdu` | 7 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Proscan TV.rmdu` | 8 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Proscan TV.rmdu` | 9 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Proscan TV.rmdu` | `Antenna Toggle` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Proscan TV.rmdu` | `Arrow DOWN` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Proscan TV.rmdu` | `Arrow LEFT` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Proscan TV.rmdu` | `Arrow RIGHT` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Proscan TV.rmdu` | `Arrow UP` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Proscan TV.rmdu` | `Audio` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Proscan TV.rmdu` | `Channel DOWN` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Proscan TV.rmdu` | `Channel UP` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Proscan TV.rmdu` | `Chctrl` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Proscan TV.rmdu` | `Clear` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Proscan TV.rmdu` | `Display` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Proscan TV.rmdu` | `Input Toggle` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Proscan TV.rmdu` | `LAST` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Proscan TV.rmdu` | `MENU` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Proscan TV.rmdu` | `MUTE` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Proscan TV.rmdu` | `PIP` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Proscan TV.rmdu` | `PIP Freeze` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Proscan TV.rmdu` | `PIP Move` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Proscan TV.rmdu` | `PIP Swap` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Proscan TV.rmdu` | `POWER` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Proscan TV.rmdu` | `Power OFF` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Proscan TV.rmdu` | `Power ON` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Proscan TV.rmdu` | `Reset` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Proscan TV.rmdu` | `Scan` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Proscan TV.rmdu` | `Skip` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Proscan TV.rmdu` | `TV/VCR` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Proscan TV.rmdu` | `Vol DOWN` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Proscan TV.rmdu` | `Vol UP` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
 | `TV/RCA 42PA30RQ TV using remote RE20QP80 Atlas OCAP.rmdu` | `#100` | `the function has no single OBC byte` |
 | `TV/RCA 42PA30RQ TV using remote RE20QP80 Atlas OCAP.rmdu` | `#101` | `the function has no single OBC byte` |
 | `TV/RCA 42PA30RQ TV using remote RE20QP80 Atlas OCAP.rmdu` | `#102` | `the function has no single OBC byte` |
@@ -6625,149 +6323,13 @@ silently (SPEC R19, condition 5).
 | `TV/RCA 42PA30RQ TV using remote RE20QP80 Atlas OCAP.rmdu` | `#97` | `the function has no single OBC byte` |
 | `TV/RCA 42PA30RQ TV using remote RE20QP80 Atlas OCAP.rmdu` | `#98` | `the function has no single OBC byte` |
 | `TV/RCA 42PA30RQ TV using remote RE20QP80 Atlas OCAP.rmdu` | `#99` | `the function has no single OBC byte` |
-| `TV/RCA F20681D6 ColorTrak 2000 Stereo Monitor.rmdu` | 0 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F20681D6 ColorTrak 2000 Stereo Monitor.rmdu` | 1 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F20681D6 ColorTrak 2000 Stereo Monitor.rmdu` | 2 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F20681D6 ColorTrak 2000 Stereo Monitor.rmdu` | 3 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F20681D6 ColorTrak 2000 Stereo Monitor.rmdu` | 4 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F20681D6 ColorTrak 2000 Stereo Monitor.rmdu` | 5 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F20681D6 ColorTrak 2000 Stereo Monitor.rmdu` | 6 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F20681D6 ColorTrak 2000 Stereo Monitor.rmdu` | 7 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F20681D6 ColorTrak 2000 Stereo Monitor.rmdu` | 8 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F20681D6 ColorTrak 2000 Stereo Monitor.rmdu` | 9 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F20681D6 ColorTrak 2000 Stereo Monitor.rmdu` | `ant` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F20681D6 ColorTrak 2000 Stereo Monitor.rmdu` | `channel down` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F20681D6 ColorTrak 2000 Stereo Monitor.rmdu` | `channel up` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F20681D6 ColorTrak 2000 Stereo Monitor.rmdu` | `clear` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F20681D6 ColorTrak 2000 Stereo Monitor.rmdu` | `display (info)` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F20681D6 ColorTrak 2000 Stereo Monitor.rmdu` | `minus` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F20681D6 ColorTrak 2000 Stereo Monitor.rmdu` | `mute` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F20681D6 ColorTrak 2000 Stereo Monitor.rmdu` | `off` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F20681D6 ColorTrak 2000 Stereo Monitor.rmdu` | `pc` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F20681D6 ColorTrak 2000 Stereo Monitor.rmdu` | `plus` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F20681D6 ColorTrak 2000 Stereo Monitor.rmdu` | `power \| tv` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F20681D6 ColorTrak 2000 Stereo Monitor.rmdu` | `prog` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F20681D6 ColorTrak 2000 Stereo Monitor.rmdu` | `reset` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F20681D6 ColorTrak 2000 Stereo Monitor.rmdu` | `setup` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F20681D6 ColorTrak 2000 Stereo Monitor.rmdu` | `vcr` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F20681D6 ColorTrak 2000 Stereo Monitor.rmdu` | `vcr fast fwd` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F20681D6 ColorTrak 2000 Stereo Monitor.rmdu` | `vcr pause` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F20681D6 ColorTrak 2000 Stereo Monitor.rmdu` | `vcr play` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F20681D6 ColorTrak 2000 Stereo Monitor.rmdu` | `vcr record` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F20681D6 ColorTrak 2000 Stereo Monitor.rmdu` | `vcr rewind` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F20681D6 ColorTrak 2000 Stereo Monitor.rmdu` | `vcr stop` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F20681D6 ColorTrak 2000 Stereo Monitor.rmdu` | `video` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F20681D6 ColorTrak 2000 Stereo Monitor.rmdu` | `vol down` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F20681D6 ColorTrak 2000 Stereo Monitor.rmdu` | `vol up` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | 0 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | 1 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | 2 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | 3 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | 4 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | 5 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | 6 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | 7 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | 8 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | 9 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | `antenna` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | `bad\!` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | `ch cntrl` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | `channel down` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | `channel up` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | `clear` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | `countdown` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | `down arrow` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | `enter` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | `exit` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | `fast fwd` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | `fetch` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | `forward 2` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | `forward1` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | `info` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | `input` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | `last (prev ch)` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | `left arrow` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | `menu` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | `mute` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | `ok` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | `pause` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | `pip on/off` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | `pip swap` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | `play` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | `power` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | `program guide` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | `record` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | `rewind` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | `right arrow` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | `serv menu` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | `stop` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | `up arrow` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | `vol down` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | `vol up` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA F38310.rmdu` | `who` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
 | `TV/RCA RT4038 TV.rmdu` | `X2` | `the function has no single OBC byte` |
 | `TV/RCA RT4038 TV.rmdu` | `center` | `the function has no single OBC byte` |
 | `TV/RCA RT4038 TV.rmdu` | `rear` | `the function has no single OBC byte` |
 | `TV/RCA RT4038 TV.rmdu` | `slow-` | `the function has no single OBC byte` |
-| `TV/RCA Scenium Plasma HDTV Monitor.rmdu` | 0 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA Scenium Plasma HDTV Monitor.rmdu` | 1 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA Scenium Plasma HDTV Monitor.rmdu` | 2 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA Scenium Plasma HDTV Monitor.rmdu` | 3 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA Scenium Plasma HDTV Monitor.rmdu` | 4 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA Scenium Plasma HDTV Monitor.rmdu` | 5 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA Scenium Plasma HDTV Monitor.rmdu` | 6 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA Scenium Plasma HDTV Monitor.rmdu` | 7 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA Scenium Plasma HDTV Monitor.rmdu` | 8 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA Scenium Plasma HDTV Monitor.rmdu` | 9 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA Scenium Plasma HDTV Monitor.rmdu` | `channel down` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA Scenium Plasma HDTV Monitor.rmdu` | `channel up` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA Scenium Plasma HDTV Monitor.rmdu` | `cinema` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA Scenium Plasma HDTV Monitor.rmdu` | `down arrow` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA Scenium Plasma HDTV Monitor.rmdu` | `enter` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA Scenium Plasma HDTV Monitor.rmdu` | `go back` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA Scenium Plasma HDTV Monitor.rmdu` | `last (prev ch)` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA Scenium Plasma HDTV Monitor.rmdu` | `left arrow` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA Scenium Plasma HDTV Monitor.rmdu` | `menu` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA Scenium Plasma HDTV Monitor.rmdu` | `mute` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA Scenium Plasma HDTV Monitor.rmdu` | `pip` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA Scenium Plasma HDTV Monitor.rmdu` | `power` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA Scenium Plasma HDTV Monitor.rmdu` | `program guide` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA Scenium Plasma HDTV Monitor.rmdu` | `right arrow` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA Scenium Plasma HDTV Monitor.rmdu` | `up arrow` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA Scenium Plasma HDTV Monitor.rmdu` | `vol down` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA Scenium Plasma HDTV Monitor.rmdu` | `vol up` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA TV upgrade from Cox URC 7820B.rmdu` | 0 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA TV upgrade from Cox URC 7820B.rmdu` | 1 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA TV upgrade from Cox URC 7820B.rmdu` | 2 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA TV upgrade from Cox URC 7820B.rmdu` | 3 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA TV upgrade from Cox URC 7820B.rmdu` | 4 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA TV upgrade from Cox URC 7820B.rmdu` | 5 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA TV upgrade from Cox URC 7820B.rmdu` | 6 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA TV upgrade from Cox URC 7820B.rmdu` | 7 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA TV upgrade from Cox URC 7820B.rmdu` | 8 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA TV upgrade from Cox URC 7820B.rmdu` | 9 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA TV upgrade from Cox URC 7820B.rmdu` | `CH+` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA TV upgrade from Cox URC 7820B.rmdu` | `CH-` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA TV upgrade from Cox URC 7820B.rmdu` | `DOWN` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA TV upgrade from Cox URC 7820B.rmdu` | `EXIT` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA TV upgrade from Cox URC 7820B.rmdu` | `FFWD` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA TV upgrade from Cox URC 7820B.rmdu` | `INFO` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA TV upgrade from Cox URC 7820B.rmdu` | `INPUT` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA TV upgrade from Cox URC 7820B.rmdu` | `LAST` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA TV upgrade from Cox URC 7820B.rmdu` | `LEFT` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA TV upgrade from Cox URC 7820B.rmdu` | `MENU` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA TV upgrade from Cox URC 7820B.rmdu` | `MUTE` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA TV upgrade from Cox URC 7820B.rmdu` | `PAUSE` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA TV upgrade from Cox URC 7820B.rmdu` | `PLAY` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA TV upgrade from Cox URC 7820B.rmdu` | `POWER` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA TV upgrade from Cox URC 7820B.rmdu` | `RECORD` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA TV upgrade from Cox URC 7820B.rmdu` | `REWIND` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA TV upgrade from Cox URC 7820B.rmdu` | `RIGHT` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA TV upgrade from Cox URC 7820B.rmdu` | `SELECT` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA TV upgrade from Cox URC 7820B.rmdu` | `STOP` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA TV upgrade from Cox URC 7820B.rmdu` | `UP` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA TV upgrade from Cox URC 7820B.rmdu` | `VOL+` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/RCA TV upgrade from Cox URC 7820B.rmdu` | `VOL-` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
+| `TV/RCA TV.rmdu` | `#88` | `the function has no two OBC bytes` |
+| `TV/RCA TV.rmdu` | `#89` | `the function has no two OBC bytes` |
+| `TV/RCA TV.rmdu` | `Typical Discret Inputs` | `the function has no two OBC bytes` |
 | `TV/RCA-38 TV Master File.rmdu` | 0 | `the device parameter is missing or is not four bits` |
 | `TV/RCA-38 TV Master File.rmdu` | 1 | `the device parameter is missing or is not four bits` |
 | `TV/RCA-38 TV Master File.rmdu` | 100 | `the device parameter is missing or is not four bits` |
@@ -7059,31 +6621,6 @@ silently (SPEC R19, condition 5).
 | `TV/Samsung_TXP3264W_HDTV_Monitor.rmdu` | `surround` | `the function has no single OBC byte` |
 | `TV/Sanyo 65 inch LED LCD.rmdu` | `#42` | `the function has no single OBC byte` |
 | `TV/Sanyo 65 inch LED LCD.rmdu` | `#43` | `the function has no single OBC byte` |
-| `TV/Sears TV.rmdu` | `+` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Sears TV.rmdu` | `-` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Sears TV.rmdu` | 0 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Sears TV.rmdu` | 1 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Sears TV.rmdu` | 2 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Sears TV.rmdu` | 3 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Sears TV.rmdu` | 4 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Sears TV.rmdu` | 5 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Sears TV.rmdu` | 6 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Sears TV.rmdu` | 7 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Sears TV.rmdu` | 8 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Sears TV.rmdu` | 9 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Sears TV.rmdu` | `channel down` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Sears TV.rmdu` | `channel up` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Sears TV.rmdu` | `clear` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Sears TV.rmdu` | `last/prev ch` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Sears TV.rmdu` | `mute` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Sears TV.rmdu` | `off` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Sears TV.rmdu` | `on/dspy` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Sears TV.rmdu` | `power` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Sears TV.rmdu` | `reset` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Sears TV.rmdu` | `setup` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Sears TV.rmdu` | `video` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Sears TV.rmdu` | `vol down` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/Sears TV.rmdu` | `vol up` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
 | `TV/Sharp Aquos LC-32E44E.rmdu` | `\=\=\= Discreet Buttons \=\=\=` | `the function has no two OBC bytes` |
 | `TV/Sharp Aquos LC-32E44E.rmdu` | `\=\=\= Groiup 4 - Cursors \=\=\=` | `the function has no two OBC bytes` |
 | `TV/Sharp Aquos LC-32E44E.rmdu` | `\=\=\= Group 1 - Functions i \=\=\=` | `the function has no two OBC bytes` |
@@ -7385,17 +6922,6 @@ silently (SPEC R19, condition 5).
 | `TV/onn_100012589-CA_Roku_TV_NEC2_234.199_URC-10820.rmdu` | `#22` | `the function has no single OBC byte` |
 | `TV/onn_100012589-CA_Roku_TV_NEC2_234.199_URC-10820.rmdu` | `#23` | `the function has no single OBC byte` |
 | `TV/onn_100012589-CA_Roku_TV_NEC2_234.199_URC-10820.rmdu` | `#24` | `the function has no single OBC byte` |
-| `TV/rca discrete pronto codes upgrade.rmdu` | 0 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/rca discrete pronto codes upgrade.rmdu` | 1 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/rca discrete pronto codes upgrade.rmdu` | 2 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/rca discrete pronto codes upgrade.rmdu` | 3 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/rca discrete pronto codes upgrade.rmdu` | 4 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/rca discrete pronto codes upgrade.rmdu` | 5 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/rca discrete pronto codes upgrade.rmdu` | 6 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/rca discrete pronto codes upgrade.rmdu` | 7 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/rca discrete pronto codes upgrade.rmdu` | 8 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/rca discrete pronto codes upgrade.rmdu` | 9 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `TV/rca discrete pronto codes upgrade.rmdu` | `power` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
 | `Tape/Sony TC-WR99ES Dual Tape.rmdu` | `+100` | `the function has no single OBC byte` |
 | `Tape/Sony TC-WR99ES Dual Tape.rmdu` | 0 | `the function has no single OBC byte` |
 | `Tape/Sony TC-WR99ES Dual Tape.rmdu` | 1 | `the function has no single OBC byte` |
@@ -7546,50 +7072,6 @@ silently (SPEC R19, condition 5).
 | `VCR/Perkins.rmdu` | `tv/vcr` | `the function has no single OBC byte` |
 | `VCR/Perkins.rmdu` | `vol down` | `the function has no single OBC byte` |
 | `VCR/Perkins.rmdu` | `vol up` | `the function has no single OBC byte` |
-| `VCR/RCA VCR Proscan PSVR82.rmdu` | 0 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `VCR/RCA VCR Proscan PSVR82.rmdu` | 1 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `VCR/RCA VCR Proscan PSVR82.rmdu` | 2 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `VCR/RCA VCR Proscan PSVR82.rmdu` | 3 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `VCR/RCA VCR Proscan PSVR82.rmdu` | 4 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `VCR/RCA VCR Proscan PSVR82.rmdu` | 5 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `VCR/RCA VCR Proscan PSVR82.rmdu` | 6 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `VCR/RCA VCR Proscan PSVR82.rmdu` | 7 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `VCR/RCA VCR Proscan PSVR82.rmdu` | 8 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `VCR/RCA VCR Proscan PSVR82.rmdu` | 9 | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `VCR/RCA VCR Proscan PSVR82.rmdu` | `Jog Down` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `VCR/RCA VCR Proscan PSVR82.rmdu` | `Jog Left` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `VCR/RCA VCR Proscan PSVR82.rmdu` | `Jog Right` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `VCR/RCA VCR Proscan PSVR82.rmdu` | `Jog Shuttle` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `VCR/RCA VCR Proscan PSVR82.rmdu` | `Jog Up` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `VCR/RCA VCR Proscan PSVR82.rmdu` | `Power Off` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `VCR/RCA VCR Proscan PSVR82.rmdu` | `Power On` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `VCR/RCA VCR Proscan PSVR82.rmdu` | `channel down` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `VCR/RCA VCR Proscan PSVR82.rmdu` | `channel up` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `VCR/RCA VCR Proscan PSVR82.rmdu` | `display` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `VCR/RCA VCR Proscan PSVR82.rmdu` | `down arrow` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `VCR/RCA VCR Proscan PSVR82.rmdu` | `eject` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `VCR/RCA VCR Proscan PSVR82.rmdu` | `enter` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `VCR/RCA VCR Proscan PSVR82.rmdu` | `exit` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `VCR/RCA VCR Proscan PSVR82.rmdu` | `fast fwd` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `VCR/RCA VCR Proscan PSVR82.rmdu` | `left arrow` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `VCR/RCA VCR Proscan PSVR82.rmdu` | `menu` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `VCR/RCA VCR Proscan PSVR82.rmdu` | `pause` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `VCR/RCA VCR Proscan PSVR82.rmdu` | `play` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `VCR/RCA VCR Proscan PSVR82.rmdu` | `power` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `VCR/RCA VCR Proscan PSVR82.rmdu` | `previous channel` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `VCR/RCA VCR Proscan PSVR82.rmdu` | `record` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `VCR/RCA VCR Proscan PSVR82.rmdu` | `rewind` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `VCR/RCA VCR Proscan PSVR82.rmdu` | `right arrow` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `VCR/RCA VCR Proscan PSVR82.rmdu` | `search` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `VCR/RCA VCR Proscan PSVR82.rmdu` | `select` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `VCR/RCA VCR Proscan PSVR82.rmdu` | `slow+` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `VCR/RCA VCR Proscan PSVR82.rmdu` | `slow-` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `VCR/RCA VCR Proscan PSVR82.rmdu` | `speed` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `VCR/RCA VCR Proscan PSVR82.rmdu` | `stop` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `VCR/RCA VCR Proscan PSVR82.rmdu` | `tracking down` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `VCR/RCA VCR Proscan PSVR82.rmdu` | `tracking up` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `VCR/RCA VCR Proscan PSVR82.rmdu` | `tv/vcr` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
-| `VCR/RCA VCR Proscan PSVR82.rmdu` | `up arrow` | `the carrier is not 38 kHz, which the ledger's RCA-38 has` |
 | `VCR/RS2116 Toshiba VCR 1045.rmdu` | `X2` | `the function has no single OBC byte` |
 | `VCR/RS2116 Toshiba VCR 1045.rmdu` | `center` | `the function has no single OBC byte` |
 | `VCR/RS2116 Toshiba VCR 1045.rmdu` | `device button` | `the function has no single OBC byte` |

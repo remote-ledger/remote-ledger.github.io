@@ -7,6 +7,7 @@ import csv
 import hashlib
 import json
 import re
+from collections import Counter
 from pathlib import Path
 
 import pytest
@@ -14,6 +15,7 @@ import pytest
 from remote_ledger.errors import ValidationError
 from remote_ledger.jp1 import importer as jp
 from remote_ledger.jp1 import rmdu
+from remote_ledger.jp1.rmdu import rev8
 from remote_ledger.remote import load_remote
 from remote_ledger.serialize import load
 
@@ -370,19 +372,59 @@ def test_recs80_68_jvc_48_and_teac_k_are_their_translators():
     assert signal(upgrade("Teac-K", "0 4 68 null", ("a", "7F FF"))) == "the OEM byte 68 is not Teac's 67, which the ledger's frame fixes"
 
 
-def test_rca_is_read_only_where_it_sends_the_38_khz_of_the_ledgers_rca_38():
-    """``RCA-38`` is ``Translator()``: the function is the OBC as it is. ``RCA`` (variant 2) and ``RCA-56`` are
-    ``Translator(comp)`` (``B5`` is 0x4A) and say their carrier in parameter 1, where 1 is 38 kHz; the first
-    variant of ``RCA`` sends 56 kHz. The ledger has no 56 kHz RCA, so those are said so and not read."""
+def test_rca_is_rca_at_56_khz_or_rca_38_at_38_by_executor_and_carrier_parameter():
+    """``RCA-38`` and the first variant of ``RCA`` are ``Translator()``: the function is the OBC as it is, at 38 kHz for
+    the first and 56 kHz for the second. ``RCA`` (variant 2) and ``RCA-56`` are ``Translator(comp)`` (``B5`` is 0x4A) and
+    say their carrier in parameter 1: 1 is 38 kHz, 0 is 57 or 56 (D152, D189)."""
     assert signal(upgrade("RCA-38", "15", ("a", "4A"))) == rmdu.Signal("RCA-38", 15, None, 0x4A)
+    assert signal(upgrade("RCA", "15", ("a", "4A"))) == rmdu.Signal("RCA", 15, None, 0x4A)
     assert signal(upgrade("RCA-56", "15 1", ("a", "B5"))) == rmdu.Signal("RCA-38", 15, None, 0x4A)
     assert signal(upgrade("RCA", "15 1", ("a", "B5"), variant="2")) == rmdu.Signal("RCA-38", 15, None, 0x4A)
-    carrier = "the carrier is not 38 kHz, which the ledger's RCA-38 has"
-    assert signal(upgrade("RCA-56", "15 0", ("a", "B5"))) == carrier
-    assert signal(upgrade("RCA", "15 0", ("a", "B5"), variant="2")) == carrier
-    assert signal(upgrade("RCA", "15", ("a", "4A"))) == carrier
+    assert signal(upgrade("RCA-56", "15 0", ("a", "B5"))) == rmdu.Signal("RCA", 15, None, 0x4A)
+    assert signal(upgrade("RCA", "5 0", ("a", "B5"), variant="2")) == rmdu.Signal("RCA", 5, None, 0x4A)
+    assert signal(upgrade("RCA", "15 2", ("a", "B5"), variant="2")) == "the carrier parameter is missing"
+    assert signal(upgrade("RCA-56", "15 null", ("a", "B5"))) == "the carrier parameter is missing"
+    assert signal(upgrade("RCA", "15", ("a", "4A"), variant="3")) == "the variant is not read"
+    assert signal(upgrade("RCA", "16", ("a", "4A"))) == "the device parameter is missing or is not four bits"
     assert signal(upgrade("RCA-38", "16", ("a", "4A"))) == "the device parameter is missing or is not four bits"
     assert signal(upgrade("RCA-38 Official", "null", ("a", "4A"), fixed="00")) == "the device parameter is missing or is not four bits"
+
+
+def test_rca_combo_is_the_device_and_the_function_in_two_bytes_and_a_prefix_is_not_read():
+    """The first variant, ``Translator(0,4,0) Translator(1,8,8)``: the device is the top nibble of the first byte, whose
+    low nibble is the executor's fixed 15, and the function the second byte (``5F 0C`` is device 5, function 12). The
+    second, ``Translator(0,4,0,comp) Translator(1,2,6) Translator(2,8,8,comp)``: the device and the function complemented
+    and the two lowest bits of the first byte a prefix choice (``A0 F3`` is device 5, function 12)."""
+    assert signal(upgrade("RCA Combo (Official)", "", ("a", "5F 0C"))) == rmdu.Signal("RCA", 5, None, 12)
+    assert signal(upgrade("RCA Combo (Official)", "", ("a", "50 0C"))) == "the first byte's low four bits are not the executor's fixed 15"
+    assert signal(upgrade("RCA Combo (Official)", "null null", ("a", "A0 F3"), variant="2")) == rmdu.Signal("RCA", 5, None, 12)
+    assert signal(upgrade("RCA Combo (Official)", "null null", ("a", "A1 F3"), variant="2")) == (
+        "the function sends a prefix code first or sets a bit the variant does not use")
+    assert signal(upgrade("RCA Combo (Official)", "null null", ("a", "A0 F3"), variant="3")) == "the variant is not read"
+    assert signal(upgrade("RCA Combo (Official)", "", ("a", "5F"))) == "the function has no two OBC bytes"
+
+
+def test_tdc_is_the_variant_device_and_sub_device_and_the_obc_shifted_right_by_one():
+    """``Translator(0,7)`` keeps the seven bits of the OBC byte from the top (``04`` is 2, ``0A`` is 5); the parameters
+    are Variant, Device and Sub Device, and the variant is the ledger's ``TDC-38`` (0) or ``TDC-56`` (1)."""
+    up = upgrade("TDC", "0 6 10", ("1", "04"), ("2", "0A"), ("select", "3C"))
+    assert [signal(up, i) for i in range(3)] == [rmdu.Signal("TDC-38", 6, 10, 2), rmdu.Signal("TDC-38", 6, 10, 5),
+                                                 rmdu.Signal("TDC-38", 6, 10, 30)]
+    assert signal(upgrade("TDC", "1 14 10", ("2", "06"))) == rmdu.Signal("TDC-56", 14, 10, 3)
+    assert signal(upgrade("TDC", "0 6 10", ("a", "FE"))) == rmdu.Signal("TDC-38", 6, 10, 127)
+    assert signal(upgrade("TDC", "0 6 10", ("a", "05"))) == "the OBC byte has its lowest bit set, which a seven-bit command does not use"
+    assert signal(upgrade("TDC", "2 6 10", ("a", "04"))) == "the variant, device or sub device parameter is missing"
+    assert signal(upgrade("TDC", "0 null 10", ("a", "04"))) == "the variant, device or sub device parameter is missing"
+    assert signal(upgrade("TDC", "0 32 10", ("a", "04"))) == "the device or the sub device is not five bits"
+    assert signal(upgrade("TDC", "0 6 32", ("a", "04"))) == "the device or the sub device is not five bits"
+
+
+def test_gi_cable_is_device_0_and_the_obc_reversed():
+    """``Translator(lsb)``, and the executor has no device parameter (IrpTransmogrifier says ``D==0`` of it): ``80`` is
+    the digit 1, ``A0`` the digit 5 and ``2C`` is 52, the up arrow of the box IrpTransmogrifier captured."""
+    up = upgrade("GI Cable", "", ("0", "00"), ("1", "80"), ("5", "A0"), ("up", "2C"))
+    assert [signal(up, i) for i in range(4)] == [rmdu.Signal("GI_Cable", 0, None, f) for f in (0, 1, 5, 52)]
+    assert signal(upgrade("GI Cable", "null null", ("1", "80"))) == rmdu.Signal("GI_Cable", 0, None, 1)
 
 
 def test_mce_is_the_obc_as_it_is_with_a_seven_bit_device_and_the_second_oem_byte():
@@ -421,6 +463,83 @@ def test_panasonic_old_is_f_reversed_in_the_top_six_bits_and_the_device_the_low_
     assert signal(upgrade("Panasonic (old)", "null null null", ("0", "9B"), fixed="90 90 90")) == \
         rmdu.Signal("Panasonic_Old", 27, None, 25)
     assert signal(upgrade("Panasonic (old)", "32 null null", ("0", "9B"))) == "the device is not five bits"
+
+
+def _committed_jp1_keys(protocol: str):
+    """``(executor, label, device, subdevice, function, file)`` of every key of the committed files that send ``protocol``:
+    the executor and the function's own name are read from the citation."""
+    shape = re.compile(r"function \d+ '(.*)' \(OBC [0-9A-F ]+; ([^;]+?), parms [^)]*\)")
+    for path in sorted((ROOT / jp.IMPORT_ROOT).rglob("*.json")):
+        doc = load(path)
+        if doc.get("protocol", {}).get("name") != protocol:
+            continue
+        for spec in doc["keys"].values():
+            for form in spec["forms"]:
+                m = shape.search(form["source"])
+                yield (m[2], m[1], int(form["device"], 0), None if "subdevice" not in form else int(form["subdevice"], 0),
+                       int(form["function"], 0), path.name)
+
+
+def test_the_jp1_rca_upgrades_send_the_codes_the_lirc_remotes_of_rca_devices_send():
+    """An independent check of the RCA rules at 56 kHz, from another project. The LIRC remotes of RCA devices
+    (878 keys, 290 distinct device and function pairs: tests/test_rca.py's layout decoder) have the codes of TVs, a game
+    console's DVD kit, converter boxes, a VCR and a home theater. The 18 upgrades of the executor ``RCA`` (its first
+    variant, the function the OBC as it is) send 461 of 552 keys among them, and the same keys with the function
+    complemented 32 and with its bits reversed 128. The nine of ``RCA Combo (Official)`` (the device and the function in
+    two bytes, one of its variants complemented) send 403 of 552. The device 2 of one upgrade has no LIRC remote."""
+    from test_rca import lirc_codes
+
+    codes = lirc_codes()
+    counts: Counter = Counter()
+    for executor, _, device, _, function, _ in _committed_jp1_keys("RCA"):
+        counts[executor] += 1
+        counts[executor, "plain"] += (device, function) in codes
+        counts[executor, "complemented"] += (device, ~function & 0xFF) in codes
+        counts[executor, "reversed"] += (device, rev8(function)) in codes
+    assert [counts["RCA"], counts["RCA", "plain"], counts["RCA", "complemented"], counts["RCA", "reversed"]] == [552, 461, 32, 128]
+    assert [counts["RCA Combo (Official)"], counts["RCA Combo (Official)", "plain"]] == [552, 403]
+
+
+def test_the_jp1_gi_cable_upgrades_send_the_codes_of_the_lirc_remotes_and_the_keys_irptransmogrifier_names():
+    """An independent check of the G.I.Cable rule (device 0, the function the OBC reversed), from two projects. The LIRC
+    remotes of cable boxes (777 keys: tests/test_gicable.py's layout decoder) hold 68 functions of device 0 (and two
+    keys of device 4). The 20 upgrades of ``GI Cable`` send 973 of their 982 keys among them; with the OBC as it is
+    271 would be and with it complemented 32. And IrpTransmogrifier's capture of a cable box names the keys 0, 1, 5, 6
+    and the four arrows (functions 0, 1, 5, 6 and 52 to 55) and Play (27): the upgrades agree on all 140 uses of
+    the first eight names, and on Play in 10 of 17 (the other seven send 56, a different model)."""
+    from test_gicable import lirc_codes
+
+    codes = lirc_codes()
+    rows = list(_committed_jp1_keys("GI_Cable"))
+    assert len(rows) == 982 and {(d, s) for _, _, d, s, _, _ in rows} == {(0, None)}
+    assert sum((0, f) in codes for *_, f, _ in rows) == 973
+    assert sum((0, rev8(f)) in codes for *_, f, _ in rows) == 271
+    assert sum((0, ~f & 0xFF) in codes for *_, f, _ in rows) == 32
+    captured = {"0": 0, "1": 1, "5": 5, "6": 6, "up": 52, "down": 53, "left": 54, "right": 55, "play": 27}
+    agree: Counter = Counter()
+    for _, label, _, _, function, _ in rows:
+        name = re.sub(r"(?i)^(num_|arrow )|[ _]?arrow$", "", label.strip()).lower()
+        if name in captured:
+            agree[name == "play", function == captured[name]] += 1
+    assert agree == {(False, True): 140, (True, True): 10, (True, False): 7}
+
+
+def test_the_jp1_tdc_upgrades_for_device_6_and_sub_device_10_send_the_keys_irptransmogrifier_captured():
+    """An independent check of the TDC rule, from another project's hardware capture. IrpTransmogrifier's
+    ``TDC-38_6_10`` is a TDC IPTV remote, device 6 and sub device 10, whose keys 1 to 4 are functions 2, 5, 6 and 9 and whose
+    Up, Down, Left, Right and OK are 25, 26, 29, 33 and 30. The four upgrades for device 6 and sub device 10, read as
+    ``OBC >> 1``, name those nine keys and send every one of those functions (36 of 36). The capture of a TDC-56 remote is
+    device 14, which no upgrade has, so ``TDC-56`` rests on the same translator and the variant parameter."""
+    captured = {"1": 2, "2": 5, "3": 6, "4": 9, "up": 25, "down": 26, "left": 29, "right": 33, "select": 30}
+    seen: dict[str, dict[str, int]] = {}
+    for executor, label, device, sub, function, name in _committed_jp1_keys("TDC-38"):
+        if (device, sub) != (6, 10):
+            continue
+        key = re.sub(r"(?i)^num_|[ _]?arrow$", "", label.strip()).lower()
+        if key in captured:
+            seen.setdefault(name, {})[key] = function
+    assert len(seen) == 4 and all(v == captured for v in seen.values()), seen
+    assert any(row[2:4] == (14, 10) for row in _committed_jp1_keys("TDC-56")) is False
 
 
 def test_an_executor_not_read_and_a_function_with_no_single_byte_are_said_so():
@@ -615,7 +734,7 @@ def test_the_committed_jp1_import_keeps_r19():
     assert f"@ `{meta['commit']}`" in (ROOT / jp.IMPORT_ROOT / jp.REPORT).read_text(encoding="utf-8")
     shape = re.compile(
         rf"^jp1-device-upgrades@{meta['commit'][:7]} \S.* function (\d+) '.*' \(OBC ((?:[0-9A-F]{{2}})(?: [0-9A-F]{{2}})*); [^;]+, parms [^)]*\): "
-        r"(NEC1|NEC2|NECx1|NECx2|Sony12|Sony15|Sony20|RC5|RC6|JVC|Aiwa|Denon|Sharp|Panasonic|Samsung36|Proton|F12_relaxed|RECS80|Denon-K|Pioneer-2Part|RCA-38|RECS80-0068|JVC-48|Teac-K|NEC1-f16|NEC2-f16|MCE|Nokia32|Panasonic_Old) device (\d+)(?: subdevice (\d+))? function (\d+)", re.S)
+        r"(NEC1|NEC2|NECx1|NECx2|Sony12|Sony15|Sony20|RC5|RC6|JVC|Aiwa|Denon|Sharp|Panasonic|Samsung36|Proton|F12_relaxed|RECS80|Denon-K|Pioneer-2Part|RCA-38|RECS80-0068|JVC-48|Teac-K|NEC1-f16|NEC2-f16|MCE|Nokia32|Panasonic_Old|RCA|TDC-38|TDC-56|GI_Cable) device (\d+)(?: subdevice (\d+))? function (\d+)", re.S)
 
     def num(value):
         return int(value, 0) if isinstance(value, str) else value
