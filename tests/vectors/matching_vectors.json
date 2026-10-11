@@ -289,6 +289,21 @@
       "brand": "WZRD",
       "model": "7790",
       "remotes": [1901]
+    },
+    {
+      "brand": "ZED",
+      "model": "Zed ZX7800",
+      "remotes": [1803]
+    },
+    {
+      "brand": "ZED",
+      "model": "ZX7800",
+      "remotes": [1804]
+    },
+    {
+      "brand": "WZRD",
+      "model": "7800",
+      "remotes": [1902]
     }
   ],
   "constants": {
@@ -2115,6 +2130,18 @@
           "models": [],
           "permille": 819,
           "remoteIds": [1003, 1801]
+        },
+        {
+          "brand": "ZED",
+          "evidence": [
+            "model:prefix",
+            "via:text",
+            "brand:text"
+          ],
+          "model": "Zed ZX7800",
+          "models": [],
+          "permille": 819,
+          "remoteIds": [1803]
         }
       ],
       "brand": null,
@@ -2141,9 +2168,65 @@
       ],
       "brand": null,
       "model": null,
-      "note": "the repeating model typed as it is: the exact long run hides every run inside it",
+      "note": "the repeating model typed as it is, with nothing of the brand inside it to find: the answer is that model alone",
       "texts": [
         "ZED ZX7710"
+      ]
+    },
+    {
+      "answer": [
+        {
+          "brand": "ZED",
+          "evidence": [
+            "model:exact",
+            "via:text",
+            "brand:text"
+          ],
+          "model": "Zed ZX7800",
+          "models": [],
+          "permille": 900,
+          "remoteIds": [1803]
+        },
+        {
+          "brand": "ZED",
+          "evidence": [
+            "model:exact",
+            "via:text",
+            "brand:text"
+          ],
+          "model": "ZX7800",
+          "models": [],
+          "permille": 900,
+          "remoteIds": [1804]
+        }
+      ],
+      "brand": null,
+      "model": null,
+      "note": "the repeating model and the same device listed without the brand, both, the longer key first; the other brand's 7800 stays out",
+      "texts": [
+        "ZED ZX7800"
+      ]
+    },
+    {
+      "answer": [
+        {
+          "brand": "ZED",
+          "evidence": [
+            "model:exact",
+            "via:text",
+            "brand:none"
+          ],
+          "model": "ZX7800",
+          "models": [],
+          "permille": 855,
+          "remoteIds": [1804]
+        }
+      ],
+      "brand": null,
+      "model": null,
+      "note": "with no brand named there is no brand to look inside: the bare model alone",
+      "texts": [
+        "ZX7800"
       ]
     }
   ],

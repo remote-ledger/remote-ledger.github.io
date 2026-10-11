@@ -66,8 +66,11 @@ a float. ``Candidate.score`` is that integer over 1000.
    among the models of the named brands, and only an exact match of it counts: the long run may have
    matched a model whose name repeats its brand and is one edit from what was typed (``philips bdp 3390``
    is ``philipsbdp3300``, 928), and the exact ``bdp3390`` of the named brand must not be hidden by it, while
-   another brand's ``3390`` and the part's own near matches are still kept out. A poor match of the long
-   run, or a short entry that is only the start of it, hides nothing.
+   another brand's ``3390`` and the part's own near matches are still kept out. **The same holds for a run
+   that gave a candidate by the exact rule when that candidate is a model whose key is a named brand's key and
+   more** (a model that repeats its brand, ``yamaha ysp-5100``): the device may be listed again without the
+   brand's name (``ysp-5100``, from another source), and the answer to ``yamaha ysp5100`` has both, the longer
+   key first. A poor match of the long run, or a short entry that is only the start of it, hides nothing.
 5. *Candidates.* A model key's grams (D90) give the models that share at least 40% of them,
    the 40 sharing the most (ties to the lower id). If a brand is named, the same is done
    inside each named brand's models, so a brand's models that a global top 40 would miss are
@@ -717,7 +720,8 @@ class MatchIndex:
                 if exact_only and rule != "exact":
                     continue
                 gave = gave or (score >= COVER_MIN and rule != "prefix")
-                gave_exact = gave_exact or rule == "exact"
+                # an exact match of a model that repeats its named brand covers like an edit, not like an exact one
+                gave_exact = gave_exact or (rule == "exact" and not self._repeats_brand(brand_id, entry, named))
                 best = found.get(model_id)
                 if best is None or (total, score) > (best[0], best[1]):
                     found[model_id] = (total, score, len(entry), rule, via, why)
@@ -727,6 +731,14 @@ class MatchIndex:
             -kv[1][0], -kv[1][1], -kv[1][2], self.brands[self._model(kv[0])[0]][0],
             self._model(kv[0])[1], kv[0]))
         return ranked, named
+
+    def _repeats_brand(self, brand_id: int, entry: str, named: dict[int, tuple[int, str]]) -> bool:
+        """Whether the catalog entry (a model's key) is a named brand's key and something more: the model repeats its
+        brand (``yamaha ysp-5100`` of Yamaha, whose model ``ysp-5100`` the same device may also be listed as)."""
+        if brand_id not in named:
+            return False
+        brand = self.brands[brand_id][1]
+        return len(entry) > len(brand) and entry.startswith(brand)
 
     # -- as you type ---------------------------------------------------------------------------
 
