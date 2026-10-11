@@ -131,7 +131,7 @@ def test_the_brand_whose_key_is_the_query_comes_first_however_few_models_it_has(
 
 def test_brands_with_as_many_models_go_by_name(plain):
     both = [b for b in plain.brands.values() if b[3] == 6]
-    assert sorted(b[0] for b in both) == ["SAMSUNG", "SONY"]
+    assert sorted(b[0] for b in both) == ["SAMSUNG", "SONY", "ZED"]
     assert names(plain.suggest_brands("s"))[:2] == ["SAMSUNG", "SONY"]
     # and by the name as it is written, in code point order: a capital before a small letter
     mixed = MatchIndex.from_entries([{"brand": "Zeta", "model": "A 1", "remotes": [1]},

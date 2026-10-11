@@ -282,12 +282,32 @@ def test_a_run_one_edit_from_a_model_that_repeats_its_brand_hides_only_the_other
     nordic = MatchIndex.from_entries(entries)
     # the long run 'nordicmx7790' is one edit from 'nordicmx7710' (916), and 'mx7790' is exact inside it
     assert ask(nordic, texts=["NORDIC MX 7790"]) == [("NORDIC", "MX 7790", 900), ("NORDIC", "Nordic MX7710", 824)]
-    # an exact long run hides everything inside it, as it did
+    # an exact long run hides everything inside it, as it did (here there is no bare MX7710 inside it to keep)
     assert ask(nordic, texts=["NORDIC MX7710"]) == [("NORDIC", "Nordic MX7710", 900)]
     # 'mx7711' is a near match of MX 7712 (833), not an exact one: the long run's cover still hides it
     assert ask(nordic, texts=["NORDIC MX 7711"]) == [("NORDIC", "Nordic MX7710", 824)]
     # with no brand named there is no brand to look inside, so the run is hidden as before
     assert [(b, m) for b, m, _ in ask(nordic, texts=["MX 7790"])][0] == ("NORDIC", "MX 7790")
+
+
+def test_an_exact_model_that_repeats_its_brand_no_longer_hides_the_same_device_listed_without_the_brand():
+    """D204. ``yamaha ysp5100`` is the model ``Yamaha YSP-5100`` exactly, and the same device is also the brand's
+    ``YSP-5100`` (another source's remotes): the exact run used to hide the bare model, the catalog's 2,596 such pairs
+    answering both in 67 of 400 typed queries. Now both are found, the longer key first, and another brand's ``7800`` and
+    the near matches stay out as they do for an edit cover."""
+    entries = [
+        {"brand": "NORDIC", "model": "Nordic MX7800", "remotes": [5]}, {"brand": "NORDIC", "model": "MX7800", "remotes": [6]},
+        {"brand": "NORDIC", "model": "MX 7801", "remotes": [7]}, {"brand": "KAPPA", "model": "7800", "remotes": [8]},
+    ]
+    nordic = MatchIndex.from_entries(entries)
+    assert ask(nordic, texts=["NORDIC MX7800"]) == [("NORDIC", "Nordic MX7800", 900), ("NORDIC", "MX7800", 900)]
+    assert ask(nordic, texts=["NORDIC MX 7800"]) == [("NORDIC", "Nordic MX7800", 900), ("NORDIC", "MX7800", 900)]
+    # with no brand named there is no brand to look inside
+    assert [(b, m) for b, m, _ in ask(nordic, texts=["MX7800"])][0] == ("NORDIC", "MX7800")
+    # a model that repeats a brand it is not of is not the brand's: the cover stays an exact one and hides what is inside
+    other = MatchIndex.from_entries([{"brand": "KAPPA", "model": "Nordic MX7800", "remotes": [1]},
+                                     {"brand": "NORDIC", "model": "MX7800", "remotes": [2]}])
+    assert [(b, m) for b, m, _ in ask(other, texts=["NORDIC MX7800"])] == [("KAPPA", "Nordic MX7800")]
 
 
 def test_a_part_number_is_a_candidate_with_its_kind_in_the_evidence(index):

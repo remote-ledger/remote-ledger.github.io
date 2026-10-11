@@ -79,6 +79,11 @@ CATALOG: list[dict[str, Any]] = [
     {"brand": "ZED", "model": "Zed ZX7710", "remotes": [1003, 1801]},
     {"brand": "ZED", "model": "ZX 7790", "remotes": [1802]},
     {"brand": "WZRD", "model": "7790", "remotes": [1901]},
+    # a model that repeats its brand, the same device listed without the brand, and another brand's model that is a
+    # part of it (D204)
+    {"brand": "ZED", "model": "Zed ZX7800", "remotes": [1803]},
+    {"brand": "ZED", "model": "ZX7800", "remotes": [1804]},
+    {"brand": "WZRD", "model": "7800", "remotes": [1902]},
 ]
 
 #: Brand aliases (D101): ``brand`` is a brand of the catalog above, ``alias`` another name a
@@ -192,7 +197,10 @@ def build() -> dict[str, Any]:
     ask("西部数据", "WDTV HUB", [], "a shared alias given with a model: the model of the brand that has it, the other brand's models not")
     # D168: a long run one edit from a model that repeats its brand hid every run inside it, including the exact model
     ask(None, None, ["ZED ZX 7790"], "a long run one edit from a model that repeats its brand hides nothing of the brand's exact model; the other brand's 7790 stays out")
-    ask(None, None, ["ZED ZX7710"], "the repeating model typed as it is: the exact long run hides every run inside it")
+    ask(None, None, ["ZED ZX7710"], "the repeating model typed as it is, with nothing of the brand inside it to find: the answer is that model alone")
+    # D204: an exact run that is a model repeating its brand hid the brand's exact bare model inside it
+    ask(None, None, ["ZED ZX7800"], "the repeating model and the same device listed without the brand, both, the longer key first; the other brand's 7800 stays out")
+    ask(None, None, ["ZX7800"], "with no brand named there is no brand to look inside: the bare model alone")
     return {
         "format": FORMAT,
         "about": "Cross-language vectors of the matcher (DESIGN.md D97): a port gives these "
