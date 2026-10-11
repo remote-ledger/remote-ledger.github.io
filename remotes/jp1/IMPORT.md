@@ -17,7 +17,7 @@ silently (SPEC R19, condition 5).
 | Upstream files: skipped: no function decodes | 17 |
 | Upstream files: skipped: no functions | 1 |
 | Upstream files: upgrades | 3,251 |
-| Remotes: imported | 2,811 |
+| Remotes: imported | 2,825 |
 | Remotes: skipped: an authored remote wins | 7 |
 | Keys: imported: Aiwa | 947 |
 | Keys: imported: Denon | 1,791 |
@@ -35,7 +35,7 @@ silently (SPEC R19, condition 5).
 | Keys: imported: Nokia32 | 1,648 |
 | Keys: imported: Panasonic | 4,656 |
 | Keys: imported: Panasonic_Old | 794 |
-| Keys: imported: Pioneer-2Part | 1,320 |
+| Keys: imported: Pioneer-2Part | 2,287 |
 | Keys: imported: Proton | 256 |
 | Keys: imported: RC5 | 5,648 |
 | Keys: imported: RC6 | 1,745 |
@@ -61,7 +61,7 @@ silently (SPEC R19, condition 5).
 | Keys: skipped: the first byte's low four bits are not the executor's fixed 15 | 1 |
 | Keys: skipped: the flag byte has bits the variant does not use | 1 |
 | Keys: skipped: the function has no single OBC byte | 5,442 |
-| Keys: skipped: the function has no two OBC bytes | 688 |
+| Keys: skipped: the function has no two OBC bytes | 711 |
 | Keys: skipped: the high X bit is sent at release, which a form cannot say | 40 |
 | Keys: skipped: the sub device parameter is missing | 97 |
 | Keys: skipped: the variant is not read (its devices are chosen by more flag bits) | 268 |
@@ -81,7 +81,7 @@ silently (SPEC R19, condition 5).
 | Files by ledger protocol: Nokia32 | 39 |
 | Files by ledger protocol: Panasonic | 93 |
 | Files by ledger protocol: Panasonic_Old | 19 |
-| Files by ledger protocol: Pioneer-2Part | 29 |
+| Files by ledger protocol: Pioneer-2Part | 43 |
 | Files by ledger protocol: Proton | 12 |
 | Files by ledger protocol: RC5 | 147 |
 | Files by ledger protocol: RC6 | 41 |
@@ -98,10 +98,10 @@ silently (SPEC R19, condition 5).
 | Files by ledger protocol: TDC-38 | 13 |
 | Files by ledger protocol: TDC-56 | 3 |
 | Files by ledger protocol: Teac-K | 2 |
-| Brand taken from: the longest brand of the index that begins the description | 149 |
-| Brand taken from: the master index | 2,571 |
+| Brand taken from: the longest brand of the index that begins the description | 150 |
+| Brand taken from: the master index | 2,584 |
 
-## Executors this import does not read (upgrades) (152)
+## Executors this import does not read (upgrades) (150)
 
 | Executor | Files |
 |---|---|
@@ -117,7 +117,6 @@ silently (SPEC R19, condition 5).
 | `Manual Settings\: 01 FF` | 9 |
 | `XMP (JP1)` | 9 |
 | `pid\: 00 A0` | 9 |
-| `Pioneer 4DEV` | 8 |
 | `Thomson` | 8 |
 | `TiVo (Official)` | 8 |
 | `Mitsubishi` | 7 |
@@ -125,7 +124,6 @@ silently (SPEC R19, condition 5).
 | `Panasonic Mixed Combo` | 7 |
 | `GI 4DTV Official` | 6 |
 | `Panasonic Combo2` | 6 |
-| `Pioneer 3DEV` | 6 |
 | `Sony Combo (12/20)` | 6 |
 | `Bose` | 5 |
 | `HK Combo` | 5 |
@@ -305,7 +303,7 @@ silently (SPEC R19, condition 5).
 | `Satellite/SonicView SV1000 6131.rmdu` | `remotes/jp1/Sonicview/Satellite-SonicView_SV1000_6131.json` |
 | `TV/VESTEL TV.rmdu` | `remotes/jp1/Vestel/TV-VESTEL_TV.json` |
 
-## Functions skipped (6,837)
+## Functions skipped (6,860)
 
 | File | Function | Reason |
 |---|---|---|
@@ -838,6 +836,23 @@ silently (SPEC R19, condition 5).
 | `Audio/Panasonic SA-XR57.rmdu` | `TV/Video` | `the function has no two OBC bytes` |
 | `Audio/Panasonic SA-XR57.rmdu` | `Track Back` | `the function has no two OBC bytes` |
 | `Audio/Panasonic SA-XR57.rmdu` | `Track Forward` | `the function has no two OBC bytes` |
+| `Audio/Pioneer VSX-D710S.rmdu` | `*** bottom ***` | `the function has no two OBC bytes` |
+| `Audio/Pioneer VSX-D710S.rmdu` | `display` | `the function has no two OBC bytes` |
+| `Audio/Pioneer VSX-D710S.rmdu` | `exit` | `the function has no two OBC bytes` |
+| `Audio/Pioneer VSX-D710S.rmdu` | `fast fwd` | `the function has no two OBC bytes` |
+| `Audio/Pioneer VSX-D710S.rmdu` | `last (prev ch)` | `the function has no two OBC bytes` |
+| `Audio/Pioneer VSX-D710S.rmdu` | `menu` | `the function has no two OBC bytes` |
+| `Audio/Pioneer VSX-D710S.rmdu` | `pause` | `the function has no two OBC bytes` |
+| `Audio/Pioneer VSX-D710S.rmdu` | `pip move` | `the function has no two OBC bytes` |
+| `Audio/Pioneer VSX-D710S.rmdu` | `pip on/off` | `the function has no two OBC bytes` |
+| `Audio/Pioneer VSX-D710S.rmdu` | `pip swap` | `the function has no two OBC bytes` |
+| `Audio/Pioneer VSX-D710S.rmdu` | `play` | `the function has no two OBC bytes` |
+| `Audio/Pioneer VSX-D710S.rmdu` | `program guide` | `the function has no two OBC bytes` |
+| `Audio/Pioneer VSX-D710S.rmdu` | `record` | `the function has no two OBC bytes` |
+| `Audio/Pioneer VSX-D710S.rmdu` | `rewind` | `the function has no two OBC bytes` |
+| `Audio/Pioneer VSX-D710S.rmdu` | `sleep` | `the function has no two OBC bytes` |
+| `Audio/Pioneer VSX-D710S.rmdu` | `stop` | `the function has no two OBC bytes` |
+| `Audio/Pioneer VSX-D710S.rmdu` | `tv/vcr` | `the function has no two OBC bytes` |
 | `Audio/Pioneer X-HM76D - 1280.rmdu` | `Bluetooth` | `the variant is not read (its devices are chosen by more flag bits)` |
 | `Audio/Pioneer X-HM76D - 1280.rmdu` | `CD` | `the variant is not read (its devices are chosen by more flag bits)` |
 | `Audio/Pioneer X-HM76D - 1280.rmdu` | `Clear` | `the variant is not read (its devices are chosen by more flag bits)` |
@@ -870,6 +885,7 @@ silently (SPEC R19, condition 5).
 | `Audio/Pioneer X-HM76D - 1280.rmdu` | `Up` | `the variant is not read (its devices are chosen by more flag bits)` |
 | `Audio/Pioneer X-HM76D - 1280.rmdu` | `Vol+` | `the variant is not read (its devices are chosen by more flag bits)` |
 | `Audio/Pioneer X-HM76D - 1280.rmdu` | `Vol-` | `the variant is not read (its devices are chosen by more flag bits)` |
+| `Audio/Pioneer-VSX-D509s-amp-1_00a.rmdu` | `AUX` | `the function has no two OBC bytes` |
 | `Audio/PioneerAmp.rmdu` | 0 | `the function has no single OBC byte` |
 | `Audio/PioneerAmp.rmdu` | 1 | `the function has no single OBC byte` |
 | `Audio/PioneerAmp.rmdu` | 2 | `the function has no single OBC byte` |
@@ -877,6 +893,11 @@ silently (SPEC R19, condition 5).
 | `Audio/PioneerAmp.rmdu` | 4 | `the function has no single OBC byte` |
 | `Audio/PioneerAmp.rmdu` | 7 | `the function has no single OBC byte` |
 | `Audio/PioneerAmp.rmdu` | 9 | `the function has no single OBC byte` |
+| `Audio/Pioneer_VSX-818V.rmdu` | `#70` | `the function has no two OBC bytes` |
+| `Audio/Pioneer_VSX-818V.rmdu` | `#71` | `the function has no two OBC bytes` |
+| `Audio/Pioneer_VSX-818V.rmdu` | `#72` | `the function has no two OBC bytes` |
+| `Audio/Pioneer_VSX-818V.rmdu` | `#73` | `the function has no two OBC bytes` |
+| `Audio/Pioneer_VSX-818V.rmdu` | `#74` | `the function has no two OBC bytes` |
 | `Audio/Polk 9500BT Device Upgrade.rmdu` | `#13` | `the function has no single OBC byte` |
 | `Audio/Polk 9500BT Device Upgrade.rmdu` | `+100` | `the function has no single OBC byte` |
 | `Audio/Polk 9500BT Device Upgrade.rmdu` | 0 | `the function has no single OBC byte` |
