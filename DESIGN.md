@@ -1,6 +1,6 @@
 # Remote Ledger — Design & Build Plan
 
-**Draft v2.1** · Status: v1 complete; all three seed remotes authored; LIRC, SmartIR and IR Blaster imports built (§14, §15, §17); 38 protocols (§18, §37, §41, §43, §45, §47) · Implements [SPEC.md](SPEC.md) v0.11
+**Draft v2.1** · Status: v1 complete; all three seed remotes authored; LIRC, SmartIR and IR Blaster imports built (§14, §15, §17); 39 protocols (§18, §37, §41, §43, §45, §47, §52) · Implements [SPEC.md](SPEC.md) v0.11
 
 SPEC.md says *what* the format has to hold and why. This says *how it gets
 built*: the resolved open decisions, the one intermediate representation
@@ -341,7 +341,7 @@ Two conditional rules the validator enforces:
   *and* `name` is omitted or its registry entry has `extent_us = None`. All
   three v1 protocols declared an extent, so in practice this only bit
   raw-only files — which is exactly where truncation is most likely. Since §18
-  twenty-one of the 38 protocols declare none (D3), so it now bites a file that
+  twenty-two of the 39 protocols declare none (D3), so it now bites a file that
   names one of them as well. A truncated form with neither an extent nor
   `defaultGapUs` is a validation error, never a guess (D4a).
 
@@ -1342,7 +1342,7 @@ remote-ledger/
 ├── src/remote_ledger/
 │   ├── signal.py      IrSignal, cycle quantization        D1
 │   ├── pronto.py      encode / decode                     D5 D6
-│   ├── protocols/     one module per family (38 protocols) D3 D18 §18 §37 §41 §43 §45 §47
+│   ├── protocols/     one module per family (39 protocols) D3 D18 §18 §37 §41 §43 §45 §47 §52
 │   ├── irblaster/     importer + six hex_*.py maps        §17 §18
 │   ├── lirc/ smartir/ importers                           §14 §15
 │   ├── forms.py       form → IrSignal, precedence         D7
@@ -2051,7 +2051,7 @@ note rather than a live contract.
 
 ## 12. Implementation status
 
-Phases 0-6 are implemented: 3803 tests, `jsonschema` the only runtime
+Phases 0-6 are implemented: 3825 tests, `jsonschema` the only runtime
 dependency. Phase 2 landed its nine SPEC edits *before* its code, per §9 --
 the spec change is what authorises the implementation. (That count is asserted by the suite itself -- see
 `test_documented_test_count_is_current` -- so it cannot drift the way the
@@ -2060,7 +2060,7 @@ added 1,367; it moves again whenever a test is added, and the figure here
 has to be re-fixed with it.) Post-v1 work has landed outside the phases: RC5
 (§16), the LIRC and SmartIR imports (§14, §15), and the IR Blaster importer
 with the 24 protocols it needed (§17, §18), and the canonical key vocabulary
-(§22). The registry held 28 protocols then, and holds 38 since §47 (30 after §37, 31 after §41, 33 after §43, 37 after §45).
+(§22). The registry held 28 protocols then, and holds 39 since §52 (30 after §37, 31 after §41, 33 after §43, 37 after §45, 38 after §47).
 `rl encode --protocol NEC1 --device 0x88 --subdevice 0x77
 --function 0x18 --carrier 38000` emits the Topping RC-15A Power key. Until
 the RC-15A was corrected this read `0x11 / 0xEE`: the capture's MSB-first
@@ -6629,3 +6629,22 @@ The ledger's other sources (IR Blaster, LIRC, SmartIR, hifi-remote and the manuf
 The corpus is **16,474 remote files and 658,690 keys**, 5,451 brands, 281,795 models (32 more) and 176,245 signals (18 more). Both bundle profiles are 57,835,520 bytes and `rl bundle --verify` passes on each. **69.9% of the new keys map to the vocabulary** (§22, 350 of 501), and the `jp1` row stays at 71.1%. No new build warnings (157 as before). The search evaluation's draw moved again (D99): first answer **88.1%**, first five 97.8%; none of its seven misses is a device of this import.
 
 **Not read**: **475 upgrades of 149 executor names**, counted in `IMPORT.md`: `Manual Settings` (75 and 31 more of its spellings), `XMP` and `XMP (Slingbox)` (48), `RC-5/5x Combo` (16), `Pioneer DVD` (4), and 144 executors of fewer than 12 each; and the 2,073 KeymapMaster files. **Not proven.** That a function does what its name says (§28); that the seventh bit is the first byte's `0x40` for the 28 functions that have it besides the Up, Down, Menu, Left, Right and OK the names confirm (they rest on the translator); that a receiver acts on an RC-5 or RC-6 frame sent with the toggle at 0 (§16, D3b).
+
+## 52. Registering XMP-1
+
+The 38 kHz nibble code of Comcast's, Cisco's, Pace's, Dreambox's and many other set-top boxes' remotes, which the JP1 executors **`XMP`**, **`XMP (JP1)`**, **`XMP (Slingbox)`** and **`XMP (UEI)`** send (57 upgrades, the largest group left unread). IrpTransmogrifier has it with hardware captures in its own test data, and the LIRC project's remotes carry the frame. It is registered through D18's three gates and **nothing reads it yet**: the corpus, the index and the bundle do not change, and the registry goes from 38 to 39 protocols. The code is `src/remote_ledger/protocols/xmp.py`, the evidence `tests/vectors/CITATIONS.md` and `tools/misc_capture_audit.py`.
+
+### D210 — What a form carries, and what it does not
+
+Every symbol is a nibble: a 210 µs mark and a space of 760 µs plus 136 µs times its value (sixteen spaces, the sixth the database's own 1,449 µs). A transmission is two subframes of eight nibbles (S's high nibble, a checksum `C1`, S's low nibble, 15, OEM, D; then S's high nibble, `C2`, the toggle nibble, S's low nibble, F and two zero nibbles), each followed by a mark and a gap of 13.8 and 80.4 ms. **`device` is D, `subdevice` is S (required) and `function` is F**, eight bits, which the IRP puts in the high byte of the 16-bit command (`F*256`, XMP-1's own: the database's `XMP-2` has F in the low byte). The **intro** has the toggle nibble 0 and the **repeat** 8. Every duration is in microseconds, so a file's `unitUs` has nothing to scale and is refused; the gaps are gaps and `extent_us` is `None` (D3).
+
+**Two things a form does not carry.** The **OEM** is the IRP's own 68: an upgrade that sets another cannot be written. And the **final frame** some remotes send on release (the database's `XMPff-1`, a third transmission with the toggle nibble 9) has no place in an `IrSignal`, whose `ending` is reserved (D1): it is not written, and an upgrade that asks for it is not read by the JP1 import.
+
+### D211 — The three gates
+
+**Gate 1**: the IRP verbatim at the commit the others cite and in the 1.2.14 release. **Gate 2a, on hardware**: `tools/misc_capture_audit.py` reads the capture of a set-top box's remote with a nibble decoder written from the layout (both checksums verified, the fixed nibble 15, the OEM 68, the toggle nibble): **42 of 42 keys** decode to the `.exp` fields (D=84, S=0 and F), **and the second transmission of each, the repeat, reads the same fields with the toggle nibble 8: 42 of 42**. The `.exp` names the decode `XMPff-1`, but the captures hold no third transmission: what they show is `XMP-1`'s intro and repeat. The capture's spaces run 2 to 3 percent long, which put a nibble at the boundary of two and made a first decoder fail three keys; the decoder now takes the capture's own scale off with the fixed nibble 15. The LIRC project's remotes of ten boxes carry the frame (**166 sequences, 72 distinct codes**, all OEM 68, decoded by `tests/test_xmp.py`). **Gate 2b**: three vectors rendered from the 1.2.14 release, whose parameters are keys of the capture; our timings under its rounding reproduce each exactly and the words differ only at the gaps. **Reproducible, none published** (33 now, from 32). **Gate 3**: `tests/test_xmp.py`, with the checksums written from the IRP's formulas and not taken from the encoder.
+
+### D212 — What it does to the rest, and what is not proven
+
+Nothing in the corpus moves. What the registration opens is in TODO.md: the XMP upgrades. **Not proven**: that a receiver acts on a transmission without the final frame, for the remotes that send one; an OEM other than 68; and `XMP-2`, `XMPff-1` and the rest of the family, which IrpTransmogrifier also has and the ledger does not register.
+

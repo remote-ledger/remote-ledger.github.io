@@ -29,6 +29,8 @@ V1_REGISTRY = {
     "RCA", "TDC-38", "TDC-56", "GI_Cable",
     # RC-6 mode 6 with a 20-bit payload, Sky's remotes (DESIGN section 47).
     "RC6-6-20",
+    # The nibble code of Comcast's and others' set-top boxes (DESIGN section 52).
+    "XMP-1",
 }
 BACKLOG = {"NEC"}
 #: Not backlogged -- `Samsung32` does not exist in any consulted source, and
