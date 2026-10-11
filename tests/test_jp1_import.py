@@ -729,8 +729,71 @@ def test_the_jp1_rc5_6_combo_upgrades_send_the_codes_the_other_sources_have_and_
         assert labels[function].most_common(1)[0][0] == key, function
 
 
+def test_xmp_is_xmp_1_with_the_parameters_or_fixed_data_and_the_obc_as_it_is_and_refuses_what_a_form_cannot_carry():
+    """``Device, Subdevice, OEM Code, Final Frame Toggle`` and ``XMP Type`` are the parameters, or where ``null`` what
+    ``FixedData`` keeps (``17 0F 44 3E 1F 00 40`` is device 62, sub device 16, OEM 68, no final frame, XMP-1; ``C0`` in its
+    last byte is a final frame). The function is the OBC byte as it is (variant 2 and ``XMP (UEI)`` have two, the second
+    the low byte of XMP-2's command, which must be 0). The OEM must be 68, the final frame off and the type 0."""
+    fixed = "17 0F 44 3E 1F 00 40"
+    up = upgrade("XMP", "62 16 null 0 0", ("1", "01"), ("power", "0C"), fixed=fixed, variant="JP1")
+    assert [signal(up, i) for i in range(2)] == [rmdu.Signal("XMP-1", 62, 16, 1), rmdu.Signal("XMP-1", 62, 16, 12)]
+    nulls = upgrade("XMP (Slingbox)", "null null null null null", ("1", "01"), fixed=fixed, variant="JP1Slingbox")
+    assert signal(nulls) == rmdu.Signal("XMP-1", 62, 16, 1)
+    assert signal(upgrade("XMP (JP1)", "null null null null null", ("1", "01"), fixed="0E 0F 44 1A 00 00 40", variant="JP1")) == \
+        rmdu.Signal("XMP-1", 26, 0, 1)
+    assert signal(upgrade("XMP", "null null null null null", ("1", "01"), fixed="1C 1F 44 47 1E 01 40", variant="JP1")) == \
+        rmdu.Signal("XMP-1", 71, 17, 1)
+    assert signal(upgrade("XMP", "62 16 null 1 0", ("1", "01"), fixed=fixed, variant="JP1")) == \
+        "the function sends a final frame, which the ledger's XMP-1 has no place for"
+    assert signal(upgrade("XMP", "null null null null null", ("1", "01"), fixed="17 0F 44 3E 1F 00 C0", variant="JP1")) == \
+        "the function sends a final frame, which the ledger's XMP-1 has no place for"
+    assert signal(upgrade("XMP", "62 16 69 0 0", ("1", "01"), fixed=fixed, variant="JP1")) == "the OEM code is not 68, which the ledger's XMP-1 fixes"
+    assert signal(upgrade("XMP", "62 16 null 0 1", ("1", "01"), fixed=fixed, variant="JP1")) == "the type is XMP-2, which the ledger does not register"
+    assert signal(upgrade("XMP", "null null null null null", ("1", "01"), fixed="17 0F 44 3E 1F 00 00", variant="JP1")) == \
+        "the type is XMP-2, which the ledger does not register"
+    two = upgrade("XMP", "62 16 null 0", ("9", "09 00"), ("x", "09 01"), ("y", "09"), fixed="17 0F 44 3E", variant="2")
+    assert [signal(two, i) for i in range(3)] == [rmdu.Signal("XMP-1", 62, 16, 9), "the second OBC byte is not 0, which XMP-1 has no place for",
+                                                  "the function has no OBC bytes of the executor's shape"]
+    assert signal(upgrade("XMP", "26 48 68 1", ("a", "27 00"), fixed="3B 07 44 1A", variant="2")) == \
+        "the function sends a final frame, which the ledger's XMP-1 has no place for"
+    assert signal(upgrade("XMP", "null null null null", ("a", "27 00"), fixed="3B 07 44 1A", variant="2")) == \
+        "the function sends a final frame, which the ledger's XMP-1 has no place for"
+    assert signal(upgrade("XMP (UEI)", "null null null 0", ("a", "27 00"), fixed="0E 0F 44 1A")) == rmdu.Signal("XMP-1", 26, 0, 0x27)
+    assert signal(upgrade("XMP", "62 16 null 0 0", ("1", "01"), fixed=fixed, variant="Q")) == "the variant is not read"
+    assert signal(upgrade("XMP", "null null null null null", ("1", "01"), fixed="17 0F", variant="JP1")) == "FixedData is too short for the null parameters"
+
+
+def test_the_jp1_xmp_upgrades_send_the_codes_the_lirc_remotes_of_xmp_boxes_send_under_the_same_names():
+    """An independent check of the XMP rule (the function is the OBC as it is, the device and sub device the parameters or
+    ``FixedData``), from another project. The LIRC remotes of ten boxes (166 sequences: tests/test_xmp.py's layout decoder)
+    hold 24 codes of device 62 and sub device 16, 11 of 49 and 16, 13 of 42 and 17, 3 of 71 and 17 and 21 of 72 and 18 (no
+    upgrade has the last). **The upgrades send 24 of 24, 11 of 11, 12 of 13 and 3 of 3**: 50 of 51 codes, and name them as
+    LIRC does: the ten digits, the volume, channel, mute, power, cursor and OK keys, last, language and info are the same
+    functions of device 62 and sub device 16 in the upgrades' own spellings."""
+    from test_xmp import lirc_frames
+
+    lirc: dict[tuple[int, int], set[int]] = {}
+    for _, _, (device, subdevice, function, _, _) in lirc_frames():
+        lirc.setdefault((device, subdevice), set()).add(function)
+    sent: dict[tuple[int, int], dict[int, set[str]]] = {}
+    for executor, label, device, subdevice, function, _ in _committed_jp1_keys("XMP-1"):
+        sent.setdefault((device, subdevice), {}).setdefault(function, set()).add(label.strip().lower())
+    got = {k: (len(lirc[k]), len([f for f in lirc[k] if f in sent.get(k, {})])) for k in lirc}
+    assert got == {(62, 16): (24, 24), (49, 16): (11, 11), (42, 17): (13, 12), (71, 17): (3, 3), (72, 18): (21, 0)}
+    spellings = {10: ("vol up", "vol+", "volume up"), 11: ("vol down", "vol-", "volume down"), 12: ("mute", "volume mute"),
+                 13: ("ch+", "channel +", "channel up", "ch up key"), 14: ("ch-", "channel -", "channel down", "ch down key"),
+                 15: ("power", "power key", "power toggle"), 33: ("up", "up arrow", "curser up"),
+                 34: ("down", "down arrow", "curser down"), 35: ("left", "left arrow", "curser left"),
+                 36: ("right", "right arrow", "curser right"), 37: ("ok", "ok key", "enter", "select"),
+                 38: ("info", "info key", "display"), 81: ("last", "last key", "last (prev ch)"), 130: ("lang", "language")}
+    spellings.update({n: (str(n), f"num_{n}", f"numeric {n}") for n in range(10)})
+    assert len(spellings) == 24 and set(spellings) == lirc[(62, 16)]
+    for function, names in spellings.items():
+        assert sent[(62, 16)][function] & set(names), function
+
+
 def test_an_executor_not_read_and_a_function_with_no_single_byte_are_said_so():
-    assert "not read by this import" in signal(upgrade("XMP", "28 0 null", ("power", "C4")))
+    assert "not read by this import" in signal(upgrade("DirecTV", "28 0 null", ("power", "C4")))
     assert signal(upgrade("NEC1", "6 null null", ("Power", "FF BF"))) == "the function has no single OBC byte"
     assert signal(upgrade("NEC1", "6 null null", ("Guide", None))) == "the function has no single OBC byte"
 
@@ -786,7 +849,7 @@ FILES = {
                            "Function.0.name=Power\r\nFunction.0.hex=AF\r\n"),
     "Misc/Nobody Box.rmdu": ("Description=Nobody Box\r\nProtocol.name=NEC1\r\nProtocolParms=6 null null\r\n"
                              "Function.0.name=Power\r\nFunction.0.hex=AF\r\n"),
-    "Audio/Mce Box.rmdu": ("Description=Acme MCE\r\nProtocol.name=XMP\r\nProtocolParms=10 0\r\n"
+    "Audio/Mce Box.rmdu": ("Description=Acme MCE\r\nProtocol.name=DirecTV\r\nProtocolParms=10 0\r\n"
                            "Function.0.name=power\r\nFunction.0.hex=CC\r\n"),
     "TV/Keymap Master.txt": "not read\r\n",
     "Audio/Empty.rmdu": "Description=Acme Empty\r\nProtocol.name=NEC1\r\nProtocolParms=6 null null\r\n",
@@ -833,7 +896,7 @@ def test_a_checkout_becomes_one_file_per_protocol_and_every_function_a_key(small
     assert samsung["protocol"]["name"] == "NECx2" and samsung["protocol"]["minSends"] == 1
     assert set(samsung["keys"]) == {"KEY_POWER"}      # `Guide` has no OBC byte
     assert (report.files["upgrades"], report.remotes["imported"]) == (8, 6)
-    assert report.unread == {"XMP": 1} and report.files["not read: KeymapMaster .txt"] == 1
+    assert report.unread == {"DirecTV": 1} and report.files["not read: KeymapMaster .txt"] == 1
     assert dict(report.protocols) == {"Sony12": 1, "Sony15": 1, "Sony20": 1, "NECx2": 2, "NEC1": 1}
 
 
@@ -921,7 +984,7 @@ def test_the_committed_jp1_import_keeps_r19():
     assert f"@ `{meta['commit']}`" in (ROOT / jp.IMPORT_ROOT / jp.REPORT).read_text(encoding="utf-8")
     shape = re.compile(
         rf"^jp1-device-upgrades@{meta['commit'][:7]} \S.* function (\d+) '.*' \(OBC ((?:[0-9A-F]{{2}})(?: [0-9A-F]{{2}})*); [^;]+, parms [^)]*\): "
-        r"(NEC1|NEC2|NECx1|NECx2|Sony12|Sony15|Sony20|RC5|RC6|JVC|Aiwa|Denon|Sharp|Panasonic|Samsung36|Proton|F12_relaxed|RECS80|Denon-K|Pioneer-2Part|RCA-38|RECS80-0068|JVC-48|Teac-K|NEC1-f16|NEC2-f16|MCE|Nokia32|Panasonic_Old|RCA|TDC-38|TDC-56|GI_Cable|RC6-6-20) device (\d+)(?: subdevice (\d+))? function (\d+)", re.S)
+        r"(NEC1|NEC2|NECx1|NECx2|Sony12|Sony15|Sony20|RC5|RC6|JVC|Aiwa|Denon|Sharp|Panasonic|Samsung36|Proton|F12_relaxed|RECS80|Denon-K|Pioneer-2Part|RCA-38|RECS80-0068|JVC-48|Teac-K|NEC1-f16|NEC2-f16|MCE|Nokia32|Panasonic_Old|RCA|TDC-38|TDC-56|GI_Cable|RC6-6-20|XMP-1) device (\d+)(?: subdevice (\d+))? function (\d+)", re.S)
 
     def num(value):
         return int(value, 0) if isinstance(value, str) else value
