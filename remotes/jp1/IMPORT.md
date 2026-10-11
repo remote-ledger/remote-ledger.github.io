@@ -17,7 +17,7 @@ silently (SPEC R19, condition 5).
 | Upstream files: skipped: no function decodes | 17 |
 | Upstream files: skipped: no functions | 1 |
 | Upstream files: upgrades | 3,251 |
-| Remotes: imported | 2,825 |
+| Remotes: imported | 2,845 |
 | Remotes: skipped: an authored remote wins | 7 |
 | Keys: imported: Aiwa | 947 |
 | Keys: imported: Denon | 1,791 |
@@ -37,8 +37,8 @@ silently (SPEC R19, condition 5).
 | Keys: imported: Panasonic_Old | 794 |
 | Keys: imported: Pioneer-2Part | 2,287 |
 | Keys: imported: Proton | 256 |
-| Keys: imported: RC5 | 5,648 |
-| Keys: imported: RC6 | 1,745 |
+| Keys: imported: RC5 | 5,876 |
+| Keys: imported: RC6 | 2,018 |
 | Keys: imported: RC6-6-20 | 535 |
 | Keys: imported: RCA | 1,104 |
 | Keys: imported: RCA-38 | 328 |
@@ -53,6 +53,7 @@ silently (SPEC R19, condition 5).
 | Keys: imported: TDC-56 | 120 |
 | Keys: imported: Teac-K | 121 |
 | Keys: skipped: the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes | 47 |
+| Keys: skipped: the RC-5 device is not five bits | 1 |
 | Keys: skipped: the command does not fit Sony's seven bits | 35 |
 | Keys: skipped: the device or the second OEM byte parameter is missing | 48 |
 | Keys: skipped: the device parameter is missing | 42 |
@@ -61,7 +62,8 @@ silently (SPEC R19, condition 5).
 | Keys: skipped: the first byte's low four bits are not the executor's fixed 15 | 1 |
 | Keys: skipped: the flag byte has bits the variant does not use | 1 |
 | Keys: skipped: the function has no single OBC byte | 5,442 |
-| Keys: skipped: the function has no two OBC bytes | 711 |
+| Keys: skipped: the function has no two OBC bytes | 744 |
+| Keys: skipped: the function sets a bit RC-5 does not use | 1 |
 | Keys: skipped: the high X bit is sent at release, which a form cannot say | 40 |
 | Keys: skipped: the sub device parameter is missing | 97 |
 | Keys: skipped: the variant is not read (its devices are chosen by more flag bits) | 268 |
@@ -83,8 +85,8 @@ silently (SPEC R19, condition 5).
 | Files by ledger protocol: Panasonic_Old | 19 |
 | Files by ledger protocol: Pioneer-2Part | 43 |
 | Files by ledger protocol: Proton | 12 |
-| Files by ledger protocol: RC5 | 147 |
-| Files by ledger protocol: RC6 | 41 |
+| Files by ledger protocol: RC5 | 157 |
+| Files by ledger protocol: RC6 | 51 |
 | Files by ledger protocol: RC6-6-20 | 15 |
 | Files by ledger protocol: RCA | 26 |
 | Files by ledger protocol: RCA-38 | 6 |
@@ -99,9 +101,9 @@ silently (SPEC R19, condition 5).
 | Files by ledger protocol: TDC-56 | 3 |
 | Files by ledger protocol: Teac-K | 2 |
 | Brand taken from: the longest brand of the index that begins the description | 150 |
-| Brand taken from: the master index | 2,584 |
+| Brand taken from: the master index | 2,596 |
 
-## Executors this import does not read (upgrades) (150)
+## Executors this import does not read (upgrades) (149)
 
 | Executor | Files |
 |---|---|
@@ -109,7 +111,6 @@ silently (SPEC R19, condition 5).
 | `XMP (Slingbox)` | 26 |
 | `XMP` | 22 |
 | `RC-5/5x Combo` | 16 |
-| `RC5/6 combo` | 12 |
 | `PID 01 FF` | 11 |
 | `Roku Official` | 10 |
 | `DirecTV` | 9 |
@@ -303,7 +304,7 @@ silently (SPEC R19, condition 5).
 | `Satellite/SonicView SV1000 6131.rmdu` | `remotes/jp1/Sonicview/Satellite-SonicView_SV1000_6131.json` |
 | `TV/VESTEL TV.rmdu` | `remotes/jp1/Vestel/TV-VESTEL_TV.json` |
 
-## Functions skipped (6,860)
+## Functions skipped (6,895)
 
 | File | Function | Reason |
 |---|---|---|
@@ -652,6 +653,7 @@ silently (SPEC R19, condition 5).
 | `Audio/Klipsch DD-5.1.rmdu` | `slow-` | `the function has no single OBC byte` |
 | `Audio/Klipsch DD-5.1.rmdu` | `surround` | `the function has no single OBC byte` |
 | `Audio/Klipsch DD-5.1.rmdu` | `up arrow` | `the function has no single OBC byte` |
+| `Audio/Krell Avs Processor.rmdu` | `#53` | `the function has no two OBC bytes` |
 | `Audio/LG SH3K Sound Bar.rmdu` | `#14` | `the function has no single OBC byte` |
 | `Audio/LG SH3K Sound Bar.rmdu` | `#15` | `the function has no single OBC byte` |
 | `Audio/LG SH3K Sound Bar.rmdu` | `#16` | `the function has no single OBC byte` |
@@ -836,6 +838,11 @@ silently (SPEC R19, condition 5).
 | `Audio/Panasonic SA-XR57.rmdu` | `TV/Video` | `the function has no two OBC bytes` |
 | `Audio/Panasonic SA-XR57.rmdu` | `Track Back` | `the function has no two OBC bytes` |
 | `Audio/Panasonic SA-XR57.rmdu` | `Track Forward` | `the function has no two OBC bytes` |
+| `Audio/Philips AZ6000.rmdu` | `#21` | `the function has no two OBC bytes` |
+| `Audio/PhilipsFR965HomeTheater.rmdu` | `#8` | `the function has no two OBC bytes` |
+| `Audio/PhilipsFR965HomeTheater.rmdu` | `Sub Vol Down` | `the function has no two OBC bytes` |
+| `Audio/Philips_FR965_Home_Theater.rmdu` | `#8` | `the function has no two OBC bytes` |
+| `Audio/Philips_FR965_Home_Theater.rmdu` | `Sub Vol Down` | `the function has no two OBC bytes` |
 | `Audio/Pioneer VSX-D710S.rmdu` | `*** bottom ***` | `the function has no two OBC bytes` |
 | `Audio/Pioneer VSX-D710S.rmdu` | `display` | `the function has no two OBC bytes` |
 | `Audio/Pioneer VSX-D710S.rmdu` | `exit` | `the function has no two OBC bytes` |
@@ -2348,6 +2355,25 @@ silently (SPEC R19, condition 5).
 | `Combo Audio Systems/Norcent DP1800 HT M4.rmdu` | `play mode` | `the function has no single OBC byte` |
 | `Combo Audio Systems/Norcent DP1800 HT M4.rmdu` | `return` | `the function has no single OBC byte` |
 | `Combo Audio Systems/Panasonic-SA-EN17.rmdu` | `#38` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Philips DVD LX 3900SA.rmdu` | `#16` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Philips DVD LX 3900SA.rmdu` | `#19` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Philips DVD LX 3900SA.rmdu` | `#22` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Philips DVD LX 3900SA.rmdu` | `#28` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Philips DVD LX 3900SA.rmdu` | `#34` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Philips DVD LX 3900SA.rmdu` | `#39` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Philips DVD LX 3900SA.rmdu` | `#44` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Philips DVD LX 3900SA.rmdu` | `#48` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Philips DVD LX 3900SA.rmdu` | `#5` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Philips DVD LX 3900SA.rmdu` | `#52` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Philips DVD LX 3900SA.rmdu` | `#55` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Philips DVD LX 3900SA.rmdu` | `#56` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Philips DVD LX 3900SA.rmdu` | `#57` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Philips HTS3544 Home Theater.rmdu` | `#18` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Philips HTS3544 Home Theater.rmdu` | `#28` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Philips HTS3544 Home Theater.rmdu` | `#30` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Philips HTS3544 Home Theater.rmdu` | `#34` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Philips HTS3544 Home Theater.rmdu` | `#35` | `the function has no two OBC bytes` |
+| `Combo Audio Systems/Philips HTS3544 Home Theater.rmdu` | `#37` | `the function has no two OBC bytes` |
 | `Combo Audio Systems/Pioneer HTS-GS1 URC-6131 v0.9b.rmdu` | `MCACC` | `the function has no two OBC bytes` |
 | `Combo Audio Systems/Pioneer HTS-GS1 URC-6131 v0.9b.rmdu` | `S. Retriever` | `the function has no two OBC bytes` |
 | `Combo Audio Systems/Pioneer HTS-GS1 URC-6131 v0.9b.rmdu` | `SR+` | `the function has no two OBC bytes` |
@@ -3401,6 +3427,15 @@ silently (SPEC R19, condition 5).
 | `DVD _ VCR combo units/Insignia DVD-VCR Recorder.rmdu` | `audio` | `the function has no single OBC byte` |
 | `DVD _ VCR combo units/Insignia DVD-VCR Recorder.rmdu` | `chapter add` | `the function has no single OBC byte` |
 | `DVD _ VCR combo units/Insignia DVD-VCR Recorder.rmdu` | `mute` | `the function has no single OBC byte` |
+| `DVD _ VCR combo units/Philips DVP-3750v_37.rmdu` | `#12` | `the function has no two OBC bytes` |
+| `DVD _ VCR combo units/Philips DVP-3750v_37.rmdu` | `#17` | `the function has no two OBC bytes` |
+| `DVD _ VCR combo units/Philips DVP-3750v_37.rmdu` | `#28` | `the function has no two OBC bytes` |
+| `DVD _ VCR combo units/Philips DVP-3750v_37.rmdu` | `#40` | `the function has no two OBC bytes` |
+| `DVD _ VCR combo units/Philips DVP-3750v_37.rmdu` | `#44` | `the function has no two OBC bytes` |
+| `DVD _ VCR combo units/Philips DVP-3750v_37.rmdu` | `#50` | `the function has no two OBC bytes` |
+| `DVD _ VCR combo units/Philips DVP-3750v_37.rmdu` | `#60` | `the function has no two OBC bytes` |
+| `DVD _ VCR combo units/Philips DVP-3750v_37.rmdu` | `#73` | `the function has no two OBC bytes` |
+| `DVD _ VCR combo units/Philips DVP-3750v_37.rmdu` | `VCR Search` | `the function sets a bit RC-5 does not use` |
 | `DVD _ VCR combo units/Pioneer DVR RT400 VCR-DVD-R-RW 6440.rmdu` | 0 | `the variant is not read (its devices are chosen by more flag bits)` |
 | `DVD _ VCR combo units/Pioneer DVR RT400 VCR-DVD-R-RW 6440.rmdu` | 1 | `the variant is not read (its devices are chosen by more flag bits)` |
 | `DVD _ VCR combo units/Pioneer DVR RT400 VCR-DVD-R-RW 6440.rmdu` | 10sec rep | `the variant is not read (its devices are chosen by more flag bits)` |
@@ -3625,6 +3660,7 @@ silently (SPEC R19, condition 5).
 | `DVR_PVR/Huawei EC2118.rmdu` | `White` | `the function has no single OBC byte` |
 | `DVR_PVR/LiteOn LVW-5045.rmdu` | `center` | `the function has no single OBC byte` |
 | `DVR_PVR/LiteOn LVW-5045.rmdu` | `rear` | `the function has no single OBC byte` |
+| `DVR_PVR/Magnavox VRA656.rmdu` | `exit` | `the RC-5 device is not five bits` |
 | `DVR_PVR/Manta DVB T01.rmdu` | `#47` | `the function has no single OBC byte` |
 | `DVR_PVR/Motorola VIP 1963 (2).rmdu` | `?` | `the function has no single OBC byte` |
 | `DVR_PVR/Motorola VIP 1963 (2).rmdu` | `Last_ch` | `the function has no single OBC byte` |
