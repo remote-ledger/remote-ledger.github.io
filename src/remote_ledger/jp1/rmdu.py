@@ -383,9 +383,10 @@ def xmp_signal(upgrade: Upgrade, function: Function) -> Signal | str:
     A ``null`` parameter is the value ``FixedData`` keeps: the subdevice as its high nibble at the top of byte 0 and its
     low nibble at the top of byte 1, the OEM byte 2 and the device byte 3, then in the five-parameter variants the final
     frame the top bit of byte 6 and the type the complement of its next bit, in variant 2 the final frame the complement
-    of bit 3 of byte 1. The ledger's ``XMP-1`` has the device, the subdevice and one function byte; **the OEM must be its
-    68, the final frame (a third transmission when the key is released, which an ``IrSignal`` has no place for) must be
-    off, and the type must be 0 (XMP-1; 1 is XMP-2)**, and the function is the OBC as it is."""
+    of bit 3 of byte 1. The ledger's ``XMP-1`` has the device, the subdevice and one function byte, and ``XMPff-1``, which an
+    upgrade with the final frame on sends, the same with that third transmission sent when the key is released (the
+    signal's ending, D217); **the OEM must be their 68 and the type 0 (XMP-1; 1 is XMP-2)**, and the function is the OBC as
+    it is."""
     variant = upgrade.fields.get("Protocol.variantName", "").strip()
     five = len(upgrade.parms) == 5
     if (five and variant not in ("JP1", "JP1Slingbox")) or (not five and variant not in ("2", "")):
@@ -405,8 +406,6 @@ def xmp_signal(upgrade: Upgrade, function: Function) -> Signal | str:
         xmp_type = 0
     if oem != 68:
         return "the OEM code is not 68, which the ledger's XMP-1 fixes"
-    if final:
-        return "the function sends a final frame, which the ledger's XMP-1 has no place for"
     if xmp_type != 0:
         return "the type is XMP-2, which the ledger does not register"
     if device > 255 or sub > 255:
@@ -416,7 +415,7 @@ def xmp_signal(upgrade: Upgrade, function: Function) -> Signal | str:
         return "the function has no OBC bytes of the executor's shape"
     if not five and obc[1] != 0:
         return "the second OBC byte is not 0, which XMP-1 has no place for"
-    return Signal("XMP-1", device, sub, obc[0])
+    return Signal("XMPff-1" if final else "XMP-1", device, sub, obc[0])
 
 
 def tdc_signal(upgrade: Upgrade, byte: int) -> Signal | str:
