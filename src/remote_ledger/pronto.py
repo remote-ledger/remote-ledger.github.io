@@ -147,6 +147,20 @@ def encode(signal: IrSignal) -> str:
     return " ".join(f"{w:04X}" for w in words)
 
 
+def encode_ending(signal: IrSignal) -> str | None:
+    """The ending of a signal as a Pronto string of its own (D217), or None when it has none.
+
+    Pronto Hex holds an intro and a repeat and no third sequence, so the ending is
+    written as the intro of a signal with no repeat, at the same carrier and so the
+    same frequency word: ``0000 006D 0012 0000`` and its burst pairs. Every tool that
+    reads a Pronto string reads it, and the signal's own string, ``encode``'s, is
+    what it was without an ending.
+    """
+    if not signal.ending:
+        return None
+    return encode(IrSignal(carrier_hz=signal.carrier_hz, intro=signal.ending))
+
+
 def parse_words(text: str) -> list[int]:
     """Split a Pronto string into words, tolerating whitespace and case (D25)."""
     tokens = text.split()

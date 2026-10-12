@@ -144,6 +144,12 @@ class Remote:
         """The Pronto string one candidate group compiles to (R12)."""
         return pronto.encode(self.render(select(self.groups(key)[candidate])))
 
+    def compile_pair(self, key: str, candidate: str) -> tuple[str, str | None]:
+        """The Pronto string of a candidate group and, for a protocol whose remotes send a
+        final frame, the Pronto string of that ending (D217); the group is rendered once."""
+        signal = self.render(select(self.groups(key)[candidate]))
+        return pronto.encode(signal), pronto.encode_ending(signal)
+
 
 def load_remote(path: Path, *, expand_variants: bool = True) -> Remote:
     """Parse and normalise a remote file.

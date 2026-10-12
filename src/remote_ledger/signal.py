@@ -23,18 +23,23 @@ from .numeric import (
 
 @dataclass(frozen=True)
 class IrSignal:
-    """A carrier plus up to two sequences of alternating mark/space durations.
+    """A carrier plus up to three sequences of alternating mark/space durations.
 
     Durations are integer microseconds. Every sequence starts with a mark and
     has even length -- a sequence ends on a space, because the trailing gap is
     part of the signal, not an afterthought.
+
+    ``intro`` is sent once when a key goes down and ``repeat`` again while it is
+    held. ``ending`` is sent once when it is released (D217): the final frame
+    some remotes send, such as XMP's. Pronto Hex holds only the first two, so
+    the ending travels beside it (``pronto.encode_ending``).
     """
 
     carrier_hz: int
     intro: tuple[int, ...] = ()
     repeat: tuple[int, ...] = ()
-    #: Reserved. Pronto carries only two sequences, so a non-empty ending
-    #: would silently vanish on emission; D1 keeps the field and rejects use.
+    #: Sent once when the key is released (D217). Empty for every protocol
+    #: but the ones whose remotes send a final frame.
     ending: tuple[int, ...] = field(default=())
 
     def __post_init__(self) -> None:
@@ -47,15 +52,6 @@ class IrSignal:
             value = getattr(self, name)
             if not isinstance(value, tuple):
                 object.__setattr__(self, name, tuple(value))
-
-        # Before the shape checks, so `ending=(564,)` reports the real reason
-        # rather than "must have even length".
-        if self.ending:
-            raise ValidationError(
-                "IrSignal.ending is reserved and must be empty in v1 (D1): "
-                "Pronto carries only two sequences, so an ending would be "
-                "dropped on emission rather than encoded"
-            )
 
         # D1a: strictly positive. v0.1's `carrier_hz = 0` was a representable
         # state with no defined encoding -- D6 divides by the carrier and

@@ -533,7 +533,10 @@ consistency check, if the tooling actually runs it.
 - **R12 — Compile the trusted form to Pronto Hex, deterministically.** R6
   picks the form; the compiler renders it. Same JSON input always produces
   byte-identical Pronto Hex output. This compiled artifact is what playback
-  apps actually load — never hand-edited, always regenerated.
+  apps actually load — never hand-edited, always regenerated. A protocol
+  whose remotes send a final frame when a key is released also has its
+  `endingHex`, a Pronto string of its own beside `prontoHex` (DESIGN D217);
+  no file on disk says so, the protocol does.
 
   "Deterministically" is only a requirement if the rules are pinned, so the
   contract is normative and lives in DESIGN.md D6 (emission), D25 (parsing)

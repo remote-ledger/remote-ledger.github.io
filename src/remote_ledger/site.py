@@ -80,10 +80,13 @@ def site_extra(root: Path, files: list[Path]) -> dict[str, Any]:
             candidates: dict[str, Any] = {}
             for name, group in remote.groups(key).items():
                 chosen = select(group)
+                pronto_hex, ending_hex = remote.compile_pair(key, name)
                 entry: dict[str, Any] = {
-                    "prontoHex": remote.compile_group(key, name),
+                    "prontoHex": pronto_hex,
                     "confidence": chosen.confidence,
                 }
+                if ending_hex is not None:
+                    entry["endingHex"] = ending_hex
                 if chosen.source:
                     entry["source"] = chosen.source
                 if name != PRIMARY:

@@ -20,6 +20,7 @@ from .check import check_remote
 from .fmt import format_document
 from .keys import vocabulary_problems
 from .pronto import encode as pronto_encode
+from .pronto import encode_ending as pronto_encode_ending
 from .remote import load_remote
 from .serialize import dumps
 from .validate import corpus_files, extra_root_conflicts, validate_file, validate_files
@@ -101,6 +102,9 @@ def cmd_encode(args: argparse.Namespace) -> int:
         unit_us=args.unit,
     )
     print(pronto_encode(signal))
+    ending = pronto_encode_ending(signal)
+    if ending is not None:
+        print(f"ending: {ending}")
     return EXIT_OK
 
 
@@ -160,10 +164,13 @@ def compiled_artifact(remote) -> dict:
         for name, group in remote.groups(key).items():
             from .forms import select
             chosen = select(group)
+            pronto_hex, ending_hex = remote.compile_pair(key, name)
             entry = {
-                "prontoHex": remote.compile_group(key, name),
+                "prontoHex": pronto_hex,
                 "confidence": chosen.confidence,
             }
+            if ending_hex is not None:
+                entry["endingHex"] = ending_hex
             if chosen.source:
                 entry["source"] = chosen.source
             if name != "primary":

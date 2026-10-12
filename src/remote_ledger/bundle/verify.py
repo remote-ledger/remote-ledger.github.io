@@ -35,14 +35,14 @@ from .. import paths
 from ..errors import LedgerError
 from ..keys import load_vocabulary, squash
 from ..parallel import ordered_map
-from ..pronto import encode
+from ..pronto import encode, encode_ending
 from ..serialize import load
 from . import aliases as brand_aliases
 from . import catalog, corpus, merge, writer
 from .build import BUNDLE_FILE, MANIFEST_FILE, NOTICES_FILE
 from .catalog import GRAM, unvarints
 from .corpus import RemoteRecord
-from .signals import blob_to_pronto, blob_words, decode_blob
+from .signals import blob_ending_pronto, blob_to_pronto, blob_words, decode_blob
 from .textnorm import search_norm
 
 #: How many remotes are compiled again from the tree, and how many models are looked up
@@ -68,7 +68,7 @@ def _decode_chunk(chunk: list[tuple[int, bytes, int]]) -> list[str]:
         except LedgerError as exc:
             out.append(f"signal {signal_id} at {carrier} Hz: {exc}")
             continue
-        if again != blob_to_pronto(blob):
+        if again != blob_to_pronto(blob) or encode_ending(decoded) != blob_ending_pronto(blob):
             out.append(f"signal {signal_id} at {carrier} Hz decodes and encodes to other words")
     return out
 
@@ -394,7 +394,7 @@ def _recompile_one(root: Path, ref: str, rid: int, files: list[RemoteRecord],
     """One remote's Pronto strings from the compile stage's own artifact, against the blobs. The
     remote is ``files[0]`` with the files folded into it after it (D103): each file's keys, in its
     own order, one after the other."""
-    keys: list[tuple[str, str]] = []
+    keys: list[tuple[str, str, str | None]] = []
     for record in files:
         artifact = root / paths.artifact(record.where)
         try:
@@ -407,12 +407,13 @@ def _recompile_one(root: Path, ref: str, rid: int, files: list[RemoteRecord],
                 compiled = compiled_artifact(load_remote(paths.locate(root, record.where)))["keys"]
         except (LedgerError, OSError, ValueError) as exc:
             return [f"{ref}: cannot be compiled again: {exc}"]
-        keys += [(name, compiled[name]["candidates"]["primary"]["prontoHex"]) for name in sorted(compiled)]
+        keys += [(name, compiled[name]["candidates"]["primary"]["prontoHex"],
+                  compiled[name]["candidates"]["primary"].get("endingHex")) for name in sorted(compiled)]
     got = rows.get(rid, [])
     if len(keys) != len(got):
         return [f"{ref}: {len(got)} keys in the bundle, {len(keys)} in its compiled artifact"]
     out = []
-    for (name, text), (n, _canon, _label, signal_id, _conf) in zip(keys, got):
-        if blob_to_pronto(signals[signal_id]) != text:
+    for (name, text, ending), (n, _canon, _label, signal_id, _conf) in zip(keys, got):
+        if blob_to_pronto(signals[signal_id]) != text or blob_ending_pronto(signals[signal_id]) != ending:
             out.append(f"{ref}: key {n} ({name}) is not the Pronto string the compile stage gives")
     return out

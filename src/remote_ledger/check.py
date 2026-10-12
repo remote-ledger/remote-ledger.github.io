@@ -64,16 +64,16 @@ def check_derived(remote: Remote, key: str) -> list[str]:
 def check_distinctness(remote: Remote, key: str) -> list[Warning_]:
     """D16: two groups that would ship the identical artifact -- one is redundant.
 
-    Compared as **compiled Pronto strings**, by exact equality, not with D8's
+    Compared as **compiled Pronto strings** (and endings), by exact equality, not with D8's
     tolerances: the claim is "these two emit the same artifact", and the
     artifact *is* that string. Under a 15% raw tolerance two captures of
     genuinely different addresses could match and warn falsely, while two
     groups one cycle apart ship different bytes and are not redundant.
     """
-    compiled: dict[str, str] = {}
+    compiled: dict[str, tuple[str, str | None]] = {}
     for candidate in remote.groups(key):
         try:
-            compiled[candidate] = remote.compile_group(key, candidate)
+            compiled[candidate] = remote.compile_pair(key, candidate)
         except ValidationError:
             continue  # reported elsewhere; distinctness is only a warning
     names = sorted(compiled)

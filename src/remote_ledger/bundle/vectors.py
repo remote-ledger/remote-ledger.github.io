@@ -16,6 +16,9 @@ that covers every protocol the ledger has, what a reader of the blob has to get:
 ``introUs`` and ``repeatUs``
     the two sequences in microseconds, from **the ledger's own decoder run on the blob**
     (``pronto.decode``, D25: cycles x period, rounded half up);
+``endingUs``
+    present only for a signal that has an ending (D217), the final frame sent when the key
+    is released, decoded the same way from the words after the Pronto string;
 ``play``
     ``repeatPasses``, ``helperRepeatPasses``, ``introEmpty``, ``rule`` of the remote
     (D78), and ``pressUs``, the intro once and then the repeat sequence ``repeatPasses``
@@ -37,7 +40,7 @@ from pathlib import Path
 from typing import Any
 
 from .corpus import sources
-from .signals import blob_words, decode_blob, frequency_hz, press
+from .signals import blob_words, decode_blob, frequency_hz, has_ending, press
 
 FORMAT = 1
 #: Keys taken for each (source, protocol) of the bundle, and the longest blob a
@@ -88,6 +91,9 @@ def build_vectors(bundle: Path) -> dict[str, Any]:
                 extremes.append(min(members, key=lambda k: k[0]))
         extremes.append(max((k for k in everything if k[7] <= MAX_WORDS),
                             key=lambda k: (remotes[k[1]][5], k[0])))
+        # a signal with an ending, if the bundle has any: the first by the sample's own rank
+        with_ending = sorted(k for k in everything if has_ending(k[6]) and k[7] <= MAX_WORDS)
+        extremes += with_ending[:PER_GROUP]
         for entry in extremes:
             chosen.setdefault((entry[1], entry[2]), entry)
 
@@ -99,7 +105,7 @@ def build_vectors(bundle: Path) -> dict[str, Any]:
                 remotes[remote_id][4], remotes[remote_id][5], remotes[remote_id][6],
                 remotes[remote_id][7], remotes[remote_id][8])
             signal = decode_blob(blob, carrier)
-            vectors.append({
+            vector = {
                 "remote": ref, "n": n, "source": sources()[source - 1],
                 "protocol": protocol, "canon": canon.get(canon_id), "label": label,
                 "confidence": confidence,
@@ -113,7 +119,10 @@ def build_vectors(bundle: Path) -> dict[str, Any]:
                     "introEmpty": bool(empty), "rule": rule,
                     "pressUs": press(signal.intro, signal.repeat, repeat),
                 },
-            })
+            }
+            if signal.ending:
+                vector["endingUs"] = list(signal.ending)
+            vectors.append(vector)
         return {
             "format": FORMAT,
             "about": "Cross-language vectors of the signal table (DESIGN.md D91): from blobHex "
