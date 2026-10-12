@@ -14,10 +14,10 @@ silently (SPEC R19, condition 5).
 |---|---|
 | Upstream files: not read: KeymapMaster .txt | 2,073 |
 | Upstream files: skipped: no brand | 12 |
-| Upstream files: skipped: no function decodes | 33 |
+| Upstream files: skipped: no function decodes | 17 |
 | Upstream files: skipped: no functions | 1 |
 | Upstream files: upgrades | 3,251 |
-| Remotes: imported | 2,891 |
+| Remotes: imported | 2,907 |
 | Remotes: skipped: an authored remote wins | 7 |
 | Keys: imported: Aiwa | 947 |
 | Keys: imported: Denon | 1,791 |
@@ -53,6 +53,7 @@ silently (SPEC R19, condition 5).
 | Keys: imported: TDC-56 | 120 |
 | Keys: imported: Teac-K | 121 |
 | Keys: imported: XMP-1 | 1,703 |
+| Keys: imported: XMPff-1 | 623 |
 | Keys: skipped: the OEM byte 162 is not Panasonic's 2, which the ledger's frame fixes | 47 |
 | Keys: skipped: the RC-5 device is not five bits | 1 |
 | Keys: skipped: the command does not fit Sony's seven bits | 35 |
@@ -65,7 +66,6 @@ silently (SPEC R19, condition 5).
 | Keys: skipped: the function has no OBC bytes of the executor's shape | 59 |
 | Keys: skipped: the function has no single OBC byte | 5,442 |
 | Keys: skipped: the function has no two OBC bytes | 744 |
-| Keys: skipped: the function sends a final frame, which the ledger's XMP-1 has no place for | 623 |
 | Keys: skipped: the function sets a bit RC-5 does not use | 1 |
 | Keys: skipped: the high X bit is sent at release, which a form cannot say | 40 |
 | Keys: skipped: the second OBC byte is not 0, which XMP-1 has no place for | 4 |
@@ -105,8 +105,9 @@ silently (SPEC R19, condition 5).
 | Files by ledger protocol: TDC-56 | 3 |
 | Files by ledger protocol: Teac-K | 2 |
 | Files by ledger protocol: XMP-1 | 46 |
+| Files by ledger protocol: XMPff-1 | 16 |
 | Brand taken from: the longest brand of the index that begins the description | 154 |
-| Brand taken from: the master index | 2,638 |
+| Brand taken from: the master index | 2,654 |
 
 ## Executors this import does not read (upgrades) (144)
 
@@ -257,7 +258,7 @@ silently (SPEC R19, condition 5).
 | `pid\: 01 61` | 1 |
 | `pid\: 01 E2` | 1 |
 
-## Upgrades of a read executor that yield nothing (46)
+## Upgrades of a read executor that yield nothing (30)
 
 | File | Reason |
 |---|---|
@@ -268,34 +269,18 @@ silently (SPEC R19, condition 5).
 | `Audio/Pioneer X-HM76D - 1280.rmdu` | `no function decodes` |
 | `Audio/Rockville BPA10 powered speakers.rmdu` | `no brand: the file is not in the master index and its description begins with no brand of it` |
 | `Audio_Video Selectors/7 Port HMDI Switch XDF7HDMI.rmdu` | `no brand: the file is not in the master index and its description begins with no brand of it` |
-| `Cable/DreamBoxDM7020_plus_help_buttons_vbs_with_rec.rmdu` | `no function decodes` |
-| `Cable/Insight-DCI1041CS.rmdu` | `no function decodes` |
-| `Cable/Samsung HD-S200C.rmdu` | `no function decodes` |
 | `DVD (Blu-Ray)/Pioneer BDP-450 BluRay Player.rmdu` | `no function decodes` |
 | `DVD (standard)/Daewoo-DVDS151.rmdu` | `no brand: the file is not in the master index and its description begins with no brand of it` |
 | `DVD (standard)/P-DV-410V-S-Fd.rmdu` | `no function decodes` |
 | `DVD (standard)/Pioneer DV-565A VXX2865.rmdu` | `no function decodes` |
 | `DVD _ VCR combo units/Pioneer DVR RT400 VCR-DVD-R-RW 6440.rmdu` | `no function decodes` |
-| `DVR_PVR/DSTV SD-PVR (UEC DVR 3000)  TV1 & TV2.rmdu` | `no function decodes` |
-| `DVR_PVR/Huawei DN370T TalkTalk-YouView.rmdu` | `no function decodes` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `no function decodes` |
-| `DVR_PVR/Pace TDS865IMC.rmdu` | `no function decodes` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `no function decodes` |
-| `Digital STBs/Huawei DC730.rmdu` | `no function decodes` |
-| `Digital STBs/Pioneer DVR-533H.rmdu` | `no function decodes` |
-| `Digital STBs/Thomson DCI1011GEM1.rmdu` | `no function decodes` |
 | `HTPC - Media Centers/Windows_Media_Center.rmdu` | `no function decodes` |
 | `MP3 Players/Chinese MP3 player DY-001 remote.rmdu` | `no brand: the file is not in the master index and its description begins with no brand of it` |
 | `Media Players/SuperBox S6 Max.rmdu` | `no brand: the file is not in the master index and its description begins with no brand of it` |
 | `Media Players/Vontage T9 - android tv box- URC-10820B00.rmdu` | `no brand: the file is not in the master index and its description begins with no brand of it` |
 | `Misc/DX Antenna DTA-3500.rmdu` | `no function decodes` |
-| `Satellite/ADB 7820sx.rmdu` | `no function decodes` |
 | `Satellite/AXAS His Twin DVBS2 H.265 Satellite Receiver.rmdu` | `no brand: the file is not in the master index and its description begins with no brand of it` |
-| `Satellite/Dream Multimedia DreamBox DM-7025 Plus.rmdu` | `no function decodes` |
-| `Satellite/Dream_Multimedia_DM800.rmdu` | `no function decodes` |
-| `Satellite/Dreambox DM500.rmdu` | `no function decodes` |
 | `Satellite/Foxtel IQ.rmdu` | `no function decodes` |
-| `Satellite/M7 SAT801 .rmdu` | `no function decodes` |
 | `Satellite/Sky PerfecTV (Japan).rmdu` | `no function decodes` |
 | `Satellite/Zodiac DZR-10DTT.rmdu` | `no function decodes` |
 | `TV Combos/Dynex-DX-26LD150A11 TV-DVD.rmdu` | `no brand: the file is not in the master index and its description begins with no brand of it` |
@@ -320,7 +305,7 @@ silently (SPEC R19, condition 5).
 | `Satellite/SonicView SV1000 6131.rmdu` | `remotes/jp1/Sonicview/Satellite-SonicView_SV1000_6131.json` |
 | `TV/VESTEL TV.rmdu` | `remotes/jp1/Vestel/TV-VESTEL_TV.json` |
 
-## Functions skipped (7,581)
+## Functions skipped (6,958)
 
 | File | Function | Reason |
 |---|---|---|
@@ -2182,46 +2167,6 @@ silently (SPEC R19, condition 5).
 | `Cable/Cisco Z368DVB.rmdu` | `vol up` | `the function has no single OBC byte` |
 | `Cable/Comcast X1.rmdu` | 0 | `the second OBC byte is not 0, which XMP-1 has no place for` |
 | `Cable/Comcast XMP-X1.rmdu` | 0 | `the second OBC byte is not 0, which XMP-1 has no place for` |
-| `Cable/DreamBoxDM7020_plus_help_buttons_vbs_with_rec.rmdu` | 0 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/DreamBoxDM7020_plus_help_buttons_vbs_with_rec.rmdu` | 1 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/DreamBoxDM7020_plus_help_buttons_vbs_with_rec.rmdu` | 2 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/DreamBoxDM7020_plus_help_buttons_vbs_with_rec.rmdu` | 3 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/DreamBoxDM7020_plus_help_buttons_vbs_with_rec.rmdu` | 4 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/DreamBoxDM7020_plus_help_buttons_vbs_with_rec.rmdu` | 5 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/DreamBoxDM7020_plus_help_buttons_vbs_with_rec.rmdu` | 6 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/DreamBoxDM7020_plus_help_buttons_vbs_with_rec.rmdu` | 7 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/DreamBoxDM7020_plus_help_buttons_vbs_with_rec.rmdu` | 8 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/DreamBoxDM7020_plus_help_buttons_vbs_with_rec.rmdu` | 9 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/DreamBoxDM7020_plus_help_buttons_vbs_with_rec.rmdu` | `<` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/DreamBoxDM7020_plus_help_buttons_vbs_with_rec.rmdu` | `>` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/DreamBoxDM7020_plus_help_buttons_vbs_with_rec.rmdu` | `Channel Down` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/DreamBoxDM7020_plus_help_buttons_vbs_with_rec.rmdu` | `Channel Up` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/DreamBoxDM7020_plus_help_buttons_vbs_with_rec.rmdu` | `Down` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/DreamBoxDM7020_plus_help_buttons_vbs_with_rec.rmdu` | `Exit` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/DreamBoxDM7020_plus_help_buttons_vbs_with_rec.rmdu` | `Fast Forward` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/DreamBoxDM7020_plus_help_buttons_vbs_with_rec.rmdu` | `Fastext Blue` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/DreamBoxDM7020_plus_help_buttons_vbs_with_rec.rmdu` | `Fastext Green` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/DreamBoxDM7020_plus_help_buttons_vbs_with_rec.rmdu` | `Fastext Red` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/DreamBoxDM7020_plus_help_buttons_vbs_with_rec.rmdu` | `Fastext Yellow` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/DreamBoxDM7020_plus_help_buttons_vbs_with_rec.rmdu` | `Guide` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/DreamBoxDM7020_plus_help_buttons_vbs_with_rec.rmdu` | `Help` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/DreamBoxDM7020_plus_help_buttons_vbs_with_rec.rmdu` | `Info` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/DreamBoxDM7020_plus_help_buttons_vbs_with_rec.rmdu` | `Left` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/DreamBoxDM7020_plus_help_buttons_vbs_with_rec.rmdu` | `Menu` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/DreamBoxDM7020_plus_help_buttons_vbs_with_rec.rmdu` | `Mute` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/DreamBoxDM7020_plus_help_buttons_vbs_with_rec.rmdu` | `OK` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/DreamBoxDM7020_plus_help_buttons_vbs_with_rec.rmdu` | `Pause` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/DreamBoxDM7020_plus_help_buttons_vbs_with_rec.rmdu` | `Play` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/DreamBoxDM7020_plus_help_buttons_vbs_with_rec.rmdu` | `Radio` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/DreamBoxDM7020_plus_help_buttons_vbs_with_rec.rmdu` | `Record` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/DreamBoxDM7020_plus_help_buttons_vbs_with_rec.rmdu` | `Rewind` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/DreamBoxDM7020_plus_help_buttons_vbs_with_rec.rmdu` | `Right` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/DreamBoxDM7020_plus_help_buttons_vbs_with_rec.rmdu` | `Stop` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/DreamBoxDM7020_plus_help_buttons_vbs_with_rec.rmdu` | `TV` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/DreamBoxDM7020_plus_help_buttons_vbs_with_rec.rmdu` | `Text` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/DreamBoxDM7020_plus_help_buttons_vbs_with_rec.rmdu` | `Up` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/DreamBoxDM7020_plus_help_buttons_vbs_with_rec.rmdu` | `Volume Down` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/DreamBoxDM7020_plus_help_buttons_vbs_with_rec.rmdu` | `Volume Up` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
 | `Cable/Foxtel Digital.rmdu` | `+100` | `the function has no single OBC byte` |
 | `Cable/Foxtel Digital.rmdu` | `device button` | `the function has no single OBC byte` |
 | `Cable/Foxtel Digital.rmdu` | `eject` | `the function has no single OBC byte` |
@@ -2259,30 +2204,6 @@ silently (SPEC R19, condition 5).
 | `Cable/Huawei DC211.rmdu` | `skip-` | `the function has no single OBC byte` |
 | `Cable/Huawei DC211.rmdu` | `stop` | `the function has no single OBC byte` |
 | `Cable/Huawei DC211.rmdu` | `yellow` | `the function has no single OBC byte` |
-| `Cable/Insight-DCI1041CS.rmdu` | 0 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Insight-DCI1041CS.rmdu` | 1 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Insight-DCI1041CS.rmdu` | 2 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Insight-DCI1041CS.rmdu` | 3 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Insight-DCI1041CS.rmdu` | 4 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Insight-DCI1041CS.rmdu` | 5 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Insight-DCI1041CS.rmdu` | 6 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Insight-DCI1041CS.rmdu` | 7 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Insight-DCI1041CS.rmdu` | 8 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Insight-DCI1041CS.rmdu` | 9 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Insight-DCI1041CS.rmdu` | `channel down` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Insight-DCI1041CS.rmdu` | `channel up` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Insight-DCI1041CS.rmdu` | `down arrow` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Insight-DCI1041CS.rmdu` | `exit` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Insight-DCI1041CS.rmdu` | `info` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Insight-DCI1041CS.rmdu` | `language` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Insight-DCI1041CS.rmdu` | `last (prev ch)` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Insight-DCI1041CS.rmdu` | `left arrow` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Insight-DCI1041CS.rmdu` | `menu` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Insight-DCI1041CS.rmdu` | `power` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Insight-DCI1041CS.rmdu` | `program guide` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Insight-DCI1041CS.rmdu` | `right arrow` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Insight-DCI1041CS.rmdu` | `select/enter` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Insight-DCI1041CS.rmdu` | `up arrow` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
 | `Cable/Millenium4-Comcast Cisco DTA30.rmdu` | `ALL ON macro key` | `the function has no single OBC byte` |
 | `Cable/Millenium4-Comcast Cisco DTA30.rmdu` | `AUX` | `the function has no single OBC byte` |
 | `Cable/Millenium4-Comcast Cisco DTA30.rmdu` | `CABLE` | `the function has no single OBC byte` |
@@ -2355,47 +2276,6 @@ silently (SPEC R19, condition 5).
 | `Cable/Pace DCR-712.rmdu` | `#44` | `the function has no single OBC byte` |
 | `Cable/Philips DCR7101-03 HDMI UPC NL.rmdu` | `Shift` | `the function has no single OBC byte` |
 | `Cable/Philips DCX-6171.rmdu` | `Serv` | `the function has no single OBC byte` |
-| `Cable/Samsung HD-S200C.rmdu` | 0 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Samsung HD-S200C.rmdu` | 1 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Samsung HD-S200C.rmdu` | 2 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Samsung HD-S200C.rmdu` | 3 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Samsung HD-S200C.rmdu` | 4 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Samsung HD-S200C.rmdu` | 5 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Samsung HD-S200C.rmdu` | 6 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Samsung HD-S200C.rmdu` | 7 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Samsung HD-S200C.rmdu` | 8 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Samsung HD-S200C.rmdu` | 9 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Samsung HD-S200C.rmdu` | `A[yellow]` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Samsung HD-S200C.rmdu` | `Audio` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Samsung HD-S200C.rmdu` | `B[blue]` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Samsung HD-S200C.rmdu` | `Back` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Samsung HD-S200C.rmdu` | `C[red]` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Samsung HD-S200C.rmdu` | `Ch+` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Samsung HD-S200C.rmdu` | `Ch-` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Samsung HD-S200C.rmdu` | `D[green]` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Samsung HD-S200C.rmdu` | `Down` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Samsung HD-S200C.rmdu` | `Exit` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Samsung HD-S200C.rmdu` | `Fast_Fwd` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Samsung HD-S200C.rmdu` | `Guide` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Samsung HD-S200C.rmdu` | `Info` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Samsung HD-S200C.rmdu` | `Left` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Samsung HD-S200C.rmdu` | `Menu` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Samsung HD-S200C.rmdu` | `Mute` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Samsung HD-S200C.rmdu` | `Ok` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Samsung HD-S200C.rmdu` | `OnDemand` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Samsung HD-S200C.rmdu` | `PVR` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Samsung HD-S200C.rmdu` | `Play` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Samsung HD-S200C.rmdu` | `Power` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Samsung HD-S200C.rmdu` | `Record` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Samsung HD-S200C.rmdu` | `Rewind` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Samsung HD-S200C.rmdu` | `Right` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Samsung HD-S200C.rmdu` | `Skip_Back` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Samsung HD-S200C.rmdu` | `Skip_Fwd` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Samsung HD-S200C.rmdu` | `Stop` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Samsung HD-S200C.rmdu` | `TV/Radio` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Samsung HD-S200C.rmdu` | `Up` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Samsung HD-S200C.rmdu` | `Vol+` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Cable/Samsung HD-S200C.rmdu` | `Vol-` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
 | `Cable/Scientific-Atlanta 2000HD.rmdu` | `+100` | `the function has no single OBC byte` |
 | `Cable/Scientific-Atlanta 2000HD.rmdu` | `device button` | `the function has no single OBC byte` |
 | `Cable/Scientific-Atlanta 2000HD.rmdu` | `fav/scan` | `the function has no single OBC byte` |
@@ -3737,44 +3617,6 @@ silently (SPEC R19, condition 5).
 | `DVR_PVR/Az America F92 .rmdu` | `Page-` | `the function has no single OBC byte` |
 | `DVR_PVR/Az America F92 .rmdu` | `Red` | `the function has no single OBC byte` |
 | `DVR_PVR/Az America F92 .rmdu` | `White` | `the function has no single OBC byte` |
-| `DVR_PVR/DSTV SD-PVR (UEC DVR 3000)  TV1 & TV2.rmdu` | `Blue` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/DSTV SD-PVR (UEC DVR 3000)  TV1 & TV2.rmdu` | `CH+` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/DSTV SD-PVR (UEC DVR 3000)  TV1 & TV2.rmdu` | `CH-` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/DSTV SD-PVR (UEC DVR 3000)  TV1 & TV2.rmdu` | `Green` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/DSTV SD-PVR (UEC DVR 3000)  TV1 & TV2.rmdu` | `Guide` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/DSTV SD-PVR (UEC DVR 3000)  TV1 & TV2.rmdu` | `Info` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/DSTV SD-PVR (UEC DVR 3000)  TV1 & TV2.rmdu` | `Last_ch` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/DSTV SD-PVR (UEC DVR 3000)  TV1 & TV2.rmdu` | `Menu` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/DSTV SD-PVR (UEC DVR 3000)  TV1 & TV2.rmdu` | `Mute` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/DSTV SD-PVR (UEC DVR 3000)  TV1 & TV2.rmdu` | `Pause` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/DSTV SD-PVR (UEC DVR 3000)  TV1 & TV2.rmdu` | `Play` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/DSTV SD-PVR (UEC DVR 3000)  TV1 & TV2.rmdu` | `Power` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/DSTV SD-PVR (UEC DVR 3000)  TV1 & TV2.rmdu` | `Record` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/DSTV SD-PVR (UEC DVR 3000)  TV1 & TV2.rmdu` | `Red` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/DSTV SD-PVR (UEC DVR 3000)  TV1 & TV2.rmdu` | `Select` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/DSTV SD-PVR (UEC DVR 3000)  TV1 & TV2.rmdu` | `Stop` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/DSTV SD-PVR (UEC DVR 3000)  TV1 & TV2.rmdu` | `TV` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/DSTV SD-PVR (UEC DVR 3000)  TV1 & TV2.rmdu` | `VOL+` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/DSTV SD-PVR (UEC DVR 3000)  TV1 & TV2.rmdu` | `VOL-` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/DSTV SD-PVR (UEC DVR 3000)  TV1 & TV2.rmdu` | `White` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/DSTV SD-PVR (UEC DVR 3000)  TV1 & TV2.rmdu` | `Yellow` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/DSTV SD-PVR (UEC DVR 3000)  TV1 & TV2.rmdu` | `down_arrow` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/DSTV SD-PVR (UEC DVR 3000)  TV1 & TV2.rmdu` | `exit` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/DSTV SD-PVR (UEC DVR 3000)  TV1 & TV2.rmdu` | `ffwd` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/DSTV SD-PVR (UEC DVR 3000)  TV1 & TV2.rmdu` | `left_arrow` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/DSTV SD-PVR (UEC DVR 3000)  TV1 & TV2.rmdu` | `num_0` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/DSTV SD-PVR (UEC DVR 3000)  TV1 & TV2.rmdu` | `num_1` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/DSTV SD-PVR (UEC DVR 3000)  TV1 & TV2.rmdu` | `num_2` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/DSTV SD-PVR (UEC DVR 3000)  TV1 & TV2.rmdu` | `num_3` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/DSTV SD-PVR (UEC DVR 3000)  TV1 & TV2.rmdu` | `num_4` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/DSTV SD-PVR (UEC DVR 3000)  TV1 & TV2.rmdu` | `num_5` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/DSTV SD-PVR (UEC DVR 3000)  TV1 & TV2.rmdu` | `num_6` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/DSTV SD-PVR (UEC DVR 3000)  TV1 & TV2.rmdu` | `num_7` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/DSTV SD-PVR (UEC DVR 3000)  TV1 & TV2.rmdu` | `num_8` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/DSTV SD-PVR (UEC DVR 3000)  TV1 & TV2.rmdu` | `num_9` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/DSTV SD-PVR (UEC DVR 3000)  TV1 & TV2.rmdu` | `rewind` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/DSTV SD-PVR (UEC DVR 3000)  TV1 & TV2.rmdu` | `right_arrow` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/DSTV SD-PVR (UEC DVR 3000)  TV1 & TV2.rmdu` | `up_arrow` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
 | `DVR_PVR/DStv HD PVR 2P.rmdu` | `Relay` | `the function has no OBC bytes of the executor's shape` |
 | `DVR_PVR/Ellas TV ETV-T503 HD.rmdu` | `#31` | `the function has no single OBC byte` |
 | `DVR_PVR/FireDTV.rmdu` | `+100` | `the function has no single OBC byte` |
@@ -3803,50 +3645,6 @@ silently (SPEC R19, condition 5).
 | `DVR_PVR/Fusion FVRT200.rmdu` | `pip on/off` | `the function has no single OBC byte` |
 | `DVR_PVR/Fusion FVRT200.rmdu` | `pip swap` | `the function has no single OBC byte` |
 | `DVR_PVR/Fusion FVRT200.rmdu` | `sleep` | `the function has no single OBC byte` |
-| `DVR_PVR/Huawei DN370T TalkTalk-YouView.rmdu` | 0 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Huawei DN370T TalkTalk-YouView.rmdu` | 1 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Huawei DN370T TalkTalk-YouView.rmdu` | 2 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Huawei DN370T TalkTalk-YouView.rmdu` | 3 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Huawei DN370T TalkTalk-YouView.rmdu` | 4 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Huawei DN370T TalkTalk-YouView.rmdu` | 5 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Huawei DN370T TalkTalk-YouView.rmdu` | 6 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Huawei DN370T TalkTalk-YouView.rmdu` | 7 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Huawei DN370T TalkTalk-YouView.rmdu` | 8 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Huawei DN370T TalkTalk-YouView.rmdu` | 9 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Huawei DN370T TalkTalk-YouView.rmdu` | `AD (audioD.on/off)` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Huawei DN370T TalkTalk-YouView.rmdu` | `Back` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Huawei DN370T TalkTalk-YouView.rmdu` | `Blue` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Huawei DN370T TalkTalk-YouView.rmdu` | `Ch+` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Huawei DN370T TalkTalk-YouView.rmdu` | `Ch-` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Huawei DN370T TalkTalk-YouView.rmdu` | `Close` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Huawei DN370T TalkTalk-YouView.rmdu` | `Down` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Huawei DN370T TalkTalk-YouView.rmdu` | `FFwd` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Huawei DN370T TalkTalk-YouView.rmdu` | `Green` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Huawei DN370T TalkTalk-YouView.rmdu` | `Guide` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Huawei DN370T TalkTalk-YouView.rmdu` | `Help` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Huawei DN370T TalkTalk-YouView.rmdu` | `Info` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Huawei DN370T TalkTalk-YouView.rmdu` | `Left` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Huawei DN370T TalkTalk-YouView.rmdu` | `OK` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Huawei DN370T TalkTalk-YouView.rmdu` | `Page down` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Huawei DN370T TalkTalk-YouView.rmdu` | `Page up` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Huawei DN370T TalkTalk-YouView.rmdu` | `Pause` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Huawei DN370T TalkTalk-YouView.rmdu` | `Play` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Huawei DN370T TalkTalk-YouView.rmdu` | `Power/Standby` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Huawei DN370T TalkTalk-YouView.rmdu` | `R(ecord)` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Huawei DN370T TalkTalk-YouView.rmdu` | `Red` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Huawei DN370T TalkTalk-YouView.rmdu` | `Rewind` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Huawei DN370T TalkTalk-YouView.rmdu` | `Right` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Huawei DN370T TalkTalk-YouView.rmdu` | `Search` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Huawei DN370T TalkTalk-YouView.rmdu` | `Skip Back` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Huawei DN370T TalkTalk-YouView.rmdu` | `Skip Fwd` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Huawei DN370T TalkTalk-YouView.rmdu` | `Stop` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Huawei DN370T TalkTalk-YouView.rmdu` | `Sub/Delete` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Huawei DN370T TalkTalk-YouView.rmdu` | `TalkTalk` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Huawei DN370T TalkTalk-YouView.rmdu` | `Text` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Huawei DN370T TalkTalk-YouView.rmdu` | `Up` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Huawei DN370T TalkTalk-YouView.rmdu` | `Y (YouView main Menu)` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Huawei DN370T TalkTalk-YouView.rmdu` | `Yellow` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Huawei DN370T TalkTalk-YouView.rmdu` | `Zoom` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
 | `DVR_PVR/Huawei EC2118.rmdu` | `Custom10` | `the function has no single OBC byte` |
 | `DVR_PVR/Huawei EC2118.rmdu` | `Custom11` | `the function has no single OBC byte` |
 | `DVR_PVR/Huawei EC2118.rmdu` | `Custom12` | `the function has no single OBC byte` |
@@ -3905,135 +3703,6 @@ silently (SPEC R19, condition 5).
 | `DVR_PVR/Motorola VIP 1963 (2).rmdu` | `Skip-` | `the function has no single OBC byte` |
 | `DVR_PVR/Motorola VIP 1963 (2).rmdu` | `TV/Exit` | `the function has no single OBC byte` |
 | `DVR_PVR/Motorola VIP 1963 (2).rmdu` | `Video` | `the function has no single OBC byte` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `Blue` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `Bookmark` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `CH+` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `CH-` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `Exit` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `Extras` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `Games` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `Green` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `Guide` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `Info` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `Menu` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `Mute` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `NovaScope` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `Number Input` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `On Demans` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `Pause` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `Play` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `PlayList` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `Power` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `Radio` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `Record` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `Red` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `Select` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `Stop` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `TV/Video` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `Teletext` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `VOL+` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `VOL-` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `Yellow` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `down_arrow` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `ffwd` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `left_arrow` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `num_0` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `num_1` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `num_2` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `num_3` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `num_4` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `num_5` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `num_6` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `num_7` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `num_8` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `num_9` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `rewind` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `right_arrow` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace (Nova) HD831.rmdu` | `up_arrow` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMC.rmdu` | `Blue` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMC.rmdu` | `CH+` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMC.rmdu` | `CH-` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMC.rmdu` | `Green` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMC.rmdu` | `Guide` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMC.rmdu` | `Info` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMC.rmdu` | `Last_ch` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMC.rmdu` | `Menu` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMC.rmdu` | `Mute` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMC.rmdu` | `Pause` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMC.rmdu` | `Play` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMC.rmdu` | `Power` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMC.rmdu` | `Record` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMC.rmdu` | `Red` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMC.rmdu` | `Select` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMC.rmdu` | `Stop` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMC.rmdu` | `TV` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMC.rmdu` | `VOL+` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMC.rmdu` | `VOL-` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMC.rmdu` | `White` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMC.rmdu` | `Yellow` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMC.rmdu` | `down_arrow` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMC.rmdu` | `exit` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMC.rmdu` | `ffwd` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMC.rmdu` | `left_arrow` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMC.rmdu` | `num_0` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMC.rmdu` | `num_1` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMC.rmdu` | `num_2` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMC.rmdu` | `num_3` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMC.rmdu` | `num_4` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMC.rmdu` | `num_5` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMC.rmdu` | `num_6` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMC.rmdu` | `num_7` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMC.rmdu` | `num_8` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMC.rmdu` | `num_9` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMC.rmdu` | `rewind` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMC.rmdu` | `right_arrow` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMC.rmdu` | `up_arrow` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `Blue` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `BookMark` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `CH+` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `CH-` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `Extras` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `Games` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `Green` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `Guide` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `Info` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `Last_ch` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `List` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `Menu` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `Mute` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `Novascot` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `On Demand` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `Pause` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `Play` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `Power` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `Radio` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `Record` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `Red` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `Select` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `Stop` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `Subtitle` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `TV/Video` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `Teletext` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `VOL+` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `VOL-` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `Yellow` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `down_arrow` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `exit` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `ffwd` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `left_arrow` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `num_0` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `num_1` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `num_2` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `num_3` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `num_4` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `num_5` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `num_6` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `num_7` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `num_8` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `num_9` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `rewind` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `right_arrow` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `DVR_PVR/Pace TDS865IMH.rmdu` | `up_arrow` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
 | `DVR_PVR/Panasonic DMR-BS750.rmdu` | `#54` | `the function has no single OBC byte` |
 | `DVR_PVR/Panasonic DMR-BS750.rmdu` | `#55` | `the function has no single OBC byte` |
 | `DVR_PVR/Panasonic DMR-BS750.rmdu` | `#56` | `the function has no single OBC byte` |
@@ -4376,45 +4045,6 @@ silently (SPEC R19, condition 5).
 | `Digital STBs/HD Duo S3.rmdu` | `Yellow` | `the function has no single OBC byte` |
 | `Digital STBs/HD Duo S3.rmdu` | `ffwd` | `the function has no single OBC byte` |
 | `Digital STBs/HD Duo S3.rmdu` | `rewind` | `the function has no single OBC byte` |
-| `Digital STBs/Huawei DC730.rmdu` | 0 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Huawei DC730.rmdu` | 1 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Huawei DC730.rmdu` | 2 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Huawei DC730.rmdu` | 3 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Huawei DC730.rmdu` | 4 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Huawei DC730.rmdu` | 5 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Huawei DC730.rmdu` | 6 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Huawei DC730.rmdu` | 7 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Huawei DC730.rmdu` | 8 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Huawei DC730.rmdu` | 9 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Huawei DC730.rmdu` | `a` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Huawei DC730.rmdu` | `b` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Huawei DC730.rmdu` | `c` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Huawei DC730.rmdu` | `channel down` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Huawei DC730.rmdu` | `channel up` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Huawei DC730.rmdu` | `display` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Huawei DC730.rmdu` | `down arrow` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Huawei DC730.rmdu` | `exit` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Huawei DC730.rmdu` | `fast fwd` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Huawei DC730.rmdu` | `fav` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Huawei DC730.rmdu` | `last (prev ch)` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Huawei DC730.rmdu` | `left arrow` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Huawei DC730.rmdu` | `list` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Huawei DC730.rmdu` | `live` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Huawei DC730.rmdu` | `menu` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Huawei DC730.rmdu` | `on demand` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Huawei DC730.rmdu` | `page+` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Huawei DC730.rmdu` | `page-` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Huawei DC730.rmdu` | `pause` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Huawei DC730.rmdu` | `play` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Huawei DC730.rmdu` | `power` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Huawei DC730.rmdu` | `program guide` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Huawei DC730.rmdu` | `record` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Huawei DC730.rmdu` | `replay` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Huawei DC730.rmdu` | `rewind` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Huawei DC730.rmdu` | `right arrow` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Huawei DC730.rmdu` | `select` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Huawei DC730.rmdu` | `stop` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Huawei DC730.rmdu` | `up arrow` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
 | `Digital STBs/Humax CXHD-3000T.rmdu` | `X2` | `the function has no single OBC byte` |
 | `Digital STBs/Humax CXHD-3000T.rmdu` | `center` | `the function has no single OBC byte` |
 | `Digital STBs/Humax CXHD-3000T.rmdu` | `device button` | `the function has no single OBC byte` |
@@ -4543,47 +4173,6 @@ silently (SPEC R19, condition 5).
 | `Digital STBs/Pinnacle ShowCenter.rmdu` | `slow-` | `the function has no single OBC byte` |
 | `Digital STBs/Pinnacle ShowCenter.rmdu` | `surround` | `the function has no single OBC byte` |
 | `Digital STBs/Pinnacle ShowCenter.rmdu` | `tv/vcr` | `the function has no single OBC byte` |
-| `Digital STBs/Pioneer DVR-533H.rmdu` | 0 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Pioneer DVR-533H.rmdu` | 1 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Pioneer DVR-533H.rmdu` | 2 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Pioneer DVR-533H.rmdu` | 3 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Pioneer DVR-533H.rmdu` | 4 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Pioneer DVR-533H.rmdu` | 5 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Pioneer DVR-533H.rmdu` | 6 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Pioneer DVR-533H.rmdu` | 7 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Pioneer DVR-533H.rmdu` | 8 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Pioneer DVR-533H.rmdu` | 9 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Pioneer DVR-533H.rmdu` | `Blue` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Pioneer DVR-533H.rmdu` | `ChannelDown` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Pioneer DVR-533H.rmdu` | `ChannelPrev` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Pioneer DVR-533H.rmdu` | `ChannelUp` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Pioneer DVR-533H.rmdu` | `DirectionDown` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Pioneer DVR-533H.rmdu` | `DirectionLeft` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Pioneer DVR-533H.rmdu` | `DirectionRight` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Pioneer DVR-533H.rmdu` | `DirectionUp` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Pioneer DVR-533H.rmdu` | `Exit` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Pioneer DVR-533H.rmdu` | `FastForward` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Pioneer DVR-533H.rmdu` | `Green` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Pioneer DVR-533H.rmdu` | `Guide` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Pioneer DVR-533H.rmdu` | `Help` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Pioneer DVR-533H.rmdu` | `Info` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Pioneer DVR-533H.rmdu` | `Language` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Pioneer DVR-533H.rmdu` | `Menu` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Pioneer DVR-533H.rmdu` | `Mute` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Pioneer DVR-533H.rmdu` | `PG` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Pioneer DVR-533H.rmdu` | `Pause` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Pioneer DVR-533H.rmdu` | `Play` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Pioneer DVR-533H.rmdu` | `PowerToggle` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Pioneer DVR-533H.rmdu` | `Record` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Pioneer DVR-533H.rmdu` | `Red` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Pioneer DVR-533H.rmdu` | `Rewind` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Pioneer DVR-533H.rmdu` | `Select/Ok` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Pioneer DVR-533H.rmdu` | `Stop` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Pioneer DVR-533H.rmdu` | `Tv` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Pioneer DVR-533H.rmdu` | `VolumeDown` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Pioneer DVR-533H.rmdu` | `VolumeUp` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Pioneer DVR-533H.rmdu` | `White` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Pioneer DVR-533H.rmdu` | `Yellow` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
 | `Digital STBs/Polaroid POSTB-1.rmdu` | `Custom18` | `the function has no single OBC byte` |
 | `Digital STBs/Polaroid POSTB-1.rmdu` | `Custom19` | `the function has no single OBC byte` |
 | `Digital STBs/Polaroid POSTB-1.rmdu` | `Custom20` | `the function has no single OBC byte` |
@@ -4649,29 +4238,6 @@ silently (SPEC R19, condition 5).
 | `Digital STBs/Teledunya OHC 1600C HD.rmdu` | `#37` | `the function has no single OBC byte` |
 | `Digital STBs/Teledunya OHC 1600C HD.rmdu` | `#38` | `the function has no single OBC byte` |
 | `Digital STBs/Teledunya OHC 1600C HD.rmdu` | `Page+` | `the function has no single OBC byte` |
-| `Digital STBs/Thomson DCI1011GEM1.rmdu` | 0 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Thomson DCI1011GEM1.rmdu` | 1 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Thomson DCI1011GEM1.rmdu` | 2 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Thomson DCI1011GEM1.rmdu` | 3 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Thomson DCI1011GEM1.rmdu` | 4 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Thomson DCI1011GEM1.rmdu` | 5 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Thomson DCI1011GEM1.rmdu` | 6 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Thomson DCI1011GEM1.rmdu` | 7 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Thomson DCI1011GEM1.rmdu` | 8 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Thomson DCI1011GEM1.rmdu` | 9 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Thomson DCI1011GEM1.rmdu` | `ChannelDown` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Thomson DCI1011GEM1.rmdu` | `ChannelPrev` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Thomson DCI1011GEM1.rmdu` | `ChannelUp` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Thomson DCI1011GEM1.rmdu` | `DirectionDown` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Thomson DCI1011GEM1.rmdu` | `DirectionLeft` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Thomson DCI1011GEM1.rmdu` | `DirectionRight` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Thomson DCI1011GEM1.rmdu` | `DirectionUp` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Thomson DCI1011GEM1.rmdu` | `Exit` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Thomson DCI1011GEM1.rmdu` | `Guide` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Thomson DCI1011GEM1.rmdu` | `Info` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Thomson DCI1011GEM1.rmdu` | `Menu` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Thomson DCI1011GEM1.rmdu` | `PowerToggle` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Digital STBs/Thomson DCI1011GEM1.rmdu` | `Select/Ok` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
 | `Digital STBs/Thomson IHD-84.rmdu` | `X2` | `the function has no single OBC byte` |
 | `Digital STBs/Thomson IHD-84.rmdu` | `center` | `the function has no single OBC byte` |
 | `Digital STBs/Thomson IHD-84.rmdu` | `eject` | `the function has no single OBC byte` |
@@ -5505,39 +5071,6 @@ silently (SPEC R19, condition 5).
 | `Projectors/Sony Projector VH11HT.rmdu` | `surround` | `the function has no two OBC bytes` |
 | `Projectors/Sony Projector VH11HT.rmdu` | `vol down` | `the function has no two OBC bytes` |
 | `Projectors/Sony Projector VH11HT.rmdu` | `vol up` | `the function has no two OBC bytes` |
-| `Satellite/ADB 7820sx.rmdu` | 0 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/ADB 7820sx.rmdu` | 1 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/ADB 7820sx.rmdu` | 2 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/ADB 7820sx.rmdu` | 3 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/ADB 7820sx.rmdu` | 4 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/ADB 7820sx.rmdu` | 5 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/ADB 7820sx.rmdu` | 6 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/ADB 7820sx.rmdu` | 7 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/ADB 7820sx.rmdu` | 8 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/ADB 7820sx.rmdu` | 9 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/ADB 7820sx.rmdu` | `blue` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/ADB 7820sx.rmdu` | `channel down` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/ADB 7820sx.rmdu` | `channel up` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/ADB 7820sx.rmdu` | `display` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/ADB 7820sx.rmdu` | `down arrow` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/ADB 7820sx.rmdu` | `fast fwd` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/ADB 7820sx.rmdu` | `green` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/ADB 7820sx.rmdu` | `last (prev ch)` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/ADB 7820sx.rmdu` | `left arrow` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/ADB 7820sx.rmdu` | `menu` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/ADB 7820sx.rmdu` | `pause` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/ADB 7820sx.rmdu` | `play` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/ADB 7820sx.rmdu` | `power` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/ADB 7820sx.rmdu` | `program guide` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/ADB 7820sx.rmdu` | `record` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/ADB 7820sx.rmdu` | `red` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/ADB 7820sx.rmdu` | `rewind` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/ADB 7820sx.rmdu` | `right arrow` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/ADB 7820sx.rmdu` | `select` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/ADB 7820sx.rmdu` | `stop` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/ADB 7820sx.rmdu` | `up arrow` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/ADB 7820sx.rmdu` | `vod` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/ADB 7820sx.rmdu` | `yellow` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
 | `Satellite/AXAS His Twin DVBS2 H.265 Satellite Receiver.rmdu` | `#26` | `the function has no single OBC byte` |
 | `Satellite/AXAS His Twin DVBS2 H.265 Satellite Receiver.rmdu` | `#27` | `the function has no single OBC byte` |
 | `Satellite/AZBox Bravissimo Twin.rmdu` | `#11` | `the function has no single OBC byte` |
@@ -5593,94 +5126,6 @@ silently (SPEC R19, condition 5).
 | `Satellite/Coolsat 8100.rmdu` | `surround` | `the function has no single OBC byte` |
 | `Satellite/Coolsat 8100.rmdu` | `vol down` | `the function has no single OBC byte` |
 | `Satellite/Coolsat 8100.rmdu` | `vol up` | `the function has no single OBC byte` |
-| `Satellite/Dream Multimedia DreamBox DM-7025 Plus.rmdu` | 0 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream Multimedia DreamBox DM-7025 Plus.rmdu` | 1 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream Multimedia DreamBox DM-7025 Plus.rmdu` | 2 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream Multimedia DreamBox DM-7025 Plus.rmdu` | 3 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream Multimedia DreamBox DM-7025 Plus.rmdu` | 4 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream Multimedia DreamBox DM-7025 Plus.rmdu` | 5 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream Multimedia DreamBox DM-7025 Plus.rmdu` | 6 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream Multimedia DreamBox DM-7025 Plus.rmdu` | 7 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream Multimedia DreamBox DM-7025 Plus.rmdu` | 8 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream Multimedia DreamBox DM-7025 Plus.rmdu` | 9 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream Multimedia DreamBox DM-7025 Plus.rmdu` | `AarowLeft` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream Multimedia DreamBox DM-7025 Plus.rmdu` | `AarowRight` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream Multimedia DreamBox DM-7025 Plus.rmdu` | `Audio` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream Multimedia DreamBox DM-7025 Plus.rmdu` | `Blue` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream Multimedia DreamBox DM-7025 Plus.rmdu` | `ChannelDown` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream Multimedia DreamBox DM-7025 Plus.rmdu` | `ChannelUp` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream Multimedia DreamBox DM-7025 Plus.rmdu` | `DirectionDown` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream Multimedia DreamBox DM-7025 Plus.rmdu` | `DirectionLeft` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream Multimedia DreamBox DM-7025 Plus.rmdu` | `DirectionRight` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream Multimedia DreamBox DM-7025 Plus.rmdu` | `DirectionUp` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream Multimedia DreamBox DM-7025 Plus.rmdu` | `Exit` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream Multimedia DreamBox DM-7025 Plus.rmdu` | `FastForward` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream Multimedia DreamBox DM-7025 Plus.rmdu` | `Green` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream Multimedia DreamBox DM-7025 Plus.rmdu` | `Help` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream Multimedia DreamBox DM-7025 Plus.rmdu` | `Info` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream Multimedia DreamBox DM-7025 Plus.rmdu` | `Menu` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream Multimedia DreamBox DM-7025 Plus.rmdu` | `Mute` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream Multimedia DreamBox DM-7025 Plus.rmdu` | `Pause` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream Multimedia DreamBox DM-7025 Plus.rmdu` | `Play` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream Multimedia DreamBox DM-7025 Plus.rmdu` | `PowerOff` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream Multimedia DreamBox DM-7025 Plus.rmdu` | `PowerOn` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream Multimedia DreamBox DM-7025 Plus.rmdu` | `PowerToggle` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream Multimedia DreamBox DM-7025 Plus.rmdu` | `Radio` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream Multimedia DreamBox DM-7025 Plus.rmdu` | `Record` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream Multimedia DreamBox DM-7025 Plus.rmdu` | `Red` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream Multimedia DreamBox DM-7025 Plus.rmdu` | `Rewind` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream Multimedia DreamBox DM-7025 Plus.rmdu` | `Select/Ok` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream Multimedia DreamBox DM-7025 Plus.rmdu` | `Stop` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream Multimedia DreamBox DM-7025 Plus.rmdu` | `TV` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream Multimedia DreamBox DM-7025 Plus.rmdu` | `Teletext` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream Multimedia DreamBox DM-7025 Plus.rmdu` | `Video` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream Multimedia DreamBox DM-7025 Plus.rmdu` | `VolumeDown` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream Multimedia DreamBox DM-7025 Plus.rmdu` | `VolumeUp` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream Multimedia DreamBox DM-7025 Plus.rmdu` | `Yellow` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream_Multimedia_DM800.rmdu` | 0 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream_Multimedia_DM800.rmdu` | 1 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream_Multimedia_DM800.rmdu` | 2 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream_Multimedia_DM800.rmdu` | 3 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream_Multimedia_DM800.rmdu` | 4 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream_Multimedia_DM800.rmdu` | 5 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream_Multimedia_DM800.rmdu` | 6 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream_Multimedia_DM800.rmdu` | 7 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream_Multimedia_DM800.rmdu` | 8 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream_Multimedia_DM800.rmdu` | 9 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream_Multimedia_DM800.rmdu` | `ArrowLeft` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream_Multimedia_DM800.rmdu` | `ArrowRight` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream_Multimedia_DM800.rmdu` | `Audio` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream_Multimedia_DM800.rmdu` | `Blue` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream_Multimedia_DM800.rmdu` | `ChannelDown` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream_Multimedia_DM800.rmdu` | `ChannelUp` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream_Multimedia_DM800.rmdu` | `DirectionDown` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream_Multimedia_DM800.rmdu` | `DirectionLeft` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream_Multimedia_DM800.rmdu` | `DirectionRight` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream_Multimedia_DM800.rmdu` | `DirectionUp` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream_Multimedia_DM800.rmdu` | `Exit` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream_Multimedia_DM800.rmdu` | `FastForward` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream_Multimedia_DM800.rmdu` | `Green` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream_Multimedia_DM800.rmdu` | `Help` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream_Multimedia_DM800.rmdu` | `Info` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream_Multimedia_DM800.rmdu` | `Menu` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream_Multimedia_DM800.rmdu` | `Mute` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream_Multimedia_DM800.rmdu` | `Ok` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream_Multimedia_DM800.rmdu` | `Pause` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream_Multimedia_DM800.rmdu` | `Play` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream_Multimedia_DM800.rmdu` | `Power` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream_Multimedia_DM800.rmdu` | `PowerOff` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream_Multimedia_DM800.rmdu` | `PowerOn` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream_Multimedia_DM800.rmdu` | `Radio` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream_Multimedia_DM800.rmdu` | `Record` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream_Multimedia_DM800.rmdu` | `Red` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream_Multimedia_DM800.rmdu` | `Rewind` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream_Multimedia_DM800.rmdu` | `Stop` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream_Multimedia_DM800.rmdu` | `TV` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream_Multimedia_DM800.rmdu` | `Teletext` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream_Multimedia_DM800.rmdu` | `Video` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream_Multimedia_DM800.rmdu` | `VolumeDown` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream_Multimedia_DM800.rmdu` | `VolumeUp` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dream_Multimedia_DM800.rmdu` | `Yellow` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
 | `Satellite/Dreambox DM500 ver1.rmdu` | `#16` | `the function has no OBC bytes of the executor's shape` |
 | `Satellite/Dreambox DM500 ver1.rmdu` | `#17` | `the function has no OBC bytes of the executor's shape` |
 | `Satellite/Dreambox DM500 ver1.rmdu` | `#27` | `the function has no OBC bytes of the executor's shape` |
@@ -5691,50 +5136,6 @@ silently (SPEC R19, condition 5).
 | `Satellite/Dreambox DM500 ver1.rmdu` | `#44` | `the function has no OBC bytes of the executor's shape` |
 | `Satellite/Dreambox DM500 ver1.rmdu` | `#55` | `the function has no OBC bytes of the executor's shape` |
 | `Satellite/Dreambox DM500 ver1.rmdu` | `#58` | `the function has no OBC bytes of the executor's shape` |
-| `Satellite/Dreambox DM500.rmdu` | 0 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dreambox DM500.rmdu` | 1 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dreambox DM500.rmdu` | 2 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dreambox DM500.rmdu` | 3 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dreambox DM500.rmdu` | 4 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dreambox DM500.rmdu` | 5 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dreambox DM500.rmdu` | 6 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dreambox DM500.rmdu` | 7 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dreambox DM500.rmdu` | 8 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dreambox DM500.rmdu` | 9 | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dreambox DM500.rmdu` | `AarowLeft` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dreambox DM500.rmdu` | `AarowRight` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dreambox DM500.rmdu` | `Audio` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dreambox DM500.rmdu` | `Blue` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dreambox DM500.rmdu` | `ChannelDown` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dreambox DM500.rmdu` | `ChannelUp` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dreambox DM500.rmdu` | `DirectionDown` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dreambox DM500.rmdu` | `DirectionLeft` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dreambox DM500.rmdu` | `DirectionRight` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dreambox DM500.rmdu` | `DirectionUp` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dreambox DM500.rmdu` | `Exit` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dreambox DM500.rmdu` | `FastForward` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dreambox DM500.rmdu` | `Green` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dreambox DM500.rmdu` | `Help` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dreambox DM500.rmdu` | `Info` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dreambox DM500.rmdu` | `Menu` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dreambox DM500.rmdu` | `Mute` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dreambox DM500.rmdu` | `Pause` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dreambox DM500.rmdu` | `Play` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dreambox DM500.rmdu` | `Power` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dreambox DM500.rmdu` | `PowerOff` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dreambox DM500.rmdu` | `PowerOn` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dreambox DM500.rmdu` | `Radio` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dreambox DM500.rmdu` | `Record` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dreambox DM500.rmdu` | `Red` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dreambox DM500.rmdu` | `Rewind` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dreambox DM500.rmdu` | `Select/Ok` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dreambox DM500.rmdu` | `Stop` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dreambox DM500.rmdu` | `TV` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dreambox DM500.rmdu` | `Teletext` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dreambox DM500.rmdu` | `Video` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dreambox DM500.rmdu` | `VolumeDown` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dreambox DM500.rmdu` | `VolumeUp` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/Dreambox DM500.rmdu` | `Yellow` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
 | `Satellite/DuoSat Spider HD .rmdu` | `White` | `the function has no single OBC byte` |
 | `Satellite/Fortec  Star Passion.rmdu` | `#40` | `the function has no single OBC byte` |
 | `Satellite/Fortec  Star Passion.rmdu` | `#41` | `the function has no single OBC byte` |
@@ -5862,45 +5263,6 @@ silently (SPEC R19, condition 5).
 | `Satellite/Humax ND-1000C Sat.rmdu` | `#51` | `the function has no single OBC byte` |
 | `Satellite/Humax ND-1000C Sat.rmdu` | `#52` | `the function has no single OBC byte` |
 | `Satellite/Limesat HD Air.rmdu` | `#52` | `the function has no single OBC byte` |
-| `Satellite/M7 SAT801 .rmdu` | `Blue` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/M7 SAT801 .rmdu` | `CH+` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/M7 SAT801 .rmdu` | `CH-` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/M7 SAT801 .rmdu` | `Fav` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/M7 SAT801 .rmdu` | `Green` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/M7 SAT801 .rmdu` | `Guide` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/M7 SAT801 .rmdu` | `Last_ch` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/M7 SAT801 .rmdu` | `List` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/M7 SAT801 .rmdu` | `Menu` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/M7 SAT801 .rmdu` | `Mute` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/M7 SAT801 .rmdu` | `Page+` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/M7 SAT801 .rmdu` | `Page-` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/M7 SAT801 .rmdu` | `Pause` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/M7 SAT801 .rmdu` | `Play` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/M7 SAT801 .rmdu` | `Power` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/M7 SAT801 .rmdu` | `Record` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/M7 SAT801 .rmdu` | `Red` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/M7 SAT801 .rmdu` | `Select` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/M7 SAT801 .rmdu` | `Stop` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/M7 SAT801 .rmdu` | `VOL+` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/M7 SAT801 .rmdu` | `VOL-` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/M7 SAT801 .rmdu` | `Yellow` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/M7 SAT801 .rmdu` | `down_arrow` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/M7 SAT801 .rmdu` | `exit` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/M7 SAT801 .rmdu` | `ffwd` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/M7 SAT801 .rmdu` | `left_arrow` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/M7 SAT801 .rmdu` | `num_0` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/M7 SAT801 .rmdu` | `num_1` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/M7 SAT801 .rmdu` | `num_2` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/M7 SAT801 .rmdu` | `num_3` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/M7 SAT801 .rmdu` | `num_4` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/M7 SAT801 .rmdu` | `num_5` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/M7 SAT801 .rmdu` | `num_6` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/M7 SAT801 .rmdu` | `num_7` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/M7 SAT801 .rmdu` | `num_8` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/M7 SAT801 .rmdu` | `num_9` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/M7 SAT801 .rmdu` | `rewind` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/M7 SAT801 .rmdu` | `right_arrow` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
-| `Satellite/M7 SAT801 .rmdu` | `up_arrow` | `the function sends a final frame, which the ledger's XMP-1 has no place for` |
 | `Satellite/Maspro DT200.rmdu` | `mute` | `the function has no single OBC byte` |
 | `Satellite/Maspro DT200.rmdu` | `pause` | `the function has no single OBC byte` |
 | `Satellite/Maspro DT200.rmdu` | `vol down` | `the function has no single OBC byte` |
