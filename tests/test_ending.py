@@ -183,3 +183,45 @@ def test_two_candidates_that_differ_only_in_their_ending_are_not_redundant(with_
     remote = remote_from_doc(two, tmp_path / "remotes" / "acme" / "two.json")
     assert remote.compile_group("KEY_1", "primary") == remote.compile_group("KEY_1", "alt")      # the same Pronto string
     assert check_distinctness(remote, "KEY_1") == []                                              # not the same artifact
+
+
+# --- end to end, with XMPff-1 (D217): a remote file, the compile stage, a bundle, its check and its vectors ---------
+
+@pytest.fixture(scope="module")
+def ledger_with_a_final_frame(tmp_path_factory):
+    import json
+
+    from bundle_corpus import make_corpus
+
+    root = make_corpus(tmp_path_factory.mktemp("ending") / "ledger")
+    doc = {"manufacturer": "Dream Multimedia", "model": "DM-test", "protocol": {"name": "XMPff-1", "carrierHz": CARRIER, "minSends": 1},
+           "keys": {name: {"forms": [{"id": "primary.irp", "type": "irp", "device": 26, "subdevice": 48, "function": f,
+                                      "confidence": "plausible", "source": "a test"}]}
+                    for name, f in (("KEY_0", 0), ("KEY_UP", 33), ("KEY_OK", 37))}}
+    path = root / "remotes" / "dream" / "DM-test.json"
+    path.parent.mkdir(parents=True)
+    path.write_text(json.dumps(doc), encoding="utf-8")
+    return root
+
+
+def test_a_bundle_of_a_remote_with_a_final_frame_holds_the_endings_and_passes_its_own_check(ledger_with_a_final_frame, tmp_path):
+    import sqlite3
+
+    from bundle_corpus import floor_of_the_small_ledgers
+    from remote_ledger.bundle import build as bb
+    from remote_ledger.bundle.verify import verify_directory
+    from remote_ledger.bundle.vectors import build_vectors
+
+    with floor_of_the_small_ledgers():
+        built = bb.build_bundle(ledger_with_a_final_frame, "full")
+    assert built.problems == []
+    bb.write_bundle(built, tmp_path, ledger_with_a_final_frame)
+    problems, _ = verify_directory(ledger_with_a_final_frame, tmp_path)
+    assert problems == []
+    conn = sqlite3.connect(tmp_path / bb.BUNDLE_FILE)
+    blobs = [b for (b,) in conn.execute("SELECT words FROM signals")]
+    assert sum(has_ending(b) for b in blobs) == 3 and len(blobs) == len({*blobs})
+    vectors = build_vectors(tmp_path / bb.BUNDLE_FILE)["vectors"]
+    with_ending = [v for v in vectors if "endingUs" in v]
+    assert len(with_ending) == 3 and all(len(v["endingUs"]) == 36 and v["protocol"] == "XMPff-1" for v in with_ending)
+    assert all("endingUs" not in v for v in vectors if v["protocol"] != "XMPff-1")

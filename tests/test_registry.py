@@ -31,6 +31,8 @@ V1_REGISTRY = {
     "RC6-6-20",
     # The nibble code of Comcast's and others' set-top boxes (DESIGN section 52).
     "XMP-1",
+    # XMP-1 with the final frame sent when a key is released, the first signal with an ending (DESIGN section 55).
+    "XMPff-1",
 }
 BACKLOG = {"NEC"}
 #: Not backlogged -- `Samsung32` does not exist in any consulted source, and
@@ -57,6 +59,22 @@ def test_gate_1_irp_string_and_source(name):
     assert proto.irp.strip()
     assert proto.irp_source.strip()
     assert len(proto.irp_source) > 20, "a source has to identify something"
+
+
+def raw_durations(path: Path) -> tuple[int, ...]:
+    """The durations of a tool's raw rendering of one sequence: ``+210,-1168,...`` (D217)."""
+    return tuple(abs(int(x)) for x in path.read_text().strip().split(","))
+
+
+def check_ending(name: str, entry: dict, signal, vectors_dir: Path) -> None:
+    """A protocol whose signal has an ending (D217) cites the tool's own raw rendering of it, and ours must be that exactly:
+    Pronto cannot hold it, so no rounding rule is involved."""
+    cited = entry.get("gate2b_ending_raw")
+    if not signal.ending:
+        assert not cited, f"{name}: cites an ending the vector's signal does not have"
+        return
+    assert cited, f"{name}: its signal has an ending, so index.json must cite the tool's raw rendering of it"
+    assert signal.ending == raw_durations(vectors_dir / cited), f"{name}: the ending disagrees with the cited raw rendering"
 
 
 def check_gate_2(name: str, entry: dict, vectors_dir: Path) -> None:
@@ -98,6 +116,7 @@ def check_gate_2(name: str, entry: dict, vectors_dir: Path) -> None:
     )
     signal = protocols.REGISTRY[name].encode(**params)
     ours = pronto.encode(signal)
+    check_ending(name, entry, signal, vectors_dir)
     rule = entry.get("gate2b_vector_quantization", "d6")
     if rule == "d6":
         assert ours == expected, (

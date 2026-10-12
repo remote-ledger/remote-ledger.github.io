@@ -1,6 +1,6 @@
 # Remote Ledger — Design & Build Plan
 
-**Draft v2.1** · Status: v1 complete; all three seed remotes authored; LIRC, SmartIR and IR Blaster imports built (§14, §15, §17); 39 protocols (§18, §37, §41, §43, §45, §47, §52) · Implements [SPEC.md](SPEC.md) v0.11
+**Draft v2.1** · Status: v1 complete; all three seed remotes authored; LIRC, SmartIR and IR Blaster imports built (§14, §15, §17); 40 protocols (§18, §37, §41, §43, §45, §47, §52, §55) · Implements [SPEC.md](SPEC.md) v0.11
 
 SPEC.md says *what* the format has to hold and why. This says *how it gets
 built*: the resolved open decisions, the one intermediate representation
@@ -341,7 +341,7 @@ Two conditional rules the validator enforces:
   *and* `name` is omitted or its registry entry has `extent_us = None`. All
   three v1 protocols declared an extent, so in practice this only bit
   raw-only files — which is exactly where truncation is most likely. Since §18
-  twenty-two of the 39 protocols declare none (D3), so it now bites a file that
+  twenty-three of the 40 protocols declare none (D3), so it now bites a file that
   names one of them as well. A truncated form with neither an extent nor
   `defaultGapUs` is a validation error, never a guess (D4a).
 
@@ -1342,7 +1342,7 @@ remote-ledger/
 ├── src/remote_ledger/
 │   ├── signal.py      IrSignal, cycle quantization        D1
 │   ├── pronto.py      encode / decode                     D5 D6
-│   ├── protocols/     one module per family (39 protocols) D3 D18 §18 §37 §41 §43 §45 §47 §52
+│   ├── protocols/     one module per family (40 protocols) D3 D18 §18 §37 §41 §43 §45 §47 §52 §55
 │   ├── irblaster/     importer + six hex_*.py maps        §17 §18
 │   ├── lirc/ smartir/ importers                           §14 §15
 │   ├── forms.py       form → IrSignal, precedence         D7
@@ -2051,7 +2051,7 @@ note rather than a live contract.
 
 ## 12. Implementation status
 
-Phases 0-6 are implemented: 3845 tests, `jsonschema` the only runtime
+Phases 0-6 are implemented: 3866 tests, `jsonschema` the only runtime
 dependency. Phase 2 landed its nine SPEC edits *before* its code, per §9 --
 the spec change is what authorises the implementation. (That count is asserted by the suite itself -- see
 `test_documented_test_count_is_current` -- so it cannot drift the way the
@@ -2060,7 +2060,7 @@ added 1,367; it moves again whenever a test is added, and the figure here
 has to be re-fixed with it.) Post-v1 work has landed outside the phases: RC5
 (§16), the LIRC and SmartIR imports (§14, §15), and the IR Blaster importer
 with the 24 protocols it needed (§17, §18), and the canonical key vocabulary
-(§22). The registry held 28 protocols then, and holds 39 since §52 (30 after §37, 31 after §41, 33 after §43, 37 after §45, 38 after §47).
+(§22). The registry held 28 protocols then, and holds 40 since §55 (30 after §37, 31 after §41, 33 after §43, 37 after §45, 38 after §47, 39 after §52).
 `rl encode --protocol NEC1 --device 0x88 --subdevice 0x77
 --function 0x18 --carrier 38000` emits the Topping RC-15A Power key. Until
 the RC-15A was corrected this read `0x11 / 0xEE`: the capture's MSB-first
@@ -6685,4 +6685,22 @@ Some remotes send one more frame when a key is **released**: XMP's final frame (
 ### D218 — What it does to the rest, and what is not proven
 
 Nothing in the corpus moves: no protocol produces an ending yet, so every `prontoHex`, every blob and the bundles are what they were (`rl build --check` reports 0 differences and `rl bundle --verify` passes on a bundle with the same `dataVersion`). **Not proven**: what a receiver does with an ending, which depends on the protocol and is for its registration (§55); and that a player sends it at the right moment, which is the player's (Talismote's `HoldPlan` and its release, in the same change).
+
+## 55. Registering XMPff-1
+
+**`XMPff-1`**: `XMP-1` (§52) with the final frame that some remotes send when a key is released, the first protocol whose signal has an ending (§54, D217). It is what the 16 XMP upgrades whose `Final Frame Toggle` is on send (§53 left them unread). IrpTransmogrifier has it, and a hardware capture of held keys of a remote that sends it is in its own test data. It is registered through D18's three gates and **nothing reads it yet**: the corpus, the index and the bundle do not change, and the registry goes from 39 to 40 protocols. The code is `src/remote_ledger/protocols/xmp.py` (the encoder is `XMP-1`'s with the ending), the evidence `tests/vectors/CITATIONS.md` and `tools/misc_capture_audit.py`.
+
+### D219 — What a form carries
+
+The same as `XMP-1`: `device` is D, `subdevice` is S (required) and `function` is F, the OEM the IRP's 68. **The signal is `XMP-1`'s intro (toggle nibble 0) and repeat (8), and its ending is the same frame with the toggle nibble 9 and a 13.8 ms last gap**, sent once when the key is released (the IRP's `[T=9]` and `[-13.8m]`). The compile stage writes it as `endingHex`, the bundle as the words after the Pronto words (D217).
+
+### D220 — The three gates, and a thing the IRP does not say
+
+**Gate 1**: the IRP verbatim at the commit the others cite and in the 1.2.14 release. **Gate 2a, on hardware**: `tools/misc_capture_audit.py` reads `XMP_1923_FinalFrame.ict`, thirteen captures of held keys of a remote (device 26, sub device 48), with the nibble decoder: **13 of 13 keys** read, every transmission of a key the same fields, the toggle nibbles 0, then 8s, then **9 at the end of 11** (two captures end before the release), the digits the functions they are named for and the cursor keys 33 to 37 as the `XMP-1` capture of another remote has them; and **the registered ending reads as each of the eleven captured final frames** (durations 0.94 to 1.11 times, median 1.00). **Gate 2b**: three vectors rendered from the 1.2.14 release: the Pronto string is the intro and the repeat (`XMP-1`'s words), and **the ending, which Pronto Hex cannot hold and the tool drops with a warning, is its raw rendering and ours must equal it exactly**, with no rounding rule in between (a new field of the gate, `gate2b_ending_raw`, which a protocol with an ending must cite). **Reproducible, none published** (34 now, from 33). **Gate 3**: `tests/test_xmp.py` and `tests/test_ending.py`, the latter taking a remote file of this protocol through the compile stage, a bundle, `rl bundle --verify` and the vectors.
+
+**The capture shows what the IRP does not say: in every one of the eleven the transmission before the final frame has its last gap cut short, to 15-22 ms where the others have 80 ms**, so the final frame follows it at once. The ledger's signal keeps the 80.4 ms of the repeat, and a player that sends the ending after its pass sends it 80 ms after the last frame, not 18. The IRP's `[-13.8m]` is the final frame's own gap; the capture ends at the release and says nothing of what follows it.
+
+### D221 — What it does to the rest, and what is not proven
+
+Nothing in the corpus moves. What the registration opens is the JP1 reading of the 16 upgrades (§56). **Not proven**: what a receiver does with the final frame, and with it arriving 80 ms after the last frame and not 18 (the capture is of a remote and says nothing of a box); and `XMPff`, `XMPff-2` and `XMP-2`, which IrpTransmogrifier also has and the ledger does not register.
 

@@ -1228,5 +1228,31 @@
       57,
       75
     ]
+  },
+  "XMPff-1": {
+    "gate1_irp_source": "IrpTransmogrifier IrpProtocols.xml @c945e76 L3052 (verbatim; identical in the 1.2.14 release, `list -i XMPff-1`). It is XMP-1 with a third transmission, the toggle nibble 9 and a 13.8 ms gap, sent when the key is released: the signal's ending (D217)",
+    "regression_snapshot": null,
+    "snapshot_is_evidence": false,
+    "gate2a_structural_vector": "bengtmartensson/IrpTransmogrifier @c945e76 src/test/teaserfiles/XMP_1923_FinalFrame.ict: thirteen captures of a remote (device 26, sub device 48, 37,876 Hz; keys held for a while, so each holds the intro, the repeats and, for eleven, the final frame), with no decode in its .exp. Not vendored (a GPL-3.0 repository, the files used there by permission of the capture's author); tools/misc_capture_audit.py --irpt DIR re-runs the comparison. All 13 keys read by the nibble decoder written from the frame layout (both checksums verified, OEM 68): every transmission of a key has the same fields, the toggle nibble runs 0, then 8s, then 9 at the end of eleven of them (the other two captures end before the release), the digit keys are the functions they are named for (0 to 7) and the five named keys 33 to 37, as the XMP-1 capture of another remote has them. **The registered ending is compared with each of the eleven captured final frames**: it reads as the captured one, and capture / encoder durations are 0.94-1.11x (median 1.00). **One thing the IRP does not say**: in every one of the eleven the transmission before the final frame has its last gap cut short to 15-22 ms (the IRP's 80.4 ms), so the final frame follows it at once; the signal keeps the 80.4 ms of the repeat, and a player sends the ending after its pass",
+    "gate2a_pending_reason": null,
+    "gate2b_golden_pronto": "irpt_xmpff1_D26_S48_F33.pronto",
+    "gate2b_pending_reason": null,
+    "gate2b_vector_source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "gate2b_vector_params": {
+      "device": 26,
+      "subdevice": 48,
+      "function": 33,
+      "carrier_hz": 38000
+    },
+    "gate2b_vector_quantization": "irpt-nominal-carrier",
+    "gate2b_vector_provenance": "reproducible",
+    "gate2b_vector_reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=26,S=48,F=33 -p XMPff-1",
+    "gate2b_byte_divergence": [
+      21,
+      39,
+      57,
+      75
+    ],
+    "gate2b_ending_raw": "irpt_xmpff1_D26_S48_F33.ending.txt"
   }
 }

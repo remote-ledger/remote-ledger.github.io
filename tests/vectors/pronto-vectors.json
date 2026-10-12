@@ -933,5 +933,74 @@
       57,
       75
     ]
+  },
+  {
+    "file": "irpt_xmpff1_D26_S48_F33.pronto",
+    "protocol": "XMPff-1",
+    "params": {
+      "device": 26,
+      "subdevice": 48,
+      "function": 33,
+      "carrier_hz": 38000
+    },
+    "quantization": "irpt-nominal-carrier",
+    "provenance": "reproducible",
+    "source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=26,S=48,F=33 -p XMPff-1",
+    "note": "Key `up` of the remote whose capture of a held key IrpTransmogrifier's own test data holds (XMP_1923_FinalFrame: device 26, sub device 48, function 33; the captures end with the final frame). The Pronto string is the intro and the repeat, which Pronto Hex can hold, and is the same as XMP-1's for the same parameters; the **ending**, which it cannot, is the tool's own raw rendering, `irpt_xmpff1_D26_S48_F33.ending.txt`, and ours must equal it exactly. No Pronto string for XMPff-1 is published, so this is a render of the pinned release.",
+    "byteDivergence": [
+      21,
+      39,
+      57,
+      75
+    ],
+    "endingRaw": "irpt_xmpff1_D26_S48_F33.ending.txt",
+    "endingReproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -r -n D=26,S=48,F=33 -p XMPff-1 (the third bracket)"
+  },
+  {
+    "file": "irpt_xmpff1_D26_S48_F0.pronto",
+    "protocol": "XMPff-1",
+    "params": {
+      "device": 26,
+      "subdevice": 48,
+      "function": 0,
+      "carrier_hz": 38000
+    },
+    "quantization": "irpt-nominal-carrier",
+    "provenance": "reproducible",
+    "source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=26,S=48,F=0 -p XMPff-1",
+    "note": "Key `0` of the same remote (function 0); the ending is the tool's raw rendering, `irpt_xmpff1_D26_S48_F0.ending.txt`.",
+    "byteDivergence": [
+      21,
+      39,
+      57,
+      75
+    ],
+    "endingRaw": "irpt_xmpff1_D26_S48_F0.ending.txt",
+    "endingReproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -r -n D=26,S=48,F=0 -p XMPff-1 (the third bracket)"
+  },
+  {
+    "file": "irpt_xmpff1_D26_S48_F37.pronto",
+    "protocol": "XMPff-1",
+    "params": {
+      "device": 26,
+      "subdevice": 48,
+      "function": 37,
+      "carrier_hz": 38000
+    },
+    "quantization": "irpt-nominal-carrier",
+    "provenance": "reproducible",
+    "source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=26,S=48,F=37 -p XMPff-1",
+    "note": "Key `OK` of the same remote (function 37); the ending is the tool's raw rendering, `irpt_xmpff1_D26_S48_F37.ending.txt`.",
+    "byteDivergence": [
+      21,
+      39,
+      57,
+      75
+    ],
+    "endingRaw": "irpt_xmpff1_D26_S48_F37.ending.txt",
+    "endingReproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -r -n D=26,S=48,F=37 -p XMPff-1 (the third bracket)"
   }
 ]

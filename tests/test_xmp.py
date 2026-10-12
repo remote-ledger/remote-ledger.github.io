@@ -165,3 +165,50 @@ def test_the_lirc_remotes_of_xmp_boxes_decode_to_transmissions_the_encoder_build
     for _, _, (d, s, f, t, oem) in frames:
         signal = _encode(d, s, f)
         assert decode(signal.intro if t == 0 else signal.repeat) == (d, s, f, t, 68)
+
+
+# --- XMPff-1: XMP-1 with the final frame that is sent when a key is released (D217) -----------------------------------
+
+from remote_ledger.protocols import XMPFF1
+
+
+def _final(device=26, subdevice=48, function=33):
+    return XMPFF1.encode(device=device, subdevice=subdevice, function=function, carrier_hz=CARRIER)
+
+
+def test_xmpff1_is_xmp1_with_an_ending_that_is_the_same_frame_with_the_toggle_nibble_9():
+    assert XMPFF1.name == "XMPff-1" and XMPFF1.extent_us is None and XMPFF1.bits == 64
+    assert "[T=0][T=8][T=9]" in XMPFF1.irp and "[-80.4m][-80.4m][-13.8m]" in XMPFF1.irp
+    for device, subdevice, function in ((26, 48, 33), (84, 0, 84), (62, 16, 0), (255, 255, 255)):
+        final, plain = _final(device, subdevice, function), _encode(device, subdevice, function)
+        assert (final.intro, final.repeat) == (plain.intro, plain.repeat) and plain.ending == ()
+        assert decode(final.ending) == (device, subdevice, function, 9, 68)
+
+
+def test_the_ending_has_the_short_gap_where_the_others_have_80_4_ms_and_differs_in_the_toggle_and_the_checksum_only():
+    signal = _final()
+    assert (signal.ending[17], signal.ending[35]) == (13_800, 13_800) and signal.repeat[35] == 80_400
+    differing = [i for i, (a, b) in enumerate(zip(signal.repeat, signal.ending)) if a != b]
+    assert differing == [18 + 2 * 1 + 1, 18 + 2 * 2 + 1, 35]       # C2's space, the toggle nibble's, the last gap
+
+
+def test_every_function_of_several_addresses_has_an_ending_that_round_trips():
+    for device, subdevice in ((26, 48), (0, 0), (255, 255)):
+        for function in range(256):
+            assert decode(_final(device, subdevice, function).ending) == (device, subdevice, function, 9, 68)
+
+
+def test_the_pronto_string_of_a_final_frame_signal_is_xmp1s_and_the_ending_is_a_string_of_its_own():
+    final, plain = _final(), _encode(26, 48, 33)
+    assert pronto.encode(final) == pronto.encode(plain)
+    ending = pronto.encode_ending(final)
+    assert ending.startswith("0000 006D 0012 0000 ") and len(ending.split()) == 4 + 36
+
+
+def test_a_final_frame_unit_and_missing_subdevice_are_refused_in_its_own_name():
+    with pytest.raises(EncodeError, match="XMPff-1 has no unit"):
+        XMPFF1.encode(device=1, subdevice=2, function=3, carrier_hz=CARRIER, unit_us=136)
+    with pytest.raises(EncodeError, match="XMPff-1 requires an explicit subdevice"):
+        XMPFF1.encode(device=1, subdevice=None, function=3, carrier_hz=CARRIER)
+    with pytest.raises(EncodeError, match="XMPff-1 function is 256"):
+        _final(function=256)
