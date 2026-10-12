@@ -40,10 +40,13 @@ def test_empty_signal_rejected():
         IrSignal(carrier_hz=38000)
 
 
-def test_ending_is_reserved_and_rejected():
-    """A non-empty ending would be dropped on emission rather than encoded."""
-    with pytest.raises(ValidationError, match="ending is reserved"):
-        IrSignal(carrier_hz=38000, intro=(564, 564), ending=(564, 564))
+def test_an_ending_is_a_third_sequence_that_pronto_does_not_hold():
+    """D217: the final frame sent when the key is released. ``sequences`` is still the two Pronto carries."""
+    s = IrSignal(carrier_hz=38000, intro=(564, 564), ending=(210, 13_800))
+    assert s.ending == (210, 13_800) and s.sequences == ((564, 564), ())
+    assert s == IrSignal(carrier_hz=38000, intro=(564, 564), ending=[210, 13_800]) and hash(s) == hash(IrSignal(
+        carrier_hz=38000, intro=(564, 564), ending=(210, 13_800)))
+    assert s != IrSignal(carrier_hz=38000, intro=(564, 564))
 
 
 @pytest.mark.parametrize("bad", [0, -5, SIGNAL_DURATION_US_MAX + 1])
@@ -82,10 +85,11 @@ def test_sequences_are_coerced_to_tuples():
     assert len({from_list, from_tuple}) == 1
 
 
-def test_reserved_ending_reports_the_real_reason_not_the_shape():
-    """An odd-length ending is reserved-field misuse, not a shape error."""
-    with pytest.raises(ValidationError, match="ending is reserved"):
+def test_an_ending_has_the_shape_of_any_sequence():
+    with pytest.raises(ValidationError, match="ending has 1 durations"):
         IrSignal(carrier_hz=38000, intro=(564, 564), ending=(564,))
+    with pytest.raises(BoundsError):
+        IrSignal(carrier_hz=38000, intro=(564, 564), ending=(0, 564))
 
 
 def test_sequence_length_cap():

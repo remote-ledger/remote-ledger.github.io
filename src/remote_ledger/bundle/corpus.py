@@ -94,13 +94,23 @@ class RemoteRecord:
     other_candidates: int
 
 
-def pronto_blob(text: str) -> bytes:
+def pronto_blob(text: str, ending: str | None = None) -> bytes:
     """A Pronto string as the bundle stores it (D91): a big-endian ``uint16``
     count of words, then the words, each a big-endian ``uint16``. The string is
     the ledger's own canonical output (``pronto.encode``: upper case, four hex
-    digits a word, one space between), so the words are its hex digits as bytes."""
-    body = bytes.fromhex(text.replace(" ", ""))
-    return struct.pack(">H", len(body) // 2) + body
+    digits a word, one space between), so the words are its hex digits as bytes.
+
+    A signal with an **ending** (D217) has it after the Pronto words, in the same
+    blob: the number of its burst pairs and then its durations in carrier cycles,
+    the two being what the ending's own Pronto string (``pronto.encode_ending``)
+    holds after its header. The two strings must share a frequency word."""
+    words = [int(w, 16) for w in text.split()]
+    if ending is not None:
+        tail = [int(w, 16) for w in ending.split()]
+        if tail[1] != words[1] or tail[3] != 0 or len(tail) != 4 + 2 * tail[2]:
+            raise ValueError("an ending is the intro of a Pronto string with no repeat and the signal's own frequency word")
+        words += [tail[2], *tail[4:]]
+    return struct.pack(f">H{len(words)}H", len(words), *words)
 
 
 def read_remote(root: Path, path: Path) -> RemoteRecord | str:
@@ -128,8 +138,8 @@ def _read(root: Path, path: Path, where: str) -> RemoteRecord | str:
         chosen = select(groups[PRIMARY])
         rank = CONFIDENCE_RANK[chosen.confidence]
         tiers.append(rank)
-        text = remote.compile_group(name, PRIMARY)
-        blob = pronto_blob(text)
+        text, ending = remote.compile_pair(name, PRIMARY)
+        blob = pronto_blob(text, ending)
         empties.add(int(text.split(" ", 3)[2], 16) == 0)
         label = remote.labels.get(name)
         keys.append((name, label, canonical_id(name, label), rank, blob))
