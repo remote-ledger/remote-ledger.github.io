@@ -1255,3 +1255,53 @@ compile stage, a bundle, `rl bundle --verify` and the signal vectors).
 
 What a receiver does with the final frame, and with it arriving 80 ms after the last frame and not 18; and `XMPff`, `XMPff-2`
 and `XMP-2`, which IrpTransmogrifier also has and the ledger does not register.
+
+## RC5x (DESIGN section 57)
+
+Philips' twenty-bit extension of RC-5: the same biphase code at 36 kHz and 889 us, with a six-bit data field after four units of silence.
+Marantz's receivers and amplifiers take it with the data field as the *extension* of their charts (D124), and so do McIntosh's.
+IrpTransmogrifier has hardware captures of it. The ledger registers it as `RC5x`; `RC5` is not it (the fourteen-bit frame with no data) and
+the two do not decode each other.
+
+### Gate 1 — IRP string with its source: **MET**
+
+`{36k,msb,889}<1,-1|-1,1>((1,~S:1:6,T:1,D:5,-4,S:6,F:6,^114m)*,T=1-T)[D:0..31,S:0..127,F:0..63,T@:0..1=0]`, verbatim from
+IrpTransmogrifier's `IrpProtocols.xml` at `c945e76` (L2133-L2141) and identical in the 1.2.14 release (`list -i RC5x`). Its documentation:
+"In Philips' (the creator of the protocol) terminology, D is called System, S is called Command, and F is called Data." The ledger's `device` is D,
+`subdevice` is S (required) and `function` is F. **The toggle is not in a remote file** (D3b): everything compiled has T=0, the IRP's default.
+
+### Gate 2a — structural: **MET**, on hardware captures and on a maker's charts
+
+`bengtmartensson/IrpTransmogrifier @c945e76 src/test/teaserfiles/RC5x.ict` and `.exp`, not vendored (a GPL-3.0 repository, the files used there by
+permission of the capture's author) and re-checked by `tools/misc_capture_audit.py --irpt DIR`:
+
+| file | what | keys | capture / encoder, every duration but the lead-out | frame period |
+|---|---|---|---|---|
+| `RC5x` | a remote of system 16 and one of system 22, 36,308 Hz | 9 of 9 | median 0.992 (0.966-1.003) | 0.997-0.998x |
+
+Every key's first frame is read by a biphase decoder written from the layout and not from the encoder (twenty bits; S1 a 1; S2 the complement of
+bit 6 of S; the four units of silence between the eighth and the ninth), compared with the `.exp` file's fields (D, S, F and T, where the file leaves T
+out when it is 0), and the registered encoder's own frame must decode to the same fields. **A capture carries instrument bias**: this says layout and bit
+order, not absolute durations.
+
+**A second source, the maker's own.** Marantz's three charts (`sources/official/marantz`, D124) give a row's system, command and extension (decimal) and,
+for 395 distinct rows that have an extension, **Marantz's own Pronto hex**. `tests/test_rc5x.py` reads each hex at its own frequency word and decodes its
+first frame through the same layout: **367 of 395 read as exactly the chart's system, command and extension.** The other 28 are the chart
+disagreeing with itself, not the layout: 19 read as *another row's* fields (a hex string under the wrong row), 7 differ by one in the command or in the
+system (a typo), and 2 are not a frame of this shape. The encoder's frame for the 367 is within 4% of Marantz's durations (median under 1: Marantz's unit is
+32 cycles of a 36.7 kHz word, 872 us, against 889 us). **This also says how far to trust the 1,034 chart rows that have an extension and no hex** (D126):
+the fields of a row are the maker's, and about one row in fourteen of those that can be checked disagrees with its own hex.
+
+### Gate 2b — golden Pronto: **MET**, reproducible and not published
+
+Three vectors rendered from the 1.2.14 release (`irpt_rc5x_D16_S12_F1.pronto`, `D16_S1_F3`, `D22_S126_F0`; the first is Marantz's `POWER ON`, the other two
+keys of the capture). No Pronto string for RC5x is published as a vector, so these are renders of the pinned release: the same IRP, not the IRP
+itself. Ours equals them in every word but the last, the lead-out, by three cycles (the release rounds the extent another way, as it does for `RC5`;
+declared as `gate2b_byte_divergence`).
+
+### Gate 3 — invariants: **MET**
+
+`tests/test_rc5x.py`: the frame's shape and extent, every field round-tripping (the corners, 8 chosen frames and 3,000 random ones, both toggle states), the
+silence between the eighth and the ninth bit, `RC5` and `RC5x` not decoding each other, every out-of-range field refused, the golden vectors, and the two
+tests over Marantz's charts above.
+

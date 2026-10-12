@@ -1,6 +1,6 @@
 # Remote Ledger — Design & Build Plan
 
-**Draft v2.1** · Status: v1 complete; all three seed remotes authored; LIRC, SmartIR and IR Blaster imports built (§14, §15, §17); 40 protocols (§18, §37, §41, §43, §45, §47, §52, §55) · Implements [SPEC.md](SPEC.md) v0.11
+**Draft v2.1** · Status: v1 complete; all three seed remotes authored; LIRC, SmartIR and IR Blaster imports built (§14, §15, §17); 41 protocols (§18, §37, §41, §43, §45, §47, §52, §55, §57) · Implements [SPEC.md](SPEC.md) v0.11
 
 SPEC.md says *what* the format has to hold and why. This says *how it gets
 built*: the resolved open decisions, the one intermediate representation
@@ -341,7 +341,7 @@ Two conditional rules the validator enforces:
   *and* `name` is omitted or its registry entry has `extent_us = None`. All
   three v1 protocols declared an extent, so in practice this only bit
   raw-only files — which is exactly where truncation is most likely. Since §18
-  twenty-three of the 40 protocols declare none (D3), so it now bites a file that
+  twenty-three of the 41 protocols declare none (D3), so it now bites a file that
   names one of them as well. A truncated form with neither an extent nor
   `defaultGapUs` is a validation error, never a guess (D4a).
 
@@ -1342,7 +1342,7 @@ remote-ledger/
 ├── src/remote_ledger/
 │   ├── signal.py      IrSignal, cycle quantization        D1
 │   ├── pronto.py      encode / decode                     D5 D6
-│   ├── protocols/     one module per family (40 protocols) D3 D18 §18 §37 §41 §43 §45 §47 §52 §55
+│   ├── protocols/     one module per family (41 protocols) D3 D18 §18 §37 §41 §43 §45 §47 §52 §55 §57
 │   ├── irblaster/     importer + six hex_*.py maps        §17 §18
 │   ├── lirc/ smartir/ importers                           §14 §15
 │   ├── forms.py       form → IrSignal, precedence         D7
@@ -2051,7 +2051,7 @@ note rather than a live contract.
 
 ## 12. Implementation status
 
-Phases 0-6 are implemented: 3868 tests, `jsonschema` the only runtime
+Phases 0-6 are implemented: 3908 tests, `jsonschema` the only runtime
 dependency. Phase 2 landed its nine SPEC edits *before* its code, per §9 --
 the spec change is what authorises the implementation. (That count is asserted by the suite itself -- see
 `test_documented_test_count_is_current` -- so it cannot drift the way the
@@ -6723,3 +6723,20 @@ The corpus is **16,536 remote files and 661,016 keys**, 5,461 brands (2 more), 2
 ### D225 — What is not proven, and what is not read
 
 **Not proven.** That a receiver acts on the final frame, or on it 80 ms after the last frame of a held key rather than 18 (§55's capture); that the 623 functions do what their names say (§28); and that a player sends the ending at the right moment, which is Talismote's (§54). **Not read** is what it was without the 16: 413 upgrades of 144 executor names (`Manual Settings`, `RC-5/5x Combo` 16, `Pioneer DVD` 4 and 141 executors of fewer than 12 each) and the 2,073 KeymapMaster files. Blaupunkt's closing sync (D66) could use an ending now and does not yet.
+
+## 57. Registering RC5x
+
+**`RC5x`**: Philips' twenty-bit extension of RC-5, the same biphase code at 36 kHz and 889 us with a six-bit data field after four units of silence. Marantz's receivers and amplifiers take it with the data field as the **extension** of their charts (D124), and D126 left 1,034 of their rows unread for want of this protocol. It is registered through D18's three gates and **nothing reads it yet**: the corpus, the index and the bundle do not change, and the registry goes from 40 to 41 protocols. The code is `src/remote_ledger/protocols/rc5x.py`, the evidence `tests/vectors/CITATIONS.md`, `tests/test_rc5x.py` and `tools/misc_capture_audit.py`.
+
+### D226 — What a form carries
+
+`device` is D, the system (0 to 31); **`subdevice` is S, the seven-bit command, and is required**; `function` is F, the six-bit data (0 to 63), which Marantz's charts call the extension. This is IrpTransmogrifier's own naming (its documentation: "D is called System, S is called Command, and F is called Data") and the one `XMP-1` took for its S. The signal is one frame and has no intro: S1 (a 1), `~S:1:6` (the complement of bit 6 of S, as RC-5's second start bit), T, D:5, four units of silence, S:6, F:6; a frame opens on a lone mark (S1's idle half-bit is dropped, as in `RC5`) and its extent, 114 ms, is measured from that mark. **The toggle is not in a remote file** (D3b): everything compiled has T=0. `RC5` is not `RC5x` and the two do not decode each other; `RC5`'s docstring said `RC5x` stayed unregistered and now says where it is.
+
+### D227 — The three gates
+
+**Gate 1**: the IRP verbatim at the commit the others cite and in the 1.2.14 release. **Gate 2a, on hardware**: `tools/misc_capture_audit.py` reads IrpTransmogrifier's `RC5x.ict`, nine captures of a remote of system 16 and one of system 22, with a biphase decoder written from the layout: **9 of 9 keys** read as the `.exp` file's D, S, F and T and re-encode to the same bit pattern, capture durations 0.97 to 1.00 times the encoder's (median 0.99), the frame period 0.997 to 0.998. **Gate 2a, a second source, the maker's**: of Marantz's 395 distinct chart rows with an extension and the maker's own Pronto hex, **367 read as exactly the chart's system, command and extension** through the same layout; the other 28 are the chart disagreeing with itself (19 hex strings that read as *another row's* fields, 7 off by one in the command or the system, 2 not a frame of this shape). **Gate 2b**: three vectors rendered from the 1.2.14 release, ours equal in every word but the lead-out, by three cycles (the release rounds the extent another way, as it does for `RC5`); reproducible, none published (35 now, from 34). **Gate 3**: `tests/test_rc5x.py`.
+
+### D228 — What it opens, and what is not proven
+
+It opens two readings, each its own pull request: **Marantz's 1,034 rows with an extension and no hex** (D126), and the **16 JP1 `RC-5/5x Combo` upgrades** (D145). The Marantz check also says how far to trust the first: about one chart row in fourteen of those that can be checked disagrees with its own hex, so the fields of a row with no hex are the maker's and carry that risk. **Not proven**: that a receiver acts on a frame the encoder makes (the capture is of a remote, no frame was sent to a device); and **what an app does with the toggle**: Talismote's `ToggleFrame` recognises RC-5 and RC-6 frames only, so an RC5x key would be sent with the same T every time, which a receiver that tells presses apart by T may take as one held key. Marantz's charts say nothing of that.
+

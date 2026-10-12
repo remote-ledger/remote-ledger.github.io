@@ -22,6 +22,7 @@ each with the decode IrpTransmogrifier's own test expects:
     GI_Cable.ict  / .exp   a General Instrument cable box's remote: an intro and a short repeat
     RC6-6-20.ict  / .exp   a Sky+ remote: RC-6 mode 6 with a 20-bit payload
     XMP-1.ict     / .exp   a set-top box's remote that sends XMP-1 with its final frame (XMPff-1)
+    RC5x.ict      / .exp   a remote of system 16 (Marantz's) and one of system 22: RC-5x, twenty biphase bits
     XMP_1923_FinalFrame.ict    a Dreambox-style remote held for a while: XMP-1's intro and repeats, then the final frame
 
 They are **cited, not vendored**: the repository is GPL-3.0 and the files are
@@ -302,6 +303,35 @@ def decode_rc6_6_20(frame: list[int]):
     return {"D": field(8), "S": field(4), "F": field(8), "T": toggle}
 
 
+def decode_rc5x(frame: list[int]):
+    """RC-5x's first frame: twenty biphase bits at one unit a half, with four units of silence between the eighth and the ninth:
+    S1 (a 1), ``~S:1:6``, T, D:5, the gap, S:6, F:6. The unit is the shortest duration of the frame (not its gap), and the
+    lone idle half-bit that opens S1, which no recording keeps, is put back."""
+    unit = min(frame[:-1])
+    assert 600 < unit < 1000, f"a unit of {unit} us"
+    levels = [0]                                            # S1's idle half-bit
+    for i, d in enumerate(frame[:-1]):
+        levels += [1 - i % 2] * max(1, round(d / unit))
+    levels += [0] * (44 - len(levels))                      # the last bit's space may be inside the lead-out gap
+    assert len(levels) == 44, f"{len(levels)} half-bits, not 44"
+    assert levels[16:20] == [0, 0, 0, 0], "no four-unit silence between the eighth and the ninth bit"
+    halves = levels[:16] + levels[20:]
+    bits = []
+    for first, second in zip(halves[0::2], halves[1::2]):
+        assert first != second, "a bit that is not biphase"
+        bits.append(int(second == 1))                       # a 1 is a space then a mark
+    assert bits[0] == 1, "S1 is not 1"
+
+    def field(lo, count):
+        value = 0
+        for b in bits[lo:lo + count]:
+            value = value << 1 | b
+        return value
+
+    command = (1 - bits[1]) << 6 | field(8, 6)              # S2 is the complement of bit 6 of S
+    return {"D": field(3, 5), "S": command, "F": field(14, 6), "T": bits[2]}
+
+
 #: XMP-1's spaces by the value of the nibble they stand for (the IRP's own figures).
 NIBBLE_SPACES = (760, 896, 1032, 1168, 1304, 1449, 1576, 1712, 1848, 1984, 2120, 2256, 2392, 2528, 2664, 2800)
 
@@ -344,6 +374,8 @@ def encode_like(proto: str, p: dict[str, int], carrier: int):
                             toggle=p["T"])
     if proto == "XMP-1":
         return entry.encode(device=p["D"], subdevice=p["S"], function=p["F"], carrier_hz=carrier)
+    if proto == "RC5x":
+        return entry.encode(device=p["D"], subdevice=p["S"], function=p["F"], carrier_hz=carrier, toggle=p["T"])
     if proto == "RC6-6-20":
         return entry.encode(device=p["D"], subdevice=p["S"], function=p["F"], carrier_hz=carrier, toggle=p["T"])
     if proto in ("Panasonic_Old", "RCA", "GI_Cable"):
@@ -379,6 +411,7 @@ CASES = (
     ("GI_Cable", "GI_Cable", decode_gicable),
     ("RC6-6-20", "RC6-6-20", decode_rc6_6_20),
     ("XMP-1", "XMP-1", decode_xmp1),
+    ("RC5x", "RC5x", decode_rc5x),
 )
 
 #: The gap that ends a frame where the default would run through the repeats (RCA's is 8 ms).
@@ -507,6 +540,8 @@ def audit(root: Path) -> int:
                 want = {"T": 0} | {k: v for k, v in expected[key].items() if k in fields}
             elif decode is decode_rc6_6_20:
                 want = {"T": fields["T"]} | {k: v for k, v in expected[key].items() if k in fields}
+            elif decode is decode_rc5x:
+                want = {"T": 0} | {k: v for k, v in expected[key].items() if k in fields}   # the .exp leaves T out when it is 0
             elif decode is decode_nokia32:
                 want = {"D": 0, "S": 0, "F": 0, "X": 0, "T": 0} | {k: v for k, v in expected[key].items() if k in fields}
             else:
