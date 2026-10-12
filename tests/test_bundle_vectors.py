@@ -70,8 +70,9 @@ def test_it_covers_every_protocol_family_and_every_source(document):
     assert {"NEC1", "NEC2", "NECx1", "NECx2", "RC5", "RC6", "Sony12", "Sony15", "Sony20", "Samsung36",
             "Sharp", "Denon", "JVC", "Pioneer-2Part", "Panasonic", "Proton", "Thomson7", "Aiwa",
             "Blaupunkt", "RCA-38", "RECS80", "RECS80-0068", "F12_relaxed", "SharpDVD", "JVC-48",
-            "Fujitsu", "Denon-K", "Teac-K", "(unnamed)"} <= got
-    assert {v["source"] for v in document["vectors"]} == {"authored", "lirc", "smartir", "irblaster"}
+            "Fujitsu", "Denon-K", "Teac-K", "(unnamed)", "XMP-1", "XMPff-1"} <= got
+    assert {v["source"] for v in document["vectors"]} == {"authored", "lirc", "smartir", "irblaster", "hifi-remote",
+                                                          "jp1", "official"}
     for protocol in got:
         assert sum(1 for v in document["vectors"] if (v["protocol"] or "(unnamed)") == protocol) >= 1
 
@@ -93,6 +94,7 @@ def test_every_expected_value_is_what_the_ledgers_decoder_gives_from_the_blob(do
         signal = decode_blob(blob, v["catalogCarrierHz"])
         assert v["introUs"] == list(signal.intro), v["remote"]
         assert v["repeatUs"] == list(signal.repeat), v["remote"]
+        assert v.get("endingUs", []) == list(signal.ending), v["remote"]
         assert v["frequencyWord"] == blob_words(blob)[1]
         assert v["frequencyHz"] == frequency_hz(blob)
         assert v["play"]["pressUs"] == press(signal.intro, signal.repeat, v["play"]["repeatPasses"])
@@ -107,10 +109,13 @@ def test_and_what_plain_arithmetic_on_the_words_gives(document):
         words = struct.unpack(f">{count}H", blob[2:])
         assert len(blob) == 2 + 2 * count and words[0] == 0
         word, n1, n2 = words[1], words[2], words[3]
-        assert count == 4 + 2 * (n1 + n2)
-        body = list(words[4:])
+        pronto_words = 4 + 2 * (n1 + n2)
+        tail = list(words[pronto_words:])                # an ending (D217): its pair count, then its durations
+        assert count == pronto_words + len(tail) and (not tail or len(tail) == 1 + 2 * tail[0])
+        body = list(words[4:pronto_words])
         assert v["introUs"] == microseconds(body[:2 * n1], word), v["remote"]
         assert v["repeatUs"] == microseconds(body[2 * n1:], word), v["remote"]
+        assert v.get("endingUs") == (microseconds(tail[1:], word) if tail else None), v["remote"]
         assert v["frequencyHz"] == half_up(Decimal(1_000_000) / (Decimal(word) * Decimal("0.241246")))
         assert v["frequencyWord"] == word
         # the catalog's carrier is the file's, and its word is the blob's
@@ -137,8 +142,18 @@ def test_a_vector_names_its_key_the_way_the_bundle_does(document):
         assert v["label"] is None or isinstance(v["label"], str)
         assert v["confidence"] in (0, 1, 2, 3) and v["n"] >= 0
         assert v["remote"].split("/")[0] in {"irblaster", "lirc", "smartir", "topping", "meridian",
-                                              "samsung", "sony"}
+                                              "samsung", "sony", "hifi-remote", "jp1", "official"}
     assert len({(v["remote"], v["n"]) for v in document["vectors"]}) == len(document["vectors"])
+
+
+def test_the_signals_with_an_ending_have_it_and_no_other_vector_does(document):
+    """D217: the final frame sent when a key is released, from the words after the Pronto string."""
+    with_ending = [v for v in document["vectors"] if "endingUs" in v]
+    assert len(with_ending) >= 2 and {v["protocol"] for v in with_ending} == {"XMPff-1"}
+    for v in with_ending:
+        assert len(v["endingUs"]) % 2 == 0 and 13_700 < v["endingUs"][-1] < 13_900 and v["introUs"] and v["repeatUs"]
+        assert v["play"]["pressUs"] == v["introUs"] + v["repeatUs"] * v["play"]["repeatPasses"]      # the ending is not in a press
+    assert all("endingUs" not in v for v in document["vectors"] if v["protocol"] != "XMPff-1")
 
 
 def test_vectors_are_made_from_a_bundle_and_the_same_one_gives_the_same_file(tmp_path):

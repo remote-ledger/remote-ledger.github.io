@@ -127,7 +127,7 @@ def build_vectors(bundle: Path) -> dict[str, Any]:
             "format": FORMAT,
             "about": "Cross-language vectors of the signal table (DESIGN.md D91): from blobHex "
                      "and catalogCarrierHz a reader must produce frequencyWord, frequencyHz, "
-                     "introUs, repeatUs and play.pressUs.",
+                     "introUs, repeatUs, play.pressUs and, where the vector has one, endingUs (D217).",
             "protocols": sorted({v["protocol"] or "(unnamed)" for v in vectors}),
             "vectors": vectors,
         }
