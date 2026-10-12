@@ -14,7 +14,7 @@ S2    ``~F:1:6`` -- the *complement* of command bit 6. Original RC-5 had no
       this is not two registry entries. Some sources, the LIRC conf for the
       Meridian MSR among them, call the extension "RC-5X". That is **not**
       IrpTransmogrifier's ``RC5x``, a different 20-bit protocol with a
-      six-bit subdevice, which stays unregistered.
+      six-bit data field, registered as ``RC5x`` (DESIGN section 57).
 T     the toggle bit
 D:5   the system address
 F:6   the low six bits of the command

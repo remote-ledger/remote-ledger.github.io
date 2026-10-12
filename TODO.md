@@ -68,9 +68,9 @@ Land it in two PRs, code and then data.
       kind goes to the private repository (D130).
 - [ ] **Marantz's direct-access sheets** (DESIGN D126): volume level, preset
       and channel commands are RC-5 with an extension byte, and so are 1,034
-      rows of the charts the import counts and does not use. They need an
-      RC-5x protocol, which needs D18's gate: an independently cited golden
-      vector.
+      rows of the charts the import counts and does not use. `RC5x` is
+      registered now (§57, D226 to D228); **reading them is the next step**,
+      and the 16 JP1 `RC-5/5x Combo` upgrades (below) are the other.
 - [ ] **Receiver commands in the key vocabulary** (D84, owner's call): the
       official import maps 16.9% of its keys, because tuner presets, surround
       modes, Pure Direct, discrete mute on and off, and a source key per input

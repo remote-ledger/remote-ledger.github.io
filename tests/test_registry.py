@@ -33,6 +33,8 @@ V1_REGISTRY = {
     "XMP-1",
     # XMP-1 with the final frame sent when a key is released, the first signal with an ending (DESIGN section 55).
     "XMPff-1",
+    # Philips' twenty-bit extension of RC-5, whose data field is Marantz's extension (DESIGN section 57).
+    "RC5x",
 }
 BACKLOG = {"NEC"}
 #: Not backlogged -- `Samsung32` does not exist in any consulted source, and

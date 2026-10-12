@@ -1002,5 +1002,59 @@
     ],
     "endingRaw": "irpt_xmpff1_D26_S48_F37.ending.txt",
     "endingReproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -r -n D=26,S=48,F=37 -p XMPff-1 (the third bracket)"
+  },
+  {
+    "file": "irpt_rc5x_D16_S12_F1.pronto",
+    "protocol": "RC5x",
+    "params": {
+      "device": 16,
+      "subdevice": 12,
+      "function": 1,
+      "carrier_hz": 36000
+    },
+    "quantization": "irpt-nominal-carrier",
+    "provenance": "reproducible",
+    "source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=16,S=12,F=1 -p RC5x",
+    "note": "System 16, command 12 and extension 1: Marantz's `POWER ON` of its charts (D124). No Pronto string for RC5x is published as a vector, so this is a render of the pinned release; the encoder differs only in the lead-out word by three cycles.",
+    "byteDivergence": [
+      37
+    ]
+  },
+  {
+    "file": "irpt_rc5x_D16_S1_F3.pronto",
+    "protocol": "RC5x",
+    "params": {
+      "device": 16,
+      "subdevice": 1,
+      "function": 3,
+      "carrier_hz": 36000
+    },
+    "quantization": "irpt-nominal-carrier",
+    "provenance": "reproducible",
+    "source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=16,S=1,F=3 -p RC5x",
+    "note": "The first key of the remote IrpTransmogrifier's own test data captures (RC5x.exp: `0` decodes as RC5x {D=16,S=1,F=3,T=1}; this is the T=0 state).",
+    "byteDivergence": [
+      37
+    ]
+  },
+  {
+    "file": "irpt_rc5x_D22_S126_F0.pronto",
+    "protocol": "RC5x",
+    "params": {
+      "device": 22,
+      "subdevice": 126,
+      "function": 0,
+      "carrier_hz": 36000
+    },
+    "quantization": "irpt-nominal-carrier",
+    "provenance": "reproducible",
+    "source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=22,S=126,F=0 -p RC5x",
+    "note": "Key `Vol+` of the other remote of RC5x.exp (D=22,S=126,F=0): a seven-bit command with its high bit set, so S2 is 0.",
+    "byteDivergence": [
+      35
+    ]
   }
 ]

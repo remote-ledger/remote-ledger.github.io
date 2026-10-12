@@ -1254,5 +1254,27 @@
       75
     ],
     "gate2b_ending_raw": "irpt_xmpff1_D26_S48_F33.ending.txt"
+  },
+  "RC5x": {
+    "gate1_irp_source": "IrpTransmogrifier IrpProtocols.xml @c945e76 L2133-L2141 (verbatim; identical in the 1.2.14 release, `list -i RC5x`), whose documentation names Philips as the protocol's creator: D is its System, S its Command and F its Data. The ledger's `device` is D, `subdevice` is S (required) and `function` is F; Marantz's charts call F the extension. The toggle is not in a remote file, so everything compiled here has T=0",
+    "regression_snapshot": null,
+    "snapshot_is_evidence": false,
+    "gate2a_structural_vector": "bengtmartensson/IrpTransmogrifier @c945e76 src/test/teaserfiles/RC5x.ict and RC5x.exp: nine captures of a remote of system 16 (Marantz's system number) and of system 22, with the .exp's own decode (D, S, F and T). Not vendored (a GPL-3.0 repository, the files used there by permission of the capture's author); tools/misc_capture_audit.py --irpt DIR re-runs the comparison. All 9 keys decode, by a biphase decoder written from the frame layout and not from the encoder (twenty bits, S1 a 1, S2 the complement of bit 6 of S, four units of silence between the eighth and the ninth), to the .exp fields, and re-encode to the same bit pattern. A capture carries instrument bias, so this verifies layout and bit order, not absolute durations: capture durations are 0.97-1.00x the encoder's (median 0.99), its carrier was measured at 36,308 Hz and its frame period is 0.997-0.998x the encoder's. A second, independent source: Marantz's own charts (sources/official/marantz) give 395 distinct rows of system, command, extension and the maker's Pronto hex, of which 367 read as exactly those fields through the same layout (tests/test_rc5x.py); the 28 others are the chart disagreeing with itself (19 hex strings under another row's fields, 7 off by one in the command or the system, 2 not a frame of this shape)",
+    "gate2a_pending_reason": null,
+    "gate2b_golden_pronto": "irpt_rc5x_D16_S12_F1.pronto",
+    "gate2b_pending_reason": null,
+    "gate2b_vector_source": "https://github.com/bengtmartensson/IrpTransmogrifier/releases/tag/Version-1.2.14 (IrpTransmogrifier-1.2.14-bin.zip)",
+    "gate2b_vector_params": {
+      "device": 16,
+      "subdevice": 12,
+      "function": 1,
+      "carrier_hz": 36000
+    },
+    "gate2b_vector_quantization": "irpt-nominal-carrier",
+    "gate2b_vector_provenance": "reproducible",
+    "gate2b_vector_reproduce": "java -jar IrpTransmogrifier-1.2.14-jar-with-dependencies.jar render -n D=16,S=12,F=1 -p RC5x",
+    "gate2b_byte_divergence": [
+      37
+    ]
   }
 }
