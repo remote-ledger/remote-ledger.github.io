@@ -51,6 +51,15 @@ def test_our_timings_reproduce_the_vector_exactly(vector):
     assert RULES[vector["quantization"]](_signal(vector)) == expected
 
 
+@pytest.mark.parametrize("vector", [v for v in SINGLE if "endingRaw" in v], ids=lambda v: v["file"])
+def test_the_ending_is_the_tools_raw_ending_exactly(vector):
+    """D217: Pronto Hex cannot hold an ending, so the tool's own raw rendering of it is the vector, and there is no rounding."""
+    from test_registry import raw_durations
+
+    assert _signal(vector).ending == raw_durations(VECTORS / vector["endingRaw"])
+    assert vector["endingReproduce"].strip()
+
+
 @pytest.mark.parametrize("vector", SINGLE, ids=lambda v: v["file"])
 def test_our_bytes_differ_only_where_declared(vector):
     expected = (VECTORS / vector["file"]).read_text().strip()

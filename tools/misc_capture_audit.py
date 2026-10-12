@@ -22,6 +22,7 @@ each with the decode IrpTransmogrifier's own test expects:
     GI_Cable.ict  / .exp   a General Instrument cable box's remote: an intro and a short repeat
     RC6-6-20.ict  / .exp   a Sky+ remote: RC-6 mode 6 with a 20-bit payload
     XMP-1.ict     / .exp   a set-top box's remote that sends XMP-1 with its final frame (XMPff-1)
+    XMP_1923_FinalFrame.ict    a Dreambox-style remote held for a while: XMP-1's intro and repeats, then the final frame
 
 They are **cited, not vendored**: the repository is GPL-3.0 and the files are
 used there by permission of a third party. Check it out at the pinned commit
@@ -427,9 +428,67 @@ def audit_pronto_panasonic_old(data: Path) -> int:
     return failures
 
 
+def audit_xmp_final_frame(data: Path) -> int:
+    """``XMP_1923_FinalFrame.ict``: thirteen captures of a remote (device 26, sub device 48, 37,876 Hz) whose keys were held, so
+    that each holds XMP-1's intro (toggle nibble 0), its repeats (8) and, where the capture lasted to the release, the final
+    frame (9). The ``.exp`` has no decode, so the fields are the decoder's own (both checksums verified) and the digit keys
+    are checked against the function they are named for. Every transmission of a key must read the same fields, the toggle
+    nibbles must run 0, then 8s, then at most one 9, and **the ending the registered ``XMPff-1`` encoder gives is compared with
+    each captured final frame**."""
+    captures = load_ict(data / "XMP_1923_FinalFrame.ict")
+    named = {"up": 33, "down": 34, "left": 35, "right": 36, "ok": 37}
+    failures = finals = shortened = keys = 0
+    ratios = []
+    for key, (carrier, signed) in captures.items():
+        subs, current = [], []
+        for d in signed:
+            current.append(abs(d))
+            if d < 0 and abs(d) >= 8_000:
+                subs.append(current)
+                current = []
+        frames = [subs[i] + subs[i + 1] for i in range(0, len(subs) - 1, 2)]
+        try:
+            read = [decode_xmp1(f) for f in frames]
+        except AssertionError as exc:
+            failures += 1
+            print(f"  FAIL XMP_1923_FinalFrame/{key}: {exc}")
+            continue
+        fields = {(r["D"], r["S"], r["F"]) for r in read}
+        toggles = [r["T"] for r in read]
+        want_f = int(key) if key.strip().isdigit() else named.get(key.strip().lower())
+        final = len(toggles) > 1 and toggles[-1] == 9
+        ok = len(fields) == 1 and toggles[0] == 0 and all(x == 8 for x in (toggles[1:-1] if final else toggles[1:]))
+        d, s, f = next(iter(fields))
+        if not ok or (d, s) != (26, 48) or (want_f is not None and f != want_f):
+            failures += 1
+            print(f"  FAIL XMP_1923_FinalFrame/{key}: reads {sorted(fields)} with the toggle nibbles {toggles}")
+            continue
+        keys += 1
+        if final:
+            finals += 1
+            ours = REGISTRY["XMPff-1"].encode(device=d, subdevice=s, function=f, carrier_hz=carrier).ending
+            captured = frames[-1]
+            if decode_xmp1(list(ours)) != read[-1]:
+                failures += 1
+                print(f"  FAIL XMP_1923_FinalFrame/{key}: the encoder's ending does not read as the captured one")
+                continue
+            ratios += [b / a for a, b in zip(ours[:-1], captured[:-1])]
+            # the transmission before the final frame has its last gap cut short, to about 18 ms where the others have 80 ms
+            before = subs[len(subs) - 3] if len(subs) >= 3 else None
+            if before is not None and 15_000 < before[-1] < 22_000:
+                shortened += 1
+    print(f"XMP_1923_FinalFrame (XMPff-1): {keys}/{len(captures)} keys read (every transmission the same fields, the toggle nibble "
+          f"0, then 8s, then 9 at the end of {finals} of them)")
+    if ratios:
+        print(f"  final frame, capture / encoder's ending, every duration but the last: median {statistics.median(ratios):.3f}, "
+              f"min {min(ratios):.3f}, max {max(ratios):.3f}")
+        print(f"  the transmission before the final frame has a last gap of 15 to 22 ms (the IRP's 80.4) in {shortened} of {finals}")
+    return failures
+
+
 def audit(root: Path) -> int:
     data = root / "src" / "test" / "teaserfiles"
-    failures = audit_pronto_panasonic_old(data)
+    failures = audit_pronto_panasonic_old(data) + audit_xmp_final_frame(data)
     for stem, proto, decode in CASES:
         captures = load_ict(data / f"{stem}.ict")
         expected = read_expected(data / f"{stem}.exp")

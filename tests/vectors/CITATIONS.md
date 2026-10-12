@@ -1194,3 +1194,64 @@ IRP's formulas, not taken from the encoder.
 
 That a receiver acts on a transmission without the final frame, for the remotes that send one (the captures here do not);
 the OEM other than 68, which a form cannot carry; and `XMP-2`, `XMPff-1` and the rest of the family.
+
+---
+
+## XMPff-1 (DESIGN section 55)
+
+`XMP-1` with the final frame that some remotes send when a key is **released**, the first protocol whose signal has an ending
+(D217). Its intro and repeat are `XMP-1`'s; its ending is the same frame with the toggle nibble 9 and a 13.8 ms last gap.
+
+### Gate 1 — IRP string with its source: **MET**
+
+`{38k,136,msb}<210u,-760u|...|210u,-2800u>([T=0][T=8][T=9],S:4:4,C1:4,S:4,15:4,OEM:8,D:8,210u,-13.8m,S:4:4,C2:4,T:4,S:4,(F*256):16,210u,[-80.4m][-80.4m][-13.8m])+{ C1=..., C2=... }[D:0..255, S:0..255, F:0..255, OEM:0..255=68]`,
+verbatim from IrpTransmogrifier's `IrpProtocols.xml` at `c945e76` (L3052) and identical in the 1.2.14 release (`list -i XMPff-1`). The
+ledger's `device` is D, `subdevice` is S (required) and `function` is F; the OEM is the IRP's 68.
+
+### Gate 2a — structural: **MET**, on a hardware capture of held keys
+
+`bengtmartensson/IrpTransmogrifier @c945e76 src/test/teaserfiles/XMP_1923_FinalFrame.ict`, not vendored (a GPL-3.0 repository, the
+files used there by permission of the capture's author) and re-checked by `tools/misc_capture_audit.py --irpt DIR`. It is
+thirteen captures of a remote at 37,876 Hz whose keys were held, so each holds the intro, the repeats and, where the capture
+lasted to the release, the final frame; its `.exp` has no decode, so **the fields are the nibble decoder's own** (both
+checksums verified, the OEM 68), and the keys name them:
+
+| what | result |
+|---|---|
+| keys read | 13 of 13, device 26, sub device 48 |
+| the keys' names against the function | the digits 0 to 7 are the functions 0 to 7; `up`, `down`, `left`, `right` and `OK` are 33 to 37, which is **what the `XMP-1` capture of another remote has for its cursor keys** |
+| the toggle nibbles of a key | 0, then 8s, then 9 at the end of **11** of the 13 (the other two captures end before the release) |
+| every transmission of a key | the same fields |
+| the registered ending against each of the 11 captured final frames | reads as the captured one; capture / encoder durations 0.94-1.11x, median 1.00 |
+
+**One thing the IRP does not say, recorded here and not corrected: in every one of the eleven the transmission before the
+final frame has its last gap cut short, to 15-22 ms where the others have 80 ms**, so the final frame follows it at once (a tap
+sends the intro with that short gap and then the final frame, and no repeat). The ledger's signal has the 80.4 ms of the repeat,
+and a player that sends the ending after its pass sends it 80 ms after the last frame, not 18. Whether a receiver minds is not
+established; the capture is of a remote and says nothing of a box.
+
+### Gate 2b — golden: **MET**, all three reproducible, none published
+
+Pronto Hex holds the intro and the repeat, which the tool renders as `XMP-1`'s for the same parameters, and **cannot hold the
+ending, which the tool drops with a warning**. So the ending is compared as the tool's own raw rendering (`render -r`, its third
+sequence, in microseconds) and **ours must equal it exactly**, with no rounding rule in between (`gate2b_ending_raw`,
+`tests/test_registry.py`, `tests/test_vectors_pronto.py`).
+
+| Protocol | Vector | Provenance | Our bytes differ at |
+|---|---|---|---|
+| XMPff-1 | D=26 S=48 F=33 @ 38k: IrpTransmogrifier 1.2.14 release, `render -n D=26,S=48,F=33 -p XMPff-1`; the ending from `render -r` | **reproducible** | words 21, 39, 57, 75 (the gaps) |
+| XMPff-1 | D=26 S=48 F=0 @ 38k: the same | **reproducible** | the same four |
+| XMPff-1 | D=26 S=48 F=37 @ 38k: the same | **reproducible** | the same four |
+
+The parameters are keys of the capture above. No Pronto string for it is published.
+
+### Gate 3 — invariant tests: **MET**
+
+`tests/test_xmp.py` (the ending is `XMP-1`'s frame with the toggle nibble 9 and the short gap, for every function of three
+addresses; its Pronto string and its string of its own) and `tests/test_ending.py` (a remote file of this protocol through the
+compile stage, a bundle, `rl bundle --verify` and the signal vectors).
+
+### Not established
+
+What a receiver does with the final frame, and with it arriving 80 ms after the last frame and not 18; and `XMPff`, `XMPff-2`
+and `XMP-2`, which IrpTransmogrifier also has and the ledger does not register.
