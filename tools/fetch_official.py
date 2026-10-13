@@ -7,7 +7,7 @@ size, SHA-256, the retrieval date (today: do not pass --date) and the server's `
 (and, for a copy from the Wayback Machine, the address and snapshot it was archived from). Run it, then
 ``tools/official_sheets_to_csv.py <maker>`` for the spreadsheets, review the diff, and import.
 
-    python3 tools/fetch_official.py marantz|anthem|oppo|kef
+    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc
 """
 
 from __future__ import annotations
@@ -60,6 +60,12 @@ DOCUMENTS = {
          "https://images.salsify.com/image/upload/s--X_6hTA78--/3aa7ccb467cc8144a9e09034f2dd27fa5ddee5a6.pdf", None),
         ("XIO_IR-Command-Codes-for-Universal-Remote-Control.pdf",
          "https://images.salsify.com/image/upload/s--cq1M8mR1--/c8d2b757680914060ac95213150814ec7b4fdc2d.pdf", None),
+    ],
+    # JVC's D-ILA projector IR emulation guide (long hex), 37 pages; its last page says it "may be distributed freely, as long as
+    # the author and copyright information remain intact", so the PDF is kept whole.
+    "jvc": [
+        ("DILA_Remote_Code_Emulation_Long_Hex.pdf",
+         "https://support.jvc.com/consumer/support/documents/DILA_Remote_Code_Emulation_Long_Hex.pdf", None),
     ],
     "anthem": [
         ("AVM-MRXx40-IR-hex-20251202185749500.xlsx",

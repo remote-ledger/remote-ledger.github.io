@@ -6,12 +6,13 @@ from __future__ import annotations
 import hashlib
 import json
 import re
+from collections import Counter
 from pathlib import Path
 
 import pytest
 
 from remote_ledger.errors import ValidationError
-from remote_ledger.official import anthem, kef, marantz, oppo
+from remote_ledger.official import anthem, jvc, kef, marantz, oppo
 from remote_ledger.official import importer as oi
 from remote_ledger.official.common import MANIFEST, Report, load_snapshot
 from remote_ledger.serialize import load
@@ -24,7 +25,8 @@ SNAPSHOT = ROOT / oi.SNAPSHOT
 
 
 def test_every_document_and_csv_is_the_one_the_manifest_pins():
-    for maker, retrieved in (("marantz", "2026-10-08"), ("anthem", "2026-10-08"), ("oppo", "2026-10-09"), ("kef", "2026-10-13")):
+    for maker, retrieved in (("marantz", "2026-10-08"), ("anthem", "2026-10-08"), ("oppo", "2026-10-09"), ("kef", "2026-10-13"),
+                             ("jvc", "2026-10-13")):
         snap = load_snapshot(SNAPSHOT / maker)
         assert snap.maker == maker and snap.retrieved == retrieved
         assert snap.documents and snap.sheets
@@ -439,13 +441,13 @@ def test_the_committed_official_import_keeps_r19():
     or Untested, and a citation that names a document the manifest pins, by hash."""
     assert (ROOT / oi.IMPORT_ROOT / "README.md").is_file() and (ROOT / oi.IMPORT_ROOT / oi.REPORT).is_file()
     hashes, dates, snapshots = {}, {}, {}
-    for maker in ("marantz", "anthem", "oppo", "kef"):
+    for maker in ("marantz", "anthem", "oppo", "kef", "jvc"):
         manifest = json.loads((SNAPSHOT / maker / MANIFEST).read_text(encoding="utf-8"))
         for name, entry in manifest["documents"].items():
             hashes[name], dates[name], snapshots[name] = entry["sha256"], manifest["retrieved"], entry.get("snapshot")
     shape = re.compile(r"^(?:marantz\.com archive-downloads|anthemav\.com \(storage\.googleapis\.com/sandbox1-anthemav/an\)"
-                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
-                       r"(?:, from the Wayback Machine snapshot (\d{14}))?\) (?:sheet '[^']+'|page \d+) row (\d+) ")
+                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
+                       r"(?:, from the Wayback Machine snapshot (\d{14}))?\) (?:sheet '[^']+' row \d+|page \d+ row \d+|page \d+ ')")
     files = sorted((ROOT / oi.IMPORT_ROOT).rglob("*.json"))
     assert len(files) > 180
     bad = []
@@ -626,3 +628,188 @@ def test_the_ir_blasters_kef_remote_has_eight_codes_and_all_eight_are_in_every_k
     for model, kef_doc in kef_files().items():
         ours = {(f["device"], f["subdevice"], f["function"]) for spec in kef_doc["keys"].values() for f in spec["forms"]}
         assert codes <= ours, model
+
+
+# --- JVC -------------------------------------------------------------------------------------------------------
+
+
+def jvc_hex(device: int, function: int, gap: int = 0x02BD) -> str:
+    """The guide's long hex for a code, written from the frame (a lead-in once, then sixteen bits least significant first and
+    a stop mark) and not from the reader."""
+    words = [0, 0x6D, 1, 17, 0x141, 0xA0]
+    for byte in (device, function):
+        for bit in range(8):
+            words += [0x14, 0x3C if byte >> bit & 1 else 0x14]
+    return " ".join(f"{w:04X}" for w in words + [0x14, gap])
+
+
+JVC_3D_FORMAT = ("0000 006D 0001 0011 0141 00A0 0014 003C 0014 003C 0014 0014 0014 0014 0014 003C 0014 003C "
+                 "0014 003C 0014 0014 0014 0014 0014 003C 0014 003C 0014 0014 0014 003C 0014 0014 0014 003C "
+                 "0014 003C 0014 02BD")
+
+
+def test_the_jvc_hex_is_a_lead_in_and_sixteen_bits_and_must_say_the_code_the_entry_states():
+    """The guide's first entry, ``3D Format``, says device 115 and function 214 and its hex is JVC's frame, the device byte and
+    the function byte least significant bit first; the final space varies with the bits (the frame is padded to a period)."""
+    assert jvc.decode(JVC_3D_FORMAT) == (115, 214)
+    assert JVC_3D_FORMAT == jvc_hex(115, 214)
+    assert jvc.decode(jvc_hex(115, 24, gap=0x0336)) == (115, 24)
+    assert jvc.decode("") == "the entry has no Pronto hex"
+    assert jvc.decode(JVC_3D_FORMAT.replace("0014 003C 0014 0014", "0014 003C 011014 0014", 1)) == \
+        "the guide's Pronto text is damaged ('011014' is not four hex digits)"
+    assert jvc.decode(JVC_3D_FORMAT.replace("0000 006D", "0000 0071")) == "the Pronto hex is not the guide's one pair and seventeen"
+    assert jvc.decode(JVC_3D_FORMAT.replace("0141 00A0", "0141 00A1")) == "the lead-in is not 0141 00A0"
+    assert jvc.decode(JVC_3D_FORMAT.replace("0014 003C 0014 003C 0014 0014", "0014 003C 0014 003D 0014 0014", 1)) == \
+        "a bit is not 0014 0014 or 0014 003C"
+    assert jvc.decode(JVC_3D_FORMAT[:-9] + "0015 02BD") == "the stop mark is not 0014"
+
+
+def jvc_rows(*lines: tuple[int, str]) -> list[list[str]]:
+    return [[str(page), text] for page, text in lines]
+
+
+def test_a_jvc_entry_is_a_title_a_device_code_line_and_the_hex_after_it_however_damaged():
+    """The cover's models are page 1's lines; an entry's title is the lines before its ``Device Code`` line (a title may wrap),
+    and the lines after it that look like hex are its Pronto text, damaged or not, so a damaged line is not the next
+    entry's title; page footers are not text, and the last page's notice is kept."""
+    rows = jvc_rows(
+        (1, "DLA-HD350 / DLA-HD750"), (1, "DLA-X70R / DLA-X90R"), (1, "Infrared Remote Control Command Emulation"),
+        (2, "Page 2 of 37"), (2, "Aspect – 16:9 (HD350/750)"), (2, "Device Code: 115 (0x73) Function: 38 (0x26)"),
+        (2, "0000 006D 0001 0011 0141 00A0"), (2, "0014 003C 00010 006D"),             # a damaged second line
+        (2, "Clear Motion Drive - Cycles through: Off/ Mode1"), (2, "(X70/X90)"),
+        (2, "Device Code: 115 (0x73) Function: 138 (0x8A)"), (2, "0000 006D 0001 0011"),
+        (3, "Page 3 of 37"), (3, "Brightness –"), (3, "Device Code: 115 (0x73) Function: 123 (0x7B)"),
+        (3, "This document may be distributed freely, as long as the author and copyright information remain intact."))
+    guide = jvc.parse_pages(rows)
+    assert guide.models == ("DLA-HD350", "DLA-HD750", "DLA-X70R", "DLA-X90R")
+    assert [(e.page, e.title, e.function, e.pronto, e.consistent) for e in guide.entries] == [
+        (2, "Aspect – 16:9 (HD350/750)", 38, "0000 006D 0001 0011 0141 00A0 0014 003C 00010 006D", True),
+        (2, "Clear Motion Drive - Cycles through: Off/ Mode1 (X70/X90)", 138, "0000 006D 0001 0011", True),
+        (3, "Brightness –", 123, "", True)]
+    assert guide.notice.startswith("This document may be distributed freely")
+    same = jvc.parse_pages(jvc_rows((2, "Gamma"), (2, "Device Code: 115 (0x73) Function: 100 (0x64)")))
+    assert same.entries[0].consistent
+    off = jvc.parse_pages(jvc_rows((2, "Gamma"), (2, "Device Code: 115 (0x73) Function: 100 (0x65)")))
+    assert not off.entries[0].consistent
+
+
+def test_a_jvc_title_is_names_with_the_models_each_applies_to_and_a_note_per_group():
+    """``HD350/750/RS10/20`` is four models (a number takes the letters before it), ``X70`` and ``X90`` are the cover's ``X70R`` and
+    ``X90R``; a parenthesis that is not a list of models (``(PC)``) is part of the name; a text after a list starts another name
+    of the same code; a dash or an ``on`` in a parenthesis gives a note; no list is every model."""
+    assert jvc.expand("HD350/750/RS10/20") == ("HD350", "HD750", "RS10", "RS20")
+    assert jvc.expand("X7/X9/X70/X90/RS40/50") == ("X7", "X9", "X70R", "X90R", "RS40", "RS50")
+    assert jvc.expand("PC") is None and jvc.expand("toggles display of RNR/MNR") is None
+    assert jvc.parse_title("Aspect (PC) – Auto (X3/X7/RS40)") == (
+        jvc.Alternative("Aspect (PC) – Auto", (jvc.Group(("X3", "X7", "RS40"), ""),)),)
+    two = jvc.parse_title("Anamorphic – Off (X3/X7) Vertical Stretch – Off (HD350/750/RS10)")
+    assert [(a.name, a.groups[0].models) for a in two] == [
+        ("Anamorphic – Off", ("X3", "X7")), ("Vertical Stretch – Off", ("HD350", "HD750", "RS10"))]
+    notes = jvc.parse_title("Picture Tone Blue – (X7/X9/RS50/60 – Film Mode Only) (X70/X90/RS55/65 - All Modes)")
+    assert len(notes) == 1 and notes[0].name == "Picture Tone Blue –"
+    assert [(g.models, g.note) for g in notes[0].groups] == [
+        (("X7", "X9", "RS50", "RS60"), "Film Mode Only"), (("X70R", "X90R", "RS55", "RS65"), "All Modes")]
+    pc = jvc.parse_title("Auto Align (PC input on HD750/950/X7)")
+    assert pc == (jvc.Alternative("Auto Align", (jvc.Group(("HD750", "HD950", "X7"), "PC input"),)),)
+    assert jvc.parse_title("Contrast –") == (jvc.Alternative("Contrast –", ()),)
+    # the label a key shows: a trailing description, a triangle and the sentence after `If` are dropped, a dash between words
+    # is a colon, a dash at the end is a minus
+    assert [jvc.tidy(n) for n in (
+        "Power – On", "Power – Off (send twice with short delay between to switch off)", "Menu (On/Off toggle)", "Cursor Up ▲",
+        "Brightness –", "Aspect (PC) – Auto", "Lens Aperture – If Lens Aperture Gauge is not displayed – displays gauge.",
+        "Lens Aperture + If Lens Aperture Gauge is not displayed", "Input – HDMI-1", "(PC)")] == [
+        "Power: On", "Power: Off", "Menu", "Cursor Up", "Brightness –", "Aspect (PC): Auto", "Lens Aperture –", "Lens Aperture +",
+        "Input: HDMI-1", "(PC)"]
+    assert jvc.key_names(["Gamma", "Gamma", "Aspect – 16:9"]) == ["KEY_GAMMA", "KEY_GAMMA_2", "KEY_ASPECT_16_9"]
+
+
+def jvc_files() -> dict[str, dict]:
+    return {p.stem: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "jvc").glob("*.json"))}
+
+
+def test_the_22_jvc_files_are_the_covers_models_and_the_three_damaged_entries_are_untested():
+    """One file for each model on the cover, 3,047 keys; each is the ledger's ``JVC`` with device 0x73. The guide's 211 entries
+    are 209 codes (functions 35 and 36 are listed twice, once for each of two groups of models), and the three whose Pronto
+    text is damaged (``Color Management - Custom 3``, ``Picture Mode - Cinema 3`` and ``Stage``, functions 99, 102 and 103) are
+    Untested in every model that has them, 54 keys, and say so; every other key is Plausible."""
+    from remote_ledger.jp1 import importer as jp
+
+    files = jvc_files()
+    assert {m: len(d["keys"]) for m, d in files.items()} == {
+        "DLA-HD350": 91, "DLA-HD550": 101, "DLA-HD750": 98, "DLA-HD950": 105, "DLA-HD990": 107, "DLA-RS10": 85, "DLA-RS15": 94,
+        "DLA-RS20": 93, "DLA-RS25": 104, "DLA-RS35": 104, "DLA-RS40": 148, "DLA-RS45": 161, "DLA-RS50": 175, "DLA-RS55": 187,
+        "DLA-RS60": 175, "DLA-RS65": 187, "DLA-X3": 149, "DLA-X30": 160, "DLA-X7": 175, "DLA-X70R": 186, "DLA-X9": 175,
+        "DLA-X90R": 187}
+    untested: Counter = Counter()
+    codes = set()
+    for doc in files.values():
+        assert doc["manufacturer"] == "JVC" and doc["protocol"] == jp.Importer.block("JVC")
+        for spec in doc["keys"].values():
+            (form,) = spec["forms"]
+            assert form["type"] == "irp" and form["device"] == "0x73" and "subdevice" not in form
+            codes.add(form["function"])
+            if form["confidence"] == "untested":
+                untested[int(form["function"], 0)] += 1
+                assert "damaged" in form["source"] and "rests on the stated code alone" in form["source"]
+            else:
+                assert form["confidence"] == "plausible" and "decodes to the same" in form["source"]
+    assert len(codes) == 209 and untested == {99: 14, 102: 18, 103: 22}
+
+
+def test_the_jvc_guides_codes_are_the_ones_other_sources_projector_remotes_send_under_the_same_names():
+    """An independent check from another source. Nine remotes of the ledger send the ``JVC`` protocol with device 115 (the IR
+    Blaster database's JVC projector remotes and the JP1 forum's ``DLA-RS2`` and ``X590R`` upgrades): **300 of their 317 keys
+    are a function the guide lists (94.6%)**, and where one has a name it agrees (power on is 5 and off 6, the cursor keys 1, 2,
+    54 and 52, the picture modes 104 to 111, the inputs 112 and 113)."""
+    guide: dict[int, set[str]] = {}
+    for doc in jvc_files().values():
+        for spec in doc["keys"].values():
+            guide.setdefault(int(spec["forms"][0]["function"], 0), set()).add(spec["label"])
+    remotes = total = hit = 0
+    for path in sorted((ROOT / "remotes").rglob("*.json")):
+        if "official" in path.parts or path.name in ("IMPORT.md",):
+            continue
+        doc = load(path)
+        if not isinstance(doc, dict) or doc.get("protocol", {}).get("name") != "JVC":
+            continue
+        functions = [int(f["function"], 0) for spec in doc["keys"].values() for f in spec["forms"]
+                     if f.get("type") == "irp" and int(f["device"], 0) == 115]
+        if functions:
+            remotes += 1
+            total += len(functions)
+            hit += sum(1 for fn in functions if fn in guide)
+    assert (remotes, total, hit) == (9, 317, 300)
+    for function, start in ((5, "Power: On"), (6, "Power: Off"), (1, "Cursor Up"), (2, "Cursor Down"), (54, "Cursor Left"),
+                            (52, "Cursor Right"), (47, "OK"), (3, "Back"), (29, "Hide"), (46, "Menu"), (104, "Picture Mode: Cinema 2"),
+                            (105, "Picture Mode: Cinema 1"), (111, "Picture Mode: THX"), (112, "Input: HDMI-1"),
+                            (113, "Input: HDMI-2"), (77, "Input: Component")):
+        assert any(label.startswith(start) for label in guide[function]), (function, start)
+
+
+def test_the_ledgers_jvc_signal_is_the_guides_hex_to_within_two_cycles_of_the_final_space():
+    """The guide's hex sends the lead-in once and then the sixteen bits, a stop mark and a space, repeated; the ledger's ``JVC``
+    sends the lead-in and the first frame as its intro and the frame again as its repeat. **For each of the 206 distinct codes
+    whose hex can be read, the ledger's compiled lead-in, sixteen bits and stop mark are the guide's, pair for pair**; only the
+    final space of the repeat differs, by one carrier cycle (143 codes) or two (63): the guide pads a frame to the period the
+    ledger's JVC does, to within 0.1 ms."""
+    from remote_ledger.import_common import probe
+
+    snap = load_snapshot(SNAPSHOT / "jvc")
+    guide = jvc.parse_pages(snap.sheet_of(jvc.DOCUMENT, jvc.SHEET))
+    seen: set[int] = set()
+    differences: Counter = Counter()
+    for entry in guide.entries:
+        if jvc.decode(entry.pronto) != (entry.device, entry.function) or entry.function in seen:
+            continue
+        seen.add(entry.function)
+        form = {"id": "primary.irp", "type": "irp", "device": entry.device, "function": entry.function,
+                "confidence": "plausible", "source": "probe"}
+        remote, _ = probe("remotes/official", dict(jvc.PROTOCOL), "K", [form])
+        ledger = [int(w, 16) for w in remote.compile_group("K", "primary").split()]
+        theirs = [int(w, 16) for w in entry.pronto.split()]
+        assert ledger[:4] == [0, 0x6D, 18, 17], entry.function
+        pairs, intro = ledger[4:], 2 * ledger[2]
+        repeat, lead_and_frame = pairs[intro:], theirs[4:]
+        assert pairs[:2] == lead_and_frame[:2] and repeat[:-1] == lead_and_frame[2:-1], entry.function
+        differences[repeat[-1] - lead_and_frame[-1]] += 1
+    assert len(seen) == 206 and dict(differences) == {1: 143, 2: 63}
