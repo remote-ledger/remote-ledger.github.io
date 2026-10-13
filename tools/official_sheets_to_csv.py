@@ -10,7 +10,7 @@ every page, ``pages`` (it needs PyMuPDF): one non-empty line to a row, in the or
 puts the page number in a first cell), which the importer parses; or as its tables, ``tables`` (Arcam's, D251): a row is
 the page, the table's number on it and the cells of one table row, so a table's merged cells are the library's reading.
 
-    python3 tools/official_sheets_to_csv.py marantz|anthem|oppo|kef|jvc|arcam
+    python3 tools/official_sheets_to_csv.py marantz|anthem|oppo|kef|jvc|arcam|cambridge
 """
 
 from __future__ import annotations
@@ -48,6 +48,7 @@ SHEETS = {
         "Solo_IR_Remote_Codes.pdf": ["tables"],
         "Solo_Mini_RS232.pdf": ["pages"],
     },
+    "cambridge": {"AXR85_100_IR_Codes.pdf": ["tables"], "752BD-CXU-CXUHD_remotes_Sept_2024_v2.pdf": ["tables"]},
     "kef": {
         "LS50Wireless-IRcode-INT.pdf": ["page 1", "page 2"],
         "LS50WII_IR-Codes-for-Universal-Remote-Control.pdf": ["page 1"],

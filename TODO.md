@@ -16,8 +16,8 @@ sources have been imported under SPEC R19:
   fifty-eight executors (DESIGN §28, §32, §33, §34, §35, §36, §39, §42, §44, §46, §48, §49, §51, §53, §56, §59, §61).
 - **Manufacturers' own IR tables**: Marantz's AV receiver charts, Anthem's IR
   hex sheet, Oppo's remote code workbooks, KEF's IR code sheets, JVC's
-  projector guide and Arcam's custom installation notes, 355 files, 39,415 keys
-  (DESIGN §29, §31, §58, §60, §62, §63, §64).
+  projector guide, Arcam's custom installation notes and two of Cambridge Audio's lists
+  of NEC codes, 360 files, 39,613 keys (DESIGN §29, §31, §58, §60, §62, §63, §64, §65).
 
 SPEC v0.11 makes growing coverage from every source whose licence permits
 it the standing goal, with no fixed list of sources (DESIGN §8, Phase 8).
@@ -63,10 +63,11 @@ Land it in two PRs, code and then data.
 - [ ] **The other makers' tables**: Arcam's older products (the AVR300, AV8
       and AV9 have their codes in handbooks, not in installation notes; the
       retailer-hosted copy of the AVR250/390/550/850/860 notes is not read, being
-      a third party's), T+A (about 150 Pronto codes in tables of
-      several layouts; its cover says "(c)" with no licence, so it goes to the
-      private repository) and Cambridge Audio (PDFs through the Wayback
-      Machine). A web search says JVC's Interface Specifications page also lists a
+      a third party's). **Cambridge Audio's other fifteen IR code PDFs** (thirteen
+      documents: the Azur 851A, C, E, N and W, CXA, CXC, CXN, CXR, Edge, Evo, ONE and the CXU's
+      2015 one, on cambridgeaudio.com) say "(c) Copyright Cambridge Audio Ltd" and
+      eight of them add "All rights are reserved", so they go to the private repository
+      (D130), as T+A's did; the two documents of §65 have no such text. A web search says JVC's Interface Specifications page also lists a
       2014 guide, long hex too, for the DLA-RS49 to RS67 and X500 to X900; the page
       answered 404 when fetched and the guide is not read. Each is a document
       pinned by hash as D123 does it; a PDF is read as the lines of text of its

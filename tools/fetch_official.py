@@ -7,7 +7,7 @@ size, SHA-256, the retrieval date (today: do not pass --date) and the server's `
 (and, for a copy from the Wayback Machine, the address and snapshot it was archived from). Run it, then
 ``tools/official_sheets_to_csv.py <maker>`` for the spreadsheets, review the diff, and import.
 
-    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc|arcam
+    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc|arcam|cambridge
 """
 
 from __future__ import annotations
@@ -79,6 +79,15 @@ DOCUMENTS = {
         ("UDP411_RS232_SH265_E_1.pdf", "https://www.arcam.co.uk/ugc/tor/udp411/RS232/UDP411_RS232_SH265_E_1_070814.pdf", None),
         ("Solo_IR_Remote_Codes.pdf", "https://www.arcam.co.uk/ugc/tor/solomovie51/IR%20Codes/solo_rc.pdf", None),
         ("Solo_Mini_RS232.pdf", "https://www.arcam.co.uk/ugc/tor/solomini/RS232/solomini_rs232.pdf", None),
+    ],
+    # Cambridge Audio's driver-updates page lists 16 PDFs of IR codes and a list of the 752BD, CXU and CXUHD remotes' NEC codes.
+    # Only two carry no copyright or rights notice (the others do, so they are held in the private repository): the AXR85/AXR100
+    # table and the remotes list. They are on Cambridge's own host, cambridgeaudio.com.
+    "cambridge": [
+        ("AXR85_100_IR_Codes.pdf",
+         "https://www.cambridgeaudio.com/sites/default/files/compliance/doc/AXR85%20100%20IR%20Codes.pdf", None),
+        ("752BD-CXU-CXUHD_remotes_Sept_2024_v2.pdf",
+         "https://www.cambridgeaudio.com/sites/default/files/compliance/doc/752BD-CXU-CXUHD%20remotes%20-%20Sept.%202024%20v2.pdf", None),
     ],
     "anthem": [
         ("AVM-MRXx40-IR-hex-20251202185749500.xlsx",

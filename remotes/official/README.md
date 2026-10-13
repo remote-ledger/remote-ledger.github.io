@@ -14,7 +14,8 @@ import must meet, and DESIGN.md section 29 describes how this one meets them.
   guide (long hex format) for its D-ILA projectors (DLA-HD, X and RS series, <https://support.jvc.com/>, DESIGN.md
   section 63) and **Arcam's** custom installation notes, whose RC-5 code tables cover its AVR, AV and SA amplifiers and
   receivers, the CDS50 and UDP411 players and the Solo and Solo Mini (PDFs on <https://www.arcam.co.uk/>, DESIGN.md
-  section 64). They are the makers' documents, not a third party's
+  section 64) and **Cambridge Audio's** two lists of NEC codes that carry no copyright notice (the AXR85 and AXR100 receivers, and
+  the 752BD, CXU and CXUHD players' remotes; PDFs on <https://www.cambridgeaudio.com/>, DESIGN.md section 65). They are the makers' documents, not a third party's
   compilation, and they are still imported at Plausible: a manufacturer's word is one source (R19.3).
 - **The pin:** a manufacturer's page is not a repository, so `sources/official/<maker>/` holds each document
   as the server sent it, the sheets the importer reads converted to CSV by
@@ -46,6 +47,7 @@ which the IR Blaster database's KEF remote confirms for the eight codes it holds
 own Pronto hex**: where the hex does not say the stated code (three entries have damaged text) the key is Untested. Arcam's are the ledger's `RC5` (the system code the device, the
 command the function), one file for each product a document lists (`AVR450`, `SA20`, `Solo Mini`...), **each row's decimal
 and hex checked against each other**; a function a table says is `(not AVR5, AVR10)` or `(AVR450/750 only)` is left out of
-the files it is not for.
+the files it is not for. Cambridge's are NEC1 (the address the device, its complement the subdevice, the function), one file for each
+product (`AXR85`, `CXU`...); **the AXR85's 23 codes are all in the IR Blaster database's AXR85 remote under the same names**.
 
 `IMPORT.md` lists everything a document holds that does not become a key, with the reason.
