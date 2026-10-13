@@ -7,9 +7,10 @@ depend on) converts the sheets the importer reads, every cell as text, and recor
 the document and sheet it came from in the manifest. ``rl import official`` reads the CSVs and refuses one
 that is not what the manifest says. **A PDF** (KEF's, DESIGN D243) is read as the text of a page, ``page N``, or of
 every page, ``pages`` (it needs PyMuPDF): one non-empty line to a row, in the order the library reads the page (``pages``
-puts the page number in a first cell), which the importer parses; the table's rules and cells are not kept.
+puts the page number in a first cell), which the importer parses; or as its tables, ``tables`` (Arcam's, D251): a row is
+the page, the table's number on it and the cells of one table row, so a table's merged cells are the library's reading.
 
-    python3 tools/official_sheets_to_csv.py marantz|anthem|oppo|kef|jvc
+    python3 tools/official_sheets_to_csv.py marantz|anthem|oppo|kef|jvc|arcam
 """
 
 from __future__ import annotations
@@ -37,6 +38,16 @@ SHEETS = {
     },
     "anthem": {"AVM-MRXx40-IR-hex-20251202185749500.xlsx": ["MRX x10-x40 remote layout", "MRX x10-x40 IR hex codes"]},
     "jvc": {"DILA_Remote_Code_Emulation_Long_Hex.pdf": ["pages"]},
+    "arcam": {
+        "AVR380-450-750_RS232_SH256E_2.pdf": ["tables"],
+        "AVR5-10-20-30-40-11-21-31-41_RS232_SH289E_F.pdf": ["tables"],
+        "SA10-SA20_RS232_SH277E_B.pdf": ["tables"],
+        "SA30_RS232_SH306E_4.pdf": ["tables"],
+        "CDS50_RS232_SH275E_C.pdf": ["tables"],
+        "UDP411_RS232_SH265_E_1.pdf": ["tables"],
+        "Solo_IR_Remote_Codes.pdf": ["tables"],
+        "Solo_Mini_RS232.pdf": ["pages"],
+    },
     "kef": {
         "LS50Wireless-IRcode-INT.pdf": ["page 1", "page 2"],
         "LS50WII_IR-Codes-for-Universal-Remote-Control.pdf": ["page 1"],
@@ -61,6 +72,10 @@ def rows_of(path: Path, sheet: str) -> list[list[str]]:
     if path.suffix.lower() == ".pdf":
         import pymupdf
         pdf = pymupdf.open(str(path))
+        if sheet == "tables":       # every table the library finds on every page: page, table number and the cells as text
+            return [[str(n), str(i)] + [" ".join((cell or "").split()) for cell in row]
+                    for n, page in enumerate(pdf, 1) for i, table in enumerate(page.find_tables().tables, 1)
+                    for row in table.extract()]
         if sheet == "pages":        # every page: a row is the page number and one line of its text
             return [[str(n), line.strip()] for n, page in enumerate(pdf, 1) for line in page.get_text("text").splitlines()
                     if line.strip()]

@@ -2051,7 +2051,7 @@ note rather than a live contract.
 
 ## 12. Implementation status
 
-Phases 0-6 are implemented: 3931 tests, `jsonschema` the only runtime
+Phases 0-6 are implemented: 3936 tests, `jsonschema` the only runtime
 dependency. Phase 2 landed its nine SPEC edits *before* its code, per §9 --
 the spec change is what authorises the implementation. (That count is asserted by the suite itself -- see
 `test_documented_test_count_is_current` -- so it cannot drift the way the
@@ -5380,9 +5380,9 @@ lirc           3,138  112,789   58.3% (65,819)    18.8% (593)   49.6% (1,557)   
 smartir           62      914      81.7% (747)     54.8% (34)      67.7% (42)      79.0% (49)
 hifi-remote      151    6,772    43.5% (2,951)       3.9% (6)      14.5% (22)      39.7% (60)
 jp1            2,938  116,042   71.0% (82,496)    20.6% (607)   62.1% (1,826)   87.1% (2,559)
-official         336   37,599     9.8% (3,696)       1.7% (6)       6.2% (21)       7.1% (24)
+official         355   39,415    10.6% (4,216)       1.6% (6)       6.1% (22)       7.6% (27)
 authored           5      128       77.3% (99)      40.0% (2)       60.0% (3)       60.0% (3)
-all           16,714  687,019  71.9% (494,047)  34.4% (5,757)  62.8% (10,505)  87.2% (14,580)
+all           16,733  688,835  71.7% (494,567)  34.4% (5,757)  62.7% (10,506)  87.1% (14,583)
 
 Remotes with at least 10 keys:
 
@@ -5393,9 +5393,9 @@ lirc           2,867  111,431   58.2% (64,915)    17.3% (496)  49.3% (1,415)   8
 smartir           39      786      84.3% (663)     58.9% (23)     76.9% (30)      94.8% (37)
 hifi-remote      128    6,653    43.7% (2,908)       3.9% (5)     14.8% (19)      42.1% (54)
 jp1            2,783  115,109   71.1% (81,894)    20.1% (562)  63.0% (1,754)   88.2% (2,457)
-official         298   37,398     9.6% (3,620)       0.0% (0)      5.0% (15)       5.3% (16)
+official         317   39,214    10.5% (4,140)       0.0% (0)      5.0% (16)       5.9% (19)
 authored           4      120       75.8% (91)      25.0% (1)      50.0% (2)       50.0% (2)
-all           15,573  681,355  71.9% (490,317)  34.1% (5,317)  63.5% (9,900)  88.6% (13,798)
+all           15,592  683,171  71.8% (490,837)  34.1% (5,317)  63.5% (9,901)  88.5% (13,801)
 ```
 
 (The `official` row is the import of §29 and §31 (D123 to D127, D131 to D133): 189 files of Marantz's, Anthem's and Oppo's own tables. **Its keys map the least of any source, 21.6%, and only 6 of its 189 remotes reach 90%**, because a receiver's chart is the whole command set of a receiver (tuner presets and frequency steps, surround modes, Pure Direct, discrete `Audio Mute On` and `Off`, a source key for each input), which the 156 keys of D84 do not cover: 10,068 of its 12,844 keys are unmapped, under 584 different names, and what does map is volume, power, the cursor, bass, treble and sleep. Oppo's player tables are the exception, and are why the share is not lower: 750 of its 864 keys (86.8%) map. Widening the vocabulary to the receiver commands is the owner's call (D84 is theirs) and is in TODO.md, not done here. The `jp1` row is the import of §28 (D118 to D122), §32 (D134 to D136), §33 (D137 to D140) and §34 (D141 to D145), added after the same figures; the combos of §33 map less of their keys (52.5% of the 9,715) and lower the row from 76.8% to 74.0%, §34's executors (61.8% of 10,963) to 72.5%, §35's (54.6% of 3,958) to 71.8%, §36's (59.3% of 2,228) to 71.5%, §39's (31.7% of 1,975) to 70.8%, §42's (80.0% of 3,391) to 71.1% and §44's (81.5% of 2,442) to 71.3%. The `hifi-remote` row is the import of §27 (D109 to D117), added after the figures in D85 to D87's prose were measured; those figures are the corpus without it. Its keys map less than the others' because the pages describe commands of one kind of device: `Index Mark`, `Disc +`, `Scan Reverse`, and `Select`, which D84 does not map.)
@@ -5531,7 +5531,7 @@ A remote is carried when **any** of its brands is chosen (its maker or a brand o
 
 **Everything not in the subset is recorded**: `excluded_brands` holds each left-out brand (`name`, `norm`) and `api_key`, the ten hex digits (SHA-1 of the exact name, D76) of the shard of the app API (§21) that has its remotes, comma-separated when the import spells it two ways; **NULL where the app API has none**, because the API serves the IR Blaster import only. Since D117 nothing is left out of the selected bundle, so the table is empty and **0 brands, 0 remotes, 0 keys** are missing from it, and **0 remotes of LIRC and SmartIR** are in no static file of the ledger that the bundle does not hold. Before it, 4,992 brands were left out, 228 of them with no shard, and 1,794 remotes of LIRC and SmartIR (the authored ones counted with them) were in no static file of the ledger at all until the full bundle was published; that finding is why `full` exists, and the selected bundle no longer has it.
 
-**What the numbers said** (D95, at a 20 MB cap; D117 removed the cap and these are history): the list did not fit. Samsung, LG, Sony, Panasonic and Philips, the first five lines, are 11.6 MB of the 19 by the estimate (Sony alone has 1,061 remotes, and most of the bytes of a brand with old equipment are LIRC raw captures: 5.0 MB of signals for 1,375 of the 4,394 remotes); the bundle carries **35 brands of the list and one by the proxy**, and **77 brands of the list are left out for lack of room** (the first are JVC, Grundig, Thomson, Telefunken, Loewe Opta, Beko, Vestel...). Levers the owner has, none taken here: reorder the list so the brands that matter most come first (the cheap ones are taken wherever the budget allows), shorten it, raise the cap, or drop what is bulkiest per remote (the LIRC raw captures, about 6 MB of the 19). **The owner signs off on the list**; until then it is a proposal. *Since D117:* nothing is skipped (0 brands of the list are left out) and nothing is left out of the bundle. The profile carries 112 brands of the list and 5,350 by the proxy, 5,462 in all, with 16,714 remote files, and its file is the size of `full`.
+**What the numbers said** (D95, at a 20 MB cap; D117 removed the cap and these are history): the list did not fit. Samsung, LG, Sony, Panasonic and Philips, the first five lines, are 11.6 MB of the 19 by the estimate (Sony alone has 1,061 remotes, and most of the bytes of a brand with old equipment are LIRC raw captures: 5.0 MB of signals for 1,375 of the 4,394 remotes); the bundle carries **35 brands of the list and one by the proxy**, and **77 brands of the list are left out for lack of room** (the first are JVC, Grundig, Thomson, Telefunken, Loewe Opta, Beko, Vestel...). Levers the owner has, none taken here: reorder the list so the brands that matter most come first (the cheap ones are taken wherever the budget allows), shorten it, raise the cap, or drop what is bulkiest per remote (the LIRC raw captures, about 6 MB of the 19). **The owner signs off on the list**; until then it is a proposal. *Since D117:* nothing is skipped (0 brands of the list are left out) and nothing is left out of the bundle. The profile carries 112 brands of the list and 5,350 by the proxy, 5,462 in all, with 16,733 remote files, and its file is the size of `full`.
 
 ### D93 — The manifest, `dataVersion` and the signature
 
@@ -5563,14 +5563,14 @@ Measured on the 64-core development machine (eight workers), `gzip -9` as the co
 
 | | `full` | `selected` |
 |---|---|---|
-| file | 59,588,608 B | 59,588,608 B |
-| `gzip -9` | 14,987,580 B | 14,987,573 B |
+| file | 59,641,856 B | 59,641,856 B |
+| `gzip -9` | 15,004,110 B | 15,004,185 B |
 | brands | 5,462 | 5,462 |
-| models | 282,093 | 282,093 |
-| remote files | 16,714 | 16,714 |
-| remotes, the fragments of D103 folded | 16,357 | 16,357 |
-| keys | 687,019 | 687,019 |
-| signals | 179,993 | 179,993 |
+| models | 282,130 | 282,130 |
+| remote files | 16,733 | 16,733 |
+| remotes, the fragments of D103 folded | 16,376 | 16,376 |
+| keys | 688,835 | 688,835 |
+| signals | 180,021 | 180,021 |
 | left out | none | none: 0 brands, 0 remotes, 0 keys |
 | `rl bundle` (read, build, write) | 27 s, 0.89 GB peak | 27 s, 0.89 GB peak |
 | `rl bundle --verify` | 23 s | 23 s |
@@ -5627,23 +5627,23 @@ Written by `rl bundle matching-vectors --file tests/vectors/matching_vectors.jso
 
 ### D99 — What was measured, and what is not proven
 
-Seed 1, 40 devices a class. **Selected bundle** (5,462 brands, 282,093 models: the same as the full one since D117) and **full bundle** (5,462 brands, 282,093 models):
+Seed 1, 40 devices a class. **Selected bundle** (5,462 brands, 282,130 models: the same as the full one since D117) and **full bundle** (5,462 brands, 282,130 models):
 
 | class | selected top-1 | selected top-5 | full top-1 | full top-5 |
 |---|---|---|---|---|
 | exact | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) |
 | case | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) |
-| punctuation | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) |
-| dropped-suffix | 38 (95.0%) | 40 (100.0%) | 38 (95.0%) | 40 (100.0%) |
-| typo | 32 (80.0%) | 38 (95.0%) | 32 (80.0%) | 38 (95.0%) |
-| brand-partial | 22 (55.0%) | 33 (82.5%) | 22 (55.0%) | 33 (82.5%) |
-| model-only | 39 (97.5%) | 40 (100.0%) | 39 (97.5%) | 40 (100.0%) |
+| punctuation | 39 (97.5%) | 40 (100.0%) | 39 (97.5%) | 40 (100.0%) |
+| dropped-suffix | 36 (90.0%) | 39 (97.5%) | 36 (90.0%) | 39 (97.5%) |
+| typo | 26 (65.0%) | 39 (97.5%) | 26 (65.0%) | 39 (97.5%) |
+| brand-partial | 17 (42.5%) | 34 (85.0%) | 17 (42.5%) | 34 (85.0%) |
+| model-only | 37 (92.5%) | 40 (100.0%) | 37 (92.5%) | 40 (100.0%) |
 | reversed | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) |
-| **all (320)** | **291 (90.9%)** | **311 (97.2%)** | **291 (90.9%)** | **311 (97.2%)** |
+| **all (320)** | **275 (85.9%)** | **312 (97.5%)** | **275 (85.9%)** | **312 (97.5%)** |
 
-**Read it as the upper bound it is** (D98). **A partial name is ambiguous**: `LOEWE OPTA CONCEPT 5` is the start of the `CONCEPT 5xx` models, `TOSHIBA 37 AV 5` of every `37 AV 50x` and `LORENZEN ART. NR` of `ART. NR. 3845`, `3846`, `3883` and more. The nine misses of the first five, the same in both bundles, are seven brand-partial queries (`LG 47LN5`, `SAMSUNG LE 37 R 82 BX`, `TOSHIBA 32RV6`, `PROLINE 32 LCD TV`, `TREVI LTV 20`, `CLASSIC IRC 831`, `TECHNISAT DIGIT MF`) and two typo ones (`UNIVERSUM 102 224 0`, `VESTEL DVD 9200`). **One query of the classes that should not miss does not answer first, and is in the first five**: the model-only `JSR 500` (a model several brands share). A person typing half a model number has to be shown a list, which the answer is: five candidates, and the brand's models when none matches.
+**Read it as the upper bound it is** (D98). **A partial name is ambiguous**: `LOEWE OPTA CONCEPT 5` is the start of the `CONCEPT 5xx` models, `TOSHIBA 37 AV 5` of every `37 AV 50x` and `LORENZEN ART. NR` of `ART. NR. 3845`, `3846`, `3883` and more. The eight misses of the first five, the same in both bundles, are six brand-partial queries (`DIKOM LED TV`, `PHILIPS 42 PFL 74`, `LOEWE OPTA AVENTOS 398`, `SONY KV-X21`, `STRONG REMCON`, `CLASSIC IRC 83`), a dropped-suffix one (`Marantz RC5300`) and a typo one (`SONY KDL - 19 XE 40 B`). **Four queries of the classes that should not miss do not answer first, and are in the first five**: the punctuation `INTEK HDC63CX` and the model-only `CTV 3740`, `21 PT 351 B` and `HD 2000` (models several brands share). A person typing half a model number has to be shown a list, which the answer is: five candidates, and the brand's models when none matches.
 
-**Why the rates are not the ones D99 first printed (91.2% and 97.8%), and why they move.** The generator ranks devices by a hash of the seed, the brand and the model's id, and an id is a place in the catalog's sorted list of models, so a catalog that gains models shifts the ids after them and the draw of 40 devices a class is a different draw. Twenty-four draws now stand in this section: 91.2%, 89.7% (§29), 93.1% (§31), 87.5% (§32), 90.3% (§33), 89.7% (§34), 90.6% (§35), 90.3% (§36), 85.6% (§38), 87.5% (§39), 89.7% (§42), 89.1% (§44), 88.4% (§46), 88.4% (§48), 88.8% (§49), 88.1% (§51), 92.2% (§53), 90.0% (§56), 89.1% (§58), 91.2% (§59), 90.9% (§60), 89.4% (§61), 87.5% (§62) and **90.9% (§63)** at the first answer, about 89.6% on average. The matcher changed twice among them, at §40 (D168) and at §50 (D204, which changed none of the 320 answers of §49's catalog). **None of the nine misses of the first five is a device of §63's 22 new files, and none of its answers holds one**; each expected device was checked (`search_eval.generate`'s `expect`) and every remote of every answer compared with the new files: the nine expected devices are IR Blaster remotes, and none of the answers holds a JVC projector model. **The 320 queries of this draw were also run against the catalog as it was before §62 and §63, and none of them answers differently (0 of 320, by brand and model, the first five each)**: the rise is the draw, 1.4 points above the average of the twenty-three before it; the first-five rate, 97.2%, is 0.6 points below §62's. The table is the bound of 320 queries it was. The 95% target is not established by this: it needs real queries.
+**Why the rates are not the ones D99 first printed (91.2% and 97.8%), and why they move.** The generator ranks devices by a hash of the seed, the brand and the model's id, and an id is a place in the catalog's sorted list of models, so a catalog that gains models shifts the ids after them and the draw of 40 devices a class is a different draw. Twenty-five draws now stand in this section: 91.2%, 89.7% (§29), 93.1% (§31), 87.5% (§32), 90.3% (§33), 89.7% (§34), 90.6% (§35), 90.3% (§36), 85.6% (§38), 87.5% (§39), 89.7% (§42), 89.1% (§44), 88.4% (§46), 88.4% (§48), 88.8% (§49), 88.1% (§51), 92.2% (§53), 90.0% (§56), 89.1% (§58), 91.2% (§59), 90.9% (§60), 89.4% (§61), 87.5% (§62), 90.9% (§63) and **85.9% (§64)** at the first answer, about 89.4% on average. The matcher changed twice among them, at §40 (D168) and at §50 (D204, which changed none of the 320 answers of §49's catalog). **None of the eight misses of the first five is a device of §64's 19 new files, and none of its answers holds one**; each expected device was checked (`search_eval.generate`'s `expect`) and every remote of every answer compared with the new files: the eight expected devices are IR Blaster remotes, and none of the answers holds an Arcam model. **The 320 queries of this draw were also run against the catalog as it was before §62, §63 and §64, and none of them answers differently (0 of 320, by brand and model, the first five each)**: the fall is the draw, 3.6 points below the average of the twenty-four before it and the second lowest of the twenty-five (§38's 85.6% is the lowest); the first-five rate, 97.5%, is 0.3 points above §63's. The table is the bound of 320 queries it was. The 95% target is not established by this: it needs real queries.
 
 **Not proven.**
 
@@ -6863,3 +6863,26 @@ An entry is a title (the function's name, usually with the models it applies to 
 ### D250 — What is not read, what it does to the rest, and what is not proven
 
 **Not read:** the model `X79` of `Color Profile`'s list, which the cover does not have and which is probably `X70`'s typo (it is not read as one; one key fewer for `DLA-X70R`). A JVC support page is reported to list a 2014 guide for the DLA-RS49 to RS67 and X500 to X900, which was not fetched. The corpus is **16,714 remote files and 687,019 keys**, 5,462 brands, 282,093 models (22 more) and 179,993 signals (120 more: the 209 codes, 89 of which were there). Both bundle profiles are 59,588,608 bytes (143,360 more), dataVersion `d9c192caa009`, `--verify` passes, and **`bundle_vectors.json` has 335 vectors, from 331**: the four new are `JVC` keys of the `official` source, a pair the vectors did not cover. **437 of the 3,047 keys map to the vocabulary (14.3%)** (132 before the labels were tidied, D248): a projector's `Lens Shift`, `Gamma` and `Color Temp.` are not generic keys (D84); the `official` row goes from 9.4% to 9.8% and the corpus from 72.1% to 71.9%. **The search evaluation: first answer 87.5% to 90.9%, first five 97.8% to 97.2%**, the 24th draw (about 89.6% on average), a draw (D99 says how that was checked: **none of the 320 queries answers differently from the catalog before §62 and §63**). **Not proven:** that a projector acts on a function the guide names for it, which for the 1,584 keys of the entries with no models is the reading of D248; that the first frame of the guide's signal and the ledger's are what a projector wants, beyond the 0.1 ms; and what an entry does that its title only names (`Lens Control (cycles through all options)`).
+
+## 64. Arcam's custom installation notes
+
+For each product family Arcam publishes a PDF, **`Custom Installation Notes`**, of its serial control commands and its **RC-5 remote codes**: a table of functions with the code as `system-command` in decimal and as `Data1 - Data2` in hex. **They are read: 8 documents, 19 products, 19 files and 1,816 keys, 1,815 Plausible and one Untested.** The manufacturers' tables (§29, §31, §58, §60, §62, §63) are now 355 files and 39,415 keys.
+
+### D251 — The documents, how their tables are pinned, and the licence
+
+Eight documents on Arcam's own host, `arcam.co.uk`, fetched on 2026-10-13 and pinned as D123 does it (the years are the server's `Last-Modified`): the **AVR380/450/750**'s (2015), the **AVR5/10/20/30/AV40 and AVR11/21/31/AV41**'s (2021), the **SA10/SA20**'s (2018), the **SA30**'s (2021), the **CDS50**'s (2019), the **UDP411**'s (2015), the **Solo**'s (a two-page table of its remote's codes) and the **Solo Mini**'s (2007 to 2008, its RC-5 codes as lines of text). **The tables are converted as the cells the PDF library finds** (`tools/official_sheets_to_csv.py`, `tables`: a row is the page, the table's number on it and the cells of one table row, every cell as text); the Solo Mini's lines are its pages' text. The importer reads the tables whose heading is `Function | RC5 code ...` or `System Code`, so the serial command tables beside them are in the CSV and not read. **The PA720/PA240/PA410's document has no IR table** and is not pinned. **Licence:** none of the eight carries a copyright, rights or reproduction notice (their text was searched as KEF's and the others' were, D243); the notes end with Arcam's address and an issue number. By the rule stated in PR #42 they are public under D110; the retailer-hosted copy of the AVR250/390/550/850/860 notes is a third party's and is not used.
+
+### D252 — The rule
+
+**A code is the ledger's `RC5`: the system code the device, the command the function** (RC-5 holds a command to 127, as `Standby On` is 124). Three layouts: the function tables (`Standby  16-12  0x10 - 0x0C`, in the six documents of the AVR, SA, CDS and UDP families); **the Solo's table**, a system code written on the first row of a group (16 for the amplifier, 17 for the tuner, 20 for the CD) and a decimal command, no hex; **the Solo Mini's lines** after `IR remote commands` (`16-12 Standby`). **A document's models are the ones its title lists**, one file each: `AVR380`, `AVR450`, `AVR750`; `AVR5`, `AVR10`, `AVR20`, `AVR30`, `AV40`, `AVR11`, `AVR21`, `AVR31`, `AV41` (the title writes `ARV31`, a typo, and its changelog `AV41`); `SA10`, `SA20`; `SA30`; `CDS50`; `UDP411`; `Solo`; `Solo Mini`. **A function the table writes `(not AVR5, AVR10)` or `(AVR450/750 only)` is left out of the files it is not for** (a number takes the letters before it): the AVR5 and AVR10 have 21 rows fewer of the AVR5-41 document's 120, the AVR380 two fewer of the AVR380/450/750's 127. A label is the function as the table writes it, the restriction and the footnote asterisk removed and the row as written in the citation; **the tables split their functions into `Basic` (on the supplied remote) and `Advanced` (created for custom installation, not on the remote), which the ledger does not tell apart**. **The same code means different things in different products' tables** (system 16 command 53 is `Select FM` in the Solo's, `Source FM` in the Solo Mini's, `NET` in the AVR380/450/750's and `Play` in the AV41's), and each file keeps its own document's name. **A digit row's command is the digit** (`Number 3` is command 3, `CD Number 7` is 20-7): it is in 79 of the 80 digit rows of the eight documents, and the one that is not is Untested (D253).
+
+### D253 — The rule checked against the tables themselves and against other data
+
+- **The tables against themselves.** Each of the 424 rows of the six function tables says its code twice and **all 424 agree**, the decimal `16-12` and the hex `0x10 - 0x0C`; three rows write the hex loosely (`0x10 - 4C`, `0X17` twice) and still say the code. A row that did not agree would be Untested (none does). The Solo's and the Solo Mini's 192 rows have a decimal only.
+- **One row is Untested for another reason: the Solo's `Number 3` of system 20 (the CD's)**, whose command the table gives as 2, the command of `Number 2` above it, where every other digit row of every document has the digit for its command. The Solo Mini's table has `CD Number 3` as 20-3, which says the Solo's is a typo; the key is not corrected, and says so.
+- **The Solo's table against the Solo Mini's.** They share 67 codes and, compared by name, **the function is the same in all 67** (`Select TV`/`Source TV`, `Vol Plus`/`Volume +`, `Number 0`/`Tuner Number 0`, `Next Track`/`CD Track Forward`...); the comparison is what found the typo.
+- **Other sources' Arcam remotes.** The ledger holds eight RC-5 remotes of Arcam's (five of the IR Blaster database's and three JP1 upgrades: the AVR100, the AVR250 and an `Amp/Tuner/CD`): **337 of their 401 keys (84.0%) are a code some table of Arcam's lists**, with the meaning agreeing where it is plain (volume plus and minus 16 and 17, mute 13, power 12, the standby on and off 124 and 123, the tuner's digits). The rest are other products' and other generations' codes. **Only 28 signals are new** of the 272 distinct codes: the rest were in the ledger already.
+
+### D254 — What it does to the rest, and what is not proven
+
+The corpus is **16,733 remote files and 688,835 keys**, 5,462 brands, 282,130 models (37 more) and 180,021 signals (28 more). Both bundle profiles are 59,641,856 bytes (53,248 more), dataVersion `073a6cff14fa`, `--verify` passes. **520 of the 1,816 keys map to the vocabulary (28.6%)**: `Standby`, `Mute`, the digits and `Menu` do, and `Increase volume (+)`, `Navigate Up` and `Select CD` do not (D84's aliases do not have them, which is the owner's call, TODO); the `official` row goes from 9.8% to 10.6% and the corpus from 71.9% to 71.7%. **The search evaluation: first answer 90.9% to 85.9%, first five 97.2% to 97.5%**, the 25th draw (about 89.4% on average), a draw (D99 says how that was checked: **none of the 320 queries answers differently from the catalog before §62, §63 and §64**). **Not read:** Arcam's older products (the AVR300, AV8 and AV9 have their codes in handbooks), the serial commands the same PDFs document (the importer reads RC-5 tables only), and the retailer's copy of the AVR250/390/550/850/860 notes. **Not proven:** that a product accepts a code its table lists, which for the `Advanced` ones needs a programmable remote or the serial link the notes describe; that a `(not ...)` restriction is complete.

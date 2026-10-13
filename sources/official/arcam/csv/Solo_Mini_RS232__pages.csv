@@ -1,0 +1,1445 @@
+1,Custom Installation Notes:
+1,Serial programming and extended
+1,IR interface for Arcam Solo Mini
+1,Model covered: Solo Mini
+1,Document Issue 2
+1,Document history:
+1,Issue 1
+1,November 2007
+1,Mark May
+1,First release
+1,Issue 2  January 2008
+1,Matt Neighbour
+1,Added commands specific to USB
+1,Issue 3
+1,January 2008
+1,Matt Neighbour
+1,Changed USB command codes to avoid conflict with Solo Movie
+1,(Solo Mini)
+1,2
+1,Applicability
+1,Equipment covered
+1,This publication applies to the following inversions of the software and RS232 protocol used by the model:
+1,Solo Mini – protocol version 1.0 (
+1,Solo Mini – software version 1.3 onwards
+1,3
+1,Controlling the Arcam Solo Mini via RS232
+1,Introduction
+1,"Solo Mini is fitted with an RS232 serial connector that allows remote control from a PC, or similar device. This section"
+1,of the document describes the protocol for controlling Solo Mini via the RS232 interface.
+1,Conventions
+1,< The remote controller is referred to as the ‘RC’.
+1,"< All values in this section are hexadecimal values, unless otherwise specified."
+1,Serial cable specification
+1,The cable is wired as a null modem:
+1,Connector 1 Connector 2 Function
+1,2 3 Rx 3— Tx
+1,3 2 Tx —4 Rx
+1,5 5 RS232 ground
+1,Data transfer format
+1,"< Transfer rate: 19,200bps."
+1,"< 1 start bit, 8 data bits, 1 stop bit, no parity, no flow control."
+1,Command and response formats
+1,"Communication between the RC and Solo Mini takes the form of sequences of bytes, with all commands and"
+1,responses having the same basic format. Communication between the two is full duplex. Solo Mini shall always
+1,respond to a received command. Each transmission by the RC shall be at least six bytes in the following format:
+1,<STR> <ZN> <CC> <NB> <Data> <ETR>
+1,< STR (Start transmission): 0x21
+1,< ZN (Zone)
+1,< CC (Command code): the code for the command
+1,"< NB (Number of bytes): the number of data items following this item, excluding the ETR"
+1,< Data: [Byte(1) - Byte(NB)]
+1,< ETR (End transmission): 0xD
+1,Each response by Solo Mini shall be at least seven bytes in the following format:
+1,<STR> <ZN> <CC> <RC> <NB> <Data> <ETR>
+1,< STR (Start transmission): 0x21
+1,< ZN (Zone)
+1,< CC (Command code)
+1,< RC (Reply code)
+1,"< NB (Number of bytes): the number of data items following this item, excluding the ETR"
+1,< Data: [Byte(1) - Byte(NB)]
+1,< ETR (End transmission): 0xD
+2,RS232
+2,Answer codes
+2,The following answer codes are defined:
+2,Status update 0x00
+2,"Command accepted, and complete 0x01"
+2,"Command accepted, currently processing 0x02"
+2,Zone Invalid 0x82
+2,Command not recognised 0x83
+2,Parameter not recognised 0x84
+2,Command invalid at this time 0x85
+2,Invalid data length 0x86
+2,"Unless detailed otherwise, the data returned is valid only when the answer code is ‘Status update’ or ‘Command"
+2,"accepted, and complete’. When ‘Command accepted, currently processing’ is returned, the data returned is the data"
+2,which is currently being processed.
+2,Status changes
+2,Note that Solo Mini shall transmit messages whenever its status changes. These messages shall be transmitted by
+2,Solo Mini at asynchronous intervals.
+2,State changes as a result of other inputs
+2,It is possible that the state of Solo Mini may be changed as a result of user input via the front panel buttons or via
+2,the IR remote control. Changes resulting from these inputs shall be relayed to the RC (using the appropriate
+2,"message type) as they occur. For example, if the user changed the front panel display brightness using the DISP"
+2,"button on the remote control, a display message (defined below) would be sent to the RC. A similar action would be"
+2,"taken for all other state changes. Unless stated, all RS232 commands have an associated status message."
+2,Example command and response sequence
+2,"As an example, the command to set the front-panel display of the Solo Mini to ‘full brightness’ (defined below) is as"
+2,follows:
+2,STR Zone CC DL Data ETR
+2,0x21 0x01 0x0A 0x01 0x04 0x0D
+2,"Assuming that the command was accepted by the unit and is being processed, Solo Mini responds to this command"
+2,with the following sequence:
+2,STR Zone CC AC DL Data ETR
+2,0x21 0x01 0x0A 0x02 0x01 0x04 0x0D
+2,Note: RS232 control is disabled if the iPod option is enabled.
+2,AMX Duet™ Support
+2,Solo Mini  is fully compatible with AMX Duet™ Dynamic Device Discovery Protocol (DDDP) The following description
+2,of Dynamic Device Discovery comes from the AMX website (www.amx.com). Dynamic Device Discovery is part of
+2,"AMX’s Duet™ platform, which combines the proven reliability and power of NetLinx with the extensive capabilities of"
+2,the Java 2 Micro Edition (J2ME) platform. When integrating a serial or IP device from a manufacturer embedding the
+2,"Dynamic Device Discovery Protocol (DDDP), Duet recognizes the device and loads the appropriate Duet module,"
+2,which automatically installs the new device. AMX’s NetLinx Master can then find and install the Duet device module
+2,"either from a library on the master, from AMX’s Web site, or from the manufacturer’s Web site. Duet also allows for"
+2,device swapping so that programming changes are not required when devices with DDDP are removed or replaced –
+2,"a huge benefit for end users. The Duet platform is an extension AMX’s InConcert® manufacturer partner program,"
+2,which was developed to ensure seamless communication between partners’ devices and the AMX control system.
+2,Command: “AMX\r”
+2,Response: “AMXB<Device-SDKClass=DiscDevice><Device-Make=ARCAM><Device-Model=solo
+2,mini><Device-Revision=x.y.0>\r”
+2,Where
+2,x = rs232 protocol major version number
+2,y = rs232 protocol minor version number
+2,RS232 commands
+2,Status (query only)
+2,Query the current state of Solo Mini.
+2,Byte:
+2,Description:
+2,ZN
+2,0x01 (Zone)
+2,CC
+2,0x00 (Command code)
+2,NB
+2,0x01 (Number of bytes)
+2,DATA
+2,0xF0 = Query
+2,RESPONSE
+2,Byte:
+2,Description:
+2,ZN
+2,0x01 (Zone)
+2,RC
+2,0x00 (Reply Code)
+2,AC
+2,0x01 (Answer code)
+3,NB
+3,0x01 (Number of bytes)
+3,DATA
+3,0x00 = Stand-by state
+3,0x01 = Power-on
+3,0x02 = Alarm
+3,0x03 = Basic menu
+3,0x04 = N/A
+3,0x05 = Clock menu
+3,0x06 = Initialising
+3,Example
+3,Command/response sequence to determine the current state (the unit is currently in standby):
+3,Command: 0x21 0x01 0x00 0x01 0xF0 0x0D
+3,Response: 0x21 0x01 0x00 0x01 0x01 0x00 0x0D
+3,Source selection (query only)
+3,Query the source of Solo Mini.
+3,Byte:
+3,Description:
+3,ZN
+3,0x01 (Zone)
+3,CC
+3,0x01 (Command code)
+3,NB
+3,0x01 (Number of bytes)
+3,DATA
+3,0xF0 = Query
+3,RESPONSE
+3,Byte:
+3,Description:
+3,ZN
+3,0x01 (Zone)
+3,RC
+3,0x01 (Reply Code)
+3,AC
+3,0x01 (Answer code)
+3,NB
+3,0x01 (Number of bytes)
+3,DATA
+3,0x00 = N/A
+3,0x01 = FM
+3,0x02 = DAB
+3,0x03 = TAPE
+3,0x04 = AV
+3,0x05 = N/A
+3,0x06 = N/A
+3,0x07 = AM
+3,0x08 = GAME
+3,0x09 = USB
+3,0x0A = CD
+3,0x0B = TV
+3,0x0C = AUX
+3,Example
+3,Command/response sequence to determine the current source (unit is currently set to ‘Tape’):
+3,Command: 0x21 0x01 0x01 0x01 0xF0 0x0D
+3,Response: 0x21 0x01 0x01 0x01 0x01 0x03 0x0D
+3,Volume
+3,Query/Change the volume level of Solo Mini.
+3,Byte:
+3,Description:
+3,ZN
+3,0x01 (Zone 1)
+3,CC
+3,0x02 (Command code)
+3,NB
+3,0x01 (Number of bytes)
+3,DATA
+3,0x00 = Volume 0
+3,…
+3,0x48 = Volume 72
+3,0xF0 = Query
+3,RESPONSE
+3,Byte:
+3,Description:
+3,ZN
+3,0x01 (Zone)
+3,RC
+3,0x02 (Reply Code)
+3,AC
+3,0x01 (Answer code)
+3,NB
+3,0x01 (Number of bytes)
+3,DATA
+3,0x00 = Volume 0
+3,…
+3,0x48 = Volume 72
+3,Example
+3,Command/response sequence to change volume to 36:
+3,Command: 0x21 0x01 0x02 0x01 0x24 0x0D
+3,Response: 0x21 0x01 0x02 0x01 0x01 0x24 0x0D
+3,Balance
+3,Query/Change the speaker balance.
+3,Byte:
+3,Description:
+3,ZN
+3,0x01 (Zone)
+3,CC
+3,0x04 (Command code)
+3,NB
+3,0x01 (Number of bytes)
+3,DATA
+3,0x5A = Left +10
+4,…
+4,0x64 = Left/Right 0
+4,…
+4,0x6E = Right +10
+4,0xF0 = Query
+4,RESPONSE
+4,Byte:
+4,Description:
+4,ZN
+4,0x01 (Zone)
+4,RC
+4,0x04 (Reply code)
+4,AC
+4,0x01 (Answer code)
+4,NB
+4,0x01 (Number of bytes)
+4,DATA
+4,0x5A = Left +10
+4,…
+4,0x64 = Left/Right 0
+4,…
+4,0x6E = Right +10
+4,Example
+4,"Command/response sequence to set the output of the left channel, where the new balance is 3dB to the left:"
+4,Command: 0x21 0x01 0x04 0x01 0x61 0x0D
+4,Response: 0x21 0x01 0x04 0x01 0x01 0x61 0x0D
+4,Bass
+4,Query/Change the bass level.
+4,Byte:
+4,Description:
+4,ZN
+4,0x01 (Zone)
+4,CC
+4,0x05 (Command code)
+4,NB
+4,0x01 (Number of bytes)
+4,DATA
+4,0x5D = -14
+4,…
+4,0x63 = -2
+4,0x64 = 0
+4,0x65 = +2
+4,…
+4,0x6B = +14
+4,0xF0 = Query
+4,RESPONSE
+4,Byte:
+4,Description:
+4,ZN
+4,0x01 (Zone)
+4,RC
+4,0x05 (Reply code)
+4,AC
+4,0x01 (Answer code)
+4,NB
+4,0x01 (Number of bytes)
+4,DATA
+4,0x5D = -14
+4,…
+4,0x63 = -2
+4,0x64 = 0
+4,0x65 = +2
+4,…
+4,0x6B = +14
+4,Example
+4,"Command/response sequence to set the bass, where the new level is +2dB:"
+4,Command: 0x21 0x01 0x05 0x01 0x65 0x0D
+4,Response: 0x21 0x01 0x05 0x01 0x01 0x65 0x0D
+4,RS232
+4,(Solo Mini)
+4,6
+4,Treble
+4,Query/Change the treble level.
+4,Byte:
+4,Description:
+4,ZN
+4,0x01 (Zone)
+4,CC
+4,0x06 (Command code)
+4,NB
+4,0x01 (Number of bytes)
+4,DATA
+4,0x5D = -14
+4,…
+4,0x63 = -2
+4,0x64 = 0
+4,0x65 = +2
+4,…
+4,0x6B = +14
+4,0xF0 = Query
+4,RESPONSE
+4,Byte:
+4,Description:
+4,ZN
+4,0x01 (Zone)
+4,RC
+4,0x06 (Reply code)
+4,AC
+4,0x01 (Answer code)
+4,NB
+4,0x01 (Number of bytes)
+4,DATA
+4,0x5D = -14
+4,…
+4,0x63 = -2
+4,0x64 = 0
+4,0x65 = +2
+4,…
+4,0x6B = +14
+5,Example
+5,"Command/response sequence to set the treble, where the new level is -12dB:"
+5,Command: 0x21 0x01 0x06 0x01 0x5E 0x0D
+5,Response: 0x21 0x01 0x06 0x01 0x01 0x5E 0x0D
+5,Mute (query only)
+5,Query the mute state.
+5,Byte:
+5,Description:
+5,ZN
+5,0x01 (Zone 1)
+5,CC
+5,0x08 (Command code)
+5,NB
+5,0x01 (Number of bytes)
+5,DATA
+5,0xF0 = Query
+5,RESPONSE
+5,Byte:
+5,Description:
+5,ZN
+5,0x01 (Zone)
+5,RC
+5,0x08 (Reply code)
+5,AC
+5,0x01 (Answer code)
+5,NB
+5,0x01 (Number of bytes)
+5,DATA
+5,0x00 = Mute Off
+5,0x01 = Mute On
+5,Example
+5,"Command/response sequence to query the mute state, where the result is that the output is muted:"
+5,Command: 0x21 0x01 0x08 0x01 0xF0 0x0D
+5,Response: 0x21 0x01 0x08 0x01 0x01 0x01 0x0D
+5,Tune mode/Preset Select
+5,"Query the tune mode/current preset,"
+5,Byte:
+5,Description:
+5,ZN
+5,0x01 (Zone)
+5,CC
+5,0x13 (Command code)
+5,NB
+5,0x01 (Number of bytes)
+5,DATA
+5,0x01 = Load Preset 1
+5,…
+5,0x0A = Load Preset 10
+5,0xF0 = Query mode/preset
+5,RESPONSE
+5,Byte:
+5,Description:
+5,ZN
+5,0x01 (Zone)
+5,RC
+5,0x13 (Reply Code)
+5,AC
+5,0x01 (Answer code)
+5,NB
+5,0x02 (Number of bytes)
+5,DATA1
+5,0x00 = Tune mode
+5,0x01 = Preset mode
+5,DATA2
+5,Current Preset Number
+5,Example
+5,"Command/response sequence to query the current preset mode, where the result is Preset mode with Preset number"
+5,5 loaded:
+5,Command: 0x21 0x01 0x13 0x01 0xF0 0x0D
+5,Response: 0x21 0x01 0x13 0x01 0x02 0x01 0x05 0x0D
+5,Display brightness
+5,Query/Change the display brightness.
+5,Byte:
+5,Description:
+5,ZN
+5,0x01 (Zone)
+5,CC
+5,0x0A (Command code)
+5,NB
+5,0x01 (Number of bytes)
+5,DATA
+5,0x00 = Display Off
+5,…
+5,0x04 = Display full brightness
+5,0xF0 = Query
+5,RESPONSE
+5,Byte:
+5,Description:
+5,ZN
+5,0x01 (Zone)
+5,RC
+5,0x0A (Reply code)
+5,AC
+5,0x01 (Answer code)
+5,NB
+5,0x01 (Number of bytes)
+5,DATA
+5,0x00 = Display Off
+5,…
+5,0x04 = Display full brightness
+5,Example
+5,"Command/response sequence to set the display brightness, where the result is that the display brightness is at level"
+5,1:
+5,Command: 0x21 0x01 0x0A 0x01 0x01 0x0D
+6,Response: 0x21 0x01 0x0A 0x01 0x01 0x01 0x0D
+6,RS232
+6,(Solo Mini)
+6,7
+6,Stand-by display brightness
+6,Query/Change the Stand-by display brightness.
+6,Byte:
+6,Description:
+6,ZN
+6,0x01 (Zone)
+6,CC
+6,0x16 (Command code)
+6,NB
+6,0x01 (Number of bytes)
+6,DATA
+6,0x00 = Display Off
+6,…
+6,0x04 = Display full brightness
+6,0xF0 = Query
+6,RESPONSE
+6,Byte:
+6,Description:
+6,ZN
+6,0x01 (Zone)
+6,RC
+6,0x16 (Reply code)
+6,AC
+6,0x01 (Answer code)
+6,NB
+6,0x01 (Number of bytes)
+6,DATA
+6,0x00 = Display Off
+6,…
+6,0x04 = Display full brightness
+6,Example
+6,"Command/response sequence to set the display brightness, where the result is that the display brightness is at level"
+6,1:
+6,Command: 0x21 0x01 0x16 0x01 0x01 0x0D
+6,Response: 0x21 0x01 0x16 0x01 0x01 0x01 0x0D
+6,‘Snooze’ time
+6,Query/Change the ‘snooze’ time (when applicable).
+6,Byte:
+6,Description:
+6,ZN
+6,0x01 (Zone)
+6,CC
+6,0x29 (Command code)
+6,NB
+6,0x01 (Number of bytes)
+6,DATA
+6,0x00 = Off
+6,0x01 = 1 minute
+6,…
+6,0x5A = 90 minutes
+6,0xF0 = Query
+6,RESPONSE
+6,Byte:
+6,Description:
+6,ZN
+6,0x01 (Zone)
+6,RC
+6,0x29 (Reply code)
+6,AC
+6,0x01 (Answer code)
+6,NB
+6,0x01 (Number of bytes)
+6,DATA
+6,0x00 = Off
+6,0x01 = 1 minute
+6,…
+6,0x5A = 90 minutes
+6,Example
+6,Command/response sequence to set the snooze time to 90 minutes:
+6,Command: 0x21 0x01 0x29 0x01 0x5A 0x0D
+6,Response: 0x21 0x01 0x29 0x01 0x01 0x5A 0x0D
+6,‘Sleep’ time
+6,Query/Set the ‘sleep’ time.
+6,Byte:
+6,Description:
+6,ZN
+6,0x01 (Zone)
+6,CC
+6,0x31 (Command code)
+6,NB
+6,0x01 (Number of bytes)
+6,DATA
+6,0x00 = Off
+6,0x01 = 1 minute
+6,…
+6,0x5A = 90 minutes
+6,0xF0 = Query
+6,RESPONSE
+6,Byte:
+6,Description:
+6,ZN
+6,0x01 (Zone)
+6,RC
+6,0x31 (Reply code)
+6,AC
+6,0x01 (Answer code)
+6,NB
+6,0x01 (Number of bytes)
+6,DATA
+6,0x00 = Off
+6,0x01 = 1 minute
+6,…
+6,0x5A = 90 minutes
+6,Example
+7,Command/response sequence to set the sleep time to 120 minutes:
+7,Command: 0x21 0x01 0x31 0x01 0x78 0x0D
+7,Response: 0x21 0x01 0x31 0x01 0x01 0x78 0x0D
+7,Headphones (query only)
+7,Query whether headphones are connected to Solo Mini.
+7,Byte:
+7,Description:
+7,ZN
+7,0x01 (Zone)
+7,CC
+7,0x32 (Command code)
+7,NB
+7,0x01 (Number of bytes)
+7,DATA
+7,0xF0 = Query
+7,RESPONSE
+7,Byte:
+7,Description:
+7,ZN
+7,0x01 (Zone)
+7,RC
+7,0x32 (Reply Code)
+7,AC
+7,0x01 (Answer code)
+7,NB
+7,0x01 (Number of bytes)
+7,DATA
+7,0x00 = No headphones
+7,0x01 = Headphones connected
+7,Example
+7,"Command/response sequence to request the headphone status, where the headphones are not connected:"
+7,Command: 0x21 0x01 0x32 0x01 0xF0 0x0D
+7,Response: 0x21 0x01 0x32 0x01 0x01 0x00 0x0D
+7,Request tuner module type (query only)
+7,Query the tuner module type present in Solo Mini.
+7,Byte:
+7,Description:
+7,ZN
+7,0x01 (Zone)
+7,CC
+7,0x37 (Command code)
+7,NB
+7,0x01 (Number of bytes)
+7,DATA
+7,0xF0 = Query
+7,RESPONSE
+7,Byte:
+7,Description:
+7,ZN
+7,0x01 (Zone)
+7,RC
+7,0x37 (Reply Code)
+7,AC
+7,0x01 (Answer code)
+7,NB
+7,0x01 (Number of bytes)
+7,DATA
+7,0x00 = UK DAB/FM/AM module fitted
+7,0x01 = US AM/FM module fitted
+7,0x02 = Japan
+7,0x03 = EU
+7,Example
+7,"Command/response sequence to request the tuner module type, where the type is UK DAB/FM/AM:"
+7,Command: 0x21 0x01 0x37 0x01 0xF0 0x0D
+7,Response: 0x21 0x01 0x37 0x01 0x01 0x00 0x0D
+7,RS232
+7,(Solo Mini)
+7,8
+7,Radio station (query only)
+7,Query the current radio station label (DAB/RDS)
+7,Byte:
+7,Description:
+7,ZN
+7,0x01 (Zone)
+7,CC
+7,0xDE (Command code)
+7,NB
+7,0x01 (Number of bytes)
+7,DATA
+7,0xF0 = Request the current station label
+7,RESPONSE
+7,Byte:
+7,Description:
+7,ZN
+7,0x01 (Zone)
+7,RC
+7,0xDE (Reply Code)
+7,AC
+7,0x01 (Answer code)
+7,NB
+7,(Number of bytes)
+7,DATA
+7,"The service label of the new radio station, in 8-bit ASCII characters"
+7,Example
+7,"Command/response sequence to request station label, where the new station is called “DAB STATION 2”:"
+7,Command: 0x21 0x01 0xDE 0x01 0xF0 0x0D
+7,Response: 0x21 0x01 0xDE 0x01 0x0D 0x44 0x41 0x42 0x20 0x53 0x54 0x41 0x54 0x49 0x4F 0x4E 0x20 0x32 0x0D
+7,Radio station information
+7,Query information on the current radio station.
+8,Byte:
+8,Description:
+8,ZN
+8,0x01 (Zone)
+8,CC
+8,0xDF (Command code)
+8,NB
+8,0x02 (Number of bytes)
+8,D1
+8,0xF0 = Request station information
+8,D2
+8,If the current source is FM/AM:
+8,0x00 = Request the station frequency
+8,0x01 = Request the station signal strength
+8,If the current source is DAB:
+8,0x01 = Request the station signal strength
+8,0x02 = Request the station MPEG mode
+8,0x04 = Request the station data rate
+8,RESPONSE
+8,Byte:
+8,Description:
+8,RC
+8,0xDF (Reply Code)
+8,AC
+8,0x01 (Answer code)
+8,NB
+8,0x03 (Number of bytes)
+8,D1
+8,0x00 = Message contains station freq.
+8,0x01 = Message contains signal strength
+8,0x02 = Message contains MPEG mode
+8,0x04 = Message contains data rate
+8,D2
+8,Response to the AM frequency request:
+8,MSB of current frequency
+8,Response to the FM frequency request:
+8,MHz of current frequency
+8,Response to the DAB MPEG mode request:
+8,0x00 = Stereo
+8,0x01 = Joint stereo
+8,0x02 = Dual mono
+8,0x03 = Mono
+8,Response to the DAB data rate request:
+8,0x00 - 0xC0 (0 - 192kb/s) = data rate
+8,Response to the signal strength request:
+8,0x00 - 0x10 = signal strength
+8,D3
+8,Response to the AM frequency request:
+8,LSB of current frequency
+8,Response to the FM frequency request:
+8,kHz/10 of current frequency
+8,Response to the DAB MPEG mode request:
+8,0x00
+8,Response to the DAB data rate request:
+8,0x00
+8,Response to the signal strength request:
+8,0x00
+8,Example
+8,"Command/response sequence to request the station frequency, where the source is AM and the frequency is"
+8,1089kHz:
+8,Command: 0x21 0x01 0xDF 0x02 0xF0 0x00 0x0D
+8,Response: 0x21 0x01 0xDF 0x01 0x02 0x04 0x41 0x0D
+8,Example
+8,"Command/response sequence to request the station frequency, where the source is FM and the frequency is"
+8,105.2MHz:
+8,Command: 0x21 0x01 0xDF 0x02 0xF0 0x00 0x0D
+8,Response: 0x21 0x01 0xDF 0x01 0x02 0x69 0x32 0x0D
+8,Example
+8,"Command/response sequence to request the signal strength, where the current signal strength is 10:"
+8,Command: 0x21 0x01 0xDF 0x02 0xF0 0x01 0x0D
+8,Response: 0x21 0x01 0xDF 0x01 0x02 0x0A 0x00 0x0D
+8,RS232
+8,(Solo Mini)
+8,Radio programme type (query only)
+8,Query the current station programme type (DAB/RDS only).
+8,Byte:
+8,Description:
+8,ZN
+8,0x01 (Zone)
+8,CC
+8,0xE6 (Command code)
+8,NB
+8,0x01 (Number of bytes)
+8,DATA
+8,0xF0 = Request programme type
+8,RESPONSE
+8,Byte:
+8,Description:
+8,ZN
+8,0x01 (Zone)
+8,RC
+8,0xE6 (Reply Code)
+8,AC
+8,0x01 (Answer code)
+8,NB
+8,(Number of bytes)
+8,DATA
+8,"The programme type of the selected station, in 8 bit ASCII characters"
+8,Example
+8,Request RDS/DLS information (query only)
+8,Request RDS/DLS (FM/DAB) information from the current radio station.
+8,Byte:
+8,Description:
+8,ZN
+8,0x01 (Zone)
+8,CC
+8,0xE7 (Command code)
+9,NB
+9,0x01 (Number of bytes)
+9,DATA
+9,0xF0 = Request RDS/DLS information
+9,RESPONSE
+9,Byte:
+9,Description:
+9,ZN
+9,0x01 (Zone)
+9,RC
+9,0xE7 (Reply Code)
+9,AC
+9,0x01 (Answer code)
+9,NB
+9,(Number of bytes <= 128)
+9,DATA
+9,"The RDS/DLS information of the selected station, in 8 bit ASCII characters."
+9,Example
+9,"Command/response sequence to request the RDS/DLS information, where the information is “Playing your favourite"
+9,music”:
+9,Command: 0x21 0x01 0xE7 0x01 0xF0 0x0D
+9,Response: 0x21 0x01 0xE7 0x01 0x1C 0x50 0x6c 0x61 0x79 0x69 0x6E 0x67 0x20 0x79 0x6F 0x75 0x72 0x20 0x66 0x61
+9,0x76 0x6F 0x75 0x72 0x69 0x74 0x65 0x20 0x6D 0x75 0x73 0x69 0x63 0x0D
+9,Virtual remote
+9,Sends an RC5 system/command code combination via RS232. Solo Mini will respond as if the command was received
+9,over IR.
+9,Byte: Description:
+9,ZN
+9,0x01 (Zone 1)
+9,CC
+9,0xE9 (Command code)
+9,NB
+9,0x02 (Number of bytes)
+9,DATA1
+9,System code
+9,DATA2
+9,Command code
+9,RESPONSE
+9,Byte:
+9,Description:
+9,ZN
+9,0x01 (Zone)
+9,RC
+9,0xE9 (Reply Code)
+9,AC
+9,0x01 (Answer code)
+9,NB
+9,0x02 (Number of bytes)
+9,DATA1
+9,System Code
+9,DATA2
+9,Command Code
+9,Example
+9,Command/response sequence to set decode mode to PLII Movie using the relevant IR code (16-33): (See IR
+9,section/document for details)
+9,Command: 0x21 0x01 0xE9 0x02 0x10 0x21 0x0D
+9,Response: 0x21 0x01 0xE9 0x02 0x02 0x10 0x21 0x0D
+9,RS232
+9,(Solo Mini)
+9,10
+9,CD Playback status
+9,Query the current CD playback state.
+9,Byte:
+9,Description:
+9,ZN
+9,0x01 (Zone)
+9,CC
+9,0xEC (Command code)
+9,NB
+9,0x01 (Number of bytes)
+9,DATA
+9,0xF0 = Request playback state
+9,RESPONSE
+9,Byte:
+9,Description:
+9,ZN
+9,0x01 (Zone)
+9,RC
+9,0xEC (Reply Code)
+9,AC
+9,0x01 (Answer code)
+9,NB
+9,0x01 (Number of bytes)
+9,DATA
+9,0x01 = Loading
+9,0x02 = Playing
+9,0x03 = Stopped
+9,0x04 = Scanning Back
+9,0x05 = Scanning Forward
+9,0x08 = Tray Open/Empty
+9,0x09 = Paused
+9,0x0D = Track Skipping
+9,Example
+9,"Command/response sequence to request the current CD playback, where the tray is currently open:"
+9,Command: 0x21 0x01 0xEC 0x01 0xF0 0x0D
+9,Response: 0x21 0x01 0xEC 0x01 0x01 0x08 0x0D
+9,CD Play mode
+9,Query the current playback mode.
+9,Byte:
+9,Description:
+9,ZN
+9,0x01 (Zone )
+9,CC
+9,0x54 (Command code)
+9,NB
+9,0x01 (Number of bytes)
+9,DATA
+9,0xF0 = Query
+10,RESPONSE
+10,Byte:
+10,Description:
+10,ZN
+10,0x01 (Zone)
+10,RC
+10,0x54 (Reply Code)
+10,AC
+10,0x01 (Answer code)
+10,NB
+10,0x01 (Number of bytes)
+10,DATA
+10,0x00 = Playmode Off
+10,BITS 1~0
+10,00 = Repeat Off
+10,01 = Repeat Single
+10,11 = Repeat All
+10,BIT 2
+10,0 = Shuffle Off
+10,1 = Shuffle On
+10,BIT 3
+10,0 = Program Off
+10,1 = Program
+10,Example
+10,"Command/response sequence to set the current disc play mode, where the mode is repeat all:"
+10,Command: 0x21 0x01 0x54 0x01 0x03 0x0D
+10,Response: 0x21 0x01 0x54 0x01 0x01 0x03 0x0D
+10,USB Playback status
+10,Query the current USB playback state.
+10,Byte:
+10,Description:
+10,ZN
+10,0x01 (Zone)
+10,CC
+10,0x58 (Command code)
+10,NB
+10,0x01 (Number of bytes)
+10,DATA
+10,0xF0 = Request playback state
+10,RESPONSE
+10,Byte:
+10,Description:
+10,ZN
+10,0x01 (Zone)
+10,RC
+10,0x58 (Reply Code)
+10,AC
+10,0x01 (Answer code)
+10,NB
+10,0x01 (Number of bytes)
+10,DATA
+10,0x01 = Initialising
+10,0x02 = Playing
+10,0x03 = Stopped
+10,0x04 = Scanning Back
+10,0x05 = Scanning Forward
+10,0x08 = No device
+10,0x09 = Paused
+10,0x10 = Invalid file
+10,0x11 = No valid files present
+10,0x0D = Track Skipping
+10,Example
+10,"Command/response sequence to request the current USB playback, where the tray is currently open:"
+10,Command: 0x21 0x01 0x58 0x01 0xF0 0x0D
+10,Response: 0x21 0x01 0x58 0x01 0x01 0x08 0x0D
+10,USB Play mode
+10,Query the current USB playback mode.
+10,Byte:
+10,Description:
+10,ZN
+10,0x01 (Zone )
+10,CC
+10,0x59 (Command code)
+10,NB
+10,0x01 (Number of bytes)
+10,DATA
+10,0xF0 = Query
+10,RESPONSE
+10,Byte:
+10,Description:
+10,ZN
+10,0x01 (Zone)
+10,RC
+10,0x59 (Reply Code)
+10,AC
+10,0x01 (Answer code)
+10,NB
+10,0x01 (Number of bytes)
+10,DATA
+10,0x00 = Repeat/Shuffle Off
+10,0x01 = Repeat Track
+10,0x02 = Repeat Folder
+10,0x03 = Repeat All
+10,0x04 = Shuffle All
+10,0x05 = Repeat Folder Shuffle
+10,0x06 = Repeat All Shuffle
+10,Example
+10,"Command/response sequence to set the current USB play mode, where the mode is repeat all:"
+10,Command: 0x21 0x01 0x59 0x01 0x03 0x0D
+10,Response: 0x21 0x01 0x59 0x01 0x01 0x03 0x0D
+10,(Solo Mini)
+10,11
+10,Total CD/USB track time (query only)
+10,Query total track time of the current track.
+10,Byte:
+10,Description:
+11,ZN
+11,0x01 (Zone 1)
+11,CC
+11,0x55 (Command code)
+11,NB
+11,0x01 (Number of bytes)
+11,DATA
+11,0xF0 = Query
+11,RESPONSE
+11,Byte:
+11,Description:
+11,ZN
+11,0x01 (Zone)
+11,RC
+11,0x55 (Reply Code)
+11,AC
+11,0x01 (Answer code)
+11,NB
+11,0x03 (Number of bytes)
+11,DATA1
+11,Hours
+11,DATA2
+11,Minutes
+11,DATA3
+11,Seconds
+11,Example
+11,Total track time 0h 14m 48s:
+11,COMMAND: 0x21 0x01 0x55 0x01 0xF0 0x0D
+11,Response: 0x21 0x01 0x55 0x01 0x03 0x00 0x0E 0x2C 0x0D
+11,(Solo Mini)
+11,12
+11,Total CD/USB playback time (query only)
+11,Query total time of current disc/folder/prog?
+11,Byte:
+11,Description:
+11,ZN
+11,0x01 (Zone 1)
+11,CC
+11,0x56 (Command code)
+11,NB
+11,0x01 (Number of bytes)
+11,DATA
+11,0xF0 = Query
+11,RESPONSE
+11,Byte:
+11,Description:
+11,ZN
+11,0x01 (Zone)
+11,RC
+11,0x56 (Reply Code)
+11,AC
+11,0x01 (Answer code)
+11,NB
+11,0x03 (Number of bytes)
+11,DATA1
+11,Hours
+11,DATA2
+11,Minutes
+11,DATA3
+11,Seconds
+11,Example
+11,Current disc time 0h 74m 02s
+11,COMMAND: 0x21 0x01 0x56 0x01 0xF0 0x0D
+11,Response: 0x21 0x01 0x56 0x01 0x03 0x00 0x4A 0x02 0x00
+11,Preset save
+11,Saves a radio station to a specific preset number
+11,Byte:
+11,Description:
+11,ZN
+11,0x01 (Zone 1)
+11,CC
+11,0xDC (Command code)
+11,NB
+11,0x01 (Number of bytes)
+11,DATA
+11,0x01 … 0x0A = Preset number to use
+11,Example
+11,Command/response sequence to save the currently selected radio station to preset number 5
+11,COMMAND: 0x21 0x01 0xDC 0x01 0x05 0x0D
+11,Response: 0x21 0x01 0xDC 0x01 0x02 0x01 0x05 0x0D
+11,CD/USB Track number information
+11,Query current track info
+11,Byte:
+11,Description:
+11,ZN
+11,0x01 (Zone 1)
+11,CC
+11,0xE8 (Command code)
+11,NB
+11,0x01 (Number of bytes)
+11,DATA
+11,0xF0 = Query
+11,RESPONSE
+11,Byte:
+11,Description:
+11,ZN
+11,0x01 (Zone)
+11,RC
+11,0xE8 (Reply Code)
+11,AC
+11,0x01 (Answer code)
+11,NB
+11,0x06 (Number of bytes)
+11,DATA1
+11,Current Folder (if applicable)
+11,DATA2
+11,Total Folder (if applicable)
+11,DATA3
+11,MSB of Current Track number
+11,DATA4
+11,LSB of Current Track number
+11,DATA5
+11,MSB of Total Tracks
+11,DATA6
+11,LSB of Total Tracks
+11,Example
+12,Current track is 23/32 in folder 2/6
+12,COMMAND: 0x21 0x01 0xE8 0x01 0xF0 0x0D
+12,Response: 0x21 0x01 0xE8 0x01 0x06 0x02 0x06 0x00 0x17 0x00 0x20 0x0D
+12,RS232
+12,Request USB track name
+12,Request USB track name for file currently playing
+12,Byte:
+12,Description:
+12,ZN
+12,0x01 (Zone)
+12,CC
+12,0x60 (Command code)
+12,NB
+12,0x01 (Number of bytes)
+12,DATA
+12,0xF0 = Request track name information
+12,RESPONSE
+12,Byte:
+12,Description:
+12,ZN
+12,0x01 (Zone)
+12,RC
+12,0x60 (Reply Code)
+12,AC
+12,0x01 (Answer code)
+12,NB
+12,(Number of bytes <= 40)
+12,DATA
+12,"The name of the current playing track, in 8 bit ASCII characters."
+12,Example
+12,"Command/response sequence to request the track name, where the information is “Hysteria”:"
+12,Command: 0x21 0x01 0x60 0x01 0xF0 0x0D
+12,Response: 0x21 0x01 0x60 0x01 0x08 0x48 0x79 0x73 0x74 0x65 0x72 0x69 0x61 0x0D
+12,Solo Mini)
+12,Request USB folder name
+12,Request USB track name for file currently playing
+12,Byte:
+12,Description:
+12,ZN
+12,0x01 (Zone)
+12,CC
+12,0x61 (Command code)
+12,NB
+12,0x01 (Number of bytes)
+12,DATA
+12,0xF0 = Request folder name information
+12,RESPONSE
+12,Byte:
+12,Description:
+12,ZN
+12,0x01 (Zone)
+12,RC
+12,0x61 (Reply Code)
+12,AC
+12,0x01 (Answer code)
+12,NB
+12,(Number of bytes <= 12)
+12,DATA
+12,"The name of the current playing folder, in 8 bit ASCII characters."
+12,Example
+12,"Command/response sequence to request the folder name, where the information is “Muse”:"
+12,Command: 0x21 0x01 0x61 0x01 0xF0 0x0D
+12,Response: 0x21 0x01 0x61 0x01 0x04 0x4D 0x75 0x73 0x65 0x0D
+12,13
+12,CD/USB Playback time
+12,"Query current track playback time,"
+12,Byte:
+12,Description:
+12,ZN
+12,0x01 (Zone 1)
+12,CC
+12,0xEB (Command code)
+12,NB
+12,0x01 (Number of bytes)
+12,DATA
+12,0xF0 = Query
+12,RESPONSE
+12,Byte:
+12,Description:
+12,ZN
+12,0x01 (Zone)
+12,RC
+12,0xEB (Reply Code)
+12,AC
+12,0x01 (Answer code)
+12,NB
+12,0x03 (Number of bytes)
+12,DATA1
+12,Hours
+12,DATA2
+12,Minutes (0~59)
+12,DATA3
+12,Seconds (0~59)
+12,Example
+12,Current track at 34m 22s:
+12,COMMAND: 0x21 0x01 0xEB 0x01 0xF0 0x0D
+12,Response: 0x21 0x01 0xEB 0x01 0x03 0x00 0x22 0x16 0x0D
+12,CD Disc type
+12,Query current disc type
+12,Byte:
+12,Description:
+12,ZN
+12,0x01 (Zone 1)
+12,CC
+12,0xED (Command code)
+12,NB
+12,0x01 (Number of bytes)
+12,DATA
+12,0xF0 = Query
+12,RESPONSE
+12,Byte:
+12,Description:
+12,ZN
+12,0x01 (Zone)
+12,RC
+12,0xED (Reply Code)
+12,AC
+12,0x01 (Answer code)
+12,NB
+12,0x01 (Number of bytes)
+12,DATA
+12,0x02 = Audio CD
+13,0x08 = CD-ROM
+13,0x20 = Unknown
+13,0x21 = No Disc
+13,Example
+13,Audio CD is loaded:
+13,COMMAND: 0x21 0x01 0xED 0x01 0xF0 0x0D
+13,Response: 0x21 0x01 0xED 0x01 0x01 0x02 0x0D
+13,(Solo Mini)
+13,14
+13,Time command
+13,Gets/sets the Real-Time Clock (RTC)
+13,"(Query/set only, no status message is generated for this command)"
+13,Byte:
+13,Description:
+13,ZN
+13,0x01
+13,CC
+13,0xF8 (Command code)
+13,NB
+13,0x04 (Number of bytes)
+13,DATA
+13,0xF0 = Query
+13,or
+13,DATA1
+13,Day
+13,0x01 = Monday … 0x07 = Sunday
+13,DATA2
+13,Hours
+13,0x00 = 00:00 (12:00am)
+13,0x01 = 01:00 (01:00am)
+13,…
+13,0x16 = 22:00 (10:00pm)
+13,0x17 = 23:00 (11:00pm))
+13,DATA3
+13,Minutes
+13,0x00 = 0 minutes
+13,…
+13,0x3B = 59 minutes
+13,DATA4
+13,Seconds
+13,0x00 = 0 seconds
+13,…
+13,0x3B = 59 seconds
+13,Example
+13,Command/response sequence to set clock to 17:30 Friday:
+13,Command: 0x21 0x01 0xF8 0x04 0x05 0x11 0x1E 0x00 0x0D
+13,Response: 0x21 0x01 0xF8 0x01 0x05 0x11 0x1E 0x00 0x0D
+13,RS232 Protocol Version
+13,Query RS232 protocol version number
+13,Byte:
+13,Description:
+13,ZN
+13,0x01 (Zone 1)
+13,CC
+13,0xF1 (Command code)
+13,NB
+13,0x01 (Number of bytes)
+13,DATA
+13,0xF0 = Query
+13,RESPONSE
+13,Byte:
+13,Description:
+13,ZN
+13,0x01 (Zone)
+13,RC
+13,0xF1 (Reply Code)
+13,AC
+13,0x01 (Answer code)
+13,NB
+13,0x02 (Number of bytes)
+13,DATA1
+13,Major Version
+13,DATA2
+13,Minor Version
+13,Example
+13,Query rs232 protocol version (version 1.2 is returned):
+13,COMMAND: 0x21 0x01 0xF1 0x01 0xF0 0x0D
+13,Response: 0x21 0x01 0xF1 0x01 0x02 0x01 0x02 0x0D
+13,Software Version
+13,Query current software version number
+13,Byte:
+13,Description:
+13,ZN
+13,0x01 (Zone 1)
+13,CC
+13,0xF2 (Command code)
+13,NB
+13,0x01 (Number of bytes)
+13,DATA
+13,0xF0 = Query
+13,RESPONSE
+13,Byte:
+13,Description:
+13,ZN
+13,0x01 (Zone)
+13,RC
+13,0xF2 (Reply Code)
+14,AC
+14,0x01 (Answer code)
+14,NB
+14,0x02 (Number of bytes)
+14,DATA1
+14,Major Version
+14,DATA2
+14,Minor Version
+14,Example
+14,Query current software version (version 1.0 is returned):
+14,COMMAND: 0x21 0x01 0xF1 0x01 0xF0 0x0D
+14,Response: 0x21 0x01 0xF1 0x01 0x02 0x01 0x00 0x0D
+14,IR remote commands
+14,The following tables give the IR (infrared) remote commands accepted by the Arcam Solo Mini.
+14,AMP commands
+14,System code 16
+14,Decimal Code Command
+14,16-0 Source TV
+14,16-2 Source AV
+14,16-3 Source DAB
+14,16-5 Source TAPE
+14,16-7 Source CD
+14,16-8 Source FRONT
+14,16-12 Standby
+14,16-13 Mute
+14,16-16 Volume +
+14,16-17 Volume –
+14,16-22 Bass +
+14,16-23 Bass –
+14,16-24 Treble +
+14,16-25 Treble –
+14,16-26 Balance Right
+14,16-27 Balance Left
+14,16-52 Source AM
+14,16-53 Source FM
+14,16-59 Display Brightness
+14,16-80 Navigate Right
+14,16-81 Navigate Left
+14,16-82 Menu
+14,16-85 Navigate Down
+14,16-86 Navigate Up
+14,16-87 OK
+14,16-113 Alarm 1 Toggle
+14,16-114 Alarm 2 Toggle
+14,16-115 Alarm 3 Toggle
+14,16-116 Alarm 4 Toggle
+14,16-117 Snooze
+14,16-118 Sleep
+14,16-119 Mute On
+14,16-120 Mute Off
+14,16-123 Standby Off
+14,16-124 Standby On
+14,TUN commands
+14,System code 17
+14,Decimal Code Command
+14,17-0 Tuner Number 0
+14,17-1 Tuner Number 1
+14,17-2 Tuner Number 2
+14,17-3 Tuner Number 3
+14,17-4 Tuner Number 4
+14,17-5 Tuner Number 5
+14,17-6 Tuner Number 6
+14,17-7 Tuner Number 7
+14,17-8 Tuner Number 8
+14,17-9 Tuner Number 9
+14,17-12 Standby
+14,17-18 Display Brightness
+14,17-32 Preset +
+14,17-33 Preset –
+14,17-37 Mode Preset/Tune
+14,17-38 FM/Mono
+14,17-52 Source DAB/AM
+14,17-53 Source FM
+14,17-60 Tune Mode
+15,17-61 Preset Mode
+15,17-63 Info
+15,17-77 Navigate Right
+15,17-78 Navigate Left
+15,17-85 Navigate Down
+15,17-86 Navigate Up
+15,17-87 Ok
+15,17-91 Direct Preset 1
+15,17-92 Direct Preset 2
+15,17-93 Direct Preset 3
+15,17-94 Direct Preset 4
+15,17-95 Direct Preset 5
+15,17-96 Direct Preset 6
+15,17-97 Direct Preset 7
+15,17-98 Direct Preset 8
+15,17-99 Direct Preset 9
+15,17-100 Direct Preset 10
+15,17-125 Menu
+15,CD commands
+15,System code 20
+15,Decimal Code Command
+15,20-0 CD Number 0
+15,20-1 CD Number 1
+15,20-2 CD Number 2
+15,20-3 CD Number 3
+15,20-4 CD Number 4
+15,20-5 CD Number 5
+15,20-6 CD Number 6
+15,20-7 CD Number 7
+15,20-8 CD Number 8
+15,20-9 CD Number 9
+15,20-12 Standby
+15,20-18 Display Brightness
+15,20-29 CD Repeat
+15,20-32 CD Track Forward
+15,20-33 CD Track Back
+15,20-41 Program
+15,20-45 CD Eject
+15,20-48 CD Pause
+15,20-50 CD Scan Back
+15,20-52 CD Scan Forward
+15,20-53 CD Play
+15,20-54 CD Stop
+15,20-58 Clear
+15,20-59 Repeat A-B
+15,20-64 CD Random
+15,20-67 Menu
+15,20-76 Search
+15,20-77 Display Mode
+15,20-80 Navigate Right
+15,20-81 Navigate Left
+15,20-85 Navigate Down
+15,20-86 Navigate Up
+15,20-87 Ok
+15,20-115 Repeat All
+15,20-116 Repeat Single
+15,20-117 Repeat Off
+15,20-118 Shuffle On
+15,20-119 Shuffle Off
+15,20-123 Standby Off
+15,20-124 Standby On

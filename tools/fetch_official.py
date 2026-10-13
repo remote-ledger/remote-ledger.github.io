@@ -7,7 +7,7 @@ size, SHA-256, the retrieval date (today: do not pass --date) and the server's `
 (and, for a copy from the Wayback Machine, the address and snapshot it was archived from). Run it, then
 ``tools/official_sheets_to_csv.py <maker>`` for the spreadsheets, review the diff, and import.
 
-    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc
+    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc|arcam
 """
 
 from __future__ import annotations
@@ -66,6 +66,19 @@ DOCUMENTS = {
     "jvc": [
         ("DILA_Remote_Code_Emulation_Long_Hex.pdf",
          "https://support.jvc.com/consumer/support/documents/DILA_Remote_Code_Emulation_Long_Hex.pdf", None),
+    ],
+    # Arcam's custom installation notes: for each product family a PDF of the serial control commands and the RC-5
+    # remote codes (a table of system and command codes in decimal and hex). They are on Arcam's own host, arcam.co.uk.
+    "arcam": [
+        ("AVR380-450-750_RS232_SH256E_2.pdf", "https://www.arcam.co.uk/ugc/tor/avr750/IR%20Codes/RS232_AVR750450380_SH256E_2.pdf", None),
+        ("AVR5-10-20-30-40-11-21-31-41_RS232_SH289E_F.pdf",
+         "https://www.arcam.co.uk/ugc/tor/AVR21/Custom%20Installation%20Notes/RS232_5_10_20_30_40_11_21_31_41__SH289E_F_07Oct21.pdf", None),
+        ("SA10-SA20_RS232_SH277E_B.pdf", "https://www.arcam.co.uk/ugc/tor/SA20/Custom%20Installation%20Notes/SH277E_RS232_SA10_SA20_B.pdf", None),
+        ("SA30_RS232_SH306E_4.pdf", "https://www.arcam.co.uk/ugc/tor/SA30/Custom%20Installation%20Notes/SH306E_RS232_SA30_4.pdf", None),
+        ("CDS50_RS232_SH275E_C.pdf", "https://www.arcam.co.uk/ugc/tor/CDS50/Installation%20Notes/SH275E_CDS50_RS232_C_110619.pdf", None),
+        ("UDP411_RS232_SH265_E_1.pdf", "https://www.arcam.co.uk/ugc/tor/udp411/RS232/UDP411_RS232_SH265_E_1_070814.pdf", None),
+        ("Solo_IR_Remote_Codes.pdf", "https://www.arcam.co.uk/ugc/tor/solomovie51/IR%20Codes/solo_rc.pdf", None),
+        ("Solo_Mini_RS232.pdf", "https://www.arcam.co.uk/ugc/tor/solomini/RS232/solomini_rs232.pdf", None),
     ],
     "anthem": [
         ("AVM-MRXx40-IR-hex-20251202185749500.xlsx",
