@@ -12,7 +12,7 @@ from pathlib import Path
 import pytest
 
 from remote_ledger.errors import ValidationError
-from remote_ledger.official import anthem, arcam, cambridge, hegel, jvc, kef, marantz, oppo
+from remote_ledger.official import anthem, arcam, cambridge, hegel, jvc, kef, linn, marantz, oppo
 from remote_ledger.official import importer as oi
 from remote_ledger.official.common import MANIFEST, Report, load_snapshot
 from remote_ledger.serialize import load
@@ -26,7 +26,7 @@ SNAPSHOT = ROOT / oi.SNAPSHOT
 
 def test_every_document_and_csv_is_the_one_the_manifest_pins():
     for maker, retrieved in (("marantz", "2026-10-08"), ("anthem", "2026-10-08"), ("oppo", "2026-10-09"), ("kef", "2026-10-13"),
-                             ("jvc", "2026-10-13"), ("arcam", "2026-10-13"), ("cambridge", "2026-10-13"), ("hegel", "2026-10-13")):
+                             ("jvc", "2026-10-13"), ("arcam", "2026-10-13"), ("cambridge", "2026-10-13"), ("hegel", "2026-10-13"), ("linn", "2026-10-13")):
         snap = load_snapshot(SNAPSHOT / maker)
         assert snap.maker == maker and snap.retrieved == retrieved
         assert snap.documents and snap.sheets
@@ -441,12 +441,12 @@ def test_the_committed_official_import_keeps_r19():
     or Untested, and a citation that names a document the manifest pins, by hash."""
     assert (ROOT / oi.IMPORT_ROOT / "README.md").is_file() and (ROOT / oi.IMPORT_ROOT / oi.REPORT).is_file()
     hashes, dates, snapshots = {}, {}, {}
-    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "arcam", "cambridge", "hegel"):
+    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "arcam", "cambridge", "hegel", "linn"):
         manifest = json.loads((SNAPSHOT / maker / MANIFEST).read_text(encoding="utf-8"))
         for name, entry in manifest["documents"].items():
             hashes[name], dates[name], snapshots[name] = entry["sha256"], manifest["retrieved"], entry.get("snapshot")
     shape = re.compile(r"^(?:marantz\.com archive-downloads|anthemav\.com \(storage\.googleapis\.com/sandbox1-anthemav/an\)"
-                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
+                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|docs\.linn\.co\.uk RC-5 codes)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
                        r"(?:, from the Wayback Machine snapshot (\d{14}))?\) (?:sheet '[^']+' row \d+|page \d+ row \d+|page \d+ '|page \d+ table \d+ row '|page \d+ row ')")
     files = sorted((ROOT / oi.IMPORT_ROOT).rglob("*.json"))
     assert len(files) > 180
@@ -1130,3 +1130,97 @@ def test_every_hegel_pronto_hex_decodes_to_its_row_and_is_the_ledgers_own_rc5_wi
                 assert hegel.decode_rc5(row.alt) == (row.system, row.command, 1)
                 twins += 1
     assert (rows, twins) == (67, 24) and dict(gaps) == {8: 34, 7: 33}
+
+
+# --- Linn --------------------------------------------------------------------------------------------------------
+
+
+def test_a_linn_cell_is_a_label_with_notes_and_a_reserved_one_is_the_function_in_brackets():
+    """``Zero / (Direct source selection)^1`` is ``Zero`` with a note, ``[Direct Source PHONO] / Linn DSM - 1st Analogue input / ...``
+    ``Direct Source PHONO``, ``Reserved (REM019) / [Audio Adjust: Balance +]`` that function reserved for a Linn remote, a stray
+    bracket is tolerated, and ``.`` or a reserved cell with no function is no key."""
+    assert linn.parse_cell("Zero / (Direct source selection)^1") == ("Zero", "", ["(Direct source selection)"])
+    assert linn.parse_cell("[Direct Source PHONO] / Linn DSM - 1st Analogue input / Akurate Kontrol/1 - PHONO") == (
+        "Direct Source PHONO", "", ["Linn DSM - 1st Analogue input", "Akurate Kontrol/1 - PHONO"])
+    assert linn.parse_cell("Reserved (REM019) / [Audio Adjust: Balance +]") == ("Audio Adjust: Balance +", "REM019", [])
+    assert linn.parse_cell("Reserved (REM020) / [Direct Source Programmable 1] / (Held Function: Set Programmable Source 1)") == (
+        "Direct Source Programmable 1", "REM020", ["(Held Function: Set Programmable Source 1)"])
+    assert linn.parse_cell("Direct Source TUNER] / Linn DS/DSM - RADIO") == ("Direct Source TUNER", "", ["Linn DS/DSM - RADIO"])
+    assert linn.parse_cell("Reserved (REM019) / .") is None and linn.parse_cell(".") is None and linn.parse_cell("") is None
+    assert linn.parse_cell("Reserved (REM021) / [*]") == ("*", "REM021", [])
+
+
+def test_a_linn_table_has_device_columns_whose_hex_and_decimal_agree_and_rows_that_are_codes():
+    devices, rows = linn.parse_table([["Code", "Amplifier Address / 0x10 (16)", "CD Address / 0x14 (20)"],
+                                      ["0x00 (0)", "Zero", "Zero"], ["0x7E (126)", "Power Off", "."]])
+    assert devices == [("Amplifier", 16), ("CD", 20)] and rows == [(2, 0, ["Zero", "Zero"]), (3, 126, ["Power Off", "."])]
+    for bad in ([["Code", "Amplifier Address / 0x10 (17)"]], [["Code", "Amplifier 0x10"]],
+                [["Code", "Amplifier Address / 0x10 (16)"], ["0x7E (127)", "x"]]):
+        with pytest.raises(ValueError):
+            linn.parse_table(bad)
+    pronto = [["1", "text", "12", "Linn DS/DSM Pronto HEX codes"],
+              ["1", "row", "1", "25", "0x00 (0)", "Zero (Direct source selection)1", "Device Code: 10 Function: 00 Linn DS/DSM Pronto codes " + FRAME],
+              ["1", "row", "1", "41", "0x0C (12)", "Power (Toggle)", FRAME], ["1", "row", "1", "50", "0x0D (13)", "x", "no hex"]]
+    assert linn.hex_rows(pronto) == {0: (FRAME, "Zero (Direct source selection)1"), 12: (FRAME, "Power (Toggle)")}
+
+
+def linn_files() -> dict[str, dict]:
+    return {load(p)["model"]: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "linn").glob("*.json"))}
+
+
+def test_the_three_linn_files_are_the_three_addresses_of_the_table_116_keys_and_one_doubtful():
+    """DS/DSM Amplifier (address 16, 51 keys), CD (20, 35) and DVD (25, 30). The one Untested key is the amplifier's ``Power Off``
+    (126): the PDF's Pronto hex for it decodes to command 127. 128 rows, 117 cells with something in them, and one of those is
+    ``Reserved (REM019)`` and nothing else, which is no key."""
+    files = linn_files()
+    assert {m: len(d["keys"]) for m, d in files.items()} == {"DS/DSM Amplifier": 51, "DS/DSM CD": 35, "DS/DSM DVD": 30}
+    for model, doc in files.items():
+        assert doc["manufacturer"] == "Linn" and doc["controls"] == ["Linn DS", "Linn DSM"]
+        assert doc["protocol"] == {"name": "RC5", "carrierHz": 36000, "minSends": 1}
+    systems = {m: {int(s["forms"][0]["device"], 0) for s in d["keys"].values()} for m, d in files.items()}
+    assert systems == {"DS/DSM Amplifier": {16}, "DS/DSM CD": {20}, "DS/DSM DVD": {25}}
+    doubtful = [(m, k) for m, d in files.items() for k, s in d["keys"].items() if s["forms"][0]["confidence"] == "untested"]
+    assert doubtful == [("DS/DSM Amplifier", "KEY_POWER_OFF")]
+    amp = files["DS/DSM Amplifier"]["keys"]
+    assert "decodes to address 16 command 127 and not to this code" in amp["KEY_POWER_OFF"]["forms"][0]["source"]
+    assert amp["KEY_POWER_ON"]["forms"][0]["function"] == "0x7D" and amp["KEY_VOLUME_PLUS"]["forms"][0]["function"] == "0x10"
+    assert "reserved for the Linn remote REM019" in amp["KEY_AUDIO_ADJUST_BALANCE_PLUS"]["forms"][0]["source"]
+    assert files["DS/DSM CD"]["keys"]["KEY_SKIP_MINUS"]["forms"][0]["function"] == "0x21"
+    assert files["DS/DSM CD"]["keys"]["KEY_SKIP_MINUS_2"]["forms"][0]["function"] == "0x61"
+    report = (ROOT / oi.IMPORT_ROOT / oi.REPORT).read_text(encoding="utf-8")
+    figure = lambda what: int(re.search(rf"\| linn: {what} \| ([\d,]+) \|", report)[1].replace(",", ""))
+    assert [figure(w) for w in ("RC5_Codes.html: rows read", "files", "keys", "Pronto hex that decodes to its row's address and command",
+                                "Pronto hex that decodes to another code")] == [128, 3, 116, 50, 1]
+
+
+def test_the_ir_blasters_linn_rc5_remotes_send_the_codes_the_wiki_table_lists():
+    """The independent check: the ledger's three Linn RC-5 remotes (IR Blaster database) hold 125 keys and **64 of them are a code the
+    table lists** (the CD player's at address 20 mostly, and a remote's volume, mute, power, balance and source keys at 16). The
+    names agree in 30 of the 34 where the vocabulary or the spelling compares them; the 4 that do not are one remote's cursor keys
+    (``UP``, ``DOWN``, ``OK``, ``YELLOW``) on the transport codes (``Play``, ``Pause``, ``Stop``): a button named for where it is."""
+    from remote_ledger.keys import load_vocabulary
+
+    vocabulary = load_vocabulary()
+    squash = lambda t: re.sub(r"[^a-z0-9]", "", t.lower())      # noqa: E731
+    ours: dict[tuple[int, int], set[str]] = {}
+    for doc in linn_files().values():
+        for spec in doc["keys"].values():
+            form = spec["forms"][0]
+            ours.setdefault((int(form["device"], 0), int(form["function"], 0)), set()).add(spec["label"])
+    remotes = total = hit = agree = disagree = 0
+    for path in sorted((ROOT / "remotes/irblaster/LINN").glob("*.json")):
+        remotes += 1
+        for spec in load(path)["keys"].values():
+            form = spec["forms"][0]
+            key = (int(form["device"], 0), int(form["function"], 0))
+            total += 1
+            if key not in ours:
+                continue
+            hit += 1
+            mine, theirs = {vocabulary.resolve(x) for x in ours[key]} - {None}, vocabulary.resolve(spec["label"])
+            if squash(spec["label"]) in {squash(x) for x in ours[key]} or (theirs and theirs in mine):
+                agree += 1
+            elif theirs is not None and mine:
+                disagree += 1
+    assert (remotes, total, hit, agree, disagree) == (3, 125, 64, 30, 4)
+
