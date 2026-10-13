@@ -660,6 +660,95 @@ def test_the_jp1_pioneer_3dev_and_4dev_upgrades_send_the_codes_the_ir_blaster_da
     assert (sum(per[n] for n in others), sum(per[n, "n"] for n in others)) == (237, 395)
 
 
+def test_pioneer_dvd_sends_one_frame_or_two_by_the_obcs_bit_5_and_the_dv_c505_notes_agree_38_of_38():
+    """``Translator(lsb,comp,3)``: the function's byte is the OBC complemented and reversed (``C2`` is 188); the OBC's ``0x20`` says
+    two parts (``Device 1`` and the prefix command, then ``Device 2`` and the OBC) and its absence one (``Device 1`` and the OBC),
+    which is the byte's bit at offset 5 (``0x04``) the other way round, as the protocol's notes put it. The DV-C505 upgrade's notes
+    spell out the frame of 38 functions, **33 of two parts and 5 of one, and all 38 are what this reads**. The rows below are six
+    of them, from the file."""
+    rows = [("Power", "c2", "163 153 66 001 - 175 188 C2 028"), ("Zoom", "13", "163 153 66 001 - 175   55 13 154"),
+            ("Arrow Left", "39", "163 153 66 001 - 175   99 39 203"), ("Play", "86", "163 158 86 254"),
+            ("Stop", "e6", "163 152 E6 253"), ("Pause", "06", "163 159 06 002")]
+    text = "Protocol.name=Pioneer DVD\r\nProtocolParms=163 175 153\r\nFixedData=3a 66 0a\r\n" + "".join(
+        f"Function.{i}.name={n}\r\nFunction.{i}.hex={h}\r\nFunction.{i}.notes={note}\r\n" for i, (n, h, note) in enumerate(rows))
+    up = rmdu.parse(text)
+    shape = re.compile(r"(\d+) (\d+) [0-9A-F]{2} \d+(?: - (\d+) +(\d+) [0-9A-F]{2} \d+)?", re.I)
+    for i, (_, _, note) in enumerate(rows):
+        d1, c1, d2, c2 = shape.fullmatch(note).groups()
+        want = (rmdu.Signal("Pioneer-2Part", int(d1) << 8 | int(d2), None, int(c1) << 8 | int(c2)) if d2 else
+                rmdu.Signal("Pioneer-2Part", int(d1) << 8 | int(d1), None, int(c1) << 8 | int(c1)))
+        assert signal(up, i) == want, rows[i]
+    # a null parameter is the byte FixedData keeps (Device 1 at 0, the prefix command at 1, Device 2 at 2)
+    nulls = upgrade("Pioneer DVD", "null null null", ("Power", "C2"), ("Play", "86"), fixed="3a 66 0a")
+    assert [signal(nulls, i) for i in range(2)] == [
+        rmdu.Signal("Pioneer-2Part", 0xA3AF, None, 0x99BC), rmdu.Signal("Pioneer-2Part", 0xA3A3, None, 0x9E9E)]
+    assert signal(upgrade("Pioneer DVD", "163 null null", ("Power", "C2"))) == "the device or the prefix command parameter is missing"
+    assert signal(upgrade("Pioneer DVD", "null null null", ("Power", "C2"))) == "the device parameter is missing"
+    assert signal(upgrade("Pioneer DVD", "null 175 153", ("Play", "86"))) == "the device parameter is missing"
+    assert signal(upgrade("Pioneer DVD", "163 300 153", ("Power", "C2"))) == "a parameter is not a byte"
+    assert signal(upgrade("Pioneer DVD", "300 175 153", ("Play", "86"))) == "a parameter is not a byte"
+    assert signal(upgrade("Pioneer DVD", "163 175 153", ("Power", "C2 00"))) == "the function has no single OBC byte"
+
+
+def test_the_dvd0571_upgrade_sends_the_codes_of_its_pioneer_mix_twin():
+    """The same device has two upgrades, ``Pioneer Improved DVD0571 setup`` (``Pioneer DVD``, 53 keys) and its ``-2`` (``Pioneer MIX``,
+    55 keys), which read the function through different translators (three one-bit ones, and a flag byte). **51 of the 53 codes of the
+    first are codes of the second**, and 49 of the 50 keys they both name send the same one; the two the second lacks are ``KEY_REWIND``
+    and ``KEY_FAST_FWD``, which are one-part codes there and not in the twin."""
+    def codes(name: str) -> dict[str, tuple[str, str]]:
+        doc = load(ROOT / jp.IMPORT_ROOT / "Pioneer" / name)
+        return {key: (f["device"], f["function"]) for key, spec in doc["keys"].items() for f in spec["forms"]}
+
+    dvd = codes("DVD__standard-Pioneer_Improved_DVD0571_setup.json")
+    mix = codes("DVD__standard-Pioneer_Improved_DVD0571-2_setup.json")
+    assert (len(dvd), len(mix)) == (53, 55)
+    assert len(set(dvd.values()) & set(mix.values())) == 51
+    both = [key for key in dvd if key in mix]
+    assert (len(both), sum(dvd[key] == mix[key] for key in both)) == (50, 49)
+    assert [key for key in dvd if dvd[key] not in set(mix.values())] == ["KEY_REWIND", "KEY_FAST_FWD"]
+
+
+def test_pioneer_dvd2_is_the_same_with_a_second_byte_that_only_repeats_the_flag():
+    """``Translator(lsb,comp,0,8,0) FieldCopier(comp,5,15,1)``: the second byte's low bit is the complement of the first's bit at
+    offset 5, which is the OBC's ``0x20``, so it is 1 for two parts and 0 for one; the reader holds the file to it (37 of 37 of the
+    DV-563AS's functions do). ``FA`` is OBC 160, ``86`` is 158."""
+    fixed = "3a 66 0a ff"
+    up = upgrade("Pioneer DVD2", "163 175 null", ("0", "FA 01"), ("Play", "86 00"), ("bad", "FA 00"), ("bad", "86 01"),
+                 ("bad", "FA 03"), fixed=fixed, variant="2")
+    assert [signal(up, i) for i in range(5)] == [
+        rmdu.Signal("Pioneer-2Part", 0xA3AF, None, 0x99A0), rmdu.Signal("Pioneer-2Part", 0xA3A3, None, 0x9E9E),
+        "the second byte is not the flag the executor copies from the first",
+        "the second byte is not the flag the executor copies from the first",
+        "the second byte is not the flag the executor copies from the first"]
+    assert signal(upgrade("Pioneer DVD2", "163 175 null", ("a", "FA"), fixed=fixed, variant="2")) == "the function has no two OBC bytes"
+
+
+def test_the_jp1_pioneer_dvd_upgrades_send_the_codes_the_ir_blaster_database_has():
+    """An independent check, from another source: the corpus as it stood at the end of DESIGN §35, before the JP1 source held any
+    Pioneer-2Part key, has the IR Blaster import's 1,673 distinct Pioneer-2Part codes (the committed files give the same counts), which hold **138 of the 147 keys of the four ``Pioneer DVD`` upgrades (93.9%) and
+    all 37 of the ``Pioneer DVD2`` one**; split by the flag, **all 21 one-part keys and 154 of the 163 two-part**, so both readings
+    of the flag are tested. The nine that are not there are functions a database seldom has (``Discrete On`` and ``Off``,
+    ``Disc Skip``, ``Power On`` and ``Off`` of a Blu-ray, a TV's ``Sleep``)."""
+    irblaster: set[tuple[int, int]] = set()
+    for path in (ROOT / "remotes" / "irblaster").rglob("*.json"):
+        doc = load(path)
+        if doc.get("protocol", {}).get("name") == "Pioneer-2Part":
+            for spec in doc["keys"].values():
+                irblaster |= {(int(f["device"], 0), int(f["function"], 0)) for f in spec["forms"] if f.get("type") == "irp"}
+    assert len(irblaster) == 1_673
+    counts: Counter = Counter()
+    for executor, _, device, _, function, _ in _committed_jp1_keys("Pioneer-2Part"):
+        if executor not in ("Pioneer DVD", "Pioneer DVD2"):
+            continue
+        part = "two" if device >> 8 != device & 0xFF else "one"
+        counts[executor] += 1
+        counts[executor, "hit"] += (device, function) in irblaster
+        counts[part] += 1
+        counts[part, "hit"] += (device, function) in irblaster
+    assert [counts["Pioneer DVD"], counts["Pioneer DVD", "hit"], counts["Pioneer DVD2"], counts["Pioneer DVD2", "hit"]] == [147, 138, 37, 37]
+    assert [counts["one"], counts["one", "hit"], counts["two"], counts["two", "hit"]] == [21, 21, 163, 154]
+
+
 def test_rc5_6_combo_is_rc5_or_rc6_by_the_low_bit_of_the_second_byte():
     """``Translator(0,1,15) Translator(1,5,3,comp) Translator(1,1,0,6) Translator(2,6,8,comp) Translator(2,1,1,6)
     Translator(3,2,13) Translator(4,8,0)``: the type is the second byte's low bit (0 is RC-5). RC-5: the device is the low
