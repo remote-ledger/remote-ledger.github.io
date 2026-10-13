@@ -2,7 +2,7 @@
 
 A manufacturer's table is the best evidence a citation can point to, and it is still imported at
 Plausible (R19.3): the table's word is one source, and a key earns Verified by a second. Each maker
-has a reader (:mod:`.marantz`, :mod:`.anthem`, :mod:`.oppo`, :mod:`.kef`, :mod:`.jvc`, :mod:`.arcam`, :mod:`.cambridge`, :mod:`.hegel`, :mod:`.linn`) over a pinned snapshot of its documents; this module
+has a reader (:mod:`.marantz`, :mod:`.anthem`, :mod:`.oppo`, :mod:`.kef`, :mod:`.jvc`, :mod:`.arcam`, :mod:`.cambridge`, :mod:`.hegel`, :mod:`.linn`, :mod:`.simaudio`) over a pinned snapshot of its documents; this module
 runs the readers, writes ``remotes/official/<maker>/`` wholesale and the report.
 """
 
@@ -14,11 +14,11 @@ from typing import Any
 from ..fmt import format_document
 from ..import_common import authored_names as _authored_names
 from ..serialize import dumps
-from . import anthem, arcam, cambridge, hegel, jvc, kef, linn, marantz, oppo
+from . import anthem, arcam, cambridge, hegel, jvc, kef, linn, marantz, oppo, simaudio
 from .common import IMPORT_ROOT, MANIFEST, REPORT, SNAPSHOT, Report, load_snapshot
 
 #: maker -> its reader. A maker is imported when its directory is in the snapshot.
-MAKERS = {"anthem": anthem, "arcam": arcam, "cambridge": cambridge, "hegel": hegel, "jvc": jvc, "kef": kef, "linn": linn, "marantz": marantz, "oppo": oppo}
+MAKERS = {"anthem": anthem, "arcam": arcam, "cambridge": cambridge, "hegel": hegel, "jvc": jvc, "kef": kef, "linn": linn, "marantz": marantz, "oppo": oppo, "simaudio": simaudio}
 
 
 def import_tree(root: Path, snapshot: Path, authored: dict[tuple[str, str], str]):

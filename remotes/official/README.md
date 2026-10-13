@@ -17,7 +17,8 @@ import must meet, and DESIGN.md section 29 describes how this one meets them.
   section 64) and **Cambridge Audio's** two lists of NEC codes that carry no copyright notice (the AXR85 and AXR100 receivers, and
   the 752BD, CXU and CXUHD players' remotes; PDFs on <https://www.cambridgeaudio.com/>, DESIGN.md section 65) and **Hegel's** RC-5 code tables, a page for each of 14 products, the three of 2020 (seven products) with each code's Pronto hex (PDFs on
   <https://support.hegel.com/>, DESIGN.md section 66) and **Linn's** RC-5 code table for its network products (a LinnDocs wiki page,
-  <https://docs.linn.co.uk/wiki/index.php/RC5_Codes>, and a PDF of Pronto hex, DESIGN.md section 67). They are the makers' documents, not a third party's
+  <https://docs.linn.co.uk/wiki/index.php/RC5_Codes>, and a PDF of Pronto hex, DESIGN.md section 67) and **Simaudio's** table of IR codes for its Moon amplifiers, CD and DVD players (a three-page PDF on
+  <https://simaudio.com/>, DESIGN.md section 68). They are the makers' documents, not a third party's
   compilation, and they are still imported at Plausible: a manufacturer's word is one source (R19.3).
 - **The pin:** a manufacturer's page is not a repository, so `sources/official/<maker>/` holds each document
   as the server sent it, the sheets the importer reads converted to CSV by
@@ -54,6 +55,7 @@ product (`AXR85`, `CXU`...); **the AXR85's 23 codes are all in the IR Blaster da
 file for each product (`H190`, `Röst`, `Mohican`...), **where a page has the Pronto hex it is decoded and checked against the row** (all 67
 agree, and are the ledger's own compile of the code but for the last gap) and the `(alt)` row is the toggle bit's twin and no key; a
 product's older table that contradicts its newer one is kept apart as `H590 (2019 table)_questionable`. Linn's are `RC5` too, a file for each
-of the three device addresses of the table (`DS/DSM Amplifier` 0x10, `CD` 0x14, `DVD` 0x19), a cell's first line the label and the rest notes.
+of the three device addresses of the table (`DS/DSM Amplifier` 0x10, `CD` 0x14, `DVD` 0x19), a cell's first line the label and the rest notes. Simaudio's are `RC5` (the amplifiers' system 16, the CD players' 20) and `RC6` (the DVD
+players' control code 4), a file for each Moon product the page names, **70 distinct codes of which 69 are held by other sources' remotes**.
 
 `IMPORT.md` lists everything a document holds that does not become a key, with the reason.
