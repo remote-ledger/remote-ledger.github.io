@@ -1,0 +1,405 @@
+{
+  "manufacturer": "Arcam",
+  "model": "SA10",
+  "aliases": [],
+  "controls": [
+    "Arcam SA10"
+  ],
+  "protocol": {
+    "name": "RC5",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_STANDBY": {
+      "label": "Standby",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/SA10-SA20_RS232_SH277E_B.pdf@28d965b6 (retrieved 2026-10-13) page 19 table 1 row 'Standby' (16-12 / 0x10 - 0x0C): RC5 system 16 command 12; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_DISP": {
+      "label": "Disp",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x3B",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/SA10-SA20_RS232_SH277E_B.pdf@28d965b6 (retrieved 2026-10-13) page 19 table 1 row 'Disp' (16-59 / 0x10 - 0x3B): RC5 system 16 command 59; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "Mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/SA10-SA20_RS232_SH277E_B.pdf@28d965b6 (retrieved 2026-10-13) page 19 table 1 row 'Mute' (16-13 / 0x10 - 0x0D): RC5 system 16 command 13; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_INCREASE_VOLUME_PLUS": {
+      "label": "Increase volume (+)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/SA10-SA20_RS232_SH277E_B.pdf@28d965b6 (retrieved 2026-10-13) page 19 table 1 row 'Increase volume (+)' (16-16 / 0x10 - 0x10): RC5 system 16 command 16; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_DECREASE_VOLUME_MINUS": {
+      "label": "Decrease volume (-)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/SA10-SA20_RS232_SH277E_B.pdf@28d965b6 (retrieved 2026-10-13) page 19 table 1 row 'Decrease volume (-)' (16-17 / 0x10 - 0x11): RC5 system 16 command 17; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_BALANCE_LEFT": {
+      "label": "Balance left",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x26",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/SA10-SA20_RS232_SH277E_B.pdf@28d965b6 (retrieved 2026-10-13) page 19 table 1 row 'Balance left' (16-38 / 0x10 - 0x26): RC5 system 16 command 38; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_BALANCE_RIGHT": {
+      "label": "Balance right",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x28",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/SA10-SA20_RS232_SH277E_B.pdf@28d965b6 (retrieved 2026-10-13) page 19 table 1 row 'Balance right' (16-40 / 0x10 - 0x28): RC5 system 16 command 40; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_PHONO": {
+      "label": "PHONO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x75",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/SA10-SA20_RS232_SH277E_B.pdf@28d965b6 (retrieved 2026-10-13) page 19 table 1 row 'PHONO' (16-117 / 0x10 - 0x75): RC5 system 16 command 117; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_CD": {
+      "label": "CD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x76",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/SA10-SA20_RS232_SH277E_B.pdf@28d965b6 (retrieved 2026-10-13) page 19 table 1 row 'CD' (16-118 / 0x10 - 0x76): RC5 system 16 command 118; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_BD": {
+      "label": "BD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x62",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/SA10-SA20_RS232_SH277E_B.pdf@28d965b6 (retrieved 2026-10-13) page 19 table 1 row 'BD' (16-98 / 0x10 - 0x62): RC5 system 16 command 98; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_SAT": {
+      "label": "SAT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x1B",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/SA10-SA20_RS232_SH277E_B.pdf@28d965b6 (retrieved 2026-10-13) page 19 table 1 row 'SAT' (16-27 / 0x10 - 0x1B): RC5 system 16 command 27; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_PVR": {
+      "label": "PVR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x60",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/SA10-SA20_RS232_SH277E_B.pdf@28d965b6 (retrieved 2026-10-13) page 19 table 1 row 'PVR' (16-96 / 0x10 - 0x60): RC5 system 16 command 96; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_AV": {
+      "label": "AV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x5E",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/SA10-SA20_RS232_SH277E_B.pdf@28d965b6 (retrieved 2026-10-13) page 19 table 1 row 'AV' (16-94 / 0x10 - 0x5E): RC5 system 16 command 94; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_AUX": {
+      "label": "AUX",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x63",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/SA10-SA20_RS232_SH277E_B.pdf@28d965b6 (retrieved 2026-10-13) page 19 table 1 row 'AUX' (16-99 / 0x10 - 0x63): RC5 system 16 command 99; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_STB": {
+      "label": "STB",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x64",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/SA10-SA20_RS232_SH277E_B.pdf@28d965b6 (retrieved 2026-10-13) page 19 table 1 row 'STB' (16-100 / 0x10 - 0x64): RC5 system 16 command 100; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_POWER_ON": {
+      "label": "Power On",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x7B",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/SA10-SA20_RS232_SH277E_B.pdf@28d965b6 (retrieved 2026-10-13) page 19 table 2 row 'Power On' (16-123 / 0x10 - 0x7B): RC5 system 16 command 123; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_POWER_OFF": {
+      "label": "Power Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x7C",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/SA10-SA20_RS232_SH277E_B.pdf@28d965b6 (retrieved 2026-10-13) page 19 table 2 row 'Power Off' (16-124 / 0x10 - 0x7C): RC5 system 16 command 124; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_MUTE_ON": {
+      "label": "Mute On",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/SA10-SA20_RS232_SH277E_B.pdf@28d965b6 (retrieved 2026-10-13) page 19 table 2 row 'Mute On' (16-26 / 0x10 - 0x1A): RC5 system 16 command 26; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_MUTE_OFF": {
+      "label": "Mute Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x78",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/SA10-SA20_RS232_SH277E_B.pdf@28d965b6 (retrieved 2026-10-13) page 19 table 2 row 'Mute Off' (16-120 / 0x10 - 0x78): RC5 system 16 command 120; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_DISPLAY_OFF": {
+      "label": "Display Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x1F",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/SA10-SA20_RS232_SH277E_B.pdf@28d965b6 (retrieved 2026-10-13) page 19 table 2 row 'Display Off' (16-31 / 0x10 - 0x1F): RC5 system 16 command 31; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_DISPLAY_L1": {
+      "label": "Display L1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x22",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/SA10-SA20_RS232_SH277E_B.pdf@28d965b6 (retrieved 2026-10-13) page 19 table 2 row 'Display L1' (16-34 / 0x10 - 0x22): RC5 system 16 command 34; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_DISPLAY_L2": {
+      "label": "Display L2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x23",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/SA10-SA20_RS232_SH277E_B.pdf@28d965b6 (retrieved 2026-10-13) page 19 table 2 row 'Display L2' (16-35 / 0x10 - 0x23): RC5 system 16 command 35; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_BACK_RETURN": {
+      "label": "Back (return)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x33",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/SA10-SA20_RS232_SH277E_B.pdf@28d965b6 (retrieved 2026-10-13) page 19 table 2 row 'Back (return)' (16-51 / 0x10 - 0x33): RC5 system 16 command 51; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_HOME": {
+      "label": "Home",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x2B",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/SA10-SA20_RS232_SH277E_B.pdf@28d965b6 (retrieved 2026-10-13) page 19 table 2 row 'Home' (16-43 / 0x10 - 0x2B): RC5 system 16 command 43; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_MENU_ENTER_SYSTEM_MENU": {
+      "label": "Menu (Enter system menu)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x52",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/SA10-SA20_RS232_SH277E_B.pdf@28d965b6 (retrieved 2026-10-13) page 19 table 2 row 'Menu (Enter system menu)' (16-82 / 0x10 - 0x52): RC5 system 16 command 82; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_NAVIGATE_UP": {
+      "label": "Navigate Up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x56",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/SA10-SA20_RS232_SH277E_B.pdf@28d965b6 (retrieved 2026-10-13) page 19 table 2 row 'Navigate Up' (16-86 / 0x10 - 0x56): RC5 system 16 command 86; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_NAVIGATE_LEFT": {
+      "label": "Navigate Left",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x51",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/SA10-SA20_RS232_SH277E_B.pdf@28d965b6 (retrieved 2026-10-13) page 19 table 2 row 'Navigate Left' (16-81 / 0x10 - 0x51): RC5 system 16 command 81; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_OK": {
+      "label": "OK",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x57",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/SA10-SA20_RS232_SH277E_B.pdf@28d965b6 (retrieved 2026-10-13) page 19 table 2 row 'OK' (16-87 / 0x10 - 0x57): RC5 system 16 command 87; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_NAVIGATE_RIGHT": {
+      "label": "Navigate Right",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/SA10-SA20_RS232_SH277E_B.pdf@28d965b6 (retrieved 2026-10-13) page 19 table 2 row 'Navigate Right' (16-80 / 0x10 - 0x50): RC5 system 16 command 80; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_NAVIGATE_DOWN": {
+      "label": "Navigate Down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x55",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/SA10-SA20_RS232_SH277E_B.pdf@28d965b6 (retrieved 2026-10-13) page 19 table 2 row 'Navigate Down' (16-85 / 0x10 - 0x55): RC5 system 16 command 85; the table's decimal and hex say the same"
+        }
+      ]
+    }
+  }
+}

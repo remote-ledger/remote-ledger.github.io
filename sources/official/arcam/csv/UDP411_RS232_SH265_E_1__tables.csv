@@ -1,0 +1,222 @@
+2,1,Connector 1 pin,Connector 2 pin,Function
+2,1,2,3,Rx  Tx
+2,1,3,2,Tx  Rx
+2,1,5,5,RS232 Ground
+3,1,COMMAND:,
+3,1,Byte:,Description:
+3,1,St,0x21
+3,1,Zn,0x01
+3,1,Cc,0x00
+3,1,Dl,0x01
+3,1,Data,0xF0 – Request power state
+3,1,Et,0x0D
+3,1,RESPONSE:,
+3,1,Byte:,Description:
+3,1,St,0x21
+3,1,Zn,0x01
+3,1,Cc,0x00
+3,1,Ac,Answer code
+3,1,Dl,0x01
+3,1,Data,0x00 – BDP100 is in stand-by 0x01 – BDP100 is powered on
+3,1,Et,0x0D
+3,2,STR,ZONE,CC,DL,Data 1,Data 2,ETR
+3,2,0x21,0x01,0x08,0x02,0x19,0x35,0x0D
+3,3,COMMAND:,
+3,3,Byte:,Description:
+3,3,St,0x21
+3,3,Zn,0x01
+3,3,Cc,0x01
+3,3,Dl,0x01
+3,3,Data,0xF0 – Request brightness
+3,3,Et,0x0D
+3,3,RESPONSE:,
+3,3,Byte:,Description:
+3,3,St,0x21
+3,3,Zn,0x01
+3,3,Cc,0x01
+3,3,Ac,Answer code
+3,3,Dl,0x01
+3,3,Data,0x00 – Front panel is off 0x01 – Front panel L1 0x02 – Front panel L2
+3,3,Et,0x0D
+3,4,STR,ZONE,CC,AC,DL,Data 1,Data 2,ETR
+3,4,0x21,0x01,0x08,0x00,0x02,0x19,0x35,0x0D
+3,5,COMMAND:,
+3,5,Byte:,Description:
+3,5,St,0x21
+3,5,Zn,0x01
+3,5,Cc,0x04
+3,5,Dl,0x01
+3,5,Data,0xF0 – Request version RS232 Protocol 0xF1 – Request version main software 0xF5 – Request version microcontroller
+3,5,Et,0x0D
+3,5,RESPONSE:,
+3,5,Byte:,Description:
+3,5,St,0x21
+3,5,Zn,0x01
+3,5,Cc,0x04
+3,5,Ac,Answer code
+3,5,Dl,0x03
+3,5,Data1,Echo data from command
+3,5,Data2,Major version number
+3,5,Data3,Minor version number
+3,5,Et,0x0D
+4,1,COMMAND:,
+4,1,Byte:,Description:
+4,1,St,0x21
+4,1,Zn,0x01
+4,1,Cc,0x08
+4,1,Dl,0x02
+4,1,Data1,RC5 System code
+4,1,Data2,RC5 Command code
+4,1,Et,0x0D
+4,1,RESPONSE:,
+4,1,Byte:,Description:
+4,1,St,0x21
+4,1,Zn,0x01
+4,1,Cc,0x08
+4,1,Ac,Answer code
+4,1,Dl,0x02
+4,1,Data1,RC5 System code
+4,1,Data2,RC5 Command code
+4,1,Et,0x0D
+4,2,COMMAND:,
+4,2,Byte:,Description
+4,2,St,0x21
+4,2,Zn,0x01
+4,2,Cc,0x29
+4,2,Dl,0x01
+4,2,Data,0xF0 – Request playback state
+4,2,Et,0x0D
+4,2,RESPONSE:,
+4,2,St,0x21
+4,2,Zn,0x01
+4,2,Cc,0x29
+4,2,Ac,Answer Code
+4,2,Dl,0x04
+4,2,Data1,Tray Status: 0x00 – Tray open 0x01 – Tray closed
+4,2,Data2,Playback state: 0x00 – Stopped 0x01 – Playing 0x02 – Paused 0x03 – Resume-stop 0x04 – Scanning 0x0A – other state
+4,2,Data3,Scanning/Slow play direction: 0x81 – Back 0x01 – Forward
+4,2,Data4,"Playback mode: 0x1x – Repeat one 0x2x – Repeat all 0xx1 – Random Note it is possible for random and repeat modes to be on together, hence the use of upper and lower nibbles to be used for the status of each."
+4,2,Et,0x0D
+4,3,COMMAND:,
+4,3,Byte:,Description
+4,3,St,0x21
+4,3,Zn,0x01
+4,3,Cc,0x28
+4,3,Dl,0x01
+4,3,Data,0xF0 – Request elapsed time
+4,3,Et,0x0D
+4,3,RESPONSE:,
+4,3,St,0x21
+4,3,Zn,0x01
+4,3,Cc,0x28
+4,3,Ac,Answer Code
+4,3,Dl,0x03
+4,3,Data1,Hours
+4,3,Data2,Minutes
+4,3,Data3,Seconds
+4,3,Et,0x0D
+4,4,COMMAND:,
+4,4,Byte:,Description
+4,4,St,0x21
+4,4,Zn,0x01
+4,4,Cc,0x2C
+4,4,Dl,0x01
+4,4,Data,0xF0 – Request source type
+4,4,Et,0x0D
+4,4,RESPONSE:,
+4,4,St,0x21
+4,4,Zn,0x01
+4,4,Cc,0x2C
+4,4,Ac,Answer Code
+4,4,Dl,0x01
+4,4,Data,0x00 – Blu-ray 0x01 – DVD-video 0x02 – CD 0x03 – Data disc 0x04 – USB media 0x05 - Network media 0x20 – No Media
+4,4,Et,0x0D
+5,1,COMMAND:,
+5,1,Byte:,Description
+5,1,St,0x21
+5,1,Zn,0x01
+5,1,Cc,0x2D
+5,1,Dl,0x01
+5,1,Data,0xF0 – Request current title/track/chapter
+5,1,Et,0x0D
+5,1,RESPONSE:,
+5,1,Byte:,Description:
+5,1,St,0x21
+5,1,Zn,0x01
+5,1,Cc,0x2D
+5,1,Ac,Answer Code
+5,1,Dl,0x03
+5,1,Data1,DVD-Video : Current Title Number Blu-ray: Current Title Number Else: 0x00
+5,1,Data2,MSB: DVD-Video : Current Chapter Blu-ray: Current Chapter Else: Current Track
+5,1,Data3,LSB: DVD-Video : Current Chapter Blu-ray: Current Chapter Else: Current Track
+5,1,Et,0x0D
+5,2,Function,RC5 code [system- command],RC5 code (Data1 - Data2)
+5,2,,Decimal,Hexadecimal
+5,2,Standby,25-12,0x19 - 0x0C
+5,2,1,25-1,0x19 - 0x01
+5,2,2,25-2,0x19 - 0x02
+5,2,3,25-3,0x19 - 0x03
+5,2,4,25-4,0x19 - 0x04
+5,2,5,25-5,0x19 - 0x05
+5,2,6,25-6,0x19 - 0x06
+5,2,7,25-7,0x19 - 0x07
+5,2,8,25-8,0x19 - 0x08
+5,2,9,25-9,0x19 - 0x09
+5,2,0,25-0,0x19 - 0x00
+5,2,HOME,25-11,0x19 - 0x0B
+5,2,RND,25-64,0x19 - 0x40
+5,2,OPEN,25-45,0x19 - 0x2D
+5,2,SRCH,25-76,0x19 - 0x4C
+5,2,RPT,25-29,0x19 - 0x1D
+5,2,<<,25-50,0x19 - 0x32
+5,2,>>,25-52,0x19 - 0x34
+5,2,|<,25-33,0x19 - 0x21
+5,2,>|,25-32,0x19 - 0x20
+5,2,POPUP MENU,25-67,0x19 - 0x43
+5,2,CANCEL,25-58,0x19 - 0x3A
+5,2,RETURN,25-72,0x19 - 0x48
+5,2,TOP MENU,25-66,0x19 - 0x42
+5,2,Nav UP,25-86,0x19 - 0x56
+5,2,Nav LEFT,25-81,0x19 - 0x51
+5,2,OK,25-87,0x19 - 0x57
+5,2,Nav RIGHT,25-80,0x19 - 0x50
+5,2,Nav DOWN,25-85,0x19 - 0x55
+5,2,DISP,25-18,0x19 - 0x12
+5,2,Play,25-53,0x19 - 0x35
+5,2,STATUS,25-75,0x19 - 0x4B
+5,2,Stop,25-54,0x19 - 0x36
+5,2,Pause,25-48,0x19 - 0x30
+5,2,HDMI,25-88,0x19 - 0x58
+5,2,TRIM,25-37,0x19 - 0x25
+5,2,ANGLE,25-73,0x19 - 0x49
+5,2,ZOOM,25-68,0x19 - 0x44
+5,2,MODE,25-77,0x19 - 0x4D
+5,2,AUDIO,25-69,0x19 - 0x45
+5,2,SUBT,25-65,0x19 - 0x41
+5,2,SETUP,25-74,0x19 - 0x4A
+5,2,RED / A,25-107,0x19 - 0x6B
+5,2,GREEN / B,25-108,0x19 - 0x6C
+5,2,YELLOW / C,25-109,0x19 - 0x6D
+5,2,BLUE / D,25-110,0x19 - 0x6E
+5,2,Power ON,25-123,0x19 - 0x7B
+5,2,Power OFF,25-124,0x19 - 0x7C
+5,2,Zoom,25-68,0x19 - 0x44
+5,2,A-B,25-105,0x19 - 0x69
+5,2,PIP Audio,25-106,0x19 - 0x6A
+5,3,COMMAND:,
+5,3,Byte:,Description:
+5,3,St,0x21
+5,3,Zn,0x01
+5,3,Cc,0x25
+5,3,Dl,0x01
+5,3,Data,0xF0 - Heartbeat
+5,3,Et,0x0D
+5,3,RESPONSE:,
+5,3,Byte:,Description:
+5,3,St,0x21
+5,3,Zn,Zone Number
+5,3,Cc,0x25
+5,3,Ac,Answer code
+5,3,Dl,0x01
+5,3,Data1,0x00 - response
+5,3,Et,0x0D
