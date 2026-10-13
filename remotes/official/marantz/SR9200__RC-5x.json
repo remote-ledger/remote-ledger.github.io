@@ -1,0 +1,113 @@
+{
+  "manufacturer": "Marantz",
+  "model": "SR9200 [RC-5x]",
+  "aliases": [],
+  "controls": [
+    "Marantz SR9200"
+  ],
+  "protocol": {
+    "name": "RC5x",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_ATT": {
+      "label": "ATT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x2B",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 19 'ATT' (RC-5 16 37 43), the column of SR9200: RC-5x system 16 command 37 extension 43, read as RC5x device 16 subdevice 37 function 43 (the chart's extension is decimal); the chart's description: 'Attenuate On/Off for analog input'"
+        }
+      ]
+    },
+    "KEY_TEST_TONE": {
+      "label": "TEST TONE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 203 'TEST TONE' (RC-5 16 37 21), the column of SR9200: RC-5x system 16 command 37 extension 21, read as RC5x device 16 subdevice 37 function 21 (the chart's extension is decimal); the chart's description: 'Jump to Test tone menu'"
+        }
+      ]
+    },
+    "KEY_CH_SELECT": {
+      "label": "CH. SELECT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x21",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 205 'CH. SELECT' (RC-5 16 37 33), the column of SR9200: RC-5x system 16 command 37 extension 33, read as RC5x device 16 subdevice 37 function 33 (the chart's extension is decimal); the chart's description: 'Channel select Jump to Surr Menu or Jump to 7.1 level menu'"
+        }
+      ]
+    },
+    "KEY_CH_LEVEL_PLUS": {
+      "label": "CH. LEVEL +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x22",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 206 'CH. LEVEL +' (RC-5 16 37 34), the column of SR9200: RC-5x system 16 command 37 extension 34, read as RC5x device 16 subdevice 37 function 34 (the chart's extension is decimal); the chart's description: 'Channel Level control up'"
+        }
+      ]
+    },
+    "KEY_CH_LEVEL_MINUS": {
+      "label": "CH. LEVEL -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x23",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 207 'CH. LEVEL -' (RC-5 16 37 35), the column of SR9200: RC-5x system 16 command 37 extension 35, read as RC5x device 16 subdevice 37 function 35 (the chart's extension is decimal); the chart's description: 'Channel Level control down'"
+        }
+      ]
+    },
+    "KEY_POWER_ON_SLASH_OFF": {
+      "label": "POWER ON/OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1D",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 498 'POWER ON/OFF' (RC-5 16 29 00), the column of SR9200: RC-5x system 16 command 29 extension 0, read as RC5x device 16 subdevice 29 function 0 (the chart's extension is decimal); the chart's description: 'Turn Power ON/OFF (Toggle)'"
+        }
+      ]
+    },
+    "KEY_SLEEP": {
+      "label": "SLEEP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1D",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 565 'SLEEP' (RC-5 16 29 10), the column of SR9200: RC-5x system 16 command 29 extension 10, read as RC5x device 16 subdevice 29 function 10 (the chart's extension is decimal); the chart's description: 'Sleep Timer set'"
+        }
+      ]
+    }
+  }
+}

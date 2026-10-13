@@ -1,0 +1,449 @@
+{
+  "manufacturer": "Marantz",
+  "model": "NR1402 [RC-5x]",
+  "aliases": [],
+  "controls": [
+    "Marantz NR1402"
+  ],
+  "protocol": {
+    "name": "RC5x",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_HDMI_AUDIO_OUTPUT_SELECT_TOGGLE": {
+      "label": "HDMI Audio Output Select (Toggle)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x54",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-2014-ir-command-sheet.xls@b9b95ca6 (retrieved 2026-10-08) sheet 'AVR Commands' row 108 'HDMI Audio Output Select (Toggle)' (RC-5 16 84 00), the column of NR1402: RC-5x system 16 command 84 extension 0, read as RC5x device 16 subdevice 84 function 0 (the chart's extension is decimal); the chart's description: 'To select AVR decode/pass through the audio signal of HDMI'"
+        }
+      ]
+    },
+    "KEY_VIDEO_MODE_TOGGLE": {
+      "label": "Video Mode (Toggle)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x54",
+          "function": "0x32",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-2014-ir-command-sheet.xls@b9b95ca6 (retrieved 2026-10-08) sheet 'AVR Commands' row 117 'Video Mode (Toggle)' (RC-5 16 84 50), the column of NR1402: RC-5x system 16 command 84 extension 50, read as RC5x device 16 subdevice 84 function 50 (the chart's extension is decimal); the chart's description: 'To select Video Mode (Auto/Game/Movie)'"
+        }
+      ]
+    },
+    "KEY_VIDEO_MODE_AUTO": {
+      "label": "Video Mode: Auto",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x54",
+          "function": "0x33",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-2014-ir-command-sheet.xls@b9b95ca6 (retrieved 2026-10-08) sheet 'AVR Commands' row 118 'Video Mode: Auto' (RC-5 16 84 51), the column of NR1402: RC-5x system 16 command 84 extension 51, read as RC5x device 16 subdevice 84 function 51 (the chart's extension is decimal); the chart's description: 'Select Video Mode = Auto'"
+        }
+      ]
+    },
+    "KEY_VIDEO_MODE_MOVIE": {
+      "label": "Video Mode: Movie",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x54",
+          "function": "0x34",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-2014-ir-command-sheet.xls@b9b95ca6 (retrieved 2026-10-08) sheet 'AVR Commands' row 119 'Video Mode: Movie' (RC-5 16 84 52), the column of NR1402: RC-5x system 16 command 84 extension 52, read as RC5x device 16 subdevice 84 function 52 (the chart's extension is decimal); the chart's description: 'Select Video Mode = Movie'"
+        }
+      ]
+    },
+    "KEY_VIDEO_MODE_GAME": {
+      "label": "Video Mode: Game",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x54",
+          "function": "0x35",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-2014-ir-command-sheet.xls@b9b95ca6 (retrieved 2026-10-08) sheet 'AVR Commands' row 120 'Video Mode: Game' (RC-5 16 84 53), the column of NR1402: RC-5x system 16 command 84 extension 53, read as RC5x device 16 subdevice 84 function 53 (the chart's extension is decimal); the chart's description: 'Select Video Mode = Game'"
+        }
+      ]
+    },
+    "KEY_DIRECT_MODE": {
+      "label": "Direct Mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x22",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-2014-ir-command-sheet.xls@b9b95ca6 (retrieved 2026-10-08) sheet 'AVR Commands' row 176 'Direct Mode' (RC-5 16 34 02), the column of NR1402: RC-5x system 16 command 34 extension 2, read as RC5x device 16 subdevice 34 function 2 (the chart's extension is decimal); the chart's description: 'Select Direct mode'"
+        }
+      ]
+    },
+    "KEY_PURE_DIRECT": {
+      "label": "Pure Direct",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x22",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-2014-ir-command-sheet.xls@b9b95ca6 (retrieved 2026-10-08) sheet 'AVR Commands' row 177 'Pure Direct' (RC-5 16 34 03), the column of NR1402: RC-5x system 16 command 34 extension 3, read as RC5x device 16 subdevice 34 function 3 (the chart's extension is decimal); the chart's description: 'Select Pure Direct mode'"
+        }
+      ]
+    },
+    "KEY_TONE_CONTROL_OFF": {
+      "label": "TONE CONTROL OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x16",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-2014-ir-command-sheet.xls@b9b95ca6 (retrieved 2026-10-08) sheet 'AVR Commands' row 193 'TONE CONTROL OFF' (RC-5 16 22 10), the column of NR1402: RC-5x system 16 command 22 extension 10, read as RC5x device 16 subdevice 22 function 10 (the chart's extension is decimal); the chart's description: 'Tone Control Off'"
+        }
+      ]
+    },
+    "KEY_TONE_CONTROL_ON": {
+      "label": "TONE CONTROL ON",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x16",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-2014-ir-command-sheet.xls@b9b95ca6 (retrieved 2026-10-08) sheet 'AVR Commands' row 194 'TONE CONTROL ON' (RC-5 16 22 11), the column of NR1402: RC-5x system 16 command 22 extension 11, read as RC5x device 16 subdevice 22 function 11 (the chart's extension is decimal); the chart's description: 'Tone Control On'"
+        }
+      ]
+    },
+    "KEY_TEST_TONE": {
+      "label": "TEST TONE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-2014-ir-command-sheet.xls@b9b95ca6 (retrieved 2026-10-08) sheet 'AVR Commands' row 199 'TEST TONE' (RC-5 16 37 21), the column of NR1402: RC-5x system 16 command 37 extension 21, read as RC5x device 16 subdevice 37 function 21 (the chart's extension is decimal); the chart's description: 'Jump to Test tone menu'"
+        }
+      ]
+    },
+    "KEY_CH_SELECT": {
+      "label": "CH. SELECT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x21",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-2014-ir-command-sheet.xls@b9b95ca6 (retrieved 2026-10-08) sheet 'AVR Commands' row 201 'CH. SELECT' (RC-5 16 37 33), the column of NR1402: RC-5x system 16 command 37 extension 33, read as RC5x device 16 subdevice 37 function 33 (the chart's extension is decimal); the chart's description: 'Channel select'"
+        }
+      ]
+    },
+    "KEY_CH_LEVEL_PLUS": {
+      "label": "CH. LEVEL +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x22",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-2014-ir-command-sheet.xls@b9b95ca6 (retrieved 2026-10-08) sheet 'AVR Commands' row 202 'CH. LEVEL +' (RC-5 16 37 34), the column of NR1402: RC-5x system 16 command 37 extension 34, read as RC5x device 16 subdevice 37 function 34 (the chart's extension is decimal); the chart's description: 'Channel Level control up'"
+        }
+      ]
+    },
+    "KEY_CH_LEVEL_MINUS": {
+      "label": "CH. LEVEL -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x23",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-2014-ir-command-sheet.xls@b9b95ca6 (retrieved 2026-10-08) sheet 'AVR Commands' row 203 'CH. LEVEL -' (RC-5 16 37 35), the column of NR1402: RC-5x system 16 command 37 extension 35, read as RC5x device 16 subdevice 37 function 35 (the chart's extension is decimal); the chart's description: 'Channel Level control down'"
+        }
+      ]
+    },
+    "KEY_FRONT_L_A_MINUS_TRIM_PLUS_UP": {
+      "label": "Front L (A-TRIM) + (Up)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1A",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-2014-ir-command-sheet.xls@b9b95ca6 (retrieved 2026-10-08) sheet 'AVR Commands' row 206 'Front L (A-TRIM) + (Up)' (RC-5 16 26 01), the column of NR1402: RC-5x system 16 command 26 extension 1, read as RC5x device 16 subdevice 26 function 1 (the chart's extension is decimal); the chart's description: 'Front L channel Volume up'"
+        }
+      ]
+    },
+    "KEY_FRONT_L_A_MINUS_TRIM_MINUS_DOWN": {
+      "label": "Front L (A-TRIM) - (Down)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1A",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-2014-ir-command-sheet.xls@b9b95ca6 (retrieved 2026-10-08) sheet 'AVR Commands' row 207 'Front L (A-TRIM) - (Down)' (RC-5 16 26 02), the column of NR1402: RC-5x system 16 command 26 extension 2, read as RC5x device 16 subdevice 26 function 2 (the chart's extension is decimal); the chart's description: 'Front L channel Volume down'"
+        }
+      ]
+    },
+    "KEY_FRONT_R_B_MINUS_TRIM_PLUS_UP": {
+      "label": "Front R (B-TRIM) + (Up)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1A",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-2014-ir-command-sheet.xls@b9b95ca6 (retrieved 2026-10-08) sheet 'AVR Commands' row 208 'Front R (B-TRIM) + (Up)' (RC-5 16 26 03), the column of NR1402: RC-5x system 16 command 26 extension 3, read as RC5x device 16 subdevice 26 function 3 (the chart's extension is decimal); the chart's description: 'Front R channel Volume up'"
+        }
+      ]
+    },
+    "KEY_FRONT_R_B_MINUS_TRIM_MINUS_DOWN": {
+      "label": "Front R (B-TRIM) - (Down)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1A",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-2014-ir-command-sheet.xls@b9b95ca6 (retrieved 2026-10-08) sheet 'AVR Commands' row 209 'Front R (B-TRIM) - (Down)' (RC-5 16 26 04), the column of NR1402: RC-5x system 16 command 26 extension 4, read as RC5x device 16 subdevice 26 function 4 (the chart's extension is decimal); the chart's description: 'Front R channel Volume down'"
+        }
+      ]
+    },
+    "KEY_SURROUND_L_PLUS_UP": {
+      "label": "Surround L + (Up)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1A",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-2014-ir-command-sheet.xls@b9b95ca6 (retrieved 2026-10-08) sheet 'AVR Commands' row 210 'Surround L + (Up)' (RC-5 16 26 05), the column of NR1402: RC-5x system 16 command 26 extension 5, read as RC5x device 16 subdevice 26 function 5 (the chart's extension is decimal); the chart's description: 'Surround L channel Volume up'"
+        }
+      ]
+    },
+    "KEY_SURROUND_L_MINUS_DOWN": {
+      "label": "Surround L - (Down)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1A",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-2014-ir-command-sheet.xls@b9b95ca6 (retrieved 2026-10-08) sheet 'AVR Commands' row 211 'Surround L - (Down)' (RC-5 16 26 06), the column of NR1402: RC-5x system 16 command 26 extension 6, read as RC5x device 16 subdevice 26 function 6 (the chart's extension is decimal); the chart's description: 'Surround L channel Volume down'"
+        }
+      ]
+    },
+    "KEY_SURROUND_R_PLUS_UP": {
+      "label": "Surround R + (Up)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1A",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-2014-ir-command-sheet.xls@b9b95ca6 (retrieved 2026-10-08) sheet 'AVR Commands' row 212 'Surround R + (Up)' (RC-5 16 26 07), the column of NR1402: RC-5x system 16 command 26 extension 7, read as RC5x device 16 subdevice 26 function 7 (the chart's extension is decimal); the chart's description: 'Surround R channel Volume up'"
+        }
+      ]
+    },
+    "KEY_SURROUND_R_MINUS_DOWN": {
+      "label": "Surround R - (Down)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1A",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-2014-ir-command-sheet.xls@b9b95ca6 (retrieved 2026-10-08) sheet 'AVR Commands' row 213 'Surround R - (Down)' (RC-5 16 26 08), the column of NR1402: RC-5x system 16 command 26 extension 8, read as RC5x device 16 subdevice 26 function 8 (the chart's extension is decimal); the chart's description: 'Surround R channel Volume down'"
+        }
+      ]
+    },
+    "KEY_SURROUND_BACK_L_PLUS_UP": {
+      "label": "Surround Back L + (Up)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1A",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-2014-ir-command-sheet.xls@b9b95ca6 (retrieved 2026-10-08) sheet 'AVR Commands' row 214 'Surround Back L + (Up)' (RC-5 16 26 09), the column of NR1402: RC-5x system 16 command 26 extension 9, read as RC5x device 16 subdevice 26 function 9 (the chart's extension is decimal); the chart's description: 'Surround Back L channel Volume up'"
+        }
+      ]
+    },
+    "KEY_SURROUND_BACK_L_MINUS_DOWN": {
+      "label": "Surround Back L - (Down)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1A",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-2014-ir-command-sheet.xls@b9b95ca6 (retrieved 2026-10-08) sheet 'AVR Commands' row 215 'Surround Back L - (Down)' (RC-5 16 26 10), the column of NR1402: RC-5x system 16 command 26 extension 10, read as RC5x device 16 subdevice 26 function 10 (the chart's extension is decimal); the chart's description: 'Surround Back L channel Volume down'"
+        }
+      ]
+    },
+    "KEY_SURROUND_BACK_R_PLUS_UP": {
+      "label": "Surround Back R + (Up)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1A",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-2014-ir-command-sheet.xls@b9b95ca6 (retrieved 2026-10-08) sheet 'AVR Commands' row 216 'Surround Back R + (Up)' (RC-5 16 26 11), the column of NR1402: RC-5x system 16 command 26 extension 11, read as RC5x device 16 subdevice 26 function 11 (the chart's extension is decimal); the chart's description: 'Surround Back R channel Volume up'"
+        }
+      ]
+    },
+    "KEY_SURROUND_BACK_R_MINUS_DOWN": {
+      "label": "Surround Back R - (Down)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1A",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-2014-ir-command-sheet.xls@b9b95ca6 (retrieved 2026-10-08) sheet 'AVR Commands' row 217 'Surround Back R - (Down)' (RC-5 16 26 12), the column of NR1402: RC-5x system 16 command 26 extension 12, read as RC5x device 16 subdevice 26 function 12 (the chart's extension is decimal); the chart's description: 'Surround Back R channel Volume down'"
+        }
+      ]
+    },
+    "KEY_CENTER_PLUS_UP": {
+      "label": "Center + (Up)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-2014-ir-command-sheet.xls@b9b95ca6 (retrieved 2026-10-08) sheet 'AVR Commands' row 226 'Center + (Up)' (RC-5 16 37 11), the column of NR1402: RC-5x system 16 command 37 extension 11, read as RC5x device 16 subdevice 37 function 11 (the chart's extension is decimal); the chart's description: 'Center Channel Volume up'"
+        }
+      ]
+    },
+    "KEY_CENTER_MINUS_DOWN": {
+      "label": "Center - (Down)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-2014-ir-command-sheet.xls@b9b95ca6 (retrieved 2026-10-08) sheet 'AVR Commands' row 227 'Center - (Down)' (RC-5 16 37 12), the column of NR1402: RC-5x system 16 command 37 extension 12, read as RC5x device 16 subdevice 37 function 12 (the chart's extension is decimal); the chart's description: 'Center Channel Volume down'"
+        }
+      ]
+    },
+    "KEY_SUBWOOFER_PLUS_UP": {
+      "label": "Subwoofer + (Up)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x31",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-2014-ir-command-sheet.xls@b9b95ca6 (retrieved 2026-10-08) sheet 'AVR Commands' row 228 'Subwoofer + (Up)' (RC-5 16 37 49), the column of NR1402: RC-5x system 16 command 37 extension 49, read as RC5x device 16 subdevice 37 function 49 (the chart's extension is decimal); the chart's description: 'Subwoofer channel Volume up'"
+        }
+      ]
+    },
+    "KEY_SUBWOOFER_MINUS_DOWN": {
+      "label": "Subwoofer - (Down)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x32",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-2014-ir-command-sheet.xls@b9b95ca6 (retrieved 2026-10-08) sheet 'AVR Commands' row 229 'Subwoofer - (Down)' (RC-5 16 37 50), the column of NR1402: RC-5x system 16 command 37 extension 50, read as RC5x device 16 subdevice 37 function 50 (the chart's extension is decimal); the chart's description: 'Subwoofer channel Volume down'"
+        }
+      ]
+    },
+    "KEY_AUDYSSEY_DYNAMIC_EQ_SLASH_VOL": {
+      "label": "Audyssey Dynamic EQ/VOL",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1C",
+          "function": "0x28",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-2014-ir-command-sheet.xls@b9b95ca6 (retrieved 2026-10-08) sheet 'AVR Commands' row 268 'Audyssey Dynamic EQ/VOL' (RC-5 16 28 40), the column of NR1402: RC-5x system 16 command 28 extension 40, read as RC5x device 16 subdevice 28 function 40 (the chart's extension is decimal); the chart's description: 'Select Audyssey Dynamic EQ or Volume mode'"
+        }
+      ]
+    },
+    "KEY_RT_FOR_EUROPE_MODEL": {
+      "label": "RT (For Europe Model)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "subdevice": "0x78",
+          "function": "0x28",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-2014-ir-command-sheet.xls@b9b95ca6 (retrieved 2026-10-08) sheet 'AVR Commands' row 350 'RT (For Europe Model)' (RC-5 17 120 40), the column of NR1402: RC-5x system 17 command 120 extension 40, read as RC5x device 17 subdevice 120 function 40 (the chart's extension is decimal); the chart marks it 'X (*5)'"
+        }
+      ]
+    }
+  }
+}
