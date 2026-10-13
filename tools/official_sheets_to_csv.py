@@ -5,9 +5,11 @@ The spreadsheets are BIFF (``.xls``) and Office Open XML (``.xlsx``), which the 
 read, so this one development-time tool (it needs ``xlrd`` and ``openpyxl``, which the ledger does not
 depend on) converts the sheets the importer reads, every cell as text, and records each CSV's SHA-256 and
 the document and sheet it came from in the manifest. ``rl import official`` reads the CSVs and refuses one
-that is not what the manifest says.
+that is not what the manifest says. **A PDF** (KEF's, DESIGN D243) is read as the text of a page, ``page N``
+(it needs PyMuPDF): one non-empty line to a row, a single cell, in the order the library reads the page, which
+the importer parses; the table's rules and cells are not kept.
 
-    python3 tools/official_sheets_to_csv.py marantz|anthem
+    python3 tools/official_sheets_to_csv.py marantz|anthem|oppo|kef
 """
 
 from __future__ import annotations
@@ -34,6 +36,14 @@ SHEETS = {
         "UDP-203_Remote_Code_v1.2.xls": ["Remote Code 1", "Remote Code 2", "Remote Code 3", "Notes"],
     },
     "anthem": {"AVM-MRXx40-IR-hex-20251202185749500.xlsx": ["MRX x10-x40 remote layout", "MRX x10-x40 IR hex codes"]},
+    "kef": {
+        "LS50Wireless-IRcode-INT.pdf": ["page 1", "page 2"],
+        "LS50WII_IR-Codes-for-Universal-Remote-Control.pdf": ["page 1"],
+        "LS60W_IR_Codes_for_Universal_Remote_Control.pdf": ["page 1"],
+        "LSX-IRcode-INT.pdf": ["page 1"],
+        "LSX-II_IR-Codes-for-Universal-Remote-Control.pdf": ["page 1"],
+        "XIO_IR-Command-Codes-for-Universal-Remote-Control.pdf": ["page 1"],
+    },
 }
 
 
@@ -47,6 +57,10 @@ def text(value) -> str:
 
 
 def rows_of(path: Path, sheet: str) -> list[list[str]]:
+    if path.suffix.lower() == ".pdf":
+        import pymupdf
+        page = pymupdf.open(str(path))[int(sheet.removeprefix("page ")) - 1]
+        return [[line.strip()] for line in page.get_text("text").splitlines() if line.strip()]
     if path.suffix.lower() == ".xls":
         import xlrd
         ws = xlrd.open_workbook(str(path)).sheet_by_name(sheet)

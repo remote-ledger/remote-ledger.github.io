@@ -80,7 +80,7 @@ FACTS: dict[str, dict[str, Any]] = {
         "kind": "none",
         "upstream_url": "https://www.marantz.com/",
         "note": "Manufacturers' own IR code tables, as they publish them (Marantz's command "
-                "charts, Anthem's IR hex sheet, Oppo's remote code workbooks): tables of "
+                "charts, Anthem's IR hex sheet, Oppo's remote code workbooks, KEF's IR code sheets): tables of "
                 "reference remote codes, which the repository records no licence for "
                 "(DESIGN D110). Every key cites the document, its checksum and the row.",
     },
