@@ -160,6 +160,7 @@ PIONEER_MIX = "Pioneer MIX"
 PIONEER_3DEV = "Pioneer 3DEV"
 PIONEER_4DEV = "Pioneer 4DEV"
 RC56_COMBO = "RC5/6 combo"
+RC55X_COMBO = "RC-5/5x Combo"
 XMP_FAMILY = ("XMP", "XMP (JP1)", "XMP (Slingbox)", "XMP (Slingbox)(No repeat)", "XMP (UEI)")
 PANASONIC_HACKED = "Panasonic Multi-Device (Hacked)"
 RECS80_68 = "RECS80 (68)"
@@ -183,7 +184,8 @@ NEC1_RNC = "NEC1-rnc"
 #: complemented (``E0=(~Y:1:1)^(F:1)``, ``~F:6:1``, ``E7=(~Y:1)^(F:1:7)``).
 YAMAHA_E_XOR = {1: 0x7F, 2: 0xFE, 3: 0x7E}
 TWO_BYTE = (SONY_COMBO, NEC1_COMBO, NEC_4DEV, NEC_4DEV_YAMAHA, NEC_2DEV, JVC_COMBO, DENON_COMBO, SHARP_COMBO,
-            PANASONIC_COMBO, DENON_K, PIONEER_MIX, PANASONIC_HACKED, TEAC_K, RCA_COMBO, PIONEER_3DEV, PIONEER_4DEV, RC56_COMBO)
+            PANASONIC_COMBO, DENON_K, PIONEER_MIX, PANASONIC_HACKED, TEAC_K, RCA_COMBO, PIONEER_3DEV, PIONEER_4DEV, RC56_COMBO,
+            RC55X_COMBO)
 MAPPED = (*NEC_FAMILY, SONY_1215, SONY_20, RC5, RC6, JVC, AIWA, DENON, PANASONIC, SHARP, SAMSUNG36, PROTON, F12,
           RECS80_45, PIONEER, RECS80_68, JVC_48, *RCA_FAMILY, NEC1_F16_OFFICIAL, NEC1_RNC, MCE, NOKIA32, PANASONIC_OLD, TDC, GI_CABLE, RC6_M_20N,
           *XMP_FAMILY, *TWO_BYTE)
@@ -222,6 +224,8 @@ def signal_of(upgrade: Upgrade, function: Function) -> Signal | str:
             return pioneer_multi_signal(upgrade, pair[0], pair[1])
         if name == RC56_COMBO:
             return rc56_combo_signal(upgrade, pair[0], pair[1])
+        if name == RC55X_COMBO:
+            return rc55x_combo_signal(upgrade, pair[0], pair[1])
         return combo_signal(name, parms, pair[0], pair[1], upgrade.fields.get("FixedData", "").split())
     byte = obc_byte(function.hex)
     if byte is None:
@@ -538,6 +542,44 @@ def rc56_combo_signal(upgrade: Upgrade, first: int, second: int) -> Signal | str
     if device > 255:
         return "a parameter is not a byte"
     return Signal("RC6", device, None, first)
+
+
+def rc55x_combo_signal(upgrade: Upgrade, first: int, second: int) -> Signal | str:
+    """``RC-5/5x Combo`` (DESIGN D232): two bytes, a function of RC-5 or of RC-5x.
+
+    ``CmdTranslator`` is RemoteMaster's ``RC5_5xComboTranslator`` (offsets count from the most significant bit of the two bytes),
+    and the low bit of the second byte is the type (0 is RC-5). **RC-5** is the ``RC5/6 combo``'s: the device the low five bits of
+    the first byte complemented, the command the six bits of the second above its low two complemented and the seventh the first
+    byte's ``0x40`` as it is (the bits at offsets 0 and 2 and the second byte's bit 1 are zero). **RC-5x:** the sub device is the
+    six bits at offsets 0 to 5 complemented, **plus 64 where the slot's flag is set**, the OBC the six bits at offsets 6 to 11
+    complemented, the bit at offset 12 is zero, and the two bits at offsets 13 and 14 pick one of the upgrade's four RC-5x device
+    slots. A slot's device and its flag are the device parameters (the setup sheet's ``RC5x Device n`` and ``Sub-Device>63``) or,
+    where the device is ``null``, what ``FixedData`` keeps: one byte a slot, the device the low five bits complemented and the flag
+    its ``0x40`` (``Rc5FlagTranslator`` sets a slot with no device to the opposite flag of the one before it, so a flag parameter
+    of an unset slot is not the effective one, and ``FixedData``'s is read). The ledger's ``RC5`` and ``RC5x``: ``device`` is D,
+    ``subdevice`` S (the seven-bit command) and ``function`` F (the six-bit data), the reading Marantz's own chart confirms (D233)."""
+    if not second & 1:
+        if first & 0xA0:
+            return "the RC-5 device is not five bits"
+        if second & 2:
+            return "the function sets a bit RC-5 does not use"
+        return Signal("RC5", ~first & 0x1F, None, (~(second >> 2) & 0x3F) | (first & 0x40))
+    if second & 8:
+        return "the function sets a bit RC-5x does not use"
+    slot = (second >> 1) & 3
+    fixed = upgrade.fields.get("FixedData", "").split()
+    byte = int(fixed[slot], 16) if slot < len(fixed) and _HEX_BYTE.match(fixed[slot]) else None
+    device = parm(upgrade.parms, 2 * slot)
+    if device is None and byte is not None:
+        device = ~byte & 0x1F
+    if device is None:
+        return "the RC-5x device the function selects is not set"
+    flag = (byte >> 6) & 1 if byte is not None else parm(upgrade.parms, 2 * slot + 1)
+    if flag is None:
+        return "the RC-5x sub device flag the function selects is not set"
+    if device > 31 or flag > 1:
+        return "a parameter is out of range"
+    return Signal("RC5x", device, (~(first >> 2) & 0x3F) + 64 * flag, ~(((first & 3) << 4) | (second >> 4)) & 0x3F)
 
 
 #: The ledger protocol of the four styles an NEC 4DEV combo function names.
