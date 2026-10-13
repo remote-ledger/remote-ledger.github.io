@@ -12,11 +12,13 @@ import must meet, and DESIGN.md section 29 describes how this one meets them.
   LS50 Wireless II, LS60 Wireless, LSX, LSX II and XIO (PDFs on <https://assets.kef.com/> and the
   product pages of <https://www.kef.com/>, DESIGN.md section 62) and **JVC's** infrared remote control command emulation
   guide (long hex format) for its D-ILA projectors (DLA-HD, X and RS series, <https://support.jvc.com/>, DESIGN.md
-  section 63). They are the makers' documents, not a third party's
+  section 63) and **Arcam's** custom installation notes, whose RC-5 code tables cover its AVR, AV and SA amplifiers and
+  receivers, the CDS50 and UDP411 players and the Solo and Solo Mini (PDFs on <https://www.arcam.co.uk/>, DESIGN.md
+  section 64). They are the makers' documents, not a third party's
   compilation, and they are still imported at Plausible: a manufacturer's word is one source (R19.3).
 - **The pin:** a manufacturer's page is not a repository, so `sources/official/<maker>/` holds each document
   as the server sent it, the sheets the importer reads converted to CSV by
-  `tools/official_sheets_to_csv.py` (a PDF page is its lines of text), and a `MANIFEST.json` with each document's URL, size and SHA-256,
+  `tools/official_sheets_to_csv.py` (a PDF page is its lines of text or its tables' cells), and a `MANIFEST.json` with each document's URL, size and SHA-256,
   each CSV's source and SHA-256, and the retrieval date. The importer refuses a file whose hash differs, and
   every citation names the first eight hex digits of its document's hash.
 - **Licence:** none recorded. A manufacturer's table of the codes its product accepts is a table of reference
@@ -41,6 +43,9 @@ KEF's are NEC1 too, one file a product (`LSX II`, `XIO`): each sheet gives a fac
 for each key, **in the other bit order than the ledger's NEC1** (the device is `0x80` and `0x40` is the function `0x02`),
 which the IR Blaster database's KEF remote confirms for the eight codes it holds. JVC's are the ledger's `JVC` protocol
 (device 115, a function number), one file for each of the 22 projectors on the guide's cover, **checked against the guide's
-own Pronto hex**: where the hex does not say the stated code (three entries have damaged text) the key is Untested.
+own Pronto hex**: where the hex does not say the stated code (three entries have damaged text) the key is Untested. Arcam's are the ledger's `RC5` (the system code the device, the
+command the function), one file for each product a document lists (`AVR450`, `SA20`, `Solo Mini`...), **each row's decimal
+and hex checked against each other**; a function a table says is `(not AVR5, AVR10)` or `(AVR450/750 only)` is left out of
+the files it is not for.
 
 `IMPORT.md` lists everything a document holds that does not become a key, with the reason.

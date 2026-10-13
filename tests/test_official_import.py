@@ -12,7 +12,7 @@ from pathlib import Path
 import pytest
 
 from remote_ledger.errors import ValidationError
-from remote_ledger.official import anthem, jvc, kef, marantz, oppo
+from remote_ledger.official import anthem, arcam, jvc, kef, marantz, oppo
 from remote_ledger.official import importer as oi
 from remote_ledger.official.common import MANIFEST, Report, load_snapshot
 from remote_ledger.serialize import load
@@ -26,7 +26,7 @@ SNAPSHOT = ROOT / oi.SNAPSHOT
 
 def test_every_document_and_csv_is_the_one_the_manifest_pins():
     for maker, retrieved in (("marantz", "2026-10-08"), ("anthem", "2026-10-08"), ("oppo", "2026-10-09"), ("kef", "2026-10-13"),
-                             ("jvc", "2026-10-13")):
+                             ("jvc", "2026-10-13"), ("arcam", "2026-10-13")):
         snap = load_snapshot(SNAPSHOT / maker)
         assert snap.maker == maker and snap.retrieved == retrieved
         assert snap.documents and snap.sheets
@@ -441,13 +441,13 @@ def test_the_committed_official_import_keeps_r19():
     or Untested, and a citation that names a document the manifest pins, by hash."""
     assert (ROOT / oi.IMPORT_ROOT / "README.md").is_file() and (ROOT / oi.IMPORT_ROOT / oi.REPORT).is_file()
     hashes, dates, snapshots = {}, {}, {}
-    for maker in ("marantz", "anthem", "oppo", "kef", "jvc"):
+    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "arcam"):
         manifest = json.loads((SNAPSHOT / maker / MANIFEST).read_text(encoding="utf-8"))
         for name, entry in manifest["documents"].items():
             hashes[name], dates[name], snapshots[name] = entry["sha256"], manifest["retrieved"], entry.get("snapshot")
     shape = re.compile(r"^(?:marantz\.com archive-downloads|anthemav\.com \(storage\.googleapis\.com/sandbox1-anthemav/an\)"
-                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
-                       r"(?:, from the Wayback Machine snapshot (\d{14}))?\) (?:sheet '[^']+' row \d+|page \d+ row \d+|page \d+ ')")
+                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
+                       r"(?:, from the Wayback Machine snapshot (\d{14}))?\) (?:sheet '[^']+' row \d+|page \d+ row \d+|page \d+ '|page \d+ table \d+ row '|page \d+ row ')")
     files = sorted((ROOT / oi.IMPORT_ROOT).rglob("*.json"))
     assert len(files) > 180
     bad = []
@@ -813,3 +813,114 @@ def test_the_ledgers_jvc_signal_is_the_guides_hex_to_within_two_cycles_of_the_fi
         assert pairs[:2] == lead_and_frame[:2] and repeat[:-1] == lead_and_frame[2:-1], entry.function
         differences[repeat[-1] - lead_and_frame[-1]] += 1
     assert len(seen) == 206 and dict(differences) == {1: 143, 2: 63}
+
+
+# --- Arcam -----------------------------------------------------------------------------------------------------
+
+
+def test_an_arcam_function_name_may_say_which_models_it_is_for():
+    """``(not AVR5, AVR10)`` is every model but those, ``(AVR450/750 only)`` is those two (a number takes the letters before it);
+    a footnote asterisk is dropped and any other parenthesis stays in the name."""
+    assert arcam.expand("AVR450/750") == ("AVR450", "AVR750") and arcam.expand("AVR5, AVR10") == ("AVR5", "AVR10")
+    assert arcam.expand("Speaker trim") is None
+    assert arcam.restriction("Zone 2 Mute (not AVR5, AVR10)") == ("Zone 2 Mute", (), ("AVR5", "AVR10"))
+    assert arcam.restriction("Zone 2 Vol-(not AVR5, AVR10)") == ("Zone 2 Vol-", (), ("AVR5", "AVR10"))
+    assert arcam.restriction("DAB (AVR450/750 only)") == ("DAB", ("AVR450", "AVR750"), ())
+    assert arcam.restriction("Eject (Speaker trim)*") == ("Eject (Speaker trim)", (), ())
+    assert arcam.restriction("Auro Native (not AVR5)") == ("Auro Native", (), ("AVR5",))
+
+
+def test_an_arcam_rows_decimal_and_hex_must_say_one_code_and_the_tables_own_typos_are_tolerated():
+    """``16-12`` and ``0x10 - 0x0C`` are one code; the tables write ``0x10 - 4C`` (no prefix on the second) and ``0X17`` (a capital
+    X) once each, which still say the code; a decimal that is not ``system-command`` is not a row."""
+    assert arcam.read_code("16-12*", "0x10 - 0x0C*") == (16, 12, True, "16-12* / 0x10 - 0x0C*")
+    assert arcam.read_code("16-76", "0x10 - 4C")[:3] == (16, 76, True)
+    assert arcam.read_code("23-123", "0X17 - 0x7B")[:3] == (23, 123, True)
+    assert arcam.read_code("16 - 48", "0x10 - 0x30")[:3] == (16, 48, True)
+    assert arcam.read_code("16-12", "0x10 - 0x0D")[:3] == (16, 12, False)
+    assert arcam.read_code("16-12", "")[:3] == (16, 12, False)
+    assert arcam.read_code("Decimal", "Hexadecimal") is None
+
+
+def test_the_three_layouts_of_arcams_tables_are_read_as_rows_with_a_system_code_and_a_command():
+    """The function tables (the CSV row is the page, the table's number and the cells), the Solo's ``System Code`` table whose
+    system code is written on the first row of a group, and the Solo Mini's lines after ``IR remote commands``."""
+    header = ["1", "1", "Function", "RC5 code [system- command]", "RC5 code (Data1 - Data2)"]
+    rows = arcam.function_rows([
+        ["1", "9", "Function", "something else", "x"], ["1", "9", "Standby", "16-12", "0x10 - 0x0C"],          # not an RC-5 table
+        header, ["1", "1", "", "Decimal", "Hexadecimal"], ["1", "1", "Standby", "16-12*", "0x10 - 0x0C*"],
+        ["1", "1", "DAB (AVR450/750 only)", "16-72", "0x10 - 0x48"], ["1", "1", "Bad", "16-1", "0x10 - 0x02"],
+        ["1", "2", "Other table", "16-2", "0x10 - 0x02"]])
+    assert [(r.function, r.system, r.command, r.agrees, r.only) for r in rows] == [
+        ("Standby", 16, 12, True, ()), ("DAB", 16, 72, True, ("AVR450", "AVR750")), ("Bad", 16, 1, False, ())]
+    assert arcam.digit_doubt("Number 3", 3) == arcam.digit_doubt("5", 5) == arcam.digit_doubt("Standby", 12) == ""
+    assert "the digit 3 and its command is 2" in arcam.digit_doubt("Number 3", 2)
+    assert "the digit 7" in arcam.digit_doubt("CD Number 7", 6) and "the digit 4" in arcam.digit_doubt("Tuner Number 4", 0)
+    solo = arcam.system_rows([
+        ["1", "1", "System Code", "Command", "Command Code", "Comments"], ["1", "1", "16", "Select TV", "0", ""],
+        ["1", "1", "", "Select AV", "2", ""], ["2", "1", "System Code", "Command", "Command Code", "Comments"],
+        ["2", "1", "17", "Number 0", "0", "For Tuner & CD"], ["2", "1", "", "Number 1", "1", ""]])
+    assert [(r.function, r.system, r.command) for r in solo] == [
+        ("Select TV", 16, 0), ("Select AV", 16, 2), ("Number 0", 17, 0), ("Number 1", 17, 1)]
+    mini = arcam.line_rows([["13", "16-0 not yet"], ["14", "IR remote commands"], ["14", "System code 16"], ["14", "16-0 Source TV"],
+                            ["14", "Decimal Code Command"], ["15", "17-52 Source DAB/AM"]])
+    assert [(r.function, r.system, r.command) for r in mini] == [("Source TV", 16, 0), ("Source DAB/AM", 17, 52)]
+
+
+def arcam_files() -> dict[str, dict]:
+    return {p.stem: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "arcam").glob("*.json"))}
+
+
+def test_the_19_arcam_files_are_the_models_the_documents_title_and_the_restrictions_leave_out_what_they_say():
+    """One file for each model a document's title lists, 1,816 keys, 1,815 Plausible because every row's decimal and hex agree and
+    one Untested (the Solo's ``Number 3``, which the table gives the command of ``Number 2``); 272 distinct codes, systems 16, 17,
+    20, 23 and 25. The AVR5 and AVR10 lack the 21 Zone 2 rows the AVR5-41 document says they do not have, the AVR380 the two
+    ``AVR450/750 only`` DAB rows."""
+    files = arcam_files()
+    assert {m: len(d["keys"]) for m, d in files.items()} == {
+        "AV40": 120, "AV41": 120, "AVR10": 99, "AVR11": 120, "AVR20": 120, "AVR21": 120, "AVR30": 120, "AVR31": 120, "AVR380": 125,
+        "AVR450": 127, "AVR5": 99, "AVR750": 127, "CDS50": 37, "SA10": 30, "SA20": 30, "SA30": 59, "Solo": 80, "Solo_Mini": 112,
+        "UDP411": 51}
+    codes = set()
+    for doc in files.values():
+        assert doc["manufacturer"] == "Arcam" and doc["protocol"]["name"] == "RC5"
+        for spec in doc["keys"].values():
+            (form,) = spec["forms"]
+            assert form["type"] == "irp" and "subdevice" not in form
+            assert form["confidence"] == (
+                "untested" if (doc["model"], spec["label"], form["device"], form["function"]) == ("Solo", "Number 3", "0x14", "0x02")
+                else "plausible")
+            codes.add((form["device"], form["function"]))
+    assert len(codes) == 272 and {c[0] for c in codes} == {"0x10", "0x11", "0x14", "0x17", "0x19"}
+    labels = {m: [s["label"] for s in d["keys"].values()] for m, d in files.items()}
+    assert not any("Zone 2 Power" in label for label in labels["AVR5"] + labels["AVR10"])
+    assert "Zone 2 Power On" in labels["AV41"] and "DAB" in labels["AVR450"] and "DAB" not in labels["AVR380"]
+    assert files["AVR450"]["keys"]["KEY_DAB"]["forms"][0]["source"].endswith("the table says it is for AVR450, AVR750 only")
+
+
+def test_the_other_sources_arcam_rc5_remotes_send_the_codes_arcams_tables_list():
+    """An independent check from other sources: eight Arcam RC-5 remotes of the ledger (five from the IR Blaster database, three
+    JP1 upgrades) hold 401 keys, and **337 of them (84.0%) are a code some table of Arcam's lists**, with the meaning agreeing
+    where it is plain (volume plus and minus 16 and 17, mute 13, power 12, the standby on and off 124 and 123, the digits). The
+    rest are other products' and other generations' codes: system 16 command 53 is Select FM on a Solo and Play on an AVR."""
+    ours: dict[tuple[int, int], set[str]] = {}
+    for doc in arcam_files().values():
+        for spec in doc["keys"].values():
+            form = spec["forms"][0]
+            ours.setdefault((int(form["device"], 0), int(form["function"], 0)), set()).add(spec["label"])
+    remotes = total = hit = 0
+    for path in sorted((ROOT / "remotes").glob("*/*/*.json")):
+        if "official" in path.parts or "arcam" not in path.parent.name.lower():
+            continue
+        doc = load(path)
+        if doc.get("protocol", {}).get("name") != "RC5":
+            continue
+        codes = [(int(f["device"], 0), int(f["function"], 0)) for spec in doc["keys"].values() for f in spec["forms"]
+                 if f.get("type") == "irp"]
+        remotes += 1
+        total += len(codes)
+        hit += sum(1 for c in codes if c in ours)
+    assert (remotes, total, hit) == (8, 401, 337)
+    for code, wanted in (((16, 16), "Increase volume (+)"), ((16, 17), "Decrease volume (-)"), ((16, 13), "Mute"), ((16, 12), "Standby"),
+                         ((16, 124), "Standby On"), ((16, 123), "Standby Off"), ((17, 5), "Tuner Number 5")):
+        assert any(label.startswith(wanted.split(" (")[0]) for label in ours[code]), (code, wanted)
