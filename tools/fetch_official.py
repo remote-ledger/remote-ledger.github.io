@@ -7,7 +7,7 @@ size, SHA-256, the retrieval date (today: do not pass --date) and the server's `
 (and, for a copy from the Wayback Machine, the address and snapshot it was archived from). Run it, then
 ``tools/official_sheets_to_csv.py <maker>`` for the spreadsheets, review the diff, and import.
 
-    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc|arcam|cambridge
+    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc|arcam|cambridge|hegel
 """
 
 from __future__ import annotations
@@ -88,6 +88,17 @@ DOCUMENTS = {
          "https://www.cambridgeaudio.com/sites/default/files/compliance/doc/AXR85%20100%20IR%20Codes.pdf", None),
         ("752BD-CXU-CXUHD_remotes_Sept_2024_v2.pdf",
          "https://www.cambridgeaudio.com/sites/default/files/compliance/doc/752BD-CXU-CXUHD%20remotes%20-%20Sept.%202024%20v2.pdf", None),
+    ],
+    # Hegel's RC-5 code tables, one page each (Excel printed to PDF; the newer three add each code's Pronto hex), on its support
+    # site. The site hands a file out by its number and ignores the rest of the address, so the name after the number is ours.
+    "hegel": [
+        (name, f"https://support.hegel.com/component/jdownloads/download/{number}-{slug}", None) for name, number, slug in (
+            ("Hegel_Rost_IR_Codes.pdf", 63, "hegel-rost-ir-codes"), ("Hegel_H190_IR_Codes.pdf", 65, "hegel-h190-ir-codes"),
+            ("Hegel_H360_IR_Codes.pdf", 66, "hegel-h360-ir-codes"), ("Hegel_H590_IR_Codes.pdf", 67, "hegel-h590-ir-codes"),
+            ("Hegel_H90_IR_Codes.pdf", 68, "hegel-h90-ir-codes"), ("Hegel_HD12_IR_Codes.pdf", 69, "hegel-hd12-ir-codes"),
+            ("Hegel_HD25_IR_Codes.pdf", 70, "hegel-hd25-ir-codes"), ("Hegel_HD30_IR_Codes.pdf", 72, "hegel-hd30-ir-codes"),
+            ("Hegel_Mohican_IR_Codes.pdf", 73, "hegel-mohican-ir-codes"), ("Hegel_H390_H590_IR_codes_v1.pdf", 85, "h390-h590-ir-codes"),
+            ("Hegel_H95_H120_H190_IR_codes_v2.pdf", 86, "h95-h120-h190-ir-codes"), ("Hegel_P20_P30_IR_codes_v2.pdf", 87, "p20-p30-ir-codes"))
     ],
     "anthem": [
         ("AVM-MRXx40-IR-hex-20251202185749500.xlsx",

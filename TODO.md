@@ -16,8 +16,8 @@ sources have been imported under SPEC R19:
   fifty-eight executors (DESIGN §28, §32, §33, §34, §35, §36, §39, §42, §44, §46, §48, §49, §51, §53, §56, §59, §61).
 - **Manufacturers' own IR tables**: Marantz's AV receiver charts, Anthem's IR
   hex sheet, Oppo's remote code workbooks, KEF's IR code sheets, JVC's
-  projector guide, Arcam's custom installation notes and two of Cambridge Audio's lists
-  of NEC codes, 360 files, 39,613 keys (DESIGN §29, §31, §58, §60, §62, §63, §64, §65).
+  projector guide, Arcam's custom installation notes, two of Cambridge Audio's lists
+  of NEC codes and Hegel's RC-5 tables, 375 files, 39,931 keys (DESIGN §29, §31, §58, §60, §62, §63, §64, §65, §66).
 
 SPEC v0.11 makes growing coverage from every source whose licence permits
 it the standing goal, with no fixed list of sources (DESIGN §8, Phase 8).
@@ -66,10 +66,15 @@ Land it in two PRs, code and then data.
       a third party's). **Cambridge Audio's other fifteen IR code PDFs** (thirteen
       documents: the Azur 851A, C, E, N and W, CXA, CXC, CXN, CXR, Edge, Evo, ONE and the CXU's
       2015 one, on cambridgeaudio.com) say "(c) Copyright Cambridge Audio Ltd" and
-      eight of them add "All rights are reserved", so they go to the private repository
-      (D130), as T+A's did; the two documents of §65 have no such text. A web search says JVC's Interface Specifications page also lists a
-      2014 guide, long hex too, for the DLA-RS49 to RS67 and X500 to X900; the page
-      answered 404 when fetched and the guide is not read. Each is a document
+      eight of them add "All rights are reserved", so they went to the private repository
+      (D130), as T+A's did; the two documents of §65 have no such text. JVC's Interface Specifications page lists
+      a 2014 guide (ver 0.44), long hex too, for the DLA-RS49 to RS67 and X500 to X900; the page
+      answers 404 and no copy has been found (a search found the 2011 remote control guide v1.4, an earlier edition of the family
+      §63 reads, with the same grant, and the 2014 RS-232 specifications, which have no code table; the 2013 models' remote
+      codes are in JVC's mobile user guide, 35 codes under "(c) 2013 JVCKENWOOD", so private). **Leads not yet read:** NAD's
+      `NAD-CrestronIR.zip` (17 Crestron `.ir` files of 2005, a readme maps them to models; NEC, customer code 877C) and its two
+      Pronto `.ccf` files, on nadelectronics.com/software; Sim Audio's `Simaudio-RC-5-IR-codes-rev1.1.pdf` (2002) and Linn's RC5
+      page. Each is a document
       pinned by hash as D123 does it; a PDF is read as the lines of text of its
       pages (KEF's was the first, D243, JVC's the second, D247), which suits a
       table and not prose. Kaleidescape's PDF says "All rights reserved": a source

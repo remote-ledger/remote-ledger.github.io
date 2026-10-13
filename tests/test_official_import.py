@@ -12,7 +12,7 @@ from pathlib import Path
 import pytest
 
 from remote_ledger.errors import ValidationError
-from remote_ledger.official import anthem, arcam, cambridge, jvc, kef, marantz, oppo
+from remote_ledger.official import anthem, arcam, cambridge, hegel, jvc, kef, marantz, oppo
 from remote_ledger.official import importer as oi
 from remote_ledger.official.common import MANIFEST, Report, load_snapshot
 from remote_ledger.serialize import load
@@ -26,7 +26,7 @@ SNAPSHOT = ROOT / oi.SNAPSHOT
 
 def test_every_document_and_csv_is_the_one_the_manifest_pins():
     for maker, retrieved in (("marantz", "2026-10-08"), ("anthem", "2026-10-08"), ("oppo", "2026-10-09"), ("kef", "2026-10-13"),
-                             ("jvc", "2026-10-13"), ("arcam", "2026-10-13"), ("cambridge", "2026-10-13")):
+                             ("jvc", "2026-10-13"), ("arcam", "2026-10-13"), ("cambridge", "2026-10-13"), ("hegel", "2026-10-13")):
         snap = load_snapshot(SNAPSHOT / maker)
         assert snap.maker == maker and snap.retrieved == retrieved
         assert snap.documents and snap.sheets
@@ -441,12 +441,12 @@ def test_the_committed_official_import_keeps_r19():
     or Untested, and a citation that names a document the manifest pins, by hash."""
     assert (ROOT / oi.IMPORT_ROOT / "README.md").is_file() and (ROOT / oi.IMPORT_ROOT / oi.REPORT).is_file()
     hashes, dates, snapshots = {}, {}, {}
-    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "arcam", "cambridge"):
+    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "arcam", "cambridge", "hegel"):
         manifest = json.loads((SNAPSHOT / maker / MANIFEST).read_text(encoding="utf-8"))
         for name, entry in manifest["documents"].items():
             hashes[name], dates[name], snapshots[name] = entry["sha256"], manifest["retrieved"], entry.get("snapshot")
     shape = re.compile(r"^(?:marantz\.com archive-downloads|anthemav\.com \(storage\.googleapis\.com/sandbox1-anthemav/an\)"
-                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
+                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
                        r"(?:, from the Wayback Machine snapshot (\d{14}))?\) (?:sheet '[^']+' row \d+|page \d+ row \d+|page \d+ '|page \d+ table \d+ row '|page \d+ row ')")
     files = sorted((ROOT / oi.IMPORT_ROOT).rglob("*.json"))
     assert len(files) > 180
@@ -1001,3 +1001,132 @@ def test_every_axr85_code_is_in_the_ir_blasters_axr85_remote_under_the_same_name
     cxu = [(squash(s["label"]), int(s["forms"][0]["function"], 0)) for s in cambridge_files()["CXU"]["keys"].values()]
     shared = [(name, fn) for name, fn in cxu if fn in oppo]
     assert len(shared) == 43 and sum(1 for name, fn in shared if name in oppo[fn]) == 2
+
+
+# --- Hegel -------------------------------------------------------------------------------------------------------
+
+M = "<merged>"
+FRAME = "0000 0073 0000 000C 0020 0020 0040 0040 0040 0020 0020 0020 0020 0020 0020 0020 0020 0020 0020 0020 0020 0020 0020 0020 0020 0040 0020 0CA4"
+
+
+def test_an_rc5_frame_in_pronto_is_read_as_its_system_command_and_toggle_bit():
+    """The first press of Hegel's P20 ``BAL1`` is system 16 command 1 with the toggle bit 0, the ``(alt)`` row of its ``Volume Up``
+    is system 16 command 16 with the toggle bit 1; a frame whose durations are not whole half-bits, or that is not a Manchester
+    frame, or whose header is not a Pronto one, is none."""
+    assert hegel.decode_rc5(FRAME) == (16, 1, 0)
+    document = next(d for d in hegel.DOCUMENTS if d.file == "Hegel_P20_P30_IR_codes_v2.pdf")
+    table = hegel.parse(oi.load_snapshot(SNAPSHOT / "hegel").sheet_of(document.file, "flow"), document)
+    volume = next(r for r in table.rows if r.function == "Volume Up")
+    assert hegel.decode_rc5(volume.hex) == (16, 16, 0) and hegel.decode_rc5(volume.alt) == (16, 16, 1)
+    assert volume.hex.split()[4:] != volume.alt.split()[4:]
+    assert hegel.decode_rc5(FRAME.replace("0040 0040 0040", "0041 0040 0040")) is None
+    assert hegel.decode_rc5(FRAME.replace("0020 0020 0040 0040 0040", "0020 0020 0020 0020 0020", 1)) is None       # not Manchester
+    assert hegel.decode_rc5("0000 0073 0001 000C") is None and hegel.decode_rc5("nope") is None
+
+
+def test_hegel_names_that_one_function_is_called_in_two_documents_are_synonyms_and_the_rest_are_contradictions():
+    assert hegel.same_name("BAL", "Balanced") and hegel.same_name("XLR (1)", "BAL") and hegel.same_name("HT / An2", "Analog 2")
+    assert hegel.same_name("Optical1", "Optical 1") and hegel.same_name("ECO", "Power") and hegel.same_name("Net", "Network")
+    assert hegel.same_name("Volume Up", "volume up") and hegel.same_name("Coax1", "Coaxial")
+    assert not hegel.same_name("Net", "Analog 2") and not hegel.same_name("USB", "HT / An2") and not hegel.same_name("An1", "XLR 2 (H590)")
+
+
+def test_a_hegel_page_is_read_as_its_title_its_system_sections_its_rows_with_their_hex_and_their_alt_twins():
+    """A table has a ``System 16 (Preamp 1)`` row, a header, and rows ``Function | Command | Descripton``; the hex is on the row's line;
+    ``16 (alt)`` is the twin of the row above (in the command cell or, as the tables' typo has it, the function cell); ``N/A`` is no
+    command; ``(H590)`` and ``(P30 only)`` limit a row to a model the title names."""
+    doc = hegel.Document("d.pdf", ("H390", "H590"))
+    rows = [
+        ["1", "text", "48", "Hegel H390, H590 RC-5 code table"], ["1", "text", "69", "v1"], ["1", "text", "81", "07.09.2020"],
+        ["1", "row", "1", "104", "System 16 (Preamp 1)", M, M, M], ["1", "text", "111", "HEX-Long"],
+        ["1", "row", "1", "111", "Function", "Command", "Descripton", "<block>"],
+        ["1", "text", "119", FRAME], ["1", "row", "1", "119", "XLR (1)", "1", "Source select", M],
+        ["1", "text", "127", FRAME], ["1", "row", "1", "127", "Volume Up", "16", "Volume control", M],
+        ["1", "text", "134", FRAME], ["1", "row", "1", "134", "", "16 (alt)", "Volume control (alt)", M],
+        ["1", "text", "142", FRAME], ["1", "row", "1", "142", "XLR 2 (H590)", "0", "Source select", M],
+        ["1", "row", "1", "150", "Network", "N/A", "Source select", M],
+        ["1", "text", "158", FRAME], ["1", "row", "1", "158", "IN -", "70", "x", M], ["1", "text", "166", FRAME], ["1", "row", "1", "166", "70 (alt)", M, "x (alt)", M],
+        ["1", "row", "2", "175", "System 19 (Preamp 2)", M, M, M], ["1", "row", "2", "183", "Function", "Command", "Descripton", M],
+        ["1", "row", "2", "191", "Display", "15", "Display on/off", M], ["1", "row", "2", "199", "", M, M, M],
+    ]
+    table = hegel.parse(rows, doc)
+    assert (table.title, table.models, table.date, table.blank) == ("H390, H590", ("H390", "H590"), "07.09.2020", 1)
+    assert [(r.system, r.function, r.command, r.only, bool(r.hex), r.alt_row, bool(r.alt)) for r in table.rows] == [
+        (16, "XLR (1)", 1, (), True, False, False), (16, "Volume Up", 16, (), True, True, True),
+        (16, "XLR 2", 0, ("H590",), True, False, False), (16, "Network", None, (), False, False, False),
+        (16, "IN -", 70, (), True, True, True), (19, "Display", 15, (), False, False, False)]
+    assert table.rows[2].written == "XLR 2 (H590)" and table.rows[0].heading == "System 16 (Preamp 1)"
+
+
+def hegel_files() -> dict[str, dict]:
+    return {load(p)["model"]: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "hegel").glob("*.json"))}
+
+
+def test_the_hegel_files_are_one_for_each_product_and_the_h590s_older_table_is_kept_apart_as_questionable():
+    """15 files, 318 keys: 14 products (295 Plausible keys) and ``H590 (2019 table)_questionable`` (23 Untested): the 2019 table of the
+    H590 is the Roest/H190/H360/H90 table, and the 2020 table of the H390 and H590 gives other names to 8 of the 22 codes they share."""
+    files = hegel_files()
+    assert {m: len(d["keys"]) for m, d in files.items()} == {
+        "H120": 27, "H190": 28, "H360": 23, "H390": 26, "H590": 28, "H590 (2019 table)_questionable": 23, "H90": 22, "H95": 27,
+        "HD12": 14, "HD25": 15, "HD30": 22, "Mohican": 17, "P20": 11, "P30": 12, "Röst": 23}
+    for model, doc in files.items():
+        assert doc["manufacturer"] == "Hegel" and doc["protocol"] == {"name": "RC5", "carrierHz": 36000, "minSends": 1}
+        tiers = {s["forms"][0]["confidence"] for s in doc["keys"].values()}
+        assert tiers == ({"untested"} if model.endswith("_questionable") else {"plausible"}), model
+        for spec in doc["keys"].values():
+            assert spec["forms"][0]["type"] == "irp" and int(spec["forms"][0]["function"], 0) <= 127
+    systems = {m: {int(s["forms"][0]["device"], 0) for s in d["keys"].values()} for m, d in files.items()}
+    assert systems["H190"] == {16, 19} and systems["HD30"] == {19} and systems["Mohican"] == {20} and systems["P20"] == {16}
+    report = (ROOT / oi.IMPORT_ROOT / oi.REPORT).read_text(encoding="utf-8")
+    figure = lambda what: int(re.search(rf"\| hegel: {what} \| ([\d,]+) \|", report)[1].replace(",", ""))
+    assert [figure(w) for w in ("files", "keys", "H590: codes Hegel_H590_IR_Codes.pdf shares with the newer document",
+                                "H590: of them named differently", "H190: of them named differently")] == [15, 318, 22, 8, 0]
+    questionable = files["H590 (2019 table)_questionable"]
+    assert all("QUESTIONABLE, kept as the document writes it" in s["forms"][0]["source"] for s in questionable["keys"].values())
+    assert questionable["keys"]["KEY_BAL"]["forms"][0]["function"] == "0x01" and files["H590"]["keys"]["KEY_XLR_1"]["forms"][0]["function"] == "0x01"
+    assert files["H590"]["keys"]["KEY_ANALOG_2"]["forms"][0]["function"] == "0x03" and questionable["keys"]["KEY_NET"]["forms"][0]["function"] == "0x03"
+
+
+def test_hegels_restrictions_and_merged_documents_give_each_product_its_own_rows():
+    files = hegel_files()
+    label = lambda model: {s["label"] for s in files[model]["keys"].values()}
+    assert "XLR 2" in label("H590") and "Analog 3" in label("H590") and not {"XLR 2", "Analog 3"} & label("H390")
+    assert "ECO" in label("P30") and "ECO" not in label("P20") and len(files["P30"]["keys"]) == len(files["P20"]["keys"]) + 1
+    # the H190 has the 2020 table's rows and the 2019 table's DAC+, which the 2020 table has not; its Power is the 2019 table's ECO
+    assert "DAC+" in label("H190") and "DAC+" not in label("H95")
+    power = files["H190"]["keys"]["KEY_POWER"]["forms"][0]["source"]
+    assert "Hegel_H95_H120_H190_IR_codes_v2.pdf" in power and "calls it 'ECO' (Low Power Toggle)" in power
+    # two functions of one document with one code are two keys: the HD25's IN + / INPUT and DAC+ are both command 32
+    hd25 = files["HD25"]["keys"]
+    assert hd25["KEY_IN_PLUS_SLASH_INPUT"]["forms"][0]["function"] == hd25["KEY_DAC_PLUS"]["forms"][0]["function"] == "0x20"
+
+
+def test_every_hegel_pronto_hex_decodes_to_its_row_and_is_the_ledgers_own_rc5_with_the_toggle_bit_zero():
+    """The independent check (D262): 67 rows of the three 2020 tables give their code in Pronto hex; **all 67 decode to the row's system
+    and command**, all with the toggle bit 0, **and are the ledger's own compile of the row's code word for word except the last one**,
+    the gap after the frame, which is 7 or 8 carrier cycles shorter in Hegel's; the 24 ``(alt)`` rows are the same codes with the toggle bit
+    1."""
+    from remote_ledger.import_common import probe
+
+    snapshot = oi.load_snapshot(SNAPSHOT / "hegel")
+    cache: dict[tuple[int, int], list[str]] = {}
+    rows = twins = 0
+    gaps = Counter()
+    for document in hegel.DOCUMENTS:
+        table = hegel.parse(snapshot.sheet_of(document.file, "flow"), document)
+        for row in table.rows:
+            if row.command is None or not row.hex:
+                continue
+            assert hegel.decode_rc5(row.hex) == (row.system, row.command, 0), row
+            if (row.system, row.command) not in cache:
+                form = {"id": "primary.irp", "type": "irp", "device": row.system, "function": row.command, "confidence": "plausible",
+                        "source": "probe"}
+                cache[(row.system, row.command)] = probe("remotes/official", hegel.PROTOCOL, "K", [form])[0].compile_group("K", "primary").split()
+            ours, theirs = cache[(row.system, row.command)], row.hex.split()
+            assert ours[:-1] == theirs[:-1]
+            gaps[int(ours[-1], 16) - int(theirs[-1], 16)] += 1
+            rows += 1
+            if row.alt:
+                assert hegel.decode_rc5(row.alt) == (row.system, row.command, 1)
+                twins += 1
+    assert (rows, twins) == (67, 24) and dict(gaps) == {8: 34, 7: 33}
