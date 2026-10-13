@@ -10,7 +10,7 @@ every page, ``pages`` (it needs PyMuPDF): one non-empty line to a row, in the or
 puts the page number in a first cell), which the importer parses; or as its tables, ``tables`` (Arcam's, D251): a row is
 the page, the table's number on it and the cells of one table row, so a table's merged cells are the library's reading.
 
-    python3 tools/official_sheets_to_csv.py marantz|anthem|oppo|kef|jvc|arcam|cambridge|hegel
+    python3 tools/official_sheets_to_csv.py marantz|anthem|oppo|kef|jvc|arcam|cambridge|hegel|linn
 """
 
 from __future__ import annotations
@@ -21,6 +21,7 @@ import hashlib
 import json
 import re
 import sys
+from html.parser import HTMLParser
 from pathlib import Path
 
 #: maker -> {document: [sheet names read]}
@@ -53,6 +54,7 @@ SHEETS = {
         "Hegel_Rost_IR_Codes.pdf", "Hegel_H190_IR_Codes.pdf", "Hegel_H360_IR_Codes.pdf", "Hegel_H590_IR_Codes.pdf", "Hegel_H90_IR_Codes.pdf",
         "Hegel_HD12_IR_Codes.pdf", "Hegel_HD25_IR_Codes.pdf", "Hegel_HD30_IR_Codes.pdf", "Hegel_Mohican_IR_Codes.pdf",
         "Hegel_H390_H590_IR_codes_v1.pdf", "Hegel_H95_H120_H190_IR_codes_v2.pdf", "Hegel_P20_P30_IR_codes_v2.pdf")},
+    "linn": {"RC5_Codes.html": ["table"], "Linn_DS-DSM_Pronto_codes.pdf": ["flow"]},
     "kef": {
         "LS50Wireless-IRcode-INT.pdf": ["page 1", "page 2"],
         "LS50WII_IR-Codes-for-Universal-Remote-Control.pdf": ["page 1"],
@@ -73,7 +75,50 @@ def text(value) -> str:
     return str(value).strip()
 
 
+class _Table(HTMLParser):
+    """The first ``<table>`` of an HTML page as rows of cell text: ``<br>`` is `` / ``, ``<sup>x</sup>`` is ``^x``, runs of space one."""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.rows: list[list[str]] = []
+        self.cell: list[str] | None = None
+        self.depth = 0
+        self.done = False
+
+    def handle_starttag(self, tag, attrs):
+        if self.done:
+            return
+        if tag == "table":
+            self.depth += 1
+        elif self.depth and tag == "tr":
+            self.rows.append([])
+        elif self.depth and tag in ("td", "th"):
+            self.cell = []
+        elif self.cell is not None and tag == "br":
+            self.cell.append(" / ")
+        elif self.cell is not None and tag == "sup":
+            self.cell.append("^")
+
+    def handle_endtag(self, tag):
+        if self.done:
+            return
+        if tag in ("td", "th") and self.cell is not None:
+            self.rows[-1].append(" ".join("".join(self.cell).split()).replace(" / ", " / ").replace("/  /", "/"))
+            self.cell = None
+        elif tag == "table" and self.depth:
+            self.depth -= 1
+            self.done = self.depth == 0
+
+    def handle_data(self, data):
+        if self.cell is not None:
+            self.cell.append(data)
+
+
 def rows_of(path: Path, sheet: str) -> list[list[str]]:
+    if path.suffix.lower() == ".html":
+        parser = _Table()
+        parser.feed(path.read_text(encoding="utf-8"))
+        return [[re.sub(r"\s*/\s*$", "", cell).strip() for cell in row] for row in parser.rows]
     if path.suffix.lower() == ".pdf":
         import pymupdf
         pdf = pymupdf.open(str(path))

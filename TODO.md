@@ -17,7 +17,7 @@ sources have been imported under SPEC R19:
 - **Manufacturers' own IR tables**: Marantz's AV receiver charts, Anthem's IR
   hex sheet, Oppo's remote code workbooks, KEF's IR code sheets, JVC's
   projector guide, Arcam's custom installation notes, two of Cambridge Audio's lists
-  of NEC codes and Hegel's RC-5 tables, 375 files, 39,931 keys (DESIGN §29, §31, §58, §60, §62, §63, §64, §65, §66).
+  of NEC codes, Hegel's RC-5 tables and Linn's RC-5 table, 378 files, 40,047 keys (DESIGN §29, §31, §58, §60, §62, §63, §64, §65, §66, §67).
 
 SPEC v0.11 makes growing coverage from every source whose licence permits
 it the standing goal, with no fixed list of sources (DESIGN §8, Phase 8).
@@ -72,9 +72,13 @@ Land it in two PRs, code and then data.
       answers 404 and no copy has been found (a search found the 2011 remote control guide v1.4, an earlier edition of the family
       §63 reads, with the same grant, and the 2014 RS-232 specifications, which have no code table; the 2013 models' remote
       codes are in JVC's mobile user guide, 35 codes under "(c) 2013 JVCKENWOOD", so private). **Leads not yet read:** NAD's
-      `NAD-CrestronIR.zip` (17 Crestron `.ir` files of 2005, a readme maps them to models; NEC, customer code 877C) and its two
-      Pronto `.ccf` files, on nadelectronics.com/software; Sim Audio's `Simaudio-RC-5-IR-codes-rev1.1.pdf` (2002) and Linn's RC5
-      page. Each is a document
+      `NAD-CrestronIR.zip` (17 Crestron `.ir` files of 2005, a readme maps them to models; NEC, customer code 877C; the binary
+      format is not documented and was not decoded) and its two Pronto `.ccf` files, on nadelectronics.com/software; Sim Audio's
+      `Simaudio-RC-5-IR-codes-rev1.1.pdf` (2002: Moon i-3, i-5, P-3, P-5, Nova, Eclipse, Stellar and Orion, RC-5 and RC-6, no
+      notice text, about 80 codes, a new brand); and **Linn's 22-page legacy PDF** (`Linn_RC5_Codes_v0102.pdf`, 2011, the codes of
+      all the older products by address, no notice text), which §67 does not read because its table cells run over several lines
+      and the text cannot say which line belongs to which code (`0x12` is `Phono 1 Laser Auxiliary 2` with `Auxiliary 2` again
+      below the next row): it needs the page images. Each is a document
       pinned by hash as D123 does it; a PDF is read as the lines of text of its
       pages (KEF's was the first, D243, JVC's the second, D247), which suits a
       table and not prose. Kaleidescape's PDF says "All rights reserved": a source
