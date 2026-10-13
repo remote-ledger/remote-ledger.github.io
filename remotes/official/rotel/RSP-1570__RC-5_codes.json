@@ -1,0 +1,67 @@
+{
+  "manufacturer": "Rotel",
+  "model": "RSP-1570 (RC-5 codes)",
+  "aliases": [],
+  "controls": [
+    "Rotel RSP-1570"
+  ],
+  "protocol": {
+    "name": "RC5",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER_TOGGLE": {
+      "label": "POWER TOGGLE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "rotel.com IR hex codes/RSP1570_HEX.pdf@0ea150e0 (retrieved 2026-10-13) page 13 'POWER TOGGLE' (RC5 system code 17, ALTERNATE RC5 POWER & VOLUME CODES, IR CODE 0C (decimal 12)): RC5 device 17 function 12; its Pronto hex decodes to the same RC-5 system code and command (toggle bit 0)"
+        }
+      ]
+    },
+    "KEY_MUTE_TOGGLE": {
+      "label": "MUTE TOGGLE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "rotel.com IR hex codes/RSP1570_HEX.pdf@0ea150e0 (retrieved 2026-10-13) page 13 'MUTE TOGGLE' (RC5 system code 17, ALTERNATE RC5 POWER & VOLUME CODES, IR CODE 0D (decimal 13)): RC5 device 17 function 13; its Pronto hex decodes to the same RC-5 system code and command (toggle bit 0)"
+        }
+      ]
+    },
+    "KEY_VOLUME_UP": {
+      "label": "VOLUME UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "rotel.com IR hex codes/RSP1570_HEX.pdf@0ea150e0 (retrieved 2026-10-13) page 13 'VOLUME UP' (RC5 system code 17, ALTERNATE RC5 POWER & VOLUME CODES, IR CODE 10 (decimal 16)): RC5 device 17 function 16; its Pronto hex decodes to the same RC-5 system code and command (toggle bit 0)"
+        }
+      ]
+    },
+    "KEY_VOLUME_DOWN": {
+      "label": "VOLUME DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "rotel.com IR hex codes/RSP1570_HEX.pdf@0ea150e0 (retrieved 2026-10-13) page 13 'VOLUME DOWN' (RC5 system code 17, ALTERNATE RC5 POWER & VOLUME CODES, IR CODE 11 (decimal 17)): RC5 device 17 function 17; its Pronto hex decodes to the same RC-5 system code and command (toggle bit 0)"
+        }
+      ]
+    }
+  }
+}

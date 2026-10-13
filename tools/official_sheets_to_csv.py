@@ -10,7 +10,7 @@ every page, ``pages`` (it needs PyMuPDF): one non-empty line to a row, in the or
 puts the page number in a first cell), which the importer parses; or as its tables, ``tables`` (Arcam's, D251): a row is
 the page, the table's number on it and the cells of one table row, so a table's merged cells are the library's reading.
 
-    python3 tools/official_sheets_to_csv.py marantz|anthem|oppo|kef|jvc|arcam|cambridge|hegel|linn|simaudio
+    python3 tools/official_sheets_to_csv.py marantz|anthem|oppo|kef|jvc|arcam|cambridge|hegel|linn|simaudio|rotel
 """
 
 from __future__ import annotations
@@ -56,6 +56,60 @@ SHEETS = {
         "Hegel_H390_H590_IR_codes_v1.pdf", "Hegel_H95_H120_H190_IR_codes_v2.pdf", "Hegel_P20_P30_IR_codes_v2.pdf")},
     "linn": {"RC5_Codes.html": ["table"], "Linn_DS-DSM_Pronto_codes.pdf": ["flow"]},
     "simaudio": {"Simaudio-RC-5-IR-codes-rev1.1.pdf": ["pages"]},
+    "rotel": {"Rotel_IR_Codes.html": ["tables"], **{name: ["pages"] for name in (
+        "P5-X5_HEX.PDF",
+        "P5-P5S2-X5-X5S2_HEX.pdf",
+        "Q5_HEX.pdf",
+        "X3_HEX.PDF",
+        "X3-X3S2_HEX.pdf",
+        "X430_HEX.pdf",
+        "P5-X5-X5S2_HEX.pdf",
+        "CD11_HEX.pdf",
+        "CD11-CD11MKII_HEX.pdf",
+        "CD14_HEX.pdf",
+        "CD14andCD14MKII_HEX.pdf",
+        "RCD06SE_HEX.pdf",
+        "RCD12_HEX.pdf",
+        "RCD1520_HEX.pdf",
+        "RCD1570_HEX_0.pdf",
+        "RCD1572_HEX.pdf",
+        "RCD1572-RCD1572MKII_HEX.pdf",
+        "DX3-DX5_HEX.pdf",
+        "A10MKII_HEX.pdf",
+        "A11_HEX.pdf",
+        "A11-A11MKII_HEX.pdf",
+        "A12-A14_HEX.pdf",
+        "A12-A14-A12MKII-A14MKII_HEX.pdf",
+        "A10MKIIandA8_HEX.pdf",
+        "RA05SE_HEX.pdf",
+        "RA12_HEX.pdf",
+        "RA1520_HEX.pdf",
+        "RA1570_HEX_0.pdf",
+        "RA1572_HEX.pdf",
+        "RA1572-RA1572MKII_HEX.pdf",
+        "RA1592-RA1592MKII_HEX.pdf",
+        "S14_RAS-5000_HEX.pdf",
+        "RC1550_HEX.pdf",
+        "RC1570_HEX.pdf",
+        "RC1572_HEX.pdf",
+        "RC1572MKII_HEX.pdf",
+        "RC1580_HEX.pdf",
+        "RC1590_HEX.pdf",
+        "RC1590-RC1590MKII_HEX.pdf",
+        "RDD1580_HEX.pdf",
+        "RCX1500_HEX.pdf",
+        "RAP1580_HEX.pdf",
+        "RSP1570_HEX.pdf",
+        "RSP1572_HEX.pdf",
+        "RSP1576_HEX.pdf",
+        "RSP1582_HEX.pdf",
+        "RSX1560_HEX.pdf",
+        "RSX1562_HEX.pdf",
+        "RDG1520_HEX.pdf",
+        "RT11_HEX.pdf",
+        "RT12_HEX.pdf",
+        "T14_HEX.pdf",
+    )}},
     "kef": {
         "LS50Wireless-IRcode-INT.pdf": ["page 1", "page 2"],
         "LS50WII_IR-Codes-for-Universal-Remote-Control.pdf": ["page 1"],
@@ -77,38 +131,50 @@ def text(value) -> str:
 
 
 class _Table(HTMLParser):
-    """The first ``<table>`` of an HTML page as rows of cell text: ``<br>`` is `` / ``, ``<sup>x</sup>`` is ``^x``, runs of space one."""
+    """The first ``<table>`` of an HTML page (``every``: all of them, each row led by its table's number) as rows of cell text:
+    ``<br>`` is `` / ``, ``<sup>x</sup>`` is ``^x``, runs of space one, and with ``links`` an anchor's address follows its text in
+    braces."""
 
-    def __init__(self) -> None:
+    def __init__(self, every: bool = False, links: bool = False) -> None:
         super().__init__()
+        self.every, self.links = every, links
         self.rows: list[list[str]] = []
         self.cell: list[str] | None = None
+        self.href = ""
         self.depth = 0
+        self.tables = 0
         self.done = False
 
     def handle_starttag(self, tag, attrs):
         if self.done:
             return
         if tag == "table":
+            if self.depth == 0:
+                self.tables += 1
             self.depth += 1
         elif self.depth and tag == "tr":
-            self.rows.append([])
+            self.rows.append([str(self.tables)] if self.every else [])
         elif self.depth and tag in ("td", "th"):
             self.cell = []
         elif self.cell is not None and tag == "br":
             self.cell.append(" / ")
         elif self.cell is not None and tag == "sup":
             self.cell.append("^")
+        elif self.cell is not None and tag == "a" and self.links:
+            self.href = dict(attrs).get("href") or ""
 
     def handle_endtag(self, tag):
         if self.done:
             return
-        if tag in ("td", "th") and self.cell is not None:
-            self.rows[-1].append(" ".join("".join(self.cell).split()).replace(" / ", " / ").replace("/  /", "/"))
+        if tag == "a" and self.cell is not None and self.href:
+            self.cell.append(" {" + self.href + "}")
+            self.href = ""
+        elif tag in ("td", "th") and self.cell is not None:
+            self.rows[-1].append(" ".join("".join(self.cell).split()))
             self.cell = None
         elif tag == "table" and self.depth:
             self.depth -= 1
-            self.done = self.depth == 0
+            self.done = self.depth == 0 and not self.every
 
     def handle_data(self, data):
         if self.cell is not None:
@@ -117,7 +183,7 @@ class _Table(HTMLParser):
 
 def rows_of(path: Path, sheet: str) -> list[list[str]]:
     if path.suffix.lower() == ".html":
-        parser = _Table()
+        parser = _Table(every=sheet == "tables", links=sheet == "tables")
         parser.feed(path.read_text(encoding="utf-8"))
         return [[re.sub(r"\s*/\s*$", "", cell).strip() for cell in row] for row in parser.rows]
     if path.suffix.lower() == ".pdf":

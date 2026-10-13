@@ -12,7 +12,7 @@ from pathlib import Path
 import pytest
 
 from remote_ledger.errors import ValidationError
-from remote_ledger.official import anthem, arcam, cambridge, hegel, jvc, kef, linn, marantz, oppo, simaudio
+from remote_ledger.official import anthem, arcam, cambridge, hegel, jvc, kef, linn, marantz, oppo, rotel, simaudio
 from remote_ledger.official import importer as oi
 from remote_ledger.official.common import MANIFEST, Report, load_snapshot
 from remote_ledger.serialize import load
@@ -26,7 +26,7 @@ SNAPSHOT = ROOT / oi.SNAPSHOT
 
 def test_every_document_and_csv_is_the_one_the_manifest_pins():
     for maker, retrieved in (("marantz", "2026-10-08"), ("anthem", "2026-10-08"), ("oppo", "2026-10-09"), ("kef", "2026-10-13"),
-                             ("jvc", "2026-10-13"), ("arcam", "2026-10-13"), ("cambridge", "2026-10-13"), ("hegel", "2026-10-13"), ("linn", "2026-10-13"), ("simaudio", "2026-10-13")):
+                             ("jvc", "2026-10-13"), ("arcam", "2026-10-13"), ("cambridge", "2026-10-13"), ("hegel", "2026-10-13"), ("linn", "2026-10-13"), ("simaudio", "2026-10-13"), ("rotel", "2026-10-13")):
         snap = load_snapshot(SNAPSHOT / maker)
         assert snap.maker == maker and snap.retrieved == retrieved
         assert snap.documents and snap.sheets
@@ -426,9 +426,11 @@ def test_inputs_21_to_30_are_only_for_the_x20_group_as_the_sheets_note_says():
 
 def test_the_committed_import_is_exactly_what_the_pinned_snapshots_yield(tmp_path):
     """SPEC R19.5: re-running the import over the pinned snapshots reproduces every file byte for byte."""
+    from remote_ledger.import_common import authored_names
+
     root = tmp_path / "repo"
     (root / "remotes").mkdir(parents=True)
-    oi.write_import(root, SNAPSHOT)
+    oi.write_import(root, SNAPSHOT, authored_names(ROOT, oi.IMPORT_ROOT))      # the other sources' names, as in the tree
     committed = {p.relative_to(ROOT / oi.IMPORT_ROOT).as_posix(): p.read_bytes()
                  for p in (ROOT / oi.IMPORT_ROOT).rglob("*") if p.is_file() and p.name != "README.md"}
     fresh = {p.relative_to(root / oi.IMPORT_ROOT).as_posix(): p.read_bytes()
@@ -441,12 +443,12 @@ def test_the_committed_official_import_keeps_r19():
     or Untested, and a citation that names a document the manifest pins, by hash."""
     assert (ROOT / oi.IMPORT_ROOT / "README.md").is_file() and (ROOT / oi.IMPORT_ROOT / oi.REPORT).is_file()
     hashes, dates, snapshots = {}, {}, {}
-    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "arcam", "cambridge", "hegel", "linn", "simaudio"):
+    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "arcam", "cambridge", "hegel", "linn", "simaudio", "rotel"):
         manifest = json.loads((SNAPSHOT / maker / MANIFEST).read_text(encoding="utf-8"))
         for name, entry in manifest["documents"].items():
             hashes[name], dates[name], snapshots[name] = entry["sha256"], manifest["retrieved"], entry.get("snapshot")
     shape = re.compile(r"^(?:marantz\.com archive-downloads|anthemav\.com \(storage\.googleapis\.com/sandbox1-anthemav/an\)"
-                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|docs\.linn\.co\.uk RC-5 codes|simaudio\.com Table of IR codes)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
+                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|docs\.linn\.co\.uk RC-5 codes|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
                        r"(?:, from the Wayback Machine snapshot (\d{14}))?\) (?:sheet '[^']+' row \d+|page \d+ row \d+|page \d+ '|page \d+ table \d+ row '|page \d+ row ')")
     files = sorted((ROOT / oi.IMPORT_ROOT).rglob("*.json"))
     assert len(files) > 180
@@ -1337,4 +1339,150 @@ def test_other_sources_hold_the_simaudio_codes_and_name_them_alike():
             or ({vocabulary.resolve(x) for x in ours[k]} - {None}) & ({vocabulary.resolve(x) for x in seen[k]} - {None})]
     assert (len(ours), len(held), len(same)) == (70, 69, 64)
     assert [k for k in ours if k not in seen] == [("RC6", 4, 0x27)]
+
+
+# --- Rotel -------------------------------------------------------------------------------------------------------
+
+
+def rows_of_lines(*lines: str, page: int = 1) -> list[list[str]]:
+    return [[str(page), line] for line in lines]
+
+
+def test_a_rotel_title_lists_models_and_a_number_alone_takes_the_letters_before_it():
+    assert rotel.title_models("ROTEL RSX-1550/1560 HEX CODES") == {"RSX1550", "RSX1560"}
+    assert rotel.title_models("ROTEL RA-11/12 HEX CODES") == {"RA11", "RA12"}
+    assert rotel.title_models("ROTEL P5/P5S2/X5/X5 Series 2 HEX CODES") == {"P5", "P5S2", "X5", "X5S2"}
+    assert rotel.title_models("ROTEL CD14 and CD14MKII HEX CODES") == {"CD14", "CD14MKII"}
+    assert rotel.documents([["1", "Model Number", "IR Hex Codes"],
+                            ["1", "A12", "A12 IR Hex Codes {https://www.rotel.com/sites/default/files/product/ir/A12-A14%20HEX.pdf}"],
+                            ["1", "A14", "A14 IR Hex Codes {https://www.rotel.com/sites/default/files/product/ir/A12-A14%20HEX.pdf}"],
+                            ["1", "CD14MKII", "CD14MKII IR Hex Codes {https://www.rotel.com/sites/default/files/product/ir/CD14%26CD14MKII%20HEX.pdf}"],
+                            ["2", "A12", "A12 IR Hex Codes {https://www.rotel.com/sites/default/files/product/ir/A12-A14%20HEX.pdf}"]]) == {
+        "A12-A14_HEX.pdf": ["A12", "A14"], "CD14andCD14MKII_HEX.pdf": ["CD14MKII"]}
+
+
+def test_an_nec_frame_in_pronto_is_read_as_its_four_bytes():
+    """Rotel's RA-1572 ``SOURCE CD`` (NEC 8311, IR CODE 01) is the bytes 0x83, 0x11, 0x01 and the complement of 0x01; a frame with a
+    space that is neither a mark nor three of them, or of another length, is none."""
+    snapshot = oi.load_snapshot(SNAPSHOT / "rotel")
+    _, sections = rotel.parse(snapshot.sheet_of("RA1572_HEX.pdf", "pages"))
+    item = sections[0].items[0]
+    assert (item.name, item.code) == ("SOURCE CD", 1)
+    assert rotel.decode_nec(item.hex) == (0x83, 0x11, 0x01, 0xFE)
+    assert rotel.decode_nec(item.hex.replace("0015 0041", "0015 0024", 1)) is None
+    assert rotel.decode_nec(item.hex.replace("0022 0002", "0021 0002")) is None and rotel.decode_nec("nope") is None
+
+
+def test_a_rotel_document_is_sets_of_codes_with_names_and_hex_and_its_oddities_are_read_as_the_documents_have_them():
+    """A page's first line is its number (a name that is a digit is a name); ``IF CODE`` is read as ``IR CODE``; a set's lines before
+    its first code are its note; a name may take two lines; a hex with no ``IR CODE`` line before it is an item with no code, to which a
+    code line put after it gives its code; ``RC5, SYSTEM CODE 17`` opens a set of decimal commands."""
+    h = "0000 006D 0022 0002 0157 00AC 0015 0016"
+    title, sections = rotel.parse(rows_of_lines(
+        "1", "ROTEL X9 HEX CODES", "NEC 8311, MAIN IR CODES", "Note commands marked with * require V1.", "IR CODE 01", "SOURCE CD*", h,
+        "IR CODE 09", "1", h, "IR CODE 0A", "RECORD /", "ZONE SELECT", h, "NEC 8314, BLUETOOTH CODES", "IF CODE 0F", "STOP", h, page=1)
+        + rows_of_lines("2", "NEC 8312", "SOURCE TUNER*", h, "IR CODE 02", page=2)
+        + rows_of_lines("3", "RC5, SYSTEM CODE 17, ALTERNATE RC5 POWER & VOLUME CODES", "IR CODE 12", "POWER TOGGLE", h, page=3))
+    assert title == "ROTEL X9 HEX CODES"
+    assert [(f"{s.protocol} {s.address:02X}{s.sub:02X}", s.kind, [(i.code, i.name, i.typo) for i in s.items]) for s in sections] == [
+        ("NEC1 8311", "MAIN IR CODES", [(1, "SOURCE CD*", False), (9, "1", False), (10, "RECORD / ZONE SELECT", False)]),
+        ("NEC1 8314", "BLUETOOTH CODES", [(15, "STOP", True)]),
+        ("NEC1 8312", "", [(2, "SOURCE TUNER*", False)]),
+        ("RC5 1100", "ALTERNATE RC5 POWER & VOLUME CODES", [(12, "POWER TOGGLE", False)])]
+    assert sections[0].note == "Note commands marked with * require V1."
+
+
+def rotel_files() -> dict[str, dict]:
+    return {load(p)["model"]: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "rotel").glob("*.json"))}
+
+
+def test_the_rotel_files_are_the_59_models_less_two_their_alternative_sets_and_the_questionable_ones():
+    """93 files and 3,598 keys: 57 model files (2,528 keys), 26 files of the units' alternative IR code set (942), 5 of the processors'
+    and receivers' RC-5 power and volume codes (20) and 5 questionable ones (108 keys, Untested). The S14 and RAS-5000 are not read."""
+    files = rotel_files()
+    kinds: dict[str, list[int]] = {"model": [], "alternative": [], "RC-5": [], "questionable": []}
+    for model, doc in files.items():
+        assert doc["manufacturer"] == "Rotel" and doc["controls"][0].startswith("Rotel ")
+        kind = ("questionable" if model.endswith("_questionable") else "alternative" if "alternative" in model else "RC-5" if "RC-5" in model else "model")
+        kinds[kind].append(len(doc["keys"]))
+        tiers = {s["forms"][0]["confidence"] for s in doc["keys"].values()}
+        assert tiers == ({"untested"} if kind == "questionable" else {"plausible"}), model
+        assert doc["protocol"]["name"] == ("RC5" if kind == "RC-5" else "NEC1")
+    assert {k: (len(v), sum(v)) for k, v in kinds.items()} == {"model": (57, 2528), "alternative": (26, 942), "RC-5": (5, 20), "questionable": (5, 108)}
+    report = (ROOT / oi.IMPORT_ROOT / oi.REPORT).read_text(encoding="utf-8")
+    figure = lambda what: int(re.search(rf"\| rotel: {what} \| ([\d,]+) \|", report)[1].replace(",", ""))
+    assert [figure(w) for w in ("models on the page", "files", "keys", "Pronto hex that decodes to its heading and code",
+                                "Pronto hex that decodes to another code", "codes whose line says IF CODE")] == [59, 93, 3598, 3052, 67, 24]
+    assert "S14" not in " ".join(files) and "RAS-5000" not in " ".join(files)
+
+
+def test_a_rotel_set_is_nec_with_the_headings_two_bytes_and_a_set_whose_hex_says_another_address_is_questionable():
+    files = rotel_files()
+    ra = files["RA-1572"]["keys"]
+    form = ra["KEY_SOURCE_CD"]["forms"][0]
+    assert (form["device"], form["subdevice"], form["function"]) == ("0x83", "0x11", "0x01")
+    assert "NEC 8311, MAIN IR CODES, IR CODE 01): NEC1 device 131 subdevice 17 function 1; its Pronto hex decodes" in form["source"]
+    assert {s["forms"][0]["subdevice"] for s in ra.values()} == {"0x11", "0x14"}                 # the main set and the Bluetooth/USB set
+    alt = files["RA-1572 (alternative IR codes)"]["keys"]
+    assert {s["forms"][0]["subdevice"] for s in alt.values()} == {"0x21"} and len(alt) > 20
+    # the RSP-1570's ZONE 4 set is headed NEC 8324 and its hex decodes to NEC 8323 (the Zone 3's): kept as written, apart
+    zone4 = files["RSP-1570_questionable"]["keys"]
+    assert len(zone4) == 14 and {s["forms"][0]["subdevice"] for s in zone4.values()} == {"0x24"}
+    assert "its Pronto hex decodes to NEC 8323 function 00, FF after it and not to NEC 8324 function 00" in zone4["KEY_ZONE_4_POWER"]["forms"][0]["source"]
+    assert "ZONE 4 POWER" not in {s["label"] for s in files["RSP-1570"]["keys"].values()}
+    # the RSP-1576's two sets have their headings the other way round from their hex
+    assert len(files["RSP-1576_questionable"]["keys"]) == len(files["RSP-1576 (alternative IR codes)_questionable"]["keys"]) == 6
+    # the NEC 24DB set is standard NEC (address 0x24, complement 0xDB) and the RC-5 power and volume codes are decimal system 17
+    rc5 = files["RSX-1562 (RC-5 codes)"]
+    assert rc5["protocol"]["name"] == "RC5" and {s["forms"][0]["device"] for s in rc5["keys"].values()} == {"0x11"}
+    assert rc5["keys"]["KEY_POWER_TOGGLE"]["forms"][0]["function"] == "0x0C" and rc5["keys"]["KEY_VOLUME_UP"]["forms"][0]["function"] == "0x10"
+    assert files["RSX-1562"]["keys"]["KEY_AMP_MODE"]["forms"][0]["device"] == "0x24"
+    # R15: the JP1 files named A11 and CD11 have the names, so these are kept under another
+    assert "A11 (Rotel hex codes)" in files and "CD11 (Rotel hex codes)" in files and "A11" not in files and "CD11" not in files
+    # the RC-1550's PDF is titled RC-1580 (Rotel's typo): the page's link decides, and the report says so
+    assert "the title 'ROTEL RC-1580 HEX CODES' does not name the RC-1550" in (ROOT / oi.IMPORT_ROOT / oi.REPORT).read_text(encoding="utf-8")
+
+
+def test_other_sources_rotel_nec_remotes_send_the_codes_the_pdfs_list():
+    """The independent check (D274): the ledger's nineteen other Rotel NEC remotes (IR Blaster, JP1, LIRC) hold 550 keys at the address
+    0x83 and **528 of them (96.0%) are a code some Rotel PDF lists**; where the vocabulary or the spelling compares the names 306 agree and
+    12 do not (``OK`` and ``ENTER``, ``PRESET NEXT`` and ``TUNE UP``: the same keys in other words)."""
+    from remote_ledger.keys import load_vocabulary
+
+    vocabulary = load_vocabulary()
+    squash = lambda t: re.sub(r"[^a-z0-9]", "", t.lower())      # noqa: E731
+    ours: dict[tuple[int, int, int], set[str]] = {}
+    for doc in rotel_files().values():
+        if doc["protocol"]["name"] == "NEC1":
+            for spec in doc["keys"].values():
+                f = spec["forms"][0]
+                ours.setdefault((int(f["device"], 0), int(f["subdevice"], 0), int(f["function"], 0)), set()).add(spec["label"])
+    remotes = total = hit = agree = disagree = 0
+    for path in sorted((ROOT / "remotes").glob("*/*/*.json")):
+        if "official" in path.parts:
+            continue
+        doc = load(path)
+        if not (doc.get("manufacturer") or "").lower().startswith("rotel") or not doc["protocol"]["name"].startswith("NEC"):
+            continue
+        remotes += 1
+        for name, spec in doc["keys"].items():
+            label = spec.get("label") or name
+            for f in spec["forms"]:
+                if f.get("type") != "irp" or f.get("device") is None or f.get("subdevice") is None:
+                    continue
+                try:
+                    key = (int(f["device"], 0), int(f["subdevice"], 0), int(f["function"], 0))
+                except (TypeError, ValueError):
+                    continue
+                if key[0] != 0x83:
+                    continue
+                total += 1
+                if key in ours:
+                    hit += 1
+                    mine, theirs = {vocabulary.resolve(x) for x in ours[key]} - {None}, vocabulary.resolve(label)
+                    if squash(label) in {squash(x) for x in ours[key]} or (theirs and theirs in mine):
+                        agree += 1
+                    elif theirs is not None and mine:
+                        disagree += 1
+    assert (remotes, total, hit, agree, disagree) == (19, 550, 528, 306, 12)
 
