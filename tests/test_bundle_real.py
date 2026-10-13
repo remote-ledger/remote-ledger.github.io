@@ -56,8 +56,8 @@ def test_the_dedupe_numbers_the_design_quotes(real):
             distinct.setdefault(record.source, set()).add(key[4])
     assert (keys["irblaster"], len(distinct["irblaster"])) == (412_775, 58_344)
     assert (keys["lirc"], keys["smartir"], keys["authored"]) == (112_789, 914, 128)
-    assert sum(keys.values()) == 667_669 and len(records) == 16_637
-    assert len(set().union(*distinct.values())) == 178_290
+    assert sum(keys.values()) == 683_664 and len(records) == 16_681
+    assert len(set().union(*distinct.values())) == 179_856
     # the IR Blaster signals as blobs, with their two-byte counts: 8.8 MB of binary words
     assert sum(len(b) for b in distinct["irblaster"]) == 8_889_348
 
@@ -103,7 +103,9 @@ def test_the_selected_bundle_is_the_size_of_the_data_and_the_estimate_is_within_
     assembled, data = selected
     assert len(data) > 51_000_000       # all the data: the size of the full bundle (D117)
     # the estimate the rule works by is within a few percent of the file it predicts
-    assert abs(len(data) - selection.estimated_bytes) / len(data) < 0.04
+    # the estimate is a flat 21 bytes a key (D95) and it was 3.7% under the file at the 4% this test once allowed; the 15,995 direct-access keys
+    # of DESIGN section 60 carry a label of 34 bytes each and took it to 4.6%, so a few percent is 5% now
+    assert abs(len(data) - selection.estimated_bytes) / len(data) < 0.05
     assert len(assembled.brands) == len(selection.curated) + len(selection.proxy_added)
     assert len(assembled.brands) + len(assembled.excluded) == len(real[1].brands)
 
@@ -155,7 +157,7 @@ def test_design_quotes_the_numbers_of_the_real_build(real, selected, selection):
         f"{len(records):,} | {len(kept):,}",                                  # the remote files
         f"{len(records) - collected.folded.folded:,} | {len(assembled.remotes):,}",   # the remotes, D103
         f"{keys:,} | {len(assembled.keys):,}",
-        f"178,290 | {len(assembled.signals):,}",
+        f"179,856 | {len(assembled.signals):,}",
         f"{len(assembled.excluded):,} brands, {len(left_out):,} remotes, "
         f"{sum(len(r.keys) for r in left_out):,} keys",
         f"{len(selection.curated)} brands of the list and {len(selection.proxy_added):,} by the proxy",

@@ -220,6 +220,126 @@ def test_marantzs_rc5_pronto_hex_decodes_to_the_system_and_command_beside_it():
     assert wrong == [] and (matched, extension) == (1_640, 31)
 
 
+DIRECT = [
+    ["Marantz AV/Stereo Receiver: Direct Volume Commands"] + [""] * 6,
+    [""] * 7,
+    [""] * 7,
+    ["Zone", "Volume", "Command", "", "", "SR1000", "NR2000\nNR2001"],
+    ["MAIN", "0 dB", "16", "111", "00", "X", "X"],
+    ["ZONE", "-1 dB", "16", "111", "01", "X", "---"],
+    ["", "-\u221e dB", "16", "111", "59-63", "X(-\u221e)", "-"],
+    ["MULTI", "0 dB", "16", "112", "00", "X", "X"],
+    ["ZONE A", "1", "17", "64", "01", "S", "X/S"],
+    ["", "2", "17", "64", "02", "", "@"],
+    [""] * 7,
+    ["Notes: Specifications subject to change without prior notice."] + [""] * 6,
+]
+
+
+def test_a_direct_sheet_is_its_models_by_column_and_a_row_a_value_in_a_zone_written_down_the_first_column():
+    models, commands = marantz.parse_direct_sheet(DIRECT, "Direct Vol.")
+    assert [(m.name, m.aliases) for m in models] == [("SR1000", ()), ("NR2000", ("NR2001",))]
+    # the zone is the group of cells that last started, the first row of it included, and the notes row is no command
+    assert [(c.row, c.name, c.triple) for c in commands] == [
+        (5, "Direct volume MAIN ZONE 0 dB", "16 111 00"), (6, "Direct volume MAIN ZONE -1 dB", "16 111 01"),
+        (7, "Direct volume MAIN ZONE -\u221e dB", "16 111 59-63"), (8, "Direct volume MULTI ZONE A 0 dB", "16 112 00"),
+        (9, "Direct volume MULTI ZONE A 1", "17 64 01"), (10, "Direct volume MULTI ZONE A 2", "17 64 02")]
+    assert commands[2].marks == {5: "X(-\u221e)", 6: "-"} and commands[4].marks == {5: "S", 6: "X/S"}
+
+
+def test_the_direct_rows_a_column_marks_are_a_file_of_its_own_with_the_rc5x_triple_and_the_rows_that_are_ranges_are_counted(tmp_path):
+    from remote_ledger.official.common import Snapshot
+
+    document = marantz.DOCUMENTS[-1]
+
+    class Fake(Snapshot):
+        def sheet_of(self, doc, sheet):
+            return DIRECT if sheet == "Direct Vol." else chart_with_hex()
+
+    sheets = {"direct.csv": {"document": document, "sheet": "Direct Vol."}}
+    snap = Fake("marantz", "2026-10-08", tmp_path, {d: {"sha256": "ab" * 32} for d in marantz.DOCUMENTS}, sheets)
+    report = Report()
+    files = dict(marantz.build(snap, {}, report))
+    direct = files["remotes/official/marantz/SR1000__direct.json"]
+    assert direct["model"] == "SR1000 [direct]" and direct["aliases"] == [] and direct["controls"] == ["Marantz SR1000"]
+    assert direct["protocol"] == {"name": "RC5x", "carrierHz": 36000, "minSends": 1}
+    # SR1000's column marks X, X, X(-inf), X, S, and not a blank: a mark that starts with X or S is a command the model has
+    assert [(f["device"], f["subdevice"], f["function"]) for f in (v["forms"][0] for v in direct["keys"].values())] == [
+        (16, 111, 0), (16, 111, 1), (16, 112, 0), (17, 64, 1)]
+    assert list(direct["keys"])[:2] == ["KEY_DIRECT_VOLUME_MAIN_ZONE_0_DB", "KEY_DIRECT_VOLUME_MAIN_ZONE_MINUS_1_DB"]
+    cited = direct["keys"]["KEY_DIRECT_VOLUME_MAIN_ZONE_0_DB"]["forms"][0]["source"]
+    assert ("sheet 'Direct Vol.' row 5 'Direct volume MAIN ZONE 0 dB' (RC-5 16 111 00), the column of SR1000: RC-5x system 16 command 111 "
+            "extension 0, read as RC5x device 16 subdevice 111 function 0") in cited
+    assert "the chart marks it 'S'" in direct["keys"]["KEY_DIRECT_VOLUME_MULTI_ZONE_A_1"]["forms"][0]["source"]
+    # NR2000 (and its alias) marks the rows 1 to 3 and the last two, but `---` and `-` are no
+    other = files["remotes/official/marantz/NR2000__direct.json"]
+    assert other["aliases"] == [] and other["controls"] == ["Marantz NR2000", "Marantz NR2001"]
+    assert [(f["device"], f["subdevice"], f["function"]) for f in (v["forms"][0] for v in other["keys"].values())] == [
+        (16, 111, 0), (16, 112, 0), (17, 64, 1), (17, 64, 2)]
+    # the main chart's files are what they were, and the -inf row, whose extension is five values, is counted
+    assert files["remotes/official/marantz/SR1000.json"]["protocol"]["name"] == "RC5"
+    assert report.unrepresented[("marantz", document, "an RC-5x extension that is a range of values, a command for each")] == 1
+
+
+def test_a_model_takes_each_direct_sheet_from_the_newest_workbook_that_lists_it_and_the_one_column_of_the_2015_workbook_is_all_of_its_models(tmp_path):
+    from remote_ledger.official.common import Snapshot
+
+    old, new = marantz.DOCUMENTS[0], marantz.DOCUMENTS[-1]
+    older = [list(r) for r in DIRECT]
+    older[5][2:5] = ["16", "99", "01"]          # the older workbook says something else for the second row
+
+    class Fake(Snapshot):
+        def sheet_of(self, doc, sheet):
+            if sheet == "Direct Vol.":
+                return older if doc == old else DIRECT
+            return chart_with_hex()
+
+    sheets = {"a.csv": {"document": old, "sheet": "Direct Vol."}, "b.csv": {"document": new, "sheet": "Direct Vol."}}
+    snap = Fake("marantz", "2026-10-08", tmp_path, {d: {"sha256": "ab" * 32} for d in marantz.DOCUMENTS}, sheets)
+    files = dict(marantz.build(snap, {}, Report()))
+    forms = [v["forms"][0] for v in files["remotes/official/marantz/SR1000__direct.json"]["keys"].values()]
+    assert (16, 99, 1) not in [(f["device"], f["subdevice"], f["function"]) for f in forms]
+    assert all(f["source"].startswith("marantz.com archive-downloads/" + new) for f in forms)
+
+    # `FY18AVR` is every model of the workbook it is in
+    fy18 = [list(r) for r in DIRECT]
+    fy18[3][5:] = ["FY18AVR"]
+    fy18 = [r[:6] for r in fy18]
+
+    class Fake2(Fake):
+        def sheet_of(self, doc, sheet):
+            return fy18 if sheet == "Direct Vol." else chart_with_hex()
+
+    only = {"b.csv": {"document": new, "sheet": "Direct Vol."}}
+    snap = Fake2("marantz", "2026-10-08", tmp_path, {d: {"sha256": "ab" * 32} for d in marantz.DOCUMENTS}, only)
+    files = dict(marantz.build(snap, {}, Report()))
+    assert {"remotes/official/marantz/SR1000__direct.json", "remotes/official/marantz/NR2000__direct.json"} <= set(files)
+
+
+def test_the_committed_direct_files_cite_the_row_they_read_and_one_jp1_upgrades_key_is_the_charts_first_row():
+    """The 44 files of §60: RC5x, one irp form a key, whose citation names the row's system, command and extension and whose form
+    carries them as D, S and F. And an independent corroboration the ledger happens to hold: the Marantz NR1402 upgrade of the JP1
+    forum has a key it calls `Direct VOLUME`, and its RC-5x signal is exactly the chart's first row of `Direct Vol.`, system 16,
+    command 111, extension 0 (the one JP1 key of the 1,567 distinct triples of the direct files)."""
+    files = keys = 0
+    for path in sorted((ROOT / oi.IMPORT_ROOT / "marantz").glob("*__direct.json")):
+        doc = load(path)
+        files += 1
+        assert doc["protocol"] == {"name": "RC5x", "carrierHz": 36000, "minSends": 1} and doc["model"].endswith(" [direct]"), path.name
+        for key, spec in doc["keys"].items():
+            keys += 1
+            (form,) = spec["forms"]
+            cited = re.search(r"\(RC-5 (\d+) (\d+) (\d+)\)", form["source"])
+            assert (form["type"], form["confidence"]) == ("irp", "plausible"), (path.name, key)
+            fields = tuple(int(str(form[name]), 0) for name in ("device", "subdevice", "function"))
+            assert fields == tuple(int(g) for g in cited.groups()), (path.name, key)
+            assert fields[0] <= 31 and fields[1] <= 127 and fields[2] <= 63
+    assert (files, keys) == (44, 15_995)
+    jp1 = load(ROOT / "remotes" / "jp1" / "Marantz" / "Audio-Marantz_NR1402-rc5x.json")
+    (form,) = [v["forms"][0] for v in jp1["keys"].values() if v["label"] == "Direct VOLUME"]
+    assert (int(form["device"], 0), int(form["subdevice"], 0), int(form["function"], 0)) == (16, 111, 0)
+
+
 def test_every_rc5x_key_of_the_tree_says_the_chart_row_it_reads_and_the_forms_are_the_rows_fields():
     """The RC-5x keys are the chart's rows that have an extension and no hex (D226): a file of the protocol ``RC5x``, a key per
     row, whose citation names the row's system, command and extension and whose form carries them as D, S and F. 75 models, 5,589
@@ -227,6 +347,8 @@ def test_every_rc5x_key_of_the_tree_says_the_chart_row_it_reads_and_the_forms_ar
     files = keys = 0
     for path in sorted((ROOT / oi.IMPORT_ROOT / "marantz").glob("*.json")):
         doc = load(path)
+        if path.name.endswith("__direct.json"):
+            continue                         # the direct-access files are RC5x too, and have a test of their own below
         if doc["protocol"].get("name") != "RC5x":
             assert all("subdevice" not in f for v in doc["keys"].values() for f in v["forms"]), path.name
             continue
