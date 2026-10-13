@@ -12,7 +12,7 @@ from pathlib import Path
 import pytest
 
 from remote_ledger.errors import ValidationError
-from remote_ledger.official import anthem, arcam, cambridge, hegel, jvc, kef, linn, marantz, oppo
+from remote_ledger.official import anthem, arcam, cambridge, hegel, jvc, kef, linn, marantz, oppo, simaudio
 from remote_ledger.official import importer as oi
 from remote_ledger.official.common import MANIFEST, Report, load_snapshot
 from remote_ledger.serialize import load
@@ -26,7 +26,7 @@ SNAPSHOT = ROOT / oi.SNAPSHOT
 
 def test_every_document_and_csv_is_the_one_the_manifest_pins():
     for maker, retrieved in (("marantz", "2026-10-08"), ("anthem", "2026-10-08"), ("oppo", "2026-10-09"), ("kef", "2026-10-13"),
-                             ("jvc", "2026-10-13"), ("arcam", "2026-10-13"), ("cambridge", "2026-10-13"), ("hegel", "2026-10-13"), ("linn", "2026-10-13")):
+                             ("jvc", "2026-10-13"), ("arcam", "2026-10-13"), ("cambridge", "2026-10-13"), ("hegel", "2026-10-13"), ("linn", "2026-10-13"), ("simaudio", "2026-10-13")):
         snap = load_snapshot(SNAPSHOT / maker)
         assert snap.maker == maker and snap.retrieved == retrieved
         assert snap.documents and snap.sheets
@@ -441,12 +441,12 @@ def test_the_committed_official_import_keeps_r19():
     or Untested, and a citation that names a document the manifest pins, by hash."""
     assert (ROOT / oi.IMPORT_ROOT / "README.md").is_file() and (ROOT / oi.IMPORT_ROOT / oi.REPORT).is_file()
     hashes, dates, snapshots = {}, {}, {}
-    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "arcam", "cambridge", "hegel", "linn"):
+    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "arcam", "cambridge", "hegel", "linn", "simaudio"):
         manifest = json.loads((SNAPSHOT / maker / MANIFEST).read_text(encoding="utf-8"))
         for name, entry in manifest["documents"].items():
             hashes[name], dates[name], snapshots[name] = entry["sha256"], manifest["retrieved"], entry.get("snapshot")
     shape = re.compile(r"^(?:marantz\.com archive-downloads|anthemav\.com \(storage\.googleapis\.com/sandbox1-anthemav/an\)"
-                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|docs\.linn\.co\.uk RC-5 codes)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
+                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|docs\.linn\.co\.uk RC-5 codes|simaudio\.com Table of IR codes)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
                        r"(?:, from the Wayback Machine snapshot (\d{14}))?\) (?:sheet '[^']+' row \d+|page \d+ row \d+|page \d+ '|page \d+ table \d+ row '|page \d+ row ')")
     files = sorted((ROOT / oi.IMPORT_ROOT).rglob("*.json"))
     assert len(files) > 180
@@ -1238,4 +1238,103 @@ def test_the_linn_licence_is_the_wikis_general_disclaimer_and_it_is_pinned_whole
     from remote_ledger.bundle import notices
 
     assert "GNU Free Documentation License" in notices.FACTS["official"]["note"]
+
+
+# --- Simaudio ----------------------------------------------------------------------------------------------------
+
+
+def test_simaudios_model_lists_label_glyphs_and_digits_are_read_as_written():
+    assert simaudio.models_of("Moon i-3, i-5, P-3, P-5") == ("Moon i-3", "Moon i-5", "Moon P-3", "Moon P-5")
+    assert simaudio.models_of("Moon Nova and Moon Eclipse") == ("Moon Nova", "Moon Eclipse")
+    assert simaudio.models_of("Moon Stellar") == ("Moon Stellar",)
+    assert simaudio.label_of("0(make CD input direct access):") == ("0", "make CD input direct access")
+    assert simaudio.label_of("▲ (Cursor Up)") == ("Cursor Up", "▲ (Cursor Up)")
+    assert simaudio.label_of("OK (Acknowledge)") == ("OK (Acknowledge)", "") and simaudio.label_of("Power :") == ("Power", "")
+
+
+def test_a_simaudio_page_is_a_heading_models_a_protocol_a_code_and_bullets_of_a_name_and_a_number():
+    """Bullets are a ``-`` line and the lines after it: the name and the number may be on two lines (``Power :`` / ``12``) or one
+    (``Search+ : 52``, ``Shuffle`` / ``1C``); the page's commands are decimal for RC-5 and hexadecimal where it says so, and a
+    page with no bullets is none."""
+    report = Report()
+    rows = [["1", "Table of IR codes"], ["1", "Rev.: 1.1 - december, 2002"], ["1", "Amplifiers"], ["1", "Æ Moon i-3, P-5"],
+            ["1", "Protocol :  Philips RC-5"], ["1", "System code : 16"], ["1", "Command codes :"],
+            ["1", "-"], ["1", "Power :"], ["1", "12"], ["1", "-"], ["1", "Search+ : 52"], ["1", "-"], ["1", "0(make CD input direct access):  0"],
+            ["1", "Note : only the P3 has those"], ["1", "inputs."], ["1", "Page 1 of 2"],
+            ["2", "Table of IR codes - Simaudio"], ["2", "DVD players"], ["2", "Æ Moon Stellar and Moon Orion"], ["2", "Protocol :  Philips RC-6"],
+            ["2", "Mode code : 00"], ["2", "Control code: 04    (Customer code)"], ["2", "Command codes : (hexadecimal)"],
+            ["2", "-"], ["2", "Standby :"], ["2", "C"], ["2", "-"], ["2", "Shuffle"], ["2", "1C"], ["2", "-"], ["2", "Broken"], ["2", "Page 2 of 2"]]
+    amplifiers, dvd = simaudio.parse(rows, report)
+    assert (amplifiers.kind, amplifiers.models, amplifiers.protocol, amplifiers.device, amplifiers.base) == (
+        "Amplifiers", ("Moon i-3", "Moon P-5"), "RC5", 16, 10)
+    assert [(t, c) for t, c, _ in amplifiers.items] == [("Power : 12", 12), ("Search+ : 52", 52), ("0(make CD input direct access):  0", 0)]
+    assert amplifiers.note == "Note : only the P3 has those inputs."
+    assert (dvd.kind, dvd.models, dvd.protocol, dvd.device, dvd.base) == ("DVD players", ("Moon Stellar", "Moon Orion"), "RC6", 4, 16)
+    assert [(t, c) for t, c, _ in dvd.items] == [("Standby : C", 12), ("Shuffle 1C", 28)]
+    assert report.unrepresented[(simaudio.MAKER, simaudio.FILE, "a bullet that is not a name and a number")] == 1
+
+
+def simaudio_files() -> dict[str, dict]:
+    return {load(p)["model"]: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "simaudio").glob("*.json"))}
+
+
+def test_the_eight_simaudio_files_are_the_moon_products_the_three_pages_name():
+    """The four amplifiers have 15 keys (system 16: power, input, mute, volume, balance and the eight inputs), the two CD players 20
+    (system 20) and the two DVD players 35 (RC-6, control code 4): 70 bullets, 170 keys, all Plausible."""
+    files = simaudio_files()
+    assert {m: (d["protocol"]["name"], len(d["keys"])) for m, d in files.items()} == {
+        "Moon i-3": ("RC5", 15), "Moon i-5": ("RC5", 15), "Moon P-3": ("RC5", 15), "Moon P-5": ("RC5", 15),
+        "Moon Nova": ("RC5", 20), "Moon Eclipse": ("RC5", 20), "Moon Stellar": ("RC6", 35), "Moon Orion": ("RC6", 35)}
+    for doc in files.values():
+        assert doc["manufacturer"] == "Simaudio" and doc["controls"] == [f"Simaudio {doc['model']}"]
+        assert {s["forms"][0]["confidence"] for s in doc["keys"].values()} == {"plausible"}
+    devices = {m: {s["forms"][0]["device"] for s in d["keys"].values()} for m, d in files.items()}
+    assert devices["Moon i-5"] == {"0x10"} and devices["Moon Eclipse"] == {"0x14"} and devices["Moon Orion"] == {"0x04"}
+    stellar = files["Moon Stellar"]["keys"]
+    assert stellar["KEY_STANDBY"]["forms"][0]["function"] == "0x0C" and stellar["KEY_MENU"]["forms"][0]["function"] == "0xD1"
+    assert stellar["KEY_CURSOR_UP"]["forms"][0]["function"] == "0x58" and "'▲ (Cursor Up)'" in stellar["KEY_CURSOR_UP"]["forms"][0]["source"]
+    nova = files["Moon Nova"]["keys"]
+    assert nova["KEY_EJECT"]["forms"][0]["function"] == "0x2D" and nova["KEY_0"]["forms"][0]["function"] == "0x00"
+    assert "only the P3 has those eight inputs" in files["Moon i-3"]["keys"]["KEY_3"]["forms"][0]["source"]
+    assert "page's note" not in files["Moon i-3"]["keys"]["KEY_POWER"]["forms"][0]["source"]
+    report = (ROOT / oi.IMPORT_ROOT / oi.REPORT).read_text(encoding="utf-8")
+    figure = lambda what: int(re.search(rf"\| simaudio: {what} \| ([\d,]+) \|", report)[1].replace(",", ""))
+    assert [figure(w) for w in ("bullets read", "files", "keys")] == [70, 8, 170]
+
+
+def test_other_sources_hold_the_simaudio_codes_and_name_them_alike():
+    """The independent check (D269): the table's 70 distinct codes (35 RC-5 and 35 RC-6) **are held by other sources' remotes of the same
+    protocol and device in 69 cases** (RC-5 system 16 and 20; RC-6 device 4), and **in 64 of them some other source's label is the
+    same function by the vocabulary or the spelling**. The five that the comparison does not count are the same functions in other
+    words (``Search+`` is ``FORWARD`` or ``DVD FWD``, ``OK (Acknowledge)`` is ``OK``, ``Bal R`` and ``Bal L`` are ``Balance Right`` and
+    ``Left``) except ``A/B Repeat`` (RC-6 0x3D), which other remotes use for ``AV/SOURCE`` and ``EJECT``. **One code is nobody else's:
+    ``Search-``, RC-6 0x27.**"""
+    from remote_ledger.keys import load_vocabulary
+
+    vocabulary = load_vocabulary()
+    squash = lambda t: re.sub(r"[^a-z0-9]", "", t.lower())      # noqa: E731
+    ours: dict[tuple[str, int, int], set[str]] = {}
+    for doc in simaudio_files().values():
+        for spec in doc["keys"].values():
+            form = spec["forms"][0]
+            ours.setdefault((doc["protocol"]["name"], int(form["device"], 0), int(form["function"], 0)), set()).add(spec["label"])
+    seen: dict[tuple[str, int, int], set[str]] = {}
+    for path in sorted((ROOT / "remotes").glob("*/*/*.json")):
+        if "official" in path.parts:
+            continue
+        doc = load(path)
+        protocol = doc.get("protocol", {}).get("name")
+        if protocol not in ("RC5", "RC6"):
+            continue
+        for spec in doc["keys"].values():
+            for form in spec["forms"]:
+                if form.get("type") == "irp" and form.get("device") is not None:
+                    key = (protocol, int(form["device"], 0), int(form["function"], 0))
+                    if key in ours:
+                        seen.setdefault(key, set()).add(spec["label"])
+    held = [k for k in ours if k in seen]
+    same = [k for k in held if any(squash(a) == squash(b) for a in ours[k] for b in seen[k])
+            or ({vocabulary.resolve(x) for x in ours[k]} - {None}) & ({vocabulary.resolve(x) for x in seen[k]} - {None})]
+    assert (len(ours), len(held), len(same)) == (70, 69, 64)
+    assert [k for k in ours if k not in seen] == [("RC6", 4, 0x27)]
 

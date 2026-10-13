@@ -7,7 +7,7 @@ size, SHA-256, the retrieval date (today: do not pass --date) and the server's `
 (and, for a copy from the Wayback Machine, the address and snapshot it was archived from). Run it, then
 ``tools/official_sheets_to_csv.py <maker>`` for the spreadsheets, review the diff, and import.
 
-    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc|arcam|cambridge|hegel|linn
+    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc|arcam|cambridge|hegel|linn|simaudio
 """
 
 from __future__ import annotations
@@ -108,6 +108,11 @@ DOCUMENTS = {
         ("RC5_Codes.html", "https://docs.linn.co.uk/wiki/index.php/RC5_Codes", None),
         ("Linn_DS-DSM_Pronto_codes.pdf", "https://docs.linn.co.uk/wiki/images/a/a3/Linn_DS-DSM_Pronto_codes.pdf", None),
         ("LinnDocs_General_disclaimer.html", "https://docs.linn.co.uk/wiki/index.php/LinnDocs:General_disclaimer", None),
+    ],
+    # Simaudio's "Table of IR codes" (Technical Notice, Rev. 1.1, December 2002): the RC-5 and RC-6 codes of its Moon preamplifiers,
+    # integrated amplifiers, CD and DVD players, three pages with no copyright or rights text, on its own host.
+    "simaudio": [
+        ("Simaudio-RC-5-IR-codes-rev1.1.pdf", "https://simaudio.com/wp-content/uploads/2019/11/Simaudio-RC-5-IR-codes-rev1.1.pdf", None),
     ],
     "anthem": [
         ("AVM-MRXx40-IR-hex-20251202185749500.xlsx",
