@@ -2051,7 +2051,7 @@ note rather than a live contract.
 
 ## 12. Implementation status
 
-Phases 0-6 are implemented: 3936 tests, `jsonschema` the only runtime
+Phases 0-6 are implemented: 3939 tests, `jsonschema` the only runtime
 dependency. Phase 2 landed its nine SPEC edits *before* its code, per §9 --
 the spec change is what authorises the implementation. (That count is asserted by the suite itself -- see
 `test_documented_test_count_is_current` -- so it cannot drift the way the
@@ -5380,9 +5380,9 @@ lirc           3,138  112,789   58.3% (65,819)    18.8% (593)   49.6% (1,557)   
 smartir           62      914      81.7% (747)     54.8% (34)      67.7% (42)      79.0% (49)
 hifi-remote      151    6,772    43.5% (2,951)       3.9% (6)      14.5% (22)      39.7% (60)
 jp1            2,938  116,042   71.0% (82,496)    20.6% (607)   62.1% (1,826)   87.1% (2,559)
-official         355   39,415    10.6% (4,216)       1.6% (6)       6.1% (22)       7.6% (27)
+official         360   39,613    10.9% (4,343)       1.6% (6)       6.1% (22)       8.3% (30)
 authored           5      128       77.3% (99)      40.0% (2)       60.0% (3)       60.0% (3)
-all           16,733  688,835  71.7% (494,567)  34.4% (5,757)  62.7% (10,506)  87.1% (14,583)
+all           16,738  689,033  71.7% (494,694)  34.3% (5,757)  62.7% (10,506)  87.1% (14,586)
 
 Remotes with at least 10 keys:
 
@@ -5393,9 +5393,9 @@ lirc           2,867  111,431   58.2% (64,915)    17.3% (496)  49.3% (1,415)   8
 smartir           39      786      84.3% (663)     58.9% (23)     76.9% (30)      94.8% (37)
 hifi-remote      128    6,653    43.7% (2,908)       3.9% (5)     14.8% (19)      42.1% (54)
 jp1            2,783  115,109   71.1% (81,894)    20.1% (562)  63.0% (1,754)   88.2% (2,457)
-official         317   39,214    10.5% (4,140)       0.0% (0)      5.0% (16)       5.9% (19)
+official         322   39,412    10.8% (4,267)       0.0% (0)      4.9% (16)       6.8% (22)
 authored           4      120       75.8% (91)      25.0% (1)      50.0% (2)       50.0% (2)
-all           15,592  683,171  71.8% (490,837)  34.1% (5,317)  63.5% (9,901)  88.5% (13,801)
+all           15,597  683,369  71.8% (490,964)  34.0% (5,317)  63.4% (9,901)  88.5% (13,804)
 ```
 
 (The `official` row is the import of §29 and §31 (D123 to D127, D131 to D133): 189 files of Marantz's, Anthem's and Oppo's own tables. **Its keys map the least of any source, 21.6%, and only 6 of its 189 remotes reach 90%**, because a receiver's chart is the whole command set of a receiver (tuner presets and frequency steps, surround modes, Pure Direct, discrete `Audio Mute On` and `Off`, a source key for each input), which the 156 keys of D84 do not cover: 10,068 of its 12,844 keys are unmapped, under 584 different names, and what does map is volume, power, the cursor, bass, treble and sleep. Oppo's player tables are the exception, and are why the share is not lower: 750 of its 864 keys (86.8%) map. Widening the vocabulary to the receiver commands is the owner's call (D84 is theirs) and is in TODO.md, not done here. The `jp1` row is the import of §28 (D118 to D122), §32 (D134 to D136), §33 (D137 to D140) and §34 (D141 to D145), added after the same figures; the combos of §33 map less of their keys (52.5% of the 9,715) and lower the row from 76.8% to 74.0%, §34's executors (61.8% of 10,963) to 72.5%, §35's (54.6% of 3,958) to 71.8%, §36's (59.3% of 2,228) to 71.5%, §39's (31.7% of 1,975) to 70.8%, §42's (80.0% of 3,391) to 71.1% and §44's (81.5% of 2,442) to 71.3%. The `hifi-remote` row is the import of §27 (D109 to D117), added after the figures in D85 to D87's prose were measured; those figures are the corpus without it. Its keys map less than the others' because the pages describe commands of one kind of device: `Index Mark`, `Disc +`, `Scan Reverse`, and `Select`, which D84 does not map.)
@@ -5531,7 +5531,7 @@ A remote is carried when **any** of its brands is chosen (its maker or a brand o
 
 **Everything not in the subset is recorded**: `excluded_brands` holds each left-out brand (`name`, `norm`) and `api_key`, the ten hex digits (SHA-1 of the exact name, D76) of the shard of the app API (§21) that has its remotes, comma-separated when the import spells it two ways; **NULL where the app API has none**, because the API serves the IR Blaster import only. Since D117 nothing is left out of the selected bundle, so the table is empty and **0 brands, 0 remotes, 0 keys** are missing from it, and **0 remotes of LIRC and SmartIR** are in no static file of the ledger that the bundle does not hold. Before it, 4,992 brands were left out, 228 of them with no shard, and 1,794 remotes of LIRC and SmartIR (the authored ones counted with them) were in no static file of the ledger at all until the full bundle was published; that finding is why `full` exists, and the selected bundle no longer has it.
 
-**What the numbers said** (D95, at a 20 MB cap; D117 removed the cap and these are history): the list did not fit. Samsung, LG, Sony, Panasonic and Philips, the first five lines, are 11.6 MB of the 19 by the estimate (Sony alone has 1,061 remotes, and most of the bytes of a brand with old equipment are LIRC raw captures: 5.0 MB of signals for 1,375 of the 4,394 remotes); the bundle carries **35 brands of the list and one by the proxy**, and **77 brands of the list are left out for lack of room** (the first are JVC, Grundig, Thomson, Telefunken, Loewe Opta, Beko, Vestel...). Levers the owner has, none taken here: reorder the list so the brands that matter most come first (the cheap ones are taken wherever the budget allows), shorten it, raise the cap, or drop what is bulkiest per remote (the LIRC raw captures, about 6 MB of the 19). **The owner signs off on the list**; until then it is a proposal. *Since D117:* nothing is skipped (0 brands of the list are left out) and nothing is left out of the bundle. The profile carries 112 brands of the list and 5,350 by the proxy, 5,462 in all, with 16,733 remote files, and its file is the size of `full`.
+**What the numbers said** (D95, at a 20 MB cap; D117 removed the cap and these are history): the list did not fit. Samsung, LG, Sony, Panasonic and Philips, the first five lines, are 11.6 MB of the 19 by the estimate (Sony alone has 1,061 remotes, and most of the bytes of a brand with old equipment are LIRC raw captures: 5.0 MB of signals for 1,375 of the 4,394 remotes); the bundle carries **35 brands of the list and one by the proxy**, and **77 brands of the list are left out for lack of room** (the first are JVC, Grundig, Thomson, Telefunken, Loewe Opta, Beko, Vestel...). Levers the owner has, none taken here: reorder the list so the brands that matter most come first (the cheap ones are taken wherever the budget allows), shorten it, raise the cap, or drop what is bulkiest per remote (the LIRC raw captures, about 6 MB of the 19). **The owner signs off on the list**; until then it is a proposal. *Since D117:* nothing is skipped (0 brands of the list are left out) and nothing is left out of the bundle. The profile carries 112 brands of the list and 5,350 by the proxy, 5,462 in all, with 16,738 remote files, and its file is the size of `full`.
 
 ### D93 — The manifest, `dataVersion` and the signature
 
@@ -5563,14 +5563,14 @@ Measured on the 64-core development machine (eight workers), `gzip -9` as the co
 
 | | `full` | `selected` |
 |---|---|---|
-| file | 59,641,856 B | 59,641,856 B |
-| `gzip -9` | 15,004,110 B | 15,004,185 B |
+| file | 59,650,048 B | 59,650,048 B |
+| `gzip -9` | 15,007,571 B | 15,007,665 B |
 | brands | 5,462 | 5,462 |
-| models | 282,130 | 282,130 |
-| remote files | 16,733 | 16,733 |
-| remotes, the fragments of D103 folded | 16,376 | 16,376 |
-| keys | 688,835 | 688,835 |
-| signals | 180,021 | 180,021 |
+| models | 282,138 | 282,138 |
+| remote files | 16,738 | 16,738 |
+| remotes, the fragments of D103 folded | 16,381 | 16,381 |
+| keys | 689,033 | 689,033 |
+| signals | 180,051 | 180,051 |
 | left out | none | none: 0 brands, 0 remotes, 0 keys |
 | `rl bundle` (read, build, write) | 27 s, 0.89 GB peak | 27 s, 0.89 GB peak |
 | `rl bundle --verify` | 23 s | 23 s |
@@ -5627,23 +5627,23 @@ Written by `rl bundle matching-vectors --file tests/vectors/matching_vectors.jso
 
 ### D99 — What was measured, and what is not proven
 
-Seed 1, 40 devices a class. **Selected bundle** (5,462 brands, 282,130 models: the same as the full one since D117) and **full bundle** (5,462 brands, 282,130 models):
+Seed 1, 40 devices a class. **Selected bundle** (5,462 brands, 282,138 models: the same as the full one since D117) and **full bundle** (5,462 brands, 282,138 models):
 
 | class | selected top-1 | selected top-5 | full top-1 | full top-5 |
 |---|---|---|---|---|
 | exact | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) |
-| case | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) |
-| punctuation | 39 (97.5%) | 40 (100.0%) | 39 (97.5%) | 40 (100.0%) |
-| dropped-suffix | 36 (90.0%) | 39 (97.5%) | 36 (90.0%) | 39 (97.5%) |
-| typo | 26 (65.0%) | 39 (97.5%) | 26 (65.0%) | 39 (97.5%) |
-| brand-partial | 17 (42.5%) | 34 (85.0%) | 17 (42.5%) | 34 (85.0%) |
-| model-only | 37 (92.5%) | 40 (100.0%) | 37 (92.5%) | 40 (100.0%) |
-| reversed | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) |
-| **all (320)** | **275 (85.9%)** | **312 (97.5%)** | **275 (85.9%)** | **312 (97.5%)** |
+| case | 39 (97.5%) | 40 (100.0%) | 39 (97.5%) | 40 (100.0%) |
+| punctuation | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) | 40 (100.0%) |
+| dropped-suffix | 36 (90.0%) | 40 (100.0%) | 36 (90.0%) | 40 (100.0%) |
+| typo | 30 (75.0%) | 38 (95.0%) | 30 (75.0%) | 38 (95.0%) |
+| brand-partial | 25 (62.5%) | 33 (82.5%) | 25 (62.5%) | 33 (82.5%) |
+| model-only | 39 (97.5%) | 40 (100.0%) | 39 (97.5%) | 40 (100.0%) |
+| reversed | 39 (97.5%) | 40 (100.0%) | 39 (97.5%) | 40 (100.0%) |
+| **all (320)** | **288 (90.0%)** | **311 (97.2%)** | **288 (90.0%)** | **311 (97.2%)** |
 
-**Read it as the upper bound it is** (D98). **A partial name is ambiguous**: `LOEWE OPTA CONCEPT 5` is the start of the `CONCEPT 5xx` models, `TOSHIBA 37 AV 5` of every `37 AV 50x` and `LORENZEN ART. NR` of `ART. NR. 3845`, `3846`, `3883` and more. The eight misses of the first five, the same in both bundles, are six brand-partial queries (`DIKOM LED TV`, `PHILIPS 42 PFL 74`, `LOEWE OPTA AVENTOS 398`, `SONY KV-X21`, `STRONG REMCON`, `CLASSIC IRC 83`), a dropped-suffix one (`Marantz RC5300`) and a typo one (`SONY KDL - 19 XE 40 B`). **Four queries of the classes that should not miss do not answer first, and are in the first five**: the punctuation `INTEK HDC63CX` and the model-only `CTV 3740`, `21 PT 351 B` and `HD 2000` (models several brands share). A person typing half a model number has to be shown a list, which the answer is: five candidates, and the brand's models when none matches.
+**Read it as the upper bound it is** (D98). **A partial name is ambiguous**: `LOEWE OPTA CONCEPT 5` is the start of the `CONCEPT 5xx` models, `TOSHIBA 37 AV 5` of every `37 AV 50x` and `LORENZEN ART. NR` of `ART. NR. 3845`, `3846`, `3883` and more. The nine misses of the first five, the same in both bundles, are seven brand-partial queries (`DIKOM LED TV`, `TECHNICS EUR 64`, `SANITRON 22 SF 10`, `TOSHIBA 19 AV 6`, `SONY KDL - 60`, `SUPERLA PRISM`, `CLASSIC IRC 830`) and two typo ones (`TBOSTON DTT 1400`, `VESTEL DIXV 2300`). **Three queries of the classes that should not miss do not answer first, and are in the first five**: the case `SAMSUNG BD - P 1500 XER`, the model-only `LE 46 A 686 M 1 F/XRU - 2` and the reversed `ELEGANCE 70 MW 70 - 2201 NIC/DOLBY GRUNDIG` (a name that is also a different model's with the spaces taken out). A person typing half a model number has to be shown a list, which the answer is: five candidates, and the brand's models when none matches.
 
-**Why the rates are not the ones D99 first printed (91.2% and 97.8%), and why they move.** The generator ranks devices by a hash of the seed, the brand and the model's id, and an id is a place in the catalog's sorted list of models, so a catalog that gains models shifts the ids after them and the draw of 40 devices a class is a different draw. Twenty-five draws now stand in this section: 91.2%, 89.7% (§29), 93.1% (§31), 87.5% (§32), 90.3% (§33), 89.7% (§34), 90.6% (§35), 90.3% (§36), 85.6% (§38), 87.5% (§39), 89.7% (§42), 89.1% (§44), 88.4% (§46), 88.4% (§48), 88.8% (§49), 88.1% (§51), 92.2% (§53), 90.0% (§56), 89.1% (§58), 91.2% (§59), 90.9% (§60), 89.4% (§61), 87.5% (§62), 90.9% (§63) and **85.9% (§64)** at the first answer, about 89.4% on average. The matcher changed twice among them, at §40 (D168) and at §50 (D204, which changed none of the 320 answers of §49's catalog). **None of the eight misses of the first five is a device of §64's 19 new files, and none of its answers holds one**; each expected device was checked (`search_eval.generate`'s `expect`) and every remote of every answer compared with the new files: the eight expected devices are IR Blaster remotes, and none of the answers holds an Arcam model. **The 320 queries of this draw were also run against the catalog as it was before §62, §63 and §64, and none of them answers differently (0 of 320, by brand and model, the first five each)**: the fall is the draw, 3.6 points below the average of the twenty-four before it and the second lowest of the twenty-five (§38's 85.6% is the lowest); the first-five rate, 97.5%, is 0.3 points above §63's. The table is the bound of 320 queries it was. The 95% target is not established by this: it needs real queries.
+**Why the rates are not the ones D99 first printed (91.2% and 97.8%), and why they move.** The generator ranks devices by a hash of the seed, the brand and the model's id, and an id is a place in the catalog's sorted list of models, so a catalog that gains models shifts the ids after them and the draw of 40 devices a class is a different draw. Twenty-six draws now stand in this section: 91.2%, 89.7% (§29), 93.1% (§31), 87.5% (§32), 90.3% (§33), 89.7% (§34), 90.6% (§35), 90.3% (§36), 85.6% (§38), 87.5% (§39), 89.7% (§42), 89.1% (§44), 88.4% (§46), 88.4% (§48), 88.8% (§49), 88.1% (§51), 92.2% (§53), 90.0% (§56), 89.1% (§58), 91.2% (§59), 90.9% (§60), 89.4% (§61), 87.5% (§62), 90.9% (§63), 85.9% (§64) and **90.0% (§65)** at the first answer, about 89.4% on average. The matcher changed twice among them, at §40 (D168) and at §50 (D204, which changed none of the 320 answers of §49's catalog). **None of the nine misses of the first five is a device of §65's 5 new files, and none of its answers holds one**; each expected device was checked (`search_eval.generate`'s `expect`) and every remote of every answer compared with the new files: the nine expected devices are IR Blaster remotes, and none of the answers holds a Cambridge model. **The 320 queries of this draw were also run against the catalog as it was before §65, and none of them answers differently (0 of 320, by brand and model, the first five each)**: the rise is the draw, 0.6 points above the average of the twenty-five before it; the first-five rate, 97.2%, is 0.3 points below §64's. The table is the bound of 320 queries it was. The 95% target is not established by this: it needs real queries.
 
 **Not proven.**
 
@@ -6886,3 +6886,28 @@ Eight documents on Arcam's own host, `arcam.co.uk`, fetched on 2026-10-13 and pi
 ### D254 — What it does to the rest, and what is not proven
 
 The corpus is **16,733 remote files and 688,835 keys**, 5,462 brands, 282,130 models (37 more) and 180,021 signals (28 more). Both bundle profiles are 59,641,856 bytes (53,248 more), dataVersion `073a6cff14fa`, `--verify` passes. **520 of the 1,816 keys map to the vocabulary (28.6%)**: `Standby`, `Mute`, the digits and `Menu` do, and `Increase volume (+)`, `Navigate Up` and `Select CD` do not (D84's aliases do not have them, which is the owner's call, TODO); the `official` row goes from 9.8% to 10.6% and the corpus from 71.9% to 71.7%. **The search evaluation: first answer 90.9% to 85.9%, first five 97.2% to 97.5%**, the 25th draw (about 89.4% on average), a draw (D99 says how that was checked: **none of the 320 queries answers differently from the catalog before §62, §63 and §64**). **Not read:** Arcam's older products (the AVR300, AV8 and AV9 have their codes in handbooks), the serial commands the same PDFs document (the importer reads RC-5 tables only), and the retailer's copy of the AVR250/390/550/850/860 notes. **Not proven:** that a product accepts a code its table lists, which for the `Advanced` ones needs a programmable remote or the serial link the notes describe; that a `(not ...)` restriction is complete.
+
+## 65. Cambridge Audio's NEC code lists
+
+Cambridge Audio's driver-updates page links sixteen PDFs of IR codes and a list of the codes of three remotes. **Two of them carry no copyright or rights text, and they are read: the AXR85/AXR100 table and the 752BD, CXU and CXUHD remotes' list, 5 files and 198 keys, 197 Plausible and one Untested.** The other thirteen documents say "(c) Copyright Cambridge Audio Ltd" and are for the private repository (D130). The manufacturers' tables (§29, §31, §58, §60, §62, §63, §64) are now 360 files and 39,613 keys.
+
+### D255 — The documents, the licence scan, and which are read
+
+The page answers a script with a Cloudflare challenge (the PDFs on `/sites/default/files/compliance/doc/` do not), so it was read through a web-fetch tool on 2026-10-13: a table of PDFs beside the products each is for. **That table is reported, not pinned.** All 17 files were downloaded (the remotes list's page puts it under the CXUHD) and their text searched for `copyright`, `©`, `(c)`, `rights`, `reproduc`, `permission`, `licence`, `confidential`, `proprietary`, `trademark` and `Ltd`:
+
+- **Two files have none of those words**: `AXR85 100 IR Codes.pdf` ("Topaz AXR85/100 Stereo Receiver Remote Control Codes", all codes NEC, made in 2019, on the server since 2023-03-31) and `752BD-CXU-CXUHD remotes - Sept. 2024 v2.pdf` (a spreadsheet printed to PDF, on the server since 2025-11-18). By the rule I stated in PR #42 (no copyright or no-reproduction text: public under D110) they are read here. They are pinned as D123 does it and converted as the cells the PDF library finds (`tools/official_sheets_to_csv.py`, `tables`: 24 and 58 rows).
+- **Fifteen files, thirteen documents (the CXA and Edge ones are each listed twice, byte for byte the same), end with `© Copyright Cambridge Audio Ltd` (2008 to 2021), and eight of the thirteen add** "This document contains proprietary information protected by copyright. All rights are reserved. No part of this document may be reproduced by any mechanical, electronic or other means, in any form, without prior written permission of the manufacturer" (the Azur 851A, 851C, 851E, 851N and 851W, the CXN, the CXU's 2015 document and the ONE). A copyright claim with no grant is the private repository's rule (D130, as T+A's), so **those are not in this repository**; TODO says so.
+
+### D256 — The rule
+
+**A code is the ledger's `NEC1`**: the table's four bytes are the address, its complement, the function and its complement, so the device is the address, the subdevice its complement and the function the function. The IR Blaster database's AXR85 remote holds `A1` as device `0xC0`, subdevice `0x3F`, function `0x1B`, which is the table's `C0 3F 1B E4`: the bytes are **in the ledger's bit order** (KEF's sheets are in the other one, D244). **A row whose second and fourth bytes are not the complements is left out** (none is). The carrier is 38,000 Hz as KEF's and Anthem's are (the documents state none); the build warns that NEC1's nominal is 38,400, as it does for those. Two layouts: **the AXR85/AXR100 table** (`Remote Button | IR Code`, 23 rows, one file each for the two receivers its title names, `AXR85` and `AXR100`) and **the remotes list** (a header `NEC: 49 B6`, repeated on the second page, and for each row a function code with its complement and a name for each of the 752BD, CXU and CXUHD, `N/A` where the product has no such button): the 752BD has 52 keys, the CXU 52 and the CXUHD 48. **The `Backlight` row (N/A, Yes, Yes) sends no code** and is a note of the report. A label is the name as the document writes it (`standby`, in lower case, for the AXR85's). **The CXUHD column gives the name `Subtitle` to two codes** (`57 A8` and `53 AC`, which is `Repeat` on the other two products): the second is Untested and says so.
+
+### D257 — The rule checked against other data
+
+- **The AXR85's table against the IR Blaster database.** Its remote 320 (`CAMBRIDGE AUDIO | AXR85`, 46 keys) holds **all 23 codes of the table, as the same device, subdevice and function**; 15 under the same name (`MENU`, `PRESET 1/5`, `D1`...), the other 8 in other words for the same key (`POWER` for `standby`, `VOL+` for `Volume Up`, `AM/FM` for `FM/AM`, the skip arrows). Other remotes with the address `C0 3F`, a common one, hold some of the codes under unrelated names (the IR Blaster's ADS, Gold, Sansui...): they are not counted.
+- **The 752BD, CXU and CXUHD are not corroborated by Oppo's tables, though they share the address.** `49 B6` is Oppo's, and **43 of the CXU's 52 function codes are in Oppo's tables, but under another name in 41 of the 43** (`Stop` and `Pop Up Menu` agree): Cambridge's remote is its own table, so the likeness of codes is no evidence for it, and it is not counted. The same overlap is why the new signals are 30 of the 78 distinct codes and not more: all 23 of the AXR85's (the IR Blaster's remote sends them at 38,400 Hz, so its Pronto word differs from this import's 38,000) and 7 of the 55 of the players'.
+- **Cambridge's own CXU document of 2015** (one of the thirteen, so not here) has the same NEC table for the CXU: **51 of this list's 52 CXU codes are in it**, 49 under the same name (`Open/Close` is `Eject` there and `On/Standby toggle` is `Standby`), the 2024 list adds `Filter` (`2A D5`), and the 2015 document has two hidden commands it does not. Two documents of one maker nine years apart that agree are one source, not two, but they are not copies of one another.
+
+### D258 — What it does to the rest, and what is not proven
+
+The corpus is **16,738 remote files and 689,033 keys**, 5,462 brands, 282,138 models (8 more) and 180,051 signals (30 more). Both bundle profiles are 59,650,048 bytes (8,192 more), dataVersion `d49061b41e07`, `--verify` passes. **127 of the 198 keys map to the vocabulary (64.1%)**; the `official` row goes from 10.6% to 10.9% and the corpus stays at 71.7%. Four of the five files have a key the app's test order (`POWER`, `POWER_OFF`, `POWER_ON`, `VOLUME_UP`, `MUTE`) can pick; **the CXUHD has none of them** (`On/Standby toggle` is not an alias of the vocabulary, D84), so it can be browsed and not tried (15,083 of the 16,381 remotes can). **The search evaluation: first answer 85.9% to 90.0%, first five 97.5% to 97.2%**, the 26th draw (about 89.4% on average): a draw, as D99 says, and checked as before: **none of the 320 queries answers differently from the catalog before this section** (0 of 320, by brand and model, the first five each), and none of the nine misses involves a Cambridge model. **Not read:** the thirteen documents with a copyright line (private repository); the page's other downloads. **Not proven:** that a product acts on a code its table lists (the AXR85's are corroborated by another source; the 752BD, CXU and CXUHD's by Cambridge's own two documents only); that the driver-updates page's product column, which was read by a tool and not pinned, is the maker's; what `Darbee`, `Res` or `TV Type` do beyond their names.
