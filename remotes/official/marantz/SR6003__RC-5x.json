@@ -1,0 +1,1443 @@
+{
+  "manufacturer": "Marantz",
+  "model": "SR6003 [RC-5x]",
+  "aliases": [],
+  "controls": [
+    "Marantz SR6003"
+  ],
+  "protocol": {
+    "name": "RC5x",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_MOVIE_SURROUND": {
+      "label": "MOVIE SURROUND",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x1D",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 136 'MOVIE SURROUND' (RC-5 16 37 29), the column of SR6003: RC-5x system 16 command 37 extension 29, read as RC5x device 16 subdevice 37 function 29 (the chart's extension is decimal); the chart's description: 'Change Surround mode (MOVIE)'"
+        }
+      ]
+    },
+    "KEY_MUSIC_SURROUND": {
+      "label": "MUSIC SURROUND",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x35",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 137 'MUSIC SURROUND' (RC-5 16 37 53), the column of SR6003: RC-5x system 16 command 37 extension 53, read as RC5x device 16 subdevice 37 function 53 (the chart's extension is decimal); the chart's description: 'Change Surround mode (MUSIC)'"
+        }
+      ]
+    },
+    "KEY_GAME_SURROUND": {
+      "label": "GAME SURROUND",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x40",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 138 'GAME SURROUND' (RC-5 16 64 18), the column of SR6003: RC-5x system 16 command 64 extension 18, read as RC5x device 16 subdevice 64 function 18 (the chart's extension is decimal); the chart's description: 'Change Surround mode (GAME)'"
+        }
+      ]
+    },
+    "KEY_CS_MINUS_II_SRS_TOGGLE": {
+      "label": "CS-II (SRS) (Toggle)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x40",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 167 'CS-II (SRS) (Toggle)' (RC-5 16 64 09), the column of SR6003: RC-5x system 16 command 64 extension 9, read as RC5x device 16 subdevice 64 function 9 (the chart's extension is decimal); the chart's description: 'Select CS mode music>movie>mono>'"
+        }
+      ]
+    },
+    "KEY_TEST_TONE": {
+      "label": "TEST TONE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 203 'TEST TONE' (RC-5 16 37 21), the column of SR6003: RC-5x system 16 command 37 extension 21, read as RC5x device 16 subdevice 37 function 21 (the chart's extension is decimal); the chart's description: 'Jump to Test tone menu'"
+        }
+      ]
+    },
+    "KEY_CH_SELECT": {
+      "label": "CH. SELECT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x21",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 205 'CH. SELECT' (RC-5 16 37 33), the column of SR6003: RC-5x system 16 command 37 extension 33, read as RC5x device 16 subdevice 37 function 33 (the chart's extension is decimal); the chart's description: 'Channel select Jump to Surr Menu or Jump to 7.1 level menu'"
+        }
+      ]
+    },
+    "KEY_CH_LEVEL_PLUS": {
+      "label": "CH. LEVEL +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x22",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 206 'CH. LEVEL +' (RC-5 16 37 34), the column of SR6003: RC-5x system 16 command 37 extension 34, read as RC5x device 16 subdevice 37 function 34 (the chart's extension is decimal); the chart's description: 'Channel Level control up'"
+        }
+      ]
+    },
+    "KEY_CH_LEVEL_MINUS": {
+      "label": "CH. LEVEL -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x23",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 207 'CH. LEVEL -' (RC-5 16 37 35), the column of SR6003: RC-5x system 16 command 37 extension 35, read as RC5x device 16 subdevice 37 function 35 (the chart's extension is decimal); the chart's description: 'Channel Level control down'"
+        }
+      ]
+    },
+    "KEY_SIRIUS_PARENTAL_LOCK": {
+      "label": "SIRIUS Parental Lock",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "subdevice": "0x0B",
+          "function": "0x32",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 348 'SIRIUS Parental Lock' (RC-5 17 11 50), the column of SR6003: RC-5x system 17 command 11 extension 50, read as RC5x device 17 subdevice 11 function 50 (the chart's extension is decimal); the chart's description: 'Select SIRIUS Parental Lock'"
+        }
+      ]
+    },
+    "KEY_NETWORK_DMP_RANDOM_TOGGLE_27_28_01": {
+      "label": "Network(DMP): Random (toggle) (27 28 01)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x1C",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 422 'Network(DMP): Random (toggle)' (RC-5 27 28 01), the column of SR6003: RC-5x system 27 command 28 extension 1, read as RC5x device 27 subdevice 28 function 1 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_NETWORK_DMP_RANDOM_OFF_27_28_02": {
+      "label": "Network(DMP): Random Off (27 28 02)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x1C",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 423 'Network(DMP): Random Off' (RC-5 27 28 02), the column of SR6003: RC-5x system 27 command 28 extension 2, read as RC5x device 27 subdevice 28 function 2 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_NETWORK_DMP_RANDOM_ON_27_28_03": {
+      "label": "Network(DMP): Random On (27 28 03)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x1C",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 424 'Network(DMP): Random On' (RC-5 27 28 03), the column of SR6003: RC-5x system 27 command 28 extension 3, read as RC5x device 27 subdevice 28 function 3 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_NETWORK_DMP_REPEAT_TOGGLE_27_29_01": {
+      "label": "Network(DMP): Repeat (toggle) (27 29 01)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x1D",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 425 'Network(DMP): Repeat (toggle)' (RC-5 27 29 01), the column of SR6003: RC-5x system 27 command 29 extension 1, read as RC5x device 27 subdevice 29 function 1 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_NETWORK_DMP_REPEAT_OFF_27_29_02": {
+      "label": "Network(DMP): Repeat Off (27 29 02)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x1D",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 426 'Network(DMP): Repeat Off' (RC-5 27 29 02), the column of SR6003: RC-5x system 27 command 29 extension 2, read as RC5x device 27 subdevice 29 function 2 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_NETWORK_DMP_REPEAT_1_27_29_03": {
+      "label": "Network(DMP): Repeat 1 (27 29 03)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x1D",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 427 'Network(DMP): Repeat 1' (RC-5 27 29 03), the column of SR6003: RC-5x system 27 command 29 extension 3, read as RC5x device 27 subdevice 29 function 3 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_NETWORK_DMP_REPEAT_ALL_27_29_04": {
+      "label": "Network(DMP): Repeat All (27 29 04)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x1D",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 428 'Network(DMP): Repeat All' (RC-5 27 29 04), the column of SR6003: RC-5x system 27 command 29 extension 4, read as RC5x device 27 subdevice 29 function 4 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_USB_REPEAT_FOLDER_27_29_05": {
+      "label": "USB: Repeat Folder (27 29 05)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x1D",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 429 'USB: Repeat Folder' (RC-5 27 29 05), the column of SR6003: RC-5x system 27 command 29 extension 5, read as RC5x device 27 subdevice 29 function 5 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_INTERNET_RADIO_PRESET_4_SLASH_FAVORITE_STATION_4": {
+      "label": "Internet Radio Preset 4/FAVORITE STATION 4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x22",
+          "function": "0x0E",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 436 'Internet Radio Preset 4/FAVORITE STATION 4' (RC-5 27 34 14), the column of SR6003: RC-5x system 27 command 34 extension 14, read as RC5x device 27 subdevice 34 function 14 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_NETWORK_DMP_SLASH_USB_NEXT": {
+      "label": "Network(DMP)/USB: Next",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x20",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 437 'Network(DMP)/USB: Next' (RC-5 27 32 01), the column of SR6003: RC-5x system 27 command 32 extension 1, read as RC5x device 27 subdevice 32 function 1 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_NETWORK_DMP_SLASH_USB_PREVIOUS": {
+      "label": "Network(DMP)/USB: Previous",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x21",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 438 'Network(DMP)/USB: Previous' (RC-5 27 33 01), the column of SR6003: RC-5x system 27 command 33 extension 1, read as RC5x device 27 subdevice 33 function 1 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_NETWORK_DMP_SLASH_USB_PAUSE": {
+      "label": "Network(DMP)/USB: Pause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x30",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 439 'Network(DMP)/USB: Pause' (RC-5 27 48 01), the column of SR6003: RC-5x system 27 command 48 extension 1, read as RC5x device 27 subdevice 48 function 1 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_NETWORK_DMP_SLASH_USB_REW_27_50_01": {
+      "label": "Network(DMP)/USB: REW (27 50 01)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x32",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 440 'Network(DMP)/USB: REW' (RC-5 27 50 01), the column of SR6003: RC-5x system 27 command 50 extension 1, read as RC5x device 27 subdevice 50 function 1 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_NETWORK_DMP_SLASH_USB_FF_27_52_01": {
+      "label": "Network(DMP)/USB: FF (27 52 01)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x34",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 441 'Network(DMP)/USB: FF' (RC-5 27 52 01), the column of SR6003: RC-5x system 27 command 52 extension 1, read as RC5x device 27 subdevice 52 function 1 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_NETWORK_DMP_PLAY_SLASH_PAUSE_27_53_01": {
+      "label": "Network(DMP): Play(/Pause) (27 53 01)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x35",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 442 'Network(DMP): Play(/Pause)' (RC-5 27 53 01), the column of SR6003: RC-5x system 27 command 53 extension 1, read as RC5x device 27 subdevice 53 function 1 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_NETWORK_DMP_STOP_27_54_01": {
+      "label": "Network(DMP): Stop (27 54 01)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x36",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 448 'Network(DMP): Stop' (RC-5 27 54 01), the column of SR6003: RC-5x system 27 command 54 extension 1, read as RC5x device 27 subdevice 54 function 1 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_USB_REW1_27_50_05": {
+      "label": "USB: Rew1 (27 50 05)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x32",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 456 'USB: Rew1' (RC-5 27 50 05), the column of SR6003: RC-5x system 27 command 50 extension 5, read as RC5x device 27 subdevice 50 function 5 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_USB_REW2_27_50_06": {
+      "label": "USB: Rew2 (27 50 06)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x32",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 457 'USB: Rew2' (RC-5 27 50 06), the column of SR6003: RC-5x system 27 command 50 extension 6, read as RC5x device 27 subdevice 50 function 6 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_USB_REW3_27_50_07": {
+      "label": "USB: Rew3 (27 50 07)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x32",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 458 'USB: Rew3' (RC-5 27 50 07), the column of SR6003: RC-5x system 27 command 50 extension 7, read as RC5x device 27 subdevice 50 function 7 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_USB_FF1_27_52_05": {
+      "label": "USB: FF1 (27 52 05)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x34",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 459 'USB: FF1' (RC-5 27 52 05), the column of SR6003: RC-5x system 27 command 52 extension 5, read as RC5x device 27 subdevice 52 function 5 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_USB_FF2_27_52_06": {
+      "label": "USB: FF2 (27 52 06)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x34",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 460 'USB: FF2' (RC-5 27 52 06), the column of SR6003: RC-5x system 27 command 52 extension 6, read as RC5x device 27 subdevice 52 function 6 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_USB_FF3_27_52_07": {
+      "label": "USB: FF3 (27 52 07)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x34",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 461 'USB: FF3' (RC-5 27 52 07), the column of SR6003: RC-5x system 27 command 52 extension 7, read as RC5x device 27 subdevice 52 function 7 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_NETWORK_DMP_CURSOR_UP": {
+      "label": "Network(DMP): Cursor Up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x50",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 462 'Network(DMP): Cursor Up' (RC-5 27 80 01), the column of SR6003: RC-5x system 27 command 80 extension 1, read as RC5x device 27 subdevice 80 function 1 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_NETWORK_DMP_CURSOR_DOWN": {
+      "label": "Network(DMP): Cursor Down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x51",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 463 'Network(DMP): Cursor Down' (RC-5 27 81 01), the column of SR6003: RC-5x system 27 command 81 extension 1, read as RC5x device 27 subdevice 81 function 1 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_NETWORK_DMP_CURSOR_LEFT": {
+      "label": "Network(DMP): Cursor Left",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x55",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 464 'Network(DMP): Cursor Left' (RC-5 27 85 01), the column of SR6003: RC-5x system 27 command 85 extension 1, read as RC5x device 27 subdevice 85 function 1 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_NETWORK_DMP_CURSOR_RIGHT": {
+      "label": "Network(DMP): Cursor Right",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x56",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 465 'Network(DMP): Cursor Right' (RC-5 27 86 01), the column of SR6003: RC-5x system 27 command 86 extension 1, read as RC5x device 27 subdevice 86 function 1 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_NETWORK_DMP_ENTER": {
+      "label": "Network(DMP): Enter",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x57",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 466 'Network(DMP): Enter' (RC-5 27 87 01), the column of SR6003: RC-5x system 27 command 87 extension 1, read as RC5x device 27 subdevice 87 function 1 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_NETWORK_DMP_PAGE_NEXT": {
+      "label": "Network(DMP): Page Next",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x50",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 467 'Network(DMP): Page Next' (RC-5 27 80 04), the column of SR6003: RC-5x system 27 command 80 extension 4, read as RC5x device 27 subdevice 80 function 4 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_NETWORK_DMP_PAGE_PREVIOUS": {
+      "label": "Network(DMP): Page Previous",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x51",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 468 'Network(DMP): Page Previous' (RC-5 27 81 04), the column of SR6003: RC-5x system 27 command 81 extension 4, read as RC5x device 27 subdevice 81 function 4 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_NETWORK_DMP_BACK": {
+      "label": "Network(DMP): Back",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x53",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 469 'Network(DMP): Back' (RC-5 27 83 01), the column of SR6003: RC-5x system 27 command 83 extension 1, read as RC5x device 27 subdevice 83 function 1 (the chart's extension is decimal); the chart marks it 'X (USB Exit)'"
+        }
+      ]
+    },
+    "KEY_NETWORK_DMP_NETWORK_MAIN_MENU": {
+      "label": "Network(DMP): Network Main Menu",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x52",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 473 'Network(DMP): Network Main Menu' (RC-5 27 82 02), the column of SR6003: RC-5x system 27 command 82 extension 2, read as RC5x device 27 subdevice 82 function 2 (the chart's extension is decimal); the chart marks it 'X (USB Top)'"
+        }
+      ]
+    },
+    "KEY_NETWORK_DMP_SCREEN_SAVER_ON": {
+      "label": "Network(DMP): Screen Saver On",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x6E",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 494 'Network(DMP): Screen Saver On' (RC-5 27 110 05), the column of SR6003: RC-5x system 27 command 110 extension 5, read as RC5x device 27 subdevice 110 function 5 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_NETWORK_DMP_SCREEN_SAVER_OFF_27_110_30": {
+      "label": "Network(DMP): Screen Saver Off (27 110 30)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x6E",
+          "function": "0x1E",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 495 'Network(DMP): Screen Saver Off' (RC-5 27 110 30), the column of SR6003: RC-5x system 27 command 110 extension 30, read as RC5x device 27 subdevice 110 function 30 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_POWER_ON_SLASH_OFF": {
+      "label": "POWER ON/OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1D",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 498 'POWER ON/OFF' (RC-5 16 29 00), the column of SR6003: RC-5x system 16 command 29 extension 0, read as RC5x device 16 subdevice 29 function 0 (the chart's extension is decimal); the chart's description: 'Turn Power ON/OFF (Toggle)'"
+        }
+      ]
+    },
+    "KEY_MULTI_ZONE_A_SPEAKER_MINUS_NET_DMP_OR_USB": {
+      "label": "Multi Zone A Speaker - Net(DMP) or USB",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1D",
+          "function": "0x3F",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 557 'Multi Zone A Speaker - Net(DMP) or USB' (RC-5 16 29 63), the column of SR6003: RC-5x system 16 command 29 extension 63, read as RC5x device 16 subdevice 29 function 63 (the chart's extension is decimal); the chart marks it 'X (USB)'; the chart's description: 'Select DMP or USB for Multi Zone A Speaker'"
+        }
+      ]
+    },
+    "KEY_SLEEP": {
+      "label": "SLEEP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1D",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 565 'SLEEP' (RC-5 16 29 10), the column of SR6003: RC-5x system 16 command 29 extension 10, read as RC5x device 16 subdevice 29 function 10 (the chart's extension is decimal); the chart's description: 'Sleep Timer set'"
+        }
+      ]
+    },
+    "KEY_SLEEP_OFF_16_38_10": {
+      "label": "SLEEP OFF (16 38 10)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x26",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 566 'SLEEP OFF' (RC-5 16 38 10), the column of SR6003: RC-5x system 16 command 38 extension 10, read as RC5x device 16 subdevice 38 function 10 (the chart's extension is decimal); the chart's description: 'Sleep Timer set: Off'"
+        }
+      ]
+    },
+    "KEY_SLEEP_30": {
+      "label": "SLEEP 30",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x26",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 567 'SLEEP 30' (RC-5 16 38 11), the column of SR6003: RC-5x system 16 command 38 extension 11, read as RC5x device 16 subdevice 38 function 11 (the chart's extension is decimal); the chart's description: 'Sleep Timer set: 30 min.'"
+        }
+      ]
+    },
+    "KEY_SLEEP_60": {
+      "label": "SLEEP 60",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x26",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 568 'SLEEP 60' (RC-5 16 38 12), the column of SR6003: RC-5x system 16 command 38 extension 12, read as RC5x device 16 subdevice 38 function 12 (the chart's extension is decimal); the chart's description: 'Sleep Timer set: 60 min.'"
+        }
+      ]
+    },
+    "KEY_SLEEP_90": {
+      "label": "SLEEP 90",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x26",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 569 'SLEEP 90' (RC-5 16 38 13), the column of SR6003: RC-5x system 16 command 38 extension 13, read as RC5x device 16 subdevice 38 function 13 (the chart's extension is decimal); the chart's description: 'Sleep Timer set: 90 min.'"
+        }
+      ]
+    },
+    "KEY_SLEEP_120": {
+      "label": "SLEEP 120",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x26",
+          "function": "0x0E",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 570 'SLEEP 120' (RC-5 16 38 14), the column of SR6003: RC-5x system 16 command 38 extension 14, read as RC5x device 16 subdevice 38 function 14 (the chart's extension is decimal); the chart's description: 'Sleep Timer set: 120 min.'"
+        }
+      ]
+    },
+    "KEY_NETWORK_DMP_NEXT": {
+      "label": "Network(DMP): Next",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x20",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 672 'Network(DMP): Next' (RC-5 27 32 02), the column of SR6003: RC-5x system 27 command 32 extension 2, read as RC5x device 27 subdevice 32 function 2 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_NETWORK_DMP_PREVIOUS": {
+      "label": "Network(DMP): Previous",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x21",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 673 'Network(DMP): Previous' (RC-5 27 33 02), the column of SR6003: RC-5x system 27 command 33 extension 2, read as RC5x device 27 subdevice 33 function 2 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_NETWORK_DMP_RANDOM_TOGGLE_27_41_01": {
+      "label": "Network(DMP): Random (toggle) (27 41 01)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x29",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 684 'Network(DMP): Random (toggle)' (RC-5 27 41 01), the column of SR6003: RC-5x system 27 command 41 extension 1, read as RC5x device 27 subdevice 41 function 1 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_NETWORK_DMP_RANDOM_OFF_27_41_02": {
+      "label": "Network(DMP): Random Off (27 41 02)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x29",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 685 'Network(DMP): Random Off' (RC-5 27 41 02), the column of SR6003: RC-5x system 27 command 41 extension 2, read as RC5x device 27 subdevice 41 function 2 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_NETWORK_DMP_RANDOM_ON_27_41_03": {
+      "label": "Network(DMP): Random On (27 41 03)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x29",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 686 'Network(DMP): Random On' (RC-5 27 41 03), the column of SR6003: RC-5x system 27 command 41 extension 3, read as RC5x device 27 subdevice 41 function 3 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_NETWORK_DMP_REPEAT_TOGGLE_27_42_01": {
+      "label": "Network(DMP): Repeat (toggle) (27 42 01)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x2A",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 688 'Network(DMP): Repeat (toggle)' (RC-5 27 42 01), the column of SR6003: RC-5x system 27 command 42 extension 1, read as RC5x device 27 subdevice 42 function 1 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_NETWORK_DMP_REPEAT_OFF_27_42_02": {
+      "label": "Network(DMP): Repeat Off (27 42 02)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x2A",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 689 'Network(DMP): Repeat Off' (RC-5 27 42 02), the column of SR6003: RC-5x system 27 command 42 extension 2, read as RC5x device 27 subdevice 42 function 2 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_NETWORK_DMP_REPEAT_1_27_42_03": {
+      "label": "Network(DMP): Repeat 1 (27 42 03)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x2A",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 690 'Network(DMP): Repeat 1' (RC-5 27 42 03), the column of SR6003: RC-5x system 27 command 42 extension 3, read as RC5x device 27 subdevice 42 function 3 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_NETWORK_DMP_REPEAT_ALL_27_42_04": {
+      "label": "Network(DMP): Repeat All (27 42 04)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x2A",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 691 'Network(DMP): Repeat All' (RC-5 27 42 04), the column of SR6003: RC-5x system 27 command 42 extension 4, read as RC5x device 27 subdevice 42 function 4 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_USB_REPEAT_FOLDER_27_42_05": {
+      "label": "USB: Repeat Folder (27 42 05)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x2A",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 692 'USB: Repeat Folder' (RC-5 27 42 05), the column of SR6003: RC-5x system 27 command 42 extension 5, read as RC5x device 27 subdevice 42 function 5 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_NETWORK_DMP_SLASH_USB_REW_27_50_02": {
+      "label": "Network(DMP)/USB: REW (27 50 02)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x32",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 693 'Network(DMP)/USB: REW' (RC-5 27 50 02), the column of SR6003: RC-5x system 27 command 50 extension 2, read as RC5x device 27 subdevice 50 function 2 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_USB_REW1_27_50_09": {
+      "label": "USB: Rew1 (27 50 09)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x32",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 694 'USB: Rew1' (RC-5 27 50 09), the column of SR6003: RC-5x system 27 command 50 extension 9, read as RC5x device 27 subdevice 50 function 9 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_USB_REW2_27_50_10": {
+      "label": "USB: Rew2 (27 50 10)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x32",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 695 'USB: Rew2' (RC-5 27 50 10), the column of SR6003: RC-5x system 27 command 50 extension 10, read as RC5x device 27 subdevice 50 function 10 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_USB_REW3_27_50_11": {
+      "label": "USB: Rew3 (27 50 11)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x32",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 696 'USB: Rew3' (RC-5 27 50 11), the column of SR6003: RC-5x system 27 command 50 extension 11, read as RC5x device 27 subdevice 50 function 11 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_NETWORK_DMP_SLASH_USB_FF_27_52_02": {
+      "label": "Network(DMP)/USB: FF (27 52 02)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x34",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 697 'Network(DMP)/USB: FF' (RC-5 27 52 02), the column of SR6003: RC-5x system 27 command 52 extension 2, read as RC5x device 27 subdevice 52 function 2 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_USB_FF1_27_52_09": {
+      "label": "USB: FF1 (27 52 09)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x34",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 698 'USB: FF1' (RC-5 27 52 09), the column of SR6003: RC-5x system 27 command 52 extension 9, read as RC5x device 27 subdevice 52 function 9 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_USB_FF2_27_52_10": {
+      "label": "USB: FF2 (27 52 10)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x34",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 699 'USB: FF2' (RC-5 27 52 10), the column of SR6003: RC-5x system 27 command 52 extension 10, read as RC5x device 27 subdevice 52 function 10 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_USB_FF3_27_52_11": {
+      "label": "USB: FF3 (27 52 11)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x34",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 700 'USB: FF3' (RC-5 27 52 11), the column of SR6003: RC-5x system 27 command 52 extension 11, read as RC5x device 27 subdevice 52 function 11 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_NETWORK_DMP_PLAY_SLASH_PAUSE_27_53_02": {
+      "label": "Network(DMP): Play(/Pause) (27 53 02)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x35",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 701 'Network(DMP): Play(/Pause)' (RC-5 27 53 02), the column of SR6003: RC-5x system 27 command 53 extension 2, read as RC5x device 27 subdevice 53 function 2 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_NETWORK_DMP_STOP_27_54_02": {
+      "label": "Network(DMP): Stop (27 54 02)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x36",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 706 'Network(DMP): Stop' (RC-5 27 54 02), the column of SR6003: RC-5x system 27 command 54 extension 2, read as RC5x device 27 subdevice 54 function 2 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_NETWORK_DMP_PAUSE": {
+      "label": "Network(DMP): Pause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x30",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 707 'Network(DMP): Pause' (RC-5 27 48 02), the column of SR6003: RC-5x system 27 command 48 extension 2, read as RC5x device 27 subdevice 48 function 2 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_NETWORK_DMP_SCREEN_SAVER_OFF_27_110_31": {
+      "label": "Network(DMP): Screen Saver Off (27 110 31)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "subdevice": "0x6E",
+          "function": "0x1F",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 748 'Network(DMP): Screen Saver Off' (RC-5 27 110 31), the column of SR6003: RC-5x system 27 command 110 extension 31, read as RC5x device 27 subdevice 110 function 31 (the chart's extension is decimal)"
+        }
+      ]
+    },
+    "KEY_POWER_ON_SLASH_OFF_TOGGLE": {
+      "label": "POWER ON/OFF (Toggle)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x5D",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 751 'POWER ON/OFF (Toggle)' (RC-5 16 93 00), the column of SR6003: RC-5x system 16 command 93 extension 0, read as RC5x device 16 subdevice 93 function 0 (the chart's extension is decimal); the chart's description: 'Turn Power ON/OFF (Toggle)'"
+        }
+      ]
+    },
+    "KEY_MUTE_TOGGLE": {
+      "label": "MUTE (Toggle)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x5D",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 759 'MUTE (Toggle)' (RC-5 16 93 08), the column of SR6003: RC-5x system 16 command 93 extension 8, read as RC5x device 16 subdevice 93 function 8 (the chart's extension is decimal); the chart's description: 'Mute On/Off (Toggle)'"
+        }
+      ]
+    },
+    "KEY_SLEEP_TOGGLE": {
+      "label": "SLEEP (Toggle)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x5D",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 766 'SLEEP (Toggle)' (RC-5 16 93 10), the column of SR6003: RC-5x system 16 command 93 extension 10, read as RC5x device 16 subdevice 93 function 10 (the chart's extension is decimal); the chart's description: 'Sleep Timer set'"
+        }
+      ]
+    },
+    "KEY_SLEEP_OFF_16_38_20": {
+      "label": "SLEEP OFF (16 38 20)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x26",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 767 'SLEEP OFF' (RC-5 16 38 20), the column of SR6003: RC-5x system 16 command 38 extension 20, read as RC5x device 16 subdevice 38 function 20 (the chart's extension is decimal); the chart's description: 'Sleep Timer set: Off'"
+        }
+      ]
+    },
+    "KEY_TAPE": {
+      "label": "TAPE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x5D",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 788 'TAPE' (RC-5 16 93 12), the column of SR6003: RC-5x system 16 command 93 extension 12, read as RC5x device 16 subdevice 93 function 12 (the chart's extension is decimal); the chart's description: 'Turn On and select TAPE'"
+        }
+      ]
+    },
+    "KEY_CD_MINUS_R": {
+      "label": "CD-R",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x5D",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 789 'CD-R' (RC-5 16 93 13), the column of SR6003: RC-5x system 16 command 93 extension 13, read as RC5x device 16 subdevice 93 function 13 (the chart's extension is decimal); the chart's description: 'Turn On and select CDR/MD'"
+        }
+      ]
+    },
+    "KEY_TV_TV_AUDIO": {
+      "label": "TV(TV AUDIO)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x5D",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 792 'TV(TV AUDIO)' (RC-5 16 93 15), the column of SR6003: RC-5x system 16 command 93 extension 15, read as RC5x device 16 subdevice 93 function 15 (the chart's extension is decimal); the chart's description: 'Turn On and select TV'"
+        }
+      ]
+    },
+    "KEY_DVD": {
+      "label": "DVD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x5D",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 793 'DVD' (RC-5 16 93 16), the column of SR6003: RC-5x system 16 command 93 extension 16, read as RC5x device 16 subdevice 93 function 16 (the chart's extension is decimal); the chart's description: 'Turn On and select DVD'"
+        }
+      ]
+    },
+    "KEY_VCR1_MEDIAPLAYER": {
+      "label": "VCR1(MEDIAPLAYER)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x5D",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 794 'VCR1(MEDIAPLAYER)' (RC-5 16 93 17), the column of SR6003: RC-5x system 16 command 93 extension 17, read as RC5x device 16 subdevice 93 function 17 (the chart's extension is decimal); the chart's description: 'Turn On and select VCR1'"
+        }
+      ]
+    },
+    "KEY_DSS_CBL_SLASH_SAT": {
+      "label": "DSS (CBL/SAT)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x5D",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 796 'DSS (CBL/SAT)' (RC-5 16 93 19), the column of SR6003: RC-5x system 16 command 93 extension 19, read as RC5x device 16 subdevice 93 function 19 (the chart's extension is decimal); the chart's description: 'Turn On and select DSS (SAT)'"
+        }
+      ]
+    },
+    "KEY_AUX1": {
+      "label": "AUX1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x5D",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 797 'AUX1' (RC-5 16 93 20), the column of SR6003: RC-5x system 16 command 93 extension 20, read as RC5x device 16 subdevice 93 function 20 (the chart's extension is decimal); the chart's description: 'Turn On and select Front Aux1 input'"
+        }
+      ]
+    },
+    "KEY_AUX2": {
+      "label": "AUX2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x5D",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 798 'AUX2' (RC-5 16 93 21), the column of SR6003: RC-5x system 16 command 93 extension 21, read as RC5x device 16 subdevice 93 function 21 (the chart's extension is decimal); the chart's description: 'Turn On and select L/R channel of Multi channel direct input'"
+        }
+      ]
+    },
+    "KEY_TUNER_MINUS_1_0": {
+      "label": "[Tuner-1] 0",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "subdevice": "0x5D",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 807 '[Tuner-1] 0' (RC-5 17 93 00), the column of SR6003: RC-5x system 17 command 93 extension 0, read as RC5x device 17 subdevice 93 function 0 (the chart's extension is decimal); the chart's description: 'Ten Key 0 ( Pre set No. or Frequency) for Tuner-1'"
+        }
+      ]
+    },
+    "KEY_TUNER_MINUS_1_1": {
+      "label": "[Tuner-1] 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "subdevice": "0x5D",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 808 '[Tuner-1] 1' (RC-5 17 93 01), the column of SR6003: RC-5x system 17 command 93 extension 1, read as RC5x device 17 subdevice 93 function 1 (the chart's extension is decimal); the chart's description: 'Ten Key 1 ( Pre set No. or Frequency) for Tuner-1'"
+        }
+      ]
+    },
+    "KEY_TUNER_MINUS_1_2": {
+      "label": "[Tuner-1] 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "subdevice": "0x5D",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 809 '[Tuner-1] 2' (RC-5 17 93 02), the column of SR6003: RC-5x system 17 command 93 extension 2, read as RC5x device 17 subdevice 93 function 2 (the chart's extension is decimal); the chart's description: 'Ten Key 2 ( Pre set No. or Frequency) for Tuner-1'"
+        }
+      ]
+    },
+    "KEY_TUNER_MINUS_1_3": {
+      "label": "[Tuner-1] 3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "subdevice": "0x5D",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 810 '[Tuner-1] 3' (RC-5 17 93 03), the column of SR6003: RC-5x system 17 command 93 extension 3, read as RC5x device 17 subdevice 93 function 3 (the chart's extension is decimal); the chart's description: 'Ten Key 3 ( Pre set No. or Frequency) for Tuner-1'"
+        }
+      ]
+    },
+    "KEY_TUNER_MINUS_1_4": {
+      "label": "[Tuner-1] 4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "subdevice": "0x5D",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 811 '[Tuner-1] 4' (RC-5 17 93 04), the column of SR6003: RC-5x system 17 command 93 extension 4, read as RC5x device 17 subdevice 93 function 4 (the chart's extension is decimal); the chart's description: 'Ten Key 4 ( Pre set No. or Frequency) for Tuner-1'"
+        }
+      ]
+    },
+    "KEY_TUNER_MINUS_1_5": {
+      "label": "[Tuner-1] 5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "subdevice": "0x5D",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 812 '[Tuner-1] 5' (RC-5 17 93 05), the column of SR6003: RC-5x system 17 command 93 extension 5, read as RC5x device 17 subdevice 93 function 5 (the chart's extension is decimal); the chart's description: 'Ten Key 5 ( Pre set No. or Frequency) for Tuner-1'"
+        }
+      ]
+    },
+    "KEY_TUNER_MINUS_1_6": {
+      "label": "[Tuner-1] 6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "subdevice": "0x5D",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 813 '[Tuner-1] 6' (RC-5 17 93 06), the column of SR6003: RC-5x system 17 command 93 extension 6, read as RC5x device 17 subdevice 93 function 6 (the chart's extension is decimal); the chart's description: 'Ten Key 6 ( Pre set No. or Frequency) for Tuner-1'"
+        }
+      ]
+    },
+    "KEY_TUNER_MINUS_1_7": {
+      "label": "[Tuner-1] 7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "subdevice": "0x5D",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 814 '[Tuner-1] 7' (RC-5 17 93 07), the column of SR6003: RC-5x system 17 command 93 extension 7, read as RC5x device 17 subdevice 93 function 7 (the chart's extension is decimal); the chart's description: 'Ten Key 7 ( Pre set No. or Frequency) for Tuner-1'"
+        }
+      ]
+    },
+    "KEY_TUNER_MINUS_1_8": {
+      "label": "[Tuner-1] 8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "subdevice": "0x5D",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 815 '[Tuner-1] 8' (RC-5 17 93 08), the column of SR6003: RC-5x system 17 command 93 extension 8, read as RC5x device 17 subdevice 93 function 8 (the chart's extension is decimal); the chart's description: 'Ten Key 8 ( Pre set No. or Frequency) for Tuner-1'"
+        }
+      ]
+    },
+    "KEY_TUNER_MINUS_1_9": {
+      "label": "[Tuner-1] 9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "subdevice": "0x5D",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 816 '[Tuner-1] 9' (RC-5 17 93 09), the column of SR6003: RC-5x system 17 command 93 extension 9, read as RC5x device 17 subdevice 93 function 9 (the chart's extension is decimal); the chart's description: 'Ten Key 9 ( Pre set No. or Frequency) for Tuner-1'"
+        }
+      ]
+    },
+    "KEY_TUNER_MINUS_1_PRESET_SCAN": {
+      "label": "[Tuner-1] PRESET SCAN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "subdevice": "0x5D",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 819 '[Tuner-1] PRESET SCAN' (RC-5 17 93 12), the column of SR6003: RC-5x system 17 command 93 extension 12, read as RC5x device 17 subdevice 93 function 12 (the chart's extension is decimal); the chart's description: 'Start Preset Scan for Tuner-1'"
+        }
+      ]
+    },
+    "KEY_TUNER_MINUS_1_PRESET_UP_PLUS": {
+      "label": "[Tuner-1] PRESET Up +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "subdevice": "0x5D",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 820 '[Tuner-1] PRESET Up +' (RC-5 17 93 13), the column of SR6003: RC-5x system 17 command 93 extension 13, read as RC5x device 17 subdevice 93 function 13 (the chart's extension is decimal); the chart's description: 'Preset (Skip) Up for Tuner-1'"
+        }
+      ]
+    },
+    "KEY_TUNER_MINUS_1_PRESET_DOWN_MINUS": {
+      "label": "[Tuner-1] PRESET Down -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "subdevice": "0x5D",
+          "function": "0x0E",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 821 '[Tuner-1] PRESET Down -' (RC-5 17 93 14), the column of SR6003: RC-5x system 17 command 93 extension 14, read as RC5x device 17 subdevice 93 function 14 (the chart's extension is decimal); the chart's description: 'Preset (Skip) Down for Tuner-1'"
+        }
+      ]
+    },
+    "KEY_TUNER_MINUS_1_FREQ_TUNING_UP_PLUS": {
+      "label": "[Tuner-1] FREQ.(tuning) Up +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "subdevice": "0x5D",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 822 '[Tuner-1] FREQ.(tuning) Up +' (RC-5 17 93 15), the column of SR6003: RC-5x system 17 command 93 extension 15, read as RC5x device 17 subdevice 93 function 15 (the chart's extension is decimal); the chart's description: 'Frequency (Scan) Up for Tuner-1'"
+        }
+      ]
+    },
+    "KEY_TUNER_MINUS_1_FREQ_TUNING_DOWN_MINUS": {
+      "label": "[Tuner-1] FREQ.(tuning) Down -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "subdevice": "0x5D",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 823 '[Tuner-1] FREQ.(tuning) Down -' (RC-5 17 93 16), the column of SR6003: RC-5x system 17 command 93 extension 16, read as RC5x device 17 subdevice 93 function 16 (the chart's extension is decimal); the chart's description: 'Frequency (Scan) Down for Tuner-1'"
+        }
+      ]
+    },
+    "KEY_TUNER_MINUS_1_CLEAR": {
+      "label": "[Tuner-1] CLEAR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "subdevice": "0x5D",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 825 '[Tuner-1] CLEAR' (RC-5 17 93 18), the column of SR6003: RC-5x system 17 command 93 extension 18, read as RC5x device 17 subdevice 93 function 18 (the chart's extension is decimal); the chart's description: 'Clear for Tuner-1'"
+        }
+      ]
+    },
+    "KEY_TUNER_MINUS_1_FREQ_MINUS_DIRECT": {
+      "label": "[Tuner-1] FREQ.-DIRECT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "subdevice": "0x5D",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 826 '[Tuner-1] FREQ.-DIRECT' (RC-5 17 93 19), the column of SR6003: RC-5x system 17 command 93 extension 19, read as RC5x device 17 subdevice 93 function 19 (the chart's extension is decimal); the chart's description: 'Change to Direct Frequency input mode for Tuner-1'"
+        }
+      ]
+    },
+    "KEY_SIRIUS": {
+      "label": "SIRIUS",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "subdevice": "0x5D",
+          "function": "0x32",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 858 'SIRIUS' (RC-5 17 93 50), the column of SR6003: RC-5x system 17 command 93 extension 50, read as RC5x device 17 subdevice 93 function 50 (the chart's extension is decimal); the chart's description: 'Select Sirius'"
+        }
+      ]
+    }
+  }
+}

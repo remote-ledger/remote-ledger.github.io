@@ -1,0 +1,99 @@
+{
+  "manufacturer": "Marantz",
+  "model": "SR4001 [RC-5x]",
+  "aliases": [],
+  "controls": [
+    "Marantz SR4001"
+  ],
+  "protocol": {
+    "name": "RC5x",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_ATT": {
+      "label": "ATT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x2B",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 19 'ATT' (RC-5 16 37 43), the column of SR4001: RC-5x system 16 command 37 extension 43, read as RC5x device 16 subdevice 37 function 43 (the chart's extension is decimal); the chart's description: 'Attenuate On/Off for analog input'"
+        }
+      ]
+    },
+    "KEY_CS_MINUS_II_SRS_TOGGLE": {
+      "label": "CS-II (SRS) (Toggle)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x40",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 167 'CS-II (SRS) (Toggle)' (RC-5 16 64 09), the column of SR4001: RC-5x system 16 command 64 extension 9, read as RC5x device 16 subdevice 64 function 9 (the chart's extension is decimal); the chart's description: 'Select CS mode music>movie>mono>'"
+        }
+      ]
+    },
+    "KEY_TEST_TONE": {
+      "label": "TEST TONE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 203 'TEST TONE' (RC-5 16 37 21), the column of SR4001: RC-5x system 16 command 37 extension 21, read as RC5x device 16 subdevice 37 function 21 (the chart's extension is decimal); the chart's description: 'Jump to Test tone menu'"
+        }
+      ]
+    },
+    "KEY_CH_SELECT": {
+      "label": "CH. SELECT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x21",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 205 'CH. SELECT' (RC-5 16 37 33), the column of SR4001: RC-5x system 16 command 37 extension 33, read as RC5x device 16 subdevice 37 function 33 (the chart's extension is decimal); the chart's description: 'Channel select Jump to Surr Menu or Jump to 7.1 level menu'"
+        }
+      ]
+    },
+    "KEY_CH_LEVEL_PLUS": {
+      "label": "CH. LEVEL +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x22",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 206 'CH. LEVEL +' (RC-5 16 37 34), the column of SR4001: RC-5x system 16 command 37 extension 34, read as RC5x device 16 subdevice 37 function 34 (the chart's extension is decimal); the chart's description: 'Channel Level control up'"
+        }
+      ]
+    },
+    "KEY_CH_LEVEL_MINUS": {
+      "label": "CH. LEVEL -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x23",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 207 'CH. LEVEL -' (RC-5 16 37 35), the column of SR4001: RC-5x system 16 command 37 extension 35, read as RC5x device 16 subdevice 37 function 35 (the chart's extension is decimal); the chart's description: 'Channel Level control down'"
+        }
+      ]
+    }
+  }
+}

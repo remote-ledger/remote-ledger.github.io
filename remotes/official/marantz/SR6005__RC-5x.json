@@ -1,0 +1,323 @@
+{
+  "manufacturer": "Marantz",
+  "model": "SR6005 [RC-5x]",
+  "aliases": [],
+  "controls": [
+    "Marantz SR6005"
+  ],
+  "protocol": {
+    "name": "RC5x",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_OPTION": {
+      "label": "OPTION",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x52",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 30 'OPTION' (RC-5 16 82 11), the column of SR6005: RC-5x system 16 command 82 extension 11, read as RC5x device 16 subdevice 82 function 11 (the chart's extension is decimal); the chart's description: 'Option Menu on/off'"
+        }
+      ]
+    },
+    "KEY_INFO": {
+      "label": "Info.",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x0F",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 46 'Info.' (RC-5 16 15 08), the column of SR6005: RC-5x system 16 command 15 extension 8, read as RC5x device 16 subdevice 15 function 8 (the chart's extension is decimal); the chart's description: 'Information On/Off'"
+        }
+      ]
+    },
+    "KEY_TEST_TONE": {
+      "label": "TEST TONE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 203 'TEST TONE' (RC-5 16 37 21), the column of SR6005: RC-5x system 16 command 37 extension 21, read as RC5x device 16 subdevice 37 function 21 (the chart's extension is decimal); the chart's description: 'Jump to Test tone menu'"
+        }
+      ]
+    },
+    "KEY_CH_SELECT": {
+      "label": "CH. SELECT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x21",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 205 'CH. SELECT' (RC-5 16 37 33), the column of SR6005: RC-5x system 16 command 37 extension 33, read as RC5x device 16 subdevice 37 function 33 (the chart's extension is decimal); the chart's description: 'Channel select Jump to Surr Menu or Jump to 7.1 level menu'"
+        }
+      ]
+    },
+    "KEY_AUDYSSEY_DYNAMIC_EQ_SLASH_VOL": {
+      "label": "Audyssey Dynamic EQ/VOL",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1C",
+          "function": "0x28",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 244 'Audyssey Dynamic EQ/VOL' (RC-5 16 28 40), the column of SR6005: RC-5x system 16 command 28 extension 40, read as RC5x device 16 subdevice 28 function 40 (the chart's extension is decimal); the chart's description: 'Select Audyssey Dynamic EQ or Volume mode'"
+        }
+      ]
+    },
+    "KEY_IPOD_MODE_SELECT_TOGGLE": {
+      "label": "iPod Mode Select (Toggle)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x52",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 354 'iPod Mode Select (Toggle)' (RC-5 16 82 07), the column of SR6005: RC-5x system 16 command 82 extension 7, read as RC5x device 16 subdevice 82 function 7 (the chart's extension is decimal); the chart's description: 'Select iPod mode On/Off'"
+        }
+      ]
+    },
+    "KEY_PAGE_PREVIOUS": {
+      "label": "Page Previous",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x20",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 363 'Page Previous' (RC-5 24 32 20), the column of SR6005: RC-5x system 24 command 32 extension 20, read as RC5x device 24 subdevice 32 function 20 (the chart's extension is decimal); the chart's description: 'Go to next page'"
+        }
+      ]
+    },
+    "KEY_PAGE_NEXT": {
+      "label": "Page Next",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x21",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 364 'Page Next' (RC-5 24 33 20), the column of SR6005: RC-5x system 24 command 33 extension 20, read as RC5x device 24 subdevice 33 function 20 (the chart's extension is decimal); the chart's description: 'Back to previous page'"
+        }
+      ]
+    },
+    "KEY_PLAY": {
+      "label": "Play",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x35",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 368 'Play' (RC-5 24 53 01), the column of SR6005: RC-5x system 24 command 53 extension 1, read as RC5x device 24 subdevice 53 function 1 (the chart's extension is decimal); the chart's description: 'Start the playback'"
+        }
+      ]
+    },
+    "KEY_PAUSE_24_48_01": {
+      "label": "Pause (24 48 01)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x30",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 370 'Pause' (RC-5 24 48 01), the column of SR6005: RC-5x system 24 command 48 extension 1, read as RC5x device 24 subdevice 48 function 1 (the chart's extension is decimal); the chart's description: 'Pause the playback'"
+        }
+      ]
+    },
+    "KEY_STOP_24_54_01": {
+      "label": "Stop (24 54 01)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x36",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 371 'Stop' (RC-5 24 54 01), the column of SR6005: RC-5x system 24 command 54 extension 1, read as RC5x device 24 subdevice 54 function 1 (the chart's extension is decimal); the chart's description: 'Stop the playback'"
+        }
+      ]
+    },
+    "KEY_NEXT": {
+      "label": "Next",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x20",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 372 'Next' (RC-5 24 32 01), the column of SR6005: RC-5x system 24 command 32 extension 1, read as RC5x device 24 subdevice 32 function 1 (the chart's extension is decimal); the chart's description: 'Go to next song'"
+        }
+      ]
+    },
+    "KEY_PREVIOUS": {
+      "label": "Previous",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x21",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 373 'Previous' (RC-5 24 33 01), the column of SR6005: RC-5x system 24 command 33 extension 1, read as RC5x device 24 subdevice 33 function 1 (the chart's extension is decimal); the chart's description: 'Back to previous song'"
+        }
+      ]
+    },
+    "KEY_REW_TOGGLE": {
+      "label": "REW (Toggle)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x32",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 374 'REW (Toggle)' (RC-5 24 50 01), the column of SR6005: RC-5x system 24 command 50 extension 1, read as RC5x device 24 subdevice 50 function 1 (the chart's extension is decimal); the chart's description: 'Change REW mode (Toggle)'"
+        }
+      ]
+    },
+    "KEY_FF_TOGGLE": {
+      "label": "FF (Toggle)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x34",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 378 'FF (Toggle)' (RC-5 24 52 01), the column of SR6005: RC-5x system 24 command 52 extension 1, read as RC5x device 24 subdevice 52 function 1 (the chart's extension is decimal); the chart's description: 'Change FF mode (Toggle)'"
+        }
+      ]
+    },
+    "KEY_RANDOM_TOGGLE": {
+      "label": "Random(Toggle)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x1C",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 382 'Random(Toggle)' (RC-5 24 28 01), the column of SR6005: RC-5x system 24 command 28 extension 1, read as RC5x device 24 subdevice 28 function 1 (the chart's extension is decimal); the chart's description: 'Change Random mode Off->Songs->Album->Off'"
+        }
+      ]
+    },
+    "KEY_RANDOM_ALBUM": {
+      "label": "Random (Album)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x1C",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 385 'Random (Album)' (RC-5 24 28 04), the column of SR6005: RC-5x system 24 command 28 extension 4, read as RC5x device 24 subdevice 28 function 4 (the chart's extension is decimal); the chart's description: 'Album Random mode on'"
+        }
+      ]
+    },
+    "KEY_REPEAT_TOGGLE_24_29_01": {
+      "label": "Repeat(Toggle)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x1D",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 386 'Repeat(Toggle)' (RC-5 24 29 01), the column of SR6005: RC-5x system 24 command 29 extension 1, read as RC5x device 24 subdevice 29 function 1 (the chart's extension is decimal); the chart's description: 'Change Repeat mode'"
+        }
+      ]
+    },
+    "KEY_REPEAT_TOGGLE_24_42_01": {
+      "label": "Repeat(toggle)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x2A",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 635 'Repeat(toggle)' (RC-5 24 42 01), the column of SR6005: RC-5x system 24 command 42 extension 1, read as RC5x device 24 subdevice 42 function 1 (the chart's extension is decimal); the chart's description: 'Change Repeat mode (Toggle)'"
+        }
+      ]
+    },
+    "KEY_PAUSE_24_48_02": {
+      "label": "Pause (24 48 02)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x30",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 640 'Pause' (RC-5 24 48 02), the column of SR6005: RC-5x system 24 command 48 extension 2, read as RC5x device 24 subdevice 48 function 2 (the chart's extension is decimal); the chart's description: 'Pause the playback'"
+        }
+      ]
+    },
+    "KEY_PLAY_SLASH_PAUSE": {
+      "label": "Play/Pause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x35",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 650 'Play/Pause' (RC-5 24 53 10), the column of SR6005: RC-5x system 24 command 53 extension 10, read as RC5x device 24 subdevice 53 function 10 (the chart's extension is decimal); the chart's description: 'Play Pause Toggle'"
+        }
+      ]
+    },
+    "KEY_STOP_24_54_02": {
+      "label": "Stop (24 54 02)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x36",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "marantz.com archive-downloads/marantz-master-ir.xls@7c5c35e9 (retrieved 2026-10-08) sheet 'AVR Commands' row 653 'Stop' (RC-5 24 54 02), the column of SR6005: RC-5x system 24 command 54 extension 2, read as RC5x device 24 subdevice 54 function 2 (the chart's extension is decimal); the chart's description: 'Stop the playback'"
+        }
+      ]
+    }
+  }
+}
