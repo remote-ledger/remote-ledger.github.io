@@ -1397,8 +1397,8 @@ def rotel_files() -> dict[str, dict]:
 
 
 def test_the_rotel_files_are_the_59_models_less_two_their_alternative_sets_and_the_questionable_ones():
-    """91 files and 3,598 keys: 57 model files (2,648 keys), 24 files of the units' alternative IR code set (822), 5 of the four
-    receivers' RC-5 power and volume codes (20) and 5 questionable ones (108 keys, Untested). The S14 and RAS-5000 are not read."""
+    """93 files and 3,598 keys: 57 model files (2,528 keys), 26 files of the units' alternative IR code set (942), 5 of the processors'
+    and receivers' RC-5 power and volume codes (20) and 5 questionable ones (108 keys, Untested). The S14 and RAS-5000 are not read."""
     files = rotel_files()
     kinds: dict[str, list[int]] = {"model": [], "alternative": [], "RC-5": [], "questionable": []}
     for model, doc in files.items():
@@ -1408,11 +1408,11 @@ def test_the_rotel_files_are_the_59_models_less_two_their_alternative_sets_and_t
         tiers = {s["forms"][0]["confidence"] for s in doc["keys"].values()}
         assert tiers == ({"untested"} if kind == "questionable" else {"plausible"}), model
         assert doc["protocol"]["name"] == ("RC5" if kind == "RC-5" else "NEC1")
-    assert {k: (len(v), sum(v)) for k, v in kinds.items()} == {"model": (57, 2648), "alternative": (24, 822), "RC-5": (5, 20), "questionable": (5, 108)}
+    assert {k: (len(v), sum(v)) for k, v in kinds.items()} == {"model": (57, 2528), "alternative": (26, 942), "RC-5": (5, 20), "questionable": (5, 108)}
     report = (ROOT / oi.IMPORT_ROOT / oi.REPORT).read_text(encoding="utf-8")
     figure = lambda what: int(re.search(rf"\| rotel: {what} \| ([\d,]+) \|", report)[1].replace(",", ""))
     assert [figure(w) for w in ("models on the page", "files", "keys", "Pronto hex that decodes to its heading and code",
-                                "Pronto hex that decodes to another code", "codes whose line says IF CODE")] == [59, 91, 3598, 3052, 67, 24]
+                                "Pronto hex that decodes to another code", "codes whose line says IF CODE")] == [59, 93, 3598, 3052, 67, 24]
     assert "S14" not in " ".join(files) and "RAS-5000" not in " ".join(files)
 
 
