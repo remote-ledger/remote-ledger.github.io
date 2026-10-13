@@ -15,10 +15,19 @@ dropped silently (SPEC R19, condition 5).
 | anthem: keys | 1,088 |
 | anthem: rows read | 104 |
 | anthem: rows whose Pronto hex disagrees with their data column | 20 |
-| marantz: files | 237 |
-| marantz: keys | 16,481 |
+| marantz: direct files | 44 |
+| marantz: direct keys | 15,995 |
+| marantz: files | 281 |
+| marantz: keys | 32,476 |
+| marantz: marantz-2014-ir-command-sheet.xls: Direct Vol.: rows | 380 |
 | marantz: marantz-2014-ir-command-sheet.xls: commands | 801 |
+| marantz: marantz-master-ir.xls: AM FM Preset Direct: rows | 244 |
+| marantz: marantz-master-ir.xls: Direct Vol.: rows | 380 |
+| marantz: marantz-master-ir.xls: XM SIRIUS Ch. Direct: rows | 768 |
+| marantz: marantz-master-ir.xls: XM SIRIUS Preset Direct: rows | 244 |
+| marantz: marantz-master-ir.xls: Zone Speaker Direct Vol.: rows | 192 |
 | marantz: marantz-master-ir.xls: commands | 1,124 |
+| marantz: marantz_fy18_av_sr_nr_ir_code_v02-02072018.xls: Direct Vol.: rows | 368 |
 | marantz: marantz_fy18_av_sr_nr_ir_code_v02-02072018.xls: commands | 559 |
 | oppo: BDP-103_BDP-103D_Remote_Code_v1.2.xls: keys read | 177 |
 | oppo: BDP-103_BDP-105_Remote_Code_v1.1.xls: keys read | 174 |
@@ -36,7 +45,7 @@ dropped silently (SPEC R19, condition 5).
 | `marantz` | `marantz-master-ir.xls` | `an RC-5x extension that is a range of values, a command for each` | 13 |
 | `marantz` | `marantz-master-ir.xls` | `no RC-5 system and command the ledger can send` | 3 |
 | `marantz` | `marantz-master-ir.xls` | `the chart's Pronto hex does not compile: repeat[70] is 0; D28 requires 1 <= repeat[70] <= 1000100` | 1 |
-| `marantz` | `marantz_fy18_av_sr_nr_ir_code_v02-02072018.xls` | `an RC-5x extension that is a range of values, a command for each` | 2 |
+| `marantz` | `marantz_fy18_av_sr_nr_ir_code_v02-02072018.xls` | `an RC-5x extension that is a range of values, a command for each` | 5 |
 | `marantz` | `marantz_fy18_av_sr_nr_ir_code_v02-02072018.xls` | `the chart's Pronto hex does not compile: repeat[70] is 0; D28 requires 1 <= repeat[70] <= 1000100` | 1 |
 
 ## Notes on what a document says (12)
