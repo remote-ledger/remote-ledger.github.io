@@ -1,0 +1,323 @@
+{
+  "manufacturer": "KEF",
+  "model": "LSX II",
+  "aliases": [],
+  "controls": [
+    "KEF LSX II"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER_ON_SLASH_OFF_TOGGLE": {
+      "label": "Power On/Off Toggle",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x7F",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "kef.com IR code sheets/LSX-II_IR-Codes-for-Universal-Remote-Control.pdf@b90d7e54 (retrieved 2026-10-13) page 1 row 1 'Power On/Off Toggle' (NEC, factory code 0x01, function code 0x40): NEC1 device 128 subdevice 127 function 2, the sheet's bytes in the other bit order"
+        }
+      ]
+    },
+    "KEY_MUTE_SLASH_UNMUTE_TOGGLE": {
+      "label": "Mute/ Unmute Toggle",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x7F",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "kef.com IR code sheets/LSX-II_IR-Codes-for-Universal-Remote-Control.pdf@b90d7e54 (retrieved 2026-10-13) page 1 row 2 'Mute/ Unmute Toggle' (NEC, factory code 0x01, function code 0x20): NEC1 device 128 subdevice 127 function 4, the sheet's bytes in the other bit order"
+        }
+      ]
+    },
+    "KEY_PLAY_SLASH_PAUSE": {
+      "label": "Play/Pause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x7F",
+          "function": "0x18",
+          "confidence": "plausible",
+          "source": "kef.com IR code sheets/LSX-II_IR-Codes-for-Universal-Remote-Control.pdf@b90d7e54 (retrieved 2026-10-13) page 1 row 3 'Play/Pause' (NEC, factory code 0x01, function code 0x18): NEC1 device 128 subdevice 127 function 24, the sheet's bytes in the other bit order"
+        }
+      ]
+    },
+    "KEY_FORWARD": {
+      "label": "Forward",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x7F",
+          "function": "0x4A",
+          "confidence": "plausible",
+          "source": "kef.com IR code sheets/LSX-II_IR-Codes-for-Universal-Remote-Control.pdf@b90d7e54 (retrieved 2026-10-13) page 1 row 4 'Forward' (NEC, factory code 0x01, function code 0x52): NEC1 device 128 subdevice 127 function 74, the sheet's bytes in the other bit order"
+        }
+      ]
+    },
+    "KEY_NEXT_SOURCE": {
+      "label": "Next Source",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x7F",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "kef.com IR code sheets/LSX-II_IR-Codes-for-Universal-Remote-Control.pdf@b90d7e54 (retrieved 2026-10-13) page 1 row 5 'Next Source' (NEC, factory code 0x01, function code 0x58): NEC1 device 128 subdevice 127 function 26, the sheet's bytes in the other bit order"
+        }
+      ]
+    },
+    "KEY_VOLUME_UP": {
+      "label": "Volume Up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x7F",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "kef.com IR code sheets/LSX-II_IR-Codes-for-Universal-Remote-Control.pdf@b90d7e54 (retrieved 2026-10-13) page 1 row 6 'Volume Up' (NEC, factory code 0x01, function code 0x60): NEC1 device 128 subdevice 127 function 6, the sheet's bytes in the other bit order"
+        }
+      ]
+    },
+    "KEY_VOLUME_DOWN": {
+      "label": "Volume Down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x7F",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "kef.com IR code sheets/LSX-II_IR-Codes-for-Universal-Remote-Control.pdf@b90d7e54 (retrieved 2026-10-13) page 1 row 7 'Volume Down' (NEC, factory code 0x01, function code 0xa0): NEC1 device 128 subdevice 127 function 5, the sheet's bytes in the other bit order"
+        }
+      ]
+    },
+    "KEY_BACKWARD": {
+      "label": "Backward",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x7F",
+          "function": "0x4B",
+          "confidence": "plausible",
+          "source": "kef.com IR code sheets/LSX-II_IR-Codes-for-Universal-Remote-Control.pdf@b90d7e54 (retrieved 2026-10-13) page 1 row 8 'Backward' (NEC, factory code 0x01, function code 0xd2): NEC1 device 128 subdevice 127 function 75, the sheet's bytes in the other bit order"
+        }
+      ]
+    },
+    "KEY_POWER_ON": {
+      "label": "Power ON",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x7F",
+          "function": "0x1C",
+          "confidence": "plausible",
+          "source": "kef.com IR code sheets/LSX-II_IR-Codes-for-Universal-Remote-Control.pdf@b90d7e54 (retrieved 2026-10-13) page 1 row 9 'Power ON' (NEC, factory code 0x01, function code 0x38): NEC1 device 128 subdevice 127 function 28, the sheet's bytes in the other bit order"
+        }
+      ]
+    },
+    "KEY_POWER_OFF": {
+      "label": "Power OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x7F",
+          "function": "0x5C",
+          "confidence": "plausible",
+          "source": "kef.com IR code sheets/LSX-II_IR-Codes-for-Universal-Remote-Control.pdf@b90d7e54 (retrieved 2026-10-13) page 1 row 10 'Power OFF' (NEC, factory code 0x01, function code 0x3a): NEC1 device 128 subdevice 127 function 92, the sheet's bytes in the other bit order"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "Mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x7F",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "kef.com IR code sheets/LSX-II_IR-Codes-for-Universal-Remote-Control.pdf@b90d7e54 (retrieved 2026-10-13) page 1 row 11 'Mute' (NEC, factory code 0x01, function code 0x48): NEC1 device 128 subdevice 127 function 18, the sheet's bytes in the other bit order"
+        }
+      ]
+    },
+    "KEY_UN_MINUS_MUTE": {
+      "label": "Un-Mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x7F",
+          "function": "0x52",
+          "confidence": "plausible",
+          "source": "kef.com IR code sheets/LSX-II_IR-Codes-for-Universal-Remote-Control.pdf@b90d7e54 (retrieved 2026-10-13) page 1 row 12 'Un-Mute' (NEC, factory code 0x01, function code 0x4a): NEC1 device 128 subdevice 127 function 82, the sheet's bytes in the other bit order"
+        }
+      ]
+    },
+    "KEY_SOURCE_WI_MINUS_FI": {
+      "label": "Source: Wi-Fi",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x7F",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "kef.com IR code sheets/LSX-II_IR-Codes-for-Universal-Remote-Control.pdf@b90d7e54 (retrieved 2026-10-13) page 1 row 13 'Source: Wi-Fi' (NEC, factory code 0x01, function code 0x30): NEC1 device 128 subdevice 127 function 12, the sheet's bytes in the other bit order"
+        }
+      ]
+    },
+    "KEY_SOURCE_BLUETOOTH": {
+      "label": "Source: Bluetooth",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x7F",
+          "function": "0x54",
+          "confidence": "plausible",
+          "source": "kef.com IR code sheets/LSX-II_IR-Codes-for-Universal-Remote-Control.pdf@b90d7e54 (retrieved 2026-10-13) page 1 row 14 'Source: Bluetooth' (NEC, factory code 0x01, function code 0x2a): NEC1 device 128 subdevice 127 function 84, the sheet's bytes in the other bit order"
+        }
+      ]
+    },
+    "KEY_BLUETOOTH_PAIRING": {
+      "label": "Bluetooth Pairing",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x7F",
+          "function": "0x19",
+          "confidence": "plausible",
+          "source": "kef.com IR code sheets/LSX-II_IR-Codes-for-Universal-Remote-Control.pdf@b90d7e54 (retrieved 2026-10-13) page 1 row 15 'Bluetooth Pairing' (NEC, factory code 0x01, function code 0x98): NEC1 device 128 subdevice 127 function 25, the sheet's bytes in the other bit order"
+        }
+      ]
+    },
+    "KEY_SOURCE_AUX": {
+      "label": "Source: AUX",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x7F",
+          "function": "0x40",
+          "confidence": "plausible",
+          "source": "kef.com IR code sheets/LSX-II_IR-Codes-for-Universal-Remote-Control.pdf@b90d7e54 (retrieved 2026-10-13) page 1 row 16 'Source: AUX' (NEC, factory code 0x01, function code 0x02): NEC1 device 128 subdevice 127 function 64, the sheet's bytes in the other bit order"
+        }
+      ]
+    },
+    "KEY_SOURCE_OPTICAL": {
+      "label": "Source: Optical",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x7F",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "kef.com IR code sheets/LSX-II_IR-Codes-for-Universal-Remote-Control.pdf@b90d7e54 (retrieved 2026-10-13) page 1 row 17 'Source: Optical' (NEC, factory code 0x01, function code 0x0a): NEC1 device 128 subdevice 127 function 80, the sheet's bytes in the other bit order"
+        }
+      ]
+    },
+    "KEY_PRESET_VOLUME_30": {
+      "label": "Preset Volume (30%)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x7F",
+          "function": "0x1E",
+          "confidence": "plausible",
+          "source": "kef.com IR code sheets/LSX-II_IR-Codes-for-Universal-Remote-Control.pdf@b90d7e54 (retrieved 2026-10-13) page 1 row 18 'Preset Volume (30%)' (NEC, factory code 0x01, function code 0x78): NEC1 device 128 subdevice 127 function 30, the sheet's bytes in the other bit order"
+        }
+      ]
+    },
+    "KEY_SOURCE_HDMI": {
+      "label": "Source: HDMI",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x7F",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "kef.com IR code sheets/LSX-II_IR-Codes-for-Universal-Remote-Control.pdf@b90d7e54 (retrieved 2026-10-13) page 1 row 19 'Source: HDMI' (NEC, factory code 0x01, function code 0x88): NEC1 device 128 subdevice 127 function 17, the sheet's bytes in the other bit order; the row has 2 codes (0x88, 0x8a) and the sheet does not say how they differ"
+        }
+      ]
+    },
+    "KEY_SOURCE_HDMI_SECOND_CODE": {
+      "label": "Source: HDMI (second code)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x7F",
+          "function": "0x51",
+          "confidence": "plausible",
+          "source": "kef.com IR code sheets/LSX-II_IR-Codes-for-Universal-Remote-Control.pdf@b90d7e54 (retrieved 2026-10-13) page 1 row 19 'Source: HDMI' (NEC, factory code 0x01, function code 0x8a): NEC1 device 128 subdevice 127 function 81, the sheet's bytes in the other bit order; the row has 2 codes (0x88, 0x8a) and the sheet does not say how they differ"
+        }
+      ]
+    },
+    "KEY_SOURCE_USB": {
+      "label": "Source: USB",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x7F",
+          "function": "0x58",
+          "confidence": "plausible",
+          "source": "kef.com IR code sheets/LSX-II_IR-Codes-for-Universal-Remote-Control.pdf@b90d7e54 (retrieved 2026-10-13) page 1 row 20 'Source: USB' (NEC, factory code 0x01, function code 0x1a): NEC1 device 128 subdevice 127 function 88, the sheet's bytes in the other bit order"
+        }
+      ]
+    },
+    "KEY_PREVIOUS_SOURCE": {
+      "label": "Previous Source",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x80",
+          "subdevice": "0x7F",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "kef.com IR code sheets/LSX-II_IR-Codes-for-Universal-Remote-Control.pdf@b90d7e54 (retrieved 2026-10-13) page 1 row 21 'Previous Source' (NEC, factory code 0x01, function code 0xd0): NEC1 device 128 subdevice 127 function 11, the sheet's bytes in the other bit order"
+        }
+      ]
+    }
+  }
+}
