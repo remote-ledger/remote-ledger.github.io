@@ -44,8 +44,8 @@ files and 6,772 keys under `remotes/hifi-remote/`, which are a table of
 reference codes and so carry no licence (DESIGN.md §27); and the JP1 device
 upgrades of hifi-remote.com's forum, 2,933 files and 115,858 keys under
 `remotes/jp1/`, likewise (DESIGN.md §28); and the manufacturers' own IR code
-tables, Marantz's, Anthem's and Oppo's, 264 files and 18,433 keys under
-`remotes/official/`, likewise (DESIGN.md §29, §31, §58). That makes 16,637 remote files with
+tables, Marantz's, Anthem's and Oppo's, 308 files and 34,428 keys under
+`remotes/official/`, likewise (DESIGN.md §29, §31, §58, §60). That makes 16,681 remote files with
 the five authored ones. Data whose licence is unclear is not here: it is kept in
 a private repository in the same layout, which the tools read through
 `--extra-root` (DESIGN.md §30). The IR Blaster database stores each code as a hexcode, and for

@@ -23,9 +23,10 @@ from pathlib import Path
 #: maker -> {document: [sheet names read]}
 SHEETS = {
     "marantz": {
-        "marantz-master-ir.xls": ["AVR Commands"],
-        "marantz-2014-ir-command-sheet.xls": ["AVR Commands"],
-        "marantz_fy18_av_sr_nr_ir_code_v02-02072018.xls": ["AVR Commands"],
+        "marantz-master-ir.xls": ["AVR Commands", "Direct Vol.", "Zone Speaker Direct Vol.", "AM FM Preset Direct",
+                                  "XM SIRIUS Preset Direct", "XM SIRIUS Ch. Direct"],
+        "marantz-2014-ir-command-sheet.xls": ["AVR Commands", "Direct Vol."],
+        "marantz_fy18_av_sr_nr_ir_code_v02-02072018.xls": ["AVR Commands", "Direct Vol."],
     },
     "oppo": {
         "BDP-103_BDP-103D_Remote_Code_v1.2.xls": ["Remote Code 1", "Remote Code 2", "Remote Code 3", "Notes"],
