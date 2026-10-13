@@ -7,7 +7,7 @@ size, SHA-256, the retrieval date (today: do not pass --date) and the server's `
 (and, for a copy from the Wayback Machine, the address and snapshot it was archived from). Run it, then
 ``tools/official_sheets_to_csv.py <maker>`` for the spreadsheets, review the diff, and import.
 
-    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc|arcam|cambridge|hegel|linn|simaudio|rotel
+    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc|arcam|cambridge|hegel|simaudio|rotel
 """
 
 from __future__ import annotations
@@ -99,15 +99,6 @@ DOCUMENTS = {
             ("Hegel_HD25_IR_Codes.pdf", 70, "hegel-hd25-ir-codes"), ("Hegel_HD30_IR_Codes.pdf", 72, "hegel-hd30-ir-codes"),
             ("Hegel_Mohican_IR_Codes.pdf", 73, "hegel-mohican-ir-codes"), ("Hegel_H390_H590_IR_codes_v1.pdf", 85, "h390-h590-ir-codes"),
             ("Hegel_H95_H120_H190_IR_codes_v2.pdf", 86, "h95-h120-h190-ir-codes"), ("Hegel_P20_P30_IR_codes_v2.pdf", 87, "p20-p30-ir-codes"))
-    ],
-    # Linn's LinnDocs wiki page of RC-5 codes (a table of the codes of its network products, DS and DSM), the one-page PDF of the
-    # Pronto hex of some of them, and the wiki's general disclaimer, which grants "a limited license to copy anything from this site"
-    # under the GNU Free Documentation License (kept whole as the licence's evidence). The wiki's other document, the 22-page PDF of
-    # the legacy products' codes, is not pinned: see section 67.
-    "linn": [
-        ("RC5_Codes.html", "https://docs.linn.co.uk/wiki/index.php/RC5_Codes", None),
-        ("Linn_DS-DSM_Pronto_codes.pdf", "https://docs.linn.co.uk/wiki/images/a/a3/Linn_DS-DSM_Pronto_codes.pdf", None),
-        ("LinnDocs_General_disclaimer.html", "https://docs.linn.co.uk/wiki/index.php/LinnDocs:General_disclaimer", None),
     ],
     # Simaudio's "Table of IR codes" (Technical Notice, Rev. 1.1, December 2002): the RC-5 and RC-6 codes of its Moon preamplifiers,
     # integrated amplifiers, CD and DVD players, three pages with no copyright or rights text, on its own host.
