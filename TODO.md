@@ -15,8 +15,8 @@ sources have been imported under SPEC R19:
 - **The JP1 device upgrades** of its forum: 2,907 files, 114,794 keys, read for
   fifty-five executors (DESIGN §28, §32, §33, §34, §35, §36, §39, §42, §44, §46, §48, §49, §51, §53, §56).
 - **Manufacturers' own IR tables**: Marantz's AV receiver charts, Anthem's IR
-  hex sheet and Oppo's remote code workbooks, 189 files, 12,844 keys (DESIGN
-  §29, §31).
+  hex sheet and Oppo's remote code workbooks, 264 files, 18,433 keys (DESIGN
+  §29, §31, §58).
 
 SPEC v0.11 makes growing coverage from every source whose licence permits
 it the standing goal, with no fixed list of sources (DESIGN §8, Phase 8).
@@ -69,8 +69,10 @@ Land it in two PRs, code and then data.
 - [ ] **Marantz's direct-access sheets** (DESIGN D126): volume level, preset
       and channel commands are RC-5 with an extension byte, and so are 1,034
       rows of the charts the import counts and does not use. `RC5x` is
-      registered now (§57, D226 to D228); **reading them is the next step**,
-      and the 16 JP1 `RC-5/5x Combo` upgrades (below) are the other.
+      registered now (§57, D226 to D228) and the 1,013 rows with a number for an
+      extension are read (§58, D229 to D231). **Still unread: the 18 rows whose extension is a
+      range** and the five direct-access sheets, which are other sheets of the workbooks; and the
+      16 JP1 `RC-5/5x Combo` upgrades (below) are the other reading `RC5x` opens.
 - [ ] **Receiver commands in the key vocabulary** (D84, owner's call): the
       official import maps 16.9% of its keys, because tuner presets, surround
       modes, Pure Direct, discrete mute on and off, and a source key per input

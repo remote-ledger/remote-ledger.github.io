@@ -123,10 +123,45 @@ def test_the_chart_gives_a_model_the_commands_it_marks_and_says_how_it_marked_th
     assert sibling["aliases"] == ["NR2001"] and sibling["controls"] == ["Marantz NR2000", "Marantz NR2001"]
     assert list(sibling["keys"]) == ["KEY_POWER_ON_SLASH_OFF", "KEY_VOL_PLUS"]
     assert "the chart marks it '@'" in sibling["keys"]["KEY_VOL_PLUS"]["forms"][0]["source"]
-    # an extension command with no hex, and a command with no RC-5 system, are counted, once however many models list them
+    # an extension command with no hex is RC-5x (D226): the system is D, the command S and the extension F, in a file of its own
+    rc5x = files["remotes/official/marantz/SR1000__RC-5x.json"]
+    assert rc5x["model"] == "SR1000 [RC-5x]" and rc5x["protocol"] == {"name": "RC5x", "carrierHz": 36000, "minSends": 1}
+    att = rc5x["keys"]["KEY_ATT"]["forms"][0]
+    assert (att["type"], att["device"], att["subdevice"], att["function"], att["confidence"]) == ("irp", 16, 37, 43, "plausible")
+    assert "(RC-5 16 37 43), the column of SR1000: RC-5x system 16 command 37 extension 43, read as RC5x device 16 subdevice 37 function 43" in att["source"]
+    assert "NR2000__RC-5x" not in " ".join(files)             # NR2000's column does not mark it
+    # a command with no RC-5 system is counted, once however many models list it
     assert dict(report.unrepresented) == {
-        ("marantz", marantz.DOCUMENTS[-1], "an RC-5 extension command with no Pronto hex"): 1,
         ("marantz", marantz.DOCUMENTS[-1], "no RC-5 system and command the ledger can send"): 1}
+
+
+def test_an_rc5x_file_has_the_models_own_name_only_when_the_model_has_nothing_else_and_a_range_is_not_a_key(tmp_path):
+    from remote_ledger.official.common import Snapshot
+
+    chart = [list(r) for r in CHART[:6]] + [
+        ["", "", "ATT", "16", "37", "43", "", "X", "X", ""],
+        ["", "", "DIRECT VOLUME", "16", "111", "00-63", "", "X", "---", ""],
+        ["", "", "TOO BIG", "16", "5", "64", "", "X", "X", ""],
+        ["", "", "POWER", "16", "12", "---", "", "---", "X", ""],
+    ]
+
+    class Fake(Snapshot):
+        def sheet_of(self, document, sheet):
+            return chart
+
+    snap = Fake("marantz", "2026-10-08", tmp_path, {d: {"sha256": "ab" * 32} for d in marantz.DOCUMENTS}, {})
+    report = Report()
+    files = dict(marantz.build(snap, {}, report))
+    # SR1000 has only an RC-5x key, so that file is the bare model's; NR2000 has a plain RC-5 key too, so its RC-5x file says what it is
+    only = files["remotes/official/marantz/SR1000.json"]
+    assert only["protocol"]["name"] == "RC5x" and list(only["keys"]) == ["KEY_ATT"]
+    assert "remotes/official/marantz/SR1000__RC-5x.json" not in files
+    assert files["remotes/official/marantz/NR2000.json"]["protocol"]["name"] == "RC5"
+    assert list(files["remotes/official/marantz/NR2000__RC-5x.json"]["keys"]) == ["KEY_ATT"]
+    # a range of extensions is a command for each value, not a key; one past F:6 cannot be sent
+    assert dict(report.unrepresented) == {
+        ("marantz", marantz.DOCUMENTS[-1], "an RC-5x extension that is a range of values, a command for each"): 1,
+        ("marantz", marantz.DOCUMENTS[-1], "no RC-5x extension the ledger can send"): 1}
 
 
 def test_the_newest_workbook_that_lists_a_model_gives_its_file():
@@ -183,6 +218,29 @@ def test_marantzs_rc5_pronto_hex_decodes_to_the_system_and_command_beside_it():
             else:
                 wrong.append(f"{path.name}:{key}")
     assert wrong == [] and (matched, extension) == (1_640, 31)
+
+
+def test_every_rc5x_key_of_the_tree_says_the_chart_row_it_reads_and_the_forms_are_the_rows_fields():
+    """The RC-5x keys are the chart's rows that have an extension and no hex (D226): a file of the protocol ``RC5x``, a key per
+    row, whose citation names the row's system, command and extension and whose form carries them as D, S and F. 75 models, 5,589
+    keys, from 1,013 of the 1,034 rows (the 21 others are 18 ranges and 3 with no system number, below)."""
+    files = keys = 0
+    for path in sorted((ROOT / oi.IMPORT_ROOT / "marantz").glob("*.json")):
+        doc = load(path)
+        if doc["protocol"].get("name") != "RC5x":
+            assert all("subdevice" not in f for v in doc["keys"].values() for f in v["forms"]), path.name
+            continue
+        files += 1
+        assert doc["protocol"] == {"name": "RC5x", "carrierHz": 36000, "minSends": 1}, path.name
+        for key, spec in doc["keys"].items():
+            keys += 1
+            (form,) = spec["forms"]
+            cited = re.search(r"\(RC-5 (\d+) (\d+) (\d+)\)", form["source"])
+            assert (form["type"], form["confidence"]) == ("irp", "plausible"), (path.name, key)
+            fields = tuple(int(str(form[name]), 0) for name in ("device", "subdevice", "function"))   # a file writes them as 0x..
+            assert fields == tuple(int(g) for g in cited.groups()), (path.name, key)
+            assert fields[0] <= 31 and fields[1] <= 127 and fields[2] <= 63
+    assert (files, keys) == (75, 5_589)
 
 
 def test_the_power_toggle_has_the_signal_marantz_lists_for_system_16_command_12():

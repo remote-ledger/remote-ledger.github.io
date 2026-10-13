@@ -5,8 +5,11 @@ and *extension* (Marantz's RC-5x adds an extension byte), a column per model wit
 model accepts it, and on the right, for the basic commands, the **Pronto hex** Marantz publishes. The
 Pronto strings are the manufacturer's own signal, extension commands included, so they are imported
 verbatim, as ``pronto`` forms. A command with no hex and no extension is plain RC-5 and is imported as
-an ``irp`` RC5 form; one with an extension and no hex needs a protocol the ledger does not have, and
-is counted in the report (D124).
+an ``irp`` RC5 form; **one with an extension and no hex is RC-5x** (``RC5x``, DESIGN section 57) and is
+imported as an ``irp`` RC5x form: the system is D, the command S and the extension F, as the 367 of the
+chart's 395 extension rows that carry their own hex read (D226, D227). An RC5x file is its own file
+(a file names one protocol): ``<model> [RC-5x]``, which only carries the model's own name when the model
+has nothing else.
 
 The three workbooks overlap (the later one lists many of the earlier one's models). A model takes its
 file from the **newest** workbook that lists it.
@@ -161,9 +164,10 @@ def build(snapshot: Snapshot, authored: dict[tuple[str, str], str], report: Repo
 def _model_files(snapshot: Snapshot, document: str, model: Model, commands: list[Command], report: Report,
                  gate: dict[tuple, str | None], refused: dict[tuple[str, int], str]) -> list[tuple[str, dict[str, Any]]]:
     sha = snapshot.sha(document)
-    # (frequency word, has an intro) -> [(command, form fields, tier)]. One file holds one carrier, and
-    # the bundle needs one play rule per file, so strings that differ in either are different files (D78).
-    buckets: dict[tuple[int, bool], list[tuple[Command, dict[str, Any], str]]] = defaultdict(list)
+    # (frequency word, has an intro, RC-5x) -> [(command, form fields, tier)]. One file holds one carrier,
+    # and the bundle needs one play rule per file, so strings that differ in either are different files
+    # (D78); and one file names one protocol, so the RC5x forms are a file of their own.
+    buckets: dict[tuple[int, bool, bool], list[tuple[Command, dict[str, Any], str]]] = defaultdict(list)
     seen: set[tuple] = set()
     for command in commands:
         mark = command.marks.get(model.column, "")
@@ -172,6 +176,7 @@ def _model_files(snapshot: Snapshot, document: str, model: Model, commands: list
         pronto = command.hex if _PRONTO.match(command.hex) else ""
         word = None
         intro = False
+        rc5x = False
         form: dict[str, Any]
         if pronto:
             try:
@@ -184,16 +189,27 @@ def _model_files(snapshot: Snapshot, document: str, model: Model, commands: list
             how = "the chart's own Pronto hex"
         else:
             system, cmd = _int(command.system), _int(command.command)
-            if command.has_extension:
-                refused[(document, command.row)] = "an RC-5 extension command with no Pronto hex"
-                continue
             if system is None or cmd is None or system > 31 or cmd > 127:
                 refused[(document, command.row)] = "no RC-5 system and command the ledger can send"
                 continue
             word = RC5_WORD
-            form = {"id": "primary.irp", "type": "irp", "device": system, "function": cmd}
-            how = f"RC-5 system {system} command {cmd} with no extension, read as RC5 device {system} function {cmd}"
-        signature = (word, intro, form.get("hex") or (form["device"], form["function"]), command.name)
+            if command.has_extension:
+                extension = _int(command.extension)
+                if extension is None or extension > 63:
+                    # `00-63`, `01-60`, `00-05`: a range, one row that stands for a command per value (a volume, a preset, a channel)
+                    ranged = re.search(r"\d\D+\d", command.extension) is not None
+                    refused[(document, command.row)] = ("an RC-5x extension that is a range of values, a command for each"
+                                                        if ranged else "no RC-5x extension the ledger can send")
+                    continue
+                rc5x = True
+                form = {"id": "primary.irp", "type": "irp", "device": system, "subdevice": cmd, "function": extension}
+                how = (f"RC-5x system {system} command {cmd} extension {extension}, read as RC5x device {system} "
+                       f"subdevice {cmd} function {extension} (the chart's extension is decimal)")
+            else:
+                form = {"id": "primary.irp", "type": "irp", "device": system, "function": cmd}
+                how = f"RC-5 system {system} command {cmd} with no extension, read as RC5 device {system} function {cmd}"
+        signature = (word, intro, rc5x,
+                     form.get("hex") or (form["device"], form.get("subdevice"), form["function"]), command.name)
         if signature in seen:
             continue
         seen.add(signature)
@@ -204,21 +220,24 @@ def _model_files(snapshot: Snapshot, document: str, model: Model, commands: list
         if command.function:
             source += f"; the chart's description: '{command.function}'"
         form["source"] = source
-        buckets[(word, intro)].append((command, form, TIER))
+        buckets[(word, intro, rc5x)].append((command, form, TIER))
     if not buckets:
         report.notes.append((MAKER, f"{document}: {model.name}", "the chart gives this model no command it can send"))
         return []
-    # the largest bucket carries the model's own name; the others say what they are
-    order = sorted(buckets, key=lambda k: (-len(buckets[k]), k))
+    # the largest bucket carries the model's own name, the RC5x one last whatever its size (so that no file that was
+    # there before changes its name); the others say what they are
+    order = sorted(buckets, key=lambda k: (k[2], -len(buckets[k]), k))
     files = []
-    for rank, (word, intro) in enumerate(order):
-        members = buckets[(word, intro)]
+    for rank, (word, intro, rc5x) in enumerate(order):
+        members = buckets[(word, intro, rc5x)]
         irp = any(f["type"] == "irp" for _c, f, _t in members)
         protocol: dict[str, Any] = {"carrierHz": 36000 if word == RC5_WORD else _word_to_hz(word), "minSends": 1}
         if irp:
-            protocol = {"name": "RC5", **protocol}
+            protocol = {"name": "RC5x" if rc5x else "RC5", **protocol}
         if rank == 0:
             suffix = ""
+        elif rc5x:
+            suffix = " [RC-5x]"
         elif word == RC5_WORD and not intro:
             suffix = " [RC-5]"
         else:
@@ -229,7 +248,7 @@ def _model_files(snapshot: Snapshot, document: str, model: Model, commands: list
         dupes = Counter(c.name for c, _f, _t in members)
         for command, form, tier in members:
             full = {**form, "confidence": tier}
-            gated = (word, intro, full["type"], full.get("hex") or (full["device"], full["function"]))
+            gated = (word, intro, rc5x, full["type"], full.get("hex") or (full["device"], full.get("subdevice"), full["function"]))
             if gated not in gate:
                 probe = {**full, "source": "probe"}
                 gate[gated] = form_compiles(IMPORT_ROOT, protocol, "K", probe)
@@ -238,7 +257,7 @@ def _model_files(snapshot: Snapshot, document: str, model: Model, commands: list
                 continue
             label = command.name if dupes[command.name] == 1 else f"{command.name} ({command.triple})"
             # the form's own field order: id, type, parameters, confidence, source
-            ordered = {k: full[k] for k in ("id", "type", "hex", "device", "function") if k in full}
+            ordered = {k: full[k] for k in ("id", "type", "hex", "device", "subdevice", "function") if k in full}
             ordered["confidence"] = full["confidence"]
             ordered["source"] = full["source"]
             keys[names[command.row]] = {"label": label, "forms": [ordered]}
