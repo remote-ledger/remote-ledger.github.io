@@ -12,7 +12,7 @@ from pathlib import Path
 import pytest
 
 from remote_ledger.errors import ValidationError
-from remote_ledger.official import anthem, arcam, jvc, kef, marantz, oppo
+from remote_ledger.official import anthem, arcam, cambridge, jvc, kef, marantz, oppo
 from remote_ledger.official import importer as oi
 from remote_ledger.official.common import MANIFEST, Report, load_snapshot
 from remote_ledger.serialize import load
@@ -26,7 +26,7 @@ SNAPSHOT = ROOT / oi.SNAPSHOT
 
 def test_every_document_and_csv_is_the_one_the_manifest_pins():
     for maker, retrieved in (("marantz", "2026-10-08"), ("anthem", "2026-10-08"), ("oppo", "2026-10-09"), ("kef", "2026-10-13"),
-                             ("jvc", "2026-10-13"), ("arcam", "2026-10-13")):
+                             ("jvc", "2026-10-13"), ("arcam", "2026-10-13"), ("cambridge", "2026-10-13")):
         snap = load_snapshot(SNAPSHOT / maker)
         assert snap.maker == maker and snap.retrieved == retrieved
         assert snap.documents and snap.sheets
@@ -441,12 +441,12 @@ def test_the_committed_official_import_keeps_r19():
     or Untested, and a citation that names a document the manifest pins, by hash."""
     assert (ROOT / oi.IMPORT_ROOT / "README.md").is_file() and (ROOT / oi.IMPORT_ROOT / oi.REPORT).is_file()
     hashes, dates, snapshots = {}, {}, {}
-    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "arcam"):
+    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "arcam", "cambridge"):
         manifest = json.loads((SNAPSHOT / maker / MANIFEST).read_text(encoding="utf-8"))
         for name, entry in manifest["documents"].items():
             hashes[name], dates[name], snapshots[name] = entry["sha256"], manifest["retrieved"], entry.get("snapshot")
     shape = re.compile(r"^(?:marantz\.com archive-downloads|anthemav\.com \(storage\.googleapis\.com/sandbox1-anthemav/an\)"
-                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
+                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
                        r"(?:, from the Wayback Machine snapshot (\d{14}))?\) (?:sheet '[^']+' row \d+|page \d+ row \d+|page \d+ '|page \d+ table \d+ row '|page \d+ row ')")
     files = sorted((ROOT / oi.IMPORT_ROOT).rglob("*.json"))
     assert len(files) > 180
@@ -924,3 +924,80 @@ def test_the_other_sources_arcam_rc5_remotes_send_the_codes_arcams_tables_list()
     for code, wanted in (((16, 16), "Increase volume (+)"), ((16, 17), "Decrease volume (-)"), ((16, 13), "Mute"), ((16, 12), "Standby"),
                          ((16, 124), "Standby On"), ((16, 123), "Standby Off"), ((17, 5), "Tuner Number 5")):
         assert any(label.startswith(wanted.split(" (")[0]) for label in ours[code]), (code, wanted)
+
+
+# --- Cambridge Audio ---------------------------------------------------------------------------------------------
+
+
+def test_cambridges_two_layouts_are_read_as_four_bytes_or_as_a_function_code_with_a_name_for_each_product():
+    """The AXR85's table gives a label and four bytes (the address, its complement, the function, its complement); the remotes list's
+    header says ``NEC: 49 B6`` and a row is a function code and what each product calls the button, ``N/A`` where it has none. A
+    row whose bytes do not complement is read and marked, not guessed at."""
+    rows = cambridge.byte_rows([["1", "1", "Remote Button", "IR Code"], ["1", "1", "standby", "C0 3F 06 F9"],
+                                ["1", "1", "Mute", "C0 3F 00 FE"], ["1", "1", "", "C0 3F 01 FE"]])
+    assert [(r.label, r.device, r.subdevice, r.function, r.complements) for r in rows] == [
+        ("standby", 0xC0, 0x3F, 0x06, True), ("Mute", 0xC0, 0x3F, 0x00, False)]
+    columns, notes = cambridge.column_rows([
+        ["1", "1", "NEC: 49 B6", "752BD", "CXU", "CXUHD"], ["1", "1", "Backlight", "N/A", "Yes", "Yes"],
+        ["1", "1", "20 DF", "N/A", "Mute", "N/A"], ["1", "1", "4C B3", "Volume Up", "Volume Up", "N/A"],
+        ["2", "1", "NEC: 49 B6", "752BD", "CXU", "CXUHD"], ["2", "1", "28 D7", "N/A", "Darbee", "HDR"],
+        ["2", "1", "22 DC", "3D", "N/A", "N/A"]])
+    assert [(r.product, r.label, r.function, r.complements, r.page) for r in columns] == [
+        ("CXU", "Mute", 0x20, True, 1), ("752BD", "Volume Up", 0x4C, True, 1), ("CXU", "Volume Up", 0x4C, True, 1),
+        ("CXU", "Darbee", 0x28, True, 2), ("CXUHD", "HDR", 0x28, True, 2), ("752BD", "3D", 0x22, False, 2)]
+    assert len(notes) == 1 and "Backlight" in notes[0] and "752BD N/A, CXU Yes, CXUHD Yes" in notes[0]
+
+
+def cambridge_files() -> dict[str, dict]:
+    return {p.stem: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "cambridge").glob("*.json"))}
+
+
+def test_the_five_cambridge_files_are_one_for_each_product_the_two_documents_list():
+    """AXR85 and AXR100 share a table (23 keys each); the remotes list gives the 752BD 52, the CXU 52 and the CXUHD 48 (an ``N/A``
+    is a button the product has not), 198 keys, 197 Plausible and one Untested: the CXUHD column names two codes ``Subtitle``
+    (57 A8 and 53 AC, which is ``Repeat`` on the other two products), and the second is the doubtful one."""
+    files = cambridge_files()
+    assert {m: len(d["keys"]) for m, d in files.items()} == {"752BD": 52, "AXR100": 23, "AXR85": 23, "CXU": 52, "CXUHD": 48}
+    for doc in files.values():
+        assert doc["manufacturer"] == "Cambridge Audio" and doc["protocol"]["name"] == "NEC1"
+        for spec in doc["keys"].values():
+            (form,) = spec["forms"]
+            assert form["type"] == "irp" and form["device"] in ("0xC0", "0x49") and form["subdevice"] in ("0x3F", "0xB6")
+            assert (form["device"], form["subdevice"]) in (("0xC0", "0x3F"), ("0x49", "0xB6"))
+    doubtful = [(m, k) for m, d in files.items() for k, s in d["keys"].items() if s["forms"][0]["confidence"] == "untested"]
+    assert doubtful == [("CXUHD", "KEY_SUBTITLE_2")]
+    assert files["CXUHD"]["keys"]["KEY_SUBTITLE"]["forms"][0]["function"] == "0x57"
+    assert files["CXUHD"]["keys"]["KEY_SUBTITLE_2"]["forms"][0]["function"] == "0x53"
+    assert files["CXU"]["keys"]["KEY_REPEAT"]["forms"][0]["function"] == "0x53"
+    assert "KEY_MUTE" in files["CXU"]["keys"] and "KEY_MUTE" not in files["752BD"]["keys"] and "KEY_3D" in files["752BD"]["keys"]
+    assert files["AXR85"]["keys"].keys() == files["AXR100"]["keys"].keys()
+
+
+def test_every_axr85_code_is_in_the_ir_blasters_axr85_remote_under_the_same_name():
+    """The independent check: the IR Blaster database's remote 320 (``CAMBRIDGE AUDIO | AXR85``) holds 46 keys and **all 23 of the
+    table's codes**, as the same device, subdevice and function, 15 under the same name (``MENU``, ``PRESET 1/5``, ``D1``) and
+    the other 8 in other words for the same key (``POWER`` for ``standby``, ``VOL+`` for ``Volume Up``, the skip arrows, ``AM/FM``
+    for ``FM/AM``): no code has a different meaning. The 752BD, CXU and CXUHD share the address 49 B6 with Oppo's players and 43
+    of the CXU's 52 function codes are in Oppo's tables, **but under another name in 41 of the 43**: Cambridge's remote is its
+    own table, so Oppo's is no evidence for it and is not counted."""
+    ours = {}
+    for spec in cambridge_files()["AXR85"]["keys"].values():
+        form = spec["forms"][0]
+        ours[(int(form["device"], 0), int(form["subdevice"], 0), int(form["function"], 0))] = spec["label"]
+    theirs = {}
+    for spec in load(ROOT / "remotes/irblaster/CAMBRIDGE_AUDIO/320-NEC1.json")["keys"].values():
+        for form in spec["forms"]:
+            theirs[(int(form["device"], 0), int(form["subdevice"], 0), int(form["function"], 0))] = spec["label"]
+    assert len(theirs) == 46 and set(ours) <= set(theirs) and len(ours) == 23
+    squash = lambda text: "".join(c for c in text.lower() if c.isalnum())      # noqa: E731
+    same = [label for code, label in ours.items() if squash(label) == squash(theirs[code])]
+    assert len(same) == 15, same          # the other eight are other words for the same key, read one by one
+    oppo = {}
+    for path in sorted((ROOT / oi.IMPORT_ROOT / "oppo").glob("*.json")):
+        for spec in load(path)["keys"].values():
+            for form in spec["forms"]:
+                if (form["device"], form["subdevice"]) == ("0x49", "0xB6"):
+                    oppo.setdefault(int(form["function"], 0), set()).add(squash(spec["label"]))
+    cxu = [(squash(s["label"]), int(s["forms"][0]["function"], 0)) for s in cambridge_files()["CXU"]["keys"].values()]
+    shared = [(name, fn) for name, fn in cxu if fn in oppo]
+    assert len(shared) == 43 and sum(1 for name, fn in shared if name in oppo[fn]) == 2
