@@ -681,6 +681,73 @@ def test_rc5_6_combo_is_rc5_or_rc6_by_the_low_bit_of_the_second_byte():
     assert signal(upgrade("RC5/6 combo", "16 300 null", ("a", "10 FB"), variant="2")) == "a parameter is not a byte"
 
 
+def rc5x_function(slot: int, sub6: int, obc: int) -> str:
+    """The two bytes ``RC5_5xComboTranslator.in`` makes for an RC-5x function, written here from the translator and not from the
+    reader (offsets from the most significant bit of the two bytes): the sub device's low six bits complemented at 0, the OBC
+    complemented at 6, a zero at 12, the device slot at 13 and the type 1 at 15."""
+    first = ((~sub6 & 0x3F) << 2) | ((~obc & 0x3F) >> 4)
+    second = (((~obc & 0x3F) & 0xF) << 4) | (slot << 1) | 1
+    return f"{first:02X} {second:02X}"
+
+
+def test_rc5_5x_combo_is_rc5_or_rc5x_by_the_low_bit_of_the_second_byte_and_the_slots_flag_adds_64():
+    """``RC5_5xComboTranslator``: the type is the second byte's low bit (0 is RC-5, read as the ``RC5/6 combo`` does). RC-5x:
+    the sub device (six bits complemented, plus 64 where the slot's flag is set), the OBC (six bits complemented) and the slot
+    (two bits) which names one of the four devices of the setup sheet; a slot's device and flag are the parameters or, where the
+    device is ``null``, the byte of ``FixedData`` (the device its low five bits complemented, the flag its ``0x40``).
+    ``Rc5FlagTranslator`` gives a slot with no device the opposite flag of the one before it, so a flag *parameter* of a
+    ``null`` device is not the effective one and ``FixedData``'s is read."""
+    up = upgrade("RC-5/5x Combo", "16 0 7 0 24 0 16 1", ("Power on", rc5x_function(0, 12, 1)), ("second", rc5x_function(1, 5, 63)),
+                 ("flagged", rc5x_function(3, 20, 2)), ("rc5", "5F BC"), ("rc5 low", "1F FC"), fixed="0F 18 07 4F")
+    assert [signal(up, i) for i in range(5)] == [
+        rmdu.Signal("RC5x", 16, 12, 1), rmdu.Signal("RC5x", 7, 5, 63), rmdu.Signal("RC5x", 16, 20 + 64, 2),
+        rmdu.Signal("RC5", 0, None, 80), rmdu.Signal("RC5", 0, None, 0)]
+    # a device that is null is read from FixedData, and so is its flag: 1F 5F is device 0 with the flag clear, then set
+    unset = upgrade("RC-5/5x Combo", "null 0 null 0 null 0 null 0", ("a", rc5x_function(0, 3, 4)), ("b", rc5x_function(1, 3, 4)),
+                    fixed="1F 5F 1F 5F")
+    assert [signal(unset, i) for i in range(2)] == [rmdu.Signal("RC5x", 0, 3, 4), rmdu.Signal("RC5x", 0, 3 + 64, 4)]
+    # what the reader refuses
+    assert signal(upgrade("RC-5/5x Combo", "16 0 7 0 24 0 16 1", ("a", "3F BC"), fixed="0F 18 07 4F")) == "the RC-5 device is not five bits"
+    assert signal(upgrade("RC-5/5x Combo", "16 0 7 0 24 0 16 1", ("a", "1F BE"), fixed="0F 18 07 4F")) == "the function sets a bit RC-5 does not use"
+    code = rc5x_function(0, 12, 1).split()
+    assert signal(upgrade("RC-5/5x Combo", "16 0", ("a", f"{code[0]} {int(code[1], 16) | 8:02X}"))) == "the function sets a bit RC-5x does not use"
+    assert signal(upgrade("RC-5/5x Combo", "null 0", ("a", rc5x_function(0, 12, 1)))) == "the RC-5x device the function selects is not set"
+    assert signal(upgrade("RC-5/5x Combo", "16", ("a", rc5x_function(0, 12, 1)))) == "the RC-5x sub device flag the function selects is not set"
+    assert signal(upgrade("RC-5/5x Combo", "40 0", ("a", rc5x_function(0, 12, 1)))) == "a parameter is out of range"
+
+
+def test_the_jp1_rc5_5x_combo_upgrades_send_the_system_command_and_extension_marantzs_own_chart_lists():
+    """An independent check of the RC-5x reading, from the maker's chart (D124, D227). The Marantz upgrades are nine of the sixteen,
+    and **314 of the 334 RC-5x keys of system 16 are a (system, command, extension) row of Marantz's three charts** (94.0%).
+    The sub device is the command and the OBC the extension; swapped, 24 match, and **without the slot's flag (the +64) 259
+    match**, so the flag is what the check measures as well. The rest are keys the chart does not list (an upgrade's own
+    additions) or whose row the chart has under another number."""
+    chart = set()
+    for stem in ("marantz-master-ir", "marantz-2014-ir-command-sheet", "marantz_fy18_av_sr_nr_ir_code_v02-02072018"):
+        path = ROOT / "sources" / "official" / "marantz" / "csv" / f"{stem}__AVR_Commands.csv"
+        for row in list(csv.reader(path.open(encoding="utf-8")))[6:]:
+            if len(row) > 5 and row[3].strip().isdigit() and row[4].strip().isdigit() and row[5].strip().isdigit():
+                chart.add((int(row[3]), int(row[4]), int(row[5])))
+    files = keys = marantz = hit = swapped = no_flag = 0
+    for path in sorted((ROOT / jp.IMPORT_ROOT).rglob("*.json")):
+        doc = load(path)
+        if doc["protocol"].get("name") != "RC5x":
+            continue
+        files += 1
+        for spec in doc["keys"].values():
+            form = spec["forms"][0]
+            device, sub, obc = (int(form[name], 0) for name in ("device", "subdevice", "function"))
+            keys += 1
+            assert device <= 31 and sub <= 127 and obc <= 63
+            if "Marantz" in path.name and device == 16:
+                marantz += 1
+                hit += (device, sub, obc) in chart
+                swapped += (device, obc, sub) in chart
+                no_flag += (device, sub & 63, obc) in chart
+    assert (files, keys) == (10, 472)
+    assert (marantz, hit, swapped, no_flag) == (334, 314, 24, 259)
+
+
 def test_the_jp1_rc5_6_combo_upgrades_send_the_codes_the_other_sources_have_and_philips_cursor_keys_by_name():
     """An independent check of the RC5/6 combo rules, from the ledger's other sources (IR Blaster, LIRC, SmartIR, hifi-remote
     and the manufacturers' tables: 2,428 distinct RC-5 codes and 1,237 RC-6). The twelve upgrades send **219 of their 228 RC-5
@@ -1014,7 +1081,7 @@ def test_the_committed_jp1_import_keeps_r19():
     assert f"@ `{meta['commit']}`" in (ROOT / jp.IMPORT_ROOT / jp.REPORT).read_text(encoding="utf-8")
     shape = re.compile(
         rf"^jp1-device-upgrades@{meta['commit'][:7]} \S.* function (\d+) '.*' \(OBC ((?:[0-9A-F]{{2}})(?: [0-9A-F]{{2}})*); [^;]+, parms [^)]*\): "
-        r"(NEC1|NEC2|NECx1|NECx2|Sony12|Sony15|Sony20|RC5|RC6|JVC|Aiwa|Denon|Sharp|Panasonic|Samsung36|Proton|F12_relaxed|RECS80|Denon-K|Pioneer-2Part|RCA-38|RECS80-0068|JVC-48|Teac-K|NEC1-f16|NEC2-f16|MCE|Nokia32|Panasonic_Old|RCA|TDC-38|TDC-56|GI_Cable|RC6-6-20|XMP-1|XMPff-1) device (\d+)(?: subdevice (\d+))? function (\d+)", re.S)
+        r"(NEC1|NEC2|NECx1|NECx2|Sony12|Sony15|Sony20|RC5|RC6|JVC|Aiwa|Denon|Sharp|Panasonic|Samsung36|Proton|F12_relaxed|RECS80|Denon-K|Pioneer-2Part|RCA-38|RECS80-0068|JVC-48|Teac-K|NEC1-f16|NEC2-f16|MCE|Nokia32|Panasonic_Old|RCA|TDC-38|TDC-56|GI_Cable|RC6-6-20|XMP-1|XMPff-1|RC5x) device (\d+)(?: subdevice (\d+))? function (\d+)", re.S)
 
     def num(value):
         return int(value, 0) if isinstance(value, str) else value

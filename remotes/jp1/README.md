@@ -25,7 +25,7 @@ Combo, NEC 4DEV Combo and NEC 4DEV Yamaha Combo, in its plain style (section 33)
 Denon and Denon Combo, Panasonic and Panasonic Combo (section 34); and NEC 2DEV Combo, Sharp Combo
 and Sharp, Samsung36, Proton, F12, RECS80 (45) and Denon-K (section 35); and Pioneer and Pioneer MIX (variants 2 and 3),
 Panasonic Multi-Device (Hacked), RECS80 (68), JVC-48, Teac-K and the RCA family where it sends 38 kHz (section 36); and the
-relaxed NEC frames, NEC1-f16 and NEC2-f16: the Yamaha combo's Y1 to Y3 styles, NEC1-f16 Official and NEC1-rnc (section 39); and MCE, Windows Media Center's RC-6 mode 6 (section 42); and Nokia32 and Panasonic (old) (section 44); and RCA at 56 kHz, RCA Combo, TDC and GI Cable (section 46); and RC6-M-20n, Sky's RC-6 (section 48); and Pioneer 3DEV and 4DEV (section 49); and RC5/6 combo (section 51); and XMP, the upgrades with a final frame as XMPff-1 (sections 53 and 56). Every other upgrade is counted by
+relaxed NEC frames, NEC1-f16 and NEC2-f16: the Yamaha combo's Y1 to Y3 styles, NEC1-f16 Official and NEC1-rnc (section 39); and MCE, Windows Media Center's RC-6 mode 6 (section 42); and Nokia32 and Panasonic (old) (section 44); and RCA at 56 kHz, RCA Combo, TDC and GI Cable (section 46); and RC6-M-20n, Sky's RC-6 (section 48); and Pioneer 3DEV and 4DEV (section 49); and RC5/6 combo (section 51); and XMP, the upgrades with a final frame as XMPff-1 (sections 53 and 56); and RC-5/5x Combo (section 59). Every other upgrade is counted by
 executor in `IMPORT.md`, with the KeymapMaster `.txt` files, which are not read.
 
 A file becomes one remote file per ledger protocol it sends, and every function a key with an `irp`

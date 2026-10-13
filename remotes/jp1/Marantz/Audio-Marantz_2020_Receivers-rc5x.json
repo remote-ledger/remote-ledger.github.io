@@ -1,0 +1,1219 @@
+{
+  "manufacturer": "Marantz",
+  "model": "Receiver [RC5x]",
+  "aliases": [],
+  "controls": [
+    "Marantz Receiver"
+  ],
+  "protocol": {
+    "name": "RC5x",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_PWR_ON": {
+      "label": "Pwr ON",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x0C",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 1 'Pwr ON' (OBC CF E1; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 12 function 1"
+        }
+      ]
+    },
+    "KEY_PWR_OFF": {
+      "label": "Pwr OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x0C",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 2 'Pwr OFF' (OBC CF D1; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 12 function 2"
+        }
+      ]
+    },
+    "KEY_SYSPWR_OFF": {
+      "label": "SysPwr OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x0C",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 3 'SysPwr OFF' (OBC CF 21; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 12 function 13"
+        }
+      ]
+    },
+    "KEY_MUTE_ON": {
+      "label": "Mute ON",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x0D",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 7 'Mute ON' (OBC CB F1; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 13 function 0"
+        }
+      ]
+    },
+    "KEY_MUTE_OFF": {
+      "label": "Mute OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x0D",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 8 'Mute OFF' (OBC CB E1; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 13 function 1"
+        }
+      ]
+    },
+    "KEY_SPKR_PRESET": {
+      "label": "Spkr Preset",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x23",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 12 'Spkr Preset' (OBC 73 51; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 35 function 10"
+        }
+      ]
+    },
+    "KEY_SPKRPRESET1": {
+      "label": "SpkrPreset1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x23",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 13 'SpkrPreset1' (OBC 73 41; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 35 function 11"
+        }
+      ]
+    },
+    "KEY_SPKRPRESET2": {
+      "label": "SpkrPreset2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x23",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 14 'SpkrPreset2' (OBC 73 31; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 35 function 12"
+        }
+      ]
+    },
+    "KEY_MENU": {
+      "label": "MENU",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x52",
+          "function": "0x3C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 16 'MENU' (OBC B4 37; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 82 function 60"
+        }
+      ]
+    },
+    "KEY_OPTION": {
+      "label": "Option",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x52",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 17 'Option' (OBC B7 47; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 82 function 11"
+        }
+      ]
+    },
+    "KEY_RETURN_SLASH_BACK": {
+      "label": "Return / Back",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x57",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 20 'Return / Back' (OBC A3 B7; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 87 function 4"
+        }
+      ]
+    },
+    "KEY_DIM_DISPLAY": {
+      "label": "Dim Display",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x0F",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 25 'Dim Display' (OBC C3 F1; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 15 function 0"
+        }
+      ]
+    },
+    "KEY_INFO": {
+      "label": "Info",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x0F",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 26 'Info' (OBC C2 D1; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 15 function 18"
+        }
+      ]
+    },
+    "KEY_STATUS": {
+      "label": "Status",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x0F",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 28 'Status' (OBC C3 81; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 15 function 7"
+        }
+      ]
+    },
+    "KEY_VIDEO_SELECT": {
+      "label": "Video Select",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x0F",
+          "function": "0x32",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 29 'Video Select' (OBC C0 D1; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 15 function 50"
+        }
+      ]
+    },
+    "KEY_INPUT_NEXT": {
+      "label": "Input Next",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x00",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 30 'Input Next' (OBC FF 21; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 0 function 13"
+        }
+      ]
+    },
+    "KEY_INPUT_BACK": {
+      "label": "Input Back",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x00",
+          "function": "0x0E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 31 'Input Back' (OBC FF 11; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 0 function 14"
+        }
+      ]
+    },
+    "KEY_BLU_MINUS_RAY": {
+      "label": "Blu-ray",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x07",
+          "subdevice": "0x3F",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 33 'Blu-ray' (OBC 03 F3; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 7 subdevice 63 function 0; the upgrade's note: 'Code 1'"
+        }
+      ]
+    },
+    "KEY_DVD": {
+      "label": "DVD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x00",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 36 'DVD' (OBC FF 51; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 0 function 10; the upgrade's note: 'DVD'"
+        }
+      ]
+    },
+    "KEY_AUX": {
+      "label": "Aux",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x00",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 39 'Aux' (OBC FF 91; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 0 function 6"
+        }
+      ]
+    },
+    "KEY_8K": {
+      "label": "8K",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x00",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 40 '8K' (OBC FF 81; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 0 function 7; the upgrade's note: '8K'"
+        }
+      ]
+    },
+    "KEY_BLUETOOTH": {
+      "label": "Bluetooth",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x02",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 41 'Bluetooth' (OBC F6 F1; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 2 function 16"
+        }
+      ]
+    },
+    "KEY_GAME": {
+      "label": "Game",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x00",
+          "function": "0x3E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 42 'Game' (OBC FC 11; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 0 function 62; the upgrade's note: 'Game'"
+        }
+      ]
+    },
+    "KEY_USB": {
+      "label": "USB",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x3F",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 44 'USB' (OBC 03 45; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 24 subdevice 63 function 11"
+        }
+      ]
+    },
+    "KEY_HEOS": {
+      "label": "Heos",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "subdevice": "0x3F",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 45 'Heos' (OBC 03 55; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 24 subdevice 63 function 10"
+        }
+      ]
+    },
+    "KEY_7_1_CH_INPUT_ON": {
+      "label": "7.1 CH Input ON",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x01",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 46 '7.1 CH Input ON' (OBC FB 31; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 1 function 12"
+        }
+      ]
+    },
+    "KEY_SMART_SELECT_1": {
+      "label": "Smart Select 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x02",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 47 'Smart Select 1' (OBC F6 A1; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 2 function 21"
+        }
+      ]
+    },
+    "KEY_SMART_SELECT_2": {
+      "label": "Smart Select 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x02",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 48 'Smart Select 2' (OBC F6 91; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 2 function 22"
+        }
+      ]
+    },
+    "KEY_SMART_SELECT_3": {
+      "label": "Smart Select 3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x02",
+          "function": "0x17",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 49 'Smart Select 3' (OBC F6 81; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 2 function 23"
+        }
+      ]
+    },
+    "KEY_SMART_SELECT_4": {
+      "label": "Smart Select 4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x02",
+          "function": "0x18",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 50 'Smart Select 4' (OBC F6 71; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 2 function 24"
+        }
+      ]
+    },
+    "KEY_SMART_SELECT_5": {
+      "label": "Smart Select 5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x02",
+          "function": "0x19",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 51 'Smart Select 5' (OBC F6 61; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 2 function 25"
+        }
+      ]
+    },
+    "KEY_INPUT_MODE_SELECT": {
+      "label": "Input Mode Select",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x01",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 52 'Input Mode Select' (OBC FB E1; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 1 function 1"
+        }
+      ]
+    },
+    "KEY_INPUT_MODE_AUTO": {
+      "label": "Input Mode AUTO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x01",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 53 'Input Mode AUTO' (OBC FB 01; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 1 function 15"
+        }
+      ]
+    },
+    "KEY_INPUT_MODE_HDMI": {
+      "label": "Input Mode HDMI",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x01",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 54 'Input Mode HDMI' (OBC FA F1; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 1 function 16"
+        }
+      ]
+    },
+    "KEY_INPUT_MODE_DIGITAL": {
+      "label": "Input Mode DIGITAL",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x01",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 55 'Input Mode DIGITAL' (OBC FA E1; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 1 function 17"
+        }
+      ]
+    },
+    "KEY_INPUT_MODE_ANALOG": {
+      "label": "Input Mode ANALOG",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x01",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 56 'Input Mode ANALOG' (OBC FA D1; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 1 function 18"
+        }
+      ]
+    },
+    "KEY_AUDIO_DELAY_SLASH_LIP_SYNC": {
+      "label": "Audio Delay / Lip Sync",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x0A",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 57 'Audio Delay / Lip Sync' (OBC D7 E1; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 10 function 1"
+        }
+      ]
+    },
+    "KEY_VIDEO_MODE": {
+      "label": "Video Mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x54",
+          "function": "0x32",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 58 'Video Mode' (OBC AC D7; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 84 function 50"
+        }
+      ]
+    },
+    "KEY_VIDEO_MODE_AUTO": {
+      "label": "Video Mode AUTO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x54",
+          "function": "0x33",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 59 'Video Mode AUTO' (OBC AC C7; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 84 function 51"
+        }
+      ]
+    },
+    "KEY_VIDEO_MODE_MOVIE": {
+      "label": "Video Mode MOVIE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x54",
+          "function": "0x34",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 60 'Video Mode MOVIE' (OBC AC B7; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 84 function 52"
+        }
+      ]
+    },
+    "KEY_VIDEO_MODE_GAME": {
+      "label": "Video Mode GAME",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x54",
+          "function": "0x35",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 61 'Video Mode GAME' (OBC AC A7; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 84 function 53"
+        }
+      ]
+    },
+    "KEY_VIDEO_MODE_BYPASS": {
+      "label": "Video Mode BYPASS",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x54",
+          "function": "0x36",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 62 'Video Mode BYPASS' (OBC AC 97; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 84 function 54"
+        }
+      ]
+    },
+    "KEY_HDMI_CEC_ON": {
+      "label": "HDMI CEC ON",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x54",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 63 'HDMI CEC ON' (OBC AF 77; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 84 function 8"
+        }
+      ]
+    },
+    "KEY_HDMI_CEC_OFF": {
+      "label": "HDMI CEC OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x54",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 64 'HDMI CEC OFF' (OBC AF 67; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 84 function 9"
+        }
+      ]
+    },
+    "KEY_SURROUND_MODE_BACK": {
+      "label": "Surround Mode Back",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x40",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 66 'Surround Mode Back' (OBC FF 07; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 64 function 15"
+        }
+      ]
+    },
+    "KEY_MOVIE_SURROUND": {
+      "label": "MOVIE Surround",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x1D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 67 'MOVIE Surround' (OBC 6A 21; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 37 function 29"
+        }
+      ]
+    },
+    "KEY_MUSIC_SURROUND": {
+      "label": "MUSIC Surround",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x35",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 68 'MUSIC Surround' (OBC 68 A1; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 37 function 53"
+        }
+      ]
+    },
+    "KEY_GAME_SURROUND": {
+      "label": "GAME Surround",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x40",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 69 'GAME Surround' (OBC FE D7; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 64 function 18"
+        }
+      ]
+    },
+    "KEY_AUTO_AUDIO_MODE": {
+      "label": "Auto Audio Mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x2D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 70 'Auto Audio Mode' (OBC 69 21; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 37 function 45"
+        }
+      ]
+    },
+    "KEY_STEREO": {
+      "label": "Stereo",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x1E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 71 'Stereo' (OBC 6A 11; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 37 function 30"
+        }
+      ]
+    },
+    "KEY_MULTI_MINUS_CH_STEREO": {
+      "label": "Multi-Ch Stereo",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x39",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 72 'Multi-Ch Stereo' (OBC 68 61; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 37 function 57"
+        }
+      ]
+    },
+    "KEY_DOLBY_ATMOS": {
+      "label": "Dolby Atmos",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x40",
+          "function": "0x19",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 73 'Dolby Atmos' (OBC FE 67; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 64 function 25"
+        }
+      ]
+    },
+    "KEY_DTS": {
+      "label": "DTS",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x2E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 74 'DTS' (OBC 69 11; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 37 function 46"
+        }
+      ]
+    },
+    "KEY_VIRTUAL_MODE": {
+      "label": "Virtual Mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x33",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 75 'Virtual Mode' (OBC 68 C1; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 37 function 51"
+        }
+      ]
+    },
+    "KEY_DIRECT_MODE": {
+      "label": "Direct Mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x22",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 77 'Direct Mode' (OBC 77 D1; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 34 function 2"
+        }
+      ]
+    },
+    "KEY_PURE_DIRECT": {
+      "label": "Pure Direct",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x22",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 78 'Pure Direct' (OBC 77 C1; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 34 function 3"
+        }
+      ]
+    },
+    "KEY_CINEMA_HT_MINUS_EQ": {
+      "label": "Cinema HT-EQ",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x40",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 79 'Cinema HT-EQ' (OBC FF 47; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 64 function 11"
+        }
+      ]
+    },
+    "KEY_LOUDNESS_ON_SLASH_OFF": {
+      "label": "Loudness ON/OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x40",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 80 'Loudness ON/OFF' (OBC FE C7; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 64 function 19"
+        }
+      ]
+    },
+    "KEY_M_MINUS_DAX": {
+      "label": "M-DAX",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x16",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 81 'M-DAX' (OBC A7 B1; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 22 function 4"
+        }
+      ]
+    },
+    "KEY_M_MINUS_DAX_OFF": {
+      "label": "M-DAX Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x16",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 82 'M-DAX Off' (OBC A7 91; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 22 function 6"
+        }
+      ]
+    },
+    "KEY_M_MINUS_DAX_HIGH": {
+      "label": "M-DAX High",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x16",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 83 'M-DAX High' (OBC A7 81; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 22 function 7"
+        }
+      ]
+    },
+    "KEY_M_MINUS_DAX_LOW": {
+      "label": "M-DAX Low",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x16",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 84 'M-DAX Low' (OBC A7 71; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 22 function 8"
+        }
+      ]
+    },
+    "KEY_M_MINUS_DAX_MID": {
+      "label": "M-DAX Mid",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x16",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 85 'M-DAX Mid' (OBC A7 61; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 22 function 9"
+        }
+      ]
+    },
+    "KEY_TONE_CONTROL": {
+      "label": "TONE Control",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x16",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 86 'TONE Control' (OBC A7 E1; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 22 function 1"
+        }
+      ]
+    },
+    "KEY_TEST_TONE": {
+      "label": "Test Tone",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 87 'Test Tone' (OBC 6A A1; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 37 function 21"
+        }
+      ]
+    },
+    "KEY_CH_LEVEL": {
+      "label": "CH Level",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x21",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 88 'CH Level' (OBC 69 E1; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 37 function 33"
+        }
+      ]
+    },
+    "KEY_CENTER_PLUS": {
+      "label": "Center +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 89 'Center +' (OBC 6B 41; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 37 function 11"
+        }
+      ]
+    },
+    "KEY_CENTER_MINUS": {
+      "label": "Center -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 90 'Center -' (OBC 6B 31; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 37 function 12"
+        }
+      ]
+    },
+    "KEY_SUB_PLUS": {
+      "label": "Sub +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x31",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 91 'Sub +' (OBC 68 E1; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 37 function 49"
+        }
+      ]
+    },
+    "KEY_SUB_MINUS": {
+      "label": "Sub -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x32",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 92 'Sub -' (OBC 68 D1; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 37 function 50"
+        }
+      ]
+    },
+    "KEY_MULTEQ": {
+      "label": "MultEQ",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1C",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 93 'MultEQ' (OBC 8F D1; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 28 function 2"
+        }
+      ]
+    },
+    "KEY_DYNEQ_MODE": {
+      "label": "DynEQ Mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1C",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 94 'DynEQ Mode' (OBC 8E B1; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 28 function 20"
+        }
+      ]
+    },
+    "KEY_DYN_VOL": {
+      "label": "Dyn VOL",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1C",
+          "function": "0x1E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 95 'Dyn VOL' (OBC 8E 11; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 28 function 30"
+        }
+      ]
+    },
+    "KEY_DYNEQ_0DB": {
+      "label": "DynEQ 0dB",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1C",
+          "function": "0x33",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 96 'DynEQ 0dB' (OBC 8C C1; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 28 function 51"
+        }
+      ]
+    },
+    "KEY_DYNEQ_MINUS_5DB": {
+      "label": "DynEQ -5dB",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1C",
+          "function": "0x34",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 97 'DynEQ -5dB' (OBC 8C B1; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 28 function 52"
+        }
+      ]
+    },
+    "KEY_DYNEQ_MINUS_10DB": {
+      "label": "DynEQ -10dB",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1C",
+          "function": "0x35",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 98 'DynEQ -10dB' (OBC 8C A1; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 28 function 53"
+        }
+      ]
+    },
+    "KEY_DYNEQ_MINUS_15DB": {
+      "label": "DynEQ -15dB",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1C",
+          "function": "0x36",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 99 'DynEQ -15dB' (OBC 8C 91; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 28 function 54"
+        }
+      ]
+    },
+    "KEY_AUDY_LFC": {
+      "label": "Audy LFC",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x40",
+          "function": "0x28",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 100 'Audy LFC' (OBC FD 77; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 64 function 40"
+        }
+      ]
+    },
+    "KEY_GRAPHIC_EQ": {
+      "label": "Graphic EQ",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1C",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 101 'Graphic EQ' (OBC 8F 51; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 28 function 10"
+        }
+      ]
+    },
+    "KEY_GRAPHICEQ_ON": {
+      "label": "GraphicEQ ON",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1C",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 102 'GraphicEQ ON' (OBC 8F 31; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 28 function 12"
+        }
+      ]
+    },
+    "KEY_GRAPHICEQ_OFF": {
+      "label": "GraphicEQ OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1C",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 103 'GraphicEQ OFF' (OBC 8F 41; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 28 function 11"
+        }
+      ]
+    },
+    "KEY_ECO_MODE": {
+      "label": "ECO Mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x3A",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 104 'ECO Mode' (OBC 17 51; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 58 function 10"
+        }
+      ]
+    },
+    "KEY_ECO_MODE_ON": {
+      "label": "ECO Mode ON",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x3A",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 105 'ECO Mode ON' (OBC 17 31; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 58 function 12"
+        }
+      ]
+    },
+    "KEY_ECO_MODE_OFF": {
+      "label": "ECO Mode OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x3A",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 106 'ECO Mode OFF' (OBC 17 41; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 58 function 11"
+        }
+      ]
+    },
+    "KEY_ECO_MODE_AUTO": {
+      "label": "ECO Mode AUTO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x3A",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 107 'ECO Mode AUTO' (OBC 17 21; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 58 function 13"
+        }
+      ]
+    },
+    "KEY_SLEEP_OFF": {
+      "label": "Sleep OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x26",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 2020 Receivers.rmdu function 109 'Sleep OFF' (OBC 67 F1; RC-5/5x Combo, parms 16 0 7 0 24 0 16 1): RC5x device 16 subdevice 38 function 0"
+        }
+      ]
+    }
+  }
+}

@@ -12,8 +12,8 @@ sources have been imported under SPEC R19:
   keys, GPL-3.0 by inheritance only (DESIGN §17, §18, §38).
 - **hifi-remote.com's Sony code pages**: 151 files, 6,772 keys, a table of
   reference codes with no licence recorded (DESIGN §27).
-- **The JP1 device upgrades** of its forum: 2,907 files, 114,794 keys, read for
-  fifty-five executors (DESIGN §28, §32, §33, §34, §35, §36, §39, §42, §44, §46, §48, §49, §51, §53, §56).
+- **The JP1 device upgrades** of its forum: 2,933 files, 115,858 keys, read for
+  fifty-six executors (DESIGN §28, §32, §33, §34, §35, §36, §39, §42, §44, §46, §48, §49, §51, §53, §56, §59).
 - **Manufacturers' own IR tables**: Marantz's AV receiver charts, Anthem's IR
   hex sheet and Oppo's remote code workbooks, 264 files, 18,433 keys (DESIGN
   §29, §31, §58).
@@ -40,7 +40,7 @@ Land it in two PRs, code and then data.
       remote codes needs no licence. That reasoning bears on all three; none
       has been changed.
 - [ ] **The rest of the JP1 upgrades** (DESIGN D120, D136, D140, D145, D155, D192):
-      413 upgrades of 144 other executors (RC-5/5x Combo 16, Pioneer DVD 4...), among them 106 `Manual Settings` upgrades that
+      397 upgrades of 143 other executors (Pioneer DVD 4...), among them 106 `Manual Settings` upgrades that
       give raw executor bytes with no protocol, and 30 upgrades of read executors that
       yield nothing (`IMPORT.md` lists them: files with no brand, 6 Pioneer MIX
       of variants 4 and 5, `RCA-38 Official`...). Pioneer DVD (4) has three flag bits in
@@ -71,8 +71,8 @@ Land it in two PRs, code and then data.
       rows of the charts the import counts and does not use. `RC5x` is
       registered now (§57, D226 to D228) and the 1,013 rows with a number for an
       extension are read (§58, D229 to D231). **Still unread: the 18 rows whose extension is a
-      range** and the five direct-access sheets, which are other sheets of the workbooks; and the
-      16 JP1 `RC-5/5x Combo` upgrades (below) are the other reading `RC5x` opens.
+      range** and the five direct-access sheets, which are other sheets of the workbooks. The
+      16 JP1 `RC-5/5x Combo` upgrades are the other reading `RC5x` opened (§59).
 - [ ] **Receiver commands in the key vocabulary** (D84, owner's call): the
       official import maps 16.9% of its keys, because tuner presets, surround
       modes, Pure Direct, discrete mute on and off, and a source key per input

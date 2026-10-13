@@ -17,7 +17,7 @@ silently (SPEC R19, condition 5).
 | Upstream files: skipped: no function decodes | 17 |
 | Upstream files: skipped: no functions | 1 |
 | Upstream files: upgrades | 3,251 |
-| Remotes: imported | 2,907 |
+| Remotes: imported | 2,933 |
 | Remotes: skipped: an authored remote wins | 7 |
 | Keys: imported: Aiwa | 947 |
 | Keys: imported: Denon | 1,791 |
@@ -37,7 +37,8 @@ silently (SPEC R19, condition 5).
 | Keys: imported: Panasonic_Old | 794 |
 | Keys: imported: Pioneer-2Part | 2,287 |
 | Keys: imported: Proton | 256 |
-| Keys: imported: RC5 | 5,876 |
+| Keys: imported: RC5 | 6,468 |
+| Keys: imported: RC5x | 472 |
 | Keys: imported: RC6 | 2,018 |
 | Keys: imported: RC6-6-20 | 535 |
 | Keys: imported: RCA | 1,104 |
@@ -65,7 +66,7 @@ silently (SPEC R19, condition 5).
 | Keys: skipped: the flag byte has bits the variant does not use | 1 |
 | Keys: skipped: the function has no OBC bytes of the executor's shape | 59 |
 | Keys: skipped: the function has no single OBC byte | 5,442 |
-| Keys: skipped: the function has no two OBC bytes | 744 |
+| Keys: skipped: the function has no two OBC bytes | 756 |
 | Keys: skipped: the function sets a bit RC-5 does not use | 1 |
 | Keys: skipped: the high X bit is sent at release, which a form cannot say | 40 |
 | Keys: skipped: the second OBC byte is not 0, which XMP-1 has no place for | 4 |
@@ -89,7 +90,8 @@ silently (SPEC R19, condition 5).
 | Files by ledger protocol: Panasonic_Old | 19 |
 | Files by ledger protocol: Pioneer-2Part | 43 |
 | Files by ledger protocol: Proton | 12 |
-| Files by ledger protocol: RC5 | 157 |
+| Files by ledger protocol: RC5 | 173 |
+| Files by ledger protocol: RC5x | 10 |
 | Files by ledger protocol: RC6 | 51 |
 | Files by ledger protocol: RC6-6-20 | 15 |
 | Files by ledger protocol: RCA | 26 |
@@ -106,15 +108,14 @@ silently (SPEC R19, condition 5).
 | Files by ledger protocol: Teac-K | 2 |
 | Files by ledger protocol: XMP-1 | 46 |
 | Files by ledger protocol: XMPff-1 | 16 |
-| Brand taken from: the longest brand of the index that begins the description | 154 |
-| Brand taken from: the master index | 2,654 |
+| Brand taken from: the longest brand of the index that begins the description | 155 |
+| Brand taken from: the master index | 2,669 |
 
-## Executors this import does not read (upgrades) (144)
+## Executors this import does not read (upgrades) (143)
 
 | Executor | Files |
 |---|---|
 | `Manual Settings` | 75 |
-| `RC-5/5x Combo` | 16 |
 | `PID 01 FF` | 11 |
 | `Roku Official` | 10 |
 | `DirecTV` | 9 |
@@ -305,7 +306,7 @@ silently (SPEC R19, condition 5).
 | `Satellite/SonicView SV1000 6131.rmdu` | `remotes/jp1/Sonicview/Satellite-SonicView_SV1000_6131.json` |
 | `TV/VESTEL TV.rmdu` | `remotes/jp1/Vestel/TV-VESTEL_TV.json` |
 
-## Functions skipped (6,958)
+## Functions skipped (6,970)
 
 | File | Function | Reason |
 |---|---|---|
@@ -747,6 +748,10 @@ silently (SPEC R19, condition 5).
 | `Audio/Logitech Speaker System Z906.rmdu` | `surround` | `the function has no single OBC byte` |
 | `Audio/Logitech Speaker System Z906.rmdu` | `tv/vcr` | `the function has no single OBC byte` |
 | `Audio/Logitech Speaker System Z906.rmdu` | `up arrow` | `the function has no single OBC byte` |
+| `Audio/Marantz 5200.rmdu` | `Other Commands` | `the function has no two OBC bytes` |
+| `Audio/NHT Controller.rmdu` | `#60` | `the function has no two OBC bytes` |
+| `Audio/NHT Controller.rmdu` | `#77` | `the function has no two OBC bytes` |
+| `Audio/NHT Controller.rmdu` | `#78` | `the function has no two OBC bytes` |
 | `Audio/Onkyo TX-NR807 AVR Upgrade.rmdu` | `#51` | `the function has no two OBC bytes` |
 | `Audio/Onkyo TX-NR807 AVR Upgrade.rmdu` | `#52` | `the function has no two OBC bytes` |
 | `Audio/Onkyo TX-NR807 AVR Upgrade.rmdu` | `#53` | `the function has no two OBC bytes` |
@@ -4994,6 +4999,13 @@ silently (SPEC R19, condition 5).
 | `Projectors/BenQ W1070.rmdu` | `#8` | `the function has no single OBC byte` |
 | `Projectors/BenQ W1070.rmdu` | `#9` | `the function has no single OBC byte` |
 | `Projectors/Infocus IN72.rmdu` | `#32` | `the function has no single OBC byte` |
+| `Projectors/Marantz Projector.rmdu` | `#27` | `the function has no two OBC bytes` |
+| `Projectors/Marantz VP-12S4.rmdu` | `#11` | `the function has no two OBC bytes` |
+| `Projectors/Marantz VP-12S4.rmdu` | `#17` | `the function has no two OBC bytes` |
+| `Projectors/Marantz VP-12S4.rmdu` | `#2` | `the function has no two OBC bytes` |
+| `Projectors/Marantz VP-12S4.rmdu` | `#45` | `the function has no two OBC bytes` |
+| `Projectors/Marantz VP-12S4.rmdu` | `#54` | `the function has no two OBC bytes` |
+| `Projectors/Marantz VP-12S4.rmdu` | `#64` | `the function has no two OBC bytes` |
 | `Projectors/Sharp QA-2500.rmdu` | `+100` | `the function has no single OBC byte` |
 | `Projectors/Sharp QA-2500.rmdu` | 0 | `the function has no single OBC byte` |
 | `Projectors/Sharp QA-2500.rmdu` | 9 | `the function has no single OBC byte` |
@@ -6003,6 +6015,7 @@ silently (SPEC R19, condition 5).
 | `TV/Benq 8700.rmdu` | `sleep` | `the function has no single OBC byte` |
 | `TV/Benq 8700.rmdu` | `stop` | `the function has no single OBC byte` |
 | `TV/Benq 8700.rmdu` | `tv/vcr` | `the function has no single OBC byte` |
+| `TV/C1556 - Philips 32DW6559_05 IDTV.rmdu` | `#11` | `the function has no two OBC bytes` |
 | `TV/Colby RC-022 TFTTV 1524.rmdu` | `X2` | `the function has no single OBC byte` |
 | `TV/Colby RC-022 TFTTV 1524.rmdu` | `center` | `the function has no single OBC byte` |
 | `TV/Colby RC-022 TFTTV 1524.rmdu` | `device button` | `the function has no single OBC byte` |
