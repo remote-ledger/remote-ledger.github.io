@@ -1,0 +1,659 @@
+{
+  "manufacturer": "Marantz",
+  "model": "5200 [RC5x]",
+  "aliases": [],
+  "controls": [
+    "Marantz 5200"
+  ],
+  "protocol": {
+    "name": "RC5x",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_AUX": {
+      "label": "AUX",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x00",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 51 'AUX' (OBC FF 91; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 16 subdevice 0 function 6"
+        }
+      ]
+    },
+    "KEY_DVD": {
+      "label": "DVD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x00",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 52 'DVD' (OBC FF 51; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 16 subdevice 0 function 10"
+        }
+      ]
+    },
+    "KEY_A_SLASH_D": {
+      "label": "A/D",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x01",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 53 'A/D' (OBC FB E1; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 16 subdevice 1 function 1"
+        }
+      ]
+    },
+    "KEY_7CH_INPUT": {
+      "label": "7ch Input",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x01",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 54 '7ch Input' (OBC FB C1; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 16 subdevice 1 function 3"
+        }
+      ]
+    },
+    "KEY_ON": {
+      "label": "ON",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x0C",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 55 'ON' (OBC CF E1; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 16 subdevice 12 function 1"
+        }
+      ]
+    },
+    "KEY_OFF": {
+      "label": "OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x0C",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 56 'OFF' (OBC CF D1; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 16 subdevice 12 function 2"
+        }
+      ]
+    },
+    "KEY_MUTE_ON": {
+      "label": "Mute On",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x0D",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 57 'Mute On' (OBC CB E1; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 16 subdevice 13 function 1"
+        }
+      ]
+    },
+    "KEY_MUTE_OFF": {
+      "label": "Mute Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x0D",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 58 'Mute Off' (OBC CB D1; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 16 subdevice 13 function 2"
+        }
+      ]
+    },
+    "KEY_DISPLAY": {
+      "label": "Display",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x0F",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 59 'Display' (OBC C3 F1; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 16 subdevice 15 function 0"
+        }
+      ]
+    },
+    "KEY_DOLBY_60": {
+      "label": "Dolby",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 60 'Dolby' (OBC 6B F1; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 16 subdevice 37 function 0"
+        }
+      ]
+    },
+    "KEY_HALL": {
+      "label": "Hall",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 61 'Hall' (OBC 6B E1; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 16 subdevice 37 function 1"
+        }
+      ]
+    },
+    "KEY_STADIUM": {
+      "label": "Stadium",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 62 'Stadium' (OBC 6B D1; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 16 subdevice 37 function 2"
+        }
+      ]
+    },
+    "KEY_MATRIX": {
+      "label": "Matrix",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 63 'Matrix' (OBC 6B 61; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 16 subdevice 37 function 9"
+        }
+      ]
+    },
+    "KEY_TEST_TONE_64": {
+      "label": "Test Tone",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 64 'Test Tone' (OBC 6A A1; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 16 subdevice 37 function 21"
+        }
+      ]
+    },
+    "KEY_MOVIE": {
+      "label": "Movie",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x1D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 65 'Movie' (OBC 6A 21; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 16 subdevice 37 function 29"
+        }
+      ]
+    },
+    "KEY_STEREO": {
+      "label": "Stereo",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x1E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 66 'Stereo' (OBC 6A 11; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 16 subdevice 37 function 30"
+        }
+      ]
+    },
+    "KEY_NIGHT": {
+      "label": "Night",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x2A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 67 'Night' (OBC 69 51; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 16 subdevice 37 function 42"
+        }
+      ]
+    },
+    "KEY_ATT": {
+      "label": "ATT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x2B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 68 'ATT' (OBC 69 41; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 16 subdevice 37 function 43"
+        }
+      ]
+    },
+    "KEY_AUTO": {
+      "label": "Auto",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x2D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 69 'Auto' (OBC 69 21; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 16 subdevice 37 function 45"
+        }
+      ]
+    },
+    "KEY_DTS": {
+      "label": "DTS",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x2E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 70 'DTS' (OBC 69 11; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 16 subdevice 37 function 46"
+        }
+      ]
+    },
+    "KEY_VIRTUAL": {
+      "label": "Virtual",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x33",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 71 'Virtual' (OBC 68 C1; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 16 subdevice 37 function 51"
+        }
+      ]
+    },
+    "KEY_6CH_STEREO": {
+      "label": "6ch Stereo",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x39",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 72 '6ch Stereo' (OBC 68 61; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 16 subdevice 37 function 57"
+        }
+      ]
+    },
+    "KEY_DSP": {
+      "label": "DSP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x3F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 73 'DSP' (OBC 68 01; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 16 subdevice 37 function 63"
+        }
+      ]
+    },
+    "KEY_6_CH_IN": {
+      "label": "6 CH IN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x01",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 82 '6 CH IN' (OBC FB C1; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 16 subdevice 1 function 3"
+        }
+      ]
+    },
+    "KEY_COAXIAL": {
+      "label": "Coaxial",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x01",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 83 'Coaxial' (OBC FB B1; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 16 subdevice 1 function 4"
+        }
+      ]
+    },
+    "KEY_OPTICAL": {
+      "label": "Optical",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x01",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 84 'Optical' (OBC FB A1; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 16 subdevice 1 function 5"
+        }
+      ]
+    },
+    "KEY_RF": {
+      "label": "RF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x01",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 85 'RF' (OBC FB 51; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 16 subdevice 1 function 10"
+        }
+      ]
+    },
+    "KEY_MUTE_ON_ALTERNATE": {
+      "label": "Mute On (alternate)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x0D",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 86 'Mute On (alternate)' (OBC CB F1; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 16 subdevice 13 function 0"
+        }
+      ]
+    },
+    "KEY_MUTE_OFF_ALTERNATE": {
+      "label": "Mute Off (alternate)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x0D",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 87 'Mute Off (alternate)' (OBC CB E1; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 16 subdevice 13 function 1"
+        }
+      ]
+    },
+    "KEY_MULTI_MINUS_ROOM": {
+      "label": "Multi-Room",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1D",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 88 'Multi-Room' (OBC 8B F1; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 16 subdevice 29 function 0"
+        }
+      ]
+    },
+    "KEY_CHURCH": {
+      "label": "Church",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 89 'Church' (OBC 6B C1; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 16 subdevice 37 function 3"
+        }
+      ]
+    },
+    "KEY_THEATER": {
+      "label": "Theater",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 90 'Theater' (OBC 6B B1; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 16 subdevice 37 function 4"
+        }
+      ]
+    },
+    "KEY_TEST_TONE_91": {
+      "label": "Test Tone",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 91 'Test Tone' (OBC 6A A1; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 16 subdevice 37 function 21"
+        }
+      ]
+    },
+    "KEY_3_STEREO": {
+      "label": "3 Stereo",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x18",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 92 '3 Stereo' (OBC 6A 71; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 16 subdevice 37 function 24"
+        }
+      ]
+    },
+    "KEY_CH_SELECT": {
+      "label": "Ch. select",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x21",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 93 'Ch. select' (OBC 69 E1; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 16 subdevice 37 function 33"
+        }
+      ]
+    },
+    "KEY_CH_MINUS_ALTERNATE": {
+      "label": "Ch- (alternate)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x22",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 94 'Ch- (alternate)' (OBC 69 D1; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 16 subdevice 37 function 34"
+        }
+      ]
+    },
+    "KEY_CH_PLUS_ALTERNATE": {
+      "label": "Ch+ (alternate)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x23",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 95 'Ch+ (alternate)' (OBC 69 C1; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 16 subdevice 37 function 35"
+        }
+      ]
+    },
+    "KEY_UP_ALTERNATE_2": {
+      "label": "Up (alternate 2)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x27",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 96 'Up (alternate 2)' (OBC 69 81; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 16 subdevice 37 function 39"
+        }
+      ]
+    },
+    "KEY_DOWN_ALTERNATE_2": {
+      "label": "Down (alternate 2)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x28",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 97 'Down (alternate 2)' (OBC 69 71; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 16 subdevice 37 function 40"
+        }
+      ]
+    },
+    "KEY_DOLBY_98": {
+      "label": "Dolby",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x29",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 98 'Dolby' (OBC 69 61; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 16 subdevice 37 function 41"
+        }
+      ]
+    },
+    "KEY_DOWN": {
+      "label": "Down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x34",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 99 'Down' (OBC 68 B1; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 16 subdevice 37 function 52"
+        }
+      ]
+    },
+    "KEY_CS_5_1": {
+      "label": "CS 5.1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x3E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 100 'CS 5.1' (OBC 68 11; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 16 subdevice 37 function 62"
+        }
+      ]
+    },
+    "KEY_PL2_MINUS_MOV": {
+      "label": "PL2-mov",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x40",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 101 'PL2-mov' (OBC FF F3; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 16 subdevice 64 function 0"
+        }
+      ]
+    },
+    "KEY_PL2_MINUS_MUS": {
+      "label": "PL2-mus",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x40",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 102 'PL2-mus' (OBC FF E3; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 16 subdevice 64 function 1"
+        }
+      ]
+    },
+    "KEY_CS_CINE": {
+      "label": "CS Cine",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x40",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 103 'CS Cine' (OBC FF D3; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 16 subdevice 64 function 2"
+        }
+      ]
+    },
+    "KEY_AF": {
+      "label": "AF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "subdevice": "0x38",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz 5200.rmdu function 104 'AF' (OBC 1F F5; RC-5/5x Combo, parms 16 0 16 1 17 0 16 0): RC5x device 17 subdevice 56 function 0"
+        }
+      ]
+    }
+  }
+}

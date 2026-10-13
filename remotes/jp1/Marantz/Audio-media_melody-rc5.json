@@ -1,0 +1,41 @@
+{
+  "manufacturer": "Marantz",
+  "model": "Media Melody CR603 [RC5]",
+  "aliases": [],
+  "controls": [
+    "Media Melody CR603"
+  ],
+  "protocol": {
+    "name": "RC5",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_VOL_PLUS": {
+      "label": "Vol+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/media_melody.rmdu function 16 'Vol+' (OBC 0F BC; RC-5/5x Combo, parms 21 0 21 1 null 0 null 0): RC5 device 16 function 16"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "Vol-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/media_melody.rmdu function 17 'Vol-' (OBC 0F B8; RC-5/5x Combo, parms 21 0 21 1 null 0 null 0): RC5 device 16 function 17"
+        }
+      ]
+    }
+  }
+}

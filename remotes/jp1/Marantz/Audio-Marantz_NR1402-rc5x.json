@@ -1,0 +1,1527 @@
+{
+  "manufacturer": "Marantz",
+  "model": "NR1402 [RC5x]",
+  "aliases": [],
+  "controls": [
+    "Marantz NR1402"
+  ],
+  "protocol": {
+    "name": "RC5x",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER_ON": {
+      "label": "POWER ON",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x0C",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 1 'POWER ON' (OBC CF E1; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 12 function 1"
+        }
+      ]
+    },
+    "KEY_POWER_OFF": {
+      "label": "POWER OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x0C",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 2 'POWER OFF' (OBC CF D1; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 12 function 2"
+        }
+      ]
+    },
+    "KEY_SYSTEM_POWER_OFF": {
+      "label": "SYSTEM POWER OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x0C",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 3 'SYSTEM POWER OFF' (OBC CF 21; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 12 function 13"
+        }
+      ]
+    },
+    "KEY_DIRECT_VOLUME": {
+      "label": "Direct VOLUME",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x6F",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 6 'Direct VOLUME' (OBC 43 F7; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 111 function 0; the upgrade's note: 'just an example, OBC 0-63 sets volume'"
+        }
+      ]
+    },
+    "KEY_AUDIO_MUTE_ON": {
+      "label": "Audio MUTE ON",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x0D",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 7 'Audio MUTE ON' (OBC CB F1; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 13 function 0"
+        }
+      ]
+    },
+    "KEY_AUDIO_MUTE_OFF": {
+      "label": "Audio MUTE OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x0D",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 8 'Audio MUTE OFF' (OBC CB E1; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 13 function 1"
+        }
+      ]
+    },
+    "KEY_MENU": {
+      "label": "MENU",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x52",
+          "function": "0x3C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 11 'MENU' (OBC B4 37; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 82 function 60"
+        }
+      ]
+    },
+    "KEY_SOURCE_SELECT_MENU": {
+      "label": "Source Select Menu",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x52",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 12 'Source Select Menu' (OBC B6 B7; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 82 function 20"
+        }
+      ]
+    },
+    "KEY_RETURN": {
+      "label": "Return",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x57",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 15 'Return' (OBC A3 B7; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 87 function 4"
+        }
+      ]
+    },
+    "KEY_SHIFT": {
+      "label": "Shift",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x20",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 20 'Shift' (OBC 7F F1; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 32 function 0"
+        }
+      ]
+    },
+    "KEY_SOFT_KEYBOARD": {
+      "label": "Soft keyboard",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x52",
+          "function": "0x3D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 21 'Soft keyboard' (OBC B4 27; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 82 function 61"
+        }
+      ]
+    },
+    "KEY_INSERT": {
+      "label": "Insert",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x4D",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 22 'Insert' (OBC CB E7; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 77 function 1"
+        }
+      ]
+    },
+    "KEY_DELETE": {
+      "label": "Delete",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x4E",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 23 'Delete' (OBC C7 E7; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 78 function 1"
+        }
+      ]
+    },
+    "KEY_DISPLAY": {
+      "label": "Display",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x0F",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 24 'Display' (OBC C3 F1; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 15 function 0"
+        }
+      ]
+    },
+    "KEY_STATUS": {
+      "label": "Status",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x0F",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 26 'Status' (OBC C3 81; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 15 function 7"
+        }
+      ]
+    },
+    "KEY_VIDEO_SELECT": {
+      "label": "Video Select",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x0F",
+          "function": "0x32",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 27 'Video Select' (OBC C0 D1; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 15 function 50"
+        }
+      ]
+    },
+    "KEY_INPUT_NEXT": {
+      "label": "INPUT NEXT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x00",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 28 'INPUT NEXT' (OBC FF 21; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 0 function 13"
+        }
+      ]
+    },
+    "KEY_INPUT_BACK": {
+      "label": "INPUT BACK",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x00",
+          "function": "0x0E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 29 'INPUT BACK' (OBC FF 11; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 0 function 14"
+        }
+      ]
+    },
+    "KEY_BD_CODE1": {
+      "label": "BD(Code1)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1C",
+          "subdevice": "0x3F",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 31 'BD(Code1)' (OBC 03 F5; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 28 subdevice 63 function 0"
+        }
+      ]
+    },
+    "KEY_BD_CODE2": {
+      "label": "BD(Code2)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1C",
+          "subdevice": "0x3F",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 32 'BD(Code2)' (OBC 03 F5; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 28 subdevice 63 function 0"
+        }
+      ]
+    },
+    "KEY_DVD": {
+      "label": "DVD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x00",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 35 'DVD' (OBC FF 51; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 0 function 10"
+        }
+      ]
+    },
+    "KEY_GAME": {
+      "label": "GAME",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x00",
+          "function": "0x3E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 37 'GAME' (OBC FC 11; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 0 function 62"
+        }
+      ]
+    },
+    "KEY_M_MINUS_XPORT": {
+      "label": "M-XPort",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x3F",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 38 'M-XPort' (OBC 03 E1; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 63 function 1; the upgrade's note: 'device29sub63'"
+        }
+      ]
+    },
+    "KEY_INPUT_MODE_SELECT": {
+      "label": "Input Mode Select",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x01",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 39 'Input Mode Select' (OBC FB E1; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 1 function 1"
+        }
+      ]
+    },
+    "KEY_BILINGUAL_AUDIO_CHANNEL": {
+      "label": "Bilingual (Audio Channel)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x01",
+          "function": "0x0E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 40 'Bilingual (Audio Channel)' (OBC FB 11; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 1 function 14"
+        }
+      ]
+    },
+    "KEY_LIP_SYNC": {
+      "label": "LIP SYNC.",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x0A",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 41 'LIP SYNC.' (OBC D7 E1; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 10 function 1"
+        }
+      ]
+    },
+    "KEY_HDMI_AUDIO_DECODE_SELECT_TOGGLE": {
+      "label": "HDMI Audio Decode Select (Toggle)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x54",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 42 'HDMI Audio Decode Select (Toggle)' (OBC AF F7; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 84 function 0"
+        }
+      ]
+    },
+    "KEY_HDMI_AUDIO_DECODE_ENABLE_DECODE_BY_AVR": {
+      "label": "HDMI Audio Decode\\: Enable (Decode by AVR)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x54",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 43 'HDMI Audio Decode\\: Enable (Decode by AVR)' (OBC AF E7; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 84 function 1"
+        }
+      ]
+    },
+    "KEY_HDMI_AUDIO_DECODE_THROUGH_DECODE_BY_TV": {
+      "label": "HDMI Audio Decode\\: Through (Decode by TV)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x54",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 44 'HDMI Audio Decode\\: Through (Decode by TV)' (OBC AF D7; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 84 function 2"
+        }
+      ]
+    },
+    "KEY_VIDEO_MODE_TOGGLE": {
+      "label": "Video Mode (Toggle)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x54",
+          "function": "0x32",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 45 'Video Mode (Toggle)' (OBC AC D7; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 84 function 50"
+        }
+      ]
+    },
+    "KEY_VIDEO_MODE_AUTO": {
+      "label": "Video Mode\\: Auto",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x54",
+          "function": "0x33",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 46 'Video Mode\\: Auto' (OBC AC C7; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 84 function 51"
+        }
+      ]
+    },
+    "KEY_VIDEO_MODE_MOVIE": {
+      "label": "Video Mode\\: Movie",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x54",
+          "function": "0x34",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 47 'Video Mode\\: Movie' (OBC AC B7; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 84 function 52"
+        }
+      ]
+    },
+    "KEY_VIDEO_MODE_GAME": {
+      "label": "Video Mode\\: Game",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x54",
+          "function": "0x35",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 48 'Video Mode\\: Game' (OBC AC A7; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 84 function 53"
+        }
+      ]
+    },
+    "KEY_SURROUND_MODE_BACK": {
+      "label": "SURROUND MODE (Back)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x40",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 50 'SURROUND MODE (Back)' (OBC FF 07; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 64 function 15"
+        }
+      ]
+    },
+    "KEY_AUTO": {
+      "label": "AUTO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x2D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 51 'AUTO' (OBC 69 21; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 37 function 45"
+        }
+      ]
+    },
+    "KEY_STEREO": {
+      "label": "STEREO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x1E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 52 'STEREO' (OBC 6A 11; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 37 function 30"
+        }
+      ]
+    },
+    "KEY_MULTI_MINUS_CH_STEREO_SLASH_SELECT": {
+      "label": "MULTI-CH Stereo/ Select",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x39",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 53 'MULTI-CH Stereo/ Select' (OBC 68 61; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 37 function 57"
+        }
+      ]
+    },
+    "KEY_PL_IIX_Z_MOVIE_SLASH_PL_II_MOVIE": {
+      "label": "PL IIx(z) Movie / PL II Movie",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x40",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 54 'PL IIx(z) Movie / PL II Movie' (OBC FF F7; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 64 function 0"
+        }
+      ]
+    },
+    "KEY_PL_IIX_Z_MUSIC_SLASH_PL_II_MUSIC": {
+      "label": "PL IIx(z) Music / PL II Music",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x40",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 55 'PL IIx(z) Music / PL II Music' (OBC FF E7; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 64 function 1"
+        }
+      ]
+    },
+    "KEY_DTS": {
+      "label": "DTS",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x2E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 56 'DTS' (OBC 69 11; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 37 function 46"
+        }
+      ]
+    },
+    "KEY_DTS_NEO6_CINEMA": {
+      "label": "DTS Neo6 Cinema",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x40",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 57 'DTS Neo6 Cinema' (OBC FF A7; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 64 function 5"
+        }
+      ]
+    },
+    "KEY_DTS_NEO6_MUSIC": {
+      "label": "DTS Neo6 Music",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x40",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 58 'DTS Neo6 Music' (OBC FF 97; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 64 function 6"
+        }
+      ]
+    },
+    "KEY_VIRTUAL": {
+      "label": "VIRTUAL",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x33",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 59 'VIRTUAL' (OBC 68 C1; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 37 function 51"
+        }
+      ]
+    },
+    "KEY_DECORDER_MODE": {
+      "label": "Decorder Mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x01",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 60 'Decorder Mode' (OBC FA B1; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 1 function 20"
+        }
+      ]
+    },
+    "KEY_DIRECT_MODE": {
+      "label": "Direct Mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x22",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 62 'Direct Mode' (OBC 77 D1; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 34 function 2"
+        }
+      ]
+    },
+    "KEY_PURE_DIRECT": {
+      "label": "Pure Direct",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x22",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 63 'Pure Direct' (OBC 77 C1; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 34 function 3"
+        }
+      ]
+    },
+    "KEY_HT_MINUS_EQ_TOGGLE": {
+      "label": "HT-EQ (Toggle)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x40",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 64 'HT-EQ (Toggle)' (OBC FF 47; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 64 function 11"
+        }
+      ]
+    },
+    "KEY_M_MINUS_DAX": {
+      "label": "M-DAX",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x16",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 65 'M-DAX' (OBC A7 B1; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 22 function 4"
+        }
+      ]
+    },
+    "KEY_M_MINUS_DAX_OFF": {
+      "label": "M-DAX OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x16",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 66 'M-DAX OFF' (OBC A7 91; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 22 function 6"
+        }
+      ]
+    },
+    "KEY_M_MINUS_DAX_HIGH": {
+      "label": "M-DAX HIGH",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x16",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 67 'M-DAX HIGH' (OBC A7 81; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 22 function 7"
+        }
+      ]
+    },
+    "KEY_M_MINUS_DAX_LOW": {
+      "label": "M-DAX LOW",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x16",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 68 'M-DAX LOW' (OBC A7 71; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 22 function 8"
+        }
+      ]
+    },
+    "KEY_M_MINUS_DAX_MID": {
+      "label": "M-DAX MID",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x16",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 69 'M-DAX MID' (OBC A7 61; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 22 function 9"
+        }
+      ]
+    },
+    "KEY_TONE_CONTROL_ON_SLASH_OFF_TOGGLE": {
+      "label": "TONE CONTROL ON/OFF (Toggle)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x16",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 70 'TONE CONTROL ON/OFF (Toggle)' (OBC A7 E1; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 22 function 1"
+        }
+      ]
+    },
+    "KEY_TONE_CONTROL_OFF": {
+      "label": "TONE CONTROL OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x16",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 71 'TONE CONTROL OFF' (OBC A7 51; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 22 function 10"
+        }
+      ]
+    },
+    "KEY_TONE_CONTROL_ON": {
+      "label": "TONE CONTROL ON",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x16",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 72 'TONE CONTROL ON' (OBC A7 41; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 22 function 11"
+        }
+      ]
+    },
+    "KEY_TEST_TONE": {
+      "label": "TEST TONE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 77 'TEST TONE' (OBC 6A A1; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 37 function 21"
+        }
+      ]
+    },
+    "KEY_CH_SELECT": {
+      "label": "CH. SELECT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x21",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 78 'CH. SELECT' (OBC 69 E1; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 37 function 33"
+        }
+      ]
+    },
+    "KEY_CH_LEVEL_PLUS": {
+      "label": "CH. LEVEL +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x22",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 79 'CH. LEVEL +' (OBC 69 D1; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 37 function 34"
+        }
+      ]
+    },
+    "KEY_CH_LEVEL_MINUS": {
+      "label": "CH. LEVEL -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x23",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 80 'CH. LEVEL -' (OBC 69 C1; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 37 function 35"
+        }
+      ]
+    },
+    "KEY_FRONT_L_A_MINUS_TRIM_PLUS_UP": {
+      "label": "Front L (A-TRIM) + (Up)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1A",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 81 'Front L (A-TRIM) + (Up)' (OBC 97 E1; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 26 function 1"
+        }
+      ]
+    },
+    "KEY_FRONT_L_A_MINUS_TRIM_MINUS_DOWN": {
+      "label": "Front L (A-TRIM) - (Down)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1A",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 82 'Front L (A-TRIM) - (Down)' (OBC 97 D1; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 26 function 2"
+        }
+      ]
+    },
+    "KEY_FRONT_R_B_MINUS_TRIM_PLUS_UP": {
+      "label": "Front R (B-TRIM) + (Up)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1A",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 83 'Front R (B-TRIM) + (Up)' (OBC 97 C1; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 26 function 3"
+        }
+      ]
+    },
+    "KEY_FRONT_R_B_MINUS_TRIM_MINUS_DOWN": {
+      "label": "Front R (B-TRIM) - (Down)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1A",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 84 'Front R (B-TRIM) - (Down)' (OBC 97 B1; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 26 function 4"
+        }
+      ]
+    },
+    "KEY_SURROUND_L_PLUS_UP": {
+      "label": "Surround L + (Up)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1A",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 85 'Surround L + (Up)' (OBC 97 A1; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 26 function 5"
+        }
+      ]
+    },
+    "KEY_SURROUND_L_MINUS_DOWN": {
+      "label": "Surround L - (Down)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1A",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 86 'Surround L - (Down)' (OBC 97 91; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 26 function 6"
+        }
+      ]
+    },
+    "KEY_SURROUND_R_PLUS_UP": {
+      "label": "Surround R + (Up)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1A",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 87 'Surround R + (Up)' (OBC 97 81; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 26 function 7"
+        }
+      ]
+    },
+    "KEY_SURROUND_R_MINUS_DOWN": {
+      "label": "Surround R - (Down)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1A",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 88 'Surround R - (Down)' (OBC 97 71; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 26 function 8"
+        }
+      ]
+    },
+    "KEY_SURROUND_BACK_L_PLUS_UP": {
+      "label": "Surround Back L + (Up)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1A",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 89 'Surround Back L + (Up)' (OBC 97 61; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 26 function 9"
+        }
+      ]
+    },
+    "KEY_SURROUND_BACK_L_MINUS_DOWN": {
+      "label": "Surround Back L - (Down)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1A",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 90 'Surround Back L - (Down)' (OBC 97 51; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 26 function 10"
+        }
+      ]
+    },
+    "KEY_SURROUND_BACK_R_PLUS_UP": {
+      "label": "Surround Back R + (Up)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1A",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 91 'Surround Back R + (Up)' (OBC 97 41; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 26 function 11"
+        }
+      ]
+    },
+    "KEY_SURROUND_BACK_R_MINUS_DOWN": {
+      "label": "Surround Back R - (Down)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1A",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 92 'Surround Back R - (Down)' (OBC 97 31; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 26 function 12"
+        }
+      ]
+    },
+    "KEY_CENTER_PLUS_UP": {
+      "label": "Center + (Up)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 93 'Center + (Up)' (OBC 6B 41; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 37 function 11"
+        }
+      ]
+    },
+    "KEY_CENTER_MINUS_DOWN": {
+      "label": "Center - (Down)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 94 'Center - (Down)' (OBC 6B 31; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 37 function 12"
+        }
+      ]
+    },
+    "KEY_SUBWOOFER_PLUS_UP": {
+      "label": "Subwoofer + (Up)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x31",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 95 'Subwoofer + (Up)' (OBC 68 E1; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 37 function 49"
+        }
+      ]
+    },
+    "KEY_SUBWOOFER_MINUS_DOWN": {
+      "label": "Subwoofer - (Down)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x25",
+          "function": "0x32",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 96 'Subwoofer - (Down)' (OBC 68 D1; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 37 function 50"
+        }
+      ]
+    },
+    "KEY_AUDYSSEY_MULTEQ_MODE_TOGGLE": {
+      "label": "Audyssey MultEQ MODE (Toggle)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1C",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 97 'Audyssey MultEQ MODE (Toggle)' (OBC 8F D1; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 28 function 2"
+        }
+      ]
+    },
+    "KEY_AUDYSSEY_DYNAMIC_EQ_SLASH_VOL": {
+      "label": "Audyssey Dynamic EQ/VOL",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1C",
+          "function": "0x28",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 98 'Audyssey Dynamic EQ/VOL' (OBC 8D 71; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 28 function 40"
+        }
+      ]
+    },
+    "KEY_AUDYSSEY_DYNAMIC_EQ_MODE": {
+      "label": "Audyssey Dynamic EQ Mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1C",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 99 'Audyssey Dynamic EQ Mode' (OBC 8E B1; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 28 function 20"
+        }
+      ]
+    },
+    "KEY_AUDYSSEY_DYNAMIC_EQ_MODE_OFF": {
+      "label": "Audyssey Dynamic EQ Mode Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1C",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 100 'Audyssey Dynamic EQ Mode Off' (OBC 8E A1; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 28 function 21"
+        }
+      ]
+    },
+    "KEY_AUDYSSEY_DYNAMIC_EQ_MODE_ON": {
+      "label": "Audyssey Dynamic EQ Mode On",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1C",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 101 'Audyssey Dynamic EQ Mode On' (OBC 8E 91; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 28 function 22"
+        }
+      ]
+    },
+    "KEY_AUDYSSEY_DYNAMIC_VOLUME_MODE": {
+      "label": "Audyssey Dynamic Volume Mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1C",
+          "function": "0x1E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 102 'Audyssey Dynamic Volume Mode' (OBC 8E 11; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 28 function 30"
+        }
+      ]
+    },
+    "KEY_AUDYSSEY_DYNAMIC_VOLUME_MODE_OFF": {
+      "label": "Audyssey Dynamic Volume Mode Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1C",
+          "function": "0x1F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 103 'Audyssey Dynamic Volume Mode Off' (OBC 8E 01; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 28 function 31"
+        }
+      ]
+    },
+    "KEY_AUDYSSEY_DYNAMIC_VOLUME_MODE_L": {
+      "label": "Audyssey Dynamic Volume Mode L",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1C",
+          "function": "0x20",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 104 'Audyssey Dynamic Volume Mode L' (OBC 8D F1; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 28 function 32"
+        }
+      ]
+    },
+    "KEY_AUDYSSEY_DYNAMIC_VOLUME_MODE_M": {
+      "label": "Audyssey Dynamic Volume Mode M",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1C",
+          "function": "0x21",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 105 'Audyssey Dynamic Volume Mode M' (OBC 8D E1; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 28 function 33"
+        }
+      ]
+    },
+    "KEY_AUDYSSEY_DYNAMIC_VOLUME_MODE_H": {
+      "label": "Audyssey Dynamic Volume Mode H",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1C",
+          "function": "0x22",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 106 'Audyssey Dynamic Volume Mode H' (OBC 8D D1; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 28 function 34"
+        }
+      ]
+    },
+    "KEY_AUDYSSEY_DYNAMIC_EQ_OFFSET_OFF": {
+      "label": "Audyssey Dynamic EQ Offset Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1C",
+          "function": "0x33",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 107 'Audyssey Dynamic EQ Offset Off' (OBC 8C C1; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 28 function 51"
+        }
+      ]
+    },
+    "KEY_AUDYSSEY_DYNAMIC_EQ_OFFSET_MINUS_5DB": {
+      "label": "Audyssey Dynamic EQ Offset -5dB",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1C",
+          "function": "0x34",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 108 'Audyssey Dynamic EQ Offset -5dB' (OBC 8C B1; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 28 function 52"
+        }
+      ]
+    },
+    "KEY_AUDYSSEY_DYNAMIC_EQ_OFFSET_MINUS_10DB": {
+      "label": "Audyssey Dynamic EQ Offset -10dB",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1C",
+          "function": "0x35",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 109 'Audyssey Dynamic EQ Offset -10dB' (OBC 8C A1; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 28 function 53"
+        }
+      ]
+    },
+    "KEY_AUDYSSEY_DYNAMIC_EQ_OFFSET_MINUS_15DB": {
+      "label": "Audyssey Dynamic EQ Offset -15dB",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x1C",
+          "function": "0x36",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 110 'Audyssey Dynamic EQ Offset -15dB' (OBC 8C 91; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 28 function 54"
+        }
+      ]
+    },
+    "KEY_SLEEP_OFF": {
+      "label": "SLEEP OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x26",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 112 'SLEEP OFF' (OBC 67 F1; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 38 function 0"
+        }
+      ]
+    },
+    "KEY_BAND": {
+      "label": "BAND",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "subdevice": "0x2F",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 113 'BAND' (OBC 43 E3; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 17 subdevice 47 function 1"
+        }
+      ]
+    },
+    "KEY_PRESET_SHIFT": {
+      "label": "PRESET SHIFT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "subdevice": "0x20",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 132 'PRESET SHIFT' (OBC 7F F3; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 17 subdevice 32 function 0"
+        }
+      ]
+    },
+    "KEY_SHIFT_A": {
+      "label": "SHIFT A",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "subdevice": "0x20",
+          "function": "0x1E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 133 'SHIFT A' (OBC 7E 13; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 17 subdevice 32 function 30"
+        }
+      ]
+    },
+    "KEY_SHIFT_B": {
+      "label": "SHIFT B",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "subdevice": "0x20",
+          "function": "0x1F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 134 'SHIFT B' (OBC 7E 03; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 17 subdevice 32 function 31"
+        }
+      ]
+    },
+    "KEY_SHIFT_C": {
+      "label": "SHIFT C",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "subdevice": "0x20",
+          "function": "0x20",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 135 'SHIFT C' (OBC 7D F3; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 17 subdevice 32 function 32"
+        }
+      ]
+    },
+    "KEY_SHIFT_D": {
+      "label": "SHIFT D",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "subdevice": "0x20",
+          "function": "0x21",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 136 'SHIFT D' (OBC 7D E3; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 17 subdevice 32 function 33"
+        }
+      ]
+    },
+    "KEY_SHIFT_E": {
+      "label": "SHIFT E",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "subdevice": "0x20",
+          "function": "0x22",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 137 'SHIFT E' (OBC 7D D3; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 17 subdevice 32 function 34"
+        }
+      ]
+    },
+    "KEY_SHIFT_F": {
+      "label": "SHIFT F",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "subdevice": "0x20",
+          "function": "0x23",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 138 'SHIFT F' (OBC 7D C3; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 17 subdevice 32 function 35"
+        }
+      ]
+    },
+    "KEY_SHIFT_G": {
+      "label": "SHIFT G",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "subdevice": "0x20",
+          "function": "0x24",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 139 'SHIFT G' (OBC 7D B3; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 17 subdevice 32 function 36"
+        }
+      ]
+    },
+    "KEY_CURSOR_UP2": {
+      "label": "Cursor Up2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "subdevice": "0x00",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 140 'Cursor Up2' (OBC FF E3; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 17 subdevice 0 function 1; the upgrade's note: 'sub80'"
+        }
+      ]
+    },
+    "KEY_CURSOR_DOWN2": {
+      "label": "Cursor Down2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "subdevice": "0x00",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 141 'Cursor Down2' (OBC FF E3; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 17 subdevice 0 function 1; the upgrade's note: 'sub81'"
+        }
+      ]
+    },
+    "KEY_CURSOR_LEFT2": {
+      "label": "Cursor Left2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "subdevice": "0x00",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 142 'Cursor Left2' (OBC FF E3; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 17 subdevice 0 function 1; the upgrade's note: 'sub85'"
+        }
+      ]
+    },
+    "KEY_CURSOR_RIGHT2": {
+      "label": "Cursor Right2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "subdevice": "0x00",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 143 'Cursor Right2' (OBC FF E3; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 17 subdevice 0 function 1; the upgrade's note: 'sub86'"
+        }
+      ]
+    },
+    "KEY_CURSOR_ENTER2": {
+      "label": "Cursor Enter2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "subdevice": "0x00",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 144 'Cursor Enter2' (OBC FF E3; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 17 subdevice 0 function 1; the upgrade's note: 'sub87'"
+        }
+      ]
+    },
+    "KEY_RETURN2": {
+      "label": "RETURN2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "subdevice": "0x00",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 145 'RETURN2' (OBC FF E3; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 17 subdevice 0 function 1; the upgrade's note: 'sub83'"
+        }
+      ]
+    },
+    "KEY_RT": {
+      "label": "RT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "subdevice": "0x28",
+          "function": "0x28",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 146 'RT' (OBC 5D 73; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 17 subdevice 40 function 40; the upgrade's note: 'sub120'"
+        }
+      ]
+    },
+    "KEY_RDS_SLASH_SEARCH": {
+      "label": "RDS/SEARCH",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "subdevice": "0x38",
+          "function": "0x3C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 147 'RDS/SEARCH' (OBC 1C 33; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 17 subdevice 56 function 60; the upgrade's note: 'sub120'"
+        }
+      ]
+    },
+    "KEY_NETWORK_DMP_REPEAT_1": {
+      "label": "Network(DMP)\\: Repeat 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "subdevice": "0x00",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz_NR1402.rmdu function 148 'Network(DMP)\\: Repeat 1' (OBC FF C1; RC-5/5x Combo, parms 16 0 17 0 28 0 16 1): RC5x device 16 subdevice 0 function 3; the upgrade's note: 'system27sub29'"
+        }
+      ]
+    }
+  }
+}

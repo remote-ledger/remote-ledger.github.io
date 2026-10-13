@@ -1,0 +1,80 @@
+{
+  "manufacturer": "Marantz",
+  "model": "ES-7001 [RC5]",
+  "aliases": [],
+  "controls": [
+    "Marantz ES-7001"
+  ],
+  "protocol": {
+    "name": "RC5",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_MODE": {
+      "label": "Mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0B",
+          "function": "0x25",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz ES-7001.rmdu function 7 'Mode' (OBC 14 68; RC-5/5x Combo, parms 11 0 11 0 11 0 11 0): RC5 device 11 function 37"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "Mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0B",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz ES-7001.rmdu function 8 'Mute' (OBC 14 C8; RC-5/5x Combo, parms 11 0 11 0 11 0 11 0): RC5 device 11 function 13"
+        }
+      ]
+    },
+    "KEY_POWERTOGGLE": {
+      "label": "PowerToggle",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0B",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz ES-7001.rmdu function 9 'PowerToggle' (OBC 14 CC; RC-5/5x Combo, parms 11 0 11 0 11 0 11 0): RC5 device 11 function 12"
+        }
+      ]
+    },
+    "KEY_VOLUMEDOWN": {
+      "label": "VolumeDown",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0B",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz ES-7001.rmdu function 10 'VolumeDown' (OBC 14 B8; RC-5/5x Combo, parms 11 0 11 0 11 0 11 0): RC5 device 11 function 17"
+        }
+      ]
+    },
+    "KEY_VOLUMEUP": {
+      "label": "VolumeUp",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0B",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Marantz ES-7001.rmdu function 11 'VolumeUp' (OBC 14 BC; RC-5/5x Combo, parms 11 0 11 0 11 0 11 0): RC5 device 11 function 16"
+        }
+      ]
+    }
+  }
+}

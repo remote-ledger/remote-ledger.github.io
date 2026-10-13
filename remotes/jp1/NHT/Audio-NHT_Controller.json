@@ -1,0 +1,1003 @@
+{
+  "manufacturer": "NHT",
+  "model": "Controller",
+  "aliases": [],
+  "controls": [
+    "NHT Controller"
+  ],
+  "protocol": {
+    "name": "RC5",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER_TOGGLE": {
+      "label": "Power Toggle",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 0 'Power Toggle' (OBC 0F CC; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 12"
+        }
+      ]
+    },
+    "KEY_POWER_ON": {
+      "label": "Power On",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x23",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 1 'Power On' (OBC 0F 70; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 35"
+        }
+      ]
+    },
+    "KEY_POWER_OFF": {
+      "label": "Power Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x22",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 2 'Power Off' (OBC 0F 74; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 34"
+        }
+      ]
+    },
+    "KEY_SOURCE_1": {
+      "label": "Source 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 3 'Source 1' (OBC 0F F8; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 1"
+        }
+      ]
+    },
+    "KEY_SOURCE_2": {
+      "label": "Source 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 4 'Source 2' (OBC 0F F4; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 2"
+        }
+      ]
+    },
+    "KEY_SOURCE_3": {
+      "label": "Source 3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 5 'Source 3' (OBC 0F F0; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 3"
+        }
+      ]
+    },
+    "KEY_SOURCE_4": {
+      "label": "Source 4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 6 'Source 4' (OBC 0F EC; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 4"
+        }
+      ]
+    },
+    "KEY_SOURCE_5": {
+      "label": "Source 5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 7 'Source 5' (OBC 0F E8; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 5"
+        }
+      ]
+    },
+    "KEY_SOURCE_6": {
+      "label": "Source 6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 8 'Source 6' (OBC 0F E4; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 6"
+        }
+      ]
+    },
+    "KEY_SOURCE_7": {
+      "label": "Source 7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 9 'Source 7' (OBC 0F E0; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 7"
+        }
+      ]
+    },
+    "KEY_SOURCE_8": {
+      "label": "Source 8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 10 'Source 8' (OBC 0F DC; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 8"
+        }
+      ]
+    },
+    "KEY_SOURCE_9": {
+      "label": "Source 9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 11 'Source 9' (OBC 0F D8; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 9"
+        }
+      ]
+    },
+    "KEY_SOURCE_10": {
+      "label": "Source 10",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 12 'Source 10' (OBC 0F D4; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 10"
+        }
+      ]
+    },
+    "KEY_DIRECT": {
+      "label": "Direct",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x43",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 13 'Direct' (OBC 4F F0; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 67"
+        }
+      ]
+    },
+    "KEY_MOVIE": {
+      "label": "Movie",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x44",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 14 'Movie' (OBC 4F EC; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 68"
+        }
+      ]
+    },
+    "KEY_MUSIC": {
+      "label": "Music",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x45",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 15 'Music' (OBC 4F E8; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 69"
+        }
+      ]
+    },
+    "KEY_GAMES": {
+      "label": "Games",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x46",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 16 'Games' (OBC 4F E4; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 70"
+        }
+      ]
+    },
+    "KEY_VOL_UP": {
+      "label": "vol up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 17 'vol up' (OBC 0F BC; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 16"
+        }
+      ]
+    },
+    "KEY_VOL_DOWN": {
+      "label": "vol down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 18 'vol down' (OBC 0F B8; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 17"
+        }
+      ]
+    },
+    "KEY_MUTE_TOGGLE": {
+      "label": "mute toggle",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 19 'mute toggle' (OBC 0F C8; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 13"
+        }
+      ]
+    },
+    "KEY_MUTE_ON": {
+      "label": "Mute On",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x6B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 20 'Mute On' (OBC 4F 50; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 107"
+        }
+      ]
+    },
+    "KEY_MUTE_OFF": {
+      "label": "Mute Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x6C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 21 'Mute Off' (OBC 4F 4C; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 108"
+        }
+      ]
+    },
+    "KEY_TUNE_UP": {
+      "label": "Tune up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x2B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 22 'Tune up' (OBC 0F 50; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 43"
+        }
+      ]
+    },
+    "KEY_TUNE_DOWN": {
+      "label": "Tune down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x2C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 23 'Tune down' (OBC 0F 4C; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 44"
+        }
+      ]
+    },
+    "KEY_DYN": {
+      "label": "Dyn",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x3E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 24 'Dyn' (OBC 0F 04; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 62"
+        }
+      ]
+    },
+    "KEY_MENU": {
+      "label": "menu",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x52",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 25 'menu' (OBC 4F B4; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 82"
+        }
+      ]
+    },
+    "KEY_EXIT": {
+      "label": "exit",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x53",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 26 'exit' (OBC 4F B0; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 83"
+        }
+      ]
+    },
+    "KEY_BAND": {
+      "label": "Band",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x2D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 27 'Band' (OBC 0F 48; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 45"
+        }
+      ]
+    },
+    "KEY_UP_ARROW": {
+      "label": "up arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 28 'up arrow' (OBC 4F BC; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 80"
+        }
+      ]
+    },
+    "KEY_DOWN_ARROW": {
+      "label": "down arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x51",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 29 'down arrow' (OBC 4F B8; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 81"
+        }
+      ]
+    },
+    "KEY_LEFT_ARROW": {
+      "label": "left arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x55",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 30 'left arrow' (OBC 4F A8; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 85"
+        }
+      ]
+    },
+    "KEY_RIGHT_ARROW": {
+      "label": "right arrow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x56",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 31 'right arrow' (OBC 4F A4; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 86"
+        }
+      ]
+    },
+    "KEY_SELECT": {
+      "label": "select",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x57",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 32 'select' (OBC 4F A0; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 87"
+        }
+      ]
+    },
+    "KEY_ZONE_CONTROL": {
+      "label": "Zone Control",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x3B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 33 'Zone Control' (OBC 0F 10; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 59"
+        }
+      ]
+    },
+    "KEY_STATUS": {
+      "label": "Status",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x54",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 34 'Status' (OBC 4F AC; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 84"
+        }
+      ]
+    },
+    "KEY_TRIM_PLUS": {
+      "label": "Trim +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x66",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 35 'Trim +' (OBC 4F 64; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 102"
+        }
+      ]
+    },
+    "KEY_TRIM_MINUS": {
+      "label": "Trim -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x67",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 36 'Trim -' (OBC 4F 60; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 103"
+        }
+      ]
+    },
+    "KEY_TRIM_SELECT": {
+      "label": "Trim Select",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x68",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 37 'Trim Select' (OBC 4F 5C; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 104"
+        }
+      ]
+    },
+    "KEY_MODE_PLUS": {
+      "label": "Mode +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x20",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 38 'Mode +' (OBC 0F 7C; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 32"
+        }
+      ]
+    },
+    "KEY_MODE_MINUS": {
+      "label": "Mode -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x21",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 39 'Mode -' (OBC 0F 78; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 33"
+        }
+      ]
+    },
+    "KEY_TUNER_PRESET_1": {
+      "label": "Tuner Preset 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x5B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 40 'Tuner Preset 1' (OBC 4F 90; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 91"
+        }
+      ]
+    },
+    "KEY_TUNER_PRESET_2": {
+      "label": "Tuner Preset 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x5C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 41 'Tuner Preset 2' (OBC 4F 8C; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 92"
+        }
+      ]
+    },
+    "KEY_TUNER_PRESET_3": {
+      "label": "Tuner Preset 3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x5D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 42 'Tuner Preset 3' (OBC 4F 88; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 93"
+        }
+      ]
+    },
+    "KEY_TUNER_PRESET_4": {
+      "label": "Tuner Preset 4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x5E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 43 'Tuner Preset 4' (OBC 4F 84; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 94"
+        }
+      ]
+    },
+    "KEY_TUNER_PRESET_5": {
+      "label": "Tuner Preset 5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x5F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 44 'Tuner Preset 5' (OBC 4F 80; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 95"
+        }
+      ]
+    },
+    "KEY_TUNER_PRESET_6": {
+      "label": "Tuner Preset 6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x60",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 45 'Tuner Preset 6' (OBC 4F 7C; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 96"
+        }
+      ]
+    },
+    "KEY_TUNER_PRESET_7": {
+      "label": "Tuner Preset 7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x61",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 46 'Tuner Preset 7' (OBC 4F 78; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 97"
+        }
+      ]
+    },
+    "KEY_TUNER_PRESET_8": {
+      "label": "Tuner Preset 8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x62",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 47 'Tuner Preset 8' (OBC 4F 74; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 98"
+        }
+      ]
+    },
+    "KEY_TUNER_PRESET_9": {
+      "label": "Tuner Preset 9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x63",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 48 'Tuner Preset 9' (OBC 4F 70; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 99"
+        }
+      ]
+    },
+    "KEY_TUNER_PRESET_10": {
+      "label": "Tuner Preset 10",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x64",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 49 'Tuner Preset 10' (OBC 4F 6C; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 16 function 100"
+        }
+      ]
+    },
+    "KEY_BASS_PLUS": {
+      "label": "Bass +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1F",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 50 'Bass +' (OBC 00 A4; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 31 function 22"
+        }
+      ]
+    },
+    "KEY_BASS_MINUS": {
+      "label": "Bass -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1F",
+          "function": "0x17",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 51 'Bass -' (OBC 00 A0; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 31 function 23"
+        }
+      ]
+    },
+    "KEY_TREBLE_PLUS": {
+      "label": "Treble +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1F",
+          "function": "0x18",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 52 'Treble +' (OBC 00 9C; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 31 function 24"
+        }
+      ]
+    },
+    "KEY_TREBLE_MINUS": {
+      "label": "Treble -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1F",
+          "function": "0x19",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 53 'Treble -' (OBC 00 98; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 31 function 25"
+        }
+      ]
+    },
+    "KEY_CENTER_PLUS": {
+      "label": "Center +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1F",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 54 'Center +' (OBC 00 94; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 31 function 26"
+        }
+      ]
+    },
+    "KEY_CENTER_MINUS": {
+      "label": "Center -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1F",
+          "function": "0x1B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 55 'Center -' (OBC 00 90; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 31 function 27"
+        }
+      ]
+    },
+    "KEY_SURROUND_PLUS": {
+      "label": "Surround +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1F",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 56 'Surround +' (OBC 00 B4; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 31 function 18"
+        }
+      ]
+    },
+    "KEY_SURROUND_MINUS": {
+      "label": "Surround -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1F",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 57 'Surround -' (OBC 00 B0; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 31 function 19"
+        }
+      ]
+    },
+    "KEY_SUB_PLUS": {
+      "label": "Sub +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1F",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 58 'Sub +' (OBC 00 AC; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 31 function 20"
+        }
+      ]
+    },
+    "KEY_SUB_MINUS": {
+      "label": "Sub -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1F",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 59 'Sub -' (OBC 00 A8; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 31 function 21"
+        }
+      ]
+    },
+    "KEY_ZONE_SRC1": {
+      "label": "Zone SRC1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x13",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 61 'Zone SRC1' (OBC 0C F8; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 19 function 1"
+        }
+      ]
+    },
+    "KEY_ZONE_SRC2": {
+      "label": "Zone SRC2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x13",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 62 'Zone SRC2' (OBC 0C F4; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 19 function 2"
+        }
+      ]
+    },
+    "KEY_ZONE_SRC3": {
+      "label": "Zone SRC3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x13",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 63 'Zone SRC3' (OBC 0C F0; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 19 function 3"
+        }
+      ]
+    },
+    "KEY_ZONE_SRC4": {
+      "label": "Zone SRC4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x13",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 64 'Zone SRC4' (OBC 0C EC; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 19 function 4"
+        }
+      ]
+    },
+    "KEY_ZONE_SRC5": {
+      "label": "Zone SRC5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x13",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 65 'Zone SRC5' (OBC 0C E8; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 19 function 5"
+        }
+      ]
+    },
+    "KEY_ZONE_SRC6": {
+      "label": "Zone SRC6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x13",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 66 'Zone SRC6' (OBC 0C E4; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 19 function 6"
+        }
+      ]
+    },
+    "KEY_ZONE_PWR_TOGGLE": {
+      "label": "Zone PWR toggle",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x13",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 67 'Zone PWR toggle' (OBC 0C CC; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 19 function 12"
+        }
+      ]
+    },
+    "KEY_ZONE_MUTE": {
+      "label": "Zone Mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x13",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 68 'Zone Mute' (OBC 0C C8; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 19 function 13"
+        }
+      ]
+    },
+    "KEY_ZONE_POWER_OFF": {
+      "label": "Zone Power Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x13",
+          "function": "0x22",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 69 'Zone Power Off' (OBC 0C 74; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 19 function 34"
+        }
+      ]
+    },
+    "KEY_ZONE_POWER_ON": {
+      "label": "Zone Power On",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x13",
+          "function": "0x23",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 70 'Zone Power On' (OBC 0C 70; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 19 function 35"
+        }
+      ]
+    },
+    "KEY_ZONE_SOURCE_PLUS": {
+      "label": "Zone Source +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x13",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 71 'Zone Source +' (OBC 4C BC; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 19 function 80"
+        }
+      ]
+    },
+    "KEY_ZONE_SOURCE_MINUS": {
+      "label": "Zone Source -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x13",
+          "function": "0x51",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 72 'Zone Source -' (OBC 4C B8; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 19 function 81"
+        }
+      ]
+    },
+    "KEY_ZONE_VOL_PLUS": {
+      "label": "Zone Vol +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x13",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 73 'Zone Vol +' (OBC 0C BC; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 19 function 16"
+        }
+      ]
+    },
+    "KEY_ZONE_VOL_MINUS": {
+      "label": "Zone Vol -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x13",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 74 'Zone Vol -' (OBC 0C B8; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 19 function 17"
+        }
+      ]
+    },
+    "KEY_ZONE_MUTE_ON": {
+      "label": "Zone Mute On",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x13",
+          "function": "0x6B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 75 'Zone Mute On' (OBC 4C 50; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 19 function 107"
+        }
+      ]
+    },
+    "KEY_ZNE_MUTE_OFF": {
+      "label": "Zne Mute Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x13",
+          "function": "0x23",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/NHT Controller.rmdu function 76 'Zne Mute Off' (OBC 0C 70; RC-5/5x Combo, parms null 0 null 0 null 0 null 0): RC5 device 19 function 35"
+        }
+      ]
+    }
+  }
+}

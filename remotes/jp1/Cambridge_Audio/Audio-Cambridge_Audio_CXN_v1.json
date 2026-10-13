@@ -1,0 +1,522 @@
+{
+  "manufacturer": "Cambridge_Audio",
+  "model": "CXN",
+  "aliases": [],
+  "controls": [
+    "Cambridge Audio CXN"
+  ],
+  "protocol": {
+    "name": "RC5",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_MUTE_TOGGLE": {
+      "label": "Mute toggle",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Cambridge Audio CXN v1.rmdu function 0 'Mute toggle' (OBC 0F C8; RC-5/5x Combo, parms 16 0 24 0 25 0 null 0): RC5 device 16 function 13"
+        }
+      ]
+    },
+    "KEY_VOLUME_UP": {
+      "label": "Volume up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Cambridge Audio CXN v1.rmdu function 1 'Volume up' (OBC 0F BC; RC-5/5x Combo, parms 16 0 24 0 25 0 null 0): RC5 device 16 function 16"
+        }
+      ]
+    },
+    "KEY_VOLUME_DOWN": {
+      "label": "Volume down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Cambridge Audio CXN v1.rmdu function 2 'Volume down' (OBC 0F B8; RC-5/5x Combo, parms 16 0 24 0 25 0 null 0): RC5 device 16 function 17"
+        }
+      ]
+    },
+    "KEY_POWER_TOGGLE_2": {
+      "label": "Power toggle 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Cambridge Audio CXN v1.rmdu function 3 'Power toggle 2' (OBC 07 F4; RC-5/5x Combo, parms 16 0 24 0 25 0 null 0): RC5 device 24 function 2"
+        }
+      ]
+    },
+    "KEY_MORE": {
+      "label": "More",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Cambridge Audio CXN v1.rmdu function 4 'More' (OBC 07 D8; RC-5/5x Combo, parms 16 0 24 0 25 0 null 0): RC5 device 24 function 9"
+        }
+      ]
+    },
+    "KEY_HOME": {
+      "label": "Home",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Cambridge Audio CXN v1.rmdu function 5 'Home' (OBC 07 CC; RC-5/5x Combo, parms 16 0 24 0 25 0 null 0): RC5 device 24 function 12"
+        }
+      ]
+    },
+    "KEY_UP": {
+      "label": "Up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Cambridge Audio CXN v1.rmdu function 6 'Up' (OBC 07 C8; RC-5/5x Combo, parms 16 0 24 0 25 0 null 0): RC5 device 24 function 13"
+        }
+      ]
+    },
+    "KEY_LEFT": {
+      "label": "Left",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Cambridge Audio CXN v1.rmdu function 7 'Left' (OBC 07 BC; RC-5/5x Combo, parms 16 0 24 0 25 0 null 0): RC5 device 24 function 16"
+        }
+      ]
+    },
+    "KEY_SELECT": {
+      "label": "Select",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Cambridge Audio CXN v1.rmdu function 8 'Select' (OBC 07 B8; RC-5/5x Combo, parms 16 0 24 0 25 0 null 0): RC5 device 24 function 17"
+        }
+      ]
+    },
+    "KEY_RIGHT": {
+      "label": "Right",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Cambridge Audio CXN v1.rmdu function 9 'Right' (OBC 07 B4; RC-5/5x Combo, parms 16 0 24 0 25 0 null 0): RC5 device 24 function 18"
+        }
+      ]
+    },
+    "KEY_DOWN": {
+      "label": "Down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Cambridge Audio CXN v1.rmdu function 10 'Down' (OBC 07 B0; RC-5/5x Combo, parms 16 0 24 0 25 0 null 0): RC5 device 24 function 19"
+        }
+      ]
+    },
+    "KEY_RANDOM": {
+      "label": "Random",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Cambridge Audio CXN v1.rmdu function 11 'Random' (OBC 07 AC; RC-5/5x Combo, parms 16 0 24 0 25 0 null 0): RC5 device 24 function 20"
+        }
+      ]
+    },
+    "KEY_REPEAT": {
+      "label": "Repeat",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Cambridge Audio CXN v1.rmdu function 12 'Repeat' (OBC 07 A8; RC-5/5x Combo, parms 16 0 24 0 25 0 null 0): RC5 device 24 function 21"
+        }
+      ]
+    },
+    "KEY_RETURN": {
+      "label": "Return",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Cambridge Audio CXN v1.rmdu function 13 'Return' (OBC 07 A4; RC-5/5x Combo, parms 16 0 24 0 25 0 null 0): RC5 device 24 function 22"
+        }
+      ]
+    },
+    "KEY_SKIP_LEFT": {
+      "label": "Skip left",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "function": "0x17",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Cambridge Audio CXN v1.rmdu function 14 'Skip left' (OBC 07 A0; RC-5/5x Combo, parms 16 0 24 0 25 0 null 0): RC5 device 24 function 23"
+        }
+      ]
+    },
+    "KEY_PLAY_SLASH_PAUSE": {
+      "label": "Play/pause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "function": "0x18",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Cambridge Audio CXN v1.rmdu function 15 'Play/pause' (OBC 07 9C; RC-5/5x Combo, parms 16 0 24 0 25 0 null 0): RC5 device 24 function 24"
+        }
+      ]
+    },
+    "KEY_SKIP_RIGHT": {
+      "label": "Skip right",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "function": "0x19",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Cambridge Audio CXN v1.rmdu function 16 'Skip right' (OBC 07 98; RC-5/5x Combo, parms 16 0 24 0 25 0 null 0): RC5 device 24 function 25"
+        }
+      ]
+    },
+    "KEY_STOP": {
+      "label": "Stop",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "function": "0x1B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Cambridge Audio CXN v1.rmdu function 17 'Stop' (OBC 07 90; RC-5/5x Combo, parms 16 0 24 0 25 0 null 0): RC5 device 24 function 27"
+        }
+      ]
+    },
+    "KEY_INFO": {
+      "label": "Info",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "function": "0x1C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Cambridge Audio CXN v1.rmdu function 18 'Info' (OBC 07 8C; RC-5/5x Combo, parms 16 0 24 0 25 0 null 0): RC5 device 24 function 28"
+        }
+      ]
+    },
+    "KEY_BLUETOOTH": {
+      "label": "Bluetooth",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "function": "0x1F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Cambridge Audio CXN v1.rmdu function 19 'Bluetooth' (OBC 07 80; RC-5/5x Combo, parms 16 0 24 0 25 0 null 0): RC5 device 24 function 31; the upgrade's note: '\\'"
+        }
+      ]
+    },
+    "KEY_USB_AUDIO": {
+      "label": "USB audio",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "function": "0x20",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Cambridge Audio CXN v1.rmdu function 20 'USB audio' (OBC 07 7C; RC-5/5x Combo, parms 16 0 24 0 25 0 null 0): RC5 device 24 function 32"
+        }
+      ]
+    },
+    "KEY_DIGITAL_1": {
+      "label": "Digital 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "function": "0x23",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Cambridge Audio CXN v1.rmdu function 21 'Digital 1' (OBC 07 70; RC-5/5x Combo, parms 16 0 24 0 25 0 null 0): RC5 device 24 function 35"
+        }
+      ]
+    },
+    "KEY_DIGITAL_2": {
+      "label": "Digital 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "function": "0x24",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Cambridge Audio CXN v1.rmdu function 22 'Digital 2' (OBC 07 6C; RC-5/5x Combo, parms 16 0 24 0 25 0 null 0): RC5 device 24 function 36"
+        }
+      ]
+    },
+    "KEY_1": {
+      "label": "1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "function": "0x39",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Cambridge Audio CXN v1.rmdu function 23 '1' (OBC 07 18; RC-5/5x Combo, parms 16 0 24 0 25 0 null 0): RC5 device 24 function 57"
+        }
+      ]
+    },
+    "KEY_2": {
+      "label": "2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "function": "0x3A",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Cambridge Audio CXN v1.rmdu function 24 '2' (OBC 07 14; RC-5/5x Combo, parms 16 0 24 0 25 0 null 0): RC5 device 24 function 58"
+        }
+      ]
+    },
+    "KEY_3": {
+      "label": "3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "function": "0x3B",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Cambridge Audio CXN v1.rmdu function 25 '3' (OBC 07 10; RC-5/5x Combo, parms 16 0 24 0 25 0 null 0): RC5 device 24 function 59"
+        }
+      ]
+    },
+    "KEY_4": {
+      "label": "4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "function": "0x3C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Cambridge Audio CXN v1.rmdu function 26 '4' (OBC 07 0C; RC-5/5x Combo, parms 16 0 24 0 25 0 null 0): RC5 device 24 function 60"
+        }
+      ]
+    },
+    "KEY_5": {
+      "label": "5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "function": "0x3D",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Cambridge Audio CXN v1.rmdu function 27 '5' (OBC 07 08; RC-5/5x Combo, parms 16 0 24 0 25 0 null 0): RC5 device 24 function 61"
+        }
+      ]
+    },
+    "KEY_6": {
+      "label": "6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "function": "0x3E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Cambridge Audio CXN v1.rmdu function 28 '6' (OBC 07 04; RC-5/5x Combo, parms 16 0 24 0 25 0 null 0): RC5 device 24 function 62"
+        }
+      ]
+    },
+    "KEY_7": {
+      "label": "7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "function": "0x3F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Cambridge Audio CXN v1.rmdu function 29 '7' (OBC 07 00; RC-5/5x Combo, parms 16 0 24 0 25 0 null 0): RC5 device 24 function 63"
+        }
+      ]
+    },
+    "KEY_8": {
+      "label": "8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "function": "0x40",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Cambridge Audio CXN v1.rmdu function 30 '8' (OBC 47 FC; RC-5/5x Combo, parms 16 0 24 0 25 0 null 0): RC5 device 24 function 64"
+        }
+      ]
+    },
+    "KEY_INPUT": {
+      "label": "Input",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x18",
+          "function": "0x78",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Cambridge Audio CXN v1.rmdu function 31 'Input' (OBC 47 1C; RC-5/5x Combo, parms 16 0 24 0 25 0 null 0): RC5 device 24 function 120"
+        }
+      ]
+    },
+    "KEY_POWER_TOGGLE": {
+      "label": "Power toggle",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Cambridge Audio CXN v1.rmdu function 32 'Power toggle' (OBC 06 CC; RC-5/5x Combo, parms 16 0 24 0 25 0 null 0): RC5 device 25 function 12"
+        }
+      ]
+    },
+    "KEY_POWER_ON": {
+      "label": "Power on",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "function": "0x0E",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Cambridge Audio CXN v1.rmdu function 33 'Power on' (OBC 06 C4; RC-5/5x Combo, parms 16 0 24 0 25 0 null 0): RC5 device 25 function 14"
+        }
+      ]
+    },
+    "KEY_POWER_OFF": {
+      "label": "Power off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Cambridge Audio CXN v1.rmdu function 34 'Power off' (OBC 06 C0; RC-5/5x Combo, parms 16 0 24 0 25 0 null 0): RC5 device 25 function 15"
+        }
+      ]
+    },
+    "KEY_LCD_BRIGHT": {
+      "label": "LCD bright",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Cambridge Audio CXN v1.rmdu function 35 'LCD bright' (OBC 06 B4; RC-5/5x Combo, parms 16 0 24 0 25 0 null 0): RC5 device 25 function 18"
+        }
+      ]
+    },
+    "KEY_LCD_DIM": {
+      "label": "LCD dim",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Cambridge Audio CXN v1.rmdu function 36 'LCD dim' (OBC 06 B0; RC-5/5x Combo, parms 16 0 24 0 25 0 null 0): RC5 device 25 function 19"
+        }
+      ]
+    },
+    "KEY_LCD_OFF": {
+      "label": "LCD off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "function": "0x47",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Cambridge Audio CXN v1.rmdu function 37 'LCD off' (OBC 46 E0; RC-5/5x Combo, parms 16 0 24 0 25 0 null 0): RC5 device 25 function 71; the upgrade's note: '\\'"
+        }
+      ]
+    },
+    "KEY_LCD_TOGGLE": {
+      "label": "LCD toggle",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x19",
+          "function": "0x48",
+          "confidence": "plausible",
+          "source": "jp1-device-upgrades@87b0ac0 Audio/Cambridge Audio CXN v1.rmdu function 38 'LCD toggle' (OBC 46 DC; RC-5/5x Combo, parms 16 0 24 0 25 0 null 0): RC5 device 25 function 72; the upgrade's note: '\\'"
+        }
+      ]
+    }
+  }
+}
