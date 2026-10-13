@@ -2,7 +2,7 @@
 
 A manufacturer's table is the best evidence a citation can point to, and it is still imported at
 Plausible (R19.3): the table's word is one source, and a key earns Verified by a second. Each maker
-has a reader (:mod:`.marantz`, :mod:`.anthem`, :mod:`.oppo`, :mod:`.kef`, :mod:`.jvc`, :mod:`.arcam`, :mod:`.cambridge`, :mod:`.hegel`, :mod:`.linn`, :mod:`.simaudio`) over a pinned snapshot of its documents; this module
+has a reader (:mod:`.marantz`, :mod:`.anthem`, :mod:`.oppo`, :mod:`.kef`, :mod:`.jvc`, :mod:`.arcam`, :mod:`.cambridge`, :mod:`.hegel`, :mod:`.linn`, :mod:`.rotel`, :mod:`.simaudio`) over a pinned snapshot of its documents; this module
 runs the readers, writes ``remotes/official/<maker>/`` wholesale and the report.
 """
 
@@ -14,11 +14,11 @@ from typing import Any
 from ..fmt import format_document
 from ..import_common import authored_names as _authored_names
 from ..serialize import dumps
-from . import anthem, arcam, cambridge, hegel, jvc, kef, linn, marantz, oppo, simaudio
+from . import anthem, arcam, cambridge, hegel, jvc, kef, linn, marantz, oppo, rotel, simaudio
 from .common import IMPORT_ROOT, MANIFEST, REPORT, SNAPSHOT, Report, load_snapshot
 
 #: maker -> its reader. A maker is imported when its directory is in the snapshot.
-MAKERS = {"anthem": anthem, "arcam": arcam, "cambridge": cambridge, "hegel": hegel, "jvc": jvc, "kef": kef, "linn": linn, "marantz": marantz, "oppo": oppo, "simaudio": simaudio}
+MAKERS = {"anthem": anthem, "arcam": arcam, "cambridge": cambridge, "hegel": hegel, "jvc": jvc, "kef": kef, "linn": linn, "marantz": marantz, "oppo": oppo, "rotel": rotel, "simaudio": simaudio}
 
 
 def import_tree(root: Path, snapshot: Path, authored: dict[tuple[str, str], str]):
@@ -38,11 +38,13 @@ def import_tree(root: Path, snapshot: Path, authored: dict[tuple[str, str], str]
     return out, report
 
 
-def write_import(root: Path, snapshot: Path | None = None) -> Report:
+def write_import(root: Path, snapshot: Path | None = None, authored: dict[tuple[str, str], str] | None = None) -> Report:
     """Rewrite ``remotes/official/`` wholesale: every ``*.json`` and ``IMPORT.md`` are the
-    importer's; anything else there (``README.md``) is authored and left alone."""
+    importer's; anything else there (``README.md``) is authored and left alone. ``authored`` is the names of the other sources'
+    remotes (by default those of ``root``'s own tree): a name of them that a file would take is renamed or skipped, as the maker's
+    reader says."""
     directory = snapshot if snapshot is not None else root / SNAPSHOT
-    docs, report = import_tree(root, directory, _authored_names(root, IMPORT_ROOT))
+    docs, report = import_tree(root, directory, _authored_names(root, IMPORT_ROOT) if authored is None else authored)
     target_root = root / IMPORT_ROOT
     for stale in sorted(target_root.rglob("*.json")) if target_root.exists() else []:
         if stale.relative_to(root).as_posix() not in docs:
