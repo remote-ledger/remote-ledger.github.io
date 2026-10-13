@@ -17,7 +17,7 @@ silently (SPEC R19, condition 5).
 | Upstream files: skipped: no function decodes | 17 |
 | Upstream files: skipped: no functions | 1 |
 | Upstream files: upgrades | 3,251 |
-| Remotes: imported | 2,933 |
+| Remotes: imported | 2,938 |
 | Remotes: skipped: an authored remote wins | 7 |
 | Keys: imported: Aiwa | 947 |
 | Keys: imported: Denon | 1,791 |
@@ -35,7 +35,7 @@ silently (SPEC R19, condition 5).
 | Keys: imported: Nokia32 | 1,648 |
 | Keys: imported: Panasonic | 4,656 |
 | Keys: imported: Panasonic_Old | 794 |
-| Keys: imported: Pioneer-2Part | 2,287 |
+| Keys: imported: Pioneer-2Part | 2,471 |
 | Keys: imported: Proton | 256 |
 | Keys: imported: RC5 | 6,468 |
 | Keys: imported: RC5x | 472 |
@@ -65,8 +65,8 @@ silently (SPEC R19, condition 5).
 | Keys: skipped: the first byte's low four bits are not the executor's fixed 15 | 1 |
 | Keys: skipped: the flag byte has bits the variant does not use | 1 |
 | Keys: skipped: the function has no OBC bytes of the executor's shape | 59 |
-| Keys: skipped: the function has no single OBC byte | 5,442 |
-| Keys: skipped: the function has no two OBC bytes | 756 |
+| Keys: skipped: the function has no single OBC byte | 5,448 |
+| Keys: skipped: the function has no two OBC bytes | 775 |
 | Keys: skipped: the function sets a bit RC-5 does not use | 1 |
 | Keys: skipped: the high X bit is sent at release, which a form cannot say | 40 |
 | Keys: skipped: the second OBC byte is not 0, which XMP-1 has no place for | 4 |
@@ -88,7 +88,7 @@ silently (SPEC R19, condition 5).
 | Files by ledger protocol: Nokia32 | 39 |
 | Files by ledger protocol: Panasonic | 93 |
 | Files by ledger protocol: Panasonic_Old | 19 |
-| Files by ledger protocol: Pioneer-2Part | 43 |
+| Files by ledger protocol: Pioneer-2Part | 48 |
 | Files by ledger protocol: Proton | 12 |
 | Files by ledger protocol: RC5 | 173 |
 | Files by ledger protocol: RC5x | 10 |
@@ -109,9 +109,9 @@ silently (SPEC R19, condition 5).
 | Files by ledger protocol: XMP-1 | 46 |
 | Files by ledger protocol: XMPff-1 | 16 |
 | Brand taken from: the longest brand of the index that begins the description | 155 |
-| Brand taken from: the master index | 2,669 |
+| Brand taken from: the master index | 2,674 |
 
-## Executors this import does not read (upgrades) (143)
+## Executors this import does not read (upgrades) (141)
 
 | Executor | Files |
 |---|---|
@@ -140,7 +140,6 @@ silently (SPEC R19, condition 5).
 | `Emerson` | 4 |
 | `F12x` | 4 |
 | `Nokia Quad` | 4 |
-| `Pioneer DVD` | 4 |
 | `RC5-7F` | 4 |
 | `Sejin-1-N` | 4 |
 | `Thomson7` | 4 |
@@ -229,7 +228,6 @@ silently (SPEC R19, condition 5).
 | `Panasonic (old-35)` | 1 |
 | `Panasonic2 (LCD-Official)` | 1 |
 | `Pioneer 2CMD` | 1 |
-| `Pioneer DVD2` | 1 |
 | `Pioneer MIX2` | 1 |
 | `Pioneer MIX3` | 1 |
 | `Pioneer Mega MIX` | 1 |
@@ -306,7 +304,7 @@ silently (SPEC R19, condition 5).
 | `Satellite/SonicView SV1000 6131.rmdu` | `remotes/jp1/Sonicview/Satellite-SonicView_SV1000_6131.json` |
 | `TV/VESTEL TV.rmdu` | `remotes/jp1/Vestel/TV-VESTEL_TV.json` |
 
-## Functions skipped (6,970)
+## Functions skipped (6,995)
 
 | File | Function | Reason |
 |---|---|---|
@@ -2511,6 +2509,8 @@ silently (SPEC R19, condition 5).
 | `DVD (Blu-Ray)/Insignia NS-BRDVD3 Blu-ray Player.rmdu` | `#56` | `the function has no single OBC byte` |
 | `DVD (Blu-Ray)/Insignia NS-BRDVD3 Blu-ray Player.rmdu` | `#57` | `the function has no single OBC byte` |
 | `DVD (Blu-Ray)/OppoDigital BD83.rmdu` | `#60` | `the function has no single OBC byte` |
+| `DVD (Blu-Ray)/Pioneer BD-051FD Blu Ray Player.rmdu` | `#49` | `the function has no single OBC byte` |
+| `DVD (Blu-Ray)/Pioneer BD-051FD Blu Ray Player.rmdu` | `#50` | `the function has no single OBC byte` |
 | `DVD (Blu-Ray)/Pioneer BDP-450 BluRay Player.rmdu` | 0 | `the variant is not read (its devices are chosen by more flag bits)` |
 | `DVD (Blu-Ray)/Pioneer BDP-450 BluRay Player.rmdu` | 1 | `the variant is not read (its devices are chosen by more flag bits)` |
 | `DVD (Blu-Ray)/Pioneer BDP-450 BluRay Player.rmdu` | 2 | `the variant is not read (its devices are chosen by more flag bits)` |
@@ -3065,6 +3065,25 @@ silently (SPEC R19, condition 5).
 | `DVD (standard)/Philips_DSX6170.rmdu` | `tv/vcr` | `the function has no single OBC byte` |
 | `DVD (standard)/Philips_DSX6170.rmdu` | `vol down` | `the function has no single OBC byte` |
 | `DVD (standard)/Philips_DSX6170.rmdu` | `vol up` | `the function has no single OBC byte` |
+| `DVD (standard)/Pioneer DV-563AS and DV-588AS DVD Player.rmdu` | `+100` | `the function has no two OBC bytes` |
+| `DVD (standard)/Pioneer DV-563AS and DV-588AS DVD Player.rmdu` | `center` | `the function has no two OBC bytes` |
+| `DVD (standard)/Pioneer DV-563AS and DV-588AS DVD Player.rmdu` | `device button` | `the function has no two OBC bytes` |
+| `DVD (standard)/Pioneer DV-563AS and DV-588AS DVD Player.rmdu` | `eject` | `the function has no two OBC bytes` |
+| `DVD (standard)/Pioneer DV-563AS and DV-588AS DVD Player.rmdu` | `fav/scan` | `the function has no two OBC bytes` |
+| `DVD (standard)/Pioneer DV-563AS and DV-588AS DVD Player.rmdu` | `input toggle` | `the function has no two OBC bytes` |
+| `DVD (standard)/Pioneer DV-563AS and DV-588AS DVD Player.rmdu` | `mute` | `the function has no two OBC bytes` |
+| `DVD (standard)/Pioneer DV-563AS and DV-588AS DVD Player.rmdu` | `pip freeze` | `the function has no two OBC bytes` |
+| `DVD (standard)/Pioneer DV-563AS and DV-588AS DVD Player.rmdu` | `rear` | `the function has no two OBC bytes` |
+| `DVD (standard)/Pioneer DV-563AS and DV-588AS DVD Player.rmdu` | `shift-left` | `the function has no two OBC bytes` |
+| `DVD (standard)/Pioneer DV-563AS and DV-588AS DVD Player.rmdu` | `shift-right` | `the function has no two OBC bytes` |
+| `DVD (standard)/Pioneer DV-563AS and DV-588AS DVD Player.rmdu` | `sleep` | `the function has no two OBC bytes` |
+| `DVD (standard)/Pioneer DV-563AS and DV-588AS DVD Player.rmdu` | `slow` | `the function has no two OBC bytes` |
+| `DVD (standard)/Pioneer DV-563AS and DV-588AS DVD Player.rmdu` | `slow+` | `the function has no two OBC bytes` |
+| `DVD (standard)/Pioneer DV-563AS and DV-588AS DVD Player.rmdu` | `slow-` | `the function has no two OBC bytes` |
+| `DVD (standard)/Pioneer DV-563AS and DV-588AS DVD Player.rmdu` | `surround` | `the function has no two OBC bytes` |
+| `DVD (standard)/Pioneer DV-563AS and DV-588AS DVD Player.rmdu` | `vol down` | `the function has no two OBC bytes` |
+| `DVD (standard)/Pioneer DV-563AS and DV-588AS DVD Player.rmdu` | `vol up` | `the function has no two OBC bytes` |
+| `DVD (standard)/Pioneer DV-563AS and DV-588AS DVD Player.rmdu` | `x2` | `the function has no two OBC bytes` |
 | `DVD (standard)/Pioneer DV-565A VXX2865.rmdu` | 0 | `the variant is not read (its devices are chosen by more flag bits)` |
 | `DVD (standard)/Pioneer DV-565A VXX2865.rmdu` | 1 | `the variant is not read (its devices are chosen by more flag bits)` |
 | `DVD (standard)/Pioneer DV-565A VXX2865.rmdu` | 2 | `the variant is not read (its devices are chosen by more flag bits)` |
@@ -3101,6 +3120,10 @@ silently (SPEC R19, condition 5).
 | `DVD (standard)/Pioneer DV-565A VXX2865.rmdu` | `Zoom` | `the variant is not read (its devices are chosen by more flag bits)` |
 | `DVD (standard)/Pioneer DV-565A VXX2865.rmdu` | `\|<<` | `the variant is not read (its devices are chosen by more flag bits)` |
 | `DVD (standard)/Pioneer DV-565A VXX2865.rmdu` | `\|\|` | `the variant is not read (its devices are chosen by more flag bits)` |
+| `DVD (standard)/Pioneer Improved DVD0571 setup.rmdu` | `enter` | `the function has no single OBC byte` |
+| `DVD (standard)/Pioneer Improved DVD0571 setup.rmdu` | `mute` | `the function has no single OBC byte` |
+| `DVD (standard)/Pioneer Improved DVD0571 setup.rmdu` | `vol down` | `the function has no single OBC byte` |
+| `DVD (standard)/Pioneer Improved DVD0571 setup.rmdu` | `vol up` | `the function has no single OBC byte` |
 | `DVD (standard)/Polaroid PDV-0700 DVD player.rmdu` | `channel down` | `the function has no single OBC byte` |
 | `DVD (standard)/Polaroid PDV-0700 DVD player.rmdu` | `channel up` | `the function has no single OBC byte` |
 | `DVD (standard)/Polaroid PDV-0700 DVD player.rmdu` | `device button` | `the function has no single OBC byte` |
