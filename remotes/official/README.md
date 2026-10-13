@@ -8,11 +8,13 @@ import must meet, and DESIGN.md section 29 describes how this one meets them.
   command charts (<https://www.marantz.com/>, the Archive pages of each model), **Anthem's** MRX and AVM
   IR hex sheet (<https://www.anthemav.com/>) and **Oppo's** remote code workbooks for its Blu-ray and Ultra HD
   players (Oppo's download host is gone, so they are the Wayback Machine's copies of
-  `download.oppodigital.com`, DESIGN.md section 31). They are the makers' documents, not a third party's
+  `download.oppodigital.com`, DESIGN.md section 31) and **KEF's** one-page IR code sheets for its LS50 Wireless,
+  LS50 Wireless II, LS60 Wireless, LSX, LSX II and XIO (PDFs on <https://assets.kef.com/> and the
+  product pages of <https://www.kef.com/>, DESIGN.md section 62). They are the makers' documents, not a third party's
   compilation, and they are still imported at Plausible: a manufacturer's word is one source (R19.3).
 - **The pin:** a manufacturer's page is not a repository, so `sources/official/<maker>/` holds each document
   as the server sent it, the sheets the importer reads converted to CSV by
-  `tools/official_sheets_to_csv.py`, and a `MANIFEST.json` with each document's URL, size and SHA-256,
+  `tools/official_sheets_to_csv.py` (a PDF page is its lines of text), and a `MANIFEST.json` with each document's URL, size and SHA-256,
   each CSV's source and SHA-256, and the retrieval date. The importer refuses a file whose hash differs, and
   every citation names the first eight hex digits of its document's hash.
 - **Licence:** none recorded. A manufacturer's table of the codes its product accepts is a table of reference
@@ -30,5 +32,8 @@ against its own Pronto hex**. A key the sheet contradicts itself on is Untested 
 from the hex column of each of a player's three code sets (`BDP-103`, `BDP-103 [code set 2]`...), **checked against
 the decimal column, the TSU3000 string and the classic Pronto hex**: where the signal itself disagrees the key is
 Untested, and where only a derived column has a typo (seven rows) it stays Plausible and the citation says so.
+KEF's are NEC1 too, one file a product (`LSX II`, `XIO`): each sheet gives a factory code (`0x01`) and a function code
+for each key, **in the other bit order than the ledger's NEC1** (the device is `0x80` and `0x40` is the function `0x02`),
+which the IR Blaster database's KEF remote confirms for the eight codes it holds.
 
 `IMPORT.md` lists everything a document holds that does not become a key, with the reason.

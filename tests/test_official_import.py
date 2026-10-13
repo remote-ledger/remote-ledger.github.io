@@ -11,7 +11,7 @@ from pathlib import Path
 import pytest
 
 from remote_ledger.errors import ValidationError
-from remote_ledger.official import anthem, marantz, oppo
+from remote_ledger.official import anthem, kef, marantz, oppo
 from remote_ledger.official import importer as oi
 from remote_ledger.official.common import MANIFEST, Report, load_snapshot
 from remote_ledger.serialize import load
@@ -24,7 +24,7 @@ SNAPSHOT = ROOT / oi.SNAPSHOT
 
 
 def test_every_document_and_csv_is_the_one_the_manifest_pins():
-    for maker, retrieved in (("marantz", "2026-10-08"), ("anthem", "2026-10-08"), ("oppo", "2026-10-09")):
+    for maker, retrieved in (("marantz", "2026-10-08"), ("anthem", "2026-10-08"), ("oppo", "2026-10-09"), ("kef", "2026-10-13")):
         snap = load_snapshot(SNAPSHOT / maker)
         assert snap.maker == maker and snap.retrieved == retrieved
         assert snap.documents and snap.sheets
@@ -439,13 +439,13 @@ def test_the_committed_official_import_keeps_r19():
     or Untested, and a citation that names a document the manifest pins, by hash."""
     assert (ROOT / oi.IMPORT_ROOT / "README.md").is_file() and (ROOT / oi.IMPORT_ROOT / oi.REPORT).is_file()
     hashes, dates, snapshots = {}, {}, {}
-    for maker in ("marantz", "anthem", "oppo"):
+    for maker in ("marantz", "anthem", "oppo", "kef"):
         manifest = json.loads((SNAPSHOT / maker / MANIFEST).read_text(encoding="utf-8"))
         for name, entry in manifest["documents"].items():
             hashes[name], dates[name], snapshots[name] = entry["sha256"], manifest["retrieved"], entry.get("snapshot")
     shape = re.compile(r"^(?:marantz\.com archive-downloads|anthemav\.com \(storage\.googleapis\.com/sandbox1-anthemav/an\)"
-                       r"|download\.oppodigital\.com/\w+)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
-                       r"(?:, from the Wayback Machine snapshot (\d{14}))?\) sheet '[^']+' row (\d+) ")
+                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
+                       r"(?:, from the Wayback Machine snapshot (\d{14}))?\) (?:sheet '[^']+'|page \d+) row (\d+) ")
     files = sorted((ROOT / oi.IMPORT_ROOT).rglob("*.json"))
     assert len(files) > 180
     bad = []
@@ -532,3 +532,97 @@ def test_the_models_of_a_workbook_are_the_ones_its_name_gives_and_the_newest_wor
         assert tuple(int(form[k], 16) for k in ("device", "subdevice", "function")) == (*device, 0x1A) and form["confidence"] == "plausible"
     doc = load(oppo_dir / "UDP-203__code_set_2.json")
     assert (doc["model"], doc["controls"], doc["protocol"]) == ("UDP-203 [code set 2]", ["Oppo UDP-203"], {"name": "NEC1", "carrierHz": 38000, "minSends": 1})
+
+
+# --- KEF -------------------------------------------------------------------------------------------------------
+
+
+KEF_HEAD = ["IR Codes for Universal Remote Control", "LS50 Wireless II work with Universal programmable remote control provided that remote",
+            "control manufacturers have implemented KEF IR command codes in their remote controls.",
+            "The following tables list the command codes required.", "Code Format:", "NEC", "Factory Code:", "0x01", "#", "Functions",
+            "Function codes"]
+
+
+def kef_rows(*lines: str) -> list[list[str]]:
+    return [[line] for line in (*KEF_HEAD, *lines)]
+
+
+def test_a_kef_page_is_a_head_and_a_numbered_table_of_rows_with_one_or_two_codes():
+    """A number line starts a row; what is above its first code is its function (a long name may wrap onto two lines); a row
+    may have two codes (the sheets' HDMI); the table ends at the first line after a code that is not a number (a footnote); and
+    a row numbered out of order (the XIO's 18th is printed 28) is kept in its place."""
+    table = kef.parse_page(1, kef_rows(
+        "1", "Power On/Off Toggle ", "0x40", "2", "Source: HDMI ", "0x88", "0x8A", "28", "Favourite (customized in", "KEF Connect app)",
+        "0x99", "*Older firmware versions do not incorporate these function codes", "9", "not a row", "0x11"))
+    assert (table.product, table.code_format, table.factory, table.caption) == ("LS50 Wireless II", "NEC", "0x01", "")
+    assert [(e.number, e.position, e.name, e.codes) for e in table.entries] == [
+        (1, 1, "Power On/Off Toggle", ("0x40",)), (2, 2, "Source: HDMI", ("0x88", "0x8a")),
+        (28, 3, "Favourite (customized in KEF Connect app)", ("0x99",))]
+    two = kef.parse_page(2, [["Table 2: speakers made after LS50W06256 use the following 19"], ["codes to control 19 functions.*"],
+                             ["Code Format:"], ["NEC"], ["Factory Code:"], ["0x01"], ["#"], ["Functions"], ["Function codes"],
+                             ["1"], ["Power"], ["0x40"]])
+    assert two.caption == "Table 2: speakers made after LS50W06256 use the following 19 codes to control 19 functions.*"
+    with pytest.raises(ValueError, match="no 'Code Format:' line"):
+        kef.parse_page(1, [["1"], ["Power"], ["0x40"]])
+    with pytest.raises(ValueError, match="has no function above it"):
+        kef.parse_page(1, kef_rows("1", "0x40"))
+
+
+def test_kefs_bytes_are_the_ledgers_nec1_in_the_other_bit_order():
+    """The sheet's factory code 0x01 is the device 0x80 and its complement 0x7F, and a function code is the function reversed:
+    0x40 is 0x02, 0xA0 is 0x05, 0x58 is 0x1A (the IR Blaster's KEF remote has exactly these, D244)."""
+    table = kef.parse_page(1, kef_rows("1", "Power", "0x40"))
+    assert [kef.read_triple(table, c) for c in ("0x40", "0xa0", "0x58", "0x99")] == [
+        (0x80, 0x7F, 0x02), (0x80, 0x7F, 0x05), (0x80, 0x7F, 0x1A), (0x80, 0x7F, 0x99)]
+    assert kef.rev8(0xD2) == 0x4B and kef.rev8(kef.rev8(0x2A)) == 0x2A
+    other = kef.Table(1, "X", "", "RC5", "0x01", ())
+    assert kef.read_triple(other, "0x40") == "the code format is RC5, not NEC"
+    assert kef.key_names(["Mute", "Mute", "Source: HDMI"]) == ["KEY_MUTE", "KEY_MUTE_2", "KEY_SOURCE_HDMI"]
+
+
+def kef_files() -> dict[str, dict]:
+    return {p.stem: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "kef").glob("*.json"))}
+
+
+def test_the_six_kef_files_are_the_six_sheets_tables_and_every_key_is_the_nec1_frame_of_one_code():
+    """One file to a product, 124 keys in all: the LS50 Wireless's and the LSX's 19, the LS50 Wireless II's, the LSX II's and the
+    LS60 Wireless's 22 (21 rows, the HDMI row having two codes) and the XIO's 20. Every key is NEC1 with device 0x80 and sub device
+    0x7F; the rows the older sheets call Next, Source toggle and Previous are the newer ones' Forward, Next source and Backward."""
+    files = kef_files()
+    assert {m: len(d["keys"]) for m, d in files.items()} == {
+        "LS50_Wireless": 19, "LS50_Wireless_II": 22, "LS60_Wireless": 22, "LSX": 19, "LSX_II": 22, "XIO": 20}
+    for doc in files.values():
+        assert doc["manufacturer"] == "KEF" and doc["protocol"]["name"] == "NEC1" and doc["aliases"] == []
+        for spec in doc["keys"].values():
+            (form,) = spec["forms"]
+            assert (form["type"], form["confidence"], form["device"], form["subdevice"]) == ("irp", "plausible", "0x80", "0x7F")
+    xio = {s["label"]: s["forms"][0]["function"] for s in files["XIO"]["keys"].values()}
+    assert xio["Favourite (customized in KEF Connect app)"] == "0x99" and xio["EQ1 (customized in KEF Connect app)"] == "0xEE"
+    assert xio["EQ2 (customized in KEF Connect app)"] == "0xAA" and "Source: AUX" not in xio
+    hdmi = [(s["label"], s["forms"][0]["function"]) for s in files["LSX_II"]["keys"].values() if "HDMI" in s["label"]]
+    assert hdmi == [("Source: HDMI", "0x11"), ("Source: HDMI (second code)", "0x51")]
+
+
+def test_the_kef_sheets_agree_with_each_other_and_a_code_means_one_function_in_all_of_them():
+    """Six documents written over four years say the same thing: grouping every key by its function code, the labels differ only
+    in case and spacing, except the three pairs the older sheets (LS50 Wireless, LSX) and the newer ones name differently."""
+    names: dict[str, dict[str, set[str]]] = {}
+    for model, doc in kef_files().items():
+        for spec in doc["keys"].values():
+            label = re.sub(r"[^a-z0-9]", "", spec["label"].lower())
+            names.setdefault(spec["forms"][0]["function"], {}).setdefault(label, set()).add(model)
+    differing = {code: sorted(labels) for code, labels in names.items() if len(labels) > 1}
+    assert differing == {"0x1A": ["nextsource", "sourcetoggle"], "0x4A": ["forward", "next"], "0x4B": ["backward", "previous"]}
+    assert len(names) == 26
+
+
+def test_the_ir_blasters_kef_remote_has_eight_codes_and_all_eight_are_in_every_kef_sheet():
+    """An independent source: the IR Blaster database's KEF remote (a SwiftRemote capture or dump) holds eight keys of NEC1 device
+    0x80, and **each is a code of each of the six sheets**, read with the bit order this import uses (0x40 is 0x02): the bit order
+    is what this checks, since the sheets' 0x40 and the IR Blaster's 0x02 are the same byte."""
+    doc = load(ROOT / "remotes" / "irblaster" / "KEF" / "6889-NEC1.json")
+    codes = {(f["device"], f["subdevice"], f["function"]) for spec in doc["keys"].values() for f in spec["forms"]}
+    assert len(codes) == 8 and {c[0] for c in codes} == {"0x80"}
+    for model, kef_doc in kef_files().items():
+        ours = {(f["device"], f["subdevice"], f["function"]) for spec in kef_doc["keys"].values() for f in spec["forms"]}
+        assert codes <= ours, model

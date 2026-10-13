@@ -7,7 +7,7 @@ size, SHA-256, the retrieval date (today: do not pass --date) and the server's `
 (and, for a copy from the Wayback Machine, the address and snapshot it was archived from). Run it, then
 ``tools/official_sheets_to_csv.py <maker>`` for the spreadsheets, review the diff, and import.
 
-    python3 tools/fetch_official.py marantz|anthem|oppo
+    python3 tools/fetch_official.py marantz|anthem|oppo|kef
 """
 
 from __future__ import annotations
@@ -47,6 +47,20 @@ DOCUMENTS = {
         ("UDP-203_Remote_Code_v1.2.xls",
          "https://web.archive.org/web/20251211233638id_/http://download.oppodigital.com/UDP203/UDP-203_Remote_Code_v1.2.xls", None),
     ],
+    # KEF's one-page IR code sheets, four from its own asset host and two (the LSX II and the XIO, which KEF
+    # links from the product page) from the image host its product pages use, whose URLs carry a 40-digit hex id.
+    "kef": [
+        ("LS50Wireless-IRcode-INT.pdf", "https://assets.kef.com/pdf_doc/ls50w/LS50Wireless-IRcode-INT.pdf", None),
+        ("LS50WII_IR-Codes-for-Universal-Remote-Control.pdf",
+         "https://assets.kef.com/pdf_doc/LS50WII/IR-Codes-for-Universal-Remote-Control.pdf", None),
+        ("LS60W_IR_Codes_for_Universal_Remote_Control.pdf",
+         "https://assets.kef.com/product-support/ls60-wireless/LS60W_IR_Codes_for_Universal_Remote_Control.pdf", None),
+        ("LSX-IRcode-INT.pdf", "https://assets.kef.com/pdf_doc/LSX/LSX-IRcode-INT.pdf", None),
+        ("LSX-II_IR-Codes-for-Universal-Remote-Control.pdf",
+         "https://images.salsify.com/image/upload/s--X_6hTA78--/3aa7ccb467cc8144a9e09034f2dd27fa5ddee5a6.pdf", None),
+        ("XIO_IR-Command-Codes-for-Universal-Remote-Control.pdf",
+         "https://images.salsify.com/image/upload/s--cq1M8mR1--/c8d2b757680914060ac95213150814ec7b4fdc2d.pdf", None),
+    ],
     "anthem": [
         ("AVM-MRXx40-IR-hex-20251202185749500.xlsx",
          "https://storage.googleapis.com/sandbox1-anthemav/an/AVM-MRXx40-IR-hex-20251202185749500.xlsx", None),
@@ -80,6 +94,8 @@ def main(argv: list[str] | None = None) -> int:
             data = zipfile.ZipFile(__import__("io").BytesIO(data)).read(member)
         if name.endswith(".xls") and not data.startswith(b"\xd0\xcf\x11\xe0"):
             raise SystemExit(f"{name}: {url} did not answer with a spreadsheet ({data[:40]!r}); nothing was pinned")
+        if name.endswith(".pdf") and not data.startswith(b"%PDF"):
+            raise SystemExit(f"{name}: {url} did not answer with a PDF ({data[:40]!r}); nothing was pinned")
         (target / name).write_bytes(data)
         entry = {"url": url, "bytes": len(data), "sha256": hashlib.sha256(data).hexdigest()}
         archived = WAYBACK.match(url)

@@ -15,8 +15,8 @@ sources have been imported under SPEC R19:
 - **The JP1 device upgrades** of its forum: 2,938 files, 116,042 keys, read for
   fifty-eight executors (DESIGN §28, §32, §33, §34, §35, §36, §39, §42, §44, §46, §48, §49, §51, §53, §56, §59, §61).
 - **Manufacturers' own IR tables**: Marantz's AV receiver charts, Anthem's IR
-  hex sheet and Oppo's remote code workbooks, 308 files, 34,428 keys (DESIGN
-  §29, §31, §58, §60).
+  hex sheet, Oppo's remote code workbooks and KEF's IR code sheets, 314 files,
+  34,552 keys (DESIGN §29, §31, §58, §60, §62).
 
 SPEC v0.11 makes growing coverage from every source whose licence permits
 it the standing goal, with no fixed list of sources (DESIGN §8, Phase 8).
@@ -59,12 +59,13 @@ Land it in two PRs, code and then data.
       repository.
 - [ ] **Data of other makers or sites whose licence is unclear**: import it into
       the private repository first, so that it is never in this one's history.
-- [ ] **The other makers' tables**: Arcam (RC-5 tables in PDFs), KEF (NEC, one
-      page), T+A (about 150 Pronto codes), JVC (the projectors' long hex, 37
-      pages) and Cambridge Audio (PDFs through the Wayback Machine). Each is a
-      document pinned by hash as D123 does it, and a PDF needs a reader of its
-      own. Kaleidescape's PDF says "All rights reserved": a source of that
-      kind goes to the private repository (D130).
+- [ ] **The other makers' tables**: Arcam (RC-5 tables in PDFs), T+A (about 150
+      Pronto codes), JVC (the projectors' long hex, 37 pages) and Cambridge Audio
+      (PDFs through the Wayback Machine). Each is a document pinned by hash as D123
+      does it; a PDF is read as the lines of text of its pages (KEF's was the first,
+      D243), which suits a short table and not a long one. Kaleidescape's PDF
+      says "All rights reserved": a source of that kind goes to the private
+      repository (D130).
 - [ ] **Marantz's direct-access sheets** (DESIGN D126): volume level, preset
       and channel commands are RC-5 with an extension byte, and so are 1,034
       rows of the charts the import counts and does not use. `RC5x` is
