@@ -5,7 +5,7 @@ LinnDocs, Linn's support wiki, has a page ``RC5 Codes``: "the current list of RC
 codes against the three device addresses the products answer to: the amplifier 0x10 (16), the CD 0x14 (20) and the DVD 0x19 (25)**,
 each cell the name of what that code does at that address (``Zero``, ``Volume +``, ``Skip +``), with notes under it (``Held Function:
 Scroll Metadata``, ``Linn DSM - HDMI2``, ``Reserved (REM019)``) and a ``.`` where the address has nothing. A second document, a
-one-page PDF, gives the Pronto hex of 50 of the amplifier's codes ("untested - derived via MAKEHEX").
+one-page PDF gives the Pronto hex of the amplifier's 51 codes ("untested - derived via MAKEHEX").
 
 A key is the ledger's ``RC5``: the address the device and the command the function. **One file for each address** (``DS/DSM Amplifier``,
 ``DS/DSM CD`` and ``DS/DSM DVD``). A cell's first line is the key's label, brackets removed (``[Direct Source PHONO]``); a cell that
