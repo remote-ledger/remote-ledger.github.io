@@ -1224,3 +1224,18 @@ def test_the_ir_blasters_linn_rc5_remotes_send_the_codes_the_wiki_table_lists():
                 disagree += 1
     assert (remotes, total, hit, agree, disagree) == (3, 125, 64, 30, 4)
 
+
+def test_the_linn_licence_is_the_wikis_general_disclaimer_and_it_is_pinned_whole():
+    """LinnDocs' disclaimer grants "a limited license to copy anything from this site" and says there is no agreement "beyond the GNU
+    Free Documentation License (GFDL)": the first copyleft grant among the manufacturers' tables, so the page, the disclaimer and the
+    PDF are kept whole and the bundle's notices name it."""
+    snapshot = oi.load_snapshot(SNAPSHOT / "linn")
+    assert sorted(snapshot.documents) == ["LinnDocs_General_disclaimer.html", "Linn_DS-DSM_Pronto_codes.pdf", "RC5_Codes.html"]
+    text = (SNAPSHOT / "linn" / "LinnDocs_General_disclaimer.html").read_text(encoding="utf-8")
+    assert "limited license to copy anything from this site" in text and "GNU Free Documentation License (GFDL)" in text
+    page = (SNAPSHOT / "linn" / "RC5_Codes.html").read_text(encoding="utf-8")
+    assert "LinnDocs:General_disclaimer" in page and "This table details the current list of RC5 codes supported by Linn" in page
+    from remote_ledger.bundle import notices
+
+    assert "GNU Free Documentation License" in notices.FACTS["official"]["note"]
+
