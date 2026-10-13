@@ -80,9 +80,13 @@ FACTS: dict[str, dict[str, Any]] = {
         "kind": "none",
         "upstream_url": "https://www.marantz.com/",
         "note": "Manufacturers' own IR code tables, as they publish them (Marantz's command "
-                "charts, Anthem's IR hex sheet, Oppo's remote code workbooks, KEF's IR code sheets): tables of "
+                "charts, Anthem's IR hex sheet, Oppo's remote code workbooks, KEF's IR code sheets, "
+                "JVC's projector IR emulation guide): tables of "
                 "reference remote codes, which the repository records no licence for "
-                "(DESIGN D110). Every key cites the document, its checksum and the row.",
+                "(DESIGN D110). JVC's guide (2012 version 3.0, (c) 2012 JVC, by Dale McWilliams of "
+                "JVC Consumer A/V Group) says it may be distributed freely as long as the author and "
+                "copyright information remain intact; it is kept whole in sources/official/jvc/. "
+                "Every key cites the document, its checksum and the row.",
     },
     "irblaster": {
         "kind": "inherited",

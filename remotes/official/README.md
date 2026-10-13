@@ -10,7 +10,9 @@ import must meet, and DESIGN.md section 29 describes how this one meets them.
   players (Oppo's download host is gone, so they are the Wayback Machine's copies of
   `download.oppodigital.com`, DESIGN.md section 31) and **KEF's** one-page IR code sheets for its LS50 Wireless,
   LS50 Wireless II, LS60 Wireless, LSX, LSX II and XIO (PDFs on <https://assets.kef.com/> and the
-  product pages of <https://www.kef.com/>, DESIGN.md section 62). They are the makers' documents, not a third party's
+  product pages of <https://www.kef.com/>, DESIGN.md section 62) and **JVC's** infrared remote control command emulation
+  guide (long hex format) for its D-ILA projectors (DLA-HD, X and RS series, <https://support.jvc.com/>, DESIGN.md
+  section 63). They are the makers' documents, not a third party's
   compilation, and they are still imported at Plausible: a manufacturer's word is one source (R19.3).
 - **The pin:** a manufacturer's page is not a repository, so `sources/official/<maker>/` holds each document
   as the server sent it, the sheets the importer reads converted to CSV by
@@ -19,7 +21,10 @@ import must meet, and DESIGN.md section 29 describes how this one meets them.
   every citation names the first eight hex digits of its document's hash.
 - **Licence:** none recorded. A manufacturer's table of the codes its product accepts is a table of reference
   remote codes, which the repository treats as facts (DESIGN D110). Anthem's separate PDF for the MRX SLM
-  says it may not be reproduced without written permission; it is not imported.
+  says it may not be reproduced without written permission; it is not imported. **JVC's guide says the opposite**
+  ("This document may be distributed freely, as long as the author and copyright information remain intact", (c) 2012
+  JVC, Dale McWilliams, JVC Consumer A/V Group): it is kept whole in `sources/official/jvc/` and the bundle's notices
+  name the author and the copyright.
 
 ## What it imports
 
@@ -34,6 +39,8 @@ the decimal column, the TSU3000 string and the classic Pronto hex**: where the s
 Untested, and where only a derived column has a typo (seven rows) it stays Plausible and the citation says so.
 KEF's are NEC1 too, one file a product (`LSX II`, `XIO`): each sheet gives a factory code (`0x01`) and a function code
 for each key, **in the other bit order than the ledger's NEC1** (the device is `0x80` and `0x40` is the function `0x02`),
-which the IR Blaster database's KEF remote confirms for the eight codes it holds.
+which the IR Blaster database's KEF remote confirms for the eight codes it holds. JVC's are the ledger's `JVC` protocol
+(device 115, a function number), one file for each of the 22 projectors on the guide's cover, **checked against the guide's
+own Pronto hex**: where the hex does not say the stated code (three entries have damaged text) the key is Untested.
 
 `IMPORT.md` lists everything a document holds that does not become a key, with the reason.
