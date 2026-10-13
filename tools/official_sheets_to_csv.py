@@ -10,7 +10,7 @@ every page, ``pages`` (it needs PyMuPDF): one non-empty line to a row, in the or
 puts the page number in a first cell), which the importer parses; or as its tables, ``tables`` (Arcam's, D251): a row is
 the page, the table's number on it and the cells of one table row, so a table's merged cells are the library's reading.
 
-    python3 tools/official_sheets_to_csv.py marantz|anthem|oppo|kef|jvc|arcam|cambridge
+    python3 tools/official_sheets_to_csv.py marantz|anthem|oppo|kef|jvc|arcam|cambridge|hegel
 """
 
 from __future__ import annotations
@@ -49,6 +49,10 @@ SHEETS = {
         "Solo_Mini_RS232.pdf": ["pages"],
     },
     "cambridge": {"AXR85_100_IR_Codes.pdf": ["tables"], "752BD-CXU-CXUHD_remotes_Sept_2024_v2.pdf": ["tables"]},
+    "hegel": {name: ["flow"] for name in (
+        "Hegel_Rost_IR_Codes.pdf", "Hegel_H190_IR_Codes.pdf", "Hegel_H360_IR_Codes.pdf", "Hegel_H590_IR_Codes.pdf", "Hegel_H90_IR_Codes.pdf",
+        "Hegel_HD12_IR_Codes.pdf", "Hegel_HD25_IR_Codes.pdf", "Hegel_HD30_IR_Codes.pdf", "Hegel_Mohican_IR_Codes.pdf",
+        "Hegel_H390_H590_IR_codes_v1.pdf", "Hegel_H95_H120_H190_IR_codes_v2.pdf", "Hegel_P20_P30_IR_codes_v2.pdf")},
     "kef": {
         "LS50Wireless-IRcode-INT.pdf": ["page 1", "page 2"],
         "LS50WII_IR-Codes-for-Universal-Remote-Control.pdf": ["page 1"],
@@ -77,6 +81,31 @@ def rows_of(path: Path, sheet: str) -> list[list[str]]:
             return [[str(n), str(i)] + [" ".join((cell or "").split()) for cell in row]
                     for n, page in enumerate(pdf, 1) for i, table in enumerate(page.find_tables().tables, 1)
                     for row in table.extract()]
+        if sheet == "flow":         # every page in reading order (D259): a line of text is ``page, text, y, line``, a table row
+            out = []                # ``page, row, table, y, cells`` (a cell a merged cell covers is ``<merged>``), sorted by ``y``;
+            for n, page in enumerate(pdf, 1):          # a cell much taller than a row is ``<block>`` and its lines are lines of text
+                tables = page.find_tables().tables
+                items, blocks = [], []
+                for i, table in enumerate(tables, 1):
+                    for row, cells in zip(table.rows, table.extract()):
+                        shown = []
+                        for box, cell in zip(row.cells, cells):
+                            if box is not None and box[3] - box[1] > 40:
+                                blocks.append(box)
+                                shown.append("<block>")
+                            else:
+                                shown.append("<merged>" if cell is None else " ".join(cell.split()))
+                        items.append((row.bbox[1], 1, [str(n), "row", str(i), str(round(row.bbox[1]))] + shown))
+                for block in page.get_text("dict")["blocks"]:
+                    for line in block.get("lines", []):
+                        text = " ".join("".join(span["text"] for span in line["spans"]).split())
+                        x0, y0 = line["bbox"][0], line["bbox"][1]
+                        inside = any(t.bbox[0] - 2 <= x0 <= t.bbox[2] + 2 and t.bbox[1] - 2 <= y0 <= t.bbox[3] + 2 for t in tables)
+                        in_block = any(b[0] - 2 <= x0 <= b[2] + 2 and b[1] - 2 <= y0 <= b[3] + 2 for b in blocks)
+                        if text and (not inside or in_block):
+                            items.append((y0, 0, [str(n), "text", str(round(y0)), text]))
+                out.extend(row for _, _, row in sorted(items, key=lambda item: (item[0], item[1])))
+            return out
         if sheet == "pages":        # every page: a row is the page number and one line of its text
             return [[str(n), line.strip()] for n, page in enumerate(pdf, 1) for line in page.get_text("text").splitlines()
                     if line.strip()]

@@ -15,7 +15,8 @@ import must meet, and DESIGN.md section 29 describes how this one meets them.
   section 63) and **Arcam's** custom installation notes, whose RC-5 code tables cover its AVR, AV and SA amplifiers and
   receivers, the CDS50 and UDP411 players and the Solo and Solo Mini (PDFs on <https://www.arcam.co.uk/>, DESIGN.md
   section 64) and **Cambridge Audio's** two lists of NEC codes that carry no copyright notice (the AXR85 and AXR100 receivers, and
-  the 752BD, CXU and CXUHD players' remotes; PDFs on <https://www.cambridgeaudio.com/>, DESIGN.md section 65). They are the makers' documents, not a third party's
+  the 752BD, CXU and CXUHD players' remotes; PDFs on <https://www.cambridgeaudio.com/>, DESIGN.md section 65) and **Hegel's** RC-5 code tables, a page for each of 14 products, three with each code's Pronto hex (PDFs on
+  <https://support.hegel.com/>, DESIGN.md section 66). They are the makers' documents, not a third party's
   compilation, and they are still imported at Plausible: a manufacturer's word is one source (R19.3).
 - **The pin:** a manufacturer's page is not a repository, so `sources/official/<maker>/` holds each document
   as the server sent it, the sheets the importer reads converted to CSV by
@@ -48,6 +49,9 @@ own Pronto hex**: where the hex does not say the stated code (three entries have
 command the function), one file for each product a document lists (`AVR450`, `SA20`, `Solo Mini`...), **each row's decimal
 and hex checked against each other**; a function a table says is `(not AVR5, AVR10)` or `(AVR450/750 only)` is left out of
 the files it is not for. Cambridge's are NEC1 (the address the device, its complement the subdevice, the function), one file for each
-product (`AXR85`, `CXU`...); **the AXR85's 23 codes are all in the IR Blaster database's AXR85 remote under the same names**.
+product (`AXR85`, `CXU`...); **the AXR85's 23 codes are all in the IR Blaster database's AXR85 remote under the same names**. Hegel's are the ledger's `RC5` too, one
+file for each product (`H190`, `Röst`, `Mohican`...), **where a page has the Pronto hex it is decoded and checked against the row** (all 67
+agree, and are the ledger's own compile of the code but for the last gap) and the `(alt)` row is the toggle bit's twin and no key; a
+product's older table that contradicts its newer one is kept apart as `H590 (2019 table)_questionable`.
 
 `IMPORT.md` lists everything a document holds that does not become a key, with the reason.
