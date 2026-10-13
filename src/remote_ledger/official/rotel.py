@@ -8,7 +8,7 @@ codes under ``NEC 8311, MAIN IR CODES`` (and ``NEC 8314, BLUETOOTH/PC-USB CODES`
 A key is the ledger's ``NEC1``: the heading's ``NEC 8311`` is the address and the subaddress (0x83 and 0x11, Rotel's NEC has its own
 second byte), ``IR CODE 01`` the function; the fourth byte is its complement, which NEC1 sends. **The hex is decoded and must agree
 with the heading and the code** (the same 32 bits); where it does not the key is Untested and says so. **A set whose heading says
-``ALTERNATIVE`` or ``ALTERNATE`` is the units' second IR code set (a unit can be set to code 1 or 2 against clashes with another Rotel remote), a file
+``ALTERNATIVE`` or ``ALTERNATE`` is the units' second IR code set, a file
 of its own** (``RA-1572 (alternative IR codes)``); every other set is the model's file, a name that another set of the file already
 has taking its set's words in parentheses. A name's ``*`` (``requires X5 Main Software V1.05``) is dropped and the set's note
 is in the citation. The S14 and RAS-5000's PDF has codes of three hex digits with a 31.8 kHz carrier that is not NEC and is not read.

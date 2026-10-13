@@ -800,11 +800,11 @@ def real(real_records):
 def test_every_ref_of_the_ledger_maps_to_exactly_one_remote_of_the_bundle(real_records, real):
     collected, assembled = real
     refs = [merge.ref_of(r) for r in real_records]
-    assert len(set(refs)) == len(refs) == 16_855
+    assert len(set(refs)) == len(refs) == 16_857
     table = {ref: (remote_id, first, count) for ref, remote_id, first, count in assembled.remote_refs}
-    assert len(assembled.remote_refs) == len(table) == 16_855 and set(table) == set(refs)
+    assert len(assembled.remote_refs) == len(table) == 16_857 and set(table) == set(refs)
     remotes = {row[0]: row for row in assembled.remotes}
-    assert len(remotes) == len(assembled.remotes) == 16_855 - collected.folded.folded
+    assert len(remotes) == len(assembled.remotes) == 16_857 - collected.folded.folded
     for ref, (remote_id, first, count) in table.items():
         assert remote_id in remotes, ref
     # a remote is carried by its own ref, and the refs that map to it cut its keys into runs
@@ -896,7 +896,7 @@ def test_the_test_key_of_every_remote_is_the_carriers_and_the_testable_remotes_a
         if before is not None:
             tried += 1
             assert merged.keys[before[1]] == record.keys[before[1]]
-    assert tried == 15_191
+    assert tried == 15_193
     assert sum(1 for i, r in enumerate(real_records) if folded.carrier[i] == i and merge.key_to_try(folded.remote(real_records, i)) is None) == 1_307
 
 
@@ -952,8 +952,8 @@ def test_the_selected_bundle_still_carries_the_selection_and_fits(real_selected,
     # 160 KB smaller than the unfolded one (51,478,528 bytes)
     assert bb.select.SELECTED_MAX_BYTES is None and built.stats["bytes"] > 51_000_000
     assert built.stats["bytes"] < real_selected_unfolded.stats["bytes"]
-    assert built.stats["remoteRefs"] == real_selected_unfolded.stats["remotes"] == 16_855
-    assert built.stats["remotes"] == 16_498 and built.stats["foldedFragments"] == 357
+    assert built.stats["remoteRefs"] == real_selected_unfolded.stats["remotes"] == 16_857
+    assert built.stats["remotes"] == 16_500 and built.stats["foldedFragments"] == 357
     assert built.stats["keys"] == real_selected_unfolded.stats["keys"] == 693_235
 
 
