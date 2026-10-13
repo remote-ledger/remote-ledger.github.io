@@ -159,6 +159,8 @@ PIONEER = "Pioneer"
 PIONEER_MIX = "Pioneer MIX"
 PIONEER_3DEV = "Pioneer 3DEV"
 PIONEER_4DEV = "Pioneer 4DEV"
+PIONEER_DVD = "Pioneer DVD"
+PIONEER_DVD2 = "Pioneer DVD2"
 RC56_COMBO = "RC5/6 combo"
 RC55X_COMBO = "RC-5/5x Combo"
 XMP_FAMILY = ("XMP", "XMP (JP1)", "XMP (Slingbox)", "XMP (Slingbox)(No repeat)", "XMP (UEI)")
@@ -185,9 +187,9 @@ NEC1_RNC = "NEC1-rnc"
 YAMAHA_E_XOR = {1: 0x7F, 2: 0xFE, 3: 0x7E}
 TWO_BYTE = (SONY_COMBO, NEC1_COMBO, NEC_4DEV, NEC_4DEV_YAMAHA, NEC_2DEV, JVC_COMBO, DENON_COMBO, SHARP_COMBO,
             PANASONIC_COMBO, DENON_K, PIONEER_MIX, PANASONIC_HACKED, TEAC_K, RCA_COMBO, PIONEER_3DEV, PIONEER_4DEV, RC56_COMBO,
-            RC55X_COMBO)
+            RC55X_COMBO, PIONEER_DVD2)
 MAPPED = (*NEC_FAMILY, SONY_1215, SONY_20, RC5, RC6, JVC, AIWA, DENON, PANASONIC, SHARP, SAMSUNG36, PROTON, F12,
-          RECS80_45, PIONEER, RECS80_68, JVC_48, *RCA_FAMILY, NEC1_F16_OFFICIAL, NEC1_RNC, MCE, NOKIA32, PANASONIC_OLD, TDC, GI_CABLE, RC6_M_20N,
+          RECS80_45, PIONEER, PIONEER_DVD, RECS80_68, JVC_48, *RCA_FAMILY, NEC1_F16_OFFICIAL, NEC1_RNC, MCE, NOKIA32, PANASONIC_OLD, TDC, GI_CABLE, RC6_M_20N,
           *XMP_FAMILY, *TWO_BYTE)
 
 
@@ -226,6 +228,8 @@ def signal_of(upgrade: Upgrade, function: Function) -> Signal | str:
             return rc56_combo_signal(upgrade, pair[0], pair[1])
         if name == RC55X_COMBO:
             return rc55x_combo_signal(upgrade, pair[0], pair[1])
+        if name == PIONEER_DVD2:
+            return pioneer_dvd_signal(upgrade, pair[0], pair[1])
         return combo_signal(name, parms, pair[0], pair[1], upgrade.fields.get("FixedData", "").split())
     byte = obc_byte(function.hex)
     if byte is None:
@@ -236,6 +240,8 @@ def signal_of(upgrade: Upgrade, function: Function) -> Signal | str:
         return tdc_signal(upgrade, byte)
     if name == GI_CABLE:
         return Signal("GI_Cable", 0, None, rev8(byte))
+    if name == PIONEER_DVD:
+        return pioneer_dvd_signal(upgrade, byte, None)
     if name == RC6_M_20N:
         return rc6_m_20n_signal(upgrade, byte)
     if name in NEC_FAMILY:
@@ -508,6 +514,45 @@ def pioneer_multi_signal(upgrade: Upgrade, first: int, second: int) -> Signal | 
     if chosen > 255:
         return "a parameter is not a byte"
     return Signal("Pioneer-2Part", chosen << 8 | chosen, None, one << 8 | two)
+
+
+def pioneer_dvd_signal(upgrade: Upgrade, first: int, second: int | None) -> Signal | str:
+    """``Pioneer DVD`` and ``Pioneer DVD2`` (DESIGN D239): Pioneer's DVD players send either one frame or two.
+
+    ``CmdTranslator`` of ``Pioneer DVD`` is ``Translator(lsb,comp,3)`` for the OBC and one-bit translators on the bit at offset 5, so
+    the function's byte is the OBC complemented and reversed (``C2`` is 188). **One bit says which**, the three one-bit translators all
+    naming offset 5: in the byte, counted from its most significant bit (``0x04``), set is one part and clear two, as the protocol's
+    notes say ("bit 5"); in the OBC, the byte complemented and reversed, it is ``0x20`` and the sense is the other: set is two parts, with
+    ``Device 1`` and the ``Prefix Command`` and then ``Device 2`` and the OBC (``Power`` of the DV-C505 is ``163 153`` then ``175 188``),
+    clear one part, ``Device 1`` and the OBC (``Play`` is ``163 158``). **The 38 functions of the DV-C505 whose notes spell the frame
+    out agree, 38 of 38.** ``DVD2`` is the same with a second byte that is only ``FieldCopier(comp,5,15,1)``, the flag again, which
+    the reader holds the file to. The ledger's
+    ``Pioneer-2Part`` writes a frame as ``D0:D`` and ``F0:F`` (one part is the two equal). The devices are the parameters, in the
+    order ``Device 1, Device 2, Prefix Command`` and, where ``null``, the bytes ``FixedData`` keeps as ``Translator(lsb,comp,...,8)``
+    does, at 0, 2 and 1."""
+    obc = ~rev8(first) & 0xFF
+    two = bool(obc & 0x20)
+    if second is not None and second != (1 if two else 0):
+        return "the second byte is not the flag the executor copies from the first"
+    fixed = upgrade.fields.get("FixedData", "").split()
+
+    def value(index: int, at: int) -> int | None:
+        given = parm(upgrade.parms, index)
+        return given if given is not None else fixed_byte(fixed, at)
+
+    one = value(0, 0)
+    if one is None:
+        return "the device parameter is missing"
+    if not two:
+        if one > 255:
+            return "a parameter is not a byte"
+        return Signal("Pioneer-2Part", one << 8 | one, None, obc << 8 | obc)
+    other, prefix = value(1, 2), value(2, 1)
+    if other is None or prefix is None:
+        return "the device or the prefix command parameter is missing"
+    if max(one, other, prefix) > 255:
+        return "a parameter is not a byte"
+    return Signal("Pioneer-2Part", one << 8 | other, None, prefix << 8 | obc)
 
 
 def rc56_combo_signal(upgrade: Upgrade, first: int, second: int) -> Signal | str:
