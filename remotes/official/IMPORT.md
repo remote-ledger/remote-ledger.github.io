@@ -91,8 +91,24 @@ dropped silently (SPEC R19, condition 5).
 | nad: T777_IR_Commands.pdf: rows read | 100 |
 | nad: T785_IR_Commands.pdf: rows read | 100 |
 | nad: T787_IR_Commands.pdf: rows read | 100 |
-| nad: files | 8 |
-| nad: keys | 797 |
+| nad: crestron_cd1.ir: keys read | 18 |
+| nad: crestron_cd2.ir: keys read | 34 |
+| nad: crestron_cd3.ir: keys read | 20 |
+| nad: crestron_cd4.ir: keys read | 46 |
+| nad: crestron_cd5.ir: keys read | 50 |
+| nad: crestron_dvd1.ir: keys read | 50 |
+| nad: crestron_dvd2.ir: keys read | 47 |
+| nad: crestron_receiver1.ir: keys read | 32 |
+| nad: crestron_receiver2_1.ir: keys read | 109 |
+| nad: crestron_receiver2_2.ir: keys read | 31 |
+| nad: crestron_receiver3.ir: keys read | 43 |
+| nad: crestron_receiver4.ir: keys read | 76 |
+| nad: crestron_tape.ir: keys read | 15 |
+| nad: crestron_tuner.ir: keys read | 28 |
+| nad: crestron_tv1.ir: keys read | 28 |
+| nad: crestron_tv2.ir: keys read | 18 |
+| nad: files | 42 |
+| nad: keys | 2,296 |
 | oppo: BDP-103_BDP-103D_Remote_Code_v1.2.xls: keys read | 177 |
 | oppo: BDP-103_BDP-105_Remote_Code_v1.1.xls: keys read | 174 |
 | oppo: UDP-203_Remote_Code_v1.2.xls: keys read | 168 |

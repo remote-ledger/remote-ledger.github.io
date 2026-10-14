@@ -448,8 +448,8 @@ def test_the_committed_official_import_keeps_r19():
         for name, entry in manifest["documents"].items():
             hashes[name], dates[name], snapshots[name] = entry["sha256"], manifest["retrieved"], entry.get("snapshot")
     shape = re.compile(r"^(?:marantz\.com archive-downloads|anthemav\.com \(storage\.googleapis\.com/sandbox1-anthemav/an\)"
-                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|nadelectronics\.com IR command tables|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
-                       r"(?:, from the Wayback Machine snapshot (\d{14}))?\) (?:sheet '[^']+' row \d+|page \d+ row \d+|page \d+ '|page \d+ table \d+ row '|page \d+ row ')")
+                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
+                       r"(?:, from the Wayback Machine snapshot (\d{14}))?\) (?:sheet '[^']+' row \d+|page \d+ row \d+|page \d+ '|page \d+ table \d+ row '|page \d+ row '|key \d+ ')")
     files = sorted((ROOT / oi.IMPORT_ROOT).rglob("*.json"))
     assert len(files) > 180
     bad = []
@@ -1255,8 +1255,16 @@ def test_a_nad_row_whose_hex_and_decimal_are_not_one_number_or_that_has_no_colum
         nad.parse(two)
 
 
-def nad_files() -> dict[str, dict]:
+NAD_TABLES = ("T175", "T765", "T775", "T775 (February 2008 table)", "T785", "T187", "T777", "T787")
+
+
+def nad_all_files() -> dict[str, dict]:
     return {load(p)["model"]: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "nad").glob("*.json"))}
+
+
+def nad_files() -> dict[str, dict]:
+    """The eight tables of the T-series PDFs (D282 to D284)."""
+    return {m: d for m, d in nad_all_files().items() if m in NAD_TABLES}
 
 
 def test_the_eight_nad_files_are_the_seven_models_and_the_t775s_older_table():
@@ -1285,16 +1293,18 @@ def test_the_eight_nad_files_are_the_seven_models_and_the_t775s_older_table():
     assert files["T187"]["keys"]["KEY_ZONE_TUNE_UP"]["forms"][0]["function"] == "0xB5"
     report = (ROOT / oi.IMPORT_ROOT / oi.REPORT).read_text(encoding="utf-8")
     figure = lambda what: int(re.search(rf"\| nad: {what} \| ([\d,]+) \|", report)[1].replace(",", ""))      # noqa: E731
-    assert [figure(w) for w in ("files", "keys")] == [8, 797]
+    assert [figure(w) for w in ("files", "keys")] == [42, 2_296]          # the eight tables' 797 keys and the Crestron files' 1,499
 
 
-def test_the_nad_documents_are_members_of_two_zips_and_the_manifest_says_which():
+def test_the_nad_documents_are_members_of_three_zips_and_the_manifest_says_which():
     snapshot = load_snapshot(SNAPSHOT / "nad")
-    assert sorted(snapshot.documents) == sorted(nad.DOCUMENTS)
+    assert sorted(snapshot.documents) == sorted([*nad.DOCUMENTS, nad.README, *(f"crestron_{s}.ir" for s in nad.CRESTRON)])
     for name, entry in snapshot.documents.items():
-        assert entry["url"].startswith("https://cdn.shopify.com/s/files/1/") and entry["url"].endswith(("NAD_TXX5_Control_Docs.zip", "NAD_TXX7_Control_Docs.zip"))
-        assert entry["member"].endswith("IR Commands.pdf") or entry["member"].endswith("IR_Commands.pdf")
+        assert entry["url"].startswith("https://cdn.shopify.com/s/files/1/") and entry["url"].endswith(
+            ("NAD_TXX5_Control_Docs.zip", "NAD_TXX7_Control_Docs.zip", "NAD-CrestronIR.zip")), name
+        assert entry["member"].endswith(("IR Commands.pdf", "IR_Commands.pdf", ".ir")) or entry["member"] == "readme.pdf"
     assert snapshot.documents["T775_IR_Commands_2008-02.pdf"]["member"] == "T775 IR Commands.pdf"
+    assert snapshot.documents["crestron_receiver2_1.ir"]["member"] == "receiver2_1.ir" and snapshot.documents[nad.README]["member"] == "readme.pdf"
 
 
 def test_other_sources_nad_remotes_hold_58_of_the_100_codes_and_name_43_alike():
@@ -1324,12 +1334,155 @@ def test_other_sources_nad_remotes_hold_58_of_the_100_codes_and_name_43_alike():
                 if form.get("type") == "irp" and form.get("device") is not None and form.get("subdevice") is not None:
                     key = (int(form["device"], 0), int(form["subdevice"], 0), int(form["function"], 0))
                     if key in ours:
-                        seen.setdefault(key, set()).add(spec["label"])
+                        seen.setdefault(key, set()).add(spec.get("label", ""))
                         remotes.add(path.name)
     held = [k for k in ours if k in seen]
     same = [k for k in held if any(squash(a) == squash(b) for a in ours[k] for b in seen[k])
             or ({vocabulary.resolve(x) for x in ours[k]} - {None}) & ({vocabulary.resolve(x) for x in seen[k]} - {None})]
     assert (len(ours), len(held), len(same), len(remotes)) == (100, 58, 43, 15)
+
+
+def ir_frame(protocol: str, bits: str) -> bytes:
+    head, tail = nad.FRAMES[protocol]
+    return head + bytes(int(b) for b in bits) + tail
+
+
+def lsb_first(*values: int) -> str:
+    return "".join(str((v >> k) & 1) for v in values for k in range(8))
+
+
+def test_a_crestron_key_is_a_head_32_bits_least_significant_first_and_a_tail_and_the_two_heads_are_the_two_protocols():
+    """NEC's 9 ms lead (the timing table 21, 64, 86, 171, 343) and ``NECx1``'s 4.5 ms lead (21, 64, 171, 1692, 3707): the bits are the bytes
+    0x87 0x7C 0x80 0x7F, the first bit the lowest."""
+    for protocol in ("NEC1", "NECx1"):
+        assert nad.decode_frame(ir_frame(protocol, lsb_first(0x87, 0x7C, 0x80, 0x7F))) == (protocol, (0x87, 0x7C, 0x80, 0x7F))
+    good = ir_frame("NEC1", lsb_first(0x87, 0x7C, 0x80, 0x7F))
+    assert nad.decode_frame(good[:-1]) is None and nad.decode_frame(good + b"\x00") is None
+    assert nad.decode_frame(good.replace(b"\x05\x42\x06", b"\x05\x42\x07")) is None
+    assert nad.decode_frame(ir_frame("NEC1", lsb_first(0x87, 0x7C, 0x80, 0x7F)).replace(bytes([0, 0, 0, 0, 0, 0, 0, 1]), bytes([0, 0, 0, 0, 0, 0, 0, 2]), 1)) is None
+
+
+def test_a_crestron_file_is_records_a_header_names_an_ff_record_and_keys_and_the_readme_says_which_models():
+    def row(i: int, tag: int, body: bytes) -> list[str]:
+        return [str(i), f"{tag:02x}", body.hex()]
+    rows = [row(0, 0xF0, b"IR"), row(1, 0xF4, b"5170, 5240"), row(2, 0xF7, b"CD"), row(3, 1, b"POWER"), row(4, 2, b"PLAY"), row(5, 0xFF, b""),
+            row(6, 1, b"\x01"), row(7, 2, b"\x02")]
+    header, names, keys = nad.parse_ir(rows)
+    assert header == {0xF0: "IR", 0xF4: "5170, 5240", 0xF7: "CD"} and names == {1: "POWER", 2: "PLAY"} and keys == [(1, 6, b"\x01"), (2, 7, b"\x02")]
+    readme = [["1", "Receivers/Preamps/Integrated Amps"], ["1", "receiver1.ir"], ["1", "118"], ["1", "receiver2_1.ir All Others"],
+              ["1", "DVD Players"], ["1", "cd2.ir 5170, 5240, 5340"], ["1", "tv2.ir MR20, MR26"]]
+    assert nad.readme_models(readme) == {"receiver1.ir": "118", "receiver2_1.ir": "All Others", "cd2.ir": "5170, 5240, 5340", "tv2.ir": "MR20, MR26"}
+    head = {0xF4: "Receiver, Amplifier"}
+    assert nad.crestron_models("r", "All Others", head) == ["Receiver, Amplifier (all others)"]
+    assert nad.crestron_models("r", "Second Zone Commands", head) == ["Receiver, Amplifier"]
+    assert nad.crestron_models("c", "5170, 5240", {0xF4: "5170, 5240"}) == ["5170", "5240"]
+    with pytest.raises(ValueError, match="the readme says"):
+        nad.crestron_models("c", "5170, 5240", {0xF4: "5170"})
+
+
+def test_the_ir_records_the_sheet_tool_writes_are_length_tag_body_and_a_file_that_does_not_fit_is_an_error():
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location("official_sheets_to_csv", ROOT / "tools" / "official_sheets_to_csv.py")
+    tool = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(tool)
+    data = bytes([4, 0xF0, 0x49, 0x52, 5, 1, 0x41, 0x42, 0x43, 2, 0xFF, 0])
+    assert tool.ir_records(data) == [["0", "f0", "4952"], ["1", "01", "414243"], ["2", "ff", ""]]
+    for bad in (data[:-1], data + b"\x00", bytes([9, 0xF0, 0x49]) + b"\x00"):
+        with pytest.raises(ValueError):
+            tool.ir_records(bad)
+
+
+def crestron_files() -> dict[str, dict]:
+    """The 34 files of the Crestron IR files (D286 to D288)."""
+    return {m: d for m, d in nad_all_files().items() if m not in NAD_TABLES}
+
+
+def test_the_crestron_files_are_34_models_of_the_16_files_and_every_key_is_one_of_the_two_frames():
+    """16 files, 645 keys, 34 models (a file for each model the readme lists, and four that say ``All Others`` or ``Second Zone``), 1,499
+    keys: every key decodes, with the fourth byte the complement of the third. Fourteen files are NEC and two (the C660 and the ten T5xx
+    DVD players) ``NECx1``."""
+    files = crestron_files()
+    assert len(files) == 34 and sum(len(d["keys"]) for d in files.values()) == 1_499
+    assert {m: (d["protocol"]["name"], len(d["keys"])) for m, d in files.items() if m in ("5060", "5170", "5240", "5340", "5325", "C660", "T512", "T572",
+                                                                                      "118", "L75", "L76", "L70", "L73", "L53", "L55", "MR13", "MR26")} == {
+        "5060": ("NEC1", 18), "5170": ("NEC1", 34), "5240": ("NEC1", 34), "5340": ("NEC1", 34), "5325": ("NEC1", 20), "C660": ("NECx1", 50),
+        "T512": ("NECx1", 47), "T572": ("NECx1", 47), "118": ("NEC1", 32), "L75": ("NEC1", 43), "L76": ("NEC1", 43), "L70": ("NEC1", 76),
+        "L73": ("NEC1", 76), "L53": ("NEC1", 76), "L55": ("NEC1", 50), "MR13": ("NEC1", 28), "MR26": ("NEC1", 18)}
+    assert {"Receiver, Amplifier (all others)", "Receiver, Amplifier (Second Zone)", "CD Player (all others)", "Tuner (all others)",
+            "Tape Deck (all others)"} <= set(files)
+    addresses = {m: {(s["forms"][0]["device"], s["forms"][0]["subdevice"]) for s in d["keys"].values()} for m, d in files.items()}
+    assert addresses["5060"] == {("0x85", "0x6F")} and addresses["5170"] == {("0x2A", "0xD5")} and addresses["5325"] == {("0x87", "0x7E")}
+    assert addresses["C660"] == {("0x2F", "0x2F")} and addresses["T532"] == {("0x2D", "0x2D")} and addresses["118"] == {("0x86", "0x0F")}
+    assert addresses["MR13"] == {("0x40", "0xBF")} and addresses["MR20"] == {("0x04", "0xFB")}
+    assert addresses["L70"] == addresses["L73"] == {("0x85", "0x6A"), ("0x85", "0x9A")} and addresses["L75"] == {("0x85", "0x6A"), ("0x85", "0x9A")}
+    assert addresses["Tuner (all others)"] == addresses["Tape Deck (all others)"] == addresses["CD Player (all others)"] == {("0x87", "0x7C")}
+    receiver = files["Receiver, Amplifier (all others)"]["keys"]
+    assert receiver["KEY_POWER"]["forms"][0]["function"] == "0x80" and receiver["KEY_MUTE"]["forms"][0]["function"] == "0x94"
+    assert receiver["KEY_MONO"]["forms"][0]["function"] == "0x83" and receiver["KEY_MONO_2"]["forms"][0]["function"] == "0x37"
+    assert receiver["KEY_MONO"]["label"] == receiver["KEY_MONO_2"]["label"] == "MONO"
+    cite = receiver["KEY_POWER"]["forms"][0]["source"]
+    assert "crestron_receiver2_1.ir@" in cite and "key " in cite and "frame 87 7C 80 7F" in cite and "lists the file for All Others" in cite
+    assert files["L75"]["keys"]["KEY_0"]["forms"][0]["source"].endswith("lists the file for L75, L76")
+    assert [(k, s["forms"][0]["device"], s["forms"][0]["subdevice"]) for k, s in files["L75"]["keys"].items() if s["forms"][0]["subdevice"] != "0x6A"] == [
+        ("KEY_DVD", "0x85", "0x9A")]
+    report = (ROOT / oi.IMPORT_ROOT / oi.REPORT).read_text(encoding="utf-8")
+    keys_read = sum(int(m[1].replace(",", "")) for m in re.finditer(r"\| nad: crestron_\w+\.ir: keys read \| ([\d,]+) \|", report))
+    assert keys_read == 645 and "no name" not in report and "neither of the two frames" not in report
+
+
+def test_the_generic_crestron_receiver_files_hold_the_t_series_codes_under_older_names():
+    """The independent check (D288): the five files at 0x87/0x7C (the receivers, the second zone, the CD players, the tuner and the tape
+    deck) have 196 distinct codes, **98 of them in the T187's table, and 40 of those 98 are named alike by the spelling or the vocabulary**;
+    the other 58 are the same functions in older words (``CENTR-`` is ``Center Volume Down``, ``NEO6_CINEMA`` is ``DTS NEO:6 - Cinema``,
+    ``PSET1`` is ``A/V Preset 1``) except three whose function was renamed between 2005 and 2008: ``HALL`` (0xC9) is the T187's ``Audyssey``,
+    ``CD`` (0x85) its ``Front`` and ``PHONO`` (0x89) its ``MP``."""
+    from remote_ledger.keys import load_vocabulary
+
+    vocabulary = load_vocabulary()
+    squash = lambda t: re.sub(r"[^a-z0-9]", "", t.lower())      # noqa: E731
+    t187 = {(int(s["forms"][0]["device"], 0), int(s["forms"][0]["subdevice"], 0), int(s["forms"][0]["function"], 0)): s["label"]
+            for s in nad_files()["T187"]["keys"].values()}
+    files = crestron_files()
+    ours: dict[tuple[int, int, int], set[str]] = {}
+    for model in ("CD Player (all others)", "Receiver, Amplifier (all others)", "Receiver, Amplifier (Second Zone)", "Tape Deck (all others)", "Tuner (all others)"):
+        for spec in files[model]["keys"].values():
+            form = spec["forms"][0]
+            ours.setdefault((int(form["device"], 0), int(form["subdevice"], 0), int(form["function"], 0)), set()).add(spec["label"])
+    both = [k for k in ours if k in t187]
+    same = [k for k in both if squash(t187[k]) in {squash(x) for x in ours[k]} or (vocabulary.resolve(t187[k]) and vocabulary.resolve(t187[k]) in {vocabulary.resolve(x) for x in ours[k]})]
+    assert (len(ours), len(both), len(same)) == (196, 98, 40)
+    assert ours[(0x87, 0x7C, 0xC9)] == {"HALL"} and t187[(0x87, 0x7C, 0xC9)] == "Audyssey" and ours[(0x87, 0x7C, 0x85)] == {"CD"} and ours[(0x87, 0x7C, 0x89)] == {"PHONO"}
+
+
+def test_other_sources_hold_the_crestron_codes_of_the_models_they_have_remotes_for():
+    """The independent check (D288): by file, the share of its codes (protocol, device, subdevice, function) that another source's remote
+    holds: the DVD players' ``NECx1`` 0x2D/0x2D 47 of 47 (59 remotes), the L55's 0x85/0x9A 49 of 50, the L75's 43 of 43 and the L70's 76 of
+    76 (0x85/0x6A and 0x85/0x9A), the CD player and the tuner at 0x87/0x7C 38 of 46 and 24 of 28; and **none of the 5060's (0x85/0x6F), the
+    5325's (0x87/0x7E), the C660's (0x2F/0x2F) nor the 118's (0x86/0x0F)**."""
+    files = crestron_files()
+    wanted: dict[str, set[tuple[str, int, int, int]]] = {}
+    for model in ("5060", "5325", "C660", "118", "T512", "L55", "L75", "L70", "CD Player (all others)", "Tuner (all others)", "MR13"):
+        wanted[model] = {(files[model]["protocol"]["name"], int(s["forms"][0]["device"], 0), int(s["forms"][0]["subdevice"], 0), int(s["forms"][0]["function"], 0))
+                         for s in files[model]["keys"].values()}
+    every = set().union(*wanted.values())
+    held: set[tuple[str, int, int, int]] = set()
+    for path in sorted((ROOT / "remotes").glob("*/*/*.json")):
+        if "official" in path.parts:
+            continue
+        doc = load(path)
+        name = doc.get("protocol", {}).get("name")
+        if name not in ("NEC1", "NECx1"):
+            continue
+        for spec in doc["keys"].values():
+            for form in spec["forms"]:
+                if form.get("type") == "irp" and form.get("device") is not None and form.get("subdevice") is not None:
+                    key = (name, int(form["device"], 0), int(form["subdevice"], 0), int(form["function"], 0))
+                    if key in every:
+                        held.add(key)
+    shares = {m: (len(c & held), len(c)) for m, c in wanted.items()}
+    assert shares == {"5060": (0, 18), "5325": (0, 20), "C660": (0, 50), "118": (0, 32), "T512": (47, 47), "L55": (49, 50), "L75": (43, 43), "L70": (76, 76),
+                      "CD Player (all others)": (38, 46), "Tuner (all others)": (24, 28), "MR13": (28, 28)}
 
 
 # --- Simaudio ----------------------------------------------------------------------------------------------------

@@ -123,6 +123,24 @@ DOCUMENTS = {
         ("T187_IR_Commands.pdf", NAD + "NAD_TXX7_Control_Docs.zip", "T187_IR_Commands.pdf"),
         ("T777_IR_Commands.pdf", NAD + "NAD_TXX7_Control_Docs.zip", "T777_IR_Commands.pdf"),
         ("T787_IR_Commands.pdf", NAD + "NAD_TXX7_Control_Docs.zip", "T787_IR_Commands.pdf"),
+        # the 16 Crestron IR driver files of January 2005 for its older products and the readme that says which file is for which model
+        ("crestron_readme.pdf", NAD + "NAD-CrestronIR.zip", "readme.pdf"),
+        ("crestron_cd1.ir", NAD + "NAD-CrestronIR.zip", "cd1.ir"),
+        ("crestron_cd2.ir", NAD + "NAD-CrestronIR.zip", "cd2.ir"),
+        ("crestron_cd3.ir", NAD + "NAD-CrestronIR.zip", "cd3.ir"),
+        ("crestron_cd4.ir", NAD + "NAD-CrestronIR.zip", "cd4.ir"),
+        ("crestron_cd5.ir", NAD + "NAD-CrestronIR.zip", "cd5.ir"),
+        ("crestron_dvd1.ir", NAD + "NAD-CrestronIR.zip", "dvd1.ir"),
+        ("crestron_dvd2.ir", NAD + "NAD-CrestronIR.zip", "dvd2.ir"),
+        ("crestron_receiver1.ir", NAD + "NAD-CrestronIR.zip", "receiver1.ir"),
+        ("crestron_receiver2_1.ir", NAD + "NAD-CrestronIR.zip", "receiver2_1.ir"),
+        ("crestron_receiver2_2.ir", NAD + "NAD-CrestronIR.zip", "receiver2_2.ir"),
+        ("crestron_receiver3.ir", NAD + "NAD-CrestronIR.zip", "receiver3.ir"),
+        ("crestron_receiver4.ir", NAD + "NAD-CrestronIR.zip", "receiver4.ir"),
+        ("crestron_tape.ir", NAD + "NAD-CrestronIR.zip", "tape.ir"),
+        ("crestron_tuner.ir", NAD + "NAD-CrestronIR.zip", "tuner.ir"),
+        ("crestron_tv1.ir", NAD + "NAD-CrestronIR.zip", "tv1.ir"),
+        ("crestron_tv2.ir", NAD + "NAD-CrestronIR.zip", "tv2.ir"),
     ],
     # Rotel's IR Codes page (a table of 59 models, each with a link to a PDF of its Pronto hex codes) and the 52 PDFs it links, on Rotel's
     # own host, rotel.com. The page is kept as the evidence of which document is for which model (DESIGN section 69).
@@ -268,6 +286,8 @@ def main(argv: list[str] | None = None) -> int:
             raise SystemExit(f"{name}: {url} did not answer with a spreadsheet ({data[:40]!r}); nothing was pinned")
         if name.endswith(".html") and b"<html" not in data[:2000].lower() and b"<!doctype" not in data[:200].lower():
             raise SystemExit(f"{name}: {url} did not answer with a web page ({data[:40]!r}); nothing was pinned")
+        if name.endswith(".ir") and not data.startswith(b"\x04\xf0IR"):
+            raise SystemExit(f"{name}: {url} did not answer with a Crestron IR file ({data[:40]!r}); nothing was pinned")
         if name.endswith(".pdf") and not data.startswith(b"%PDF"):
             raise SystemExit(f"{name}: {url} did not answer with a PDF ({data[:40]!r}); nothing was pinned")
         (target / name).write_bytes(data)
