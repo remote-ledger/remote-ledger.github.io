@@ -72,12 +72,13 @@ Land it in two PRs, code and then data.
       a 2014 guide (ver 0.44), long hex too, for the DLA-RS49 to RS67 and X500 to X900; the page
       answers 404 and no copy has been found (a search found the 2011 remote control guide v1.4, an earlier edition of the family
       §63 reads, with the same grant, and the 2014 RS-232 specifications, which have no code table; the 2013 models' remote
-      codes are in JVC's mobile user guide, 35 codes under "(c) 2013 JVCKENWOOD", so private). **Leads not yet read:** NAD's two Pronto `.ccf` files (`NADRCVRandDVD.ccf` and `NAD_C420.ccf`, on nadelectronics.com/software: the
-      Pronto editor's binary format, not decoded; NAD's T-series IR tables are §72 and its Crestron `.ir` files, which turned out to be
-      NEC frames, §73); and **Linn's 22-page legacy PDF** (`Linn_RC5_Codes_v0102.pdf`, 2011, the codes of all the older products by
-      address, no notice text), **which goes to the private repository if it is read** (§70: Linn's table is there), and which §67
-      did not read because its table cells run over several lines and the text cannot say which line belongs to which code
-      (`0x12` is `Phono 1 Laser Auxiliary 2` with `Auxiliary 2` again below the next row): it needs the page images. Each is a document
+      codes are in JVC's mobile user guide, 35 codes under "(c) 2013 JVCKENWOOD", so private). **Leads closed on 2026-10-14:** NAD's two Pronto `.ccf` files (`NADRCVRandDVD.ccf`, `NAD_C420.ccf`) keep their Pronto words in the clear,
+      and the NAD codes in them (29 NEC codes of the C420 tuner; 62 at 0x87/0x7C and 0x85/0x9A in the other) **are all in the ledger
+      already** (§72, §73), so there is nothing to import; Linn's 22-page legacy PDF is **read into the private repository** (§70: private
+      pull request #6, its `docs/linn.md` LN-4 and LN-5); and Cambridge Audio's support archive (the live driver-updates page answers a
+      script with 403) has nothing left: the Wayback Machine's copy of that page of 6 June 2026 lists exactly the IR PDFs already read
+      (the 15 files of 13 documents in the private repository and the two public ones of §65), and its other files are serial and RS-232
+      protocols, not IR codes. A document is
       pinned by hash as D123 does it; a PDF is read as the lines of text of its
       pages (KEF's was the first, D243, JVC's the second, D247), which suits a
       table and not prose. Kaleidescape's PDF says "All rights reserved": a source
