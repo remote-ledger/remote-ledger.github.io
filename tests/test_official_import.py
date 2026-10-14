@@ -12,7 +12,7 @@ from pathlib import Path
 import pytest
 
 from remote_ledger.errors import ValidationError
-from remote_ledger.official import anthem, arcam, cambridge, hegel, jvc, kef, marantz, oppo, rotel, simaudio
+from remote_ledger.official import anthem, arcam, cambridge, cary, hegel, jvc, kef, marantz, oppo, rotel, simaudio
 from remote_ledger.official import importer as oi
 from remote_ledger.official.common import MANIFEST, Report, load_snapshot
 from remote_ledger.serialize import load
@@ -26,7 +26,7 @@ SNAPSHOT = ROOT / oi.SNAPSHOT
 
 def test_every_document_and_csv_is_the_one_the_manifest_pins():
     for maker, retrieved in (("marantz", "2026-10-08"), ("anthem", "2026-10-08"), ("oppo", "2026-10-09"), ("kef", "2026-10-13"),
-                             ("jvc", "2026-10-13"), ("arcam", "2026-10-13"), ("cambridge", "2026-10-13"), ("hegel", "2026-10-13"), ("simaudio", "2026-10-13"), ("rotel", "2026-10-13")):
+                             ("jvc", "2026-10-13"), ("arcam", "2026-10-13"), ("cambridge", "2026-10-13"), ("hegel", "2026-10-13"), ("cary", "2026-10-13"), ("simaudio", "2026-10-13"), ("rotel", "2026-10-13")):
         snap = load_snapshot(SNAPSHOT / maker)
         assert snap.maker == maker and snap.retrieved == retrieved
         assert snap.documents and snap.sheets
@@ -443,12 +443,12 @@ def test_the_committed_official_import_keeps_r19():
     or Untested, and a citation that names a document the manifest pins, by hash."""
     assert (ROOT / oi.IMPORT_ROOT / "README.md").is_file() and (ROOT / oi.IMPORT_ROOT / oi.REPORT).is_file()
     hashes, dates, snapshots = {}, {}, {}
-    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "arcam", "cambridge", "hegel", "simaudio", "rotel"):
+    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "arcam", "cambridge", "hegel", "cary", "simaudio", "rotel"):
         manifest = json.loads((SNAPSHOT / maker / MANIFEST).read_text(encoding="utf-8"))
         for name, entry in manifest["documents"].items():
             hashes[name], dates[name], snapshots[name] = entry["sha256"], manifest["retrieved"], entry.get("snapshot")
     shape = re.compile(r"^(?:marantz\.com archive-downloads|anthemav\.com \(storage\.googleapis\.com/sandbox1-anthemav/an\)"
-                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
+                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
                        r"(?:, from the Wayback Machine snapshot (\d{14}))?\) (?:sheet '[^']+' row \d+|page \d+ row \d+|page \d+ '|page \d+ table \d+ row '|page \d+ row ')")
     files = sorted((ROOT / oi.IMPORT_ROOT).rglob("*.json"))
     assert len(files) > 180
@@ -1132,6 +1132,88 @@ def test_every_hegel_pronto_hex_decodes_to_its_row_and_is_the_ledgers_own_rc5_wi
                 assert hegel.decode_rc5(row.alt) == (row.system, row.command, 1)
                 twins += 1
     assert (rows, twins) == (67, 24) and dict(gaps) == {8: 34, 7: 33}
+
+
+# --- Cary Audio ----------------------------------------------------------------------------------------------------
+
+
+HEADER6 = ["Key Printing", "Function", "System Code A", "System Code B", "Key Command", "Notes"]
+
+
+def test_a_cary_table_is_a_header_of_six_columns_and_rows_of_a_printing_a_function_two_system_codes_and_a_command():
+    rows = [["1", "1", *HEADER6], ["1", "1", "POWER", "POWER ON / OFF", "0x10", "0x09", "0x0C", ""],
+            ["1", "1", "-  VOLUME", "VOLUME DOWN", "0x10", "0x09", "0x11", "a note"]]
+    assert cary.parse(rows) == [(2, "POWER", "POWER ON / OFF", 16, 9, 12, ""), (3, "- VOLUME", "VOLUME DOWN", 16, 9, 17, "a note")]
+    for bad in ([["1", "1", "Key", "Function"]], [["1", "1", *HEADER6], ["1", "1", "POWER", "POWER ON / OFF", "0x10", "0x09"]],
+                [["1", "1", *HEADER6], ["1", "1", "POWER", "POWER ON / OFF", "0x10", "0x09", "zz", ""]]):
+        with pytest.raises(ValueError):
+            cary.parse(bad)
+
+
+def test_a_cary_label_is_the_key_printing_unless_it_is_a_sign_beside_a_word():
+    assert cary.label_of("POWER", "POWER ON / OFF") == "POWER" and cary.label_of("1", "NUMBER KEY PAD 1") == "1"
+    assert cary.label_of("- VOLUME", "VOLUME DOWN") == "VOLUME DOWN" and cary.label_of("VOLUME +", "VOLUME UP") == "VOLUME UP"
+    assert cary.label_of("*.-/", "NUMBER KEY PAD *.-/") == "*.-/" and cary.label_of("USB / SD CARD", "USB/ SD CARD INPUT") == "USB / SD CARD"
+
+
+def cary_files() -> dict[str, dict]:
+    return {load(p)["model"]: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "cary").glob("*.json"))}
+
+
+def test_the_two_cary_files_are_the_two_system_codes_of_one_table_of_38_keys():
+    """``DMS`` (system code A, 0x10) and ``DMS (system code B)`` (0x09): the same 38 commands under each, 76 keys, all Plausible."""
+    files = cary_files()
+    assert sorted(files) == ["DMS", "DMS (system code B)"]
+    for doc in files.values():
+        assert doc["manufacturer"] == "Cary Audio" and doc["controls"] == ["Cary Audio DMS"] and len(doc["keys"]) == 38
+        assert doc["protocol"] == {"name": "RC5", "carrierHz": 36000, "minSends": 1}
+        assert {s["forms"][0]["confidence"] for s in doc["keys"].values()} == {"plausible"}
+    a, b = files["DMS"]["keys"], files["DMS (system code B)"]["keys"]
+    assert {s["forms"][0]["device"] for s in a.values()} == {"0x10"} and {s["forms"][0]["device"] for s in b.values()} == {"0x09"}
+    assert list(a) == list(b) and [s["forms"][0]["function"] for s in a.values()] == [s["forms"][0]["function"] for s in b.values()]
+    assert a["KEY_POWER"]["forms"][0]["function"] == "0x0C" and a["KEY_VOLUME_UP"]["forms"][0]["function"] == "0x10"
+    assert a["KEY_VOLUME_DOWN"]["label"] == "VOLUME DOWN" and "'- VOLUME'" in a["KEY_VOLUME_DOWN"]["forms"][0]["source"]
+    assert a["KEY_LIFT"]["forms"][0]["function"] == "0x1F" and "function 'NAVIGATION LIFT'" in a["KEY_LIFT"]["forms"][0]["source"]
+    assert a["KEY_NETWORK"]["forms"][0]["function"] == "0x22" and "function 'NETWORD INPUT'" in a["KEY_NETWORK"]["forms"][0]["source"]
+    assert "the table's system code B" in b["KEY_POWER"]["forms"][0]["source"] and "RC5 system 9 command 12" in b["KEY_POWER"]["forms"][0]["source"]
+    report = (ROOT / oi.IMPORT_ROOT / oi.REPORT).read_text(encoding="utf-8")
+    figure = lambda what: int(re.search(rf"\| cary: {what} \| ([\d,]+) \|", report)[1].replace(",", ""))      # noqa: E731
+    assert [figure(w) for w in ("rows read", "files", "keys")] == [38, 2, 76]
+
+
+def test_other_sources_hold_most_of_the_cary_codes_and_agree_on_three_names():
+    """The independent check (D280): of the table's 76 codes **67 are held by other sources' RC-5 remotes at the same system code and
+    command** (all 38 of system 16, 29 of the 38 of system 9), **and in only 3 does another source's label name the same function: ``POWER``
+    (0x0C) and ``VOLUME UP`` and ``DOWN`` (0x10, 0x11) at system 16.** The other 35 keys of system 16 are the DMS's own assignment (its keys
+    ``5``, ``6``, ``7``, ``9`` and ``0`` send what the standard sends for ``1`` to ``5``), and the keys of system 9 are nothing like
+    what the other remotes use there: 0 of 58 names agree."""
+    from remote_ledger.keys import load_vocabulary
+
+    vocabulary = load_vocabulary()
+    squash = lambda t: re.sub(r"[^a-z0-9]", "", t.lower())      # noqa: E731
+    ours: dict[tuple[int, int], set[str]] = {}
+    for doc in cary_files().values():
+        for spec in doc["keys"].values():
+            form = spec["forms"][0]
+            ours.setdefault((int(form["device"], 0), int(form["function"], 0)), set()).add(spec["label"])
+    seen: dict[tuple[int, int], set[str]] = {}
+    for path in sorted((ROOT / "remotes").glob("*/*/*.json")):
+        if "official" in path.parts:
+            continue
+        doc = load(path)
+        if doc.get("protocol", {}).get("name") != "RC5":
+            continue
+        for spec in doc["keys"].values():
+            for form in spec["forms"]:
+                if form.get("type") == "irp" and form.get("device") is not None:
+                    key = (int(form["device"], 0), int(form["function"], 0))
+                    if key in ours:
+                        seen.setdefault(key, set()).add(spec["label"])
+    held = [k for k in ours if k in seen]
+    same = [k for k in held if any(squash(a) == squash(b) for a in ours[k] for b in seen[k])
+            or ({vocabulary.resolve(x) for x in ours[k]} - {None}) & ({vocabulary.resolve(x) for x in seen[k]} - {None})]
+    assert (len(ours), len(held), len([k for k in held if k[0] == 16]), len([k for k in held if k[0] == 9])) == (76, 67, 38, 29)
+    assert sorted(same) == [(16, 0x0C), (16, 0x10), (16, 0x11)]
 
 
 # --- Simaudio ----------------------------------------------------------------------------------------------------

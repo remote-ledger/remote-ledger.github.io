@@ -16,7 +16,7 @@ import must meet, and DESIGN.md section 29 describes how this one meets them.
   receivers, the CDS50 and UDP411 players and the Solo and Solo Mini (PDFs on <https://www.arcam.co.uk/>, DESIGN.md
   section 64) and **Cambridge Audio's** two lists of NEC codes that carry no copyright notice (the AXR85 and AXR100 receivers, and
   the 752BD, CXU and CXUHD players' remotes; PDFs on <https://www.cambridgeaudio.com/>, DESIGN.md section 65) and **Hegel's** RC-5 code tables, a page for each of 14 products, the three of 2020 (seven products) with each code's Pronto hex (PDFs on
-  <https://support.hegel.com/>, DESIGN.md section 66) and **Simaudio's** table of IR codes for its Moon amplifiers, CD and DVD players (a three-page PDF on
+  <https://support.hegel.com/>, DESIGN.md section 66) and **Cary Audio's** one-page table of IR remote codes for its DMS network players (a PDF on <https://www.caryaudio.com/>, DESIGN.md section 71) and **Simaudio's** table of IR codes for its Moon amplifiers, CD and DVD players (a three-page PDF on
   <https://simaudio.com/>, DESIGN.md section 68) and **Rotel's** IR hex code PDFs, one for each of 59 models of its amplifiers, CD players, tuners, processors and
   streamers (52 PDFs on <https://www.rotel.com/manuals-resources/ir-codes>, DESIGN.md section 69). They are the makers' documents, not a third party's
   compilation, and they are still imported at Plausible: a manufacturer's word is one source (R19.3).
@@ -54,7 +54,7 @@ the files it is not for. Cambridge's are NEC1 (the address the device, its compl
 product (`AXR85`, `CXU`...); **the AXR85's 23 codes are all in the IR Blaster database's AXR85 remote under the same names**. Hegel's are the ledger's `RC5` too, one
 file for each product (`H190`, `Röst`, `Mohican`...), **where a page has the Pronto hex it is decoded and checked against the row** (all 67
 agree, and are the ledger's own compile of the code but for the last gap) and the `(alt)` row is the toggle bit's twin and no key; a
-product's older table that contradicts its newer one is kept apart as `H590 (2019 table)_questionable`. Simaudio's are `RC5` (the amplifiers' system 16, the CD players' 20) and `RC6` (the DVD
+product's older table that contradicts its newer one is kept apart as `H590 (2019 table)_questionable`. Cary Audio's are `RC5` too, a file for each of the table's two system codes (`DMS` 0x10, `DMS (system code B)` 0x09), the label the key printing. Simaudio's are `RC5` (the amplifiers' system 16, the CD players' 20) and `RC6` (the DVD
 players' control code 4), a file for each Moon product the page names, **70 distinct codes of which 69 are held by other sources' remotes**.
 Rotel's are `NEC1` (the heading's `NEC 8311` is the address 0x83 and the subaddress 0x11, `IR CODE 01` the function), one file for each
 model, one for its alternative code set where it has one, and **each Pronto hex decoded and checked against its heading and code (3,052 of
