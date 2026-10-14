@@ -7,7 +7,7 @@ size, SHA-256, the retrieval date (today: do not pass --date) and the server's `
 (and, for a copy from the Wayback Machine, the address and snapshot it was archived from). Run it, then
 ``tools/official_sheets_to_csv.py <maker>`` for the spreadsheets, review the diff, and import.
 
-    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc|arcam|cambridge|hegel|cary|simaudio|rotel
+    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc|arcam|cambridge|hegel|cary|nad|simaudio|rotel
 """
 
 from __future__ import annotations
@@ -26,6 +26,7 @@ from pathlib import Path
 
 WAYBACK = re.compile(r"^https://web\.archive\.org/web/(?P<snapshot>\d{14})id_/(?P<original>https?://.+)$")
 USER_AGENT = "remote-ledger snapshot (+https://github.com/remote-ledger)"
+NAD = "https://cdn.shopify.com/s/files/1/0784/9751/3722/files/"
 MARANTZ = ("https://www.marantz.com/on/demandware.static/-/Library-Sites-marantz_europe_shared/default/"
            "dw78eade36/archive-downloads/")
 #: maker -> [(file name to keep, url, member of the zip to keep or None)]
@@ -109,6 +110,19 @@ DOCUMENTS = {
     # of 38 keys with two system codes, no copyright or rights text, on its own host.
     "cary": [
         ("DMS-IR-Remote-Codes.pdf", "https://www.caryaudio.com/wp-content/uploads/2018/11/DMS-IR-Remote-Codes.pdf", None),
+    ],
+    # NAD's "IR Commands by Model" pages for its T-series receivers and processors, 3 pages each, no copyright or rights text: the members
+    # of two zips of control documents on its site (the zips also hold RS-232 command lists and a test program, which are not read). The
+    # T775 has two, of 5 February and 24 March 2008 (DESIGN section 72).
+    "nad": [
+        ("T175_IR_Commands.pdf", NAD + "NAD_TXX5_Control_Docs.zip", "T175_IR_Commands.pdf"),
+        ("T765_IR_Commands.pdf", NAD + "NAD_TXX5_Control_Docs.zip", "T765_IR_Commands.pdf"),
+        ("T775_IR_Commands_2008-02.pdf", NAD + "NAD_TXX5_Control_Docs.zip", "T775 IR Commands.pdf"),
+        ("T775_IR_Commands.pdf", NAD + "NAD_TXX5_Control_Docs.zip", "T775_IR_Commands.pdf"),
+        ("T785_IR_Commands.pdf", NAD + "NAD_TXX5_Control_Docs.zip", "T785_IR_Commands.pdf"),
+        ("T187_IR_Commands.pdf", NAD + "NAD_TXX7_Control_Docs.zip", "T187_IR_Commands.pdf"),
+        ("T777_IR_Commands.pdf", NAD + "NAD_TXX7_Control_Docs.zip", "T777_IR_Commands.pdf"),
+        ("T787_IR_Commands.pdf", NAD + "NAD_TXX7_Control_Docs.zip", "T787_IR_Commands.pdf"),
     ],
     # Rotel's IR Codes page (a table of 59 models, each with a link to a PDF of its Pronto hex codes) and the 52 PDFs it links, on Rotel's
     # own host, rotel.com. The page is kept as the evidence of which document is for which model (DESIGN section 69).
@@ -258,6 +272,8 @@ def main(argv: list[str] | None = None) -> int:
             raise SystemExit(f"{name}: {url} did not answer with a PDF ({data[:40]!r}); nothing was pinned")
         (target / name).write_bytes(data)
         entry = {"url": url, "bytes": len(data), "sha256": hashlib.sha256(data).hexdigest()}
+        if member is not None:
+            entry["member"] = member          # the file of the zip at ``url`` that is kept
         archived = WAYBACK.match(url)
         if archived:
             # a copy from the Wayback Machine: the address it was archived from and when, and what the origin said

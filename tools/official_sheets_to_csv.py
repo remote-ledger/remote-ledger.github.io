@@ -10,7 +10,7 @@ every page, ``pages`` (it needs PyMuPDF): one non-empty line to a row, in the or
 puts the page number in a first cell), which the importer parses; or as its tables, ``tables`` (Arcam's, D251): a row is
 the page, the table's number on it and the cells of one table row, so a table's merged cells are the library's reading.
 
-    python3 tools/official_sheets_to_csv.py marantz|anthem|oppo|kef|jvc|arcam|cambridge|hegel|cary|simaudio|rotel
+    python3 tools/official_sheets_to_csv.py marantz|anthem|oppo|kef|jvc|arcam|cambridge|hegel|cary|nad|simaudio|rotel
 """
 
 from __future__ import annotations
@@ -55,6 +55,9 @@ SHEETS = {
         "Hegel_HD12_IR_Codes.pdf", "Hegel_HD25_IR_Codes.pdf", "Hegel_HD30_IR_Codes.pdf", "Hegel_Mohican_IR_Codes.pdf",
         "Hegel_H390_H590_IR_codes_v1.pdf", "Hegel_H95_H120_H190_IR_codes_v2.pdf", "Hegel_P20_P30_IR_codes_v2.pdf")},
     "cary": {"DMS-IR-Remote-Codes.pdf": ["tables"]},
+    "nad": {name: ["cells"] for name in (
+        "T175_IR_Commands.pdf", "T765_IR_Commands.pdf", "T775_IR_Commands_2008-02.pdf", "T775_IR_Commands.pdf", "T785_IR_Commands.pdf",
+        "T187_IR_Commands.pdf", "T777_IR_Commands.pdf", "T787_IR_Commands.pdf")},
     "simaudio": {"Simaudio-RC-5-IR-codes-rev1.1.pdf": ["pages"]},
     "rotel": {"Rotel_IR_Codes.html": ["tables"], **{name: ["pages"] for name in (
         "P5-X5_HEX.PDF",
@@ -217,6 +220,26 @@ def rows_of(path: Path, sheet: str) -> list[list[str]]:
                         if text and (not inside or in_block):
                             items.append((y0, 0, [str(n), "text", str(round(y0)), text]))
                 out.extend(row for _, _, row in sorted(items, key=lambda item: (item[0], item[1])))
+            return out
+        if sheet == "cells":        # a table with no ruling lines (NAD's, D283): the text of every page as rows of cells at a place: a row is
+            out = []                # ``page, y, x, text, x, text...``, the cells of one line (``y`` within 2 points) by their left edge ``x``
+            for n, page in enumerate(pdf, 1):
+                spans = []
+                for block in page.get_text("dict")["blocks"]:
+                    for line in block.get("lines", []):
+                        for span in line["spans"]:
+                            cell = " ".join(span["text"].split())
+                            if cell:
+                                spans.append((line["bbox"][1], line["bbox"][0], cell))
+                spans.sort()
+                rows: list[list] = []
+                for y, x, cell in spans:
+                    if rows and abs(rows[-1][0] - y) <= 2:
+                        rows[-1][1].append((x, cell))
+                    else:
+                        rows.append([y, [(x, cell)]])
+                for y, cells in rows:
+                    out.append([str(n), str(round(y))] + [v for x, cell in sorted(cells) for v in (str(round(x)), cell)])
             return out
         if sheet == "pages":        # every page: a row is the page number and one line of its text
             return [[str(n), line.strip()] for n, page in enumerate(pdf, 1) for line in page.get_text("text").splitlines()

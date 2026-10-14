@@ -12,7 +12,7 @@ from pathlib import Path
 import pytest
 
 from remote_ledger.errors import ValidationError
-from remote_ledger.official import anthem, arcam, cambridge, cary, hegel, jvc, kef, marantz, oppo, rotel, simaudio
+from remote_ledger.official import anthem, arcam, cambridge, cary, hegel, jvc, kef, marantz, nad, oppo, rotel, simaudio
 from remote_ledger.official import importer as oi
 from remote_ledger.official.common import MANIFEST, Report, load_snapshot
 from remote_ledger.serialize import load
@@ -26,7 +26,7 @@ SNAPSHOT = ROOT / oi.SNAPSHOT
 
 def test_every_document_and_csv_is_the_one_the_manifest_pins():
     for maker, retrieved in (("marantz", "2026-10-08"), ("anthem", "2026-10-08"), ("oppo", "2026-10-09"), ("kef", "2026-10-13"),
-                             ("jvc", "2026-10-13"), ("arcam", "2026-10-13"), ("cambridge", "2026-10-13"), ("hegel", "2026-10-13"), ("cary", "2026-10-13"), ("simaudio", "2026-10-13"), ("rotel", "2026-10-13")):
+                             ("jvc", "2026-10-13"), ("arcam", "2026-10-13"), ("cambridge", "2026-10-13"), ("hegel", "2026-10-13"), ("cary", "2026-10-13"), ("nad", "2026-10-14"), ("simaudio", "2026-10-13"), ("rotel", "2026-10-13")):
         snap = load_snapshot(SNAPSHOT / maker)
         assert snap.maker == maker and snap.retrieved == retrieved
         assert snap.documents and snap.sheets
@@ -443,12 +443,12 @@ def test_the_committed_official_import_keeps_r19():
     or Untested, and a citation that names a document the manifest pins, by hash."""
     assert (ROOT / oi.IMPORT_ROOT / "README.md").is_file() and (ROOT / oi.IMPORT_ROOT / oi.REPORT).is_file()
     hashes, dates, snapshots = {}, {}, {}
-    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "arcam", "cambridge", "hegel", "cary", "simaudio", "rotel"):
+    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "arcam", "cambridge", "hegel", "cary", "nad", "simaudio", "rotel"):
         manifest = json.loads((SNAPSHOT / maker / MANIFEST).read_text(encoding="utf-8"))
         for name, entry in manifest["documents"].items():
             hashes[name], dates[name], snapshots[name] = entry["sha256"], manifest["retrieved"], entry.get("snapshot")
     shape = re.compile(r"^(?:marantz\.com archive-downloads|anthemav\.com \(storage\.googleapis\.com/sandbox1-anthemav/an\)"
-                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
+                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|nadelectronics\.com IR command tables|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
                        r"(?:, from the Wayback Machine snapshot (\d{14}))?\) (?:sheet '[^']+' row \d+|page \d+ row \d+|page \d+ '|page \d+ table \d+ row '|page \d+ row ')")
     files = sorted((ROOT / oi.IMPORT_ROOT).rglob("*.json"))
     assert len(files) > 180
@@ -1214,6 +1214,122 @@ def test_other_sources_hold_most_of_the_cary_codes_and_agree_on_three_names():
             or ({vocabulary.resolve(x) for x in ours[k]} - {None}) & ({vocabulary.resolve(x) for x in seen[k]} - {None})]
     assert (len(ours), len(held), len([k for k in held if k[0] == 16]), len([k for k in held if k[0] == 9])) == (76, 67, 38, 29)
     assert sorted(same) == [(16, 0x0C), (16, 0x10), (16, 0x11)]
+
+
+# --- NAD ---------------------------------------------------------------------------------------------------------
+
+
+def nad_sheet(model: str, rows: list[tuple[int, str, str, str, str, str]], comment: str = "") -> list[list[str]]:
+    """A page's cells as ``tools/official_sheets_to_csv.py`` writes them: the model, the header rows, then ``(y, function, address
+    hex, data hex, address dec, data dec)`` rows."""
+    out = [["1", "39", "40", f"Model {model}"],
+           ["1", "64", "40", "Function", "181", "Format", "253", "Address", "303", "Data", "353", "Address", "404", "Data", "454", "Comment"],
+           ["1", "78", "253", "Hex", "303", "Hex", "353", "Dec", "404", "Dec"]]
+    for y, function, ah, dh, ad, dd in rows:
+        out.append(["1", str(y), "40", function, "181", "NEC", "253", ah, "304", dh, "355", ad, "403", dd] + (["454", comment] if comment else []))
+    out.append(["1", "738", "40", "April-27-12", "261", "IR Commands by Model", "516", "Page 52 of 127"])
+    return out
+
+
+def test_a_nad_page_is_a_model_a_header_with_columns_at_places_and_rows_of_cells_at_those_places():
+    sheet = nad_sheet("T187", [(99, "A/V Preset 1", "877C", "3A", "34684", "58"), (112, "Zone Tune Up", "877C", "B5", "34684", "181")], "a note")
+    model, rows = nad.parse(sheet)
+    assert model == "T187" and rows == [(1, "A/V Preset 1", "NEC", 0x877C, 0x3A, "a note"), (1, "Zone Tune Up", "NEC", 0x877C, 0xB5, "a note")]
+    assert nad.columns([nad.cells_of(r) for r in sheet]) == {"function": 40, "format": 181, "address_hex": 253, "data_hex": 303,
+                                                             "address_dec": 353, "data_dec": 404, "comment": 454}
+    assert nad.parse(nad_sheet("T187", [(99, "Mute", "877C", "94", "34684", "148")]))[1][0][5] == ""
+
+
+def test_a_nad_row_whose_hex_and_decimal_are_not_one_number_or_that_has_no_column_is_an_error():
+    for bad in ([(99, "Mute", "877C", "94", "34684", "149")], [(99, "Mute", "877C", "94", "34685", "148")]):
+        with pytest.raises(ValueError, match="not one number"):
+            nad.parse(nad_sheet("T187", bad))
+    off = nad_sheet("T187", [(99, "Mute", "877C", "94", "34684", "148")])
+    off[3][12] = "999"
+    with pytest.raises(ValueError, match="in no column"):
+        nad.parse(off)
+    with pytest.raises(ValueError, match="no header row"):
+        nad.parse(nad_sheet("T187", [])[:1] + [["1", "64", "40", "Function"]])
+    two = nad_sheet("T187", []) + [["2", "39", "40", "Model T777"]]
+    with pytest.raises(ValueError, match="2 models"):
+        nad.parse(two)
+
+
+def nad_files() -> dict[str, dict]:
+    return {load(p)["model"]: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "nad").glob("*.json"))}
+
+
+def test_the_eight_nad_files_are_the_seven_models_and_the_t775s_older_table():
+    """Seven models and eight tables (the T775 has two, of February and March 2008): 797 keys, all Plausible, NEC1 device 0x87 subdevice 0x7C
+    (the address 877C). The T187, T777, T785 and T787 and the T775 of March have the same 100 codes; the T175 lacks ``Speaker A`` and
+    ``Speaker B`` and the T765 ``Audyssey``; the T775 of February has the same 100 codes under abbreviated names (``Vol +``)."""
+    files = nad_files()
+    assert {m: len(d["keys"]) for m, d in files.items()} == {
+        "T175": 98, "T765": 99, "T775": 100, "T775 (February 2008 table)": 100, "T785": 100, "T187": 100, "T777": 100, "T787": 100}
+    for doc in files.values():
+        assert doc["manufacturer"] == "NAD" and doc["protocol"] == {"name": "NEC1", "carrierHz": 38000, "minSends": 1}
+        assert doc["controls"] == [f"NAD {doc['model'].split(' ')[0]}"]
+        for spec in doc["keys"].values():
+            form = spec["forms"][0]
+            assert (form["device"], form["subdevice"], form["confidence"]) == ("0x87", "0x7C", "plausible")
+    codes = {m: {s["forms"][0]["function"]: s["label"] for s in d["keys"].values()} for m, d in files.items()}
+    assert len({tuple(sorted(c)) for m, c in codes.items() if m not in ("T175", "T765")}) == 1
+    t187 = codes["T187"]
+    assert set(t187) - set(codes["T175"]) == {"0xCE", "0xCF"} and {t187[c] for c in set(t187) - set(codes["T175"])} == {"Speaker A", "Speaker B"}
+    assert {t187[c] for c in set(t187) - set(codes["T765"])} == {"Audyssey"}
+    assert codes["T777"] == codes["T787"] == codes["T785"] == codes["T775"] == t187
+    old = codes["T775 (February 2008 table)"]
+    assert set(old) == set(t187) and {c for c in old if old[c] != t187[c]} and old["0x88"] == "Vol +" and t187["0x88"] == "Volume Up"
+    power = files["T187"]["keys"]["KEY_POWER_TOGGLE"]["forms"][0]
+    assert power["function"] == "0x80" and "page 1 row 'Power Toggle' (NEC, address 877C, data 128 = 0x80)" in power["source"]
+    assert files["T187"]["keys"]["KEY_ZONE_TUNE_UP"]["forms"][0]["function"] == "0xB5"
+    report = (ROOT / oi.IMPORT_ROOT / oi.REPORT).read_text(encoding="utf-8")
+    figure = lambda what: int(re.search(rf"\| nad: {what} \| ([\d,]+) \|", report)[1].replace(",", ""))      # noqa: E731
+    assert [figure(w) for w in ("files", "keys")] == [8, 797]
+
+
+def test_the_nad_documents_are_members_of_two_zips_and_the_manifest_says_which():
+    snapshot = load_snapshot(SNAPSHOT / "nad")
+    assert sorted(snapshot.documents) == sorted(nad.DOCUMENTS)
+    for name, entry in snapshot.documents.items():
+        assert entry["url"].startswith("https://cdn.shopify.com/s/files/1/") and entry["url"].endswith(("NAD_TXX5_Control_Docs.zip", "NAD_TXX7_Control_Docs.zip"))
+        assert entry["member"].endswith("IR Commands.pdf") or entry["member"].endswith("IR_Commands.pdf")
+    assert snapshot.documents["T775_IR_Commands_2008-02.pdf"]["member"] == "T775 IR Commands.pdf"
+
+
+def test_other_sources_nad_remotes_hold_58_of_the_100_codes_and_name_43_alike():
+    """The independent check (D284): the 100 distinct codes (NEC1 device 0x87 subdevice 0x7C) **are held by other sources' NEC1 remotes in
+    58 cases** (15 remotes, the IR Blaster database's NAD ones), **and in 43 of them some other source's label is the same function by the
+    vocabulary or the spelling**; the 15 that the comparison does not count are mostly the same function in other words (``Tuner 1`` is
+    the remote's ``1``, ``A/V Preset 1`` its ``AV PRESET``). **42 codes are nobody else's.**"""
+    from remote_ledger.keys import load_vocabulary
+
+    vocabulary = load_vocabulary()
+    squash = lambda t: re.sub(r"[^a-z0-9]", "", t.lower())      # noqa: E731
+    ours: dict[tuple[int, int, int], set[str]] = {}
+    for doc in nad_files().values():
+        for spec in doc["keys"].values():
+            form = spec["forms"][0]
+            ours.setdefault((int(form["device"], 0), int(form["subdevice"], 0), int(form["function"], 0)), set()).add(spec["label"])
+    seen: dict[tuple[int, int, int], set[str]] = {}
+    remotes: set[str] = set()
+    for path in sorted((ROOT / "remotes").glob("*/*/*.json")):
+        if "official" in path.parts:
+            continue
+        doc = load(path)
+        if doc.get("protocol", {}).get("name") != "NEC1":
+            continue
+        for spec in doc["keys"].values():
+            for form in spec["forms"]:
+                if form.get("type") == "irp" and form.get("device") is not None and form.get("subdevice") is not None:
+                    key = (int(form["device"], 0), int(form["subdevice"], 0), int(form["function"], 0))
+                    if key in ours:
+                        seen.setdefault(key, set()).add(spec["label"])
+                        remotes.add(path.name)
+    held = [k for k in ours if k in seen]
+    same = [k for k in held if any(squash(a) == squash(b) for a in ours[k] for b in seen[k])
+            or ({vocabulary.resolve(x) for x in ours[k]} - {None}) & ({vocabulary.resolve(x) for x in seen[k]} - {None})]
+    assert (len(ours), len(held), len(same), len(remotes)) == (100, 58, 43, 15)
 
 
 # --- Simaudio ----------------------------------------------------------------------------------------------------
