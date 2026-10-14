@@ -1,4 +1,5 @@
-"""NAD's IR command tables for its T-series receivers and processors (DESIGN section 72).
+"""NAD's IR command tables for its T-series receivers and processors (DESIGN section 72) and its Crestron IR files for its older products
+(DESIGN section 73, at the end of this docstring).
 
 NAD's control documents for the T175, T765, T775, T785, T187, T777 and T787 each hold three pages, ``IR Commands by Model``: a table of
 every function the unit's remote sends, ``Function``, ``Format`` (``NEC``), the ``Address`` and the ``Data`` byte of the NEC code in
@@ -12,6 +13,17 @@ A key is the ledger's ``NEC1``: the address ``877C`` is two bytes, **the device 
 number are read and must agree**; a row whose two disagree is an error, not a guess. The label is the function as written
 (``Zone Tune Up``, ``DB (XM or DAB)``). The tables are the codes of IR channel 0 (the default), which is standard NEC; NAD's
 ``IR Channels`` note says that a channel above 0 is not (the tables do not list them, and the note is not pinned).
+
+**The Crestron files** (January 2005, 16 ``.ir`` files and a ``readme.pdf``) are binary records, ``length, tag, length - 2 bytes`` (the
+length counts itself and the tag), written out by ``tools/official_sheets_to_csv.py`` as ``number, tag, body`` in hexadecimal. A header
+(tags ``f0`` to ``f7``: ``IR``, a comment, the date ``012005``, ``NAD``, the models, ``<none>``, two bytes, the kind of product) is
+followed by one record for each key naming it (tag = its number, body = its name), a record ``ff`` and one record for each key with
+its signal: **a timing table, then 32 data bits as the bytes 0 and 1, then a trailer**. **There are two such frames**: the one with the
+timing table 21, 64, 86, 171, 343 carrier cycles (a 9 ms mark and a 4.5 ms space for the lead, 0.55 ms marks, 1.68 ms spaces for a
+one) is NEC; the one with 21, 64, 171, 1692, 3707 (a 4.5 ms mark and a 4.5 ms space, no 9 ms) is ``NECx1``. **The bits go least
+significant first** (the receivers' are then 0x87, 0x7C, the function and its complement, as the T-series tables and every other
+source's NAD remote have them), and **the fourth byte must be the complement of the third**. The readme says which file is for which
+model; each model of a file is a file of its own.
 """
 
 from __future__ import annotations
@@ -27,6 +39,13 @@ from .common import IMPORT_ROOT, TIER, Report, Snapshot, slug
 MAKER = "nad"
 BRAND = "NAD"
 PROTOCOL = {"name": "NEC1", "carrierHz": 38000, "minSends": 1}
+PROTOCOLS = {"NEC1": PROTOCOL, "NECx1": {"name": "NECx1", "carrierHz": 38000, "minSends": 1}}
+README = "crestron_readme.pdf"
+CRESTRON = ("cd1", "cd2", "cd3", "cd4", "cd5", "dvd1", "dvd2", "receiver1", "receiver2_1", "receiver2_2", "receiver3", "receiver4", "tape",
+            "tuner", "tv1", "tv2")
+#: a key's signal: the head up to the 32 data bits and the tail after them, for NEC (A) and for NECx1 (B)
+FRAMES = {"NEC1": (bytes.fromhex("6922020700150040005600ab015705f10e5043"), bytes.fromhex("054206")),
+          "NECx1": (bytes.fromhex("692203050015004000ab069c0e7b22"), bytes.fromhex("03220004"))}
 #: the document -> the model its table is for, and the file's name where that is not the model's
 DOCUMENTS: dict[str, tuple[str, str]] = {
     "T175_IR_Commands.pdf": ("T175", "T175"),
@@ -98,7 +117,125 @@ def key_names(labels: list[str]) -> list[str]:
     return out
 
 
+def decode_frame(body: bytes) -> tuple[str, tuple[int, int, int, int]] | None:
+    """``(protocol, the four bytes)`` of a key's signal, or None where it is neither of the two frames: the head, 32 bits as the bytes 0 and
+    1, the tail. The bits go least significant first, so the first eight are the first byte."""
+    for protocol, (head, tail) in FRAMES.items():
+        if body.startswith(head) and body.endswith(tail) and len(body) == len(head) + 32 + len(tail):
+            bits = body[len(head):len(head) + 32]
+            if set(bits) <= {0, 1}:
+                v = tuple(sum(bits[8 * i + k] << k for k in range(8)) for i in range(4))
+                return protocol, v          # type: ignore[return-value]
+    return None
+
+
+def parse_ir(rows: list[list[str]]) -> tuple[dict[int, str], dict[int, str], list[tuple[int, int, bytes]]]:
+    """``(header, names, keys)`` of a Crestron file's records: the header's tags ``f0`` to ``f7`` as text, the key names by number, and
+    each key's ``(number, the record's number, the body)`` after the record ``ff``."""
+    header: dict[int, str] = {}
+    names: dict[int, str] = {}
+    keys: list[tuple[int, int, bytes]] = []
+    past = False
+    for number, tag, body in ((int(r[0]), int(r[1], 16), bytes.fromhex(r[2])) for r in rows):
+        if tag == 0xFF:
+            past = True
+        elif tag >= 0xF0 and not past:
+            header[tag] = body.decode("latin1") if all(32 <= c < 127 for c in body) else body.hex()
+        elif not past:
+            names[tag] = body.decode("latin1")
+        else:
+            keys.append((tag, number, body))
+    return header, names, keys
+
+
+def readme_models(rows: list[list[str]]) -> dict[str, str]:
+    """The readme's ``file -> the models text``: ``dvd1.ir L55, L56, T550, T562`` on one line, or the models on the line after the file."""
+    lines = [r[1].strip() for r in rows]
+    out: dict[str, str] = {}
+    for i, line in enumerate(lines):
+        m = re.match(r"^(\w+\.ir)\s*(.*)$", line)
+        if m:
+            out[m[1]] = m[2].strip() or (lines[i + 1] if i + 1 < len(lines) and ".ir" not in lines[i + 1] else "")
+    return out
+
+
+def crestron_models(file: str, text: str, header: dict[int, str]) -> list[str]:
+    """The models of a file: the readme's list; ``All Others`` is the header's kind of product, ``(all others)``; ``Second Zone Commands`` is
+    the header's own words. A list must be the header's (a different one is an error)."""
+    kind = header.get(0xF4, "")
+    if text == "All Others":
+        return [f"{kind} (all others)"]
+    if text == "Second Zone Commands":
+        return [kind]
+    models = [m.strip() for m in text.split(",") if m.strip()]
+    if models != [m.strip() for m in kind.split(",")]:
+        raise ValueError(f"{file}: the readme says {models} and the file says {kind!r}")
+    return models
+
+
+def build_crestron(snapshot: Snapshot, authored: dict[tuple[str, str], str], report: Report) -> list[tuple[str, dict[str, Any]]]:
+    gate: dict[tuple, str | None] = {}
+    out: list[tuple[str, dict[str, Any]]] = []
+    where = readme_models(snapshot.sheet_of(README, "pages"))
+    readme_sha = snapshot.sha(README)
+    for stem in CRESTRON:
+        file = f"crestron_{stem}.ir"
+        header, names, keys = parse_ir(snapshot.sheet_of(file, "records"))
+        if f"{stem}.ir" not in where:
+            raise ValueError(f"the readme does not list {stem}.ir")
+        text = where[f"{stem}.ir"]
+        models = crestron_models(stem, text, header)
+        sha = snapshot.sha(file)
+        report.count(MAKER, f"{file}: keys read", len(keys))
+        built: list[tuple[str, dict[str, Any], str]] = []
+        for tag, number, body in keys:
+            decoded = decode_frame(body)
+            if decoded is None or tag not in names:
+                report.unrepresented[(MAKER, file, "a key whose signal is neither of the two frames" if decoded is None else "a key with no name")] += 1
+                continue
+            protocol, (device, subdevice, function, complement) = decoded
+            if function ^ complement != 0xFF:
+                report.unrepresented[(MAKER, file, "a frame whose fourth byte is not the complement of the third")] += 1
+                continue
+            if (protocol, device, subdevice, function) not in gate:
+                gate[(protocol, device, subdevice, function)] = form_compiles(IMPORT_ROOT, PROTOCOLS[protocol], "K", {
+                    "id": "primary.irp", "type": "irp", "device": device, "subdevice": subdevice, "function": function,
+                    "confidence": TIER, "source": "probe"})
+            if gate[(protocol, device, subdevice, function)]:
+                report.unrepresented[(MAKER, file, f"does not compile: {gate[(protocol, device, subdevice, function)]}")] += 1
+                continue
+            name = names[tag]
+            cite = (f"nadelectronics.com Crestron IR files/{file}@{sha} (retrieved {snapshot.retrieved}) key {tag} '{name}' (record "
+                    f"{number}, frame {device:02X} {subdevice:02X} {function:02X} {complement:02X}): {protocol} device 0x{device:02X} "
+                    f"subdevice 0x{subdevice:02X} function {function}; the readme ({README}@{readme_sha}) lists the file for "
+                    f"{text if text.startswith(('All', 'Second')) else ', '.join(models)}")
+            built.append((name, {"id": "primary.irp", "type": "irp", "device": device, "subdevice": subdevice, "function": function,
+                                 "confidence": TIER, "source": cite}, protocol))
+        if not built:
+            continue
+        if len({b[2] for b in built}) != 1:
+            raise ValueError(f"{file}: its keys are of two protocols")
+        protocol = built[0][2]
+        for model in models:
+            final = model
+            while (BRAND.casefold(), final.casefold()) in authored:
+                renamed = f"{final} (NAD Crestron file)"
+                report.notes.append((MAKER, final, f"kept as '{renamed}': the ledger's {authored[(BRAND.casefold(), final.casefold())]} has the name (R15)"))
+                final = renamed
+            keys_out = {n: {"label": b[0], "forms": [b[1]]} for n, b in zip(key_names([b[0] for b in built]), built)}
+            report.count(MAKER, "files")
+            report.count(MAKER, "keys", len(keys_out))
+            out.append((f"{IMPORT_ROOT}/{MAKER}/{slug(final)}.json",
+                        {"manufacturer": BRAND, "model": final, "aliases": [], "controls": [f"{BRAND} {model}"],
+                         "protocol": dict(PROTOCOLS[protocol]), "keys": keys_out}))
+    return out
+
+
 def build(snapshot: Snapshot, authored: dict[tuple[str, str], str], report: Report) -> list[tuple[str, dict[str, Any]]]:
+    return build_tables(snapshot, authored, report) + build_crestron(snapshot, authored, report)
+
+
+def build_tables(snapshot: Snapshot, authored: dict[tuple[str, str], str], report: Report) -> list[tuple[str, dict[str, Any]]]:
     gate: dict[tuple, str | None] = {}
     out: list[tuple[str, dict[str, Any]]] = []
     for file, (expected, name) in DOCUMENTS.items():

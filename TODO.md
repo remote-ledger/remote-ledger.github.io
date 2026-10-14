@@ -72,13 +72,12 @@ Land it in two PRs, code and then data.
       a 2014 guide (ver 0.44), long hex too, for the DLA-RS49 to RS67 and X500 to X900; the page
       answers 404 and no copy has been found (a search found the 2011 remote control guide v1.4, an earlier edition of the family
       §63 reads, with the same grant, and the 2014 RS-232 specifications, which have no code table; the 2013 models' remote
-      codes are in JVC's mobile user guide, 35 codes under "(c) 2013 JVCKENWOOD", so private). **Leads not yet read** (NAD's T-series IR tables, from its Txx5 and Txx7 control documents, are read: §72): NAD's
-      `NAD-CrestronIR.zip` (17 Crestron `.ir` files of 2005, a readme maps them to models; NEC, customer code 877C; the binary
-      format is not documented and was not decoded) and its two Pronto `.ccf` files, on nadelectronics.com/software; and **Linn's 22-page
-      legacy PDF** (`Linn_RC5_Codes_v0102.pdf`, 2011, the codes of
-      all the older products by address, no notice text), which §67 does not read because its table cells run over several lines
-      and the text cannot say which line belongs to which code (`0x12` is `Phono 1 Laser Auxiliary 2` with `Auxiliary 2` again
-      below the next row): it needs the page images. Each is a document
+      codes are in JVC's mobile user guide, 35 codes under "(c) 2013 JVCKENWOOD", so private). **Leads not yet read:** NAD's two Pronto `.ccf` files (`NADRCVRandDVD.ccf` and `NAD_C420.ccf`, on nadelectronics.com/software: the
+      Pronto editor's binary format, not decoded; NAD's T-series IR tables are §72 and its Crestron `.ir` files, which turned out to be
+      NEC frames, §73); and **Linn's 22-page legacy PDF** (`Linn_RC5_Codes_v0102.pdf`, 2011, the codes of all the older products by
+      address, no notice text), **which goes to the private repository if it is read** (§70: Linn's table is there), and which §67
+      did not read because its table cells run over several lines and the text cannot say which line belongs to which code
+      (`0x12` is `Phono 1 Laser Auxiliary 2` with `Auxiliary 2` again below the next row): it needs the page images. Each is a document
       pinned by hash as D123 does it; a PDF is read as the lines of text of its
       pages (KEF's was the first, D243, JVC's the second, D247), which suits a
       table and not prose. Kaleidescape's PDF says "All rights reserved": a source

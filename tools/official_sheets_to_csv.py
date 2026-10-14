@@ -55,9 +55,13 @@ SHEETS = {
         "Hegel_HD12_IR_Codes.pdf", "Hegel_HD25_IR_Codes.pdf", "Hegel_HD30_IR_Codes.pdf", "Hegel_Mohican_IR_Codes.pdf",
         "Hegel_H390_H590_IR_codes_v1.pdf", "Hegel_H95_H120_H190_IR_codes_v2.pdf", "Hegel_P20_P30_IR_codes_v2.pdf")},
     "cary": {"DMS-IR-Remote-Codes.pdf": ["tables"]},
-    "nad": {name: ["cells"] for name in (
+    "nad": {**{name: ["records"] for name in (
+        "crestron_cd1.ir", "crestron_cd2.ir", "crestron_cd3.ir", "crestron_cd4.ir", "crestron_cd5.ir", "crestron_dvd1.ir", "crestron_dvd2.ir",
+        "crestron_receiver1.ir", "crestron_receiver2_1.ir", "crestron_receiver2_2.ir", "crestron_receiver3.ir", "crestron_receiver4.ir",
+        "crestron_tape.ir", "crestron_tuner.ir", "crestron_tv1.ir", "crestron_tv2.ir")},
+        "crestron_readme.pdf": ["pages"], **{name: ["cells"] for name in (
         "T175_IR_Commands.pdf", "T765_IR_Commands.pdf", "T775_IR_Commands_2008-02.pdf", "T775_IR_Commands.pdf", "T785_IR_Commands.pdf",
-        "T187_IR_Commands.pdf", "T777_IR_Commands.pdf", "T787_IR_Commands.pdf")},
+        "T187_IR_Commands.pdf", "T777_IR_Commands.pdf", "T787_IR_Commands.pdf")}},
     "simaudio": {"Simaudio-RC-5-IR-codes-rev1.1.pdf": ["pages"]},
     "rotel": {"Rotel_IR_Codes.html": ["tables"], **{name: ["pages"] for name in (
         "P5-X5_HEX.PDF",
@@ -184,7 +188,25 @@ class _Table(HTMLParser):
             self.cell.append(data)
 
 
+def ir_records(data: bytes) -> list[list[str]]:
+    """A Crestron IR driver file (NAD's, D287) as its records: each is ``length, tag, length - 2 bytes`` (the length counts itself and the
+    tag) and the file ends with one zero byte. A row is the record's number, its tag and its body, both in hexadecimal."""
+    out: list[list[str]] = []
+    i = 0
+    while i < len(data) - 1:
+        n = data[i]
+        if n < 2 or i + n > len(data):
+            raise ValueError(f"a record of length {n} at byte {i} does not fit the file")
+        out.append([str(len(out)), f"{data[i + 1]:02x}", data[i + 2:i + n].hex()])
+        i += n
+    if data[i:] != b"\x00":
+        raise ValueError(f"the file does not end with one zero byte but with {data[i:].hex()!r}")
+    return out
+
+
 def rows_of(path: Path, sheet: str) -> list[list[str]]:
+    if path.suffix.lower() == ".ir":
+        return ir_records(path.read_bytes())
     if path.suffix.lower() == ".html":
         parser = _Table(every=sheet == "tables", links=sheet == "tables")
         parser.feed(path.read_text(encoding="utf-8"))
