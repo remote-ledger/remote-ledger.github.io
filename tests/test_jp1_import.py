@@ -863,7 +863,7 @@ def test_the_jp1_rc5_6_combo_upgrades_send_the_codes_the_other_sources_have_and_
                         codes[protocol].add((device, function))
                         if protocol == "RC5" and device == 0:
                             labels.setdefault(function, Counter())[key] += 1
-    assert (len(codes["RC5"]), len(codes["RC6"])) == (2_482, 1_238)
+    assert (len(codes["RC5"]), len(codes["RC6"])) == (2_491, 1_238)
     counts: Counter = Counter()
     cursor: dict[str, int] = {}
     for protocol in ("RC5", "RC6"):

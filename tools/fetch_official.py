@@ -7,7 +7,7 @@ size, SHA-256, the retrieval date (today: do not pass --date) and the server's `
 (and, for a copy from the Wayback Machine, the address and snapshot it was archived from). Run it, then
 ``tools/official_sheets_to_csv.py <maker>`` for the spreadsheets, review the diff, and import.
 
-    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc|arcam|cambridge|hegel|simaudio|rotel
+    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc|arcam|cambridge|hegel|cary|simaudio|rotel
 """
 
 from __future__ import annotations
@@ -104,6 +104,11 @@ DOCUMENTS = {
     # integrated amplifiers, CD and DVD players, three pages with no copyright or rights text, on its own host.
     "simaudio": [
         ("Simaudio-RC-5-IR-codes-rev1.1.pdf", "https://simaudio.com/wp-content/uploads/2019/11/Simaudio-RC-5-IR-codes-rev1.1.pdf", None),
+    ],
+    # Cary Audio's "DMS IR Remote Codes" (one page, Word to PDF, 2 November 2018): the RC-5 codes of its DMS network music players, a table
+    # of 38 keys with two system codes, no copyright or rights text, on its own host.
+    "cary": [
+        ("DMS-IR-Remote-Codes.pdf", "https://www.caryaudio.com/wp-content/uploads/2018/11/DMS-IR-Remote-Codes.pdf", None),
     ],
     # Rotel's IR Codes page (a table of 59 models, each with a link to a PDF of its Pronto hex codes) and the 52 PDFs it links, on Rotel's
     # own host, rotel.com. The page is kept as the evidence of which document is for which model (DESIGN section 69).

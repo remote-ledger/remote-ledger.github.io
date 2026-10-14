@@ -10,7 +10,7 @@ every page, ``pages`` (it needs PyMuPDF): one non-empty line to a row, in the or
 puts the page number in a first cell), which the importer parses; or as its tables, ``tables`` (Arcam's, D251): a row is
 the page, the table's number on it and the cells of one table row, so a table's merged cells are the library's reading.
 
-    python3 tools/official_sheets_to_csv.py marantz|anthem|oppo|kef|jvc|arcam|cambridge|hegel|simaudio|rotel
+    python3 tools/official_sheets_to_csv.py marantz|anthem|oppo|kef|jvc|arcam|cambridge|hegel|cary|simaudio|rotel
 """
 
 from __future__ import annotations
@@ -54,6 +54,7 @@ SHEETS = {
         "Hegel_Rost_IR_Codes.pdf", "Hegel_H190_IR_Codes.pdf", "Hegel_H360_IR_Codes.pdf", "Hegel_H590_IR_Codes.pdf", "Hegel_H90_IR_Codes.pdf",
         "Hegel_HD12_IR_Codes.pdf", "Hegel_HD25_IR_Codes.pdf", "Hegel_HD30_IR_Codes.pdf", "Hegel_Mohican_IR_Codes.pdf",
         "Hegel_H390_H590_IR_codes_v1.pdf", "Hegel_H95_H120_H190_IR_codes_v2.pdf", "Hegel_P20_P30_IR_codes_v2.pdf")},
+    "cary": {"DMS-IR-Remote-Codes.pdf": ["tables"]},
     "simaudio": {"Simaudio-RC-5-IR-codes-rev1.1.pdf": ["pages"]},
     "rotel": {"Rotel_IR_Codes.html": ["tables"], **{name: ["pages"] for name in (
         "P5-X5_HEX.PDF",
