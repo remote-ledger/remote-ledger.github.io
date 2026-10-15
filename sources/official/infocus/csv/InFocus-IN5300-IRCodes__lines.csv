@@ -1,0 +1,91 @@
+1,123,209,Technical Documentation
+1,172,90,Product,180,IN5302 IN5304
+1,220,90,Title,180,IR Codes & Documentation
+1,261,36,Introduction:
+1,288,36,IR (infrared) light can be used to send commands to and retrieve status information from many consumer devices. IR
+1,300,36,"communication can be used for two-way data communication (mostly between computers and PDAs), though most"
+1,311,36,"display devices, including projectors, are configured to receive commands only. Commonly the IR capability of projectors"
+1,323,36,"is used in conjunction with the factory-provided remote control. However, if there are multiple devices that need control,"
+1,334,36,you may wish to use a universal or learning remote.
+1,357,36,Many universal remote controls can only control devices that the remote manufacturer has included in their table of pre-
+1,369,36,programmed codes. These types of universal remote controls aren’t usually capable of controlling projectors and other
+1,380,36,less common equipment. A universal remote with a “Learning” function is suitable for use with projectors and other
+1,392,36,"unique components (game consoles, media PCs & extenders, curtain/lighting controls, etc.). Many other programmable"
+1,403,36,remotes are also able to work with projectors and other equipment.
+1,426,36,"If you need help setting up your universal “Learning” remote, please refer to the universal remote manufacturer’s"
+1,438,36,documentation.
+1,460,36,"The directions below are intended to help you set up a programmable remote, using the codes for your InFocus projector."
+1,518,36,Configuration:
+1,559,68,InFocus projectors use the NEC IR protocol.
+1,594,68,The customer code is used to identify the sender of the IR transmission. InFocus Corporation’s customer code is
+1,605,72,hexadecimal value: 0x4E87
+1,640,68,"Please note that the letter O is not used in hexadecimal, only zeros are used."
+2,52,36,Supported Commands:
+2,84,45,Key Name,198,Description,415,Hexadecimal
+2,99,45,Menu,198,Toggles menu state up or down,436,02h
+2,115,45,Brightness Plus,198,Increases brightness,436,03h
+2,130,45,Volume Minus,198,Decreases volume,436,04h
+2,146,45,Brightness Minus,198,Decreases brightness,436,07h
+2,161,45,Volume Plus,198,Increases volume,436,08h
+2,177,45,Help,198,Displays help menu,435,0Ah
+2,192,45,Right Mouse Button,198,Sends right mouse click,436,0Bh
+2,208,45,Left Mouse Button,198,Sends left mouse click,436,0Ch
+2,223,45,Standby,198,Toggles standby state on or off,435,0Dh
+2,239,45,Freeze,198,Toggles freeze state on or off,436,0Eh
+2,254,45,Source Select,198,Selects next available source,436,10h
+2,270,45,Cursor Left,198,Moves menu cursor left,436,11h
+2,285,45,Cursor Right,198,Moves menu cursor right,436,12h
+2,301,45,Cursor Up,198,Moves menu cursor up,436,13h
+2,316,45,Cursor Down,198,Moves menu cursor down,436,14h
+2,332,45,Power,198,Toggles power state on or off,436,17h
+2,347,45,Computer Toggle,198,Selects next available computer source,436,19h
+2,363,45,Video Toggle,198,Selects next available video source,435,1Ah
+2,378,45,Keystone Plus,198,Increases keystone,436,20h
+2,394,45,Keystone Minus,198,Decreases keystone,436,21h
+2,409,45,Next Slide,198,Moves to next slide in powerpoint,436,24h
+2,425,45,Previous Slide,198,Moves to previous slide in powerpoint,436,25h
+2,440,45,Zoom Plus,198,Increases zoom ratio,436,26h
+2,456,45,Zoom Minus,198,Decreases zoom ratio,436,27h
+2,471,45,Zoom Toggle,198,Toggles zoom state on or off,436,28h
+2,487,45,Mute,198,Toggles audio mute state on or off,436,29h
+2,502,45,Custom,198,Performs programmed action of Custom Key,436,2Bh
+2,518,45,Presets,198,Toggles through available presets,436,2Ch
+2,533,45,Source1,198,Selects programmed source,435,2Dh
+2,549,45,Source2,198,Selects programmed source,436,2Eh
+2,564,45,Source3,198,Selects programmed source,436,2Fh
+2,580,45,Source4,198,Selects programmed source,436,30h
+2,595,45,Blank,198,Toggles state of blank screen on or off,436,31h
+2,611,45,Select,198,Selects current menu item,436,32h
+2,626,45,Auto Image,198,Activates automatic image re ‐ acquisition,436,33h
+2,642,45,Resize,198,Toggles through available resize modes,436,34h
+2,657,45,Overscan,198,Toggles overscan state on or off,436,35h
+2,673,45,Contrast Plus,198,Increases contrast,436,36h
+2,688,45,Contrast Minus,198,Decreases contrast,436,37h
+2,704,45,Discrete Power Off,198,Commands the system to power down,436,39h
+2,719,45,Discrete Power On,198,Commands the system to power up,435,3Ah
+2,735,45,Discrete Resize Native,198,Selects the Native aspect ratio,436,3Bh
+2,750,45,Discrete Resize 16:9,198,Selects the 16:9 aspect ratio,436,3Ch
+3,40,45,Discrete Resize 4:3,198,Selects the 4:3 aspect ratio,435,3Dh
+3,55,45,Discrete Resize Letterbox,198,Selects the Letterbox aspect ratio,436,3Eh
+3,72,45,Discrete Resize Natural,198,Selects the Natural Wide/Panorama aspect
+3,86,45,Wide/Panorama,198,ratio,436,3Fh
+3,101,45,Discrete User Preset 1,198,Selects the User Preset 1,436,40h
+3,120,198,Selects the User Preset 2 (or selects ISF Day
+3,133,198,preset if projector supports that instead of
+3,147,45,Discrete User Preset 2,198,user preset 2),436,41h
+3,165,198,Selects the User Preset 3 (or selects ISF Night
+3,179,198,preset if projector supports that instead of
+3,192,45,Discrete User Preset 3,198,user preset 3),436,42h
+3,208,45,Discrete Blank Off,198,Turns off the blank screen,436,43h
+3,223,45,Discrete Blank On,198,Turns on the blank screen,436,44h
+3,239,45,Discrete Resize Auto,198,Selects the Auto aspect ratio,436,45h
+3,254,45,Discrete Resize 15:9,198,Selects the 15:9 aspect ratio,436,46h
+3,270,45,Discrete Resize 16:10,198,Selects the 16:10 aspect ratio,436,47h
+3,285,45,Focus Near,198,Motorized focus nearer,436,48h
+3,301,45,Focus Far,198,Motorized focus further,436,49h
+3,316,45,Zoom In,198,Motorized zoom in,435,4Ah
+3,332,45,Zoom Out,198,Motorized zoom out,436,4Bh
+3,347,45,Shift Left,198,Motorized lens shift move left,436,4Ch
+3,363,45,Shift Right,198,Motorized lens shift move right,435,4Dh
+3,378,45,Shift Up,198,Motorized lens shift move up,436,4Eh
+3,394,45,Shift Down,198,Motorized lens shift move down,436,4Fh

@@ -7,7 +7,7 @@ size, SHA-256, the retrieval date (today: do not pass --date) and the server's `
 (and, for a copy from the Wayback Machine, the address and snapshot it was archived from). Run it, then
 ``tools/official_sheets_to_csv.py <maker>`` for the spreadsheets, review the diff, and import.
 
-    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc|arcam|cambridge|hegel|cary|nad|simaudio|rotel
+    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc|arcam|infocus|cambridge|hegel|cary|nad|simaudio|rotel
 """
 
 from __future__ import annotations
@@ -18,6 +18,7 @@ import json
 import re
 import sys
 import time
+import urllib.error
 import urllib.parse
 import urllib.request
 import zipfile
@@ -96,6 +97,72 @@ DOCUMENTS = {
         ("Solo_bar_IR_codes_V2.0.pdf", "https://www.arcam.co.uk/ugc/tor/Solobar/IRcodes/Solo_bar_IR_codes_V2.0.pdf", None),
         ("Solo_Movie-Movie_2.1-Music_2_RS232_SH284E_A.pdf",
          "https://www.arcam.co.uk/ugc/tor/solomovie/RS232/SH284E_Solo_Movie_RS232_issue_A_130116.pdf", None),
+    ],
+    # InFocus's IR code PDFs for its projectors (DESIGN section 75): its own site is gone (infocus.com no longer serves them), so these are
+    # the Wayback Machine's copies, each the snapshot named in its URL. 29 of the 43 distinct PDFs of 54 addresses found (an `also` names the others that are the same
+    # file under another product page); not pinned: the IN80's and the JTouch's (a copyright notice), the LP500/LP530's (the archive holds the site's
+    # "page does not exist"), the SP8604's and the IN3118HD's (the table is an image), the IN5550's (two tables of codes with no customer code),
+    # the IN3900LB's (a specification), the IN110's, IN3114's and IN3910's (the table is an image), the LP800's and LP810's (two-digit codes with no protocol or customer code) and two Mondopad documents
+    # that carry the same 22 rows as the one that names the models.
+    "infocus": [
+        ("540-640-IR_codes.pdf",
+         "https://web.archive.org/web/20040212180123id_/http://www.infocus.com:80/service/lp640/downloads/540-640-IR_codes.pdf", None),  # also InFocus-LP540-IRCodes.pdf, InFocus-LP640-IRCodes.pdf
+        ("IN2x_IR_Codes.pdf",
+         "https://web.archive.org/web/20060508074130id_/http://www.infocus.com/service/in24/downloads/IN2x_IR_Codes.pdf", None),
+        ("IN5140_IRCodes.pdf",
+         "https://web.archive.org/web/20140705063913id_/http://infocus.com/resources/documents/IN5140/IN5140_IRCodes.pdf", None),
+        ("IN5148HD-IR-Codes.pdf",
+         "https://web.archive.org/web/20170506020520id_/http://www.infocus.com:80/resources/documents/IN5148HD-IR-Codes.pdf", None),
+        ("IN7x_IR_Codes.pdf",
+         "https://web.archive.org/web/20060312091902id_/http://www.infocus.com/service/IN72/downloads/IN7x_IR_Codes.pdf", None),  # also InFocus-IN70-IRCodes.pdf
+        ("InFocus-IN100-IRCodes.pdf",
+         "https://web.archive.org/web/20140617004308id_/http://infocus.com:80/resources/documents/IN100/InFocus-IN100-IRCodes.pdf", None),
+        ("InFocus-IN1100-IRCodes.pdf",
+         "https://web.archive.org/web/20140705062522id_/http://infocus.com/resources/documents/IN1100/InFocus-IN1100-IRCodes.pdf", None),
+        ("InFocus-IN20-IRCodes.pdf",
+         "https://web.archive.org/web/20140705034713id_/http://infocus.com/resources/documents/IN20/InFocus-IN20-IRCodes.pdf", None),
+        ("InFocus-IN2100-IRCodes.pdf",
+         "https://web.archive.org/web/20140705022822id_/http://infocus.com/resources/documents/IN2100/InFocus-IN2100-IRCodes.pdf", None),
+        ("InFocus-IN3100-IRCodes.pdf",
+         "https://web.archive.org/web/20140705014410id_/http://infocus.com/resources/documents/IN3100/InFocus-IN3100-IRCodes.pdf", None),
+        ("InFocus-IN32-IRcodes.pdf",
+         "https://web.archive.org/web/20140705042859id_/http://infocus.com/resources/documents/IN30/InFocus-IN32-IRcodes.pdf", None),  # also InFocus-IN34-IRcodes.pdf
+        ("InFocus-IN5300-IRCodes.pdf",
+         "https://web.archive.org/web/20140705055607id_/http://infocus.com/resources/documents/IN5300/InFocus-IN5300-IRCodes.pdf", None),
+        ("InFocus-IN5310-IRCodes.pdf",
+         "https://web.archive.org/web/20140705075434id_/http://infocus.com/resources/documents/IN5310/InFocus-IN5310-IRCodes.pdf", None),  # also InFocus-IN5310HD-IRCodes.pdf
+        ("InFocus-IN5500-IRCodes.pdf",
+         "https://web.archive.org/web/20140705081359id_/http://infocus.com/resources/documents/IN5500/InFocus-IN5500-IRCodes.pdf", None),  # also InFocus-IN5532-IN5534-IRCodes.pdf, InFocus-IN5533-IN5535-IRCodes.pdf
+        ("InFocus-LP120-IRCodes.pdf",
+         "https://web.archive.org/web/20140705074143id_/http://infocus.com/resources/documents/LP100/InFocus-LP120-IRCodes.pdf", None),
+        ("InFocus-LP240-LP250-IRCodes.pdf",
+         "https://web.archive.org/web/20140705071014id_/http://infocus.com/resources/documents/LP200/InFocus-LP240-LP250-IRCodes.pdf", None),
+        ("InFocus-LP600-IRCodes.pdf",
+         "https://web.archive.org/web/20140705063504id_/http://infocus.com/resources/documents/LP600/InFocus-LP600-IRCodes.pdf", None),
+        ("InFocus-LP650-IRCodes.pdf",
+         "https://web.archive.org/web/20140705075838id_/http://infocus.com/resources/documents/LP600/InFocus-LP650-IRCodes.pdf", None),
+        ("InFocus-LP815-IRCodes.pdf",
+         "https://web.archive.org/web/20140705082241id_/http://infocus.com/resources/documents/LP800/InFocus-LP815-IRCodes.pdf", None),  # also InFocus-LP820-IRCodes.pdf
+        ("InFocus-LP840-IRCodes.pdf",
+         "https://web.archive.org/web/20140705055934id_/http://infocus.com/resources/documents/LP800/InFocus-LP840-IRCodes.pdf", None),  # also InFocus-LP850-IRCodes.pdf, InFocus-LP860-IRCodes.pdf
+        ("InFocus-LS110-IRCodes.pdf",
+         "https://web.archive.org/web/20140705064620id_/http://infocus.com/resources/documents/LS110/InFocus-LS110-IRCodes.pdf", None),
+        ("InFocus-SP4800-IRCodes.pdf",
+         "https://web.archive.org/web/20140705074151id_/http://infocus.com/resources/documents/ScreenPlay/InFocus-SP4800-IRCodes.pdf", None),
+        ("InFocus-SP4805-IRCodes.pdf",
+         "https://web.archive.org/web/20140705080741id_/http://infocus.com/resources/documents/ScreenPlay/InFocus-SP4805-IRCodes.pdf", None),
+        ("InFocus-SP5000-IRCodes.pdf",
+         "https://web.archive.org/web/20140705081124id_/http://infocus.com/resources/documents/ScreenPlay/InFocus-SP5000-IRCodes.pdf", None),
+        ("InFocus-SP7200-IRCodes.pdf",
+         "https://web.archive.org/web/20140705055827id_/http://infocus.com/resources/documents/ScreenPlay/InFocus-SP7200-IRCodes.pdf", None),
+        ("InFocus-SP7205-IRCodes.pdf",
+         "https://web.archive.org/web/20140705070148id_/http://infocus.com/resources/documents/ScreenPlay/InFocus-SP7205-IRCodes.pdf", None),
+        ("Mondopad_IR_codes.pdf",
+         "https://web.archive.org/web/20140705054058id_/http://infocus.com/resources/documents/BigTouch/Mondopad_IR_codes.pdf", None),
+        ("X2_IRCodes.pdf",
+         "https://web.archive.org/web/20140705065926id_/http://infocus.com/resources/documents/X/X2_IRCodes.pdf", None),
+        ("X3_IRCodes.pdf",
+         "https://web.archive.org/web/20140705064703id_/http://infocus.com/resources/documents/X/X3_IRCodes.pdf", None),
     ],
     # Cambridge Audio's driver-updates page lists 16 PDFs of IR codes and a list of the 752BD, CXU and CXUHD remotes' NEC codes.
     # Only two carry no copyright or rights notice (the others do, so they are held in the private repository): the AXR85/AXR100
@@ -276,8 +343,18 @@ DOCUMENTS = {
 
 def fetch(url: str) -> tuple[bytes, dict[str, str]]:
     request = urllib.request.Request(urllib.parse.quote(url, safe=":/%?=&"), headers={"User-Agent": USER_AGENT})
-    with urllib.request.urlopen(request, timeout=90) as response:
-        return response.read(), {k.lower(): v for k, v in response.headers.items()}
+    for attempt in range(5):         # the Wayback Machine answers a script that is too quick with 429 or 5xx: wait and ask again
+        try:
+            with urllib.request.urlopen(request, timeout=90) as response:
+                return response.read(), {k.lower(): v for k, v in response.headers.items()}
+        except urllib.error.HTTPError as exc:
+            if exc.code not in (429, 500, 502, 503, 504) or attempt == 4:
+                raise
+        except urllib.error.URLError:
+            if attempt == 4:
+                raise
+        time.sleep(10 * (attempt + 1))
+    raise AssertionError("unreachable")
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -300,7 +377,7 @@ def main(argv: list[str] | None = None) -> int:
     for name, url, member in DOCUMENTS[args.maker]:
         if args.only and name not in args.only:
             continue
-        time.sleep(1.0)
+        time.sleep(4.0 if WAYBACK.match(url) else 1.0)
         data, headers = fetch(url)
         if member is not None:
             data = zipfile.ZipFile(__import__("io").BytesIO(data)).read(member)
