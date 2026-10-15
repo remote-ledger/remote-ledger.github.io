@@ -446,7 +446,7 @@ def test_the_committed_official_import_keeps_r19():
     for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "arcam", "cambridge", "hegel", "cary", "nad", "simaudio", "rotel"):
         manifest = json.loads((SNAPSHOT / maker / MANIFEST).read_text(encoding="utf-8"))
         for name, entry in manifest["documents"].items():
-            hashes[name], dates[name], snapshots[name] = entry["sha256"], manifest["retrieved"], entry.get("snapshot")
+            hashes[name], dates[name], snapshots[name] = entry["sha256"], entry.get("retrieved", manifest["retrieved"]), entry.get("snapshot")
     shape = re.compile(r"^(?:marantz\.com archive-downloads|anthemav\.com \(storage\.googleapis\.com/sandbox1-anthemav/an\)"
                        r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
                        r"(?:, from the Wayback Machine snapshot (\d{14}))?\) (?:sheet '[^']+' row \d+|page \d+ row \d+|page \d+ '|page \d+ table \d+ row '|page \d+ row '|key \d+ ')")
@@ -869,8 +869,13 @@ def test_the_three_layouts_of_arcams_tables_are_read_as_rows_with_a_system_code_
     assert [(r.function, r.system, r.command) for r in mini] == [("Source TV", 16, 0), ("Source DAB/AM", 17, 52)]
 
 
-def arcam_files() -> dict[str, dict]:
-    return {p.stem: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "arcam").glob("*.json"))}
+FIRST_ARCAM = ("AV40", "AV41", "AVR10", "AVR11", "AVR20", "AVR21", "AVR30", "AVR31", "AVR380", "AVR450", "AVR5", "AVR750", "CDS50", "SA10",
+               "SA20", "SA30", "Solo", "Solo_Mini", "UDP411")           # the files of DESIGN section 64
+
+
+def arcam_files(only: tuple[str, ...] | None = None) -> dict[str, dict]:
+    """Every Arcam file by its stem, or the ones named."""
+    return {p.stem: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "arcam").glob("*.json")) if only is None or p.stem in only}
 
 
 def test_the_19_arcam_files_are_the_models_the_documents_title_and_the_restrictions_leave_out_what_they_say():
@@ -878,7 +883,7 @@ def test_the_19_arcam_files_are_the_models_the_documents_title_and_the_restricti
     one Untested (the Solo's ``Number 3``, which the table gives the command of ``Number 2``); 272 distinct codes, systems 16, 17,
     20, 23 and 25. The AVR5 and AVR10 lack the 21 Zone 2 rows the AVR5-41 document says they do not have, the AVR380 the two
     ``AVR450/750 only`` DAB rows."""
-    files = arcam_files()
+    files = arcam_files(FIRST_ARCAM)
     assert {m: len(d["keys"]) for m, d in files.items()} == {
         "AV40": 120, "AV41": 120, "AVR10": 99, "AVR11": 120, "AVR20": 120, "AVR21": 120, "AVR30": 120, "AVR31": 120, "AVR380": 125,
         "AVR450": 127, "AVR5": 99, "AVR750": 127, "CDS50": 37, "SA10": 30, "SA20": 30, "SA30": 59, "Solo": 80, "Solo_Mini": 112,
@@ -902,15 +907,18 @@ def test_the_19_arcam_files_are_the_models_the_documents_title_and_the_restricti
 
 def test_the_other_sources_arcam_rc5_remotes_send_the_codes_arcams_tables_list():
     """An independent check from other sources: eight Arcam RC-5 remotes of the ledger (five from the IR Blaster database, three
-    JP1 upgrades) hold 401 keys, and **337 of them (84.0%) are a code some table of Arcam's lists**, with the meaning agreeing
-    where it is plain (volume plus and minus 16 and 17, mute 13, power 12, the standby on and off 124 and 123, the digits). The
-    rest are other products' and other generations' codes: system 16 command 53 is Select FM on a Solo and Play on an AVR."""
+    JP1 upgrades) hold 401 keys, and **337 of them (84.0%) are a code some table of the first 19 files lists**, **361 (90.0%) with the
+    34 files of section 74**, the meaning agreeing where it is plain (volume plus and minus 16 and 17, mute 13, power 12, the
+    standby on and off 124 and 123, the digits). The rest are other products' and other generations' codes: system 16 command 53 is
+    Select FM on a Solo and Play on an AVR. The 53 files hold 399 distinct codes."""
     ours: dict[tuple[int, int], set[str]] = {}
-    for doc in arcam_files().values():
+    for doc in arcam_files(FIRST_ARCAM).values():
         for spec in doc["keys"].values():
             form = spec["forms"][0]
             ours.setdefault((int(form["device"], 0), int(form["function"], 0)), set()).add(spec["label"])
-    remotes = total = hit = 0
+    every = {(int(spec["forms"][0]["device"], 0), int(spec["forms"][0]["function"], 0))
+             for doc in arcam_files().values() for spec in doc["keys"].values()}          # the files of section 74 as well
+    remotes = total = hit = hit_all = 0
     for path in sorted((ROOT / "remotes").glob("*/*/*.json")):
         if "official" in path.parts or "arcam" not in path.parent.name.lower():
             continue
@@ -922,10 +930,133 @@ def test_the_other_sources_arcam_rc5_remotes_send_the_codes_arcams_tables_list()
         remotes += 1
         total += len(codes)
         hit += sum(1 for c in codes if c in ours)
-    assert (remotes, total, hit) == (8, 401, 337)
+        hit_all += sum(1 for c in codes if c in every)
+    assert (remotes, total, hit, hit_all) == (8, 401, 337, 361)
+    assert len(every) == 399
     for code, wanted in (((16, 16), "Increase volume (+)"), ((16, 17), "Decrease volume (-)"), ((16, 13), "Mute"), ((16, 12), "Standby"),
                          ((16, 124), "Standby On"), ((16, 123), "Standby Off"), ((17, 5), "Tuner Number 5")):
         assert any(label.startswith(wanted.split(" (")[0]) for label in ours[code]), (code, wanted)
+
+
+def codes_of(doc: dict) -> dict[str, tuple[str, str]]:
+    return {spec["label"]: (spec["forms"][0]["device"], spec["forms"][0]["function"]) for spec in doc["keys"].values()}
+
+
+def test_the_older_arcam_sheets_columns_are_read_by_where_they_are_with_the_sentences_that_apply_to_a_table():
+    """A row is a name and its code in the cell after it, a table at the left and one at the right (the left first); the sheet's
+    ``The commands are accepted by the A90 and P38 Power amplifier`` makes the table under it those two models'; ``Track number 'n'`` is
+    the digits 1 to 9; the CD sheet says what its italics mean, which is in each citation; a code two names share and a system code
+    other than the one the sheet states are doubtful."""
+    amps = arcam.column_rows([
+        ["2", "86", "113", "The system code is 16 ."], ["2", "104", "119", "Power commands", "318", "Menu navigation commands"],
+        ["2", "118", "119", "Command", "204", "Decimal Code", "318", "Command", "403", "Decimal Code"],
+        ["2", "129", "119", "Power toggle", "204", "16–12", "318", "Up", "403", "16–32"],
+        ["2", "140", "119", "Power-on", "204", "16–123", "318", "Down", "403", "16–33"],
+        ["2", "323", "113", "The commands are accepted by the A90 and P38 Power amplifier."],
+        ["2", "366", "119", "Speaker 1 toggle", "204", "16–35"],
+        ["2", "460", "113", "Note that Arcam amplifers also responds to code 20–53 (the Play command for an Arcam CD player)."]])
+    assert [(r.function, r.system, r.command, r.only) for r in amps] == [
+        ("Power toggle", 16, 12, ()), ("Power-on", 16, 123, ()), ("Speaker 1 toggle", 16, 35, ("A90", "P38")), ("Up", 16, 32, ()),
+        ("Down", 16, 33, ()), ("Play (the CD player's command)", 20, 53, ())]
+    assert "accepted by the A90 and P38 Power amplifier" in amps[2].note and not any(r.doubt for r in amps)
+    cd = arcam.column_rows([
+        ["2", "83", "113", "The following tables give the IR-commands accepted by Arcam CD players. The system code is 20 ."],
+        ["2", "95", "113", "Items shown in italics reference the buttons on the supplied CR-314 remote control. The items not in"],
+        ["2", "104", "113", "italics are additional commands accepted by the CD player."],
+        ["2", "158", "119", "<i>Power toggle</i>", "236", "<i>20–12</i>"],
+        ["2", "226", "119", "<i>Track number ‘n’, (e.g., 1)</i>", "236", "<i>20–n (e.g., 20–1)</i>"],
+        ["2", "237", "119", "Remain", "236", "20–11"], ["2", "300", "119", "Scan 30 seconds", "236", "20–90"],
+        ["2", "310", "119", "Scan off", "236", "20–90"], ["2", "320", "119", "Odd", "236", "16–9"]])
+    assert [r.function for r in cd] == ["Power toggle"] + [f"Track {n}" for n in range(1, 10)] + ["Remain", "Scan 30 seconds", "Scan off", "Odd"]
+    assert [r.command for r in cd[1:10]] == list(range(1, 10)) and all(r.system == 20 for r in cd[:-1])
+    assert "set in italics: a button of the supplied CR-314 remote control" in cd[0].note and "gives no n of 0" in cd[5].note
+    assert cd[10].note.startswith("not in italics: an additional command the unit accepts")
+    assert "gives this code to 'Scan 30 seconds' and 'Scan off'" in cd[11].doubt and cd[11].doubt == cd[12].doubt
+    assert cd[13].doubt == "the sheet says the system code is 20 and this row's is 16"
+
+
+def test_the_solo_bars_page_is_read_as_two_tables_with_a_decimal_and_a_hex_without_the_prefix():
+    rows = arcam.bar_rows([
+        ["1", "180", "50", "Commands on the Solo bar remote control"], ["1", "195", "50", "Function", "298", "Decimal", "349", "Hex", "390", "Comments"],
+        ["1", "210", "50", "Standby", "298", "19-12", "349", "13-0C", "390", "Toggle standby ON/OFF"],
+        ["1", "300", "50", "Additional commands (not on the Solo bar remote)"],
+        ["1", "320", "50", "Power On", "298", "19-123", "349", "13-7B", "390", "If the soundbar is OFF, turn it ON"],
+        ["1", "330", "50", "Select HDMI1", "298", "19-00", "349", "13-01", "390", "Switch directly to the HDMI1 input"]])
+    assert [(r.function, r.system, r.command, r.agrees) for r in rows] == [
+        ("Standby", 19, 12, True), ("Power On", 19, 123, True), ("Select HDMI1", 19, 0, False)]
+    assert rows[0].note == "the sheet lists it under 'Commands on the Solo bar remote control'; the sheet's comment: 'Toggle standby ON/OFF'"
+    assert rows[1].note.startswith("the sheet lists it under 'Additional commands (not on the Solo bar remote)'")
+
+
+def test_the_older_arcam_sheets_are_16_files_for_the_models_on_their_covers_and_the_speaker_keys_are_the_a90s_and_p38s():
+    """The amplifier sheet's cover lists ten models (the DiVA A65 Plus, A70, A80 and A90, the FMJ A18, A28, A32, A38, C30 and C31) and the
+    CD sheet's five (the DiVA CD73 and CD192, the FMJ CD17, CD36 and CD37): 467 keys. **The six speaker keys are for the A90 and the P38**,
+    which the sheet names under its speaker table and not on its cover (26 keys the A90, 6 keys the P38, 20 each of the other nine); the
+    CD files have 51 keys, 49 Plausible and the two that share the code 20-90 (``Scan 30 seconds`` and ``Scan off``) Untested. Of the
+    CD keys 18 are set in italics, the buttons of the supplied CR-314 remote, and 33 are additional commands."""
+    amps = ("A65_Plus", "A70", "A80", "A90", "A18", "A28", "A32", "A38", "C30", "C31", "P38")
+    cds = ("CD73", "CD192", "CD17", "CD36", "CD37")
+    files = arcam_files(amps + cds)
+    assert {m: len(d["keys"]) for m, d in files.items()} == {**{m: 20 for m in amps}, "A90": 26, "P38": 6, **{m: 51 for m in cds}}
+    assert sum(len(d["keys"]) for d in files.values()) == 467
+    speaker = {"Speaker 1 toggle": 0x23, "Speaker 2 toggle": 0x27, "Speaker 1 on": 0x2B, "Speaker 1 off": 0x2C, "Speaker 2 on": 0x2D, "Speaker 2 off": 0x2E}
+    for m in ("A90", "P38"):
+        assert {label: int(code[1], 16) for label, code in codes_of(files[m]).items() if "Speaker" in label} == speaker
+    assert not any("Speaker" in label for m in amps if m not in ("A90", "P38") for label in codes_of(files[m]))
+    assert len(codes_of(files["P38"])) == 6 and {c[0] for c in codes_of(files["P38"]).values()} == {"0x10"}
+    base = {k: v for k, v in codes_of(files["A18"]).items()}
+    assert all(codes_of(files[m]) == base for m in amps if m not in ("A90", "P38"))
+    assert codes_of(files["A90"]) == {**base, **{label: ("0x10", f"0x{code:02X}") for label, code in speaker.items()}}
+    assert base["Power toggle"] == ("0x10", "0x0C") and base["Power-on"] == ("0x10", "0x7B") and base["Power-off"] == ("0x10", "0x7C")
+    assert [base[f"{n} select"] for n in ("PHONO", "AV", "Tuner", "DVD", "tape", "VCR", "CD", "Aux")] == [("0x10", f"0x{i:02X}") for i in range(1, 9)]
+    assert base["Play (the CD player's command)"] == ("0x14", "0x35") and base["Enter"] == ("0x10", "0x57") and len(base) == 20
+    cd17 = codes_of(files["CD17"])
+    assert all(codes_of(files[m]) == cd17 for m in cds) and {c[0] for c in cd17.values()} == {"0x14"}
+    assert [cd17[f"Track {n}"] for n in range(1, 10)] == [("0x14", f"0x{n:02X}") for n in range(1, 10)] and cd17["Track selection 10+"] == ("0x14", "0x0A")
+    assert cd17["Scan 30 seconds"] == cd17["Scan off"] == ("0x14", "0x5A") and cd17["Repeat all"] == ("0x14", "0x7F")
+    for m in cds:
+        keys = files[m]["keys"].values()
+        assert sorted(spec["label"] for spec in keys if spec["forms"][0]["confidence"] == "untested") == ["Scan 30 seconds", "Scan off"]
+        assert sum("set in italics" in spec["forms"][0]["source"] for spec in keys) == 18
+        assert sum("not in italics" in spec["forms"][0]["source"] for spec in keys) == 33
+    assert all(spec["forms"][0]["confidence"] == "plausible" for m in amps for spec in files[m]["keys"].values())
+    assert all("retrieved 2026-10-15" in spec["forms"][0]["source"] for m in amps + cds for spec in files[m]["keys"].values())
+
+
+def test_the_older_products_serial_notes_end_with_the_same_table_as_the_newer_ones_and_a_title_with_models_is_a_file_each():
+    """Nine documents of Arcam's custom installation notes, eight with the ``Function | RC5 code | RC5 code (Data1 - Data2)`` table of the
+    ones of section 64 (17 files, 1,695 keys) and the Solo bar's one page (24 keys, system 19). Of the 1,695 keys three are Untested:
+    ``Zone 3 Vol+``, the row of the AVR500, AVR600 and AV888 whose decimal says 23-20 and whose hex 0x17 - 0x17. Two codes of the
+    AVR390 family are two rows (``HOME`` and ``Yellow``, ``Cycle between VFD information panels`` and ``Blue``), as the BDP's ``ZOOM`` and
+    ``Zoom`` are."""
+    sizes = {"AVR500": 171, "AVR600": 171, "AV888": 171, "AVR400": 153, "AVR390": 116, "AVR550": 116, "AVR850": 116, "AV860": 116, "SR250": 116,
+             "BDP100": 51, "BDP300": 51, "CDS27": 36, "D33": 19, "ST60": 43, "Solo_Movie": 83, "Solo_Movie_2.1": 83, "Solo_Music_2": 83}
+    files = arcam_files(tuple(sizes))
+    assert {m: len(d["keys"]) for m, d in files.items()} == sizes and sum(sizes.values()) == 1695
+    for group in (("AVR500", "AVR600", "AV888"), ("AVR390", "AVR550", "AVR850", "AV860", "SR250"), ("BDP100", "BDP300"),
+                  ("Solo_Movie", "Solo_Movie_2.1", "Solo_Music_2")):
+        assert all(codes_of(files[m]) == codes_of(files[group[0]]) for m in group)
+    untested = sorted((m, spec["label"], spec["forms"][0]["device"], spec["forms"][0]["function"])
+                      for m, d in files.items() for spec in d["keys"].values() if spec["forms"][0]["confidence"] == "untested")
+    assert untested == [(m, "Zone 3 Vol+", "0x17", "0x14") for m in ("AV888", "AVR500", "AVR600")]
+    assert "do not say the same code" in files["AVR600"]["keys"]["KEY_ZONE_3_VOL_PLUS"]["forms"][0]["source"]
+    systems = {m: {spec["forms"][0]["device"] for spec in d["keys"].values()} for m, d in files.items()}
+    assert systems["AVR600"] == systems["AVR400"] == {"0x10", "0x11", "0x17"} and systems["AV860"] == {"0x10", "0x17"}
+    assert systems["BDP100"] == {"0x19"} and systems["CDS27"] == {"0x14"} and systems["D33"] == {"0x1B"} and systems["ST60"] == {"0x15"}
+    assert systems["Solo_Movie"] == {"0x10"}
+    codes = {m: {} for m in ("AV860", "BDP100")}
+    for m in codes:
+        for spec in files[m]["keys"].values():
+            codes[m].setdefault((spec["forms"][0]["device"], spec["forms"][0]["function"]), []).append(spec["label"])
+    assert {k: v for k, v in codes["AV860"].items() if len(v) > 1} == {
+        ("0x10", "0x37"): ["Cycle between VFD information panels", "Blue"], ("0x10", "0x2B"): ["HOME", "Yellow"]}
+    assert {k: v for k, v in codes["BDP100"].items() if len(v) > 1} == {("0x19", "0x44"): ["ZOOM", "Zoom"]}
+    bar = arcam_files(("Solo_bar",))["Solo_bar"]
+    assert len(bar["keys"]) == 24 and {c[0] for c in codes_of(bar).values()} == {"0x13"}
+    assert all(spec["forms"][0]["confidence"] == "plausible" for spec in bar["keys"].values())
+    on_remote = [spec["label"] for spec in bar["keys"].values() if "under 'Commands on the Solo bar remote control'" in spec["forms"][0]["source"]]
+    assert len(on_remote) == 14 and on_remote[0] == "Standby" and on_remote[-1] == "Enter system menu"
+    assert [codes_of(bar)[f"Select HDMI{n}"][1] for n in (1, 2, 3, 4)] == ["0x00", "0x01", "0x02", "0x04"] and codes_of(bar)["Select BT"] == ("0x13", "0x0B")
 
 
 # --- Cambridge Audio ---------------------------------------------------------------------------------------------

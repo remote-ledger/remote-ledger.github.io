@@ -1,0 +1,93 @@
+{
+  "manufacturer": "Arcam",
+  "model": "P38",
+  "aliases": [],
+  "controls": [
+    "Arcam P38"
+  ],
+  "protocol": {
+    "name": "RC5",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_SPEAKER_1_TOGGLE": {
+      "label": "Speaker 1 toggle",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x23",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/A18-A28-A38_amps_rc.pdf@1ce816bc (retrieved 2026-10-15) page 2 row 'Speaker 1 toggle' (16–35): RC5 system 16 command 35; the sheet says: 'The commands are accepted by the A90 and P38 Power amplifier'; the table says it is for A90, P38 only"
+        }
+      ]
+    },
+    "KEY_SPEAKER_2_TOGGLE": {
+      "label": "Speaker 2 toggle",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x27",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/A18-A28-A38_amps_rc.pdf@1ce816bc (retrieved 2026-10-15) page 2 row 'Speaker 2 toggle' (16–39): RC5 system 16 command 39; the sheet says: 'The commands are accepted by the A90 and P38 Power amplifier'; the table says it is for A90, P38 only"
+        }
+      ]
+    },
+    "KEY_SPEAKER_1_ON": {
+      "label": "Speaker 1 on",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x2B",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/A18-A28-A38_amps_rc.pdf@1ce816bc (retrieved 2026-10-15) page 2 row 'Speaker 1 on' (16–43): RC5 system 16 command 43; the sheet says: 'The commands are accepted by the A90 and P38 Power amplifier'; the table says it is for A90, P38 only"
+        }
+      ]
+    },
+    "KEY_SPEAKER_1_OFF": {
+      "label": "Speaker 1 off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x2C",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/A18-A28-A38_amps_rc.pdf@1ce816bc (retrieved 2026-10-15) page 2 row 'Speaker 1 off' (16–44): RC5 system 16 command 44; the sheet says: 'The commands are accepted by the A90 and P38 Power amplifier'; the table says it is for A90, P38 only"
+        }
+      ]
+    },
+    "KEY_SPEAKER_2_ON": {
+      "label": "Speaker 2 on",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x2D",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/A18-A28-A38_amps_rc.pdf@1ce816bc (retrieved 2026-10-15) page 2 row 'Speaker 2 on' (16–45): RC5 system 16 command 45; the sheet says: 'The commands are accepted by the A90 and P38 Power amplifier'; the table says it is for A90, P38 only"
+        }
+      ]
+    },
+    "KEY_SPEAKER_2_OFF": {
+      "label": "Speaker 2 off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x2E",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/A18-A28-A38_amps_rc.pdf@1ce816bc (retrieved 2026-10-15) page 2 row 'Speaker 2 off' (16–46): RC5 system 16 command 46; the sheet says: 'The commands are accepted by the A90 and P38 Power amplifier'; the table says it is for A90, P38 only"
+        }
+      ]
+    }
+  }
+}

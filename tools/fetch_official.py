@@ -80,6 +80,22 @@ DOCUMENTS = {
         ("UDP411_RS232_SH265_E_1.pdf", "https://www.arcam.co.uk/ugc/tor/udp411/RS232/UDP411_RS232_SH265_E_1_070814.pdf", None),
         ("Solo_IR_Remote_Codes.pdf", "https://www.arcam.co.uk/ugc/tor/solomovie51/IR%20Codes/solo_rc.pdf", None),
         ("Solo_Mini_RS232.pdf", "https://www.arcam.co.uk/ugc/tor/solomini/RS232/solomini_rs232.pdf", None),
+        # the older products' sheets (DESIGN section 74): two 3-page sheets, issue B (PDFs made on 6 September 2006), on the product pages of the
+        # A18, A28 and A38 (amplifiers) and of the CD17 and CD37 (CD players); their covers list the models they cover
+        ("A18-A28-A38_amps_rc.pdf", "https://www.arcam.co.uk/ugc/tor/a18/IR%20Codes/amps_rc.pdf", None),
+        ("CD17-CD37_cd_rc.pdf", "https://www.arcam.co.uk/ugc/tor/cd17/IR%20Codes/cd_rc.pdf", None),
+        # the older products' serial control notes, which end with the RC-5 codes (DESIGN section 74)
+        ("AVR500-600-AV888_RS232_SH217_E_7.pdf", "https://www.arcam.co.uk/ugc/tor/av888/RS232/AVR600_RS232_SH217_E_7.0.pdf", None),
+        ("AVR400_RS232_SH235_E_1.2.pdf", "https://www.arcam.co.uk/ugc/tor/avr400/RS232/AVR400_RS232_SH235_E_1.2.pdf", None),
+        ("AVR390-550-850-AV860-SR250_RS232_SH274E_D.pdf",
+         "https://www.arcam.co.uk/ugc/tor/av860/RS232/RS232_860_850_550_390_250_SH274E_D_181018.pdf", None),
+        ("BDP100-BDP300_RS232_SH231_E_2.pdf", "https://www.arcam.co.uk/ugc/tor/bdp100/RS232/BDP100_BDP300_RS232_SH231_E_2.pdf", None),
+        ("CDS27_RS232_SH272_E_1.pdf", "https://www.arcam.co.uk/ugc/tor/cds27/RS232/CDS27_RS232_SH272_E_1_070814.pdf", None),
+        ("D33_RS232_SH236_E_D.pdf", "https://www.arcam.co.uk/ugc/tor/d33/RS232/D33_RS232_SH236_E_D.0.pdf", None),
+        ("ST60_RS232_SH309_C.pdf", "https://www.arcam.co.uk/ugc/tor/ST60/Custom%20Installation%20Notes/SH309_RS232_ST60_C.pdf", None),
+        ("Solo_bar_IR_codes_V2.0.pdf", "https://www.arcam.co.uk/ugc/tor/Solobar/IRcodes/Solo_bar_IR_codes_V2.0.pdf", None),
+        ("Solo_Movie-Movie_2.1-Music_2_RS232_SH284E_A.pdf",
+         "https://www.arcam.co.uk/ugc/tor/solomovie/RS232/SH284E_Solo_Movie_RS232_issue_A_130116.pdf", None),
     ],
     # Cambridge Audio's driver-updates page lists 16 PDFs of IR codes and a list of the 752BD, CXU and CXUHD remotes' NEC codes.
     # Only two carry no copyright or rights notice (the others do, so they are held in the private repository): the AXR85/AXR100
@@ -269,15 +285,21 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("maker", choices=sorted(DOCUMENTS))
     parser.add_argument("--date", default=date.today().isoformat(), help="the retrieval date to record")
     parser.add_argument("--root", default="sources/official")
+    parser.add_argument("--only", nargs="+", metavar="NAME", help="fetch only these documents of the maker: the others and the maker's "
+                        "retrieval date stay as they are, and each fetched document records its own date")
     args = parser.parse_args(argv)
     target = Path(args.root) / args.maker
     target.mkdir(parents=True, exist_ok=True)
     manifest_path = target / "MANIFEST.json"
     manifest = json.loads(manifest_path.read_text()) if manifest_path.is_file() else {}
-    manifest.update({"maker": args.maker, "retrieved": args.date})
+    manifest.update({"maker": args.maker, "retrieved": manifest["retrieved"] if args.only else args.date})
     manifest.setdefault("documents", {})
     manifest.setdefault("sheets", {})
+    if args.only and (missing := set(args.only) - {name for name, _, _ in DOCUMENTS[args.maker]}):
+        raise SystemExit(f"--only: {sorted(missing)} are not documents of {args.maker}")
     for name, url, member in DOCUMENTS[args.maker]:
+        if args.only and name not in args.only:
+            continue
         time.sleep(1.0)
         data, headers = fetch(url)
         if member is not None:
@@ -292,6 +314,8 @@ def main(argv: list[str] | None = None) -> int:
             raise SystemExit(f"{name}: {url} did not answer with a PDF ({data[:40]!r}); nothing was pinned")
         (target / name).write_bytes(data)
         entry = {"url": url, "bytes": len(data), "sha256": hashlib.sha256(data).hexdigest()}
+        if args.only:
+            entry["retrieved"] = args.date
         if member is not None:
             entry["member"] = member          # the file of the zip at ``url`` that is kept
         archived = WAYBACK.match(url)

@@ -1,0 +1,678 @@
+{
+  "manufacturer": "Arcam",
+  "model": "CD36",
+  "aliases": [],
+  "controls": [
+    "Arcam CD36"
+  ],
+  "protocol": {
+    "name": "RC5",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER_TOGGLE": {
+      "label": "Power toggle",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Power toggle' (20–12): RC5 system 20 command 12; set in italics: a button of the supplied CR-314 remote control"
+        }
+      ]
+    },
+    "KEY_POWER_MINUS_ON": {
+      "label": "Power-on",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x7B",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Power-on' (20–123): RC5 system 20 command 123; not in italics: an additional command the unit accepts, not a button of the supplied CR-314 remote control"
+        }
+      ]
+    },
+    "KEY_POWER_MINUS_OFF": {
+      "label": "Power-off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x7C",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Power-off' (20–124): RC5 system 20 command 124; not in italics: an additional command the unit accepts, not a button of the supplied CR-314 remote control"
+        }
+      ]
+    },
+    "KEY_TRACK_1": {
+      "label": "Track 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Track number ‘n’, (e.g., 1)' (20–n (e.g., 20–1), n = 1): RC5 system 20 command 1; set in italics: a button of the supplied CR-314 remote control; the sheet says the track number n is the command n (its example is 20-1) and gives no n of 0"
+        }
+      ]
+    },
+    "KEY_TRACK_2": {
+      "label": "Track 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Track number ‘n’, (e.g., 1)' (20–n (e.g., 20–1), n = 2): RC5 system 20 command 2; set in italics: a button of the supplied CR-314 remote control; the sheet says the track number n is the command n (its example is 20-1) and gives no n of 0"
+        }
+      ]
+    },
+    "KEY_TRACK_3": {
+      "label": "Track 3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Track number ‘n’, (e.g., 1)' (20–n (e.g., 20–1), n = 3): RC5 system 20 command 3; set in italics: a button of the supplied CR-314 remote control; the sheet says the track number n is the command n (its example is 20-1) and gives no n of 0"
+        }
+      ]
+    },
+    "KEY_TRACK_4": {
+      "label": "Track 4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Track number ‘n’, (e.g., 1)' (20–n (e.g., 20–1), n = 4): RC5 system 20 command 4; set in italics: a button of the supplied CR-314 remote control; the sheet says the track number n is the command n (its example is 20-1) and gives no n of 0"
+        }
+      ]
+    },
+    "KEY_TRACK_5": {
+      "label": "Track 5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Track number ‘n’, (e.g., 1)' (20–n (e.g., 20–1), n = 5): RC5 system 20 command 5; set in italics: a button of the supplied CR-314 remote control; the sheet says the track number n is the command n (its example is 20-1) and gives no n of 0"
+        }
+      ]
+    },
+    "KEY_TRACK_6": {
+      "label": "Track 6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Track number ‘n’, (e.g., 1)' (20–n (e.g., 20–1), n = 6): RC5 system 20 command 6; set in italics: a button of the supplied CR-314 remote control; the sheet says the track number n is the command n (its example is 20-1) and gives no n of 0"
+        }
+      ]
+    },
+    "KEY_TRACK_7": {
+      "label": "Track 7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Track number ‘n’, (e.g., 1)' (20–n (e.g., 20–1), n = 7): RC5 system 20 command 7; set in italics: a button of the supplied CR-314 remote control; the sheet says the track number n is the command n (its example is 20-1) and gives no n of 0"
+        }
+      ]
+    },
+    "KEY_TRACK_8": {
+      "label": "Track 8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Track number ‘n’, (e.g., 1)' (20–n (e.g., 20–1), n = 8): RC5 system 20 command 8; set in italics: a button of the supplied CR-314 remote control; the sheet says the track number n is the command n (its example is 20-1) and gives no n of 0"
+        }
+      ]
+    },
+    "KEY_TRACK_9": {
+      "label": "Track 9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Track number ‘n’, (e.g., 1)' (20–n (e.g., 20–1), n = 9): RC5 system 20 command 9; set in italics: a button of the supplied CR-314 remote control; the sheet says the track number n is the command n (its example is 20-1) and gives no n of 0"
+        }
+      ]
+    },
+    "KEY_TRACK_SELECTION_10_PLUS": {
+      "label": "Track selection 10+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Track selection 10+' (20–10): RC5 system 20 command 10; set in italics: a button of the supplied CR-314 remote control"
+        }
+      ]
+    },
+    "KEY_TIME": {
+      "label": "Time",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x42",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Time' (20–66): RC5 system 20 command 66; set in italics: a button of the supplied CR-314 remote control"
+        }
+      ]
+    },
+    "KEY_REMAIN": {
+      "label": "Remain",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Remain' (20–11): RC5 system 20 command 11; not in italics: an additional command the unit accepts, not a button of the supplied CR-314 remote control"
+        }
+      ]
+    },
+    "KEY_TRACK_FORWARD": {
+      "label": "Track forward",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x20",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Track forward' (20–32): RC5 system 20 command 32; set in italics: a button of the supplied CR-314 remote control"
+        }
+      ]
+    },
+    "KEY_TRACK_BACK": {
+      "label": "Track back",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x21",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Track back' (20–33): RC5 system 20 command 33; not in italics: an additional command the unit accepts, not a button of the supplied CR-314 remote control"
+        }
+      ]
+    },
+    "KEY_FAST_FORWARD": {
+      "label": "Fast forward",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x34",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Fast forward' (20–52): RC5 system 20 command 52; not in italics: an additional command the unit accepts, not a button of the supplied CR-314 remote control"
+        }
+      ]
+    },
+    "KEY_FAST_REWIND": {
+      "label": "Fast rewind",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x32",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Fast rewind' (20–50): RC5 system 20 command 50; not in italics: an additional command the unit accepts, not a button of the supplied CR-314 remote control"
+        }
+      ]
+    },
+    "KEY_OPEN": {
+      "label": "Open",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x2D",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Open' (20–45): RC5 system 20 command 45; not in italics: an additional command the unit accepts, not a button of the supplied CR-314 remote control"
+        }
+      ]
+    },
+    "KEY_PAUSE": {
+      "label": "Pause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x30",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Pause' (20–48): RC5 system 20 command 48; not in italics: an additional command the unit accepts, not a button of the supplied CR-314 remote control"
+        }
+      ]
+    },
+    "KEY_STOP": {
+      "label": "Stop",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x36",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Stop' (20–54): RC5 system 20 command 54; not in italics: an additional command the unit accepts, not a button of the supplied CR-314 remote control"
+        }
+      ]
+    },
+    "KEY_PLAY": {
+      "label": "Play",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x35",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Play' (20–53): RC5 system 20 command 53; not in italics: an additional command the unit accepts, not a button of the supplied CR-314 remote control"
+        }
+      ]
+    },
+    "KEY_REPEAT_TOGGLE": {
+      "label": "Repeat toggle",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x1D",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Repeat toggle' (20–29): RC5 system 20 command 29; set in italics: a button of the supplied CR-314 remote control"
+        }
+      ]
+    },
+    "KEY_REPEAT_OFF": {
+      "label": "Repeat off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x7D",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Repeat off' (20–125): RC5 system 20 command 125; not in italics: an additional command the unit accepts, not a button of the supplied CR-314 remote control"
+        }
+      ]
+    },
+    "KEY_REPEAT_ONE": {
+      "label": "Repeat one",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x7E",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Repeat one' (20–126): RC5 system 20 command 126; not in italics: an additional command the unit accepts, not a button of the supplied CR-314 remote control"
+        }
+      ]
+    },
+    "KEY_REPEAT_ALL": {
+      "label": "Repeat all",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x7F",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Repeat all' (20–127): RC5 system 20 command 127; not in italics: an additional command the unit accepts, not a button of the supplied CR-314 remote control"
+        }
+      ]
+    },
+    "KEY_REPEAT_A_MINUS_B": {
+      "label": "Repeat A-B",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x3B",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Repeat A-B' (20–59): RC5 system 20 command 59; set in italics: a button of the supplied CR-314 remote control"
+        }
+      ]
+    },
+    "KEY_SEARCH": {
+      "label": "Search",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x4C",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Search' (20–76): RC5 system 20 command 76; not in italics: an additional command the unit accepts, not a button of the supplied CR-314 remote control"
+        }
+      ]
+    },
+    "KEY_SCAN": {
+      "label": "Scan",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x2B",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Scan' (20–43): RC5 system 20 command 43; not in italics: an additional command the unit accepts, not a button of the supplied CR-314 remote control"
+        }
+      ]
+    },
+    "KEY_SCAN_10_SECONDS": {
+      "label": "Scan 10 seconds",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x4F",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Scan 10 seconds' (20–79): RC5 system 20 command 79; not in italics: an additional command the unit accepts, not a button of the supplied CR-314 remote control"
+        }
+      ]
+    },
+    "KEY_SCAN_20_SECONDS": {
+      "label": "Scan 20 seconds",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x58",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Scan 20 seconds' (20–88): RC5 system 20 command 88; not in italics: an additional command the unit accepts, not a button of the supplied CR-314 remote control"
+        }
+      ]
+    },
+    "KEY_SCAN_30_SECONDS": {
+      "label": "Scan 30 seconds",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x5A",
+          "confidence": "untested",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Scan 30 seconds' (20–90): RC5 system 20 command 90; the sheet gives this code to 'Scan 30 seconds' and 'Scan off', and a code is one function; not in italics: an additional command the unit accepts, not a button of the supplied CR-314 remote control"
+        }
+      ]
+    },
+    "KEY_SCAN_OFF": {
+      "label": "Scan off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x5A",
+          "confidence": "untested",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Scan off' (20–90): RC5 system 20 command 90; the sheet gives this code to 'Scan 30 seconds' and 'Scan off', and a code is one function; not in italics: an additional command the unit accepts, not a button of the supplied CR-314 remote control"
+        }
+      ]
+    },
+    "KEY_CLEAR": {
+      "label": "Clear",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x3A",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Clear' (20–58): RC5 system 20 command 58; not in italics: an additional command the unit accepts, not a button of the supplied CR-314 remote control"
+        }
+      ]
+    },
+    "KEY_CLEAR_ALL": {
+      "label": "Clear all",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x39",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Clear all' (20–57): RC5 system 20 command 57; not in italics: an additional command the unit accepts, not a button of the supplied CR-314 remote control"
+        }
+      ]
+    },
+    "KEY_PROGRAMME": {
+      "label": "Programme",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x29",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Programme' (20–41): RC5 system 20 command 41; set in italics: a button of the supplied CR-314 remote control"
+        }
+      ]
+    },
+    "KEY_PROGRAMME_ON": {
+      "label": "Programme on",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x63",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Programme on' (20–99): RC5 system 20 command 99; not in italics: an additional command the unit accepts, not a button of the supplied CR-314 remote control"
+        }
+      ]
+    },
+    "KEY_PROGRAMME_OFF": {
+      "label": "Programme off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x64",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Programme off' (20–100): RC5 system 20 command 100; not in italics: an additional command the unit accepts, not a button of the supplied CR-314 remote control"
+        }
+      ]
+    },
+    "KEY_PMODE_SHUFFLE": {
+      "label": "PMode (Shuffle)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x40",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'PMode (Shuffle)' (20–64): RC5 system 20 command 64; not in italics: an additional command the unit accepts, not a button of the supplied CR-314 remote control"
+        }
+      ]
+    },
+    "KEY_SHUFFLE": {
+      "label": "Shuffle",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x1C",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Shuffle' (20–28): RC5 system 20 command 28; set in italics: a button of the supplied CR-314 remote control"
+        }
+      ]
+    },
+    "KEY_SHUFFLE_ON": {
+      "label": "Shuffle on",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x72",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Shuffle on' (20–114): RC5 system 20 command 114; not in italics: an additional command the unit accepts, not a button of the supplied CR-314 remote control"
+        }
+      ]
+    },
+    "KEY_SHUFFLE_OFF": {
+      "label": "Shuffle off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x73",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Shuffle off' (20–115): RC5 system 20 command 115; not in italics: an additional command the unit accepts, not a button of the supplied CR-314 remote control"
+        }
+      ]
+    },
+    "KEY_DISPLAY_TOGGLE": {
+      "label": "Display toggle",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Display toggle' (20–18): RC5 system 20 command 18; set in italics: a button of the supplied CR-314 remote control"
+        }
+      ]
+    },
+    "KEY_DISPLAY_ON": {
+      "label": "Display on",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x0E",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Display on' (20–14): RC5 system 20 command 14; not in italics: an additional command the unit accepts, not a button of the supplied CR-314 remote control"
+        }
+      ]
+    },
+    "KEY_DISPLAY_DIM": {
+      "label": "Display dim",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Display dim' (20–20): RC5 system 20 command 20; not in italics: an additional command the unit accepts, not a button of the supplied CR-314 remote control"
+        }
+      ]
+    },
+    "KEY_DISPLAY_OFF": {
+      "label": "Display off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Display off' (20–21): RC5 system 20 command 21; not in italics: an additional command the unit accepts, not a button of the supplied CR-314 remote control"
+        }
+      ]
+    },
+    "KEY_DISPLAY_REMAINING_TRACK_TIME": {
+      "label": "Display remaining track time",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x6E",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Display remaining track time' (20–110): RC5 system 20 command 110; not in italics: an additional command the unit accepts, not a button of the supplied CR-314 remote control"
+        }
+      ]
+    },
+    "KEY_DISPLAY_ELAPSED_TRACK_TIME": {
+      "label": "Display elapsed track time",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x6F",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Display elapsed track time' (20–111): RC5 system 20 command 111; not in italics: an additional command the unit accepts, not a button of the supplied CR-314 remote control"
+        }
+      ]
+    },
+    "KEY_DISPLAY_REMAINING_DISK_TIME": {
+      "label": "Display remaining disk time",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x70",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Display remaining disk time' (20–112): RC5 system 20 command 112; not in italics: an additional command the unit accepts, not a button of the supplied CR-314 remote control"
+        }
+      ]
+    },
+    "KEY_DISPLAY_REMAINING_TITLES": {
+      "label": "Display remaining titles",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x71",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/CD17-CD37_cd_rc.pdf@1a084bc2 (retrieved 2026-10-15) page 2 row 'Display remaining titles' (20–113): RC5 system 20 command 113; not in italics: an additional command the unit accepts, not a button of the supplied CR-314 remote control"
+        }
+      ]
+    }
+  }
+}

@@ -1,4 +1,5 @@
-"""Arcam's custom installation notes: the RC-5 codes of its amplifiers, receivers, players and the Solo family (DESIGN section 64).
+"""Arcam's custom installation notes: the RC-5 codes of its amplifiers, receivers, players and the Solo family (DESIGN section 64), and its
+older amplifiers' and CD players' IR sheets (DESIGN section 74, the ``columns`` layout at the end of this docstring).
 
 Arcam publishes, for each product family, a PDF of its serial control commands and its **RC-5 remote codes**: a table of
 functions with the code as ``system-command`` in decimal and as ``Data1 - Data2`` in hex (``Standby  16-12  0x10 - 0x0C``),
@@ -9,6 +10,16 @@ row for a digit (``Number 3``) whose command is not the digit, which every other
 
 A function's name may carry the models it is for in parentheses, ``(not AVR5, AVR10)`` or ``(AVR450/750 only)``; a document's
 models are the ones its title lists, and each is a file with the functions that apply to it.
+
+**The older sheets** (``Infrared codes for Arcam amplifiers`` and ``... CD players``, 3 pages each, issue B, made on 6 September 2006)
+are tables of ``Command | Decimal Code`` (``Power toggle  16-12``, an en dash), one or two side by side on a page, set under a heading
+(``Power commands``) and read by where the lines are (``tools/official_sheets_to_csv.py``, ``lines``: a row is ``page, y, x, text, x, text``;
+a line set in italics is ``<i>text</i>``). **The cover lists the models covered** (ten amplifiers and five CD players), and each is a file. The
+amplifier sheet says of the speaker table under it that ``The commands are accepted by the A90 and P38 Power amplifier``: those six keys
+are for those two (the P38 is not on the cover and has only them). ``Track number 'n' (e.g., 1)`` is ``20-n``: the digits 1 to 9 are keys, as the
+document says. The CD sheet sets in italics the buttons of the supplied CR-314 remote and says the others are additional commands the player
+accepts; the citation says which a row is. Two rows with one code are both Untested, and a code whose system code is not the one the document
+states is too.
 """
 
 from __future__ import annotations
@@ -32,8 +43,9 @@ PROTOCOL = {"name": "RC5", "carrierHz": 36000, "minSends": 1}
 class Document:
     file: str
     sheet: str                 # ``tables`` or ``pages`` of the manifest
-    layout: str                # ``function`` (decimal and hex), ``system`` (the Solo's) or ``lines`` (the Solo Mini's)
+    layout: str                # ``function`` (decimal and hex), ``system`` (the Solo's), ``lines`` (the Solo Mini's) or ``columns`` (the older sheets')
     models: tuple[str, ...]
+    named: tuple[str, ...] = ()     # models the document names only in a sentence about some of its rows: they have those rows and no others
 
 
 DOCUMENTS: tuple[Document, ...] = (
@@ -47,12 +59,32 @@ DOCUMENTS: tuple[Document, ...] = (
     Document("UDP411_RS232_SH265_E_1.pdf", "tables", "function", ("UDP411",)),
     Document("Solo_IR_Remote_Codes.pdf", "tables", "system", ("Solo",)),
     Document("Solo_Mini_RS232.pdf", "pages", "lines", ("Solo Mini",)),
+    # the older sheets: "Models covered" on the cover (the DiVA and FMJ ranges); the file's name is the product pages it is on
+    Document("A18-A28-A38_amps_rc.pdf", "lines", "columns",
+             ("A65 Plus", "A70", "A80", "A90", "A18", "A28", "A32", "A38", "C30", "C31"), ("P38",)),
+    Document("CD17-CD37_cd_rc.pdf", "lines", "columns", ("CD73", "CD192", "CD17", "CD36", "CD37")),
+    # the older products' serial control notes (DESIGN section 74), each ending with its RC-5 table in the same layout as the newer ones'
+    Document("AVR500-600-AV888_RS232_SH217_E_7.pdf", "tables", "function", ("AVR500", "AVR600", "AV888")),
+    Document("AVR400_RS232_SH235_E_1.2.pdf", "tables", "function", ("AVR400",)),
+    Document("AVR390-550-850-AV860-SR250_RS232_SH274E_D.pdf", "tables", "function", ("AVR390", "AVR550", "AVR850", "AV860", "SR250")),
+    Document("BDP100-BDP300_RS232_SH231_E_2.pdf", "tables", "function", ("BDP100", "BDP300")),
+    Document("CDS27_RS232_SH272_E_1.pdf", "tables", "function", ("CDS27",)),
+    Document("D33_RS232_SH236_E_D.pdf", "tables", "function", ("D33",)),
+    Document("ST60_RS232_SH309_C.pdf", "tables", "function", ("ST60",)),
+    Document("Solo_Movie-Movie_2.1-Music_2_RS232_SH284E_A.pdf", "tables", "function", ("Solo Movie", "Solo Movie 2.1", "Solo Music 2")),
+    Document("Solo_bar_IR_codes_V2.0.pdf", "lines", "bar", ("Solo bar",)),
 )
 _DEC = re.compile(r"^(\d{1,3})\s*-\s*(\d{1,3})\s*\**$")
 _HEX = re.compile(r"^0[xX]([0-9A-Fa-f]{1,2})\s*-\s*(?:0[xX])?([0-9A-Fa-f]{1,2})\s*\**$")
 _LINE = re.compile(r"^(\d{1,3})-(\d{1,3})\s+(\S.*)$")
 _TOKEN = re.compile(r"^([A-Za-z]*)(\d+)$")
 _DIGIT = re.compile(r"^(?:(?:CD|Tuner)\s+)?(?:Number\s+)?(\d)$", re.I)
+_COLUMN_CODE = re.compile(r"^(\d{1,3})\s*[\u2013-]\s*(\d{1,3}|n)\b")
+_SYSTEM_IS = re.compile(r"system code is\s*(\d+)", re.I)
+_ITALIC = re.compile(r"^<i>(.*)</i>$")
+_ITALICS_MEAN = re.compile(r"Items shown in italics reference the buttons on the supplied (\S+) remote control", re.I)
+_ACCEPTED_BY = re.compile(r"The commands are accepted by the (.+?) Power amplifiers?\.", re.I)
+_ALSO = re.compile(r"also responds? to code\s*(\d+)\s*[\u2013-]\s*(\d+)\s*\(the\s+(.+?)\s+command for an Arcam (.+?)\)", re.I)
 
 
 @dataclass(frozen=True)
@@ -68,6 +100,7 @@ class Row:
     doubt: str              # why the code is doubtful in another way, or empty
     only: tuple[str, ...]   # the models it is for, empty for every model of the document
     excluded: tuple[str, ...]
+    note: str = ""          # what the document says near the row, for the citation
 
 
 def expand(text: str) -> tuple[str, ...] | None:
@@ -186,7 +219,89 @@ def line_rows(rows: list[list[str]]) -> list[Row]:
     return out
 
 
-READERS = {"function": function_rows, "system": system_rows, "lines": line_rows}
+def column_rows(rows: list[list[str]]) -> list[Row]:
+    """The rows of the older sheets' ``Command | Decimal Code`` tables (each row of the ``lines`` sheet is the page, ``y`` and cells of
+    ``x, text``, a line set in italics ``<i>text</i>``): a name followed by a code in the same row, once or twice (two tables side by
+    side), the rows of a table under its heading. ``Track number 'n'`` is the digits 1 to 9; the note that the amplifiers also take the CD
+    player's ``Play`` is one more key; the tables under ``The commands are accepted by the A90 and P38 Power amplifier`` are for those two."""
+    parsed: list[tuple[int, int, list[tuple[int, str, bool]]]] = []
+    for r in rows:
+        cells = []
+        for x, text in zip(r[2::2], r[3::2]):
+            italic = _ITALIC.match(text)
+            cells.append((int(x), italic[1] if italic else text, bool(italic)))
+        parsed.append((int(r[0]), int(r[1]), cells))
+    text = " ".join(t for _, _, cells in parsed for _, t, _ in cells)
+    stated = int(m[1]) if (m := _SYSTEM_IS.search(text)) else None
+    remote = m[1] if (m := _ITALICS_MEAN.search(text)) else None
+    accepted = next(((page, y, tuple(n for n in re.split(r",\s*|\s+and\s+", m[1]) if n))
+                     for page, y, cells in parsed for _, t, _ in cells if (m := _ACCEPTED_BY.search(t))), None)
+    out: list[Row] = []
+    order: list[tuple[int, int, int]] = []          # (page, column, y) of each row of ``out``: left table first, then the right one
+    for page, y, cells in parsed:
+        for i in range(1, len(cells)):
+            x, name, _ = cells[i - 1]
+            _, written, italic = cells[i]
+            m = _COLUMN_CODE.match(written)
+            if not m or _COLUMN_CODE.match(name):
+                continue
+            system = int(m[1])
+            doubt = f"the sheet says the system code is {stated} and this row's is {system}" if stated is not None and system != stated else ""
+            only = accepted[2] if accepted and page == accepted[0] and y > accepted[1] else ()
+            notes = [f"the sheet says: 'The commands are accepted by the {' and '.join(only)} Power amplifier'"] if only else []
+            if remote:
+                notes.append(f"set in italics: a button of the supplied {remote} remote control" if italic
+                             else f"not in italics: an additional command the unit accepts, not a button of the supplied {remote} remote control")
+            if m[2] == "n":
+                notes.append("the sheet says the track number n is the command n (its example is 20-1) and gives no n of 0")
+                for n in range(1, 10):
+                    out.append(Row(page, None, f"Track {n}", name, system, n, f"{written}, n = {n}", True, doubt, only, (), "; ".join(notes)))
+                    order.append((page, int(x >= 300), y))
+                continue
+            out.append(Row(page, None, name, name, system, int(m[2]), written, True, doubt, only, (), "; ".join(notes)))
+            order.append((page, int(x >= 300), y))
+    # the note that the amplifiers take the CD player's Play
+    if (m := _ALSO.search(text)):
+        page = next(p for p, _, cells in parsed if any("also responds" in t for _, t, _ in cells))
+        out.append(Row(page, None, f"{m[3]} (the {m[4]}'s command)", m[0], int(m[1]), int(m[2]), f"{m[1]}-{m[2]}", True, "", (), (),
+                       f"the sheet says: Arcam amplifiers also respond to code {m[1]}-{m[2]} (the {m[3]} command for an Arcam {m[4]})"))
+        order.append((page, 2, 0))
+    out = [row for _, row in sorted(zip(order, out), key=lambda pair: pair[0])]
+    # a code two functions share: both are doubtful
+    by_code: dict[tuple[int, int], list[int]] = {}
+    for index, row in enumerate(out):
+        by_code.setdefault((row.system, row.command), []).append(index)
+    for indexes in by_code.values():
+        names = {out[i].function for i in indexes}
+        if len(names) > 1:
+            for i in indexes:
+                out[i] = Row(**{**out[i].__dict__, "doubt": out[i].doubt or (
+                    "the sheet gives this code to " + " and ".join(f"'{n}'" for n in sorted(names)) + ", and a code is one function")})
+    return out
+
+
+_BAR_HEX = re.compile(r"^([0-9A-Fa-f]{2})\s*-\s*([0-9A-Fa-f]{2})$")
+
+
+def bar_rows(rows: list[list[str]]) -> list[Row]:
+    """The Solo bar's one page (each row of the ``lines`` sheet is the page, ``y`` and cells of ``x, text``): two tables, ``Commands on
+    the Solo bar remote control`` and ``Additional commands (not on the Solo bar remote)``, each a function or key name, its decimal
+    code ``19-12``, its hex ``13-0C`` (no ``0x``) and a comment. A row whose decimal and hex say two codes is read and marked."""
+    out: list[Row] = []
+    heading = ""
+    for r in rows:
+        cells = [text for text in r[3::2]]
+        if len(cells) == 1 and cells[0].startswith(("Commands on", "Additional commands")):
+            heading = cells[0]
+        elif len(cells) >= 3 and (d := _DEC.match(cells[1])) and (h := _BAR_HEX.match(cells[2])):
+            system, command = int(d[1]), int(d[2])
+            agrees = (int(h[1], 16), int(h[2], 16)) == (system, command)
+            note = (f"the sheet lists it under '{heading}'" if heading else "") + (f"; the sheet's comment: '{cells[3]}'" if len(cells) > 3 else "")
+            out.append(Row(int(r[0]), None, cells[0], cells[0], system, command, f"{cells[1]} / {cells[2]}", agrees, "", (), (), note.lstrip("; ")))
+    return out
+
+
+READERS = {"function": function_rows, "system": system_rows, "lines": line_rows, "columns": column_rows, "bar": bar_rows}
 
 
 def key_names(labels: list[str]) -> list[str]:
@@ -205,12 +320,13 @@ def build(snapshot: Snapshot, authored: dict[tuple[str, str], str], report: Repo
     for document in DOCUMENTS:
         rows = READERS[document.layout](snapshot.sheet_of(document.file, document.sheet))
         sha = snapshot.sha(document.file)
+        retrieved = snapshot.documents[document.file].get("retrieved", snapshot.retrieved)       # a document fetched later has its own date
         where = f"arcam.co.uk custom installation notes/{document.file}"
         report.count(MAKER, f"{document.file}: rows read", len(rows))
-        for model in document.models:
+        for model in document.models + document.named:
             members: list[tuple[str, dict[str, Any]]] = []
             for row in rows:
-                if row.only and model not in row.only or model in row.excluded:
+                if row.only and model not in row.only or model in row.excluded or model in document.named and not row.only:
                     continue
                 key = (row.system, row.command)
                 if key not in gate:
@@ -221,15 +337,19 @@ def build(snapshot: Snapshot, authored: dict[tuple[str, str], str], report: Repo
                     report.unrepresented[(MAKER, document.file, f"does not compile: {gate[key]}")] += 1
                     continue
                 place = f"page {row.page}" + (f" table {row.table}" if row.table is not None else "")
-                cite = (f"{where}@{sha} (retrieved {snapshot.retrieved}) {place} row '{row.written}' ({row.stated}): "
+                cite = (f"{where}@{sha} (retrieved {retrieved}) {place} row '{row.written}' ({row.stated}): "
                         f"RC5 system {row.system} command {row.command}")
                 if row.agrees:
-                    cite += "; the table's decimal and hex say the same" if document.layout == "function" else ""
+                    cite += "; the table's decimal and hex say the same" if document.layout in ("function", "bar") else ""
                 else:
                     cite += "; the table's decimal and hex do not say the same code, so the key rests on neither alone"
                 if row.doubt:
                     cite += "; " + row.doubt
-                    report.notes.append((MAKER, f"{document.file} {place}", f"'{row.written}' ({row.stated}): {row.doubt}"))
+                    note = (MAKER, f"{document.file} {place}", f"'{row.written}' ({row.stated}): {row.doubt}")
+                    if note not in report.notes:
+                        report.notes.append(note)
+                if row.note:
+                    cite += "; " + row.note
                 if row.only:
                     cite += f"; the table says it is for {', '.join(row.only)} only"
                 if row.excluded:
