@@ -1,0 +1,132 @@
+1,86,361,SW E NGINEERING
+1,160,340,I NFRARED K EYCODE
+1,185,107,CONTROLLED ISSUE,365,S PECIFICATION
+1,199,123,INFORMATION
+1,252,384,009-1067-00
+1,337,271,Revision History
+1,351,48,Revision,101,PCR #,155,Date,209,Initiator/Doc Control,319,Pages,438,Description
+1,362,64,A,98,P5137,142,06/02/06,199,M. Girardelli/J. Dixon,359,Initial Release
+1,373,64,B,98,P5259,142,9/27/06,199,M. Girardelli/W. Glasscock,316,"6,7",359,Discrete Blank Off and Discrete Blank On keycodes
+1,384,359,were added
+1,395,63,C,98,P5663,142,6/24/08,199,A. Benenson,316,"5,6,7",359,"Added reserved codes 1, 5, 6, 21, 22, 31, and 56."
+1,405,359,"Changed codes 9, 27-30 to reserved."
+1,415,359,Changed code 10 to help.
+1,426,359,Added new codes 69-79 for new aspect ratios and
+1,436,359,motorized zoom/focus/shift.
+1,447,63,D,98,P5709,142,10/20/08,199,A. Benenson,316,"6,7",359,‘New Mute’ (code 41) name changed to ‘Mute’ and
+1,458,359,revised description to be clearer. ‘Discrete User
+1,468,359,Preset 2’ and ‘Discrete User Preset 3’ (codes 65 &
+1,478,359,66) descriptions revised; these codes access ISF
+1,489,359,day/night presets if projector supports ISF presets
+1,499,359,instead of user 2 & 3 presets.
+1,510,64,E,98,P5745,142,12/18/08,199,A. Benenson,316,"5,6",359,Changed the following codes that are not
+1,520,359,"transmitted to N/A reserved codes: Light (15),"
+1,531,359,"Reset lamp hour counter (24), USB flash (42)"
+1,542,64,F,98,P5764,147,03/13/09,209,L.Hindman / P.Young,327,All,392,Changed Dept. to SW Engineering.
+1,553,63,G,98,P5829,142,5/8/09,199,A. Benenson,316,6,359,"Removed detail about USB behavior for next slide,"
+1,563,359,previous slide (not needed for remote
+1,574,359,manufacturer)
+1,728,63,009-1067-00 Rev. G,225,InFocus Infrared Keycode Specification,487,Page 1 of 7
+2,153,253,Table of Contents
+2,185,72,1.,92,PURPOSE ............................................................................................................................................................ 3
+2,208,72,2.,92,SCOPE .................................................................................................................................................................. 3
+2,232,72,3.,92,INFRARED KEYCODES ................................................................................................................................... 5
+2,728,63,009-1067-00 Rev. G,225,InFocus Infrared Keycode Specification,487,Page 2 of 7
+3,153,72,1. Purpose
+3,186,72,This document will define the remote control keycodes that are supported on InFocus projectors.
+3,212,72,2. Scope
+3,245,72,This document is targeted at the engineering and OEM-inbound partners for the design of IR
+3,259,72,transmitters (e.g. remotes) and receivers (e.g. projectors).
+3,728,63,009-1067-00 Rev. G,225,InFocus Infrared Keycode Specification,487,Page 3 of 7
+4,84,72,3. Infrared Keycodes
+4,115,72,The following table lists all of the currently designated infrared keycodes. Additional keycodes should be added to the end of this list.
+4,129,72,All unused values before the last specified keycode are reserved and should not be used.
+4,170,56,InFocus Keycodes
+4,186,602,<i>Code</i>
+4,199,56,Key Name,217,Description,516,Decimal,584,Hexadecimal,683,Binary
+4,213,56,N/A,217,Reserved (selects computer 1 source),533,1,606,01h,675,0000 0001
+4,226,56,Menu,217,Toggles menu state up or down,533,2,606,02h,675,0000 0010
+4,239,56,Brightness Plus,217,Increases brightness,533,3,606,03h,675,0000 0011
+4,252,56,Volume Minus,217,Decreases volume,533,4,606,04h,675,0000 0100
+4,266,56,N/A,217,Reserved (selects video 1 source),533,5,606,05h,675,0000 0101
+4,279,56,N/A,217,Reserved (selects scribble mode),533,6,606,06h,675,0000 0110
+4,292,56,Brightness Minus,217,Decreases brightness,533,7,606,07h,675,0000 0111
+4,305,56,Volume Plus,217,Increases volume,533,8,606,08h,675,0000 1000
+4,319,56,N/A,217,Reserved (external media player),533,9,606,09h,675,0000 1001
+4,332,56,Help,217,Displays help menu,530,10,605,0Ah,675,0000 1010
+4,345,56,Right Mouse Button,217,Sends right mouse click,530,11,605,0Bh,675,0000 1011
+4,358,56,Left Mouse Button,217,Sends left mouse click,530,12,605,0Ch,675,0000 1100
+4,371,56,Standby,217,Toggles standby state on or off,530,13,605,0Dh,675,0000 1101
+4,384,56,Freeze,217,Toggles freeze state on or off,530,14,605,0Eh,675,0000 1110
+4,397,56,N/A,217,"Reserved (enable backlighting on remote control, not",530,15,606,0Fh,675,0000 1111
+4,409,217,transmitted)
+4,421,56,Source Select,217,Selects next available source,530,16,606,10h,675,0001 0000
+4,434,56,Cursor Left,217,Moves menu cursor left,530,17,606,11h,675,0001 0001
+4,447,56,Cursor Right,217,Moves menu cursor right,530,18,606,12h,675,0001 0010
+4,461,56,Cursor Up,217,Moves menu cursor up,530,19,606,13h,675,0001 0011
+4,474,56,Cursor Down,217,Moves menu cursor down,530,20,606,14h,675,0001 0100
+4,487,56,N/A,217,Reserved (selects computer 2 source),530,21,606,15h,675,0001 0101
+4,500,56,N/A,217,Reserved (selects video 2 source),530,22,606,16h,675,0001 0110
+4,514,56,Power,217,Toggles power state on or off,530,23,606,17h,675,0001 0111
+4,527,56,N/A,217,"Reserved (reset lamp hour counter, not transmitted)",530,24,606,18h,675,0001 1000
+4,548,153,009-1067-00 Rev. G,315,InFocus Infrared Keycode Specification,577,Page 5 of 7
+5,72,56,Computer Toggle,217,Selects next available computer source,530,25,606,19h,675,0001 1001
+5,85,56,Video Toggle,217,Selects next available video source,530,26,605,1Ah,675,0001 1010
+5,99,56,N/A,217,Reserved (selects computer 4 source),530,27,605,1Bh,675,0001 1011
+5,112,56,N/A,217,Reserved (selects computer 5 source),530,28,605,1Ch,675,0001 1100
+5,125,56,N/A,217,Reserved (selects video 3 source),530,29,605,1Dh,675,0001 1101
+5,138,56,N/A,217,Reserved (selects computer network A),530,30,605,1Eh,675,0001 1110
+5,152,56,N/A,217,Reserved (selects computer network B),530,31,606,1Fh,675,0001 1111
+5,165,56,Keystone Plus,217,Increases keystone,530,32,606,20h,675,0010 0000
+5,178,56,Keystone Minus,217,Decreases keystone,530,33,606,21h,675,0010 0001
+5,191,56,N/A,217,Reserved (increment selected setting),530,34,606,22h,675,0010 0010
+5,206,56,N/A,217,Reserved (decrement selected setting),530,35,606,23h,675,0010 0011
+5,221,56,Next Slide,217,Moves to next slide in powerpoint,530,36,606,24h,675,0010 0100
+5,236,56,Previous Slide,217,Moves to previous slide in powerpoint,530,37,606,25h,675,0010 0101
+5,248,56,Zoom Plus,217,Increases zoom ratio,530,38,606,26h,675,0010 0110
+5,261,56,Zoom Minus,217,Decreases zoom ratio,530,39,606,27h,675,0010 0111
+5,275,56,Zoom Toggle,217,Toggles zoom state on or off,530,40,606,28h,675,0010 1000
+5,288,56,Mute,217,Toggles audio mute state on or off,530,41,606,29h,675,0010 1001
+5,301,56,N/A,217,"Reserved (enable USB flash mode, not transmitted)",530,42,605,2Ah,675,0010 1010
+5,314,56,Custom,217,Performs programmed action of Custom Key,530,43,605,2Bh,675,0010 1011
+5,328,56,Presets,217,Toggles through available presets,530,44,605,2Ch,675,0010 1100
+5,341,56,Source1,217,Selects programmed source,530,45,605,2Dh,675,0010 1101
+5,354,56,Source2,217,Selects programmed source,530,46,605,2Eh,675,0010 1110
+5,367,56,Source3,217,Selects programmed source,530,47,606,2Fh,675,0010 1111
+5,381,56,Source4,217,Selects programmed source,530,48,606,30h,675,0011 0000
+5,394,56,Blank,217,Toggles state of blank screen on or off,530,49,606,31h,675,0011 0001
+5,407,56,Select,217,Selects current menu item,530,50,606,32h,675,0011 0010
+5,420,56,Auto Image,217,Activates automatic image re-acquisition,530,51,606,33h,675,0011 0011
+5,434,56,Resize,217,Toggles through available resize modes,530,52,606,34h,675,0011 0100
+5,447,56,Overscan,217,Toggles overscan state on or off,530,53,606,35h,675,0011 0101
+5,460,56,Contrast Plus,217,Increases contrast,530,54,606,36h,675,0011 0110
+5,473,56,Contrast Minus,217,Decreases contrast,530,55,606,37h,675,0011 0111
+5,487,56,N/A,217,Reserved (aspect ratio toggle),530,56,606,38h,675,0011 1000
+5,500,56,Discrete Power Off,217,Commands the system to power down,530,57,606,39h,675,0011 1001
+5,513,56,Discrete Power On,217,Commands the system to power up,530,58,605,3Ah,675,0011 1010
+5,526,56,Discrete Resize Native,217,Selects the Native aspect ratio,530,59,605,3Bh,675,0011 1011
+5,548,153,009-1067-00 Rev. G,315,InFocus Infrared Keycode Specification,577,Page 6 of 7
+6,73,56,Discrete Resize 16:9,217,Selects the 16:9 aspect ratio,530,60,605,3Ch,675,0011 1100
+6,86,56,Discrete Resize 4:3,217,Selects the 4:3 aspect ratio,530,61,605,3Dh,675,0011 1101
+6,99,56,Discrete Resize Letterbox,217,Selects the Letterbox aspect ratio,530,62,605,3Eh,675,0011 1110
+6,112,56,Discrete Resize Natural,217,Selects the Natural Wide/Panorama aspect ratio,530,63,606,3Fh,675,0011 1111
+6,124,56,Wide/Panorama
+6,136,56,Discrete User Preset 1,217,Selects the User Preset 1,530,64,606,40h,675,0100 0000
+6,149,56,Discrete User Preset 2,217,Selects the User Preset 2 (or selects ISF Day preset if,606,41h,675,0100 0001
+6,161,217,projector supports that instead of user preset 2),530,65
+6,173,56,Discrete User Preset 3,217,Selects the User Preset 3 (or selects ISF Night preset if,606,42h,675,0100 0010
+6,184,217,projector supports that instead of user preset 3),530,66
+6,196,56,Discrete Blank Off,217,Turns off the blank screen,530,67,606,43h,675,0100 0011
+6,209,56,Discrete Blank On,217,Turns on the blank screen,530,68,606,44h,675,0100 0100
+6,223,56,Discrete Resize Auto,217,Selects the Auto aspect ratio,530,69,606,45h,676,0100 0101
+6,236,56,Discrete Resize 15:9,217,Selects the 15:9 aspect ratio,530,70,606,46h,676,0100 0110
+6,249,56,Discrete Resize 16:10,217,Selects the 16:10 aspect ratio,530,71,606,47h,676,0100 0111
+6,262,56,Focus Near,217,Motorized focus nearer,530,72,606,48h,675,0100 1000
+6,276,56,Focus Far,217,Motorized focus further,530,73,606,49h,675,0100 1001
+6,289,56,Zoom In,217,Motorized zoom in,530,74,605,4Ah,676,0100 1010
+6,302,56,Zoom Out,217,Motorized zoom out,530,75,605,4Bh,676,0100 1011
+6,315,56,Shift Left,217,Motorized lens shift move left,530,76,605,4Ch,675,0100 1100
+6,329,56,Shift Right,217,Motorized lens shift move right,530,77,605,4Dh,675,0100 1101
+6,342,56,Shift Up,217,Motorized lens shift move up,530,78,605,4Eh,675,0100 1110
+6,355,56,Shift Down,217,Motorized lens shift move down,530,79,606,4Fh,675,0100 1111
+6,548,153,009-1067-00 Rev. G,315,InFocus Infrared Keycode Specification,577,Page 7 of 7

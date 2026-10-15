@@ -62,6 +62,8 @@ SHEETS = {
     },
     "infocus": {"InFocus-IN5310-IRCodes.pdf": ["pages"],         # the four whose table is an image (D298) have the text layer and a transcription
                 **{name: ["lines", "transcribed"] for name in ("InFocus-IN110-IRCodes.pdf", "InFocus-IN3118HD-IRCodes.pdf", "IN3114_IN3116_IRCodes.pdf", "InFocus-IN3910-IRCodes.pdf")},
+                "SP8604_IRCodes.pdf": ["transcribed"],        # no text layer at all: the whole page is pictures (D301)
+                **{name: ["lines"] for name in ("IN5550-IR-Codes.pdf", "InFocus-IN3900LB-IRCodes.pdf")},
                 **{name: ["lines"] for name in (
         "540-640-IR_codes.pdf",
         "IN2x_IR_Codes.pdf",
@@ -316,7 +318,8 @@ def rows_of(path: Path, sheet: str) -> list[list[str]]:
                         if cell and all(span["flags"] & 2 or "Italic" in span["font"] for span in line["spans"] if span["text"].strip()):
                             cell = f"<i>{cell}</i>"
                         if cell:
-                            lines.append((line["bbox"][1], line["bbox"][0], cell))
+                            box = pymupdf.Rect(line["bbox"]) * page.rotation_matrix       # where it is on the page as it is shown (a rotated page: InFocus's spec)
+                            lines.append((box.y0, box.x0, cell))
                 lines.sort()
                 rows: list[list] = []
                 for y, x, cell in lines:

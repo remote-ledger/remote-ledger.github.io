@@ -43,6 +43,10 @@ class Document:
     name_max: int = 150            # the name column of a table read by ``banded`` is the cells with ``x`` under this
     text_sheet: str = ""           # the sheet that has the customer code's sentence when it is not the one of the rows (a table that is an image)
     names_from: str = ""           # the document whose key names a table without names takes, by key number (the IN3118HD's from the IN5310's)
+    high_first: bool = False       # the customer code is written in the order it is sent: its high byte is the device (the SP8604's and IN100's)
+    default_customer: int = DEFAULT_CUSTOMER   # the customer code a document that states none is read with
+    default_why: str = ""          # why that one, when it is not the one every other document gives
+    skip_names: tuple[str, ...] = ()           # the names of rows that are no key (the specification's ``N/A``: a reserved code)
 
 
 DOCUMENTS: tuple[Document, ...] = (
@@ -51,9 +55,10 @@ DOCUMENTS: tuple[Document, ...] = (
     Document("IN7x_IR_Codes.pdf", ("IN72", "IN74", "IN76"), "name_code"),
     Document("IN5140_IRCodes.pdf", ("IN5140",), "keyno", unnamed=("IN5140",)),
     Document("IN5148HD-IR-Codes.pdf", ("IN5148HD",), "dec_hex_bin", name_max=90),
-    Document("InFocus-IN100-IRCodes.pdf", ("IN102", "IN104"), "name_desc_code",
-             doubt="its customer code 0x83F4 is read low byte first as the other documents' 0x4E87 is (device 0xF4, subdevice 0x83), and the IR Blaster "
-                   "database's InFocus remote that has these 13 functions has the two bytes the other way round (device 0x83, subdevice 0xF4)"),
+    Document("InFocus-IN100-IRCodes.pdf", ("IN102", "IN104"), "name_desc_code", high_first=True,
+             doubt="its customer code 0x83F4 is read first byte first (device 0x83, subdevice 0xF4), as the IR Blaster database's InFocus remote that has these "
+                   "13 functions has it and as the SP8604's own 0x31CE is sent (D301), though the other documents' 0x4E87 is the device 0x87 and the "
+                   "subdevice 0x4E, low byte first: InFocus's notation is not one, and nothing in this document says which this is"),
     Document("InFocus-IN1100-IRCodes.pdf", ("IN1100", "IN1102", "M20", "M22", "LP85", "LP85W", "M11", "M11W"), "name_desc_code"),
     Document("InFocus-IN20-IRCodes.pdf", ("IN24", "IN24+", "IN24+EP", "IN26", "IN26EP", "IN26+"), "name_desc_code"),
     Document("InFocus-IN2100-IRCodes.pdf", ("IN2100",), "dec_hex_bin", unnamed=("IN2100",)),
@@ -67,6 +72,14 @@ DOCUMENTS: tuple[Document, ...] = (
     Document("IN3114_IN3116_IRCodes.pdf", ("IN2112", "IN2114", "IN2116", "IN3114", "IN3116"), "transcribed", sheet="transcribed", text_sheet="lines"),
     Document("InFocus-IN3910-IRCodes.pdf", ("IN3914", "IN3916"), "transcribed", sheet="transcribed", text_sheet="lines"),
     Document("InFocus-IN3118HD-IRCodes.pdf", ("IN3118HD",), "keyed_image", sheet="transcribed", text_sheet="lines", names_from="InFocus-IN5310-IRCodes.pdf"),
+    Document("InFocus-IN3900LB-IRCodes.pdf", ("IN3900LB",), "dec_hex_bin", unnamed=("IN3900LB",), skip_names=("N/A",)),
+    Document("SP8604_IRCodes.pdf", ("SP8600", "SP8604"), "keycodes_image", sheet="transcribed", high_first=True, unnamed=("SP8604",)),
+    Document("IN5550-IR-Codes.pdf", ("IN5550",), "ids0", unnamed=("IN5550",), high_first=True, default_customer=0x31CE,
+             default_why="the SP8604's, whose document has these table's codes for 14 functions (`MENU` 0x87, `ENTER` 0xC5, `FREEZE` 0x8E, `INPUT` 0x83, `AUTO SYNC` 0x86, `ON` 0x90...), "
+                         "but another InFocus remote of the IR Blaster database that shares only `ENTER` is at 0x32CD, so the family has more than one address: a guess"),
+    Document("IN5550-IR-Codes.pdf", ("IN5550 (table 1)",), "ids1", unnamed=("IN5550 (table 1)",), high_first=True, default_customer=0x31CE,
+             default_why="the SP8604's, whose document has these table's codes for 14 functions (`MENU` 0x87, `ENTER` 0xC5, `FREEZE` 0x8E, `INPUT` 0x83, `AUTO SYNC` 0x86, `ON` 0x90...), "
+                         "but another InFocus remote of the IR Blaster database that shares only `ENTER` is at 0x32CD, so the family has more than one address: a guess"),
     Document("InFocus-IN5500-IRCodes.pdf", ("IN5502", "IN5502L", "IN5504", "IN5504L", "IN5532", "IN5532L", "IN5534", "IN5534L"), "name_desc_code"),
     Document("InFocus-LP120-IRCodes.pdf", ("LP120",), "name_code"),
     Document("InFocus-LP240-LP250-IRCodes.pdf", ("LP240", "LP250"), "hex16"),
@@ -275,6 +288,38 @@ def transcribed(rows: list[list[str]]) -> list[Entry]:
     return out
 
 
+def keycodes_image(rows: list[list[str]]) -> tuple[list[Entry], int]:
+    """The SP8604's table (a picture, written down by eye: ``page, key number, function, description, keycode``, after a first row
+    ``page, customer, 0x31CE, the sentence``): the function is the label, the keycode the function of the key. The document writes
+    ``Ox31CE`` and ``Ox90`` with the letter O."""
+    if rows[0][1] != "customer" or not _HEX16.match(rows[0][2]):
+        raise ValueError(f"the transcription's first row {rows[0]} is not the customer code")
+    out = []
+    for position, (page, number, function, description, code) in enumerate(((int(r[0]), r[1], _clean(r[2]), _clean(r[3]), r[4]) for r in rows[1:]), 1):
+        if int(number) != position or not _HEX0X.match(code):
+            raise ValueError(f"transcription row {position}: {number} {function} {code}")
+        out.append(Entry(page, function, int(code[2:], 16), f"{number} '{function}' ({description}) / {code}", True, "", None, position))
+    return out, int(rows[0][2], 16)
+
+
+def ids(rows: list[list[str]], table: int) -> list[Entry]:
+    """The IN5550's two tables (a ``Table 0 (default)`` and a ``Table 1``, the remote's ID-set modes): a row is ``number, key, code, function``
+    for each table, and the last four rows are the special codes the ID-set sequences send (``ID_SET + MENU  0x6C  Table0``). The cells at the
+    right (``x`` of 400 or more) are the labels of the remote's picture. A row with ``-`` for the function in a table has none there."""
+    out: list[Entry] = []
+    for row in rows:
+        page = int(row[0])
+        cells = [_clean(text) for x, text in zip(row[2::2], row[3::2]) if int(x) < 400]
+        if len(cells) == 6 and re.fullmatch(r"\d{1,2}", cells[0]) and (_HEX0X.match(cells[2]) or cells[2] == "-"):
+            code, function = (cells[2], cells[3]) if table == 0 else (cells[4], cells[5])
+            if _HEX0X.match(code) and function != "-":
+                out.append(Entry(page, function, int(code[2:], 16), f"{cells[0]} {cells[1]} / {code}", True, "", None, int(cells[0])))
+        elif len(cells) == 5 and cells[0].startswith("ID_SET") and _HEX0X.match(cells[1]):
+            code, function = (cells[1], cells[2]) if table == 0 else (cells[3], cells[4])
+            out.append(Entry(page, function, int(code[2:], 16), f"{cells[0]} / {code}", True, f"the special code of {cells[0]}"))
+    return out
+
+
 def keyed_image(rows: list[list[str]], names: dict[int, Entry]) -> tuple[list[Entry], list[str]]:
     """The IN3118HD's table (an image: ``page, key number, description, data code``) has no key names, only a description of each key; it is the
     IN5310's table (the same ``Code table (InFocus RC)``), so each row takes the IN5310's name for the key of that number, **and the two codes
@@ -302,6 +347,10 @@ def read(document: Document, rows: list[list[str]], names: dict[int, Entry] | No
         return transcribed(rows), []
     if document.layout == "keyed_image":
         return keyed_image(rows, names or {})
+    if document.layout == "keycodes_image":
+        return keycodes_image(rows)[0], []
+    if document.layout in ("ids0", "ids1"):
+        return ids(rows, int(document.layout[-1])), []
     if document.layout in ("name_desc_code", "dec_hex_bin"):
         return {"name_desc_code": name_desc_code, "dec_hex_bin": dec_hex_bin}[document.layout](rows, document.name_max), []
     readers = {"name_code": name_code, "code_name": code_name, "hex16": hex16, "keyno": keyno}
@@ -331,10 +380,17 @@ def build(snapshot: Snapshot, authored: dict[tuple[str, str], str], report: Repo
         rows = snapshot.sheet_of(document.file, document.sheet)
         entry = snapshot.documents[document.file]
         sha = snapshot.sha(document.file)
-        stated = customer_of(snapshot.sheet_of(document.file, document.text_sheet), document.text_sheet) if document.text_sheet else customer_of(rows, document.sheet)
+        if document.layout == "keycodes_image":
+            stated = keycodes_image(rows)[1]
+        else:
+            stated = customer_of(snapshot.sheet_of(document.file, document.text_sheet), document.text_sheet) if document.text_sheet else customer_of(rows, document.sheet)
         entries, no_code = read(document, rows, {e.number: e for e in read_entries.get(document.names_from, [])})
         read_entries[document.file] = entries
-        report.count(MAKER, f"{document.file}: rows read", len(entries))
+        reserved = [e for e in entries if e.name in document.skip_names]
+        entries = [e for e in entries if e.name not in document.skip_names]
+        if reserved:
+            report.notes.append((MAKER, document.file, f"{len(reserved)} rows are named `{document.skip_names[0]}` (reserved codes) and are no keys"))
+        report.count(MAKER, f"{document.file}{' (table 1)' if document.layout == 'ids1' else ''}: rows read", len(entries))
         for why in no_code:
             report.notes.append((MAKER, document.file, why))
         # a name written twice with one code is one key; two names with one code are both doubtful
@@ -351,14 +407,14 @@ def build(snapshot: Snapshot, authored: dict[tuple[str, str], str], report: Repo
         if document.doubt:
             report.notes.append((MAKER, document.file, f"every key is Untested: {document.doubt}"))
         if inferred:
-            report.notes.append((MAKER, document.file, f"states no customer code: read with 0x{DEFAULT_CUSTOMER:04X}, the one the other InFocus documents give, "
-                                                       f"and each of its {len(unique)} keys is Untested"))
+            report.notes.append((MAKER, document.file, f"states no customer code: read with 0x{document.default_customer:04X}, " + (document.default_why or "the one the other InFocus documents give")
+                                 + f", and each of its {len(unique)} keys is Untested"))
         where = f"infocus.com IR code PDFs/{document.file}"
         for model in document.models:
             members: list[tuple[str, dict[str, Any]]] = []
             for e in unique:
-                customer = e.customer if e.customer is not None else (stated if stated is not None else DEFAULT_CUSTOMER)
-                device, subdevice = customer & 0xFF, customer >> 8
+                customer = e.customer if e.customer is not None else (stated if stated is not None else document.default_customer)
+                device, subdevice = (customer >> 8, customer & 0xFF) if document.high_first else (customer & 0xFF, customer >> 8)
                 key = (device, subdevice, e.code)
                 if key not in gate:
                     gate[key] = form_compiles(IMPORT_ROOT, PROTOCOL, "K", {
@@ -369,12 +425,12 @@ def build(snapshot: Snapshot, authored: dict[tuple[str, str], str], report: Repo
                     continue
                 cite = (f"{where}@{sha} (retrieved {entry.get('retrieved', snapshot.retrieved)}, from the Wayback Machine snapshot {entry['snapshot']}) "
                         f"page {e.page} row '{e.name}' ({e.written}): NEC1 device {device} subdevice {subdevice} function {e.code}, "
-                        f"customer code 0x{customer:04X}")
+                        f"customer code 0x{customer:04X}" + (" written in the order it is sent" if document.high_first else ""))
                 doubts = []
                 if document.doubt:
                     doubts.append(document.doubt)
                 if inferred:
-                    doubts.append(f"the document states no customer code, and 0x{DEFAULT_CUSTOMER:04X} is the one the other InFocus documents give")
+                    doubts.append(f"the document states no customer code, and 0x{document.default_customer:04X} is " + (document.default_why or "the one the other InFocus documents give"))
                 elif e.customer is None:
                     cite += ", as the document states"
                 if not e.agrees:
