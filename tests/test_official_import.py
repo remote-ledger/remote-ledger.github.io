@@ -12,7 +12,7 @@ from pathlib import Path
 import pytest
 
 from remote_ledger.errors import ValidationError
-from remote_ledger.official import anthem, arcam, cambridge, cary, hegel, jvc, kef, marantz, nad, oppo, rotel, simaudio
+from remote_ledger.official import anthem, arcam, cambridge, cary, hegel, infocus, jvc, kef, marantz, nad, oppo, rotel, simaudio
 from remote_ledger.official import importer as oi
 from remote_ledger.official.common import MANIFEST, Report, load_snapshot
 from remote_ledger.serialize import load
@@ -26,7 +26,7 @@ SNAPSHOT = ROOT / oi.SNAPSHOT
 
 def test_every_document_and_csv_is_the_one_the_manifest_pins():
     for maker, retrieved in (("marantz", "2026-10-08"), ("anthem", "2026-10-08"), ("oppo", "2026-10-09"), ("kef", "2026-10-13"),
-                             ("jvc", "2026-10-13"), ("arcam", "2026-10-13"), ("cambridge", "2026-10-13"), ("hegel", "2026-10-13"), ("cary", "2026-10-13"), ("nad", "2026-10-14"), ("simaudio", "2026-10-13"), ("rotel", "2026-10-13")):
+                             ("jvc", "2026-10-13"), ("arcam", "2026-10-13"), ("cambridge", "2026-10-13"), ("hegel", "2026-10-13"), ("cary", "2026-10-13"), ("infocus", "2026-10-15"), ("nad", "2026-10-14"), ("simaudio", "2026-10-13"), ("rotel", "2026-10-13")):
         snap = load_snapshot(SNAPSHOT / maker)
         assert snap.maker == maker and snap.retrieved == retrieved
         assert snap.documents and snap.sheets
@@ -443,12 +443,12 @@ def test_the_committed_official_import_keeps_r19():
     or Untested, and a citation that names a document the manifest pins, by hash."""
     assert (ROOT / oi.IMPORT_ROOT / "README.md").is_file() and (ROOT / oi.IMPORT_ROOT / oi.REPORT).is_file()
     hashes, dates, snapshots = {}, {}, {}
-    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "arcam", "cambridge", "hegel", "cary", "nad", "simaudio", "rotel"):
+    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "arcam", "cambridge", "hegel", "cary", "infocus", "nad", "simaudio", "rotel"):
         manifest = json.loads((SNAPSHOT / maker / MANIFEST).read_text(encoding="utf-8"))
         for name, entry in manifest["documents"].items():
             hashes[name], dates[name], snapshots[name] = entry["sha256"], entry.get("retrieved", manifest["retrieved"]), entry.get("snapshot")
     shape = re.compile(r"^(?:marantz\.com archive-downloads|anthemav\.com \(storage\.googleapis\.com/sandbox1-anthemav/an\)"
-                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
+                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|infocus\.com IR code PDFs|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
                        r"(?:, from the Wayback Machine snapshot (\d{14}))?\) (?:sheet '[^']+' row \d+|page \d+ row \d+|page \d+ '|page \d+ table \d+ row '|page \d+ row '|key \d+ ')")
     files = sorted((ROOT / oi.IMPORT_ROOT).rglob("*.json"))
     assert len(files) > 180
@@ -1057,6 +1057,173 @@ def test_the_older_products_serial_notes_end_with_the_same_table_as_the_newer_on
     on_remote = [spec["label"] for spec in bar["keys"].values() if "under 'Commands on the Solo bar remote control'" in spec["forms"][0]["source"]]
     assert len(on_remote) == 14 and on_remote[0] == "Standby" and on_remote[-1] == "Enter system menu"
     assert [codes_of(bar)[f"Select HDMI{n}"][1] for n in (1, 2, 3, 4)] == ["0x00", "0x01", "0x02", "0x04"] and codes_of(bar)["Select BT"] == ("0x13", "0x0B")
+
+
+# --- InFocus -----------------------------------------------------------------------------------------------------
+
+
+def test_infocus_customer_code_is_the_documents_own_sentence_and_two_of_them_are_an_error():
+    """``The customer code portion of the IR packet should use the hexadecimal value 0x4E87``, which may be split over two lines, or a
+    ``Device ID:0x4E87`` with non-breaking spaces (the IN5310's text); a document with none has none (the importer then uses 0x4E87 and
+    marks every key); two different ones in one document stop the import."""
+    assert infocus.customer_of([["1", "132", "139", "The customer code portion of the IR packet should use the hexadecimal value 0x4E87."]], "lines") == 0x4E87
+    assert infocus.customer_of([["1", "105", "90", "The Screen Play 110 remote uses the NEC protocol. The customer code"],
+                                ["1", "121", "90", "portion of the IR packet should use the hexadecimal value 0x4E87."]], "lines") == 0x4E87
+    assert infocus.customer_of([["1", "Standard\xa0consumer\xa0IR\xa0(NEC\xa0framing)\xa0Device\xa0ID:0x4E87"]], "pages") == 0x4E87
+    assert infocus.customer_of([["1", "448", "90", "The customer code portion should use the hexadecimal value: 0x83F4"]], "lines") == 0x83F4
+    assert infocus.customer_of([["1", "79", "471", "Customer Code: 0x0080"]], "lines") == 0x0080
+    assert infocus.customer_of([["1", "5", "5", "a table of 0x4E87 and nothing else"]], "lines") is None
+    with pytest.raises(ValueError, match="two customer codes"):
+        infocus.customer_of([["1", "1", "5", "The customer code is 0x4E87"], ["1", "2", "5", "Customer Code: 0x0080"]], "lines")
+
+
+def test_the_infocus_table_layouts_are_read_as_a_name_and_a_data_code_with_each_layouts_own_checks():
+    """``name_code``, ``code_name``, ``hex16`` (the code is the low byte and the high byte is its bit reverse: 0xE817 is 0x17), ``keyno``
+    (the customer code in each row) and the layouts whose rows are not on one line (``banded``): a code and its name a point or two
+    apart, a name that goes on in the next line (``Discrete Resize`` / ``Letterbox``), a decimal and a binary that must agree with the hex."""
+    named = infocus.name_code(infocus.cells_of([["1", "161", "99", "Key Name", "225", "Code", "270", "Description"],
+                                                ["1", "178", "99", "Menu", "225", "0x02", "270", "Toggles menu state up or down"],
+                                                ["1", "322", "99", "Power", "225", "0x17"]]))
+    assert [(e.name, e.code) for e in named] == [("Menu", 2), ("Power", 0x17)]
+    coded = infocus.code_name(infocus.cells_of([["1", "186", "113", "Keycode Hexadecimal Value", "392", "Function"], ["1", "202", "90", "0x02", "311", "Menu toggle"]]))
+    assert [(e.name, e.code) for e in coded] == [("Menu toggle", 2)]
+    sixteen = infocus.hex16(infocus.cells_of([["1", "136", "193", "POWER", "338", "0xE817"], ["1", "153", "193", "VOLUME_UP", "338", "0x1008"],
+                                              ["1", "169", "193", "MUTE", "338", "0x9429"], ["1", "185", "193", "WRONG", "338", "0xE818"]]))
+    assert [(e.name, e.code, e.agrees) for e in sixteen] == [("POWER", 0x17, True), ("VOLUME_UP", 0x08, True), ("MUTE", 0x29, True), ("WRONG", 0x18, False)]
+    assert "bit reverse" in sixteen[-1].note
+    numbered_keys = infocus.keyno(infocus.cells_of([["1", "101", "77", "K01", "132", "STANDBY", "200", "NEC", "261", "4E87", "326", "39"],
+                                                    ["1", "112", "77", "K02", "139", "ON", "200", "NEC", "261", "4E87", "326", "3A"]]))
+    assert [(e.name, e.code, e.customer) for e in numbered_keys] == [("STANDBY", 0x39, 0x4E87), ("ON", 0x3A, 0x4E87)]
+    banded = infocus.name_desc_code([
+        ["2", "122", "88", "Key Name", "263", "Description", "392", "Hexadecimal"],
+        ["3", "78", "412", "39h"], ["3", "80", "36", "Discrete Power Off", "194", "Commands the system to power down"],
+        ["3", "117", "36", "Discrete Resize", "477", "3Eh"], ["3", "129", "36", "Letterbox", "156", "Selects the Letterbox aspect ratio"],
+        ["3", "141", "36", "Discrete Resize Natural", "477", "3Fh"], ["3", "152", "36", "Wide", "156", "Selects the Natural Wide aspect ratio"],
+        ["3", "300", "36", "A footer far from any code"]])
+    assert [(e.page, e.name, e.code) for e in banded] == [(3, "Discrete Power Off", 0x39), (3, "Discrete Resize Letterbox", 0x3E), (3, "Discrete Resize Natural Wide", 0x3F)]
+    checked = infocus.dec_hex_bin([
+        ["2", "114", "41", "Power On", "108", "Turns on projector power", "366", "58", "437", "3Ah", "513", "0011 1010"],
+        ["2", "200", "41", "Computer", "108", "Computer2", "366", "25", "438", "19h", "512", "1000 1001"],
+        ["2", "300", "41", "Discrete Resize Native", "411", "3Bh", "459", "0011 1011"]], name_max=90)
+    assert [(e.name, e.code, e.agrees) for e in checked] == [("Power On", 0x3A, True), ("Computer", 0x19, False), ("Discrete Resize Native", 0x3B, True)]
+    assert "decimal 25, hex 0x19 and binary 1000 1001 (0x89) are not one code" in checked[1].note and checked[2].note == "the table's decimal of this row was not read"
+
+
+def test_the_infocus_numbered_rows_are_read_in_order_with_the_arrow_keys_named_and_a_row_without_a_code_left_out():
+    rows = [["1", line] for line in (
+        "Remote IR Information", "Standard consumer IR (NEC framing) Device ID:0x4E87", "Description", "Data Code",
+        "1 Power On", "Turns the projector on.", "3Ah", "2", "^", "When the OSD menu is on, acts as an up arrow key. When the OSD",
+        "menu is off, adjusts keystone +.", "13h", "3 Volume\u2010", "Decreases volume.", "04h", "4 Light", "Turns on remote backlight", "n/a")]
+    entries, no_code = infocus.numbered(rows)
+    assert [(e.name, e.code) for e in entries] == [("Power On", 0x3A), ("Up", 0x13), ("Volume-", 4)]
+    assert entries[1].note == "the table writes the key's name as '^'" and no_code == ["'Light' (row 4): the table's code is n/a, so it sends none"]
+
+
+def infocus_files() -> dict[str, dict]:
+    return {p.stem: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "infocus").glob("*.json"))}
+
+
+def infocus_doc_of(doc: dict) -> str:
+    return next(iter(doc["keys"].values()))["forms"][0]["source"].split("/")[1].split("@")[0]
+
+
+def test_the_29_infocus_documents_are_74_files_and_3297_keys_and_489_of_them_are_untested_for_the_reason_each_says():
+    """Files, keys per file and Untested keys per file of each document (the models are the title's: the IN1100's are eight, the IN3100's
+    twelve). **Untested are the 489 keys of 13 documents' files**: the IN100's 13 (the customer code's byte order is in doubt, below), and
+    the keys of the 12 documents that state no customer code (the IN2100's, LP650's, SP4800's, SP4805's, X2's and X3's, and the hex16 ones),
+    which are read with 0x4E87, and the IN5148HD's `Computer` row, whose binary is not its decimal's."""
+    per: dict[str, list] = {}
+    for stem, doc in infocus_files().items():
+        row = per.setdefault(infocus_doc_of(doc), [0, len(doc["keys"]), sum(s["forms"][0]["confidence"] == "untested" for s in doc["keys"].values())])
+        row[0] += 1
+    assert {k: tuple(v) for k, v in per.items()} == {
+        "InFocus-IN3100-IRCodes.pdf": (12, 59, 0), "InFocus-IN100-IRCodes.pdf": (2, 13, 13), "InFocus-IN1100-IRCodes.pdf": (8, 59, 0),
+        "InFocus-IN2100-IRCodes.pdf": (1, 55, 55), "InFocus-IN20-IRCodes.pdf": (6, 59, 0), "InFocus-IN32-IRcodes.pdf": (2, 41, 0),
+        "IN5140_IRCodes.pdf": (1, 50, 0), "IN5148HD-IR-Codes.pdf": (1, 44, 1), "InFocus-IN5300-IRCodes.pdf": (2, 62, 0),
+        "InFocus-IN5310-IRCodes.pdf": (2, 29, 0), "InFocus-IN5500-IRCodes.pdf": (8, 62, 0), "IN7x_IR_Codes.pdf": (3, 32, 0),
+        "IN2x_IR_Codes.pdf": (3, 41, 0), "Mondopad_IR_codes.pdf": (3, 22, 0), "InFocus-LP120-IRCodes.pdf": (1, 29, 0),
+        "InFocus-LP240-LP250-IRCodes.pdf": (2, 20, 20), "540-640-IR_codes.pdf": (2, 20, 20), "InFocus-LP600-IRCodes.pdf": (1, 29, 0),
+        "InFocus-LP650-IRCodes.pdf": (1, 46, 46), "InFocus-LP815-IRCodes.pdf": (2, 20, 20), "InFocus-LP840-IRCodes.pdf": (3, 19, 19),
+        "InFocus-LS110-IRCodes.pdf": (1, 20, 0), "InFocus-SP4800-IRCodes.pdf": (1, 41, 41), "InFocus-SP4805-IRCodes.pdf": (1, 41, 41),
+        "InFocus-SP5000-IRCodes.pdf": (1, 20, 20), "InFocus-SP7200-IRCodes.pdf": (1, 29, 0), "InFocus-SP7205-IRCodes.pdf": (1, 29, 0),
+        "X2_IRCodes.pdf": (1, 41, 41), "X3_IRCodes.pdf": (1, 41, 41)}
+    files = infocus_files()
+    assert len(files) == 74 and sum(len(d["keys"]) for d in files.values()) == 3_297
+    tiers = Counter(s["forms"][0]["confidence"] for d in files.values() for s in d["keys"].values())
+    assert tiers == {"plausible": 2_808, "untested": 489}
+    assert {d["protocol"]["name"] for d in files.values()} == {"NEC1"} and all(d["manufacturer"] == "InFocus" for d in files.values())
+    # the two documents of the IN72, IN74 and IN76, and the names other sources already have (R15)
+    assert {"IN72 (InFocus table)", "IN74", "IN76", "IN72 (IN7x_IR_Codes.pdf)", "IN74 (IN7x_IR_Codes.pdf)", "IN76 (IN7x_IR_Codes.pdf)",
+            "SP4805 (InFocus table)"} <= {d["model"] for d in files.values()}
+    assert files["IN72__InFocus_table"]["controls"] == ["InFocus IN72"]
+    # a model the document does not name says so
+    assert "the document does not name IN32, and the PDF is served on the page of IN32" in files["IN32"]["keys"]["KEY_MENU"]["forms"][0]["source"]
+    assert "the document does not name IN34, and the PDF is served on the page of IN34" in files["IN34"]["keys"]["KEY_MENU"]["forms"][0]["source"]
+    assert "does not name" not in files["LP120"]["keys"]["KEY_MENU"]["forms"][0]["source"]
+    # the three customer codes: 0x4E87 (device 0x87, subdevice 0x4E, low byte first), the IN100's 0x83F4 and the Mondopad's 0x0080
+    for model, expected in (("IN1100", ("0x87", "0x4E")), ("IN102", ("0xF4", "0x83")), ("INF5520", ("0x80", "0x00")), ("LP120", ("0x87", "0x4E"))):
+        assert {(s["forms"][0]["device"], s["forms"][0]["subdevice"]) for s in files[model]["keys"].values()} == {expected}, model
+    assert files["LP650"]["keys"]["KEY_POWER"]["forms"][0]["source"].count("states no customer code") == 1
+    assert files["IN1100"]["keys"]["KEY_POWER"]["forms"][0]["source"].endswith("customer code 0x4E87, as the document states")
+    # the IN5148HD's table has a row whose binary is not its decimal's; the LP840's gives one code to two functions
+    computer = files["IN5148HD"]["keys"]["KEY_COMPUTER"]["forms"][0]
+    assert computer["confidence"] == "untested" and "binary 1000 1001 (0x89) are not one code" in computer["source"]
+    assert files["LP840"]["keys"]["KEY_EFFECT"]["forms"][0]["function"] == files["LP840"]["keys"]["KEY_SOURCE_1"]["forms"][0]["function"] == "0x2B"
+    assert "the table gives this code to 'Effect' and 'Source 1'" in files["LP840"]["keys"]["KEY_EFFECT"]["forms"][0]["source"]
+    # the IN5310's arrow keys are named and its Light key sends no code
+    assert {"Up", "Down", "Left", "Right"} <= {s["label"] for s in files["IN5310"]["keys"].values()} and "Light" not in {s["label"] for s in files["IN5310"]["keys"].values()}
+
+
+def test_every_code_like_cell_of_an_infocus_document_is_a_row_of_it():
+    """The count that found the rows the first reading missed (12 `Discrete ...` rows of the IN1100's and of the IN3100's, 2 of the IN20's,
+    5 of the IN2100's): in each pinned document the cells that look like a data code (`0x02`, `02h`, a four-digit `0xE817`, a `K01` row's
+    code) are as many as the entries read from it, and the IN5310's one row with no code is the one `n/a`."""
+    snapshot = load_snapshot(SNAPSHOT / "infocus")
+    assert len(infocus.DOCUMENTS) == len(snapshot.documents) == 29
+    for document in infocus.DOCUMENTS:
+        rows = snapshot.sheet_of(document.file, document.sheet)
+        entries, no_code = infocus.read(document, rows)
+        if document.sheet == "pages":
+            cells = [infocus._clean(r[1]) for r in rows]
+        else:
+            cells = [infocus._clean(c) for _, cs in infocus.cells_of(rows) for c in cs]
+        if document.layout == "keyno":
+            like = [c for c in cells if re.fullmatch(r"K\d+", c)]
+        else:
+            like = [c for c in cells if re.fullmatch(r"0[xX][0-9A-Fa-f]{2,4}|[0-9A-Fa-f]{2}[hH]", c) and not c.startswith("0x4E87")]
+        assert len(like) == len(entries), (document.file, len(like), len(entries))
+        assert len(no_code) == (1 if document.layout == "numbered" else 0)
+
+
+def test_other_sources_infocus_remotes_send_the_codes_the_tables_list_and_the_documents_disagree_where_they_do():
+    """An independent check: the ledger's nine InFocus remotes at 0x4E87 (device 0x87, subdevice 0x4E: six from the IR Blaster database and
+    three JP1 upgrades) hold 219 keys, **215 of them (98.2%) a code some table lists**. **The IN100's 13 functions are all in the IR
+    Blaster database's one remote at 0x83/0xF4 (NEC2), but with the two bytes the other way round**, which is why the IN100's keys are
+    Untested. **The IN5140's table has `PAGE UP` at 0x25 and `PAGE DOWN` at 0x24, and the IN5148HD's has them the other way**
+    (`Page Up` 0x24, `Page Down` 0x25), as the LP650's `Next Slide` 0x24 and `Previous Slide` 0x25 send PageUp and PageDn: the IN5140's
+    two names are swapped against every other table, and its keys say so."""
+    ours = {(f["device"], f["subdevice"], f["function"]) for d in infocus_files().values() for s in d["keys"].values() for f in s["forms"]}
+    remotes = total = hit = 0
+    for path in sorted((ROOT / "remotes").glob("*/*/*.json")):
+        if "official" in path.parts or "infocus" not in path.parent.name.lower().replace(" ", ""):
+            continue
+        doc = load(path)
+        codes = [(f["device"], f.get("subdevice"), f["function"]) for spec in doc["keys"].values() for f in spec["forms"]
+                 if f.get("type") == "irp" and (f["device"], f.get("subdevice")) == ("0x87", "0x4E")]
+        if codes:
+            remotes += 1
+            total += len(codes)
+            hit += sum(1 for c in codes if c in ours)
+    assert (remotes, total, hit) == (9, 219, 215)
+    other = load(ROOT / "remotes" / "irblaster" / "INFOCUS" / "1739-NEC2.json")
+    theirs = {(f["device"], f["subdevice"], f["function"]) for spec in other["keys"].values() for f in spec["forms"]}
+    mine = {(f["device"], f["subdevice"], f["function"]) for spec in infocus_files()["IN102"]["keys"].values() for f in spec["forms"]}
+    assert len(mine) == 13 and {f for _, _, f in mine} == {f for _, _, f in theirs}      # the remote has Menu and Exit on one code (0x0F)
+    assert {(d, s) for d, s, _ in mine} == {("0xF4", "0x83")} and {(d, s) for d, s, _ in theirs} == {("0x83", "0xF4")}
+    page = {m: {s["label"]: s["forms"][0]["function"] for s in d["keys"].values()} for m, d in infocus_files().items() if m in ("IN5140", "IN5148HD", "LP650")}
+    assert (page["IN5140"]["PAGE UP"], page["IN5140"]["PAGE DOWN"]) == ("0x25", "0x24")
+    assert (page["IN5148HD"]["Page Up"], page["IN5148HD"]["Page Down"]) == ("0x24", "0x25")
+    assert (page["LP650"]["Next Slide"], page["LP650"]["Previous Slide"]) == ("0x24", "0x25")
 
 
 # --- Cambridge Audio ---------------------------------------------------------------------------------------------

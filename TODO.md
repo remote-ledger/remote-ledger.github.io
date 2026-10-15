@@ -17,8 +17,8 @@ sources have been imported under SPEC R19:
 - **Manufacturers' own IR tables**: Marantz's AV receiver charts, Anthem's IR
   hex sheet, Oppo's remote code workbooks, KEF's IR code sheets, JVC's
   projector guide, Arcam's custom installation notes, two of Cambridge Audio's lists
-  of NEC codes, Hegel's RC-5 tables, Cary Audio's DMS table, NAD's T-series IR tables and Crestron IR files, Simaudio's table of IR codes and Rotel's IR hex code PDFs, 554 files, 48,257
-  keys (DESIGN §29, §31, §58, §60, §62, §63, §64, §65, §66, §68, §69, §71, §72, §73, §74; Linn's RC-5 table moved to the private repository, §70).
+  of NEC codes, Hegel's RC-5 tables, Cary Audio's DMS table, InFocus's projector IR code PDFs, NAD's T-series IR tables and Crestron IR files, Simaudio's table of IR codes and Rotel's IR hex code PDFs, 628 files, 51,554
+  keys (DESIGN §29, §31, §58, §60, §62, §63, §64, §65, §66, §68, §69, §71, §72, §73, §74, §75; Linn's RC-5 table moved to the private repository, §70).
 
 SPEC v0.11 makes growing coverage from every source whose licence permits
 it the standing goal, with no fixed list of sources (DESIGN §8, Phase 8).
@@ -61,6 +61,7 @@ Land it in two PRs, code and then data.
       repository.
 - [ ] **Data of other makers or sites whose licence is unclear**: import it into
       the private repository first, so that it is never in this one's history.
+- [ ] **InFocus's remaining documents** (§75 read 29 of the 43 distinct PDFs the Wayback Machine holds): **the tables that are images** (the IN110's, IN3114's, IN3910's and IN3118HD's, with a decimal, a hex and a binary column that would check a hand reading, and the SP8604's); the IN5550's two tables of NEC codes with no customer code, the IN3900LB's keycode specification (rev G, the master list of codes 1 to 79) and the LP800's and LP810's two-digit codes with no protocol stated; **the IN80's (© 2007 InFocus) and the JTouch's (©2014 ... All rights reserved) tables are for the private repository**; the LP500/LP530's PDF is the archive's "page does not exist" and no other copy was found.
 - [ ] **The other makers' tables**: Arcam's older products (§74 read the two IR sheets and eight more notes, and Arcam's own copy of the
       AVR250/390/550/850/860 notes; the AVR300, AV8 and AV9 have their codes in handbooks, not in installation notes; the Radia Remote documents
       of 2025 say "© 2025 HARMAN ... All rights reserved" and are for the private repository; the Solo Movie 2.1 and 5.1's
