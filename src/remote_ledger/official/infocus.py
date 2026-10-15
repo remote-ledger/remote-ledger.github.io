@@ -41,6 +41,8 @@ class Document:
     unnamed: tuple[str, ...] = ()  # models the document does not name (it names a family, or none): they are the product pages that serve it
     doubt: str = ""                # why every key of the document is doubtful, when the document alone does not say
     name_max: int = 150            # the name column of a table read by ``banded`` is the cells with ``x`` under this
+    text_sheet: str = ""           # the sheet that has the customer code's sentence when it is not the one of the rows (a table that is an image)
+    names_from: str = ""           # the document whose key names a table without names takes, by key number (the IN3118HD's from the IN5310's)
 
 
 DOCUMENTS: tuple[Document, ...] = (
@@ -60,6 +62,11 @@ DOCUMENTS: tuple[Document, ...] = (
     Document("InFocus-IN32-IRcodes.pdf", ("IN32", "IN34"), "name_code", unnamed=("IN32", "IN34")),
     Document("InFocus-IN5300-IRCodes.pdf", ("IN5302", "IN5304"), "name_desc_code"),
     Document("InFocus-IN5310-IRCodes.pdf", ("IN5310", "IN5310HD"), "numbered", sheet="pages", unnamed=("IN5310", "IN5310HD")),
+    # the four whose table is an image (D298), read from the transcription; the customer code's sentence is in the text layer
+    Document("InFocus-IN110-IRCodes.pdf", ("IN112", "IN114", "IN116"), "transcribed", sheet="transcribed", text_sheet="lines"),
+    Document("IN3114_IN3116_IRCodes.pdf", ("IN2112", "IN2114", "IN2116", "IN3114", "IN3116"), "transcribed", sheet="transcribed", text_sheet="lines"),
+    Document("InFocus-IN3910-IRCodes.pdf", ("IN3914", "IN3916"), "transcribed", sheet="transcribed", text_sheet="lines"),
+    Document("InFocus-IN3118HD-IRCodes.pdf", ("IN3118HD",), "keyed_image", sheet="transcribed", text_sheet="lines", names_from="InFocus-IN5310-IRCodes.pdf"),
     Document("InFocus-IN5500-IRCodes.pdf", ("IN5502", "IN5502L", "IN5504", "IN5504L", "IN5532", "IN5532L", "IN5534", "IN5534L"), "name_desc_code"),
     Document("InFocus-LP120-IRCodes.pdf", ("LP120",), "name_code"),
     Document("InFocus-LP240-LP250-IRCodes.pdf", ("LP240", "LP250"), "hex16"),
@@ -95,6 +102,7 @@ class Entry:
     agrees: bool = True        # the row's own checks (decimal, hex and binary; a code and its bit reverse) say one code
     note: str = ""             # what the document says of the row, for the citation
     customer: int | None = None  # the customer code the row itself gives (the IN514x's table)
+    number: int = 0              # the row's key number in a table that has them (the IN5310's)
 
 
 def _clean(text: str) -> str:
@@ -160,10 +168,10 @@ def banded(rows: list[list[str]], code: re.Pattern[str], numbers: bool, name_max
                 if x < name_max:
                     if near:
                         names[near[0]].append(text)
-                    else:
-                        before = [i for i, (cy, _) in enumerate(codes) if 0 < y - cy <= 20]
-                        if before:
-                            names[before[-1]].append(text)
+                    elif codes and y > codes[0][0]:         # between two codes, or after the last: the nearer one's, the one above if as near
+                        i = min(range(len(codes)), key=lambda i: (abs(codes[i][0] - y), i))
+                        if abs(codes[i][0] - y) <= 20:
+                            names[i].append(text)
                 elif numbers and x >= 300 and near and (re.fullmatch(r"\d{1,3}", text) or _BINARY.match(text)):
                     extra[near[0]].append(text)
         out.extend((page, " ".join(n), c[1], e) for n, c, e in zip(names, codes, extra) if n)
@@ -247,15 +255,53 @@ def numbered(rows: list[list[str]]) -> tuple[list[Entry], list[str]]:
         if code == "n/a":
             no_code.append(f"'{label}' (row {seen}): the table's code is n/a, so it sends none")
         else:
-            out.append(Entry(page, label, int(code[:2], 16), code, True, f"the table writes the key's name as '{name}'" if name in _ARROWS else ""))
+            out.append(Entry(page, label, int(code[:2], 16), code, True, f"the table writes the key's name as '{name}'" if name in _ARROWS else "", None, seen))
         i = j + 1
     return out, no_code
 
 
-def read(document: Document, rows: list[list[str]]) -> tuple[list[Entry], list[str]]:
+def transcribed(rows: list[list[str]]) -> list[Entry]:
+    """The tables that are images (the IN110's, IN3114's and IN3910's), written down by eye as ``page, name, decimal, hex, binary``: the same
+    checks as ``dec_hex_bin``, which are what a misreading would fail."""
+    out = []
+    for row in rows:
+        page, name, decimal, hexa, binary = int(row[0]), _clean(row[1]), row[2], row[3], row[4]
+        if not (re.fullmatch(r"\d{1,3}", decimal) and _HEXH.match(hexa) and _BINARY.match(binary)):
+            raise ValueError(f"transcription row {row}: not a decimal, a hex with h and a binary of two nibbles")
+        code, value = int(_HEXH.match(hexa)[1], 16), int(binary.replace(" ", ""), 2)
+        agrees = int(decimal) == code == value
+        out.append(Entry(page, name, code, f"{decimal} / {hexa} / {binary}", agrees,
+                         "" if agrees else f"its decimal {decimal}, hex 0x{code:02X} and binary {binary} (0x{value:02X}) are not one code"))
+    return out
+
+
+def keyed_image(rows: list[list[str]], names: dict[int, Entry]) -> tuple[list[Entry], list[str]]:
+    """The IN3118HD's table (an image: ``page, key number, description, data code``) has no key names, only a description of each key; it is the
+    IN5310's table (the same ``Code table (InFocus RC)``), so each row takes the IN5310's name for the key of that number, **and the two codes
+    must be the same** (they are in all 29 rows). A row with no code (the 30th, ``LIGHT``) is no key."""
+    out: list[Entry] = []
+    no_code: list[str] = []
+    for page, number, description, code in ((int(r[0]), int(r[1]), _clean(r[2]), r[3]) for r in rows):
+        if not code:
+            no_code.append(f"'{description}' (row {number}): the table has no code, so it sends none")
+            continue
+        twin = names.get(number)
+        if twin is None or not _HEXH.match(code) or twin.code != int(code[:2], 16):
+            raise ValueError(f"row {number} '{description}' ({code}) is not the IN5310's row of that number ({twin and twin.written})")
+        out.append(Entry(page, twin.name, twin.code, f"{number} '{description}' / {code}", True,
+                         f"the label is the IN5310 document's name for the key of this number and code, the same code table; this document gives only "
+                         f"the description '{description}'", None, number))
+    return out, no_code
+
+
+def read(document: Document, rows: list[list[str]], names: dict[int, Entry] | None = None) -> tuple[list[Entry], list[str]]:
     """The document's entries and what its rows say that is no key."""
     if document.layout == "numbered":
         return numbered(rows)
+    if document.layout == "transcribed":
+        return transcribed(rows), []
+    if document.layout == "keyed_image":
+        return keyed_image(rows, names or {})
     if document.layout in ("name_desc_code", "dec_hex_bin"):
         return {"name_desc_code": name_desc_code, "dec_hex_bin": dec_hex_bin}[document.layout](rows, document.name_max), []
     readers = {"name_code": name_code, "code_name": code_name, "hex16": hex16, "keyno": keyno}
@@ -280,12 +326,14 @@ def build(snapshot: Snapshot, authored: dict[tuple[str, str], str], report: Repo
     gate: dict[tuple, str | None] = {}
     out: list[tuple[str, dict[str, Any]]] = []
     taken: set[str] = set()
+    read_entries: dict[str, list[Entry]] = {}
     for document in DOCUMENTS:
         rows = snapshot.sheet_of(document.file, document.sheet)
         entry = snapshot.documents[document.file]
         sha = snapshot.sha(document.file)
-        stated = customer_of(rows, document.sheet)
-        entries, no_code = read(document, rows)
+        stated = customer_of(snapshot.sheet_of(document.file, document.text_sheet), document.text_sheet) if document.text_sheet else customer_of(rows, document.sheet)
+        entries, no_code = read(document, rows, {e.number: e for e in read_entries.get(document.names_from, [])})
+        read_entries[document.file] = entries
         report.count(MAKER, f"{document.file}: rows read", len(entries))
         for why in no_code:
             report.notes.append((MAKER, document.file, why))
@@ -341,6 +389,8 @@ def build(snapshot: Snapshot, authored: dict[tuple[str, str], str], report: Repo
                         report.notes.append(note)
                 if e.note and e.agrees:
                     cite += "; " + e.note
+                if document.sheet == "transcribed":
+                    cite += "; the table is an image in the PDF, and this row was read from it by eye (DESIGN D298)"
                 if model in document.unnamed:
                     cite += f"; the document does not name {model}, and the PDF is served on the page of {model}"
                 members.append((e.name, {"id": "primary.irp", "type": "irp", "device": device, "subdevice": subdevice, "function": e.code,

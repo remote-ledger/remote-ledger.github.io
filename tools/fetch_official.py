@@ -99,10 +99,10 @@ DOCUMENTS = {
          "https://www.arcam.co.uk/ugc/tor/solomovie/RS232/SH284E_Solo_Movie_RS232_issue_A_130116.pdf", None),
     ],
     # InFocus's IR code PDFs for its projectors (DESIGN section 75): its own site is gone (infocus.com no longer serves them), so these are
-    # the Wayback Machine's copies, each the snapshot named in its URL. 29 of the 43 distinct PDFs of 54 addresses found (an `also` names the others that are the same
+    # the Wayback Machine's copies, each the snapshot named in its URL. 33 of the 43 distinct PDFs of 54 addresses found (an `also` names the others that are the same
     # file under another product page); not pinned: the IN80's and the JTouch's (a copyright notice), the LP500/LP530's (the archive holds the site's
-    # "page does not exist"), the SP8604's and the IN3118HD's (the table is an image), the IN5550's (two tables of codes with no customer code),
-    # the IN3900LB's (a specification), the IN110's, IN3114's and IN3910's (the table is an image), the LP800's and LP810's (two-digit codes with no protocol or customer code) and two Mondopad documents
+    # "page does not exist"), the SP8604's (a page of image strips in no reading order; its customer code is 0x31CE), the IN5550's (two tables of codes with no customer code),
+    # the IN3900LB's (a specification), the LP800's and LP810's (two-digit codes with no protocol or customer code) and two Mondopad documents
     # that carry the same 22 rows as the one that names the models.
     "infocus": [
         ("540-640-IR_codes.pdf",
@@ -127,6 +127,14 @@ DOCUMENTS = {
          "https://web.archive.org/web/20140705014410id_/http://infocus.com/resources/documents/IN3100/InFocus-IN3100-IRCodes.pdf", None),
         ("InFocus-IN32-IRcodes.pdf",
          "https://web.archive.org/web/20140705042859id_/http://infocus.com/resources/documents/IN30/InFocus-IN32-IRcodes.pdf", None),  # also InFocus-IN34-IRcodes.pdf
+        ("InFocus-IN110-IRCodes.pdf",
+         "https://web.archive.org/web/20140629071636id_/http://www.infocus.com:80/resources/documents/IN110/InFocus-IN110-IRCodes.pdf", None),
+        ("InFocus-IN3118HD-IRCodes.pdf",
+         "https://web.archive.org/web/20140705033833id_/http://infocus.com/resources/documents/IN3110/InFocus-IN3118HD-IRCodes.pdf", None),
+        ("IN3114_IN3116_IRCodes.pdf",
+         "https://web.archive.org/web/20131008173450id_/http://www.infocus.com:80/sites/default/files/SupportDocs/InFocus_IN3110_Projector_Series/InFocus_IN3114_Projector/IN3114_IN3116_IRCodes.pdf", None),   # also InFocus-IN2110-IRCodes.pdf, InFocus-IN3110-IRCodes.pdf
+        ("InFocus-IN3910-IRCodes.pdf",
+         "https://web.archive.org/web/20140705045937id_/http://infocus.com/resources/documents/IN3910/InFocus-IN3910-IRCodes.pdf", None),
         ("InFocus-IN5300-IRCodes.pdf",
          "https://web.archive.org/web/20140705055607id_/http://infocus.com/resources/documents/IN5300/InFocus-IN5300-IRCodes.pdf", None),
         ("InFocus-IN5310-IRCodes.pdf",
