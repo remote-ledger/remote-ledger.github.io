@@ -17,8 +17,8 @@ sources have been imported under SPEC R19:
 - **Manufacturers' own IR tables**: Marantz's AV receiver charts, Anthem's IR
   hex sheet, Oppo's remote code workbooks, KEF's IR code sheets, JVC's
   projector guide, Arcam's custom installation notes, two of Cambridge Audio's lists
-  of NEC codes, Hegel's RC-5 tables, Cary Audio's DMS table, InFocus's projector IR code PDFs, NAD's T-series IR tables and Crestron IR files, Simaudio's table of IR codes and Rotel's IR hex code PDFs, 644 files, 52,252
-  keys (DESIGN §29, §31, §58, §60, §62, §63, §64, §65, §66, §68, §69, §71, §72, §73, §74, §75, §76, §77; Linn's RC-5 table moved to the private repository, §70).
+  of NEC codes, Hegel's RC-5 tables, Cary Audio's DMS table, InFocus's projector IR code PDFs, NAD's T-series IR tables and Crestron IR files, Simaudio's table of IR codes and Rotel's IR hex code PDFs, 646 files, 52,716
+  keys (DESIGN §29, §31, §58, §60, §62, §63, §64, §65, §66, §68, §69, §71, §72, §73, §74, §75, §76, §77, §78; Linn's RC-5 table moved to the private repository, §70).
 
 SPEC v0.11 makes growing coverage from every source whose licence permits
 it the standing goal, with no fixed list of sources (DESIGN §8, Phase 8).
@@ -65,7 +65,7 @@ Land it in two PRs, code and then data.
 - [ ] **The other makers' tables**: Arcam's older products (§74 read the two IR sheets and eight more notes, and Arcam's own copy of the
       AVR250/390/550/850/860 notes; the AVR300, AV8 and AV9 have their codes in handbooks, not in installation notes; the Radia Remote documents
       of 2025 say "© 2025 HARMAN ... All rights reserved" and are for the private repository; the Solo Movie 2.1 and 5.1's
-      2008 notes (SH194) have tables of one code and one name to a line and are not read). **Cambridge Audio's other fifteen IR code PDFs** (thirteen
+      2008 notes (SH194) are read in §78). **Cambridge Audio's other fifteen IR code PDFs** (thirteen
       documents: the Azur 851A, C, E, N and W, CXA, CXC, CXN, CXR, Edge, Evo, ONE and the CXU's
       2015 one, on cambridgeaudio.com) say "(c) Copyright Cambridge Audio Ltd" and
       eight of them add "All rights are reserved", so they went to the private repository

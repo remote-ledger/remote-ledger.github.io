@@ -94,6 +94,7 @@ DOCUMENTS = {
         ("CDS27_RS232_SH272_E_1.pdf", "https://www.arcam.co.uk/ugc/tor/cds27/RS232/CDS27_RS232_SH272_E_1_070814.pdf", None),
         ("D33_RS232_SH236_E_D.pdf", "https://www.arcam.co.uk/ugc/tor/d33/RS232/D33_RS232_SH236_E_D.0.pdf", None),
         ("ST60_RS232_SH309_C.pdf", "https://www.arcam.co.uk/ugc/tor/ST60/Custom%20Installation%20Notes/SH309_RS232_ST60_C.pdf", None),
+        ("Solo_Movie_2.1-5.1_RS232_SH194_3.pdf", "https://www.arcam.co.uk/ugc/tor/solomovie21/RS232/SH194%20iss3.pdf", None),
         ("Solo_bar_IR_codes_V2.0.pdf", "https://www.arcam.co.uk/ugc/tor/Solobar/IRcodes/Solo_bar_IR_codes_V2.0.pdf", None),
         ("Solo_Movie-Movie_2.1-Music_2_RS232_SH284E_A.pdf",
          "https://www.arcam.co.uk/ugc/tor/solomovie/RS232/SH284E_Solo_Movie_RS232_issue_A_130116.pdf", None),
