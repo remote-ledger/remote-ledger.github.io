@@ -48,6 +48,17 @@ SHEETS = {
         "UDP411_RS232_SH265_E_1.pdf": ["tables"],
         "Solo_IR_Remote_Codes.pdf": ["tables"],
         "Solo_Mini_RS232.pdf": ["pages"],
+        "A18-A28-A38_amps_rc.pdf": ["lines"],
+        "CD17-CD37_cd_rc.pdf": ["lines"],
+        "AVR500-600-AV888_RS232_SH217_E_7.pdf": ["tables"],
+        "AVR400_RS232_SH235_E_1.2.pdf": ["tables"],
+        "AVR390-550-850-AV860-SR250_RS232_SH274E_D.pdf": ["tables"],
+        "BDP100-BDP300_RS232_SH231_E_2.pdf": ["tables"],
+        "CDS27_RS232_SH272_E_1.pdf": ["tables"],
+        "D33_RS232_SH236_E_D.pdf": ["tables"],
+        "ST60_RS232_SH309_C.pdf": ["tables"],
+        "Solo_bar_IR_codes_V2.0.pdf": ["lines"],
+        "Solo_Movie-Movie_2.1-Music_2_RS232_SH284E_A.pdf": ["tables"],
     },
     "cambridge": {"AXR85_100_IR_Codes.pdf": ["tables"], "752BD-CXU-CXUHD_remotes_Sept_2024_v2.pdf": ["tables"]},
     "hegel": {name: ["flow"] for name in (
@@ -256,6 +267,27 @@ def rows_of(path: Path, sheet: str) -> list[list[str]]:
                 spans.sort()
                 rows: list[list] = []
                 for y, x, cell in spans:
+                    if rows and abs(rows[-1][0] - y) <= 2:
+                        rows[-1][1].append((x, cell))
+                    else:
+                        rows.append([y, [(x, cell)]])
+                for y, cells in rows:
+                    out.append([str(n), str(round(y))] + [v for x, cell in sorted(cells) for v in (str(round(x)), cell)])
+            return out
+        if sheet == "lines":        # tables with no ruling lines, a cell for each LINE of text (Arcam's, D290): like ``cells``, but the spans of one
+            out = []                # line are one cell in the order they are written, so a name set in two fonts stays one name; a line set
+            for n, page in enumerate(pdf, 1):       # wholly in italics is written ``<i>text</i>`` (Arcam's CD sheet says what its italics mean)
+                lines = []
+                for block in page.get_text("dict")["blocks"]:
+                    for line in block.get("lines", []):
+                        cell = " ".join(" ".join(span["text"] for span in line["spans"]).split())
+                        if cell and all(span["flags"] & 2 or "Italic" in span["font"] for span in line["spans"] if span["text"].strip()):
+                            cell = f"<i>{cell}</i>"
+                        if cell:
+                            lines.append((line["bbox"][1], line["bbox"][0], cell))
+                lines.sort()
+                rows: list[list] = []
+                for y, x, cell in lines:
                     if rows and abs(rows[-1][0] - y) <= 2:
                         rows[-1][1].append((x, cell))
                     else:

@@ -1,0 +1,509 @@
+3,1,Connector 1 pin,Connector 2 pin,Function
+3,1,2,3,Rx  Tx
+3,1,3,2,Tx  Rx
+3,1,5,5,RS232 Ground
+4,1,St,Zn,Cc,Dl,Data 1,Data 2,Et
+4,1,0x21,0x01,0x08,0x02,0x10,0x10,0x0D
+4,2,St,Zn,Cc,Ac,Dl,Data 1,Data 2,Et
+4,2,0x21,0x01,0x08,0x00,0x02,0x10,0x10,0x0D
+5,1,COMMAND:,
+5,1,Byte:,Description:
+5,1,St,0x21
+5,1,Zn,Zone number
+5,1,Cc,0x00
+5,1,Dl,0x01
+5,1,Data,0x00 – Power off 0x01 – Power on 0x02 – Power toggle 0xF0 – Request power state
+5,1,Et,0x0D
+5,1,RESPONSE:,
+5,1,Byte:,Description:
+5,1,St,0x21
+5,1,Zn,Zone number
+5,1,Cc,0x00
+5,1,Ac,Answer code
+5,1,Dl,0x01
+5,1,Data,0x00 – Zone is in standby 0x01 – Zone is powered on
+5,1,Et,0x0D
+5,2,COMMAND:,
+5,2,Byte:,Description:
+5,2,St,0x21
+5,2,Zn,Zone number
+5,2,Cc,0x01
+5,2,Dl,0x01
+5,2,Data,0x00 – Set brightness to off 0x01 – Set brightness to dim 0x02 – Set brightness to full 0xF0 – Request display brightness
+5,2,Et,0x0D
+5,2,RESPONSE:,
+5,2,Byte:,Description:
+5,2,St,0x21
+5,2,Zn,Zone number
+5,2,Cc,0x01
+5,2,Ac,Answer code
+5,2,Dl,0x0
+5,2,Data,For Display brightness: 0x00 – Display brightness is off 0x01 – Display brightness is dim 0x02 – Display brightness is full 0x03 – Dark mode is on
+5,2,Et,0x0D
+6,1,COMMAND:,
+6,1,Byte:,Description:
+6,1,St,0x21
+6,1,Zn,Zone number
+6,1,Cc,0x04
+6,1,Dl,0x01
+6,1,Data,0xF0 – request software version
+6,1,Et,0x0D
+6,1,RESPONSE:,
+6,1,Byte:,Description:
+6,1,St,0x21
+6,1,Zn,Zone number
+6,1,Cc,0x04
+6,1,Ac,Answer code
+6,1,Dl,0x02
+6,1,Data1,Echo data from command
+6,1,Data2,0x?? – major version number
+6,1,Data3,0x?? – minor version number
+6,1,Et,0x0D
+6,2,COMMAND:,
+6,2,Byte:,Description:
+6,2,St,0x21
+6,2,Zn,Zone number
+6,2,Cc,0x05
+6,2,Dl,0x02
+6,2,Data1,0xAA (Confirmation data pattern to avoid accidental restore)
+6,2,Data2,0xAA (Confirmation data pattern to avoid accidental restore)
+6,2,Et,0x0D
+6,2,RESPONSE:,
+6,2,Byte:,Description:
+6,2,St,0x21
+6,2,Zn,Zone number
+6,2,Cc,0x05
+6,2,Ac,Answer code
+6,2,Dl,0x00
+6,2,Et,0x0D
+7,1,COMMAND:,
+7,1,Byte:,Description:
+7,1,St,0x21
+7,1,Zn,Zone number
+7,1,Cc,0x08
+7,1,Dl,0x02
+7,1,Data1,RC5 System code
+7,1,Data2,RC5 Command code
+7,1,Et,0x0D
+7,1,RESPONSE:,
+7,1,Byte:,Description:
+7,1,St,0x21
+7,1,Zn,Zone number
+7,1,Cc,0x08
+7,1,Ac,Answer code
+7,1,Dl,0x02
+7,1,Data1,RC5 System code
+7,1,Data2,RC5 Command code
+7,1,Et,0x0D
+7,2,COMMAND:,
+7,2,Byte:,Description:
+7,2,St,0x21
+7,2,Zn,Zone number
+7,2,Cc,0x0D
+7,2,Dl,0x01
+7,2,Data,0x00 (0) – 0x63 (99) – Set the volume 0xF0 – Request the current volume 0xF1 – Increment volume by 1 step 0xF2 – Decrement volume by 1 step
+7,2,Et,0x0D
+7,2,RESPONSE:,
+7,2,Byte:,Description:
+7,2,St,0x21
+7,2,Zn,Zone number
+7,2,Cc,0x0D
+7,2,Ac,Answer code
+7,2,Dl,0x01
+7,2,Data,"Zone volume, integer value: 0x00 (0) – 0x63 (99)"
+7,2,Et,0x0D
+8,1,COMMAND:,
+8,1,Byte:,Description:
+8,1,St,0x21
+8,1,Zn,Zone number
+8,1,Cc,0x0E
+8,1,Dl,0x01
+8,1,Data,0x00 – Mute 0x01 – Unmute 0x02 – Mute toggle 0xF0 – Request mute status
+8,1,Et,0x0D
+8,1,RESPONSE:,
+8,1,Byte:,Description:
+8,1,St,0x21
+8,1,Zn,Zone number
+8,1,Cc,0x0E
+8,1,Ac,Answer code
+8,1,Dl,0x01
+8,1,Data,0x00 – Muted 0x01 – Unmuted
+8,1,Et,0x0D
+8,2,COMMAND:,
+8,2,Byte:,Description:
+8,2,St,0x21
+8,2,Zn,Zone number
+8,2,Cc,0x1C
+8,2,Dl,0x01
+8,2,Data,0xF0 – Request Network playback status
+8,2,Et,0x0D
+8,2,RESPONSE:,
+8,2,Byte:,Description:
+8,2,St,0x21
+8,2,Zn,Zone number
+8,2,Cc,0x1C
+8,2,Ac,Answer code
+8,2,Dl,0x01
+8,2,Data1,0x00 – Stopped 0x01 – Transitioning 0x02 – Playing 0x03 - Paused
+8,2,Et,0x0D
+9,1,COMMAND:,
+9,1,Byte:,Description:
+9,1,St,0x21
+9,1,Zn,Zone number
+9,1,Cc,0x1D
+9,1,Dl,0x01
+9,1,Data,0x01 – DIG1 0x02 – DIG2 0x03 – DIG3 0x04 – DIG4 0x05 - NET/USB 0xF0 - Request input
+9,1,Et,0x0D
+9,1,RESPONSE:,
+9,1,Byte:,Description:
+9,1,St,0x21
+9,1,Zn,Zone number
+9,1,Cc,0x1D
+9,1,Ac,Answer code
+9,1,Dl,0x02
+9,1,Data,The current source in the indicated zone: 0x01 – DIG1 0x02 – DIG2 0x03 – DIG3 0x04 – DIG4 0x05 - NET/USB
+9,1,Et,0x0D
+9,2,COMMAND:,
+9,2,Byte:,Description:
+9,2,St,0x21
+9,2,Zn,Zone number
+9,2,Cc,0x25
+9,2,Dl,0x01
+9,2,Data,0xF0 – Heartbeat
+9,2,Et,0x0D
+9,2,RESPONSE:,
+9,2,Byte:,Description:
+9,2,St,0x21
+9,2,Zn,Zone Number
+9,2,Cc,0x25
+9,2,Ac,Answer code
+9,2,Dl,0x01
+9,2,Data,0x00 – Response
+9,2,Et,0x0D
+10,1,COMMAND:,
+10,1,Byte:,Description:
+10,1,St,0x21
+10,1,Zn,Zone number
+10,1,Cc,0x26
+10,1,Dl,0x06
+10,1,Data1,0x52
+10,1,Data2,0x45
+10,1,Data3,0x42
+10,1,Data4,0x4F
+10,1,Data5,0x4F
+10,1,Data6,0x54
+10,1,Et,0x0D
+10,1,RESPONSE:,
+10,1,Byte:,Description:
+10,1,St,0x21
+10,1,Zn,Zone Number
+10,1,Cc,0x26
+10,1,Ac,Answer code
+10,1,Dl,0x01
+10,1,Data,0x00 – Response
+10,1,Et,0x0D
+11,1,COMMAND:,
+11,1,Byte:,Description:
+11,1,St,0x21
+11,1,Zn,0x01
+11,1,Cc,0x30
+11,1,Dl,0x01
+11,1,Data1,0xF0 - Request IP address 0xF1 - Request Wired MAC address 0xF2 - Request WiFi MAC address 0xF3 - Request Friendly name 0xF4 - Request Host Name 0xF5 - Request SSID
+11,1,Et,0x0D
+11,1,RESPONSE:,
+11,1,Byte:,Description:
+11,1,St,0x21
+11,1,Zn,Zone Number
+11,1,Cc,0x30
+11,1,Ac,Answer code
+11,1,Dl,"0x04 (IP), 0x06 (MAC), <n> (Name)"
+11,1,,
+11,1,,IP Address
+11,1,Data1,0x?? First byte of IP address
+11,1,Data2,0x?? Second byte of IP address
+11,1,Data3,0x?? Third byte of IP address
+11,1,Data4,0x?? Forth byte of IP address
+11,1,,
+11,1,,Wired/WiFi MAC Address
+11,1,Data1,0x?? First byte of MAC address
+11,1,Data2,0x?? Second byte of MAC address
+11,1,Data3,0x?? Third byte of MAC address
+11,1,Data4,0x?? Forth byte of MAC address
+11,1,Data5,0x?? Fifth byte of MAC address
+11,1,Data6,0x?? Sixth byte of MAC address
+11,1,,
+11,1,,Friendly/Host name
+11,1,Data1 - Data <n-1>,Friendly name in UTF-8 characters
+11,1,,
+11,1,,SSID
+11,1,Data1 - Data <n-1>,SSID in UTF-8 characters
+11,1,Et,0x0D
+12,1,COMMAND:,
+12,1,Byte:,Description:
+12,1,St,0x21
+12,1,Zn,Zone number
+12,1,Cc,0x44
+12,1,Dl,0x01
+12,1,Data,0xF0 – Request incoming audio sample rate
+12,1,Et,0x0D
+12,1,RESPONSE:,
+12,1,Byte:,Description:
+12,1,St,0x21
+12,1,Zn,Zone number
+12,1,Cc,0x44
+12,1,Ac,Answer code
+12,1,Dl,0x01
+12,1,Data,Incoming audio sample rate: 0x00 – 32 kHz 0x01 – 44.1 kHz 0x02 – 48 kHz 0x03 – 88.2 kHz 0x04 – 96 kHz 0x05 – 176.4 kHz 0x06 – 192 kHz 0x07 – Unknown 0x08 – Undetected
+12,1,Et,0x0D
+12,2,COMMAND:,
+12,2,Byte:,Description:
+12,2,St,0x21
+12,2,Zn,Zone number
+12,2,Cc,0x55
+12,2,Dl,0x01
+12,2,Data,0xF0
+12,2,Et,0x0D
+12,2,RESPONSE:,
+12,2,Byte:,Description:
+12,2,St,0x21
+12,2,Zn,Zone number
+12,2,Cc,0x55
+12,2,Ac,Answer code
+12,2,Dl,0x02
+12,2,Data1,"0x00 (First byte of timeout counter, value is fixed)"
+12,2,Data2,0x00 – 0xF0 (Second byte timeout counter)
+12,2,Et,0x0D
+13,1,COMMAND:,
+13,1,Byte:,Description:
+13,1,St,0x21
+13,1,Zn,Zone number
+13,1,Cc,0x58
+13,1,Dl,0x01
+13,1,Data,0x00 – Disable (Default) 0x01 – 20 min 0x02 – 30 min 0x03 – 1 hour 0x04 – 2 hours 0x05 – 4 hours 0xF0 – Request timeout status
+13,1,Et,0x0D
+13,1,RESPONSE:,
+13,1,Byte:,Description:
+13,1,St,0x21
+13,1,Zn,Zone number
+13,1,Cc,0x58
+13,1,Ac,Answer code
+13,1,Dl,0x01
+13,1,Data,0x00 – Disabled 0x01 – 20 min 0x02 – 30 min 0x03 – 1 hour 0x04 – 2 hours 0x05 – 4 hours
+13,1,Et,0x0D
+13,2,COMMAND:,
+13,2,Byte:,Description:
+13,2,St,0x21
+13,2,Zn,Zone number
+13,2,Cc,0x5A
+13,2,Dl,0x01
+13,2,Data,0xF0 - Request input status
+13,2,Et,0x0D
+13,2,RESPONSE:,
+13,2,Byte:,Description:
+13,2,St,0x21
+13,2,Zn,Zone number
+13,2,Cc,0x5A
+13,2,Ac,Answer code
+13,2,Dl,0x01
+13,2,Data,0x00 - Input not present 0x01 - Input present
+13,2,Et,0x0D
+14,1,COMMAND:,
+14,1,Byte:,Description:
+14,1,St,0x21
+14,1,Zn,Zone number
+14,1,Cc,0x5C
+14,1,Dl,0x01
+14,1,Data,0x00 - Variable volume mode 0x01 - Fixed volume mode 0xF0 - Request fixed volume mode
+14,1,Et,0x0D
+14,1,RESPONSE:,
+14,1,Byte:,Description:
+14,1,St,0x21
+14,1,Zn,Zone number
+14,1,Cc,0x5C
+14,1,Ac,Answer code
+14,1,Dl,0x01
+14,1,Data,0x00 - Variable volume mode 0x01 - Fixed volume mode
+14,1,Et,0x0D
+14,2,COMMAND:,
+14,2,Byte:,Description:
+14,2,St,0x21
+14,2,Zn,Zone number
+14,2,Cc,0x5D
+14,2,Dl,0x01
+14,2,Data,0xF0 – Request the system
+14,2,Et,0x0D
+14,2,RESPONSE:,
+14,2,Byte:,Description:
+14,2,St,0x21
+14,2,Zn,Zone number
+14,2,Cc,0x5D
+14,2,Ac,Answer code
+14,2,Dl,0x01
+14,2,Data,0xF0 - System status sent
+14,2,Et,0x0D
+15,1,COMMAND:,
+15,1,Byte:,Description:
+15,1,St,0x21
+15,1,Zn,Zone number
+15,1,Cc,0x5E
+15,1,Dl,0x01
+15,1,Data,0xF0 – Request the system model
+15,1,Et,0x0D
+15,1,RESPONSE:,
+15,1,Byte:,Description:
+15,1,St,0x21
+15,1,Zn,Zone number
+15,1,Cc,0x5E
+15,1,Ac,Answer code
+15,1,Dl,0x04
+15,1,Data,System model in ASCII characters
+15,1,Et,0x0D
+15,2,COMMAND:,
+15,2,Byte:,Description:
+15,2,St,0x21
+15,2,Zn,Zone number
+15,2,Cc,0x61
+15,2,Dl,0x01
+15,2,Data,0x00 - Linear Phase Fast Roll Off 0x01 - Linear Phase Slow Roll Off 0x02 - Minimum Phase Fast Roll Off 0x03 - Minimum Phase Slow Roll Off 0x04 - Brick Wall 0x05 - Corrected Phase Fast Roll Off 0x06 - Apodizing 0xF0 - Request the current filter
+15,2,Et,0x0D
+15,2,RESPONSE:,
+15,2,Byte:,Description:
+15,2,St,0x21
+15,2,Zn,Zone number
+15,2,Cc,0x61
+15,2,Ac,Answer code
+15,2,Dl,0x01
+15,2,Data,0x00 - Linear Phase Fast Roll Off 0x01 - Linear Phase Slow Roll Off 0x02 - Minimum Phase Fast Roll Off 0x03 - Minimum Phase Slow Roll Off 0x04 - Brick Wall 0x05 - Corrected Phase Fast Roll Off 0x06 - Apodizing
+15,2,Et,0x0D
+16,1,COMMAND:,
+16,1,Byte:,Description:
+16,1,St,0x21
+16,1,Zn,Zone number
+16,1,Cc,0x64
+16,1,Dl,0x01
+16,1,Data,0xF0 – Request the currently playing track title 0xF1 - Request the currently playing artist 0xF2 - Request the currently playing album 0xF3 - Request the currently playing application (GoogleCast only) 0xF4 - Request the currently playing sample rate 0xF5 - Request the currently playing track encoder
+16,1,Et,0x0D
+16,1,RESPONSE:,
+16,1,Byte:,Description:
+16,1,St,0x21
+16,1,Zn,Zone number
+16,1,Cc,0x64
+16,1,Ac,Answer code
+16,1,Dl,<n>
+16,1,Data,Track: Track title in UTF-8 characters Album: Album name in UTF-8 characters Artist: Artist name in UTF-8 characters Application: GoogleCast source application in UTF-8 characters Sample rate: 0x00 – 32 kHz 0x01 – 44.1 kHz 0x02 – 48 kHz 0x03 – 88.2 kHz 0x04 – 96 kHz 0x05 – 176.4 kHz 0x06 – 192 kHz 0x07 – Unknown 0x08 – Undetected Audio encoder: 0x00 – Uknown 0x01 – MP3 0x02 – WMA 0x03 – Ogg Vorbis 0x04 - FLAC 0x05 – WAV 0x06 - AIFF 0x07 - RealAudio 0x08 - MPEG URL 0x09 - SCPLS 0x0A - WPL 0x0B - MP4 0x0C - DSD 0x0D - Opus 0x0E - Sirius 0x0F - MQA
+16,1,Et,0x0D
+17,1,COMMAND:,
+17,1,Byte:,Description:
+17,1,St,0x21
+17,1,Zn,Zone number
+17,1,Cc,0x65
+17,1,Dl,0x01
+17,1,Data,0x00 (0) – 0x63 (99) – Set the maximum turn on volume 0xF0 – Request the maximum turn on volume
+17,1,Et,0x0D
+17,1,RESPONSE:,
+17,1,Byte:,Description:
+17,1,St,0x21
+17,1,Zn,Zone number
+17,1,Cc,0x65
+17,1,Ac,Answer code
+17,1,Dl,0x01
+17,1,Data,"Maximum turn on volume, integer value: 0x00 (0) – 0x63 (99)"
+17,1,Et,0x0D
+17,2,COMMAND:,
+17,2,Byte:,Description:
+17,2,St,0x21
+17,2,Zn,Zone number
+17,2,Cc,0x66
+17,2,Dl,0x01
+17,2,Data,0x00 (0) – 0x63 (99) – Set the maximum volume 0xF0 – Request the maximum volume
+17,2,Et,0x0D
+17,2,RESPONSE:,
+17,2,Byte:,Description:
+17,2,St,0x21
+17,2,Zn,Zone number
+17,2,Cc,0x66
+17,2,Ac,Answer code
+17,2,Dl,0x01
+17,2,Data,"Maximum volume, integer value: 0x00 (0) – 0x63 (99)"
+17,2,Et,0x0D
+18,1,COMMAND:,
+18,1,Byte:,Description:
+18,1,St,0x21
+18,1,Zn,Zone number
+18,1,Cc,0x67
+18,1,Dl,0x01
+18,1,Data,0x00 (0) – 0x63 (99) – Set the maximum volume 0xF0 – Request the maximum volume
+18,1,Et,0x0D
+18,1,RESPONSE:,
+18,1,Byte:,Description:
+18,1,St,0x21
+18,1,Zn,Zone number
+18,1,Cc,0x67
+18,1,Ac,Answer code
+18,1,Dl,0x01
+18,1,Data,"Maximum volume, integer value: 0x00 (0) – 0x63 (99)"
+18,1,Et,0x0D
+18,2,COMMAND:,
+18,2,Byte:,Description:
+18,2,St,0x21
+18,2,Zn,Zone number
+18,2,Cc,0x68
+18,2,Dl,0x01
+18,2,Data,0x00 - Dark mode off 0x01 - Dark mode on 0xF0 - Request dark mode status
+18,2,Et,0x0D
+18,2,RESPONSE:,
+18,2,Byte:,Description:
+18,2,St,0x21
+18,2,Zn,Zone number
+18,2,Cc,0x68
+18,2,Ac,Answer code
+18,2,Dl,0x01
+18,2,Data,0x00 - Dark mode off 0x01 - Dark mode on
+18,2,Et,0x0D
+19,1,Function,RC5 code [system- command],RC5 code (Data1 - Data2)
+19,1,,Decimal,Hexadecimal
+19,1,Standby,21-12,0x15 - 0x0C
+19,1,1,21-1,0x15 - 0x01
+19,1,2,21-2,0x15 - 0x02
+19,1,3,21-3,0x15 - 0x03
+19,1,4,21-4,0x15 - 0x04
+19,1,5,21-5,0x15 - 0x05
+19,1,6,21-6,0x15 - 0x06
+19,1,7,21-7,0x15 - 0x07
+19,1,8,21-8,0x15 - 0x08
+19,1,9,21-9,0x15 - 0x09
+19,1,0,21-0,0x15 - 0x00
+19,1,Mute,21-13,0x15 - 0x0D
+19,1,Rewind,21-50,0x15 - 0x32
+19,1,Fast Forward,21-52,0x15 - 0x34
+19,1,Skip Back,21-33,0x15 - 0x21
+19,1,Skip Forward,21-32,0x15 - 0x20
+19,1,Play,21-53,0x15 - 0x35
+19,1,Pause,21-48,0x15 - 0x30
+19,1,Shuffle,21-64,0x15 - 0x40
+19,1,Repeat,21-29,0x15 - 0x1D
+19,1,Navigate Up,21-86,0x15 - 0x56
+19,1,Navigate Left,21-81,0x15 - 0x51
+19,1,OK,21-87,0x15 - 0x57
+19,1,Navigate Right,21-80,0x15 - 0x50
+19,1,Navigate Down,21-85,0x15 - 0x55
+19,1,HOME,21-74,0x15 - 0x4A
+19,1,Back,21-72,0x15 - 0x48
+19,1,Menu,21-66,0x15 - 0x42
+19,1,DISP,21-59,0x15 - 0x3B
+19,1,Info,21-55,0x15 - 0x37
+19,1,Digital Input 1,21-94,0x15 - 0x5E
+19,1,Digital Input 2,21-98,0x15 - 0x62
+19,1,Digital Input 3,21-27,0x15 - 0x1B
+19,1,Digital Input 4,21-97,0x15 - 0x61
+19,1,USB,21-93,0x15 - 0x5D
+19,1,NET,21-92,0x15 - 0x5C
+19,2,Function,RC5 Code [system-command],RC5 Code (Data1 - Data2)
+19,2,,Decimal,Hexadecimal
+19,2,Power On,21-123,0x15 - 0x7B
+19,2,Power Off,21-124,0x15 - 0x7C
+19,2,Mute On,21-26,0x15 - 0x1A
+19,2,Mute Off,21-120,0x15 - 0x78
+19,2,Display brightness off,21-31,0x15 - 0x1F
+19,2,Display brightness dim,21-34,0x15 - 0x22
+19,2,Display brightness full,21-35,0x15 - 0x23

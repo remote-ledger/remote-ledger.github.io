@@ -1,0 +1,1194 @@
+3,1,Connector 1 pin,Connector 2 pin,Function
+3,1,2,3,Rx  Tx
+3,1,3,2,Tx  Rx
+3,1,5,5,RS232 Ground
+4,1,STR,ZONE,CC,DL,Data 1,Data 2,ETR
+4,1,0x21,0x01,0x08,0x02,0x10,0x10,0x0D
+4,2,STR,ZONE,CC,AC,DL,Data 1,Data 2,ETR
+4,2,0x21,0x01,0x08,0x00,0x02,0x10,0x10,0x0D
+5,1,COMMAND:,
+5,1,Byte:,Description:
+5,1,St,0x21
+5,1,Zn,Zone number
+5,1,Cc,0x00
+5,1,Dl,0x01
+5,1,Data,0xF0 – Request power state
+5,1,Et,0x0D
+5,1,RESPONSE:,
+5,1,Byte:,Description:
+5,1,St,0x21
+5,1,Zn,Zone number
+5,1,Cc,0x00
+5,1,Ac,Answer code
+5,1,Dl,0x01
+5,1,Data,0x00 – Zone is in stand-by 0x01 – Zone is powered on
+5,1,Et,0x0D
+5,2,COMMAND:,
+5,2,Byte:,Description:
+5,2,St,0x21
+5,2,Zn,0x01
+5,2,Cc,0x01
+5,2,Dl,0x01
+5,2,Data,0xF0 – Request brightness
+5,2,Et,0x0D
+5,2,RESPONSE:,
+5,2,Byte:,Description:
+5,2,St,0x21
+5,2,Zn,0x01
+5,2,Cc,0x01
+5,2,Ac,Answer code
+5,2,Dl,0x01
+5,2,Data,0x00 – Front panel is off 0x01 – Front panel L1 0x02 – Front panel L2 0x03 – Front panel L3
+5,2,Et,0x0D
+5,3,COMMAND:,
+5,3,Byte:,Description:
+5,3,St,0x21
+5,3,Zn,0x01
+5,3,Cc,0x02
+5,3,Dl,0x01
+5,3,Data,0xF0 – Request current headphone connection status
+5,3,Et,0x0D
+5,3,RESPONSE:,
+5,3,Byte:,Description:
+5,3,St,0x21
+5,3,Zn,0x01
+5,3,Cc,0x02
+5,3,Ac,Answer code
+5,3,Dl,0x01 (Data length)
+5,3,Data,0x00 – Headphones are not connected. 0x01 – Headphones are connected
+5,3,Et,0x0D
+6,1,COMMAND:,
+6,1,Byte:,Description:
+6,1,St,0x21
+6,1,Zn,Zone number
+6,1,Cc,0x03
+6,1,Dl,0x01
+6,1,Data1,Request information source: 0xF0 – FM program type
+6,1,Et,0x0D
+6,1,RESPONSE:,
+6,1,Byte:,Description:
+6,1,St,0x21
+6,1,Zn,Zone number
+6,1,Cc,0x03
+6,1,Ac,Answer code
+6,1,Dl,Data length <n>
+6,1,Data1 – Data<n>,The radio programme type in ASCII characters
+6,1,Et,0x0D
+6,2,COMMAND:,
+6,2,Byte:,Description:
+6,2,St,0x21
+6,2,Zn,0x01
+6,2,Cc,0x04
+6,2,Dl,0x01
+6,2,Data,0xF0 – Request version RS232 protocol 0xF1 - Request version main software 0xF2 - Request version network player 0xF3 - Request version DAB 0xF4 - Request version DSP Code
+6,2,Et,0x0D
+6,2,RESPONSE:,
+6,2,Byte:,Description:
+6,2,St,0x21
+6,2,Zn,0x01
+6,2,Cc,0x04
+6,2,Ac,Answer code
+6,2,Dl,0x03
+6,2,Data1,Echo data from command
+6,2,Data2,Major version number
+6,2,Data3,Minor version number
+6,2,Et,0x0D
+6,3,COMMAND:,
+6,3,Byte:,Description:
+6,3,St,0x21
+6,3,Zn,0x01
+6,3,Cc,0x05
+6,3,Dl,0x02
+6,3,Data1,0xAA (Confirmation data pattern to avoid accidental restore)
+6,3,Data2,0xAA (Confirmation data pattern to avoid accidental restore)
+6,3,Et,0x0D
+6,3,RESPONSE:,
+6,3,Byte:,Description:
+6,3,St,0x21
+6,3,Zn,0x01
+6,3,Cc,0x05
+6,3,Ac,Answer code
+6,3,Dl,0x00
+6,3,Et,0x0D
+7,1,COMMAND:,
+7,1,Byte:,Description:
+7,1,St,0x21
+7,1,Zn,0x01
+7,1,Cc,0X06
+7,1,Dl,0x07
+7,1,Data1,0x00 – Save secure backup 0x01 – Restore secure backup
+7,1,Data2,0x55 (Confirmation data pattern to avoid accidental save/restore)
+7,1,Data3,0x55 (Confirmation data pattern to avoid accidental save/restore)
+7,1,Data4,Pin digit 1
+7,1,Data5,Pin Digit 2
+7,1,Data5,Pin Digit 3
+7,1,Data7,Pin Digit 4
+7,1,Et,0x0D
+7,1,RESPONSE:,
+7,1,Byte:,Description:
+7,1,St,0x21
+7,1,Zn,0x01
+7,1,Cc,0x06
+7,1,Ac,Answer code
+7,1,Dl,0x00
+7,1,Et,0x0D
+7,2,COMMAND:,
+7,2,Byte:,Description:
+7,2,St,0x21
+7,2,Zn,Zone number
+7,2,Cc,0x08
+7,2,Dl,0x02
+7,2,Data1,RC5 System code
+7,2,Data2,RC5 Command code
+7,2,Et,0x0D
+7,2,RESPONSE:,
+7,2,Byte:,Description:
+7,2,St,0x21
+7,2,Zn,Zone number
+7,2,Cc,0x08
+7,2,Ac,Answer code
+7,2,Dl,0x02
+7,2,Data1,RC5 System code
+7,2,Data2,RC5 Command code
+7,2,Et,0x0D
+8,1,COMMAND:,
+8,1,Byte:,Description:
+8,1,St,0x21
+8,1,Zn,Zone number
+8,1,Cc,0x09
+8,1,Dl,0x01
+8,1,Data,For all sources: 0x00 – Set the display to Processing mode 0xD0 – Set the display to Time & date 0xE0 – Cycle though all displayable information. 0xF0 – Request the current display type If the current source is AM: 0x01 – Set the display to Signal strength If the current source is FM: 0x01 – Set the display to Radio text 0x02 – Set the display to Programme type 0x03 – Set the display to Signal strength If the current source is DAB: 0x01 – Set the display to Radio text 0x02 – Set the display to Genre 0x03 – Set the display to Signal quality 0x04 – Set the display to Bit rate If the current source is Sirius: 0x01 – Set the display to Artist title 0x02 – Set the display to Composer 0x03 – Set the display to Category name 0x04 – Set the display to Signal Strength If the current source is NET 0x01 – Set the display to Track 0x02 – Set the display to Artist 0x03 - Set the display to Album 0x04 – Set the display to audio type 0x05 – Set the display to rate If the current source is iPod 0x01 – Set the display to Track 0x02 – Set the display to Artist 0x03 - Set the display to Album
+8,1,Et,0x0D
+8,1,RESPONSE:,
+8,1,Byte:,Description:
+8,1,St,0x21
+8,1,Zn,Zone number
+8,1,Cc,0x09
+8,1,Ac,Answer code
+8,1,Dl,0x01
+8,1,Data,"The current display is returned, as for the command."
+8,1,Et,0x0D
+9,1,COMMAND:,
+9,1,Byte:,Description:
+9,1,St,0x21
+9,1,Zn,Zone number
+9,1,Cc,0x1D
+9,1,Dl,0x01
+9,1,Data,0xF0
+9,1,Et,0x0D
+9,1,RESPONSE:,
+9,1,Byte:,Description:
+9,1,St,0x21
+9,1,Zn,Zone number
+9,1,Cc,0x1D
+9,1,Ac,Answer code
+9,1,Dl,0x01
+9,1,Data,The current source in the indicated zone: 0x00 – Follow Zone 1 0x01 – CD 0x02 – DVD 0x03 – AV 0x04 – SAT 0x05 – PVR 0x06 – VCR 0x07 – TAPE 0x08 – AUX 0x09 – PHONO 0x0A – TUNER (AM) 0x0B – TUNER (FM) 0x0C – TUNER (Digital) 0x0D – MCH 0x0E – NET 0x0F – IPOD
+9,1,Et,0x0D
+9,2,COMMAND:,
+9,2,Byte:,Description:
+9,2,St,0x21
+9,2,Zn,Zone number
+9,2,Cc,0x1F
+9,2,Dl,0x01
+9,2,Data,0x00 – Headphone/Over-ride Clear 0x01 – Headphone/Over-ride Set
+9,2,Et,0x0D
+9,2,RESPONSE:,
+9,2,Byte:,Description:
+9,2,St,0x21
+9,2,Zn,Zone number
+9,2,Cc,0x1F
+9,2,Ac,Answer code
+9,2,Dl,0x01
+9,2,Data1,Relay state
+9,2,Et,0x0D
+10,1,COMMAND:,
+10,1,Byte:,Description:
+10,1,St,0x21
+10,1,Zn,0x01
+10,1,Cc,0x0A
+10,1,Dl,0x01
+10,1,Data,Source: 0x00 – DVD 0x01 – SAT 0x02 – AV 0x03 – PVR 0x04 – VCR 0xF0 – Request current input
+10,1,Et,0x0D
+10,1,RESPONSE:,
+10,1,Byte:,Description:
+10,1,St,0x21
+10,1,Zn,0x01
+10,1,Cc,0x0A
+10,1,Ac,Answer code
+10,1,Dl,0x01
+10,1,Data,"Response: The current video source is returned, as for the command"
+10,1,Et,0x0D
+10,2,COMMAND:,
+10,2,Byte:,Description:
+10,2,St,0x21
+10,2,Zn,Zone number
+10,2,Cc,0x0B
+10,2,Dl,0x01
+10,2,Data,0x00 – Use the analogue audio for the current source. 0x01 – Use the digital audio for the current source (if available). 0x02 – Use HDMI for the current source (if available). 0xF0 – Request the audio type in use for the current source.
+10,2,Et,0x0D
+10,2,RESPONSE:,
+10,2,Byte:,Description:
+10,2,St,0x21
+10,2,Zn,Zone number
+10,2,Cc,0x0B
+10,2,Ac,Answer code
+10,2,Dl,0x01
+10,2,Data,Response: 0x00 – Analogue audio is in use for the current source. 0x01 – Digital audio is in use for the current source. 0x02 – HDMI audio is in use for the current source.
+10,2,Et,0x0D
+10,3,COMMAND:,
+10,3,Byte:,Description:
+10,3,St,0x21
+10,3,Zn,0x01
+10,3,Cc,0x0C
+10,3,Dl,0x01
+10,3,Data,0x00 – Auto. 0x01 – HDMI. 0x02 – Component. 0x03 – S-Video. 0x04 – CVBS. 0xF0 – Request the video type in use for the current source.
+10,3,Et,0x0D
+10,3,RESPONSE:,
+10,3,Byte:,Description:
+10,3,St,0x21
+10,3,Zn,0x01
+10,3,Cc,0x0C
+10,3,Ac,Answer code
+10,3,Dl,0x01
+10,3,Data,0x00 – Auto. 0x01 – HDMI. 0x02 – Component. 0x03 – S-Video. 0x04 – CVBS.
+10,3,Et,0x0D
+11,1,COMMAND:,
+11,1,Byte:,Description:
+11,1,St,0x21
+11,1,Zn,Zone number
+11,1,Cc,0x0D
+11,1,Dl,0x01
+11,1,Data,0x00 — 0xC6 – Set the volume 0xF0 – Request the current volume
+11,1,Et,0x0D
+11,1,RESPONSE:,
+11,1,Byte:,Description:
+11,1,St,0x21
+11,1,Zn,Zone number
+11,1,Cc,0x0D
+11,1,Ac,Answer code
+11,1,Dl,0x02
+11,1,Data1,"Zone volume, integer value: 0x00 (0) – 0x63 (99)"
+11,1,Data2,"Zone volume, fractional value: 0x00 (.0) 0x05 – (.5) (Zone 1 only)"
+11,1,Et,0x0D
+11,2,COMMAND:,
+11,2,Byte:,Description:
+11,2,St,0x21
+11,2,Zn,Zone number
+11,2,Cc,0x0E
+11,2,Dl,0x01
+11,2,Data,0xF0 – Request mute status
+11,2,Et,0x0D
+11,2,RESPONSE:,
+11,2,Byte:,Description:
+11,2,St,0x21
+11,2,Zn,Zone number
+11,2,Cc,0x0E
+11,2,Ac,Answer code
+11,2,Dl,0x01
+11,2,P2,0x00 – Zone is muted 0x01 – Zone is not muted
+11,2,Et,0x0D
+11,3,COMMAND:,
+11,3,Byte:,Description:
+11,3,St,0x21
+11,3,Zn,0x01
+11,3,Cc,0x0F
+11,3,Dl,0x01
+11,3,Data,0xF0 – Request mode setting
+11,3,Et,0x0D
+11,3,RESPONSE:,
+11,3,Byte:,Description:
+11,3,St,0x21
+11,3,Zn,0x01
+11,3,Cc,0x0F
+11,3,Ac,Answer code
+11,3,Dl,0x01
+11,3,Data,0x00 – ‘Direct mode’ is off 0x01 – ‘Direct mode’ is on
+11,3,Et,0x0D
+12,1,COMMAND:,
+12,1,Byte:,Description:
+12,1,St,0x21
+12,1,Zn,0x01
+12,1,Cc,0x10
+12,1,Dl,0x01
+12,1,Data,0xF0 – Request decode mode
+12,1,Et,0x0D
+12,1,RESPONSE:,
+12,1,Byte:,Description:
+12,1,St,0x21
+12,1,Zn,0x01
+12,1,Cc,0x10
+12,1,Ac,Answer code
+12,1,Dl,0x01
+12,1,Data,0x00 – Mono 0x01 – Stereo 0x02 – Pro Logic II / x Movie Mode 0x03 – Pro Logic II / x Music Mode 0x04 – Pro Logic II Matrix 0x05 – Pro Logic II Game 0x06 – Dolby Pro Logic Emulation 0x07 – Neo:6 Cinema 0x08 – Neo:6 Music
+12,1,Et,0x0D
+12,2,COMMAND:,
+12,2,Byte:,Description:
+12,2,St,0x21
+12,2,Zn,0x01
+12,2,Cc,0x11
+12,2,Dl,0x01
+12,2,Data,0xF0 – Request decode mode
+12,2,Et,0x0D
+12,2,RESPONSE:,
+12,2,Byte:,Description:
+12,2,St,0x21
+12,2,Zn,0x01
+12,2,Cc,0x11
+12,2,Ac,Answer code
+12,2,Dl,0x01
+12,2,Data,0x00 – Mono down-mix 0x01 – Stereo down-mix 0x02 – Multi-channel mode 0x03 - Dolby EX / DTS-ES mode 0x04 – Pro Logic IIx movie mode 0x05 - Pro Logic IIx music mode
+12,2,Et,0x0D
+13,1,COMMAND:,
+13,1,Byte:,Description:
+13,1,St,0x21
+13,1,Zn,Zone number
+13,1,Cc,0x12
+13,1,Dl,0x01
+13,1,Data1,Request information source: 0xF0 – FM
+13,1,Et,0x0D
+13,1,RESPONSE:,
+13,1,Byte:,Description:
+13,1,St,0x21
+13,1,Zn,Zone number
+13,1,Cc,0x12
+13,1,Ac,Answer code
+13,1,Dl,Data length <n>
+13,1,Data1 – Data<n>,The radio programme type in ASCII characters
+13,1,Et,0x0D
+13,2,COMMAND:,
+13,2,Byte:,Description:
+13,2,St,0x21
+13,2,Zn,0x01
+13,2,Cc,0x13
+13,2,Dl,0x01
+13,2,Data,0x01 – Set resolution to SD Interlaced. 0x02 – Set resolution to SD Progressive. 0x03 – Set resolution to 720p. 0x04 – Set resolution to 1080i. 0x05 – Set resolution to 1080p. 0x06 – Set resolution to ‘Preferred’. 0xF0 – Request the video output. 0xF1 – Increment the resolution setting. 0xF2 – Decrement the resolution setting.
+13,2,Et,0x0D
+13,2,RESPONSE:,
+13,2,Byte:,Description:
+13,2,St,0x21
+13,2,Zn,0x01
+13,2,Cc,0x13
+13,2,Ac,Answer code
+13,2,Dl,0x01
+13,2,Data,0x00 - 480i 0x01 – 480p 0x02 – 576i 0x03 – 576p 0x04 – 720p 50Hz 0x05 – 720p 60Hz 0x08 - 1080i 25Hz 0x09 - 1080i 30Hz 0x0A - 1080p 24Hz 0x0D - 1080P 50Hz 0x0E - 1080P 60Hz
+13,2,Et,0x0D
+14,1,COMMAND:,
+14,1,Byte:,Description:
+14,1,St,0x21
+14,1,Zn,0x01
+14,1,Cc,0x14
+14,1,Dl,0x01
+14,1,Data,0xF0 – Request the open menu state
+14,1,Et,0x0D
+14,1,RESPONSE:,
+14,1,Byte:,Description:
+14,1,St,0x21
+14,1,Zn,0x01
+14,1,Cc,0x14
+14,1,Ac,Answer code
+14,1,Dl,0x01
+14,1,Data,0x00 – No menu is open 0x01 – Menu Open 0x02 – Set-up Menu Open 0x03 – Trim Menu Open 0x04 – Bass Menu Open 0x05 – Treble Menu Open 0x06 – Sync Menu Open 0x07 – Sub Menu Open 0x08 – Tuner Menu Open 0x09 – Network menu Open 0x0A – iPod Menu Open
+14,1,Et,0x0D
+14,2,COMMAND:,
+14,2,Byte:,Description:
+14,2,St,0x21
+14,2,Zn,Zone number
+14,2,Cc,0x15
+14,2,Dl,0x01
+14,2,Data,0x01 – 0x32 (1-50) number of required preset. 0xF0 – Request the current preset number.
+14,2,Et,0x0D
+14,2,RESPONSE:,
+14,2,Byte:,Description:
+14,2,St,0x21
+14,2,Zn,Zone number
+14,2,Cc,0x15
+14,2,Ac,Answer code
+14,2,Dl,0x01
+14,2,Data,0xFF – Currently no preset selected 0x01- 0x32: (1-50) the current preset number.
+14,2,Et,0x0D
+14,3,COMMAND:,
+14,3,Byte:,Description:
+14,3,St,0x21
+14,3,Zn,Zone number
+14,3,Cc,0x16
+14,3,Dl,0x01
+14,3,Data1,0x00 – Decrement tuner frequency by 1 step. 0x01 – Increment tuner frequency by 1 step. 0xF0 – Request the current tuner frequency.
+14,3,Et,0x0D
+14,3,RESPONSE:,
+14,3,Byte:,Description:
+14,3,St,0x21
+14,3,Zn,Zone number
+14,3,Cc,0x16
+14,3,Ac,Answer code
+14,3,Dl,0x02 (Data length)
+14,3,Data1,AM: New frequency (1000’s & 100’s kHz) FM: New frequency (MHz)
+14,3,Data2,AM: New frequency (10’s & 1’s kHz) FM: New frequency (10’s kHz)
+14,3,Et,0x0D
+15,1,COMMAND:,
+15,1,Byte:,Description:
+15,1,St,0x21
+15,1,Zn,Zone number
+15,1,Cc,0x18
+15,1,Dl,0x01
+15,1,Data,0xF0 – Request the current DAB/Sirius station
+15,1,Et,0x0D
+15,1,RESPONSE:,
+15,1,Byte:,Description:
+15,1,St,0x21
+15,1,Zn,Zone number
+15,1,Cc,0x18
+15,1,Ac,Answer code
+15,1,Dl,Data length <n>
+15,1,Data1 – Data<n>,The service label of the DAB/Sirius station in ASCII characters
+15,1,Et,0x0D
+15,2,COMMAND:,
+15,2,Byte:,Description:
+15,2,St,0x21
+15,2,Zn,Zone number
+15,2,Cc,0x19
+15,2,Dl,0x01
+15,2,Data1,Request information source: 0xF0 – DAB/Sirius program type
+15,2,Et,0x0D
+15,2,RESPONSE:,
+15,2,Byte:,Description:
+15,2,St,0x21
+15,2,Zn,Zone number
+15,2,Cc,0x19
+15,2,Ac,Answer code
+15,2,Dl,Data length <n>
+15,2,Data1 – Data<n>,The radio programme type in ASCII characters
+15,2,Et,0x0D
+15,3,COMMAND:,
+15,3,Byte:,Description:
+15,3,St,0x21
+15,3,Zn,Zone number
+15,3,Cc,0x1A
+15,3,Dl,0x01
+15,3,Data1,Request information source: 0xF0 – DAB/Sirius
+15,3,Et,0x0D
+15,3,RESPONSE:,
+15,3,Byte:,Description:
+15,3,St,0x21
+15,3,Zn,Zone number
+15,3,Cc,0x1A
+15,3,Ac,Answer code
+15,3,Dl,Data length <n>
+15,3,Data1 – Data<n>,The radio programme type in ASCII characters
+15,3,Et,0x0D
+16,1,COMMAND:,
+16,1,Byte:,Description:
+16,1,St,0x21
+16,1,Zn,Zone number
+16,1,Cc,0x1B
+16,1,Dl,0x01
+16,1,Data,0x01- 0x32: (1-50) The number of the required preset
+16,1,Et,0x0D
+16,1,RESPONSE:,
+16,1,Byte:,Description:
+16,1,St,0x21
+16,1,Zn,Zone number
+16,1,Cc,0x1B
+16,1,Ac,Answer code
+16,1,Dl,Data length <n>
+16,1,Data1,0x01- 0x32: (1-50) The number of the requested preset
+16,1,Data2,0x00 : AM frequency 0x01 : FM frequency 0x02 : FM RDS name 0x03 : DAB 0x04 : Sirius
+16,1,Data3 Data4 Data<n>,"AM: New frequency (1000’s & 100’s kHz) FM: New frequency (MHz) AM: New frequency (10’s & 1’s kHz) FM: New frequency (10’skHz) The name (DAB, Sirius, FM if RDS) in ASCII characters"
+16,1,Et,0x0D
+16,2,COMMAND:,
+16,2,Byte:,Description:
+16,2,St,0x21
+16,2,Zn,Zone number
+16,2,Cc,0x1C
+16,2,Dl,0x01
+16,2,Data,0xF0 – Request Network playback status
+16,2,Et,0x0D
+16,2,RESPONSE:,
+16,2,Byte:,Description:
+16,2,St,0x21
+16,2,Zn,Zone number
+16,2,Cc,0x1C
+16,2,Ac,Answer code
+16,2,Dl,Data length <n>
+16,2,Data1,0x00 – Navigating 0x01 – Playing 0x02 – Paused 0xFF - Busy/Not Playing
+16,2,Data2 – Data<n>,name of folder in ASCII if navigating name of file in ASCII if playing or paused
+16,2,Et,0x0D
+17,1,COMMAND:,
+17,1,Byte:,Description:
+17,1,St,0x21
+17,1,Zn,Zone number
+17,1,Cc,0x35
+17,1,Dl,0x01
+17,1,Data,0x00 — 0x0A – Set treble to 0dB — +10dB 0x81 — 0x8A – Set treble to -1dB — -10dB 0xF0 – Request current treble value 0xF1 – Increment treble by 1dB 0xF2 – Decrement treble by 1dB
+17,1,Et,0x0D
+17,1,RESPONSE:,
+17,1,Byte:,Description:
+17,1,St,0x21
+17,1,Zn,Zone number
+17,1,Cc,0x35
+17,1,Ac,Answer code
+17,1,Dl,0x01
+17,1,Data1,0x00 — 0x0A – Treble is 0dB — +10dB 0x81 — 0x8A – Treble is -1dB — -10dB
+17,1,Et,0x0D
+17,2,COMMAND:,
+17,2,Byte:,Description:
+17,2,St,0x21
+17,2,Zn,Zone number
+17,2,Cc,0x36
+17,2,Dl,0x01
+17,2,Data,0x00 — 0x0A – Set bass to 0dB — +10dB 0x81 — 0x8A – Set bass to -1dB — -10dB 0xF0 – Request current bass value 0xF1 – Increment bass by 1dB 0xF2 – Decrement bass by 1dB
+17,2,Et,0x0D
+17,2,RESPONSE:,
+17,2,Byte:,Description:
+17,2,St,0x21
+17,2,Zn,Zone number
+17,2,Cc,0x36
+17,2,Ac,Answer code
+17,2,Dl,0x01
+17,2,Data1,0x00 — 0x0A – Bass is 0dB — +10dB 0x81 — 0x8A – Bass is -1dB — -10dB
+17,2,Et,0x0D
+17,3,COMMAND:,
+17,3,Byte:,Description:
+17,3,St,0x21
+17,3,Zn,Zone number
+17,3,Cc,0x37
+17,3,Dl,0x01
+17,3,Data,0xF0 – Request current Room EQ state 0xF1 – Room EQ on 0xF2 – Room EQ off
+17,3,Et,0x0D
+17,3,RESPONSE:,
+17,3,Byte:,Description:
+17,3,St,0x21
+17,3,Zn,Zone number
+17,3,Cc,0x37
+17,3,Ac,Answer code
+17,3,Dl,0x01
+17,3,Data1,0x00 – Room EQ is off 0x01 – Room EQ is on 0x02 – Room EQ has not been calculated and is therefore off
+17,3,Et,0x0D
+18,1,COMMAND:,
+18,1,Byte:,Description:
+18,1,St,0x21
+18,1,Zn,Zone number
+18,1,Cc,0x38
+18,1,Dl,0x01
+18,1,Data,"0x00 – Dolby Volume off 0x01 – Dolby Volume on, Music mode 0x02 – Dolby Volume on, Movie mode 0xF0 – Request current Dolby Volume mode"
+18,1,Et,0x0D
+18,1,RESPONSE:,
+18,1,Byte:,Description:
+18,1,St,0x21
+18,1,Zn,Zone number
+18,1,Cc,0x38
+18,1,Ac,Answer code
+18,1,Dl,0x01
+18,1,Data1,"0x00 – Dolby Volume is off 0x01 – Dolby Volume is on, Music mode 0x02 – Dolby Volume is on, Movie mode"
+18,1,Et,0x0D
+18,2,COMMAND:,
+18,2,Byte:,Description:
+18,2,St,0x21
+18,2,Zn,Zone number
+18,2,Cc,0x39
+18,2,Dl,0x01
+18,2,Data,0x00 — 0x0A – Set Dolby Leveller to 0 — 10 0xF0 – Request current Dolby Leveller setting 0xF1 – Increment Dolby Leveller setting 0xF2 – Decrement Dolby Leveller setting 0xFF – Turn off Dolby Leveller
+18,2,Et,0x0D
+18,2,RESPONSE:,
+18,2,Byte:,Description:
+18,2,St,0x21
+18,2,Zn,Zone number
+18,2,Cc,0x39
+18,2,Ac,Answer code
+18,2,Dl,0x01
+18,2,Data1,0x00 — 0x0A – Dolby Leveller setting is 0 — 10 0xFF – Dolby Leveller is off
+18,2,Et,0x0D
+18,3,COMMAND:,
+18,3,Byte:,Description:
+18,3,St,0x21
+18,3,Zn,Zone number
+18,3,Cc,0x3A
+18,3,Dl,0x01
+18,3,Data,0x00 — 0x0F – Set the calibration offset to 0 — 15dB 0x80 — 0x8F – Set the calibration offset to -1 — -15dB 0xF0 – Request current calibration offset 0xF1 – Increment the calibration offset by 1dB 0xF2 – Decrement the calibration offset by 1dB
+18,3,Et,0x0D
+18,3,RESPONSE:,
+18,3,Byte:,Description:
+18,3,St,0x21
+18,3,Zn,Zone number
+18,3,Cc,0x3A
+18,3,Ac,Answer code
+18,3,Dl,0x01
+18,3,Data1,0x00 — 0x0F – Calibration offset is 0 — 15dB 0x80 — 0x8F – Calibration offset is -1 — -15dB
+18,3,Et,0x0D
+19,1,COMMAND:,
+19,1,Byte:,Description:
+19,1,St,0x21
+19,1,Zn,Zone number
+19,1,Cc,0x3B
+19,1,Dl,0x01
+19,1,Data,0x00 — 0x06 – Set the balance to 0 — 6 0x81 — 0x86 – Set the balance to -1 — -6 0xF0 – Request current balance 0xF1 – Increment the balance by 1dB 0xF2 – Decrement the balance by 1dB
+19,1,Et,0x0D
+19,1,RESPONSE:,
+19,1,Byte:,Description:
+19,1,St,0x21
+19,1,Zn,Zone number
+19,1,Cc,0x3B
+19,1,Ac,Answer code
+19,1,Dl,0x01
+19,1,Data1,0x00 — 0x06 – Balance is 0 — 6 0x81 — 0x86 – Balance is -1 — -6
+19,1,Et,0x0D
+19,2,COMMAND:,
+19,2,Byte:,Description:
+19,2,St,0x21
+19,2,Zn,Zone number
+19,2,Cc,0x3C
+19,2,Dl,0x01
+19,2,Data,0x00 — 0x03 – Set the Pro Logic II Dimension parameter to 0 — 3 0x81 — 0x83 – Set the Pro Logic II Dimension parameter to -1 — -3 0xF0 – Request current Pro Logic II Dimension setting 0xF1 – Increment the Pro Logic II Dimension 0xF2 – Decrement the Pro Logic II Dimension
+19,2,Et,0x0D
+19,2,RESPONSE:,
+19,2,Byte:,Description:
+19,2,St,0x21
+19,2,Zn,Zone number
+19,2,Cc,0x3C
+19,2,Ac,Answer code
+19,2,Dl,0x01
+19,2,Data1,0x00 — 0x03 – The Pro Logic II Dimension parameter is 0 — 3 0x81 — 0x83 – The Pro Logic II Dimension parameter is -1 — -3
+19,2,Et,0x0D
+19,3,COMMAND:,
+19,3,Byte:,Description:
+19,3,St,0x21
+19,3,Zn,Zone number
+19,3,Cc,0x3D
+19,3,Dl,0x01
+19,3,Data,0x00 — 0x07 – Set the Pro Logic II Centre Width parameter to 0 — 7 0xF0 – Request current Pro Logic II Centre Width setting 0xF1 – Increment the Pro Logic II Centre Width 0xF2 – Decrement the Pro Logic II Centre Width
+19,3,Et,0x0D
+19,3,RESPONSE:,
+19,3,Byte:,Description:
+19,3,St,0x21
+19,3,Zn,Zone number
+19,3,Cc,0x3D
+19,3,Ac,Answer code
+19,3,Dl,0x01
+19,3,Data1,0x00 — 0x07 – The Pro Logic II Centre Width parameter is 0 — 7
+19,3,Et,0x0D
+20,1,COMMAND:,
+20,1,Byte:,Description:
+20,1,St,0x21
+20,1,Zn,Zone number
+20,1,Cc,0x3E
+20,1,Dl,0x01
+20,1,Data,0xF0 – Request current Pro Logic II Panorama setting 0xF1 – Set Dolby Pro Logic II Panorama on 0xF2 – Set Dolby Pro Logic II Panorama off
+20,1,Et,0x0D
+20,1,RESPONSE:,
+20,1,Byte:,Description:
+20,1,St,0x21
+20,1,Zn,Zone number
+20,1,Cc,0x3E
+20,1,Ac,Answer code
+20,1,Dl,0x01
+20,1,Data1,0x00 – Dolby Pro Logic II Panorama is off 0x01 – Dolby Pro Logic II Panorama is on
+20,1,Et,0x0D
+20,2,COMMAND:,
+20,2,Byte:,Description:
+20,2,St,0x21
+20,2,Zn,Zone number
+20,2,Cc,0x3F
+20,2,Dl,0x01
+20,2,Data,0x00 — 0x28 – Set positive subwoofer trim in 0.25dB steps (e.g. 0x04 = +1dB) 0x81 — 0x8A – Set negative sub. trim in 0.25dB steps (e.g. 0x85 = -1.25dB) 0xF0 – Request current subwoofer trim value 0xF1 – Increment the subwoofer trim by 1dB 0xF2 – Decrement the subwoofer trim by 1dB
+20,2,Et,0x0D
+20,2,RESPONSE:,
+20,2,Byte:,Description:
+20,2,St,0x21
+20,2,Zn,Zone number
+20,2,Cc,0x3F
+20,2,Ac,Answer code
+20,2,Dl,0x01
+20,2,Data1,0x00 — 0x28 – Positive subwoofer trim in 0.25dB steps (e.g. 0x04 = +1dB) 0x81 — 0x8A – Negative subwoofer trim in 0.25dB steps (e.g. 0x85 = -1.25dB)
+20,2,Et,0x0D
+20,3,COMMAND:,
+20,3,Byte:,Description:
+20,3,St,0x21
+20,3,Zn,Zone number
+20,3,Cc,0x40
+20,3,Dl,0x01
+20,3,Data,0x00 — 0xC8 – set the lipsync delay in 5ms steps (e.g. 0x08 = 40ms) 0xF0 – Request current lipsync delay value 0xF1 – Increment the lipsync delay by 5ms 0xF2 – Decrement the lipsync delay by 5ms
+20,3,Et,0x0D
+20,3,RESPONSE:,
+20,3,Byte:,Description:
+20,3,St,0x21
+20,3,Zn,Zone number
+20,3,Cc,0x40
+20,3,Ac,Answer code
+20,3,Dl,0x01
+20,3,Data1,0x00 — 0xC8 – the lipsync delay in 5ms steps (e.g. 0x10 = 80ms)
+20,3,Et,0x0D
+21,1,COMMAND:,
+21,1,Byte:,Description:
+21,1,St,0x21
+21,1,Zn,Zone number
+21,1,Cc,0x41
+21,1,Dl,0x01
+21,1,Data,0x00 – Compression off 0x01 – Set compression to ‘On/Auto’ (follows HD stream metadata compression flag and sets compression on if there is no metadata present) 0x02 – Set compression to ‘On’ 0xF0 – Request current compression setting
+21,1,Et,0x0D
+21,1,RESPONSE:,
+21,1,Byte:,Description:
+21,1,St,0x21
+21,1,Zn,Zone number
+21,1,Cc,0x41
+21,1,Ac,Answer code
+21,1,Dl,0x01
+21,1,Data1,0x00 – Compression off 0x01 – ‘On/Auto’ 0x02 – ‘On’
+21,1,Et,0x0D
+21,2,COMMAND:,
+21,2,Byte:,Description:
+21,2,St,0x21
+21,2,Zn,Zone number
+21,2,Cc,0x42
+21,2,Dl,0x01
+21,2,Data,0xF0 – Request incoming video parameters
+21,2,Et,0x0D
+21,2,RESPONSE:,
+21,2,Byte:,Description:
+21,2,St,0x21
+21,2,Zn,Zone number
+21,2,Cc,0x42
+21,2,Ac,Answer code
+21,2,Dl,0x07
+21,2,Data1,Horizontal resolution MSB (e.g. for 720p: 0x05 since 1280 = 0x0500)
+21,2,Data2,Horizontal resolution LSB (e.g. for 720p: 0x00 since 1280 = 0x0500)
+21,2,Data3,Vertical resolution MSB (e.g. for 720p: 0x02 since 720 = 0x02D0)
+21,2,Data4,Vertical resolution LSB (e.g. for 720p: 0xD0 since 720 = 0x02D0)
+21,2,Data5,Refresh rate for full image update (half the field rate for interlaced signals) (e.g. for 50Hz progressive: 0x32)
+21,2,Data6,Interlaced flag: 0x00 – Progressive 0x01 – Interlaced
+21,2,Data7,Aspect ratio: 0x00 – Undefined 0x01 – 4:3 0x02 – 16:9
+21,2,Et,0x0D
+22,1,COMMAND:,
+22,1,Byte:,Description:
+22,1,St,0x21
+22,1,Zn,Zone number
+22,1,Cc,0x43
+22,1,Dl,0x01
+22,1,Data,0xF0 – Request incoming audio format
+22,1,Et,0x0D
+22,1,RESPONSE:,
+22,1,Byte:,Description:
+22,1,St,0x21
+22,1,Zn,Zone number
+22,1,Cc,0x43
+22,1,Ac,Answer code
+22,1,Dl,0x02
+22,1,Data1,Audio stream format: 0x00 – PCM 0x01 – Analogue Direct 0x02 – Dolby Digital 0x03 – Dolby Digital EX 0x04 – Dolby Digital Surround 0x05 – Dolby Digital Plus 0x06 – Dolby Digital True HD 0x07 – DTS 0x08 – DTS 96/24 0x09 – DTS ES Matrix 0x0A – DTS ES Discrete 0x0B – DTS ES Matrix 96/24 0x0C – DTS ES Discrete 96/24 0x0D – DTS HD Master Audio 0x0E – DTS HD High Res Audio 0x0F – DTS Low Bit Rate 0x10 – DTS Core 0x11 – AAC 0x12 – MPEG 0x13 – PCM Zero 0x14 – Unsupported 0x15 – Undetected
+22,1,Data2,"Audio channel configuration: 0x00 – Dual Mono 0x01 – Centre only 0x02 – Stereo only 0x03 – Stereo + mono surround 0x04 – Stereo + Surround L & R 0x05 – Stereo + Surround L & R + mono Surround Back 0x06 – Stereo + Surround L & R + Surround Back L & R 0x07 – Stereo + Surround L & R containing matrix information for surround back L&R 0x08 – Stereo + Centre 0x09 – Stereo + Centre + mono surround 0x0A – Stereo + Centre + Surround L & R 0x0B – Stereo + Centre + Surround L & R + mono Surround Back 0x0C – Stereo + Centre + Surround L & R + Surround Back L & R 0x0D – Stereo + Centre + Surround L & R containing matrix information for surround back L&R 0x0E – Stereo Downmix Lt Rt 0x0F – Stereo Only (Lo Ro) 0x10 – Dual Mono + LFE 0x11 – Centre + LFE 0x12 – Stereo + LFE 0x13 – Stereo + single surround + LFE 0x14 – Stereo + Surround L & R + LFE 0x15 – Stereo + Surround L & R + mono Surround Back + LFE 0x16 – Stereo + Surround L & R + Surround Back L & R + LFE 0x17 – Stereo + Surround L & R + LFE 0x18 – Stereo + Centre + LFE containing matrix information for surround back L&R 0x19 – Stereo + Centre + single surround + LFE 0x1A – Stereo + Surround L & R + LFE (Standard 5.1) 0x1B – Stereo + Centre + Surround L & R + mono Surround Back + LFE (6.1, e.g. DTS ES Discrete) 0x1C – Stereo + Centre + Surround L & R + Surround Back L & R + LFE (7.1) 0x1D – Stereo + Centre + Surround L & R + LFE, containing matrix information for surround back L&R (6.1 e.g. Dolby Digital EX) 0x1E – Stereo Downmix (Lt Rt) + LFE 0x1F – Stereo Only (Lo Ro) + LFE 0x20 – Unknown 0x21 – Undetected"
+22,1,Et,0x0D
+23,1,COMMAND:,
+23,1,Byte:,Description:
+23,1,St,0x21
+23,1,Zn,Zone number
+23,1,Cc,0x44
+23,1,Dl,0x01
+23,1,Data,0xF0 – Request incoming audio sample rate
+23,1,Et,0x0D
+23,1,RESPONSE:,
+23,1,Byte:,Description:
+23,1,St,0x21
+23,1,Zn,Zone number
+23,1,Cc,0x44
+23,1,Ac,Answer code
+23,1,Dl,0x01
+23,1,Data1,Incoming audio sample rate: 0x00 – 32 KHz 0x01 – 44.1 KHz 0x02 – 48 KHz 0x03 – 88.2 KHz 0x04 – 96 KHz 0x05 – 176.4 KHz 0x06 – 192 KHz 0x07 – Unknown 0x08 – Undetected
+23,1,Et,0x0D
+23,2,COMMAND:,
+23,2,Byte:,Description:
+23,2,St,0x21
+23,2,Zn,Zone number
+23,2,Cc,0x45
+23,2,Dl,0x01
+23,2,Data,0x00 – set the Sub Stereo Trim value to 0dB 0x80 — 0x8A – set the Sub Stereo Trim value to -0.25dB — -10.00dB 0xF0 – Request Sub Stereo Trim value 0xF1 – Increment Sub Stereo Trim value by 0.25dB 0xF2 – Decrement Sub Stereo Trim value by 0.25dB
+23,2,Et,0x0D
+23,2,RESPONSE:,
+23,2,Byte:,Description:
+23,2,St,0x21
+23,2,Zn,Zone number
+23,2,Cc,0x45
+23,2,Ac,Answer code
+23,2,Dl,0x01
+23,2,Data1,"0x00, 0x80 — 0x8A – Sub Stereo Trim value in -0.25dB steps"
+23,2,Et,0x0D
+23,3,COMMAND:,
+23,3,Byte:,Description:
+23,3,St,0x21
+23,3,Zn,Zone number
+23,3,Cc,0x46
+23,3,Dl,0x01
+23,3,Data,0x00 — 0x0A – set the Brightness value to 0 — 10. 0x81 — 0x8A – set the Brightness value to -1 — -10. 0xF0 – Request the current Brightness value. 0xF1 – Increment Brightness value by 1. 0xF2 – Decrement Brightness value by 1.
+23,3,Et,0x0D
+23,3,RESPONSE:,
+23,3,Byte:,Description:
+23,3,St,0x21
+23,3,Zn,Zone number
+23,3,Cc,0x46
+23,3,Ac,Answer code
+23,3,Dl,0x01
+23,3,Data1,0x00 — 0x0A – Brightness value 0 — 10 0x81 — 0x8A – Brightness value -1 — -10
+23,3,Et,0x0D
+24,1,COMMAND:,
+24,1,Byte:,Description:
+24,1,St,0x21
+24,1,Zn,Zone number
+24,1,Cc,0x47
+24,1,Dl,0x01
+24,1,Data,0x00 — 0x0A – set the Contrast value to 0 — 10. 0x81 — 0x8A – set the Contrast value to -1 — -10. 0xF0 – Request the current Contrast value. 0xF1 – Increment Contrast value by 1. 0xF2 – Decrement Contrast value by 1.
+24,1,Et,0x0D
+24,1,RESPONSE:,
+24,1,Byte:,Description:
+24,1,St,0x21
+24,1,Zn,Zone number
+24,1,Cc,0x47
+24,1,Ac,Answer code
+24,1,Dl,0x01
+24,1,Data1,0x00 — 0x0A – Contrast value 0 — 10 0x81 — 0x8A – Contrast value -1 — -10
+24,1,Et,0x0D
+24,2,COMMAND:,
+24,2,Byte:,Description:
+24,2,St,0x21
+24,2,Zn,Zone number
+24,2,Cc,0x48
+24,2,Dl,0x01
+24,2,Data,0x00 — 0x0A – set the Colour value to 0 — 10. 0x81 — 0x8A – set the Colour value to -1 — -10. 0xF0 – Request the current Colour value. 0xF1 – Increment Colour value by 1. 0xF2 – Decrement Colour value by 1.
+24,2,Et,0x0D
+24,2,RESPONSE:,
+24,2,Byte:,Description:
+24,2,St,0x21
+24,2,Zn,Zone number
+24,2,Cc,0x48
+24,2,Ac,Answer code
+24,2,Dl,0x01
+24,2,Data1,0x00 — 0x0A – Colour value 0 — 10 0x81 — 0x8A – Colour value -1 — -10
+24,2,Et,0x0D
+24,3,COMMAND:,
+24,3,Byte:,Description:
+24,3,St,0x21
+24,3,Zn,Zone number
+24,3,Cc,0x49
+24,3,Dl,0x01
+24,3,Data,0x00 – Set Picture Mode to Auto. 0x01 – Set Picture Mode to Video. 0x02 – Set Picture Mode to Film. 0xF0 – Request current Picture Mode. 0xF1 – Increment Picture Mode value by 1. 0xF2 – Decrement Picture Mode value by 1.
+24,3,Et,0x0D
+24,3,RESPONSE:,
+24,3,Byte:,Description:
+24,3,St,0x21
+24,3,Zn,Zone number
+24,3,Cc,0x49
+24,3,Ac,Answer code
+24,3,Dl,0x01
+24,3,Data1,0x00 – Picture Mode is Auto. 0x01 – Picture Mode is Video. 0x02 – Picture Mode is Film.
+24,3,Et,0x0D
+25,1,COMMAND:,
+25,1,Byte:,Description:
+25,1,St,0x21
+25,1,Zn,Zone number
+25,1,Cc,0x4A
+25,1,Dl,0x01
+25,1,Data,0x00 – Set Edge Enhancement to Off. 0x01 – Set to Edge Enhancement to Low. 0x02 – Set Edge Enhancement to Medium. 0x03 – Set Edge Enhancement to High. 0xF0 – Request current Edge Enhancement value. 0xF1 – Increment Edge Enhancement value by 1. 0xF2 – Decrement Edge Enhancement value by 1.
+25,1,Et,0x0D
+25,1,RESPONSE:,
+25,1,Byte:,Description:
+25,1,St,0x21
+25,1,Zn,Zone number
+25,1,Cc,0x4A
+25,1,Ac,Answer code
+25,1,Dl,0x01
+25,1,Data1,0x00 – Edge Enhancement is Off. 0x01 – Edge Enhancement is Low. 0x02 – Edge Enhancement is Medium. 0x03 – Edge Enhancement is High.
+25,1,Et,0x0D
+25,2,COMMAND:,
+25,2,Byte:,Description:
+25,2,St,0x21
+25,2,Zn,Zone number
+25,2,Cc,0x4B
+25,2,Dl,0x01
+25,2,Data,0x00 – Set Mosquito NR to Off. 0x01 – Set to Mosquito NR to Low. 0x02 – Set Mosquito NR to Medium. 0x03 – Set Mosquito NR to High. 0xF0 – Request current Mosquito NR value. 0xF1 – Increment Mosquito NR value by 1. 0xF2 – Decrement Mosquito NR value by 1.
+25,2,Et,0x0D
+25,2,RESPONSE:,
+25,2,Byte:,Description:
+25,2,St,0x21
+25,2,Zn,Zone number
+25,2,Cc,0x4B
+25,2,Ac,Answer code
+25,2,Dl,0x01
+25,2,Data1,0x00 – Mosquito NR is Off. 0x01 – Mosquito NR is Low. 0x02 – Mosquito NR is Medium. 0x03 – Mosquito NR is High.
+25,2,Et,0x0D
+25,3,COMMAND:,
+25,3,Byte:,Description:
+25,3,St,0x21
+25,3,Zn,Zone number
+25,3,Cc,0x4C
+25,3,Dl,0x01
+25,3,Data,0x00 – Set Noise Reduction to Off. 0x01 – Set to Noise Reduction to Low. 0x02 – Set Noise Reduction to Medium. 0x03 – Set Noise Reduction to High. 0xF0 – Request current Noise Reduction value. 0xF1 – Increment Noise Reduction value by 1. 0xF2 – Decrement Noise Reduction value by 1.
+25,3,Et,0x0D
+25,3,RESPONSE:,
+25,3,Byte:,Description:
+25,3,St,0x21
+25,3,Zn,Zone number
+25,3,Cc,0x4C
+25,3,Ac,Answer code
+25,3,Dl,0x01
+25,3,Data1,0x00 – Noise Reduction is Off. 0x01 – Noise Reduction is Low. 0x02 – Noise Reduction is Medium.
+25,3,Et,0x0D
+26,1,COMMAND:,
+26,1,Byte:,Description:
+26,1,St,0x21
+26,1,Zn,Zone number
+26,1,Cc,0x4D
+26,1,Dl,0x01
+26,1,Data,0x00 – Set Block Noise Reduction to Off. 0x01 – Set to Block Noise Reduction to Low. 0x02 – Set Block Noise Reduction to Medium. 0x03 – Set Block Noise Reduction to High. 0xF0 – Request current Block Noise Reduction value. 0xF1 – Increment Block Noise Reduction value by 1. 0xF2 – Decrement Block Noise Reduction value by 1.
+26,1,Et,0x0D
+26,1,RESPONSE:,
+26,1,Byte:,Description:
+26,1,St,0x21
+26,1,Zn,Zone number
+26,1,Cc,0x4D
+26,1,Ac,Answer code
+26,1,Dl,0x01
+26,1,Data1,0x00 – Block Noise Reduction is Off. 0x01 – Block Noise Reduction is Low. 0x02 – Block Noise Reduction is Medium. 0x03 – Block Noise Reducton is High.
+26,1,Et,0x0D
+26,2,COMMAND:,
+26,2,Byte:,Description:
+26,2,St,0x21
+26,2,Zn,0x01
+26,2,Cc,0x4E
+26,2,Dl,0x01
+26,2,Data,0xF0 – Request current Zone 1 OSD on/off state. 0xF1 – Set Zone 1 OSD to On. 0xF2 – Set Zone 1 OSD to Off.
+26,2,Et,0x0D
+26,2,RESPONSE:,
+26,2,Byte:,Description:
+26,2,St,0x21
+26,2,Zn,0x01
+26,2,Cc,0x4E
+26,2,Ac,Answer code
+26,2,Dl,0x01
+26,2,Data1,0x00 – Zone 1 OSD is On. 0x01 – Zone 1 OSD is Off.
+26,2,Et,0x0D
+26,3,COMMAND:,
+26,3,Byte:,Description:
+26,3,St,0x21
+26,3,Zn,0x01
+26,3,Cc,0x4F
+26,3,Dl,0x01
+26,3,Data,0x00 – Set HDMI Output 1 Auto-Priority. 0x01 – Set HDMI Output 2 Auto-Priority. 0x02 – Set HDMI Output 1. 0x03 – Set HDMI Output 2. 0x04 – Set HDMI Output 1 & 2. 0xF0 – Request current video output switching setting. 0xF1 – Increment setting. 0xF2 – Decrement setting.
+26,3,Et,0x0D
+26,3,RESPONSE:,
+26,3,Byte:,Description:
+26,3,St,0x21
+26,3,Zn,0x01
+26,3,Cc,0x4F
+26,3,Ac,Answer code
+26,3,Dl,0x01
+26,3,Data1,0x00 – HDMI Output 1 Auto-Priority. 0x01 – HDMI Output 2 Auto-Priority. 0x02 – HDMI Output 1. 0x03 – HDMI Output 2. 0x04 – HDMI Output 1 & 2.
+26,3,Et,0x0D
+27,1,COMMAND:,
+27,1,Byte:,Description:
+27,1,St,0x21
+27,1,Zn,Zone Number
+27,1,Cc,0x50
+27,1,Dl,0x01
+27,1,Data,0x00 – Set the frame rate to Auto. 0x01 – Set the frame rate to follow the source. 0x02 – Set the frame rate to 50Hz. 0x03 – Set the frame rate to 60Hz. 0xF0 – Request the current frame rate. 0xF1 – Increment setting. 0xF2 – Decrement setting.
+27,1,Et,0x0D
+27,1,RESPONSE:,
+27,1,Byte:,Description:
+27,1,St,0x21
+27,1,Zn,Zone Number
+27,1,Cc,0x50
+27,1,Ac,Answer code
+27,1,Dl,0x01
+27,1,Data1,0x00 – Auto. 0x01 – 50Hz. 0x02 – 60Hz.
+27,1,Et,0x0D
+27,2,COMMAND:,
+27,2,Byte:,Description:
+27,2,St,0x21
+27,2,Zn,Zone Number
+27,2,Cc,0x53
+27,2,Dl,0x01
+27,2,Data,0xF0 – Request the current frame rate.
+27,2,Et,0x0D
+27,2,RESPONSE:,
+27,2,Byte:,Description:
+27,2,St,0x21
+27,2,Zn,Zone Number
+27,2,Cc,0x53
+27,2,Ac,Answer code
+27,2,Dl,0x01
+27,2,Data1,0x00 – Bypass disabled 0x01 – Bypass enabled
+27,2,Et,0x0D
+28,1,Function,RC5 code [system- command],RC5 code (Data1 - Data2)
+28,1,,Decimal,Hexadecimal
+28,1,Standby,16-12,0x10 - 0x0C
+28,1,Select Phono,16-1,0x10 - 0x01
+28,1,Select AV,16-2,0x10 - 0x02
+28,1,Select Tuner,16-3,0x10 - 0x03
+28,1,Select DVD,16-4,0x10 - 0x04
+28,1,Select Tape,16-5,0x10 - 0x05
+28,1,Select VCR,16-6,0x10 - 0x06
+28,1,Select CD,16-7,0x10 - 0x07
+28,1,Select Aux,16-8,0x10 - 0x08
+28,1,Select MCH,16-9,0x10 - 0x09
+28,1,Select SAT,16-0,0x10 - 0x00
+28,1,Select PVR,16-34,0x10 - 0x22
+28,1,Random,16-48,0x10 - 0x30
+28,1,Repeat,16-49,0x10 - 0x31
+28,1,Select iPod,16-18,0x10 - 0x12
+28,1,Select NET,16-11,0x10 - 0x0B
+28,1,Navigate Up,16-86,0x10 - 0x56
+28,1,Navigate Left,16-81,0x10 - 0x51
+28,1,OK,16-87,0x10 - 0x57
+28,1,Navigate Right,16-80,0x10 - 0x50
+28,1,Navigate Down,16-85,0x10 - 0x55
+28,1,Cycle between decoding modes (MODE),16-32,0x10 - 0x20
+28,1,Enter system menu (MENU),16-82,0x10 - 0x52
+28,1,Mute,16-13,0x10 - 0x0D
+28,1,Change VFD brightness (DISP),16-59,0x10 - 0x3B
+28,1,Decrease volume (-),16-17,0x10 - 0x11
+28,1,Increase volume (+),16-16,0x10 - 0x10
+28,1,CH- (track back symbol),16-57,0x10 - 0x39
+28,1,CH+ (track fwd symbol),16-56,0x10 - 0x38
+28,1,Activate DIRECT mode,16-10,0x10 - 0x0A
+28,1,Room EQ on/off / NET “Now Playing” screen / IPOD Play/Pause,16-30,0x10 - 0x1E
+28,1,Toggle Dolby Volume on/off / NET & IPOD Play/Pause,16-70,0x10 - 0x46
+28,1,Access Bass control,16-39,0x10 - 0x27
+28,1,Access Speaker Trim controls,16-37,0x10 - 0x25
+28,1,Access Lipsync Delay control / NET & IPOD Stop,16-50,0x10 - 0x32
+28,1,Access Subwoofer Trim control,16-51,0x10 - 0x33
+28,1,Access Treble control,16-14,0x10 - 0x0E
+28,1,FAV+ / red / Page Up,16-41,0x10 - 0x29
+28,1,FAV- / green / Page Down,16-42,0x10 - 0x2A
+28,1,HOME / yellow,16-43,0x10 - 0x2B
+28,1,Cycle between VFD information panels / blue,16-55,0x10 - 0x37
+28,1,Change control to next zone,16-95,0x10 - 0x5F
+28,1,Set selected zone to Follow Zone 1,16-20,0x10 - 0x14
+28,1,Cycle between output resolutons,16-47,0x10 - 0x2F
+28,1,"Cycle between aspect ratios (Auto, 16:9, 4:3)",16-19,0x10 - 0x13
+28,1,Power On,16-123,0x10 - 0x7B
+28,1,Power Off,16-124,0x10 - 0x7C
+28,2,Function,RC5 code [system- command],RC5 code (Data1 - Data2
+28,2,,Decimal,Hexadecimal
+28,2,Numeric entry - 1,17-1,0x11 - 0x01
+28,2,Numeric entry - 2,17-2,0x11 - 0x02
+28,2,Numeric entry - 3,17-3,0x11 - 0x03
+28,2,Numeric entry - 4,17-4,0x11 - 0x04
+28,2,Numeric entry - 5,17-5,0x11 - 0x05
+28,2,Numeric entry - 6,17-6,0x11 - 0x06
+28,2,Numeric entry - 7,17-7,0x11 - 0x07
+28,2,Numeric entry - 8,17-8,0x11 - 0x08
+28,2,Numeric entry - 9,17-9,0x11 - 0x09
+28,2,Numeric entry - 0,17-0,0x11 - 0x00
+28,2,Navigate Up / Increment Preset,17-86,0x11 - 0x56
+28,2,Navigate Left / Decrease Tuning,17-78,0x11 - 0x4E
+28,2,OK / SELECT,17-87,0x11 - 0x57
+28,2,Navigate Right / Increase Tuning,17-77,0x11 - 0x4D
+28,2,Navigate Down / Decrement Preset,17-85,0x11 - 0x55
+28,2,BAND,17-50,0x11 - 0x32
+28,2,MENU,17-125,0x11 - 0x7D
+28,2,Change VFD Brightness (DISP),17-18,0x11 - 0x12
+28,2,Preset - / Sirius Category - (CH- / track back symbol),17-33,0x11 - 0x21
+28,2,Preset + / Sirius Category + (CH+ / track fwd symbol),17-32,0x11 - 0x20
+28,2,Select AM,17-53,0x11 - 0x35
+28,2,Select FM,17-52,0x11 - 0x34
+28,2,Select FM,17-127,0x11 - 0x7F
+28,2,Select DAB,17-126,0x11 - 0x7E
+28,2,Page Up (preset list),17-38,0x11 - 0x26
+28,2,Page Down (preset list),17-37,0x11 -0x25
+28,2,Delete selected preset,17-41,0x11 - 0x29
+28,2,Cycle between VFD information panels,17-15,0x11 - 0x0F
+29,1,Function,RC5 Code [system-command],RC5 Code (Data1 - Data2)
+29,1,,Decimal,Hexadecimal
+29,1,Direct mode On,16-78,0x10 - 0x4E
+29,1,Direct mode Off,16-79,0x10 - 0x4F
+29,1,PL II / IIx Game,16-102,0x10 - 0x66
+29,1,PL II / IIx Movie,16-103,0x10 - 0x67
+29,1,PL II / IIx Music,16-104,0x10 - 0x68
+29,1,Multi Channel,16-106,0x10 - 0x6A
+29,1,Stereo,16-107,0x10 - 0x6B
+29,1,PL,16-110,0x10 - 0x6E
+29,1,DTS Neo:6 Cinema,16-111,0x10 - 0x6F
+29,1,DTS Neo:6 Music,16-112,0x10 - 0x70
+29,1,Dolby EX,16-118,0x10 - 0x76
+29,1,Mute On,16-119,0x10 - 0x77
+29,1,Mute Off,16-120,0x10 - 0x78
+29,1,NET,16-53,0x10 - 0x35
+29,1,FM,16-54,0x10 - 0x36
+29,1,AM,16-52,0x10 - 0x34
+29,1,DAB / Sirius,16-72,0x10 - 0x48
+29,1,Video VCR-CVBS,16-58,0x10 - 0x3A
+29,1,Video AV-CVBS,16-60,0x10 - 0x3C
+29,1,Video PVR-CVBS,16-61,0x10 - 0x3D
+29,1,Video SAT-CVBS,16-62,0x10 - 0x3E
+29,1,Video DVD-CVBS,16-71,0x10 - 0x47
+29,1,Video VCR-Svid,16-77,0x10 - 0x4D
+29,1,Video AV-Svid,16-83,0x10 - 0x53
+29,1,Video PVR-Svid,16-84,0x10 - 0x54
+29,1,Video SAT-Svid,16-88,0x10 - 0x58
+29,1,Video DVD-Svid,16-89,0x10 - 0x59
+29,1,Video VCR-HDMI,16-90,0x10 - 0x5A
+29,1,Video AV-HDMI,16-91,0x10 - 0x5B
+29,1,Video PVR-HDMI,16-92,0x10 - 0x5C
+29,1,Video SAT-HDMI,16-93,0x10 - 0x5D
+29,1,Video DVD-HDMI,16-94,0x10 - 0x5E
+29,1,Lip Sync +1ms,16-100,0x10 - 0x64
+29,1,Lip sync -1ms,16-101,0x10 - 0x65
+29,1,Sub trim +1,16-105,0x10 - 0x69
+29,1,Sub trim -1,16-108,0x10 - 0x6C
+29,1,PLII Music Centre +1,16-109,0x10 - 0x6D
+29,1,PLII Music Centre -1,16-113,0x10 - 0x71
+29,1,PLII Music Dimension +1,16-114,0x10 - 0x72
+29,1,PLII Music Dimension -1,16-115,0x10 - 0x73
+29,1,PLII Panorama On,16-116,0x10 - 0x74
+29,1,PLII Panorama Off,16-117,0x10 - 0x75
+29,1,Video out Preferred/Best,16-125,0x10 - 0x7D
+29,1,Video out SD Inter,16-126,0x10 - 0x7E
+29,1,Video out SD Prog,16-15,0x10 - 0x0F
+29,1,Video out 720p,16-23,0x10 - 0x17
+29,1,Video out 1080i,16-26,0x10 - 0x1A
+29,1,Video out 1080p,16-27,0x10 - 0x1B
+29,1,Select HDMI Out 1,16-73,0x10 - 0x49
+29,1,Select HDMI Out 2,16-74,0x10 - 0x4A
+29,1,Select HDMI Out 1 & 2,16-75,0x10 - 0x4B
+29,2,Function,RC5 Code [system-command],RC5 Code (Data1 - Data2)
+29,2,,Decimal,Hexadecimal
+29,2,Frame Rate 50,16-64,0x10 - 0x40
+29,2,Frame Rate 60,16-65,0x10 - 0x41
+29,2,Display Off,16-31,0x10 - 0x1F
+29,2,Display L1,16-33,0x10 - 0x21
+29,2,Display L2,16-35,0x10 - 0x23
+29,2,Display L3,16-36,0x10 - 0x24
+29,2,Balance left,16-38,0x10 - 0x26
+29,2,Balance right,16-40,0x10 - 0x28
+29,2,Bass +1,16-44,0x10 - 0x2C
+29,2,Bass -1,16-45,0x10 - 0x2D
+29,2,Treble +1,16-46,0x10 - 0x2E
+29,2,Treble -1,16-98,0x10 - 0x62
+29,2,Zone 2 Power On,23-123,0X17 - 0x7B
+29,2,Zone 2 Power Off,23-124,0x17 - 0x7C
+29,2,Zone 2 Vol+,23-1,0x17 - 0x01
+29,2,Zone 2 Vol-,23-2,0x17 - 0x02
+29,2,Zone 2 Mute,23-3,0x17 - 0x03
+29,2,Zone 2 Mute On,23-4,0x17 - 0x04
+29,2,Zone 2 Mute Off,23-5,0x17 - 0x05
+29,2,Zone 2 CD,23-6,0x17 - 0x06
+29,2,Zone 2 DVD,23-7,0x17 - 0x07
+29,2,Zone 2 SAT,23-8,0x17 - 0x08
+29,2,Zone 2 AV,23-9,0x17 - 0x09
+29,2,Zone 2 TAPE,23-10,0x17 - 0x0A
+29,2,Zone 2 VCR,23-11,0x17 - 0x0B
+29,2,Zone 2 PVR,23-12,0x17 - 0x0C
+29,2,Zone 2 Aux,23-13,0x17 - 0x0D
+29,2,Zone 2 FM,23-14,0x17 - 0x0E
+29,2,Zone 2 AM,23-15,0x17 - 0x0F
+29,2,Zone 2 DAB / Sirius,23-16,0x17 - 0x10
+29,2,Zone 2 Phono,23-17,0x17 - 0x11
+29,2,Zone 2 iPod,23-18,0x17 - 0x12
+29,2,Zone 2 NET,23-19,0x17 - 0x13
+29,2,Zone 3 Power On,23-121,0x17 - 0x79
+29,2,Zone 3 Power Off,23-122,0x17 - 0x7A
+29,2,Zone 3 Vol+,23-20,0x17 - 0x17
+29,2,Zone 3 Vol-,23-21,0x17 - 0x15
+29,2,Zone 3 Mute,23-22,0x17 - 0x16
+29,2,Zone 3 Mute On,23-23,0x17 - 0x17
+29,2,Zone 3 Mute Off,23-24,0x17 - 0x18
+29,2,Video Bypass Toggle (3D only),16-66,0x10 - 0x42
+29,2,Video Bypass On (3D only),16-67,0x10 - 0x43
+29,2,Video Bypass Off (3D only),16-68,0x10 - 0x44
+29,2,Set HDMI Priority 1 out,16-96,0x10 - 0x60
+29,2,Set HDMI Priority 2 out,16-97,0x10 - 0x61

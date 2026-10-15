@@ -14,7 +14,9 @@ import must meet, and DESIGN.md section 29 describes how this one meets them.
   guide (long hex format) for its D-ILA projectors (DLA-HD, X and RS series, <https://support.jvc.com/>, DESIGN.md
   section 63) and **Arcam's** custom installation notes, whose RC-5 code tables cover its AVR, AV and SA amplifiers and
   receivers, the CDS50 and UDP411 players and the Solo and Solo Mini (PDFs on <https://www.arcam.co.uk/>, DESIGN.md
-  section 64) and **Cambridge Audio's** two lists of NEC codes that carry no copyright notice (the AXR85 and AXR100 receivers, and
+  section 64), and its older products' two IR sheets for the DiVA and FMJ amplifiers and CD players, eight more notes
+  (the AVR400, AVR500/600 and AV888, the AVR390 family, BDP100/300, CDS27, D33, ST60 and the Solo Movie and Music 2) and the Solo bar's one-page table
+  (DESIGN.md section 74) and **Cambridge Audio's** two lists of NEC codes that carry no copyright notice (the AXR85 and AXR100 receivers, and
   the 752BD, CXU and CXUHD players' remotes; PDFs on <https://www.cambridgeaudio.com/>, DESIGN.md section 65) and **Hegel's** RC-5 code tables, a page for each of 14 products, the three of 2020 (seven products) with each code's Pronto hex (PDFs on
   <https://support.hegel.com/>, DESIGN.md section 66) and **Cary Audio's** one-page table of IR remote codes for its DMS network players (a PDF on <https://www.caryaudio.com/>, DESIGN.md section 71) and **NAD's** "IR Commands by Model" pages for its T-series receivers and processors (eight 3-page PDFs, members of two zips of control documents on its site, DESIGN.md section 72) and its **Crestron IR driver files** of January 2005 for its older receivers, DVD and CD players, tuner, tape deck and televisions (sixteen binary files and the readme that says which is for which model, DESIGN.md section 73) and **Simaudio's** table of IR codes for its Moon amplifiers, CD and DVD players (a three-page PDF on
   <https://simaudio.com/>, DESIGN.md section 68) and **Rotel's** IR hex code PDFs, one for each of 59 models of its amplifiers, CD players, tuners, processors and
@@ -50,7 +52,8 @@ which the IR Blaster database's KEF remote confirms for the eight codes it holds
 own Pronto hex**: where the hex does not say the stated code (three entries have damaged text) the key is Untested. Arcam's are the ledger's `RC5` (the system code the device, the
 command the function), one file for each product a document lists (`AVR450`, `SA20`, `Solo Mini`...), **each row's decimal
 and hex checked against each other**; a function a table says is `(not AVR5, AVR10)` or `(AVR450/750 only)` is left out of
-the files it is not for. Cambridge's are NEC1 (the address the device, its complement the subdevice, the function), one file for each
+the files it is not for (the older amplifier sheet's six speaker keys are the A90's and the P38's, and each key of the CD sheet says whether it is a
+button of the supplied CR-314 remote or an additional command). Cambridge's are NEC1 (the address the device, its complement the subdevice, the function), one file for each
 product (`AXR85`, `CXU`...); **the AXR85's 23 codes are all in the IR Blaster database's AXR85 remote under the same names**. Hegel's are the ledger's `RC5` too, one
 file for each product (`H190`, `Röst`, `Mohican`...), **where a page has the Pronto hex it is decoded and checked against the row** (all 67
 agree, and are the ledger's own compile of the code but for the last gap) and the `(alt)` row is the toggle bit's twin and no key; a

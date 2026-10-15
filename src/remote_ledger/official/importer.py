@@ -8,6 +8,7 @@ runs the readers, writes ``remotes/official/<maker>/`` wholesale and the report.
 
 from __future__ import annotations
 
+from collections import Counter
 from pathlib import Path
 from typing import Any
 
@@ -30,7 +31,8 @@ def import_tree(root: Path, snapshot: Path, authored: dict[tuple[str, str], str]
         if not (directory / MANIFEST).is_file():
             continue
         snap = load_snapshot(directory)
-        report.retrieved[maker] = snap.retrieved
+        later = Counter(entry["retrieved"] for entry in snap.documents.values() if "retrieved" in entry)    # documents fetched on a later day
+        report.retrieved[maker] = snap.retrieved + "".join(f" (and {day} for {n} document{'s' * (n > 1)})" for day, n in sorted(later.items()))
         for target, doc in reader.build(snap, authored, report):
             if target in out:
                 raise ValueError(f"{target} is yielded twice")
