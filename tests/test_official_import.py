@@ -1101,6 +1101,10 @@ def test_the_infocus_table_layouts_are_read_as_a_name_and_a_data_code_with_each_
         ["3", "141", "36", "Discrete Resize Natural", "477", "3Fh"], ["3", "152", "36", "Wide", "156", "Selects the Natural Wide aspect ratio"],
         ["3", "300", "36", "A footer far from any code"]])
     assert [(e.page, e.name, e.code) for e in banded] == [(3, "Discrete Power Off", 0x39), (3, "Discrete Resize Letterbox", 0x3E), (3, "Discrete Resize Natural Wide", 0x3F)]
+    nearer = infocus.name_desc_code([["3", "55", "45", "Discrete Resize Letterbox", "198", "Selects the Letterbox aspect ratio", "436", "3Eh"],
+                                     ["3", "72", "45", "Discrete Resize Natural", "198", "Selects the Natural Wide/Panorama aspect"],
+                                     ["3", "86", "45", "Wide/Panorama", "198", "ratio", "436", "3Fh"]])
+    assert [(e.name, e.code) for e in nearer] == [("Discrete Resize Letterbox", 0x3E), ("Discrete Resize Natural Wide/Panorama", 0x3F)]     # begins above its code
     checked = infocus.dec_hex_bin([
         ["2", "114", "41", "Power On", "108", "Turns on projector power", "366", "58", "437", "3Ah", "513", "0011 1010"],
         ["2", "200", "41", "Computer", "108", "Computer2", "366", "25", "438", "19h", "512", "1000 1001"],
@@ -1119,6 +1123,48 @@ def test_the_infocus_numbered_rows_are_read_in_order_with_the_arrow_keys_named_a
     assert entries[1].note == "the table writes the key's name as '^'" and no_code == ["'Light' (row 4): the table's code is n/a, so it sends none"]
 
 
+def test_the_infocus_tables_that_are_images_are_read_from_a_transcription_with_the_same_checks_and_the_ones_that_have_no_names_take_a_twins():
+    """A transcription row is ``page, name, decimal, hex, binary`` and a misreading fails the three columns' agreement; the IN3118HD's table
+    (a key number, a description, a data code) is the IN5310's, takes its names by number, and a code that is not the twin's stops the import."""
+    entries = infocus.transcribed([["2", "Menu", "2", "02h", "0000 0010"], ["2", "Power", "23", "17h", "0001 0110"]])
+    assert [(e.name, e.code, e.agrees) for e in entries] == [("Menu", 2, True), ("Power", 0x17, False)]
+    assert "binary 0001 0110 (0x16)" in entries[1].note
+    with pytest.raises(ValueError, match="not a decimal"):
+        infocus.transcribed([["2", "Menu", "two", "02h", "0000 0010"]])
+    twin = {1: infocus.Entry(1, "Power On", 0x3A, "3Ah", True, "", None, 1), 2: infocus.Entry(1, "Power Off", 0x39, "39h", True, "", None, 2)}
+    keyed, no_code = infocus.keyed_image([["1", "1", "Turns the projector on.", "3Ah"], ["1", "2", "Turns the projector off.", "39h"],
+                                          ["1", "3", "LIGHT", ""]], twin)
+    assert [(e.name, e.code, e.number) for e in keyed] == [("Power On", 0x3A, 1), ("Power Off", 0x39, 2)] and len(no_code) == 1
+    with pytest.raises(ValueError, match="not the IN5310's row"):
+        infocus.keyed_image([["1", "1", "Turns the projector on.", "3Bh"]], twin)
+
+
+def test_the_three_infocus_image_tables_are_one_table_whose_every_name_is_in_the_text_tables_of_the_family():
+    """The IN110's, IN3114's and IN3910's images are the same 48 rows (the three transcriptions are one file), the 48 codes are all codes of the
+    text tables of the IN1100, IN20, IN3100, IN5300 and IN5500 (59, 59, 59, 62 and 62 rows), and **each name is that table's name for the
+    code** (case and punctuation aside): a misreading of a name would show; the IN3118HD's 29 codes are the IN5310's."""
+    folder = SNAPSHOT / "infocus" / "csv"
+    names = ("InFocus-IN110-IRCodes", "IN3114_IN3116_IRCodes", "InFocus-IN3910-IRCodes")
+    texts = [(folder / f"{n}__transcribed.csv").read_text(encoding="utf-8") for n in names]
+    assert texts[0] == texts[1] == texts[2] and texts[0].count("\n") == 48
+    files = infocus_files()
+    squash = lambda t: re.sub(r"[^a-z0-9]", "", t.lower())
+    table = {s["forms"][0]["function"]: s["label"] for s in files["IN112"]["keys"].values()}
+    assert len(table) == 48
+    for model in ("IN1100", "IN24", "IN3102"):          # the three text tables that have all 48 rows, with the same names
+        text = {s["forms"][0]["function"]: s["label"] for s in files[model]["keys"].values()}
+        assert all(code in text and squash(text[code]) == squash(label) for code, label in table.items()), model
+    for model in ("IN5302", "IN5502"):                  # the IN5300's and IN5500's: no `Light` and `Reset Bulb Counter` (not transmitted), and three names
+        text = {s["forms"][0]["function"]: s["label"] for s in files[model]["keys"].values()}      # that the later tables write otherwise
+        assert {table[c] for c in table if c not in text} == {"Light", "Reset Bulb Counter"}
+        assert {(table[c], text[c]) for c in table if c in text and squash(text[c]) != squash(table[c])} == {
+            ("New Mute", "Mute"), ("Effect", "Custom"), ("Discrete Resize Natural Wide", "Discrete Resize Natural Wide/Panorama")}
+    twin = {s["forms"][0]["function"]: s["label"] for s in files["IN5310"]["keys"].values()}
+    assert {s["forms"][0]["function"]: s["label"] for s in files["IN3118HD"]["keys"].values()} == twin and len(twin) == 29
+    assert "read from it by eye" in files["IN112"]["keys"]["KEY_MENU"]["forms"][0]["source"]
+    assert "the table has no code" not in files["IN3118HD"]["keys"]["KEY_POWER_ON"]["forms"][0]["source"]
+
+
 def infocus_files() -> dict[str, dict]:
     return {p.stem: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "infocus").glob("*.json"))}
 
@@ -1127,9 +1173,9 @@ def infocus_doc_of(doc: dict) -> str:
     return next(iter(doc["keys"].values()))["forms"][0]["source"].split("/")[1].split("@")[0]
 
 
-def test_the_29_infocus_documents_are_74_files_and_3297_keys_and_489_of_them_are_untested_for_the_reason_each_says():
+def test_the_33_infocus_documents_are_85_files_and_3806_keys_and_489_of_them_are_untested_for_the_reason_each_says():
     """Files, keys per file and Untested keys per file of each document (the models are the title's: the IN1100's are eight, the IN3100's
-    twelve). **Untested are the 489 keys of 13 documents' files**: the IN100's 13 (the customer code's byte order is in doubt, below), and
+    twelve; the last four documents' tables are images, read by eye: D298). **Untested are the 489 keys of 13 documents' files**: the IN100's 13 (the customer code's byte order is in doubt, below), and
     the keys of the 12 documents that state no customer code (the IN2100's, LP650's, SP4800's, SP4805's, X2's and X3's, and the hex16 ones),
     which are read with 0x4E87, and the IN5148HD's `Computer` row, whose binary is not its decimal's."""
     per: dict[str, list] = {}
@@ -1146,11 +1192,13 @@ def test_the_29_infocus_documents_are_74_files_and_3297_keys_and_489_of_them_are
         "InFocus-LP650-IRCodes.pdf": (1, 46, 46), "InFocus-LP815-IRCodes.pdf": (2, 20, 20), "InFocus-LP840-IRCodes.pdf": (3, 19, 19),
         "InFocus-LS110-IRCodes.pdf": (1, 20, 0), "InFocus-SP4800-IRCodes.pdf": (1, 41, 41), "InFocus-SP4805-IRCodes.pdf": (1, 41, 41),
         "InFocus-SP5000-IRCodes.pdf": (1, 20, 20), "InFocus-SP7200-IRCodes.pdf": (1, 29, 0), "InFocus-SP7205-IRCodes.pdf": (1, 29, 0),
-        "X2_IRCodes.pdf": (1, 41, 41), "X3_IRCodes.pdf": (1, 41, 41)}
+        "X2_IRCodes.pdf": (1, 41, 41), "X3_IRCodes.pdf": (1, 41, 41),
+        "InFocus-IN110-IRCodes.pdf": (3, 48, 0), "IN3114_IN3116_IRCodes.pdf": (5, 48, 0), "InFocus-IN3910-IRCodes.pdf": (2, 48, 0),
+        "InFocus-IN3118HD-IRCodes.pdf": (1, 29, 0)}
     files = infocus_files()
-    assert len(files) == 74 and sum(len(d["keys"]) for d in files.values()) == 3_297
+    assert len(files) == 85 and sum(len(d["keys"]) for d in files.values()) == 3_806
     tiers = Counter(s["forms"][0]["confidence"] for d in files.values() for s in d["keys"].values())
-    assert tiers == {"plausible": 2_808, "untested": 489}
+    assert tiers == {"plausible": 3_317, "untested": 489}
     assert {d["protocol"]["name"] for d in files.values()} == {"NEC1"} and all(d["manufacturer"] == "InFocus" for d in files.values())
     # the two documents of the IN72, IN74 and IN76, and the names other sources already have (R15)
     assert {"IN72 (InFocus table)", "IN74", "IN76", "IN72 (IN7x_IR_Codes.pdf)", "IN74 (IN7x_IR_Codes.pdf)", "IN76 (IN7x_IR_Codes.pdf)",
@@ -1179,10 +1227,16 @@ def test_every_code_like_cell_of_an_infocus_document_is_a_row_of_it():
     5 of the IN2100's): in each pinned document the cells that look like a data code (`0x02`, `02h`, a four-digit `0xE817`, a `K01` row's
     code) are as many as the entries read from it, and the IN5310's one row with no code is the one `n/a`."""
     snapshot = load_snapshot(SNAPSHOT / "infocus")
-    assert len(infocus.DOCUMENTS) == len(snapshot.documents) == 29
+    assert len(infocus.DOCUMENTS) == len(snapshot.documents) == 33
+    read: dict[str, list] = {}
     for document in infocus.DOCUMENTS:
         rows = snapshot.sheet_of(document.file, document.sheet)
-        entries, no_code = infocus.read(document, rows)
+        entries, no_code = infocus.read(document, rows, {e.number: e for e in read.get(document.names_from, [])})
+        read[document.file] = entries
+        if document.sheet == "transcribed":         # the image tables: a row of the transcription is an entry or the one row with no code
+            assert len(entries) + len(no_code) == len(rows), document.file
+            assert len(no_code) == (1 if document.layout == "keyed_image" else 0)
+            continue
         if document.sheet == "pages":
             cells = [infocus._clean(r[1]) for r in rows]
         else:

@@ -60,7 +60,9 @@ SHEETS = {
         "Solo_bar_IR_codes_V2.0.pdf": ["lines"],
         "Solo_Movie-Movie_2.1-Music_2_RS232_SH284E_A.pdf": ["tables"],
     },
-    "infocus": {"InFocus-IN5310-IRCodes.pdf": ["pages"], **{name: ["lines"] for name in (
+    "infocus": {"InFocus-IN5310-IRCodes.pdf": ["pages"],         # the four whose table is an image (D298) have the text layer and a transcription
+                **{name: ["lines", "transcribed"] for name in ("InFocus-IN110-IRCodes.pdf", "InFocus-IN3118HD-IRCodes.pdf", "IN3114_IN3116_IRCodes.pdf", "InFocus-IN3910-IRCodes.pdf")},
+                **{name: ["lines"] for name in (
         "540-640-IR_codes.pdf",
         "IN2x_IR_Codes.pdf",
         "IN5140_IRCodes.pdf",
@@ -351,10 +353,19 @@ def main(argv: list[str] | None = None) -> int:
     for document, sheets in SHEETS[args.maker].items():
         for sheet in sheets:
             name = re.sub(r"[^A-Za-z0-9._-]+", "_", f"{Path(document).stem}__{sheet}") + ".csv"
+            out = target / "csv" / name
+            if sheet == "transcribed":      # a table that is an image, written down by eye (D298): the file is the work and is kept as it is
+                if not out.is_file():
+                    raise SystemExit(f"{out}: the transcription of {document} is not there; it is written by hand and this tool does not make it")
+                with out.open(encoding="utf-8", newline="") as handle:
+                    rows = list(csv.reader(handle))
+                manifest["sheets"][name] = {"document": document, "sheet": sheet, "sha256": hashlib.sha256(out.read_bytes()).hexdigest(),
+                                            "rows": len(rows), "transcribed": "by eye from the table's image in the PDF"}
+                print(f"{name}: {len(rows)} rows (transcribed, kept)", file=sys.stderr)
+                continue
             rows = rows_of(target / document, sheet)
             while rows and not any(rows[-1]):
                 rows.pop()
-            out = target / "csv" / name
             with out.open("w", encoding="utf-8", newline="") as handle:
                 csv.writer(handle, lineterminator="\n").writerows(rows)
             manifest["sheets"][name] = {"document": document, "sheet": sheet,

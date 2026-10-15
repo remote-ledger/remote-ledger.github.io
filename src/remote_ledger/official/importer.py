@@ -31,7 +31,7 @@ def import_tree(root: Path, snapshot: Path, authored: dict[tuple[str, str], str]
         if not (directory / MANIFEST).is_file():
             continue
         snap = load_snapshot(directory)
-        later = Counter(entry["retrieved"] for entry in snap.documents.values() if "retrieved" in entry)    # documents fetched on a later day
+        later = Counter(entry["retrieved"] for entry in snap.documents.values() if entry.get("retrieved", snap.retrieved) != snap.retrieved)    # documents fetched on a later day
         report.retrieved[maker] = snap.retrieved + "".join(f" (and {day} for {n} document{'s' * (n > 1)})" for day, n in sorted(later.items()))
         for target, doc in reader.build(snap, authored, report):
             if target in out:
