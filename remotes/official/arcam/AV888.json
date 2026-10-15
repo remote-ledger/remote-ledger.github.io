@@ -1,0 +1,2238 @@
+{
+  "manufacturer": "Arcam",
+  "model": "AV888",
+  "aliases": [],
+  "controls": [
+    "Arcam AV888"
+  ],
+  "protocol": {
+    "name": "RC5",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_STANDBY": {
+      "label": "Standby",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'Standby' (16-12 / 0x10 - 0x0C): RC5 system 16 command 12; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_SELECT_PHONO": {
+      "label": "Select Phono",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'Select Phono' (16-1 / 0x10 - 0x01): RC5 system 16 command 1; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_SELECT_AV": {
+      "label": "Select AV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'Select AV' (16-2 / 0x10 - 0x02): RC5 system 16 command 2; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_SELECT_TUNER": {
+      "label": "Select Tuner",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'Select Tuner' (16-3 / 0x10 - 0x03): RC5 system 16 command 3; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_SELECT_DVD": {
+      "label": "Select DVD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'Select DVD' (16-4 / 0x10 - 0x04): RC5 system 16 command 4; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_SELECT_TAPE": {
+      "label": "Select Tape",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'Select Tape' (16-5 / 0x10 - 0x05): RC5 system 16 command 5; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_SELECT_VCR": {
+      "label": "Select VCR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'Select VCR' (16-6 / 0x10 - 0x06): RC5 system 16 command 6; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_SELECT_CD": {
+      "label": "Select CD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'Select CD' (16-7 / 0x10 - 0x07): RC5 system 16 command 7; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_SELECT_AUX": {
+      "label": "Select Aux",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'Select Aux' (16-8 / 0x10 - 0x08): RC5 system 16 command 8; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_SELECT_MCH": {
+      "label": "Select MCH",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'Select MCH' (16-9 / 0x10 - 0x09): RC5 system 16 command 9; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_SELECT_SAT": {
+      "label": "Select SAT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'Select SAT' (16-0 / 0x10 - 0x00): RC5 system 16 command 0; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_SELECT_PVR": {
+      "label": "Select PVR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x22",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'Select PVR' (16-34 / 0x10 - 0x22): RC5 system 16 command 34; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_RANDOM": {
+      "label": "Random",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x30",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'Random' (16-48 / 0x10 - 0x30): RC5 system 16 command 48; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_REPEAT": {
+      "label": "Repeat",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x31",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'Repeat' (16-49 / 0x10 - 0x31): RC5 system 16 command 49; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_SELECT_IPOD": {
+      "label": "Select iPod",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'Select iPod' (16-18 / 0x10 - 0x12): RC5 system 16 command 18; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_SELECT_NET": {
+      "label": "Select NET",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'Select NET' (16-11 / 0x10 - 0x0B): RC5 system 16 command 11; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_NAVIGATE_UP": {
+      "label": "Navigate Up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x56",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'Navigate Up' (16-86 / 0x10 - 0x56): RC5 system 16 command 86; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_NAVIGATE_LEFT": {
+      "label": "Navigate Left",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x51",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'Navigate Left' (16-81 / 0x10 - 0x51): RC5 system 16 command 81; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_OK": {
+      "label": "OK",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x57",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'OK' (16-87 / 0x10 - 0x57): RC5 system 16 command 87; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_NAVIGATE_RIGHT": {
+      "label": "Navigate Right",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'Navigate Right' (16-80 / 0x10 - 0x50): RC5 system 16 command 80; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_NAVIGATE_DOWN": {
+      "label": "Navigate Down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x55",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'Navigate Down' (16-85 / 0x10 - 0x55): RC5 system 16 command 85; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_CYCLE_BETWEEN_DECODING_MODES_MODE": {
+      "label": "Cycle between decoding modes (MODE)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x20",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'Cycle between decoding modes (MODE)' (16-32 / 0x10 - 0x20): RC5 system 16 command 32; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_ENTER_SYSTEM_MENU_MENU": {
+      "label": "Enter system menu (MENU)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x52",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'Enter system menu (MENU)' (16-82 / 0x10 - 0x52): RC5 system 16 command 82; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "Mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'Mute' (16-13 / 0x10 - 0x0D): RC5 system 16 command 13; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_CHANGE_VFD_BRIGHTNESS_DISP": {
+      "label": "Change VFD brightness (DISP)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x3B",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'Change VFD brightness (DISP)' (16-59 / 0x10 - 0x3B): RC5 system 16 command 59; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_DECREASE_VOLUME_MINUS": {
+      "label": "Decrease volume (-)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'Decrease volume (-)' (16-17 / 0x10 - 0x11): RC5 system 16 command 17; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_INCREASE_VOLUME_PLUS": {
+      "label": "Increase volume (+)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'Increase volume (+)' (16-16 / 0x10 - 0x10): RC5 system 16 command 16; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_CH_MINUS_TRACK_BACK_SYMBOL": {
+      "label": "CH- (track back symbol)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x39",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'CH- (track back symbol)' (16-57 / 0x10 - 0x39): RC5 system 16 command 57; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_CH_PLUS_TRACK_FWD_SYMBOL": {
+      "label": "CH+ (track fwd symbol)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x38",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'CH+ (track fwd symbol)' (16-56 / 0x10 - 0x38): RC5 system 16 command 56; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_ACTIVATE_DIRECT_MODE": {
+      "label": "Activate DIRECT mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'Activate DIRECT mode' (16-10 / 0x10 - 0x0A): RC5 system 16 command 10; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_ROOM_EQ_ON_SLASH_OFF_SLASH_NET_NOW_PLAYING_SCREEN_SLASH_IPOD_PLAY_SLASH_PAUSE": {
+      "label": "Room EQ on/off / NET “Now Playing” screen / IPOD Play/Pause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x1E",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'Room EQ on/off / NET “Now Playing” screen / IPOD Play/Pause' (16-30 / 0x10 - 0x1E): RC5 system 16 command 30; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_TOGGLE_DOLBY_VOLUME_ON_SLASH_OFF_SLASH_NET_IPOD_PLAY_SLASH_PAUSE": {
+      "label": "Toggle Dolby Volume on/off / NET & IPOD Play/Pause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x46",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'Toggle Dolby Volume on/off / NET & IPOD Play/Pause' (16-70 / 0x10 - 0x46): RC5 system 16 command 70; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_ACCESS_BASS_CONTROL": {
+      "label": "Access Bass control",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x27",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'Access Bass control' (16-39 / 0x10 - 0x27): RC5 system 16 command 39; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_ACCESS_SPEAKER_TRIM_CONTROLS": {
+      "label": "Access Speaker Trim controls",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x25",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'Access Speaker Trim controls' (16-37 / 0x10 - 0x25): RC5 system 16 command 37; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_ACCESS_LIPSYNC_DELAY_CONTROL_SLASH_NET_IPOD_STOP": {
+      "label": "Access Lipsync Delay control / NET & IPOD Stop",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x32",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'Access Lipsync Delay control / NET & IPOD Stop' (16-50 / 0x10 - 0x32): RC5 system 16 command 50; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_ACCESS_SUBWOOFER_TRIM_CONTROL": {
+      "label": "Access Subwoofer Trim control",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x33",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'Access Subwoofer Trim control' (16-51 / 0x10 - 0x33): RC5 system 16 command 51; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_ACCESS_TREBLE_CONTROL": {
+      "label": "Access Treble control",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x0E",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'Access Treble control' (16-14 / 0x10 - 0x0E): RC5 system 16 command 14; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_FAV_PLUS_SLASH_RED_SLASH_PAGE_UP": {
+      "label": "FAV+ / red / Page Up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x29",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'FAV+ / red / Page Up' (16-41 / 0x10 - 0x29): RC5 system 16 command 41; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_FAV_MINUS_SLASH_GREEN_SLASH_PAGE_DOWN": {
+      "label": "FAV- / green / Page Down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x2A",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'FAV- / green / Page Down' (16-42 / 0x10 - 0x2A): RC5 system 16 command 42; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_HOME_SLASH_YELLOW": {
+      "label": "HOME / yellow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x2B",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'HOME / yellow' (16-43 / 0x10 - 0x2B): RC5 system 16 command 43; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_CYCLE_BETWEEN_VFD_INFORMATION_PANELS_SLASH_BLUE": {
+      "label": "Cycle between VFD information panels / blue",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x37",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'Cycle between VFD information panels / blue' (16-55 / 0x10 - 0x37): RC5 system 16 command 55; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_CHANGE_CONTROL_TO_NEXT_ZONE": {
+      "label": "Change control to next zone",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x5F",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'Change control to next zone' (16-95 / 0x10 - 0x5F): RC5 system 16 command 95; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_SET_SELECTED_ZONE_TO_FOLLOW_ZONE_1": {
+      "label": "Set selected zone to Follow Zone 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'Set selected zone to Follow Zone 1' (16-20 / 0x10 - 0x14): RC5 system 16 command 20; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_CYCLE_BETWEEN_OUTPUT_RESOLUTONS": {
+      "label": "Cycle between output resolutons",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x2F",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'Cycle between output resolutons' (16-47 / 0x10 - 0x2F): RC5 system 16 command 47; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_CYCLE_BETWEEN_ASPECT_RATIOS_AUTO_16_9_4_3": {
+      "label": "Cycle between aspect ratios (Auto, 16:9, 4:3)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'Cycle between aspect ratios (Auto, 16:9, 4:3)' (16-19 / 0x10 - 0x13): RC5 system 16 command 19; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_POWER_ON": {
+      "label": "Power On",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x7B",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'Power On' (16-123 / 0x10 - 0x7B): RC5 system 16 command 123; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_POWER_OFF": {
+      "label": "Power Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x7C",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 1 row 'Power Off' (16-124 / 0x10 - 0x7C): RC5 system 16 command 124; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_NUMERIC_ENTRY_MINUS_1": {
+      "label": "Numeric entry - 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 2 row 'Numeric entry - 1' (17-1 / 0x11 - 0x01): RC5 system 17 command 1; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_NUMERIC_ENTRY_MINUS_2": {
+      "label": "Numeric entry - 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 2 row 'Numeric entry - 2' (17-2 / 0x11 - 0x02): RC5 system 17 command 2; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_NUMERIC_ENTRY_MINUS_3": {
+      "label": "Numeric entry - 3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 2 row 'Numeric entry - 3' (17-3 / 0x11 - 0x03): RC5 system 17 command 3; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_NUMERIC_ENTRY_MINUS_4": {
+      "label": "Numeric entry - 4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 2 row 'Numeric entry - 4' (17-4 / 0x11 - 0x04): RC5 system 17 command 4; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_NUMERIC_ENTRY_MINUS_5": {
+      "label": "Numeric entry - 5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 2 row 'Numeric entry - 5' (17-5 / 0x11 - 0x05): RC5 system 17 command 5; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_NUMERIC_ENTRY_MINUS_6": {
+      "label": "Numeric entry - 6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 2 row 'Numeric entry - 6' (17-6 / 0x11 - 0x06): RC5 system 17 command 6; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_NUMERIC_ENTRY_MINUS_7": {
+      "label": "Numeric entry - 7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 2 row 'Numeric entry - 7' (17-7 / 0x11 - 0x07): RC5 system 17 command 7; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_NUMERIC_ENTRY_MINUS_8": {
+      "label": "Numeric entry - 8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 2 row 'Numeric entry - 8' (17-8 / 0x11 - 0x08): RC5 system 17 command 8; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_NUMERIC_ENTRY_MINUS_9": {
+      "label": "Numeric entry - 9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 2 row 'Numeric entry - 9' (17-9 / 0x11 - 0x09): RC5 system 17 command 9; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_NUMERIC_ENTRY_MINUS_0": {
+      "label": "Numeric entry - 0",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 2 row 'Numeric entry - 0' (17-0 / 0x11 - 0x00): RC5 system 17 command 0; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_NAVIGATE_UP_SLASH_INCREMENT_PRESET": {
+      "label": "Navigate Up / Increment Preset",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "function": "0x56",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 2 row 'Navigate Up / Increment Preset' (17-86 / 0x11 - 0x56): RC5 system 17 command 86; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_NAVIGATE_LEFT_SLASH_DECREASE_TUNING": {
+      "label": "Navigate Left / Decrease Tuning",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "function": "0x4E",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 2 row 'Navigate Left / Decrease Tuning' (17-78 / 0x11 - 0x4E): RC5 system 17 command 78; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_OK_SLASH_SELECT": {
+      "label": "OK / SELECT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "function": "0x57",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 2 row 'OK / SELECT' (17-87 / 0x11 - 0x57): RC5 system 17 command 87; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_NAVIGATE_RIGHT_SLASH_INCREASE_TUNING": {
+      "label": "Navigate Right / Increase Tuning",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "function": "0x4D",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 2 row 'Navigate Right / Increase Tuning' (17-77 / 0x11 - 0x4D): RC5 system 17 command 77; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_NAVIGATE_DOWN_SLASH_DECREMENT_PRESET": {
+      "label": "Navigate Down / Decrement Preset",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "function": "0x55",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 2 row 'Navigate Down / Decrement Preset' (17-85 / 0x11 - 0x55): RC5 system 17 command 85; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_BAND": {
+      "label": "BAND",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "function": "0x32",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 2 row 'BAND' (17-50 / 0x11 - 0x32): RC5 system 17 command 50; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_MENU": {
+      "label": "MENU",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "function": "0x7D",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 2 row 'MENU' (17-125 / 0x11 - 0x7D): RC5 system 17 command 125; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_CHANGE_VFD_BRIGHTNESS_DISP_2": {
+      "label": "Change VFD Brightness (DISP)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 2 row 'Change VFD Brightness (DISP)' (17-18 / 0x11 - 0x12): RC5 system 17 command 18; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_PRESET_MINUS_SLASH_SIRIUS_CATEGORY_MINUS_CH_MINUS_SLASH_TRACK_BACK_SYMBOL": {
+      "label": "Preset - / Sirius Category - (CH- / track back symbol)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "function": "0x21",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 2 row 'Preset - / Sirius Category - (CH- / track back symbol)' (17-33 / 0x11 - 0x21): RC5 system 17 command 33; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_PRESET_PLUS_SLASH_SIRIUS_CATEGORY_PLUS_CH_PLUS_SLASH_TRACK_FWD_SYMBOL": {
+      "label": "Preset + / Sirius Category + (CH+ / track fwd symbol)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "function": "0x20",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 2 row 'Preset + / Sirius Category + (CH+ / track fwd symbol)' (17-32 / 0x11 - 0x20): RC5 system 17 command 32; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_SELECT_AM": {
+      "label": "Select AM",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "function": "0x35",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 2 row 'Select AM' (17-53 / 0x11 - 0x35): RC5 system 17 command 53; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_SELECT_FM": {
+      "label": "Select FM",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "function": "0x34",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 2 row 'Select FM' (17-52 / 0x11 - 0x34): RC5 system 17 command 52; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_SELECT_FM_2": {
+      "label": "Select FM",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "function": "0x7F",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 2 row 'Select FM' (17-127 / 0x11 - 0x7F): RC5 system 17 command 127; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_SELECT_DAB": {
+      "label": "Select DAB",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "function": "0x7E",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 2 row 'Select DAB' (17-126 / 0x11 - 0x7E): RC5 system 17 command 126; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_PAGE_UP_PRESET_LIST": {
+      "label": "Page Up (preset list)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "function": "0x26",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 2 row 'Page Up (preset list)' (17-38 / 0x11 - 0x26): RC5 system 17 command 38; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_PAGE_DOWN_PRESET_LIST": {
+      "label": "Page Down (preset list)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "function": "0x25",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 2 row 'Page Down (preset list)' (17-37 / 0x11 -0x25): RC5 system 17 command 37; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_DELETE_SELECTED_PRESET": {
+      "label": "Delete selected preset",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "function": "0x29",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 2 row 'Delete selected preset' (17-41 / 0x11 - 0x29): RC5 system 17 command 41; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_CYCLE_BETWEEN_VFD_INFORMATION_PANELS": {
+      "label": "Cycle between VFD information panels",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 28 table 2 row 'Cycle between VFD information panels' (17-15 / 0x11 - 0x0F): RC5 system 17 command 15; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_DIRECT_MODE_ON": {
+      "label": "Direct mode On",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x4E",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'Direct mode On' (16-78 / 0x10 - 0x4E): RC5 system 16 command 78; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_DIRECT_MODE_OFF": {
+      "label": "Direct mode Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x4F",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'Direct mode Off' (16-79 / 0x10 - 0x4F): RC5 system 16 command 79; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_PL_II_SLASH_IIX_GAME": {
+      "label": "PL II / IIx Game",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x66",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'PL II / IIx Game' (16-102 / 0x10 - 0x66): RC5 system 16 command 102; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_PL_II_SLASH_IIX_MOVIE": {
+      "label": "PL II / IIx Movie",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x67",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'PL II / IIx Movie' (16-103 / 0x10 - 0x67): RC5 system 16 command 103; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_PL_II_SLASH_IIX_MUSIC": {
+      "label": "PL II / IIx Music",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x68",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'PL II / IIx Music' (16-104 / 0x10 - 0x68): RC5 system 16 command 104; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_MULTI_CHANNEL": {
+      "label": "Multi Channel",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x6A",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'Multi Channel' (16-106 / 0x10 - 0x6A): RC5 system 16 command 106; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_STEREO": {
+      "label": "Stereo",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x6B",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'Stereo' (16-107 / 0x10 - 0x6B): RC5 system 16 command 107; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_PL": {
+      "label": "PL",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x6E",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'PL' (16-110 / 0x10 - 0x6E): RC5 system 16 command 110; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_DTS_NEO_6_CINEMA": {
+      "label": "DTS Neo:6 Cinema",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x6F",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'DTS Neo:6 Cinema' (16-111 / 0x10 - 0x6F): RC5 system 16 command 111; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_DTS_NEO_6_MUSIC": {
+      "label": "DTS Neo:6 Music",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x70",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'DTS Neo:6 Music' (16-112 / 0x10 - 0x70): RC5 system 16 command 112; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_DOLBY_EX": {
+      "label": "Dolby EX",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x76",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'Dolby EX' (16-118 / 0x10 - 0x76): RC5 system 16 command 118; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_MUTE_ON": {
+      "label": "Mute On",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x77",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'Mute On' (16-119 / 0x10 - 0x77): RC5 system 16 command 119; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_MUTE_OFF": {
+      "label": "Mute Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x78",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'Mute Off' (16-120 / 0x10 - 0x78): RC5 system 16 command 120; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_NET": {
+      "label": "NET",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x35",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'NET' (16-53 / 0x10 - 0x35): RC5 system 16 command 53; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_FM": {
+      "label": "FM",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x36",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'FM' (16-54 / 0x10 - 0x36): RC5 system 16 command 54; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_AM": {
+      "label": "AM",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x34",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'AM' (16-52 / 0x10 - 0x34): RC5 system 16 command 52; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_DAB_SLASH_SIRIUS": {
+      "label": "DAB / Sirius",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x48",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'DAB / Sirius' (16-72 / 0x10 - 0x48): RC5 system 16 command 72; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_VIDEO_VCR_MINUS_CVBS": {
+      "label": "Video VCR-CVBS",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x3A",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'Video VCR-CVBS' (16-58 / 0x10 - 0x3A): RC5 system 16 command 58; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_VIDEO_AV_MINUS_CVBS": {
+      "label": "Video AV-CVBS",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x3C",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'Video AV-CVBS' (16-60 / 0x10 - 0x3C): RC5 system 16 command 60; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_VIDEO_PVR_MINUS_CVBS": {
+      "label": "Video PVR-CVBS",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x3D",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'Video PVR-CVBS' (16-61 / 0x10 - 0x3D): RC5 system 16 command 61; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_VIDEO_SAT_MINUS_CVBS": {
+      "label": "Video SAT-CVBS",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x3E",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'Video SAT-CVBS' (16-62 / 0x10 - 0x3E): RC5 system 16 command 62; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_VIDEO_DVD_MINUS_CVBS": {
+      "label": "Video DVD-CVBS",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x47",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'Video DVD-CVBS' (16-71 / 0x10 - 0x47): RC5 system 16 command 71; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_VIDEO_VCR_MINUS_SVID": {
+      "label": "Video VCR-Svid",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x4D",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'Video VCR-Svid' (16-77 / 0x10 - 0x4D): RC5 system 16 command 77; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_VIDEO_AV_MINUS_SVID": {
+      "label": "Video AV-Svid",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x53",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'Video AV-Svid' (16-83 / 0x10 - 0x53): RC5 system 16 command 83; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_VIDEO_PVR_MINUS_SVID": {
+      "label": "Video PVR-Svid",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x54",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'Video PVR-Svid' (16-84 / 0x10 - 0x54): RC5 system 16 command 84; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_VIDEO_SAT_MINUS_SVID": {
+      "label": "Video SAT-Svid",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x58",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'Video SAT-Svid' (16-88 / 0x10 - 0x58): RC5 system 16 command 88; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_VIDEO_DVD_MINUS_SVID": {
+      "label": "Video DVD-Svid",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x59",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'Video DVD-Svid' (16-89 / 0x10 - 0x59): RC5 system 16 command 89; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_VIDEO_VCR_MINUS_HDMI": {
+      "label": "Video VCR-HDMI",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x5A",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'Video VCR-HDMI' (16-90 / 0x10 - 0x5A): RC5 system 16 command 90; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_VIDEO_AV_MINUS_HDMI": {
+      "label": "Video AV-HDMI",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x5B",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'Video AV-HDMI' (16-91 / 0x10 - 0x5B): RC5 system 16 command 91; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_VIDEO_PVR_MINUS_HDMI": {
+      "label": "Video PVR-HDMI",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x5C",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'Video PVR-HDMI' (16-92 / 0x10 - 0x5C): RC5 system 16 command 92; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_VIDEO_SAT_MINUS_HDMI": {
+      "label": "Video SAT-HDMI",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x5D",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'Video SAT-HDMI' (16-93 / 0x10 - 0x5D): RC5 system 16 command 93; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_VIDEO_DVD_MINUS_HDMI": {
+      "label": "Video DVD-HDMI",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x5E",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'Video DVD-HDMI' (16-94 / 0x10 - 0x5E): RC5 system 16 command 94; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_LIP_SYNC_PLUS_1MS": {
+      "label": "Lip Sync +1ms",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x64",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'Lip Sync +1ms' (16-100 / 0x10 - 0x64): RC5 system 16 command 100; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_LIP_SYNC_MINUS_1MS": {
+      "label": "Lip sync -1ms",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x65",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'Lip sync -1ms' (16-101 / 0x10 - 0x65): RC5 system 16 command 101; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_SUB_TRIM_PLUS_1": {
+      "label": "Sub trim +1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x69",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'Sub trim +1' (16-105 / 0x10 - 0x69): RC5 system 16 command 105; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_SUB_TRIM_MINUS_1": {
+      "label": "Sub trim -1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x6C",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'Sub trim -1' (16-108 / 0x10 - 0x6C): RC5 system 16 command 108; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_PLII_MUSIC_CENTRE_PLUS_1": {
+      "label": "PLII Music Centre +1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x6D",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'PLII Music Centre +1' (16-109 / 0x10 - 0x6D): RC5 system 16 command 109; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_PLII_MUSIC_CENTRE_MINUS_1": {
+      "label": "PLII Music Centre -1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x71",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'PLII Music Centre -1' (16-113 / 0x10 - 0x71): RC5 system 16 command 113; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_PLII_MUSIC_DIMENSION_PLUS_1": {
+      "label": "PLII Music Dimension +1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x72",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'PLII Music Dimension +1' (16-114 / 0x10 - 0x72): RC5 system 16 command 114; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_PLII_MUSIC_DIMENSION_MINUS_1": {
+      "label": "PLII Music Dimension -1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x73",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'PLII Music Dimension -1' (16-115 / 0x10 - 0x73): RC5 system 16 command 115; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_PLII_PANORAMA_ON": {
+      "label": "PLII Panorama On",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x74",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'PLII Panorama On' (16-116 / 0x10 - 0x74): RC5 system 16 command 116; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_PLII_PANORAMA_OFF": {
+      "label": "PLII Panorama Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x75",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'PLII Panorama Off' (16-117 / 0x10 - 0x75): RC5 system 16 command 117; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_VIDEO_OUT_PREFERRED_SLASH_BEST": {
+      "label": "Video out Preferred/Best",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x7D",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'Video out Preferred/Best' (16-125 / 0x10 - 0x7D): RC5 system 16 command 125; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_VIDEO_OUT_SD_INTER": {
+      "label": "Video out SD Inter",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x7E",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'Video out SD Inter' (16-126 / 0x10 - 0x7E): RC5 system 16 command 126; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_VIDEO_OUT_SD_PROG": {
+      "label": "Video out SD Prog",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'Video out SD Prog' (16-15 / 0x10 - 0x0F): RC5 system 16 command 15; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_VIDEO_OUT_720P": {
+      "label": "Video out 720p",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x17",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'Video out 720p' (16-23 / 0x10 - 0x17): RC5 system 16 command 23; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_VIDEO_OUT_1080I": {
+      "label": "Video out 1080i",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'Video out 1080i' (16-26 / 0x10 - 0x1A): RC5 system 16 command 26; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_VIDEO_OUT_1080P": {
+      "label": "Video out 1080p",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x1B",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'Video out 1080p' (16-27 / 0x10 - 0x1B): RC5 system 16 command 27; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_SELECT_HDMI_OUT_1": {
+      "label": "Select HDMI Out 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x49",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'Select HDMI Out 1' (16-73 / 0x10 - 0x49): RC5 system 16 command 73; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_SELECT_HDMI_OUT_2": {
+      "label": "Select HDMI Out 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x4A",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'Select HDMI Out 2' (16-74 / 0x10 - 0x4A): RC5 system 16 command 74; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_SELECT_HDMI_OUT_1_2": {
+      "label": "Select HDMI Out 1 & 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x4B",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 1 row 'Select HDMI Out 1 & 2' (16-75 / 0x10 - 0x4B): RC5 system 16 command 75; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_FRAME_RATE_50": {
+      "label": "Frame Rate 50",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x40",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 2 row 'Frame Rate 50' (16-64 / 0x10 - 0x40): RC5 system 16 command 64; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_FRAME_RATE_60": {
+      "label": "Frame Rate 60",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x41",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 2 row 'Frame Rate 60' (16-65 / 0x10 - 0x41): RC5 system 16 command 65; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_DISPLAY_OFF": {
+      "label": "Display Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x1F",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 2 row 'Display Off' (16-31 / 0x10 - 0x1F): RC5 system 16 command 31; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_DISPLAY_L1": {
+      "label": "Display L1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x21",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 2 row 'Display L1' (16-33 / 0x10 - 0x21): RC5 system 16 command 33; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_DISPLAY_L2": {
+      "label": "Display L2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x23",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 2 row 'Display L2' (16-35 / 0x10 - 0x23): RC5 system 16 command 35; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_DISPLAY_L3": {
+      "label": "Display L3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x24",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 2 row 'Display L3' (16-36 / 0x10 - 0x24): RC5 system 16 command 36; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_BALANCE_LEFT": {
+      "label": "Balance left",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x26",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 2 row 'Balance left' (16-38 / 0x10 - 0x26): RC5 system 16 command 38; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_BALANCE_RIGHT": {
+      "label": "Balance right",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x28",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 2 row 'Balance right' (16-40 / 0x10 - 0x28): RC5 system 16 command 40; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_BASS_PLUS_1": {
+      "label": "Bass +1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x2C",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 2 row 'Bass +1' (16-44 / 0x10 - 0x2C): RC5 system 16 command 44; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_BASS_MINUS_1": {
+      "label": "Bass -1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x2D",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 2 row 'Bass -1' (16-45 / 0x10 - 0x2D): RC5 system 16 command 45; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_TREBLE_PLUS_1": {
+      "label": "Treble +1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x2E",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 2 row 'Treble +1' (16-46 / 0x10 - 0x2E): RC5 system 16 command 46; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_TREBLE_MINUS_1": {
+      "label": "Treble -1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x62",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 2 row 'Treble -1' (16-98 / 0x10 - 0x62): RC5 system 16 command 98; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_ZONE_2_POWER_ON": {
+      "label": "Zone 2 Power On",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x17",
+          "function": "0x7B",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 2 row 'Zone 2 Power On' (23-123 / 0X17 - 0x7B): RC5 system 23 command 123; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_ZONE_2_POWER_OFF": {
+      "label": "Zone 2 Power Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x17",
+          "function": "0x7C",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 2 row 'Zone 2 Power Off' (23-124 / 0x17 - 0x7C): RC5 system 23 command 124; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_ZONE_2_VOL_PLUS": {
+      "label": "Zone 2 Vol+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x17",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 2 row 'Zone 2 Vol+' (23-1 / 0x17 - 0x01): RC5 system 23 command 1; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_ZONE_2_VOL_MINUS": {
+      "label": "Zone 2 Vol-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x17",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 2 row 'Zone 2 Vol-' (23-2 / 0x17 - 0x02): RC5 system 23 command 2; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_ZONE_2_MUTE": {
+      "label": "Zone 2 Mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x17",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 2 row 'Zone 2 Mute' (23-3 / 0x17 - 0x03): RC5 system 23 command 3; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_ZONE_2_MUTE_ON": {
+      "label": "Zone 2 Mute On",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x17",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 2 row 'Zone 2 Mute On' (23-4 / 0x17 - 0x04): RC5 system 23 command 4; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_ZONE_2_MUTE_OFF": {
+      "label": "Zone 2 Mute Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x17",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 2 row 'Zone 2 Mute Off' (23-5 / 0x17 - 0x05): RC5 system 23 command 5; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_ZONE_2_CD": {
+      "label": "Zone 2 CD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x17",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 2 row 'Zone 2 CD' (23-6 / 0x17 - 0x06): RC5 system 23 command 6; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_ZONE_2_DVD": {
+      "label": "Zone 2 DVD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x17",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 2 row 'Zone 2 DVD' (23-7 / 0x17 - 0x07): RC5 system 23 command 7; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_ZONE_2_SAT": {
+      "label": "Zone 2 SAT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x17",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 2 row 'Zone 2 SAT' (23-8 / 0x17 - 0x08): RC5 system 23 command 8; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_ZONE_2_AV": {
+      "label": "Zone 2 AV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x17",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 2 row 'Zone 2 AV' (23-9 / 0x17 - 0x09): RC5 system 23 command 9; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_ZONE_2_TAPE": {
+      "label": "Zone 2 TAPE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x17",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 2 row 'Zone 2 TAPE' (23-10 / 0x17 - 0x0A): RC5 system 23 command 10; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_ZONE_2_VCR": {
+      "label": "Zone 2 VCR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x17",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 2 row 'Zone 2 VCR' (23-11 / 0x17 - 0x0B): RC5 system 23 command 11; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_ZONE_2_PVR": {
+      "label": "Zone 2 PVR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x17",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 2 row 'Zone 2 PVR' (23-12 / 0x17 - 0x0C): RC5 system 23 command 12; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_ZONE_2_AUX": {
+      "label": "Zone 2 Aux",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x17",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 2 row 'Zone 2 Aux' (23-13 / 0x17 - 0x0D): RC5 system 23 command 13; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_ZONE_2_FM": {
+      "label": "Zone 2 FM",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x17",
+          "function": "0x0E",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 2 row 'Zone 2 FM' (23-14 / 0x17 - 0x0E): RC5 system 23 command 14; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_ZONE_2_AM": {
+      "label": "Zone 2 AM",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x17",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 2 row 'Zone 2 AM' (23-15 / 0x17 - 0x0F): RC5 system 23 command 15; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_ZONE_2_DAB_SLASH_SIRIUS": {
+      "label": "Zone 2 DAB / Sirius",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x17",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 2 row 'Zone 2 DAB / Sirius' (23-16 / 0x17 - 0x10): RC5 system 23 command 16; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_ZONE_2_PHONO": {
+      "label": "Zone 2 Phono",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x17",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 2 row 'Zone 2 Phono' (23-17 / 0x17 - 0x11): RC5 system 23 command 17; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_ZONE_2_IPOD": {
+      "label": "Zone 2 iPod",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x17",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 2 row 'Zone 2 iPod' (23-18 / 0x17 - 0x12): RC5 system 23 command 18; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_ZONE_2_NET": {
+      "label": "Zone 2 NET",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x17",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 2 row 'Zone 2 NET' (23-19 / 0x17 - 0x13): RC5 system 23 command 19; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_ZONE_3_POWER_ON": {
+      "label": "Zone 3 Power On",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x17",
+          "function": "0x79",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 2 row 'Zone 3 Power On' (23-121 / 0x17 - 0x79): RC5 system 23 command 121; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_ZONE_3_POWER_OFF": {
+      "label": "Zone 3 Power Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x17",
+          "function": "0x7A",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 2 row 'Zone 3 Power Off' (23-122 / 0x17 - 0x7A): RC5 system 23 command 122; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_ZONE_3_VOL_PLUS": {
+      "label": "Zone 3 Vol+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x17",
+          "function": "0x14",
+          "confidence": "untested",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 2 row 'Zone 3 Vol+' (23-20 / 0x17 - 0x17): RC5 system 23 command 20; the table's decimal and hex do not say the same code, so the key rests on neither alone"
+        }
+      ]
+    },
+    "KEY_ZONE_3_VOL_MINUS": {
+      "label": "Zone 3 Vol-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x17",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 2 row 'Zone 3 Vol-' (23-21 / 0x17 - 0x15): RC5 system 23 command 21; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_ZONE_3_MUTE": {
+      "label": "Zone 3 Mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x17",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 2 row 'Zone 3 Mute' (23-22 / 0x17 - 0x16): RC5 system 23 command 22; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_ZONE_3_MUTE_ON": {
+      "label": "Zone 3 Mute On",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x17",
+          "function": "0x17",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 2 row 'Zone 3 Mute On' (23-23 / 0x17 - 0x17): RC5 system 23 command 23; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_ZONE_3_MUTE_OFF": {
+      "label": "Zone 3 Mute Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x17",
+          "function": "0x18",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 2 row 'Zone 3 Mute Off' (23-24 / 0x17 - 0x18): RC5 system 23 command 24; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_VIDEO_BYPASS_TOGGLE_3D_ONLY": {
+      "label": "Video Bypass Toggle (3D only)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x42",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 2 row 'Video Bypass Toggle (3D only)' (16-66 / 0x10 - 0x42): RC5 system 16 command 66; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_VIDEO_BYPASS_ON_3D_ONLY": {
+      "label": "Video Bypass On (3D only)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x43",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 2 row 'Video Bypass On (3D only)' (16-67 / 0x10 - 0x43): RC5 system 16 command 67; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_VIDEO_BYPASS_OFF_3D_ONLY": {
+      "label": "Video Bypass Off (3D only)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x44",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 2 row 'Video Bypass Off (3D only)' (16-68 / 0x10 - 0x44): RC5 system 16 command 68; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_SET_HDMI_PRIORITY_1_OUT": {
+      "label": "Set HDMI Priority 1 out",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x60",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 2 row 'Set HDMI Priority 1 out' (16-96 / 0x10 - 0x60): RC5 system 16 command 96; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_SET_HDMI_PRIORITY_2_OUT": {
+      "label": "Set HDMI Priority 2 out",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x61",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/AVR500-600-AV888_RS232_SH217_E_7.pdf@46e60c6a (retrieved 2026-10-15) page 29 table 2 row 'Set HDMI Priority 2 out' (16-97 / 0x10 - 0x61): RC5 system 16 command 97; the table's decimal and hex say the same"
+        }
+      ]
+    }
+  }
+}

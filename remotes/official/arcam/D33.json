@@ -1,0 +1,262 @@
+{
+  "manufacturer": "Arcam",
+  "model": "D33",
+  "aliases": [],
+  "controls": [
+    "Arcam D33"
+  ],
+  "protocol": {
+    "name": "RC5",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_STANDBY": {
+      "label": "Standby",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/D33_RS232_SH236_E_D.pdf@c63b1373 (retrieved 2026-10-15) page 7 table 2 row 'Standby' (27-12 / 0x1B - 0x0C): RC5 system 27 command 12; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_FILTER": {
+      "label": "FILTER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "function": "0x46",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/D33_RS232_SH236_E_D.pdf@c63b1373 (retrieved 2026-10-15) page 7 table 2 row 'FILTER' (27-70 / 0x1B - 0x46): RC5 system 27 command 70; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_SELECT_AES_INPUT": {
+      "label": "Select AES Input",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/D33_RS232_SH236_E_D.pdf@c63b1373 (retrieved 2026-10-15) page 7 table 2 row 'Select AES Input' (27-6 / 0x1B - 0x06): RC5 system 27 command 6; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_SELECT_USB_INPUT": {
+      "label": "Select USB Input",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/D33_RS232_SH236_E_D.pdf@c63b1373 (retrieved 2026-10-15) page 7 table 2 row 'Select USB Input' (27-8 / 0x1B - 0x08): RC5 system 27 command 8; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_SELECT_IPOD_INPUT": {
+      "label": "Select iPod Input",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/D33_RS232_SH236_E_D.pdf@c63b1373 (retrieved 2026-10-15) page 7 table 2 row 'Select iPod Input' (27-18 / 0x1B - 0x12): RC5 system 27 command 18; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_SELECT_COAX1_INPUT": {
+      "label": "Select COAX1 input",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/D33_RS232_SH236_E_D.pdf@c63b1373 (retrieved 2026-10-15) page 7 table 2 row 'Select COAX1 input' (27-4 / 0x1B - 0x04): RC5 system 27 command 4; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_SELECT_COAX2_INPUT": {
+      "label": "Select COAX2 input",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/D33_RS232_SH236_E_D.pdf@c63b1373 (retrieved 2026-10-15) page 7 table 2 row 'Select COAX2 input' (27-5 / 0x1B - 0x05): RC5 system 27 command 5; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_SELECT_OPTICAL1_INPUT": {
+      "label": "Select Optical1 input",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/D33_RS232_SH236_E_D.pdf@c63b1373 (retrieved 2026-10-15) page 7 table 2 row 'Select Optical1 input' (27-0 / 0x1B - 0x00): RC5 system 27 command 0; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_SELECT_OPTICAL2_INPUT": {
+      "label": "Select Optical2 input",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/D33_RS232_SH236_E_D.pdf@c63b1373 (retrieved 2026-10-15) page 7 table 2 row 'Select Optical2 input' (27-2 / 0x1B - 0x02): RC5 system 27 command 2; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_GO_INTO_STANDBY": {
+      "label": "Go into Standby",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "function": "0x7C",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/D33_RS232_SH236_E_D.pdf@c63b1373 (retrieved 2026-10-15) page 7 table 2 row 'Go into Standby' (27-124 / 0x1B - 0x7C): RC5 system 27 command 124; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_COME_OUT_OF_STANDBY": {
+      "label": "Come out of Standby",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "function": "0x7B",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/D33_RS232_SH236_E_D.pdf@c63b1373 (retrieved 2026-10-15) page 7 table 2 row 'Come out of Standby' (27-123 / 0x1B - 0x7B): RC5 system 27 command 123; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_SELECT_FILTER0": {
+      "label": "Select Filter0",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "function": "0x28",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/D33_RS232_SH236_E_D.pdf@c63b1373 (retrieved 2026-10-15) page 7 table 2 row 'Select Filter0' (27-40 / 0x1B - 0x28): RC5 system 27 command 40; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_SELECT_FILTER1": {
+      "label": "Select Filter1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "function": "0x29",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/D33_RS232_SH236_E_D.pdf@c63b1373 (retrieved 2026-10-15) page 7 table 2 row 'Select Filter1' (27-41 / 0x1B - 0x29): RC5 system 27 command 41; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_SELECT_FILTER2": {
+      "label": "Select Filter2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "function": "0x2A",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/D33_RS232_SH236_E_D.pdf@c63b1373 (retrieved 2026-10-15) page 7 table 2 row 'Select Filter2' (27-42 / 0x1B - 0x2A): RC5 system 27 command 42; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_HID_PLAY": {
+      "label": "HID Play",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "function": "0x35",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/D33_RS232_SH236_E_D.pdf@c63b1373 (retrieved 2026-10-15) page 7 table 2 row 'HID Play' (27-53 / 0x1B - 0x35): RC5 system 27 command 53; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_HID_PAUSE": {
+      "label": "HID Pause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "function": "0x30",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/D33_RS232_SH236_E_D.pdf@c63b1373 (retrieved 2026-10-15) page 7 table 2 row 'HID Pause' (27-48 / 0x1B - 0x30): RC5 system 27 command 48; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_HID_STOP": {
+      "label": "HID Stop",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "function": "0x36",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/D33_RS232_SH236_E_D.pdf@c63b1373 (retrieved 2026-10-15) page 7 table 2 row 'HID Stop' (27-54 / 0x1B - 0x36): RC5 system 27 command 54; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_HID_TRACK_FWD": {
+      "label": "HID Track fwd",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "function": "0x20",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/D33_RS232_SH236_E_D.pdf@c63b1373 (retrieved 2026-10-15) page 7 table 2 row 'HID Track fwd' (27-32 / 0x1B - 0x20): RC5 system 27 command 32; the table's decimal and hex say the same"
+        }
+      ]
+    },
+    "KEY_HID_TRACK_BACK": {
+      "label": "HID Track back",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x1B",
+          "function": "0x21",
+          "confidence": "plausible",
+          "source": "arcam.co.uk custom installation notes/D33_RS232_SH236_E_D.pdf@c63b1373 (retrieved 2026-10-15) page 7 table 2 row 'HID Track back' (27-33 / 0x1B - 0x21): RC5 system 27 command 33; the table's decimal and hex say the same"
+        }
+      ]
+    }
+  }
+}
