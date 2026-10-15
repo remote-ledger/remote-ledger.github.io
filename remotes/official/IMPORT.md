@@ -72,6 +72,8 @@ dropped silently (SPEC R19, condition 5).
 | infocus: IN3114_IN3116_IRCodes.pdf: rows read | 48 |
 | infocus: IN5140_IRCodes.pdf: rows read | 50 |
 | infocus: IN5148HD-IR-Codes.pdf: rows read | 44 |
+| infocus: IN5550-IR-Codes.pdf (table 1): rows read | 34 |
+| infocus: IN5550-IR-Codes.pdf: rows read | 33 |
 | infocus: IN7x_IR_Codes.pdf: rows read | 32 |
 | infocus: InFocus-IN100-IRCodes.pdf: rows read | 13 |
 | infocus: InFocus-IN110-IRCodes.pdf: rows read | 48 |
@@ -81,6 +83,7 @@ dropped silently (SPEC R19, condition 5).
 | infocus: InFocus-IN3100-IRCodes.pdf: rows read | 59 |
 | infocus: InFocus-IN3118HD-IRCodes.pdf: rows read | 29 |
 | infocus: InFocus-IN32-IRcodes.pdf: rows read | 41 |
+| infocus: InFocus-IN3900LB-IRCodes.pdf: rows read | 62 |
 | infocus: InFocus-IN3910-IRCodes.pdf: rows read | 48 |
 | infocus: InFocus-IN5300-IRCodes.pdf: rows read | 62 |
 | infocus: InFocus-IN5310-IRCodes.pdf: rows read | 29 |
@@ -98,10 +101,11 @@ dropped silently (SPEC R19, condition 5).
 | infocus: InFocus-SP7200-IRCodes.pdf: rows read | 29 |
 | infocus: InFocus-SP7205-IRCodes.pdf: rows read | 29 |
 | infocus: Mondopad_IR_codes.pdf: rows read | 22 |
+| infocus: SP8604_IRCodes.pdf: rows read | 30 |
 | infocus: X2_IRCodes.pdf: rows read | 41 |
 | infocus: X3_IRCodes.pdf: rows read | 41 |
-| infocus: files | 85 |
-| infocus: keys | 3,806 |
+| infocus: files | 90 |
+| infocus: keys | 3,995 |
 | jvc: entries read | 211 |
 | jvc: entries whose Pronto hex does not say the stated code | 3 |
 | jvc: files | 22 |
@@ -239,7 +243,7 @@ dropped silently (SPEC R19, condition 5).
 | `marantz` | `marantz_fy18_av_sr_nr_ir_code_v02-02072018.xls` | `the chart's Pronto hex does not compile: repeat[70] is 0; D28 requires 1 <= repeat[70] <= 1000100` | 1 |
 | `rotel` | `S14_RAS-5000_HEX.pdf` | `its codes have three hex digits and its Pronto carrier word is 0x82 (31.8 kHz): it is not NEC, and no protocol of the ledger's was found for it` | 2 |
 
-## Notes on what a document says (147)
+## Notes on what a document says (152)
 
 | Maker | Where | Note |
 |---|---|---|
@@ -253,13 +257,17 @@ dropped silently (SPEC R19, condition 5).
 | `infocus` | `540-640-IR_codes.pdf page 1` | `'Auto_Image' (0xCC33) is the table's second row for the same name and code` |
 | `infocus` | `540-640-IR_codes.pdf page 1` | `'Presets' (0x342C) is the table's second row for the same name and code` |
 | `infocus` | `IN5148HD-IR-Codes.pdf page 2` | `'Computer' (25 / 19h / 1000 1001): its decimal 25, hex 0x19 and binary 1000 1001 (0x89) are not one code` |
+| `infocus` | `IN5550-IR-Codes.pdf` | `states no customer code: read with 0x31CE, the SP8604's, whose document has these table's codes for 14 functions (`MENU` 0x87, `ENTER` 0xC5, `FREEZE` 0x8E, `INPUT` 0x83, `AUTO SYNC` 0x86, `ON` 0x90...), but another InFocus remote of the IR Blaster database that shares only `ENTER` is at 0x32CD, so the family has more than one address: a guess, and each of its 33 keys is Untested` |
+| `infocus` | `IN5550-IR-Codes.pdf` | `states no customer code: read with 0x31CE, the SP8604's, whose document has these table's codes for 14 functions (`MENU` 0x87, `ENTER` 0xC5, `FREEZE` 0x8E, `INPUT` 0x83, `AUTO SYNC` 0x86, `ON` 0x90...), but another InFocus remote of the IR Blaster database that shares only `ENTER` is at 0x32CD, so the family has more than one address: a guess, and each of its 34 keys is Untested` |
 | `infocus` | `IN72` | `kept as 'IN72 (IN7x_IR_Codes.pdf)': an earlier document of the maker has a file of that name` |
 | `infocus` | `IN72` | `kept as 'IN72 (InFocus table)': the ledger's remotes/jp1/InFocus/Projectors-Infocus_IN72.json has the name (R15)` |
 | `infocus` | `IN74` | `kept as 'IN74 (IN7x_IR_Codes.pdf)': an earlier document of the maker has a file of that name` |
 | `infocus` | `IN76` | `kept as 'IN76 (IN7x_IR_Codes.pdf)': an earlier document of the maker has a file of that name` |
-| `infocus` | `InFocus-IN100-IRCodes.pdf` | `every key is Untested: its customer code 0x83F4 is read low byte first as the other documents' 0x4E87 is (device 0xF4, subdevice 0x83), and the IR Blaster database's InFocus remote that has these 13 functions has the two bytes the other way round (device 0x83, subdevice 0xF4)` |
+| `infocus` | `InFocus-IN100-IRCodes.pdf` | `every key is Untested: its customer code 0x83F4 is read first byte first (device 0x83, subdevice 0xF4), as the IR Blaster database's InFocus remote that has these 13 functions has it and as the SP8604's own 0x31CE is sent (D301), though the other documents' 0x4E87 is the device 0x87 and the subdevice 0x4E, low byte first: InFocus's notation is not one, and nothing in this document says which this is` |
 | `infocus` | `InFocus-IN2100-IRCodes.pdf` | `states no customer code: read with 0x4E87, the one the other InFocus documents give, and each of its 55 keys is Untested` |
 | `infocus` | `InFocus-IN3118HD-IRCodes.pdf` | `'LIGHT' (row 30): the table has no code, so it sends none` |
+| `infocus` | `InFocus-IN3900LB-IRCodes.pdf` | `17 rows are named `N/A` (reserved codes) and are no keys` |
+| `infocus` | `InFocus-IN3900LB-IRCodes.pdf` | `states no customer code: read with 0x4E87, the one the other InFocus documents give, and each of its 62 keys is Untested` |
 | `infocus` | `InFocus-IN5310-IRCodes.pdf` | `'Light' (row 30): the table's code is n/a, so it sends none` |
 | `infocus` | `InFocus-LP240-LP250-IRCodes.pdf` | `states no customer code: read with 0x4E87, the one the other InFocus documents give, and each of its 20 keys is Untested` |
 | `infocus` | `InFocus-LP240-LP250-IRCodes.pdf page 1` | `'Auto_Image' (0xCC33) is the table's second row for the same name and code` |
@@ -277,6 +285,7 @@ dropped silently (SPEC R19, condition 5).
 | `infocus` | `InFocus-SP5000-IRCodes.pdf page 1` | `'Auto_Image' (0xCC33) is the table's second row for the same name and code` |
 | `infocus` | `InFocus-SP5000-IRCodes.pdf page 1` | `'Presets' (0x342C) is the table's second row for the same name and code` |
 | `infocus` | `SP4805` | `kept as 'SP4805 (InFocus table)': the ledger's remotes/jp1/InFocus/Projectors-InFocus-SP4805.json has the name (R15)` |
+| `infocus` | `SP8600` | `kept as 'SP8600 (InFocus table)': the ledger's remotes/lirc/infocus/SP8600.json has the name (R15)` |
 | `infocus` | `X2_IRCodes.pdf` | `states no customer code: read with 0x4E87, the one the other InFocus documents give, and each of its 41 keys is Untested` |
 | `infocus` | `X3_IRCodes.pdf` | `states no customer code: read with 0x4E87, the one the other InFocus documents give, and each of its 41 keys is Untested` |
 | `jvc` | `DILA_Remote_Code_Emulation_Long_Hex.pdf` | `This document may be distributed freely, as long as the author and copyright information remain intact.` |

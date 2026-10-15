@@ -1165,6 +1165,61 @@ def test_the_three_infocus_image_tables_are_one_table_whose_every_name_is_in_the
     assert "the table has no code" not in files["IN3118HD"]["keys"]["KEY_POWER_ON"]["forms"][0]["source"]
 
 
+def test_the_sp8604_in5550_and_in3900lb_tables_are_read_by_eye_by_a_second_table_and_from_a_rotated_page():
+    """The SP8604's table (a picture: a transcription ``page, number, function, description, keycode`` after a customer-code row), the
+    IN5550's two tables (a ``Table 0`` and a ``Table 1`` side by side, the ID-set special codes under them) and the IN3900LB's landscape
+    specification (rows of ``N/A`` are reserved codes, no keys)."""
+    entries, customer = infocus.keycodes_image([["1", "customer", "0x31CE", "Device ID:Ox31CE"], ["1", "1", "Power ON", "Power on toggle", "0x90"],
+                                                ["1", "2", "Power OFF", "Power off toggle", "0x91"]])
+    assert customer == 0x31CE and [(e.name, e.code, e.number) for e in entries] == [("Power ON", 0x90, 1), ("Power OFF", 0x91, 2)]
+    with pytest.raises(ValueError, match="transcription row"):
+        infocus.keycodes_image([["1", "customer", "0x31CE", ""], ["1", "2", "Power ON", "x", "0x90"]])
+    rows = [["1", "85", "57", "1", "98", "K22", "157", "0x90", "219", "ON", "280", "0x90", "346", "ON", "455", "ON"],
+            ["1", "141", "57", "5", "98", "K19", "157", "0xB8", "203", "TEST PATERN", "280", "0xB8", "330", "TEST PATERN"],
+            ["1", "350", "55", "20", "98", "K21", "157", "0x86", "206", "AUTO SYNC", "280", "0x61", "349", "1"],
+            ["1", "279", "55", "15", "103", "-", "164", "-", "223", "-", "287", "-", "350", "-", "446", "AUTO SYNC"],
+            ["1", "433", "55", "26", "98", "K30", "157", "0xBE", "223", "-", "280", "0x67", "349", "7"],
+            ["1", "545", "72", "ID_SET + MENU", "157", "0x6C", "214", "Table0", "280", "0x6C", "341", "Table0"]]
+    assert [(e.name, e.code) for e in infocus.ids(rows, 0)] == [("ON", 0x90), ("TEST PATERN", 0xB8), ("AUTO SYNC", 0x86), ("Table0", 0x6C)]
+    assert [(e.name, e.code) for e in infocus.ids(rows, 1)] == [("ON", 0x90), ("TEST PATERN", 0xB8), ("1", 0x61), ("7", 0x67), ("Table0", 0x6C)]
+
+
+def test_the_sp8604_is_the_sp8600_remote_lircs_raw_decodes_confirm_and_its_customer_code_is_sent_first_byte_first():
+    """**An independent check of the byte order and of the transcription.** LIRC's ``SP8600`` remote is raw timings; decoded as NEC (the bits
+    of each byte least significant first) every key is ``0x31 0xCE`` and a function with its complement: **the first byte sent is 0x31, the
+    document's ``0x31CE`` is the order sent, and 9 of its 15 functions are keys of the SP8604's table (0x87 `MENU`, 0xC1 to 0xC5 the arrows
+    and `ENTER`, 0x8E `FREEZE`, 0x86 `AUTO`, 0x83 `SOURCE`)**, the digits of the transcription that a misreading would have changed. The
+    IN5550's table has 14 of the SP8604's functions on the same codes, and the IR Blaster database's InFocus remote at 0x32CD shares only
+    `ENTER` (0xC5): the family has more than one address, and the IN5550's is a guess (Untested)."""
+    import json
+
+    raw = json.loads((ROOT / "remotes" / "lirc" / "infocus" / "SP8600.json").read_text(encoding="utf-8"))["keys"]
+    files = infocus_files()
+    table = {int(s["forms"][0]["function"], 16): s["label"] for s in files["SP8604"]["keys"].values()}
+    hits = 0
+    for spec in raw.values():
+        intro = spec["forms"][0]["intro"][2:]
+        bits = [1 if intro[i + 1] > 1000 else 0 for i in range(0, 64, 2)]
+        first, second, function, complement = ([sum(bits[8 * b + k] << k for k in range(8))] for b in range(4))
+        assert (first[0], second[0]) == (0x31, 0xCE) and complement[0] == ~function[0] & 0xFF
+        hits += function[0] in table
+    assert hits == 9 and len(raw) == 15
+    assert {"0x87": "MENU", "0xC1": "Up arrow", "0xC5": "ENTER", "0x8E": "FREEZE", "0x86": "AUTO", "0x83": "SOURCE"} == {
+        hex(c).upper().replace("0X", "0x"): table[c] for c in (0x87, 0xC1, 0xC5, 0x8E, 0x86, 0x83)}
+    sp, i0 = {s["forms"][0]["function"]: s["label"] for s in files["SP8604"]["keys"].values()}, {s["forms"][0]["function"]: s["label"] for s in files["IN5550"]["keys"].values()}
+    shared = [c for c in sp if c in i0]
+    assert len(shared) == 18
+    assert {c for c in shared if c in ("0x8B", "0x9A", "0x9B", "0x9C")} == {"0x8B", "0x9A", "0x9B", "0x9C"}          # four codes the tables give other functions
+    assert {sp[c]: i0[c] for c in shared if c not in ("0x8B", "0x9A", "0x9B", "0x9C")} == {      # and 14 the same one under shorter names
+        "Power ON": "ON", "Power OFF": "OFF", "Up arrow": "UP", "Left arrow": "LEFT", "ENTER": "ENTER", "Right arrow": "RIGHT", "Down arrow": "DOWN",
+        "MENU": "MENU", "ASPECT RATIO": "ASPECT", "PICTURE MODE": "PICTURE", "SOURCE": "INPUT", "FREEZE": "FREEZE", "LIGHT": "LIGHT", "AUTO": "AUTO SYNC"}
+    assert files["SP8600__InFocus_table"]["model"] == "SP8600 (InFocus table)"                  # LIRC has an SP8600
+    assert files["IN5550"]["keys"]["KEY_ENTER"]["forms"][0]["confidence"] == "untested" and "a guess" in files["IN5550"]["keys"]["KEY_ENTER"]["forms"][0]["source"]
+    spec = files["IN3900LB"]
+    assert len(spec["keys"]) == 62 and "N/A" not in {s["label"] for s in spec["keys"].values()}
+    assert spec["keys"]["KEY_SHIFT_DOWN"]["forms"][0]["function"] == "0x4F" and spec["keys"]["KEY_HELP"]["forms"][0]["function"] == "0x0A"
+
+
 def infocus_files() -> dict[str, dict]:
     return {p.stem: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "infocus").glob("*.json"))}
 
@@ -1173,15 +1228,17 @@ def infocus_doc_of(doc: dict) -> str:
     return next(iter(doc["keys"].values()))["forms"][0]["source"].split("/")[1].split("@")[0]
 
 
-def test_the_33_infocus_documents_are_85_files_and_3806_keys_and_489_of_them_are_untested_for_the_reason_each_says():
+def test_the_36_infocus_documents_are_90_files_and_3995_keys_and_618_of_them_are_untested_for_the_reason_each_says():
     """Files, keys per file and Untested keys per file of each document (the models are the title's: the IN1100's are eight, the IN3100's
-    twelve; the last four documents' tables are images, read by eye: D298). **Untested are the 489 keys of 13 documents' files**: the IN100's 13 (the customer code's byte order is in doubt, below), and
+    twelve; the tables of the IN110's, IN3114's, IN3910's, IN3118HD's and SP8604's are images, read by eye: D298, D301). **Untested are the 618 keys of 16 documents' files**: the IN100's 13 (the customer code's byte order is in doubt, below), and
     the keys of the 12 documents that state no customer code (the IN2100's, LP650's, SP4800's, SP4805's, X2's and X3's, and the hex16 ones),
     which are read with 0x4E87, and the IN5148HD's `Computer` row, whose binary is not its decimal's."""
     per: dict[str, list] = {}
     for stem, doc in infocus_files().items():
-        row = per.setdefault(infocus_doc_of(doc), [0, len(doc["keys"]), sum(s["forms"][0]["confidence"] == "untested" for s in doc["keys"].values())])
+        row = per.setdefault(infocus_doc_of(doc), [0, 0, 0])      # files, and the most keys and Untested keys a file of the document has
         row[0] += 1
+        row[1] = max(row[1], len(doc["keys"]))
+        row[2] = max(row[2], sum(s["forms"][0]["confidence"] == "untested" for s in doc["keys"].values()))
     assert {k: tuple(v) for k, v in per.items()} == {
         "InFocus-IN3100-IRCodes.pdf": (12, 59, 0), "InFocus-IN100-IRCodes.pdf": (2, 13, 13), "InFocus-IN1100-IRCodes.pdf": (8, 59, 0),
         "InFocus-IN2100-IRCodes.pdf": (1, 55, 55), "InFocus-IN20-IRCodes.pdf": (6, 59, 0), "InFocus-IN32-IRcodes.pdf": (2, 41, 0),
@@ -1194,11 +1251,12 @@ def test_the_33_infocus_documents_are_85_files_and_3806_keys_and_489_of_them_are
         "InFocus-SP5000-IRCodes.pdf": (1, 20, 20), "InFocus-SP7200-IRCodes.pdf": (1, 29, 0), "InFocus-SP7205-IRCodes.pdf": (1, 29, 0),
         "X2_IRCodes.pdf": (1, 41, 41), "X3_IRCodes.pdf": (1, 41, 41),
         "InFocus-IN110-IRCodes.pdf": (3, 48, 0), "IN3114_IN3116_IRCodes.pdf": (5, 48, 0), "InFocus-IN3910-IRCodes.pdf": (2, 48, 0),
-        "InFocus-IN3118HD-IRCodes.pdf": (1, 29, 0)}
+        "InFocus-IN3118HD-IRCodes.pdf": (1, 29, 0),
+        "InFocus-IN3900LB-IRCodes.pdf": (1, 62, 62), "SP8604_IRCodes.pdf": (2, 30, 0), "IN5550-IR-Codes.pdf": (2, 34, 34)}
     files = infocus_files()
-    assert len(files) == 85 and sum(len(d["keys"]) for d in files.values()) == 3_806
+    assert len(files) == 90 and sum(len(d["keys"]) for d in files.values()) == 3_995
     tiers = Counter(s["forms"][0]["confidence"] for d in files.values() for s in d["keys"].values())
-    assert tiers == {"plausible": 3_317, "untested": 489}
+    assert tiers == {"plausible": 3_377, "untested": 618}
     assert {d["protocol"]["name"] for d in files.values()} == {"NEC1"} and all(d["manufacturer"] == "InFocus" for d in files.values())
     # the two documents of the IN72, IN74 and IN76, and the names other sources already have (R15)
     assert {"IN72 (InFocus table)", "IN74", "IN76", "IN72 (IN7x_IR_Codes.pdf)", "IN74 (IN7x_IR_Codes.pdf)", "IN76 (IN7x_IR_Codes.pdf)",
@@ -1209,7 +1267,7 @@ def test_the_33_infocus_documents_are_85_files_and_3806_keys_and_489_of_them_are
     assert "the document does not name IN34, and the PDF is served on the page of IN34" in files["IN34"]["keys"]["KEY_MENU"]["forms"][0]["source"]
     assert "does not name" not in files["LP120"]["keys"]["KEY_MENU"]["forms"][0]["source"]
     # the three customer codes: 0x4E87 (device 0x87, subdevice 0x4E, low byte first), the IN100's 0x83F4 and the Mondopad's 0x0080
-    for model, expected in (("IN1100", ("0x87", "0x4E")), ("IN102", ("0xF4", "0x83")), ("INF5520", ("0x80", "0x00")), ("LP120", ("0x87", "0x4E"))):
+    for model, expected in (("IN1100", ("0x87", "0x4E")), ("IN102", ("0x83", "0xF4")), ("SP8604", ("0x31", "0xCE")), ("IN5550", ("0x31", "0xCE")), ("INF5520", ("0x80", "0x00")), ("LP120", ("0x87", "0x4E"))):
         assert {(s["forms"][0]["device"], s["forms"][0]["subdevice"]) for s in files[model]["keys"].values()} == {expected}, model
     assert files["LP650"]["keys"]["KEY_POWER"]["forms"][0]["source"].count("states no customer code") == 1
     assert files["IN1100"]["keys"]["KEY_POWER"]["forms"][0]["source"].endswith("customer code 0x4E87, as the document states")
@@ -1227,12 +1285,18 @@ def test_every_code_like_cell_of_an_infocus_document_is_a_row_of_it():
     5 of the IN2100's): in each pinned document the cells that look like a data code (`0x02`, `02h`, a four-digit `0xE817`, a `K01` row's
     code) are as many as the entries read from it, and the IN5310's one row with no code is the one `n/a`."""
     snapshot = load_snapshot(SNAPSHOT / "infocus")
-    assert len(infocus.DOCUMENTS) == len(snapshot.documents) == 33
+    assert len({d.file for d in infocus.DOCUMENTS}) == len(snapshot.documents) == 36
     read: dict[str, list] = {}
     for document in infocus.DOCUMENTS:
         rows = snapshot.sheet_of(document.file, document.sheet)
         entries, no_code = infocus.read(document, rows, {e.number: e for e in read.get(document.names_from, [])})
         read[document.file] = entries
+        if document.layout in ("ids0", "ids1"):             # the IN5550's two tables in one: 33 keys in the first, 34 in the second
+            assert len(entries) == {"ids0": 33, "ids1": 34}[document.layout]
+            continue
+        if document.layout == "keycodes_image":              # the SP8604's: the first row is the customer code
+            assert len(entries) == len(rows) - 1 == 30
+            continue
         if document.sheet == "transcribed":         # the image tables: a row of the transcription is an entry or the one row with no code
             assert len(entries) + len(no_code) == len(rows), document.file
             assert len(no_code) == (1 if document.layout == "keyed_image" else 0)
@@ -1252,8 +1316,8 @@ def test_every_code_like_cell_of_an_infocus_document_is_a_row_of_it():
 def test_other_sources_infocus_remotes_send_the_codes_the_tables_list_and_the_documents_disagree_where_they_do():
     """An independent check: the ledger's nine InFocus remotes at 0x4E87 (device 0x87, subdevice 0x4E: six from the IR Blaster database and
     three JP1 upgrades) hold 219 keys, **215 of them (98.2%) a code some table lists**. **The IN100's 13 functions are all in the IR
-    Blaster database's one remote at 0x83/0xF4 (NEC2), but with the two bytes the other way round**, which is why the IN100's keys are
-    Untested. **The IN5140's table has `PAGE UP` at 0x25 and `PAGE DOWN` at 0x24, and the IN5148HD's has them the other way**
+    Blaster database's one remote at 0x83/0xF4 (NEC2)**: the IN100's keys are read at that address (its 0x83F4 first byte first, D301)
+    and stay Untested, since the document's notation is not the 0x4E87 documents'. **The IN5140's table has `PAGE UP` at 0x25 and `PAGE DOWN` at 0x24, and the IN5148HD's has them the other way**
     (`Page Up` 0x24, `Page Down` 0x25), as the LP650's `Next Slide` 0x24 and `Previous Slide` 0x25 send PageUp and PageDn: the IN5140's
     two names are swapped against every other table, and its keys say so."""
     ours = {(f["device"], f["subdevice"], f["function"]) for d in infocus_files().values() for s in d["keys"].values() for f in s["forms"]}
@@ -1273,7 +1337,7 @@ def test_other_sources_infocus_remotes_send_the_codes_the_tables_list_and_the_do
     theirs = {(f["device"], f["subdevice"], f["function"]) for spec in other["keys"].values() for f in spec["forms"]}
     mine = {(f["device"], f["subdevice"], f["function"]) for spec in infocus_files()["IN102"]["keys"].values() for f in spec["forms"]}
     assert len(mine) == 13 and {f for _, _, f in mine} == {f for _, _, f in theirs}      # the remote has Menu and Exit on one code (0x0F)
-    assert {(d, s) for d, s, _ in mine} == {("0xF4", "0x83")} and {(d, s) for d, s, _ in theirs} == {("0x83", "0xF4")}
+    assert {(d, s) for d, s, _ in mine} == {("0x83", "0xF4")} == {(d, s) for d, s, _ in theirs}       # read first byte first, as the remote has it (D301)
     page = {m: {s["label"]: s["forms"][0]["function"] for s in d["keys"].values()} for m, d in infocus_files().items() if m in ("IN5140", "IN5148HD", "LP650")}
     assert (page["IN5140"]["PAGE UP"], page["IN5140"]["PAGE DOWN"]) == ("0x25", "0x24")
     assert (page["IN5148HD"]["Page Up"], page["IN5148HD"]["Page Down"]) == ("0x24", "0x25")
