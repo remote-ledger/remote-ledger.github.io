@@ -57,6 +57,7 @@ SHEETS = {
         "CDS27_RS232_SH272_E_1.pdf": ["tables"],
         "D33_RS232_SH236_E_D.pdf": ["tables"],
         "ST60_RS232_SH309_C.pdf": ["tables"],
+        "Solo_Movie_2.1-5.1_RS232_SH194_3.pdf": ["lines"],
         "Solo_bar_IR_codes_V2.0.pdf": ["lines"],
         "Solo_Movie-Movie_2.1-Music_2_RS232_SH284E_A.pdf": ["tables"],
     },

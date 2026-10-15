@@ -46,6 +46,7 @@ class Document:
     layout: str                # ``function`` (decimal and hex), ``system`` (the Solo's), ``lines`` (the Solo Mini's) or ``columns`` (the older sheets')
     models: tuple[str, ...]
     named: tuple[str, ...] = ()     # models the document names only in a sentence about some of its rows: they have those rows and no others
+    second: str = ""                # what a model is kept under, in brackets, when an earlier document of this maker has a file of that name
 
 
 DOCUMENTS: tuple[Document, ...] = (
@@ -73,6 +74,7 @@ DOCUMENTS: tuple[Document, ...] = (
     Document("ST60_RS232_SH309_C.pdf", "tables", "function", ("ST60",)),
     Document("Solo_Movie-Movie_2.1-Music_2_RS232_SH284E_A.pdf", "tables", "function", ("Solo Movie", "Solo Movie 2.1", "Solo Music 2")),
     Document("Solo_bar_IR_codes_V2.0.pdf", "lines", "bar", ("Solo bar",)),
+    Document("Solo_Movie_2.1-5.1_RS232_SH194_3.pdf", "lines", "codefirst", ("Solo Movie 2.1", "Solo Movie 5.1"), second="SH194"),
 )
 _DEC = re.compile(r"^(\d{1,3})\s*-\s*(\d{1,3})\s*\**$")
 _HEX = re.compile(r"^0[xX]([0-9A-Fa-f]{1,2})\s*-\s*(?:0[xX])?([0-9A-Fa-f]{1,2})\s*\**$")
@@ -280,6 +282,7 @@ def column_rows(rows: list[list[str]]) -> list[Row]:
     return out
 
 
+_CODE_FIRST = re.compile(r"^(\d{1,3})-(\d{1,3})$")
 _BAR_HEX = re.compile(r"^([0-9A-Fa-f]{2})\s*-\s*([0-9A-Fa-f]{2})$")
 
 
@@ -301,7 +304,37 @@ def bar_rows(rows: list[list[str]]) -> list[Row]:
     return out
 
 
-READERS = {"function": function_rows, "system": system_rows, "lines": line_rows, "columns": column_rows, "bar": bar_rows}
+def code_first_rows(rows: list[list[str]]) -> list[Row]:
+    """The Solo Movie 2.1 and 5.1 notes' IR tables, from the page headed ``IR remote commands`` (each row of the ``lines`` sheet is ``page, y, x,
+    text, x, text...``): two tables side by side, each row a decimal code ``16-12`` and the command beside it, under the headings ``System code
+    16``, ``17``, ``21`` and ``25`` (the AMP, TUN, AUX and DVD commands). A name that goes on in the next line (``HDMI Resolution SD`` /
+    ``Interlaced``, indented in the right table) is the previous row's. A code whose system code is none of the four the page heads is
+    doubtful; ``25-611`` is a typo of the document's and no code (the importer reports it)."""
+    start = next((i for i, row in enumerate(rows) if row[3:4] == ["IR remote commands"]), None)
+    if start is None:
+        raise ValueError("no page headed IR remote commands")
+    rows = rows[start:]
+    systems = {int(m[1]) for row in rows for text in row[3::2] if (m := re.fullmatch(r"System code (\d+)", text))}
+    out: list[Row] = []
+    last_right: int | None = None              # the index in ``out`` of the right table's latest row
+    for row in rows:
+        page = int(row[0])
+        cells = [(int(x), text) for x, text in zip(row[2::2], row[3::2])]
+        for x, text in cells:                  # the right table's indented continuation of the name above it: before this line's own rows
+            if x >= 430 and not _CODE_FIRST.match(text) and last_right is not None and out[last_right].page == page:
+                former = out[last_right]
+                out[last_right] = Row(**{**former.__dict__, "function": f"{former.function} {text.strip()}", "written": f"{former.written} {text.strip()}"})
+        for i, (x, text) in enumerate(cells):
+            if (m := _CODE_FIRST.match(text)) and i + 1 < len(cells) and not _CODE_FIRST.match(cells[i + 1][1]):
+                name, system = cells[i + 1][1].strip(), int(m[1])
+                doubt = "" if system in systems else f"the page heads the system codes {', '.join(map(str, sorted(systems)))} and this row's is {system}"
+                out.append(Row(page, None, name, name, system, int(m[2]), text, True, doubt, (), ()))
+                if x >= 250:
+                    last_right = len(out) - 1
+    return out
+
+
+READERS = {"function": function_rows, "system": system_rows, "lines": line_rows, "columns": column_rows, "bar": bar_rows, "codefirst": code_first_rows}
 
 
 def key_names(labels: list[str]) -> list[str]:
@@ -317,6 +350,7 @@ def key_names(labels: list[str]) -> list[str]:
 def build(snapshot: Snapshot, authored: dict[tuple[str, str], str], report: Report) -> list[tuple[str, dict[str, Any]]]:
     gate: dict[tuple, str | None] = {}
     out: list[tuple[str, dict[str, Any]]] = []
+    taken: set[str] = set()
     for document in DOCUMENTS:
         rows = READERS[document.layout](snapshot.sheet_of(document.file, document.sheet))
         sha = snapshot.sha(document.file)
@@ -362,6 +396,11 @@ def build(snapshot: Snapshot, authored: dict[tuple[str, str], str], report: Repo
             if (BRAND.casefold(), model.casefold()) in authored:
                 report.collisions.append((MAKER, model))
                 continue
+            if model in taken:                  # an earlier document of this maker has a file of the name: kept, under another (the owner's rule)
+                renamed = f"{model} ({document.second or document.file})"
+                report.notes.append((MAKER, model, f"kept as '{renamed}': an earlier document of the maker has a file of that name"))
+                model = renamed
+            taken.add(model)
             names = key_names([m[0] for m in members])
             keys = {n: {"label": m[0], "forms": [m[1]]} for n, m in zip(names, members)}
             report.count(MAKER, "keys", len(keys))

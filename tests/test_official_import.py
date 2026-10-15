@@ -907,10 +907,10 @@ def test_the_19_arcam_files_are_the_models_the_documents_title_and_the_restricti
 
 def test_the_other_sources_arcam_rc5_remotes_send_the_codes_arcams_tables_list():
     """An independent check from other sources: eight Arcam RC-5 remotes of the ledger (five from the IR Blaster database, three
-    JP1 upgrades) hold 401 keys, and **337 of them (84.0%) are a code some table of the first 19 files lists**, **361 (90.0%) with the
-    34 files of section 74**, the meaning agreeing where it is plain (volume plus and minus 16 and 17, mute 13, power 12, the
+    JP1 upgrades) hold 401 keys, and **337 of them (84.0%) are a code some table of the first 19 files lists**, **369 (92.0%) with the
+    36 more files of sections 74 and 78**, the meaning agreeing where it is plain (volume plus and minus 16 and 17, mute 13, power 12, the
     standby on and off 124 and 123, the digits). The rest are other products' and other generations' codes: system 16 command 53 is
-    Select FM on a Solo and Play on an AVR. The 53 files hold 399 distinct codes."""
+    Select FM on a Solo and Play on an AVR. The 55 files hold 469 distinct codes."""
     ours: dict[tuple[int, int], set[str]] = {}
     for doc in arcam_files(FIRST_ARCAM).values():
         for spec in doc["keys"].values():
@@ -931,8 +931,8 @@ def test_the_other_sources_arcam_rc5_remotes_send_the_codes_arcams_tables_list()
         total += len(codes)
         hit += sum(1 for c in codes if c in ours)
         hit_all += sum(1 for c in codes if c in every)
-    assert (remotes, total, hit, hit_all) == (8, 401, 337, 361)
-    assert len(every) == 399
+    assert (remotes, total, hit, hit_all) == (8, 401, 337, 369)
+    assert len(every) == 469
     for code, wanted in (((16, 16), "Increase volume (+)"), ((16, 17), "Decrease volume (-)"), ((16, 13), "Mute"), ((16, 12), "Standby"),
                          ((16, 124), "Standby On"), ((16, 123), "Standby Off"), ((17, 5), "Tuner Number 5")):
         assert any(label.startswith(wanted.split(" (")[0]) for label in ours[code]), (code, wanted)
@@ -1342,6 +1342,47 @@ def test_other_sources_infocus_remotes_send_the_codes_the_tables_list_and_the_do
     assert (page["IN5140"]["PAGE UP"], page["IN5140"]["PAGE DOWN"]) == ("0x25", "0x24")
     assert (page["IN5148HD"]["Page Up"], page["IN5148HD"]["Page Down"]) == ("0x24", "0x25")
     assert (page["LP650"]["Next Slide"], page["LP650"]["Previous Slide"]) == ("0x24", "0x25")
+
+
+def test_the_solo_movie_notes_ir_tables_are_two_tables_side_by_side_of_a_code_and_a_command_and_a_name_may_go_on_in_the_next_line():
+    """``16-12  Standby`` for each row, the AMP, TUN, AUX and DVD tables under ``System code 16``, ``17``, ``21`` and ``25``; the right table's
+    ``HDMI Resolution SD`` goes on in an indented line (``Interlaced``) and ``(DV137/9 only)`` stays in the label; a code whose system is none the
+    page heads is doubtful, and the text before the ``IR remote commands`` page is not read."""
+    rows = arcam.code_first_rows([
+        ["2", "50", "59", "16-1", "120", "Not an IR row"],
+        ["15", "23", "28", "IR remote commands"], ["15", "92", "50", "AMP commands", "298", "TUN commands"],
+        ["15", "108", "50", "System code 16", "298", "System code 17"], ["15", "123", "59", "Decimal Code", "120", "Command", "307", "Decimal Code", "371", "Command"],
+        ["15", "134", "59", "16-0", "120", "Source SAT", "307", "17-0", "371", "Tuner Number 0"],
+        ["15", "145", "59", "16-12", "120", "Standby", "307", "17-5", "371", "Tuner Number 5"],
+        ["16", "439", "50", "System code 25", "329", "25-90", "425", "HDMI Resolution SD"],
+        ["16", "448", "439", "Interlaced"], ["16", "459", "329", "25-91", "425", "HDMI Resolution SD"],
+        ["16", "467", "59", "25-0", "154", "DVD Number 0", "439", "Progressive"],
+        ["16", "500", "329", "25-94", "425", "HDMI Resolution 1080p"], ["16", "510", "59", "25-4", "154", "DVD Number 4", "439", "(DV137/9 only)"],
+        ["16", "520", "59", "30-1", "154", "Odd one"]])
+    assert [(r.function, r.system, r.command) for r in rows] == [
+        ("Source SAT", 16, 0), ("Tuner Number 0", 17, 0), ("Standby", 16, 12), ("Tuner Number 5", 17, 5),
+        ("HDMI Resolution SD Interlaced", 25, 90), ("HDMI Resolution SD Progressive", 25, 91), ("DVD Number 0", 25, 0),
+        ("HDMI Resolution 1080p (DV137/9 only)", 25, 94), ("DVD Number 4", 25, 4), ("Odd one", 30, 1)]
+    assert [bool(r.doubt) for r in rows] == [False] * 9 + [True]
+    with pytest.raises(ValueError, match="no page headed"):
+        arcam.code_first_rows([["2", "50", "59", "16-1", "120", "Not an IR row"]])
+
+
+def test_the_solo_movie_2_1_and_5_1_notes_of_2008_are_two_files_of_232_keys_with_the_typo_left_out_and_the_second_2_1_kept_under_another_name():
+    """SH194 issue 3 (the Solo Movie 2.1 and 5.1: its cover lists both): the AMP codes (system 16, 59 keys), the tuner's (17, 59), the iPod's (21, 30)
+    and the DVD's (25, 84), 232 keys each, all Plausible. **The `25-611` of its `Slow Backward x1/4` is a typo (the order says 25-61) and is no code**:
+    the importer reports it for each file. The SH284 notes (section 74) already have a `Solo Movie 2.1`, so this one is `Solo Movie 2.1 (SH194)`."""
+    files = arcam_files(("Solo_Movie_2.1__SH194", "Solo_Movie_5.1", "Solo_Movie_2.1"))
+    assert sorted(d["model"] for d in files.values()) == ["Solo Movie 2.1", "Solo Movie 2.1 (SH194)", "Solo Movie 5.1"]
+    a, b = files["Solo_Movie_2.1__SH194"], files["Solo_Movie_5.1"]
+    assert len(a["keys"]) == len(b["keys"]) == 232 and codes_of(a) == codes_of(b)
+    assert Counter(int(s["forms"][0]["device"], 0) for s in b["keys"].values()) == {16: 59, 17: 59, 21: 30, 25: 84}
+    assert all(s["forms"][0]["confidence"] == "plausible" for s in b["keys"].values())
+    labels = [s["label"] for s in b["keys"].values()]
+    assert "HDMI Resolution SD Interlaced" in labels and "HDMI Resolution 1080p (DV137/9 only)" in labels and "Slow Backward x1/4" not in labels
+    assert codes_of(b)["Source SAT"] == ("0x10", "0x00") and b["keys"]["KEY_STANDBY_2"]["forms"][0]["device"] == "0x11"
+    assert "@2c160215 (retrieved 2026-10-15) page 15 row 'Source SAT' (16-0)" in b["keys"]["KEY_SOURCE_SAT"]["forms"][0]["source"]
+    assert len(files["Solo_Movie_2.1"]["keys"]) == 83                                               # the SH284 notes' file is as it was
 
 
 # --- Cambridge Audio ---------------------------------------------------------------------------------------------

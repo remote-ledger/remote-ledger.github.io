@@ -1,0 +1,1151 @@
+1,136,113,Custom Installation Notes:
+1,166,113,Serial programming interface and
+1,196,113,IR remote commands for
+1,226,113,Arcam Solo Movie 2.1 and 5.1
+1,357,219,tp m p!npwjf! 3/2
+1,374,99,MENU,125,SOURCE,159,INFO,181,OK,476,VOLUME
+1,386,111,tp m p
+1,391,464,POWER
+1,401,130,TAPE
+1,524,219,tp m p!npwjf! 6/2
+1,542,99,MENU,125,SOURCE,159,INFO,181,OK,476,VOLUME
+1,553,111,tp m p
+1,558,464,POWER
+1,568,130,TAPE
+1,746,113,Models covered:
+1,769,113,Solo Movie 2.1
+1,781,113,Solo Movie 5.1
+2,31,119,Contents
+2,53,122,Applicability........................................................... 2
+2,68,122,Controlling the Arcam Solo Movie via RS232......... 3
+2,77,136,Introduction....................................................... 3
+2,86,136,Serial cable specification...................................... 3
+2,95,136,Command and response formats........................... 3
+2,104,136,Example command and response sequence............ 4
+2,118,122,RS232 commands.................................................. 5
+2,127,136,Status................................................................ 5
+2,136,136,Source selection.................................................. 5
+2,145,136,Main volume....................................................... 5
+2,154,136,Balance.............................................................. 5
+2,163,136,Bass.................................................................. 5
+2,172,136,Treble................................................................ 6
+2,181,136,Bass correction................................................... 6
+2,190,136,Sub level ........................................................... 6
+2,199,136,Mute.................................................................. 6
+2,208,136,Preset mode/Preset select ................................... 6
+2,217,136,Display brightness............................................... 6
+2,226,136,Stand-by display brightness.................................. 7
+2,235,136,‘Snooze’ time...................................................... 7
+2,244,136,‘Sleep’ time........................................................ 7
+2,253,136,Headphones....................................................... 7
+2,262,136,Request tuner module type................................... 7
+2,271,136,Radio station...................................................... 8
+2,280,136,Radio station information..................................... 8
+2,289,136,Radio programme type......................................... 9
+2,298,136,Request RDS/DLS information............................... 9
+2,307,136,Virtual remote.................................................... 9
+2,316,136,DVD player status ............................................ 10
+2,325,136,Disc play mode................................................. 10
+2,334,136,DVD angle........................................................ 10
+2,343,136,DVD subtitle..................................................... 11
+2,352,136,DVD zoom........................................................ 11
+2,361,136,DVDA page....................................................... 11
+2,370,136,DVD total track-chapter-time information............. 11
+2,379,136,DVD total disc-group-title-time information........... 12
+2,388,136,DVD Disc menu................................................. 12
+2,397,136,FM search........................................................ 12
+2,406,136,Preset save...................................................... 12
+2,415,136,Disc chapter-track information............................ 12
+2,424,136,Playback time................................................... 13
+2,433,136,Disc type.......................................................... 13
+2,442,136,HDMI resolution................................................ 13
+2,451,136,Audio stream decode mode................................ 14
+2,460,136,DVD Popup menu.............................................. 14
+2,469,136,Time command................................................. 14
+2,484,122,IR remote commands.......................................... 15
+2,493,136,AMP commands................................................. 15
+2,502,136,TUN commands................................................. 15
+2,511,136,AUX commands................................................. 16
+2,520,136,DVD commands................................................ 16
+2,567,28,Applicability
+2,626,113,Publication reference
+2,636,113,"This is Arcam technical publication SH194, issue 2 (May 2007)."
+2,652,113,Equipment covered
+2,662,113,This publication applies to the following inversions of the software and RS232 protocol used by the
+2,671,113,models:
+2,688,118,Model,199,RS232 protocol,281,Software version
+2,697,199,version
+2,711,118,Solo Movie 2.1,199,1.5,281,2.7 onwards
+2,724,118,Solo Movie 5.1,199,1.5,281,2.7 onwards
+2,748,113,The latest version of this document is available on the Arcam Dealer extranet accessed via
+2,756,113,www.arcam.co.uk/extranet
+2,769,113,"If you cannot yet access the Dealer extranet, please apply by email to nadinec@arcam.co.uk"
+2,797,49,RS232,112,"Arcam (A&R Cambridge Ltd), Pembroke Avenue, Waterbeach, CAMBRIDGE, CB25 9QR, England"
+2,806,39,(solo movie)
+2,810,200,+44 (0)1223 203200 www.arcam.co.uk/extranet
+2,815,58,2
+3,23,28,Controlling the Arcam Solo Movie via RS232
+3,85,85,Introduction
+3,100,113,"Solo Movie is fitted with an RS232 serial connector that allows remote control from a PC, or similar"
+3,109,113,device. This section of the document describes the protocol for controlling Solo Movie 2.1 or 5.1 via the
+3,118,113,RS232 interface.
+3,135,113,Conventions
+3,143,128,< The remote controller is referred to as the ‘RC’.
+3,155,128,"< All values in this section are hexadecimal values, unless otherwise specified."
+3,173,113,Data transfer format
+3,182,128,"< Transfer rate: 38,400bps."
+3,194,128,"< 1 start bit, 8 data bits, 1 stop bit, no parity, no flow control."
+3,228,85,Serial cable specification
+3,256,151,2,331,6
+3,259,116,EC:!gfnbmf,137,7,346,:,362,EC:!gfnbmf
+3,295,137,:,346,7
+3,299,151,6,331,2
+3,318,113,The cable is wired as a null modem:
+3,335,153,Connector 1,218,Connector 2,288,Function
+3,348,172,2,237,3,288,Rx 3 — Tx
+3,362,172,3,237,2,288,Tx — 4 Rx
+3,375,172,5,237,5,278,RS232 ground
+3,392,113,Data transfer format
+3,401,128,"< Transfer rate: 19,200bps."
+3,413,128,"< 1 start bit, 8 data bits, 1 stop bit, no parity, no flow control."
+3,436,85,Command and response formats
+3,454,113,"Communication between the RC and Solo Movie takes the form of sequences of bytes, with all"
+3,463,113,commands and responses having the same basic format. Communication between the two is full duplex.
+3,472,113,Solo Movie shall always respond to a received command.
+3,484,113,Each transmission by the RC shall be at least six bytes in the following format:
+3,496,128,<STR> <ZN> <CC> <NB> <Data> <ETR>
+3,506,128,< STR (Start transmission): 0x21
+3,518,128,< ZN (Zone)
+3,530,128,< CC (Command code): the code for the command
+3,542,128,"< NB (Number of bytes): the number of data items following this item, excluding the ETR"
+3,553,128,< Data: [Byte(1) - Byte(NB)]
+3,565,128,< ETR (End transmission): 0xD
+3,579,113,Each response by Solo Movie shall be at least seven bytes in the following format:
+3,590,128,<STR> <ZN> <CC> <RC> <NB> <Data> <ETR>
+3,601,128,< STR (Start transmission): 0x21
+3,613,128,< ZN (Zone)
+3,624,128,< CC (Command code)
+3,636,128,< RC (Reply code)
+3,648,128,"< NB (Number of bytes): the number of data items following this item, excluding the ETR"
+3,660,128,< Data: [Byte(1) - Byte(NB)]
+3,672,128,< ETR (End transmission): 0xD
+3,797,112,"Arcam (A&R Cambridge Ltd), Pembroke Avenue, Waterbeach, CAMBRIDGE, CB25 9QR, England",523,RS232
+3,806,513,(solo movie)
+3,810,200,+44 (0)1223 203200 www.arcam.co.uk/extranet
+3,815,532,3
+4,26,113,Answer codes
+4,36,113,The following answer codes are defined:
+4,53,146,Status update,309,0x00
+4,66,146,"Command accepted, and complete",309,0x01
+4,80,146,"Command accepted, currently processing",309,0x02
+4,93,146,Zone Invalid,309,0x82
+4,106,146,Command not recognised,309,0x83
+4,120,146,Parameter not recognised,309,0x84
+4,133,146,Command invalid at this time,309,0x85
+4,146,146,Invalid data length,309,0x86
+4,170,113,"Unless detailed otherwise, the data returned is valid only when the answer code is ‘Status update’ or"
+4,179,113,"‘Command accepted, and complete’. When ‘Command accepted, currently processing’ is returned, the"
+4,188,113,data returned is the data which is currently being processed.
+4,205,113,Status changes
+4,215,113,Note that Solo Movie shall transmit messages whenever its status changes. These messages shall be
+4,224,113,transmitted by Solo Movie at asynchronous intervals.
+4,240,113,State changes as a result of other inputs
+4,250,113,It is possible that the state of Solo Movie may be changed as a result of user input via the front panel
+4,259,113,buttons or via the IR remote control. Changes resulting from these inputs shall be relayed to the RC
+4,268,113,(using the appropriate message type) as they occur.
+4,280,113,"For example, if the user changed the front panel display brightness using the DISP button on the remote"
+4,289,113,"control, a display message (defined below) would be sent to the RC. A similar action would be taken for"
+4,298,113,all other state changes.
+4,310,113,"Unless stated, all RS232 commands have an associated status message."
+4,331,85,Example command and response sequence
+4,350,113,"As an example, the command to set the front-panel display of the Solo Movie to ‘full brightness’ (defined"
+4,359,113,below) is as follows:
+4,375,146,STR,186,Zone,225,CC,265,DL,304,Data,344,ETR
+4,389,146,0x21,186,0x01,225,0x0A,265,0x01,304,0x04,344,0x0D
+4,401,113,"Assuming that the command was accepted by the DVD player and is being processed, the DVD player"
+4,410,113,responds to this command with the following sequence:
+4,426,146,STR,186,Zone,225,CC,265,AC,304,DL,344,Data,383,ETR
+4,439,146,0x21,186,0x01,225,0x0A,265,0x02,304,0x01,344,0x04,383,0x0D
+4,463,113,<i>Note: RS232 control is disabled if the iPod option is enabled.</i>
+4,797,49,RS232,112,"Arcam (A&R Cambridge Ltd), Pembroke Avenue, Waterbeach, CAMBRIDGE, CB25 9QR, England"
+4,806,39,(solo movie)
+4,810,200,+44 (0)1223 203200 www.arcam.co.uk/extranet
+4,815,58,4
+5,23,28,RS232 commands
+5,83,32,Status
+5,87,407,Byte:,438,Description:
+5,93,32,Query the current state of Solo Movie.
+5,99,407,ZN,438,0x01 (Zone)
+5,110,407,CC,438,0x00 (Command code)
+5,122,407,NB,438,0x01 (Number of bytes)
+5,129,32,Example
+5,133,407,DATA,438,0xF0 = Query
+5,141,32,Command/response sequence to determine the current state (the unit is currently in stand-
+5,145,407,RESPONSE
+5,150,32,by):
+5,156,407,Byte:,438,Description:
+5,160,32,Command: 0x21 0x01 0x00 0x01 0xF0 0x0D
+5,168,407,ZN,438,0x01 (Zone)
+5,171,32,Response: 0x21 0x01 0x00 0x01 0x01 0x00 0x0D
+5,180,407,RC,438,0x00 (Reply Code)
+5,191,407,AC,438,0x01 (Answer code)
+5,203,407,NB,438,0x01 (Number of bytes)
+5,214,407,DATA,438,0x00 = Stand-by state
+5,222,438,0x01 = Power-on
+5,230,438,0x02 = Alarm
+5,238,438,0x03 = Basic menu
+5,246,438,0x04 = Setup menu
+5,254,438,0x05 = Clock menu
+5,262,438,0x06 = Initialising
+5,270,438,0x08 = Engineering menu
+5,278,438,0x0A = iPod menu
+5,304,32,Source selection
+5,308,407,Byte:,438,Description:
+5,314,32,Change the source of Solo Movie.
+5,319,407,ZN,438,0x01 (Zone)
+5,331,407,CC,438,0x01 (Command code)
+5,342,407,NB,438,0x01 (Number of bytes)
+5,349,32,Example
+5,353,407,DATA,438,0x00 = DVD
+5,361,32,Command/response sequence to change the source to ‘Tape’:,438,0x01 = FM
+5,369,32,Command: 0x21 0x01 0x01 0x01 0x03 0x0D,438,0x02 = DAB/AM
+5,377,438,0x03 = AV
+5,383,32,Response: 0x21 0x01 0x01 0x01 0x01 0x03 0x0D
+5,385,438,0x04 = SAT
+5,393,438,0x05 = AUX
+5,401,438,0x06 = TAPE
+5,409,438,0xF0 = Query
+5,434,32,Main volume
+5,438,407,Byte:,438,Description:
+5,444,32,Change the volume level of Solo Movie.
+5,449,407,ZN,438,0x01 (Zone 1)
+5,457,438,0X02 (Zone 2)
+5,469,407,CC,438,0x02 (Command code)
+5,479,32,Example,407,NB,438,0x01 (Number of bytes)
+5,491,32,Command/response sequence to change Zone 1 volume to 36:,407,DATA,438,0x00 = Volume 0
+5,499,32,Command: 0x21 0x01 0x02 0x01 0x24 0x0D,438,…
+5,510,438,0x48 = Volume 72
+5,513,32,Response: 0x21 0x01 0x02 0x01 0x01 0x24 0x0D
+5,518,438,0xF0 = Query
+5,537,32,Balance
+5,542,407,Byte:,438,Description:
+5,547,32,Change the speaker balance.
+5,553,407,ZN,438,0x01 (Zone)
+5,564,407,CC,438,0x04 (Command code)
+5,576,407,NB,438,0x01 (Number of bytes)
+5,583,32,Example
+5,587,407,DATA,438,0x5A = Left +10
+5,595,32,"Command/response sequence to set the output of the left channel, where the new balance is",438,…
+5,604,32,3dB to the left:
+5,606,438,0x64 = Left/Right
+5,614,32,Command: 0x21 0x01 0x04 0x01 0x61 0x0D,438,…
+5,622,438,0x6E = Right +10
+5,625,32,Response: 0x21 0x01 0x04 0x01 0x01 0x61 0x0D
+5,630,438,0xF0 = Query
+5,649,32,Bass
+5,653,407,Byte:,438,Description:
+5,659,32,Change the bass level.
+5,665,407,ZN,438,0x01 (Zone)
+5,676,407,CC,438,0x05 (Command code)
+5,687,407,NB,438,0x01 (Number of bytes)
+5,695,32,Example
+5,699,407,DATA,438,0x5D = -7
+5,706,32,"Command/response sequence to set the bass, where the new level is +1dB:",438,…
+5,718,438,0x64 = 0
+5,726,438,…
+5,728,32,Command: 0x21 0x01 0x05 0x01 0x65 0x0D
+5,734,438,0x6B = +7
+5,740,32,Response: 0x21 0x01 0x05 0x01 0x01 0x65 0x0D,438,0xF0 = Query
+5,797,112,"Arcam (A&R Cambridge Ltd), Pembroke Avenue, Waterbeach, CAMBRIDGE, CB25 9QR, England",523,RS232
+5,806,513,(solo movie)
+5,810,200,+44 (0)1223 203200 www.arcam.co.uk/extranet
+5,815,532,5
+6,33,32,Treble
+6,37,407,Byte:,438,Description:
+6,43,32,Change the treble level.
+6,48,407,ZN,438,0x01 (Zone)
+6,60,407,CC,438,0x06 (Command code)
+6,71,407,NB,438,0x01 (Number of bytes)
+6,78,32,Example
+6,82,407,DATA,438,0x5D = -7
+6,90,32,"Command/response sequence to set the treble, where the new level is -6dB:",438,…
+6,100,32,Command: 0x21 0x01 0x06 0x01 0x5E 0x0D,438,0x64 = 0
+6,109,438,…
+6,112,32,Response: 0x21 0x01 0x06 0x01 0x01 0x5E 0x0D
+6,117,438,0x6B = +7
+6,125,438,0xF0 = Query
+6,144,32,Bass correction
+6,148,407,Byte:,438,Description:
+6,154,32,Change the bass correction level.
+6,160,407,ZN,438,0x01 (Zone)
+6,171,407,CC,438,0x07 (Command code)
+6,183,407,NB,438,0x01 (Number of bytes)
+6,190,32,Example
+6,194,407,DATA,438,0x00 = Bass correction Off
+6,202,32,Command/response sequence to turn bass correction off:,438,…
+6,211,32,Command: 0x21 0x01 0x07 0x01 0x00 0x0D,438,0x03 = Bass correction Max
+6,221,438,0xF0 = Query.
+6,223,32,Response: 0x21 0x01 0x07 0x01 0x01 0x00 0x0D
+6,242,32,Sub level
+6,246,407,Byte:,438,Description:
+6,252,32,Change the sub level.
+6,257,407,ZN,438,0x01 (Zone)
+6,269,407,CC,438,0x17 (Command code)
+6,280,407,NB,438,0x01 (Number of bytes)
+6,287,32,Example
+6,291,407,DATA,438,0x00 = -10
+6,299,32,"Command/response sequence to set the sub level, where the new level is +5db:",438,…
+6,309,32,Command: 0x21 0x01 0x17 0x01 0x0F 0x0D,438,0x0A = 0
+6,318,438,…
+6,321,32,Response: 0x21 0x01 0x17 0x01 0x01 0x0F 0x0D
+6,326,438,0x14 = +10
+6,334,438,0xF0 = Query
+6,353,32,Mute
+6,357,407,Byte:,438,Description:
+6,363,32,Mute the output.
+6,369,407,ZN,438,0x01 (Zone 1)
+6,377,438,0x02 (Zone 2)
+6,388,407,CC,438,0x08 (Command code)
+6,399,32,Example,407,NB,438,0x01 (Number of bytes)
+6,411,32,"Command/response sequence to set the mute state of Zone 1, where the result is that the",407,DATA,438,0x00 = Mute Off
+6,419,32,output is muted:,438,0x01 = Mute On
+6,427,438,0xF0 = Query
+6,430,32,Command: 0x21 0x01 0x08 0x01 0x01 0x0D
+6,441,32,Response: 0x21 0x01 0x08 0x01 0x01 0x01 0x0D
+6,460,32,Preset mode/Preset select
+6,464,407,Byte:,438,Description:
+6,470,32,"Command/response sequence to query the unit for the current preset mode, to toggle the"
+6,475,407,ZN,438,0x01 (Zone)
+6,479,32,"preset mode, or load a stored preset."
+6,487,407,CC,438,0x13 (Command code)
+6,498,407,NB,438,0x01 (Number of bytes)
+6,510,407,DATA,438,0x01 … 0x1E = Preset number to load
+6,514,32,Example
+6,518,438,0xF0 = Query mode
+6,526,32,"Command/response sequence to query the current preset mode, where the result is Tune",438,0xF3 = Toggle mode
+6,535,32,mode with preset number 5 loaded:,407,RESPONSE
+6,545,32,Command: 0x21 0x01 0x13 0x01 0xF0 0x0D
+6,548,407,Byte:,438,Description:
+6,557,32,Response: 0x21 0x01 0x13 0x01 0x02 0x00 0x05 0x0D
+6,560,407,ZN,438,0x01 (Zone)
+6,571,407,RC,438,0x13 (Reply Code)
+6,583,407,AC,438,0x01 (Answer code)
+6,594,407,NB,438,0x02 (Number of bytes)
+6,605,407,D1,438,0x00 = Tune mode
+6,613,438,0x01 = Preset mode
+6,625,407,D2,438,Current preset number
+6,644,32,Display brightness
+6,648,407,Byte:,438,Description:
+6,654,32,Set the display brightness.
+6,660,407,ZN,438,0x01 (Zone)
+6,671,407,CC,438,0x0A (Command code)
+6,683,407,NB,438,0x01 (Number of bytes)
+6,690,32,Example
+6,694,407,DATA,438,0x00 = Display Off
+6,702,32,"Command/response sequence to set the display brightness, where the result is that the display",438,…
+6,710,32,brightness is at level 1:,438,0x04 = Display full brightness
+6,718,438,0xF0 = Query
+6,720,32,Command: 0x21 0x01 0x0A 0x01 0x01 0x0D
+6,732,32,Response: 0x21 0x01 0x0A 0x01 0x01 0x01 0x0D
+6,797,49,RS232,112,"Arcam (A&R Cambridge Ltd), Pembroke Avenue, Waterbeach, CAMBRIDGE, CB25 9QR, England"
+6,806,39,(solo movie)
+6,810,200,+44 (0)1223 203200 www.arcam.co.uk/extranet
+6,815,58,6
+7,33,32,Stand-by display brightness
+7,37,407,Byte:,438,Description:
+7,43,32,Set the Stand-by display brightness.
+7,48,407,ZN,438,0x01 (Zone)
+7,60,407,CC,438,0x16 (Command code)
+7,71,407,NB,438,0x01 (Number of bytes)
+7,78,32,Example
+7,82,407,DATA,438,0x00 = Display Off
+7,90,32,"Command/response sequence to set the display brightness, where the result is that the display",438,…
+7,98,32,brightness is at level 1:,438,0x04 = Display full brightness
+7,106,438,0xF0 = Query
+7,109,32,Command: 0x21 0x01 0x16 0x01 0x01 0x0D
+7,121,32,Response: 0x21 0x01 0x16 0x01 0x01 0x01 0x0D
+7,139,32,‘Snooze’ time
+7,143,407,Byte:,438,Description:
+7,149,32,Set the ‘snooze’ time (when applicable).
+7,155,407,ZN,438,0x01 (Zone)
+7,166,407,CC,438,0x29 (Command code)
+7,177,407,NB,438,0x01 (Number of bytes)
+7,185,32,Example
+7,189,407,DATA,438,0x00 = Off
+7,196,32,Command/response sequence to set the snooze time to 90 minutes:,438,0x01 = 1 minute
+7,205,32,Command: 0x21 0x01 0x29 0x01 0x5A 0x0D,438,…
+7,213,438,0x5A = 90 minutes
+7,218,32,Response: 0x21 0x01 0x29 0x01 0x01 0x5A 0x0D
+7,221,438,0xF0 = Query
+7,240,32,‘Sleep’ time
+7,244,407,Byte:,438,Description:
+7,250,32,Set the ‘sleep’ time.
+7,256,407,ZN,438,0x01 (Zone)
+7,267,407,CC,438,0x31 (Command code)
+7,278,407,NB,438,0x01 (Number of bytes)
+7,286,32,Example
+7,290,407,DATA,438,0x00 = Off
+7,297,32,Command/response sequence to set the sleep time to 120 minutes:,438,0x01 = 1 minute
+7,306,32,Command: 0x21 0x01 0x31 0x01 0x78 0x0D,438,…
+7,314,438,0x78 = 120 minutes
+7,319,32,Response: 0x21 0x01 0x31 0x01 0x01 0x78 0x0D
+7,322,438,0xF0 = Query
+7,341,32,Headphones
+7,345,407,Byte:,438,Description:
+7,351,32,Determine whether headphones are connected to Solo Movie.
+7,357,407,ZN,438,0x01 (Zone)
+7,368,407,CC,438,0x32 (Command code)
+7,379,407,NB,438,0x01 (Number of bytes)
+7,387,32,Example
+7,391,407,DATA,438,0xF0 = Query
+7,398,32,"Command/response sequence to request the headphone status, where the headphones are not"
+7,402,407,RESPONSE
+7,407,32,connected:
+7,414,407,Byte:,438,Description:
+7,417,32,Command: 0x21 0x01 0x32 0x01 0xF0 0x0D
+7,425,407,ZN,438,0x01 (Zone)
+7,429,32,Response: 0x21 0x01 0x32 0x01 0x01 0x00 0x0D
+7,437,407,RC,438,0x32 (Reply Code)
+7,448,407,AC,438,0x01 (Answer code)
+7,459,407,NB,438,0x01 (Number of bytes)
+7,471,407,DATA,438,0x00 = No headphones
+7,479,438,0x01 = Headphones connected
+7,498,32,Request tuner module type
+7,502,407,Byte:,438,Description:
+7,508,32,Determine the tuner module type present in Solo Movie.
+7,514,407,ZN,438,0x01 (Zone)
+7,525,407,CC,438,0x37 (Command code)
+7,536,407,NB,438,0x01 (Number of bytes)
+7,544,32,Example
+7,548,407,DATA,438,0xF0 = Query
+7,555,32,"Command/response sequence to request the tuner module type, where the type is DAB/FM:"
+7,559,407,RESPONSE
+7,565,32,Command: 0x21 0x01 0x37 0x01 0xF0 0x0D
+7,571,407,Byte:,438,Description:
+7,577,32,Response: 0x21 0x01 0x37 0x01 0x01 0x00 0x0D
+7,582,407,ZN,438,0x01 (Zone)
+7,594,407,RC,438,0x37 (Reply Code)
+7,605,407,AC,438,0x01 (Answer code)
+7,616,407,NB,438,0x01 (Number of bytes)
+7,628,407,DATA,438,0x00 = DAB/FM module fitted
+7,636,438,0x01 = AM/FM module fitted
+7,797,112,"Arcam (A&R Cambridge Ltd), Pembroke Avenue, Waterbeach, CAMBRIDGE, CB25 9QR, England",523,RS232
+7,806,513,(solo movie)
+7,810,200,+44 (0)1223 203200 www.arcam.co.uk/extranet
+7,815,532,7
+8,33,32,Radio station
+8,37,407,Byte:,438,Description:
+8,43,32,Request radio station label (DAB/RDS)
+8,48,407,ZN,438,0x01 (Zone)
+8,60,407,CC,438,0xDE (Command code)
+8,71,407,NB,438,0x01 (Number of bytes)
+8,78,32,Example
+8,82,407,DATA,438,0xF0 = Request the current DAB station
+8,90,32,"Command/response sequence to request station label, where the new station is called “DAB"
+8,94,407,RESPONSE
+8,99,32,STATION 2”:
+8,106,407,Byte:,438,Description:
+8,109,32,Command: 0x21 0x01 0xDE 0x01 0xF0 0x0D
+8,117,407,ZN,438,0x01 (Zone)
+8,121,32,Response: 0x21 0x01 0xDE 0x01 0x0D 0x44 0x41 0x42 0x20 0x53 0x54 0x41
+8,129,32,0x54 0x49 0x4F 0x4E 0x20 0x32 0x0D,407,RC,438,0xDE (Reply Code)
+8,140,407,AC,438,0x01 (Answer code)
+8,152,407,NB,438,(Number of bytes)
+8,163,407,Dn,438,Response:
+8,171,438,The service label of the new radio
+8,179,438,"station, in ASCII characters"
+8,199,32,Radio station information
+8,203,407,Byte:,438,Description:
+8,209,32,Request information on the current radio station.
+8,214,407,ZN,438,0x01 (Zone)
+8,225,407,CC,438,0xDF (Command code)
+8,237,407,NB,438,0x02 (Number of bytes)
+8,244,32,Example
+8,248,407,D1,438,0xF0 = Request station information
+8,256,32,"Command/response sequence to request the station frequency, where the source is AM and the"
+8,260,407,D2,438,If the current source is FM/AM:
+8,265,32,frequency is 1089kHz:
+8,268,438,0x00 = Request the station frequency
+8,275,32,Command: 0x21 0x01 0xDF 0x02 0xF0 0x00 0x0D,438,0x01 = Request the station signal
+8,284,438,strength
+8,287,32,Response: 0x21 0x01 0xDF 0x01 0x02 0x04 0x41 0x0D
+8,295,438,If the current source is DAB:
+8,303,438,0x01 = Request the station signal
+8,311,32,Example,438,strength
+8,319,438,0x02 = Request the station MPEG mode
+8,324,32,"Command/response sequence to request the station frequency, where the source is FM and the"
+8,327,438,0x04 = Request the station data rate
+8,333,32,frequency is 105.2MHz:
+8,338,407,RESPONSE
+8,343,32,Command: 0x21 0x01 0xDF 0x02 0xF0 0x00 0x0D
+8,350,407,Byte:,438,Description:
+8,355,32,Response: 0x21 0x01 0xDF 0x01 0x02 0x69 0x32 0x0D
+8,361,407,RC,438,0xDF (Reply Code)
+8,373,407,AC,438,0xDF (Answer code)
+8,380,32,Example
+8,384,407,NB,438,0x03 (Number of bytes)
+8,392,32,"Command/response sequence to request the signal strength, where the current signal strength"
+8,396,407,D1,438,0x00 = Message contains station freq.
+8,401,32,is 10:
+8,404,438,0x01 = Message contains signal
+8,411,32,Command: 0x21 0x01 0xDF 0x02 0xF0 0x01 0x0D,438,strength
+8,420,438,0x02 = Message contains MPEG mode
+8,423,32,Response: 0x21 0x01 0xDF 0x01 0x02 0x0A 0x00 0x0D
+8,428,438,0x04 = Message contains data rate
+8,439,407,D2,438,Response to the AM frequency request:
+8,447,438,MSB of current frequency
+8,458,438,Response to the FM frequency request:
+8,466,438,MHz of current frequency
+8,477,438,Response to the DAB MPEG mode
+8,485,438,request:
+8,493,438,0x00 = Stereo
+8,501,438,0x01 = Joint stereo
+8,509,438,0x02 = Dual mono
+8,517,438,0x03 = Mono
+8,528,438,Response to the DAB data rate request:
+8,536,438,0x00 - 0xC0 (0 - 192kb/s) = data rate
+8,547,438,Response to the signal strength
+8,555,438,request:
+8,563,438,0x00 - 0x10 = signal strength
+8,574,407,D3,438,Response to the AM frequency request:
+8,582,438,LSB of current frequency
+8,593,438,Response to the FM frequency request:
+8,601,438,kHz/10 of current frequency
+8,612,438,Response to the DAB MPEG mode
+8,620,438,request:
+8,628,438,0x00
+8,639,438,Response to the DAB data rate request:
+8,647,438,0x00
+8,657,438,Response to the signal strength
+8,665,438,request:
+8,673,438,0x00
+8,797,49,RS232,112,"Arcam (A&R Cambridge Ltd), Pembroke Avenue, Waterbeach, CAMBRIDGE, CB25 9QR, England"
+8,806,39,(solo movie)
+8,810,200,+44 (0)1223 203200 www.arcam.co.uk/extranet
+8,815,58,8
+9,33,32,Radio programme type
+9,37,407,Byte:,438,Description:
+9,43,32,Query the current station programme type (DAB/FM only).
+9,48,407,ZN,438,0x01 (Zone)
+9,60,407,CC,438,0xE6 (Command code)
+9,71,407,NB,438,0x01 (Number of bytes)
+9,78,32,Example
+9,82,407,DATA,438,0xF0 = Request programme type
+9,90,32,Command/response sequence to request PTY where current PTY is ‘POP MUSIC’:
+9,94,407,RESPONSE
+9,100,32,Command: 0x21 0x01 0xE6 0x01 0xF0 0x0D
+9,106,407,Byte:,438,Description:
+9,112,32,Response: 0x21 0x01 0xE6 0x01 0x09 0x50 0x4F 0x50 0x20 0x4D 0x55 0x53
+9,117,407,ZN,438,0x01 (Zone)
+9,121,32,0x49 0x43 0x0D
+9,129,407,RC,438,0xE6 (Reply Code)
+9,140,407,AC,438,Answer code
+9,152,407,NB,438,(Number of bytes)
+9,163,407,Dn,438,Response:
+9,171,438,The programme type of the selected
+9,179,438,"station, in ASCII characters."
+9,199,32,Request RDS/DLS information
+9,203,407,Byte:,438,Description:
+9,209,32,Request RDS/DLS (FM/DAB) information from the current radio station.
+9,214,407,ZN,438,0x01 (Zone)
+9,225,407,CC,438,0xE7 (Command code)
+9,237,407,NB,438,0x01 (Number of bytes)
+9,244,32,Example
+9,248,407,DATA,438,0xF0 = Request RDS/DLS information
+9,256,32,"Command/response sequence to request the RDS/DLS information, where the information is"
+9,260,407,RESPONSE
+9,265,32,“Playing your favourite music”:
+9,272,407,Byte:,438,Description:
+9,275,32,Command: 0x21 0x01 0xE7 0x01 0xF0 0x0D
+9,283,407,ZN,438,0x01 (Zone)
+9,287,32,Response: 0x21 0x01 0xE7 0x01 0x1C 0x50 0x6c 0x61 0x79 0x69 0x6E 0x67
+9,295,32,0x20 0x79 0x6F 0x75 0x72 0x20 0x66 0x61 0x76 0x6F 0x75 0x72 0x69 0x74,407,RC,438,0xE7 (Reply Code)
+9,305,32,0x65 0x20 0x6D 0x75 0x73 0x69 0x63 0x0D,407,AC,438,Answer code
+9,318,407,NB,438,(Number of bytes)
+9,329,407,Dn,438,Response:
+9,337,438,The RDS/DLS information of the
+9,345,438,"selected station, in ASCII characters."
+9,353,438,Up to 128 characters may be returned.
+9,372,32,Virtual remote
+9,377,407,Byte:,438,Description:
+9,382,32,Sends an RC5 system/command code combination via RS232. Solo Movie will respond as if the
+9,388,407,ZN,438,0x01 (Zone 1)
+9,391,32,command was received over IR.
+9,396,438,0x02 (Zone 2)
+9,407,407,CC,438,0xE9 (Command code)
+9,419,407,NB,438,0x02 (Number of bytes)
+9,427,32,Example
+9,430,407,DATA,438,MSB = System code
+9,438,32,Command/response sequence to set decode mode to PLII Movie using the relevent IR code,438,LSB = Command code
+9,448,32,(16-33):
+9,457,32,(See IR section/document for details)
+9,467,32,Command: 0x21 0x01 0xE9 0x02 0x10 0x21 0x0D
+9,478,32,Response: 0x21 0x01 0xE9 0x02 0x02 0x10 0x21 0x0D
+9,797,112,"Arcam (A&R Cambridge Ltd), Pembroke Avenue, Waterbeach, CAMBRIDGE, CB25 9QR, England",523,RS232
+9,806,513,(solo movie)
+9,810,200,+44 (0)1223 203200 www.arcam.co.uk/extranet
+9,815,532,9
+10,33,32,DVD player status
+10,37,407,Byte:,438,Description:
+10,43,32,Query the current DVD section state.
+10,48,407,ZN,438,0x01 (Zone)
+10,60,407,CC,438,0xEC (Command code)
+10,71,407,NB,438,0x01 (Number of bytes)
+10,78,32,Example
+10,82,407,DATA,438,0xF0 = Request DVD information
+10,90,32,"Command/response sequence to request the current DVD player, where the tray is currently"
+10,94,407,RESPONSE
+10,99,32,open:
+10,105,407,Byte:,438,Description:
+10,109,32,Command: 0x21 0x01 0xEC 0x01 0xF0 0x0D
+10,117,407,ZN,438,0x01 (Zone)
+10,121,32,Response: 0x21 0x01 0xEC 0x01 0x02 0x08 0x00 0x0D
+10,128,407,CC,438,0xEC (Command code)
+10,139,407,NB,438,0x01 (Number of bytes)
+10,151,407,D1,438,0x01 = Loading
+10,159,438,0x02 = Playing
+10,167,438,0x03 = Stopped
+10,175,438,0x04 = Scanning Back
+10,183,438,0x05 = Scanning Forward
+10,191,438,0x08 = Tray Open
+10,199,438,0x09 = Paused
+10,207,438,0x0A = Stop Resume
+10,215,438,0x0B = Slow Back
+10,223,438,0x0C = Slow Forward
+10,231,438,0x0D = Skipping
+10,239,438,0z0E = Other
+10,250,407,D2,438,when scanning:
+10,258,438,0x01 = x2
+10,266,438,0x02 = x4
+10,274,438,0x03 = x8
+10,282,438,0x04 = x16
+10,293,438,when slow:
+10,301,438,0x01 = 1/2
+10,309,438,0x02 = 1/4
+10,317,438,0x03 = 1/6
+10,325,438,0x04 = 1/8
+10,344,32,Disc play mode
+10,348,407,Byte:,438,Description:
+10,354,32,Set the current playmode.
+10,360,407,ZN,438,0x01 (Zone )
+10,371,407,CC,438,0x54 (Command code)
+10,382,407,NB,438,0x01 (Number of bytes)
+10,390,32,Example
+10,394,407,DATA,438,0x00 = Playmode Off
+10,402,32,"Command/response sequence to set the current disc playmode, where the playmode is repeat"
+10,405,438,BITS 1~0
+10,411,32,all:
+10,413,438,00 = Repeat Off
+10,420,32,Command: 0x21 0x01 0x54 0x01 0x03 0x0D,438,01 = Repeat Single
+10,429,438,11 = Repeat All
+10,432,32,Response: 0x21 0x01 0x54 0x01 0x01 0x03 0x0D
+10,440,438,BIT 2
+10,448,438,0 = Shuffle Off
+10,456,438,1 = Shuffle On
+10,464,438,BIT 3
+10,472,438,0 = Program Off
+10,480,438,1 = Program
+10,491,438,0xF0 = Query
+10,510,32,DVD angle
+10,514,407,Byte:,438,Description:
+10,520,32,Query the current DVD angle.
+10,525,407,ZN,438,0x01 (Zone)
+10,537,407,CC,438,0x50 (Command code)
+10,548,407,NB,438,0x01 (Number of bytes)
+10,555,32,Example
+10,560,407,DATA,438,0xF0 = Query
+10,567,32,The response sequence where current angle is 1 from a total of 5 angles:
+10,571,407,RESPONSE
+10,577,32,Command: 0x21 0x01 0x50 0x01 0xF0 0x0D
+10,583,407,Byte:,438,Description:
+10,589,32,Response: 0x21 0x01 0x50 0x01 0x02 0x01 0x05 0x0D
+10,594,407,ZN,438,0x01 (Zone)
+10,606,407,RC,438,0x50 (Reply Code)
+10,617,407,AC,438,0x01 (Answer code)
+10,629,407,NB,438,0x02 (Number of bytes)
+10,640,407,Dn,438,MSB = Current Angle
+10,648,438,LSB = Total Angles
+10,797,49,RS232,112,"Arcam (A&R Cambridge Ltd), Pembroke Avenue, Waterbeach, CAMBRIDGE, CB25 9QR, England"
+10,806,39,(solo movie)
+10,810,200,+44 (0)1223 203200 www.arcam.co.uk/extranet
+10,815,56,10
+11,33,32,DVD subtitle
+11,37,407,Byte:,438,Description:
+11,43,32,Query current DVD subtitle
+11,48,407,ZN,438,0x01 (Zone 1)
+11,60,407,CC,438,0x51 (Command code)
+11,71,407,NB,438,0x01 (Number of bytes)
+11,78,32,Example
+11,82,407,DATA,438,0xF0 = Query
+11,90,32,"Current subtitle 2/6, English:"
+11,94,407,RESPONSE
+11,100,32,Command: 0x21 0x01 0x51 0x01 0xF0 0x0D
+11,105,407,Byte:,438,Description:
+11,112,32,Response: 0x21 0x01 0x51 0x01 0x04 0x02 0x06 0x45 0x4E 0x0D
+11,117,407,ZN,438,0x01 (Zone)
+11,128,407,RC,438,0x51 (Reply Code)
+11,140,407,AC,438,0x01 (Answer code)
+11,151,407,NB,438,0x04 (Number of bytes)
+11,162,407,Dn,438,MSB = Current subtitle
+11,170,438,Byte = Total subtitles
+11,178,438,LSB(2) = ISO639-1 language code
+11,198,32,DVD zoom
+11,202,407,Byte:,438,Description:
+11,208,32,Query current DVD zoom level
+11,213,407,ZN,438,0x01 (Zone 1)
+11,224,407,CC,438,0x52 (Command code)
+11,236,407,NB,438,0x01 (Number of bytes)
+11,243,32,Example
+11,247,407,DATA,438,0xF0 = Query
+11,255,32,Current zoom level 2:
+11,259,407,RESPONSE
+11,265,32,Command: 0x21 0x01 0x52 0x01 0xF0 0x0D
+11,270,407,Byte:,438,Description:
+11,277,32,Response: 0x21 0x01 0x52 0x01 0x01 0x02 0x0D
+11,282,407,ZN,438,0x01 (Zone)
+11,294,407,RC,438,0x52 (Reply Code)
+11,305,407,AC,438,0x01 (Answer code)
+11,317,407,NB,438,0x01 (Number of bytes)
+11,328,407,Dn,438,0x00 = No zoom
+11,336,438,…
+11,344,438,0x03 = Zoom level 3
+11,363,32,DVDA page
+11,368,407,Byte:,438,Description:
+11,373,32,Query current DVDA page
+11,379,407,ZN,438,0x01 (Zone 1)
+11,390,407,CC,438,0x53 (Command code)
+11,402,407,NB,438,0x01 (Number of bytes)
+11,409,32,Example
+11,413,407,DATA,438,0xF0 = Query
+11,421,32,Current page 4/4:
+11,425,407,RESPONSE
+11,436,407,Byte:,438,Description:
+11,442,32,Command: 0x21 0x01 0x53 0x01 0xF0 0x0D
+11,448,407,ZN,438,0x01 (Zone)
+11,454,32,Response: 0x21 0x01 0x53 0x01 0x02 0x04 0x04 0x0D
+11,459,407,RC,438,0x50 (Reply Code)
+11,470,407,AC,438,0x01 (Answer code)
+11,482,407,NB,438,0x02 (Number of bytes)
+11,493,407,DATA,438,MSB = Current page
+11,501,438,LSB = Total pages
+11,520,32,DVD total track-chapter-time information
+11,524,407,Byte:,438,Description:
+11,530,32,Query current track/chapter/time information.
+11,536,407,ZN,438,0x01 (Zone 1)
+11,547,407,CC,438,0x55 (Command code)
+11,559,407,NB,438,0x01 (Number of bytes)
+11,566,32,Example
+11,570,407,DATA,438,0xF0 = Query
+11,578,32,Total track time 0h 14m 48s:
+11,582,407,RESPONSE
+11,587,32,COMMAND: 0x21 0x01 0x55 0x01 0xF0 0x0D
+11,593,407,Byte:,438,Description:
+11,599,32,Response: 0x21 0x01 0x55 0x01 0x03 0x00 0x0E 0x2C 0x0D
+11,604,407,ZN,438,0x01 (Zone)
+11,616,407,RC,438,0x55 (Reply Code)
+11,627,407,AC,438,0x01 (Answer code)
+11,639,407,NB,438,0x03 (Number of bytes)
+11,650,407,DATA,438,MSB = Hours
+11,658,438,Byte = Minutes
+11,666,438,LSB = Seconds
+11,797,112,"Arcam (A&R Cambridge Ltd), Pembroke Avenue, Waterbeach, CAMBRIDGE, CB25 9QR, England",523,RS232
+11,806,513,(solo movie)
+11,810,200,+44 (0)1223 203200 www.arcam.co.uk/extranet
+11,815,530,11
+12,33,32,DVD total disc-group-title-time information
+12,37,407,Byte:,438,Description:
+12,43,32,Query current group/title/time information
+12,48,407,ZN,438,0x01 (Zone 1)
+12,60,407,CC,438,0x56 (Command code)
+12,71,407,NB,438,0x01 (Number of bytes)
+12,78,32,Example
+12,82,407,DATA,438,0xF0 = Query
+12,90,32,Current disc time 0h 74m 02s
+12,94,407,RESPONSE
+12,100,32,COMMAND: 0x21 0x01 0x56 0x01 0xF0 0x0D
+12,106,407,Byte:,438,Description:
+12,112,32,Response: 0x21 0x01 0x56 0x01 0x03 0x00 0x4A 0x02 0x00
+12,117,407,ZN,438,0x01 (Zone)
+12,129,407,RC,438,0x56 (Reply Code)
+12,140,407,AC,438,0x01 (Answer code)
+12,152,407,NB,438,0x03 (Number of bytes)
+12,163,407,DATA,438,MSB = Hours
+12,171,438,Byte = Minutes
+12,179,438,LSB = Seconds
+12,199,32,DVD Disc menu
+12,203,407,Byte:,438,Description:
+12,209,32,Query Disc menu state
+12,214,407,ZN,438,0x01 (Zone 1)
+12,225,407,CC,438,0x57 (Command code)
+12,237,407,NB,438,0x01 (Number of bytes)
+12,244,32,Example
+12,248,407,DATA,438,0xF0 = Query
+12,254,32,COMMAND: 0x21 0x01 0x57 0x01 0xF0 0x0D
+12,260,407,RESPONSE
+12,266,32,Response: 0x21 0x01 0x57 0x01 0x01 0x00 0x0D
+12,272,407,Byte:,438,Description:
+12,280,32,– indicates that the disc menu is not open.
+12,283,407,ZN,438,0x01 (Zone)
+12,295,407,RC,438,0x57 (Reply Code)
+12,306,407,AC,438,0x01 (Answer code)
+12,318,407,NB,438,0x01 (Number of bytes)
+12,329,407,DATA,438,0x00 = No disc menu open
+12,337,438,0x01 = Disc menu open
+12,356,32,FM search
+12,361,407,Byte:,438,Description:
+12,366,32,Starts an FM search either up or down the frequency band
+12,372,407,ZN,438,0x01 (Zone 1)
+12,383,407,CC,438,0xDA (Command code)
+12,395,407,NB,438,0x01 (Number of bytes)
+12,402,32,Example
+12,406,407,DATA,438,0xF1 = Scan Down
+12,414,32,Command/response sequence to start an FM scan going up the frequency band,438,0xF1 = Scan Up
+12,424,32,COMMAND: 0x21 0x01 0xDA 0x01 0xF2 0x0D
+12,435,32,Response: 0x21 0x01 0xDA 0x02 0x01 0xF2 0x0D
+12,454,32,Preset save
+12,458,407,Byte:,438,Description:
+12,464,32,Saves a radio station to a specific preset number
+12,469,407,ZN,438,0x01 (Zone 1)
+12,481,407,CC,438,0xDC (Command code)
+12,492,407,NB,438,0x01 (Number of bytes)
+12,499,32,Example
+12,504,407,DATA,438,0x01 … 0x1E = Preset number to use
+12,511,32,Command/response sequence to save the currently selected radio station to preset number 5
+12,521,32,COMMAND: 0x21 0x01 0xDC 0x01 0x05 0x0D
+12,533,32,Response: 0x21 0x01 0xDC 0x02 0x01 0x05 0x0D
+12,551,32,Disc chapter-track information
+12,555,407,Byte:,438,Description:
+12,561,32,Query current chapter/track info
+12,567,407,ZN,438,0x01 (Zone 1)
+12,578,407,CC,438,0xE8 (Command code)
+12,590,407,NB,438,0x01 (Number of bytes)
+12,597,32,Example
+12,601,407,DATA,438,0xF0 = Query
+12,609,32,Current track/chapter title 2 chapter 23 (total 6:32)
+12,613,407,RESPONSE
+12,619,32,COMMAND: 0x21 0x01 0xE8 0x01 0xF0 0x0D
+12,624,407,Byte:,438,Description:
+12,630,32,Response: 0x21 0x01 0xE8 0x01 0x06 0x02 0x06 0x00 0x17 0x00 0x20 0x0D
+12,636,407,ZN,438,0x01 (Zone)
+12,647,407,RC,438,0xE8 (Reply Code)
+12,659,407,AC,438,0x01 (Answer code)
+12,671,407,NB,438,0x06 (Number of bytes)
+12,682,407,DATA,438,MSB = Current Group/Title (0~99)
+12,690,438,BYTE = Total Group/Title(0~99)
+12,698,438,BYTE(2) = Current Chapter/Track
+12,706,438,(0~999)
+12,714,438,LSB(2) = Total Chapters/Tracks
+12,722,438,(0~999)
+12,797,49,RS232,112,"Arcam (A&R Cambridge Ltd), Pembroke Avenue, Waterbeach, CAMBRIDGE, CB25 9QR, England"
+12,806,39,(solo movie)
+12,810,200,+44 (0)1223 203200 www.arcam.co.uk/extranet
+12,815,56,12
+13,33,32,Playback time
+13,37,407,Byte:,438,Description:
+13,43,32,"Query current playback time, CD track, DVD title:"
+13,48,407,ZN,438,0x01 (Zone 1)
+13,60,407,CC,438,0xEB (Command code)
+13,71,407,NB,438,0x01 (Number of bytes)
+13,78,32,Example
+13,82,407,DATA,438,0xF0 = Query
+13,90,32,DVD 34m 22s into movie:
+13,94,407,RESPONSE
+13,100,32,COMMAND: 0x21 0x01 0xEB 0x01 0xF0 0x0D
+13,106,407,Byte:,438,Description:
+13,112,32,Response: 0x21 0x01 0xEB 0x01 0x03 0x00 0x22 0x16 0x0D
+13,117,407,ZN,438,0x01 (Zone)
+13,129,407,RC,438,0xEB (Reply Code)
+13,140,407,AC,438,0x01 (Answer code)
+13,152,407,NB,438,0x03 (Number of bytes)
+13,163,407,DATA,438,MSB = Hours
+13,171,438,Byte = Minutes (0~59)
+13,179,438,LSB = Seconds (0~59)
+13,199,32,Disc type
+13,203,407,Byte:,438,Description:
+13,209,32,Query current disc type
+13,214,407,ZN,438,0x01 (Zone 1)
+13,225,407,CC,438,0xED (Command code)
+13,237,407,NB,438,0x01 (Number of bytes)
+13,244,32,Example
+13,248,407,DATA,438,0xF0 = Query
+13,256,32,SACD is loaded:
+13,260,407,RESPONSE
+13,266,32,COMMAND: 0x21 0x01 0xED 0x01 0xF0 0x0D
+13,272,407,Byte:,438,Description:
+13,278,32,Response: 0x21 0x01 0xED 0x01 0x01 0x04 0x0D
+13,283,407,ZN,438,0x01 (Zone)
+13,295,407,RC,438,0xED (Reply Code)
+13,306,407,AC,438,0x01 (Answer code)
+13,318,407,NB,438,0x01 (Number of bytes)
+13,329,407,DATA,438,0x00 = DVD
+13,337,438,0x01 = DVD-A
+13,345,438,0x02 = CD
+13,353,438,0x03 = HDCD
+13,361,438,0x04 = SACD
+13,369,438,0x05 = VCD
+13,377,438,0x06 = SVCD
+13,385,438,0x07 = PHOTO CD
+13,393,438,0x08 = CD-ROM
+13,401,438,0x09 = DVD-ROM
+13,409,438,0x0A = Upgrade
+13,417,438,0x20 = Unknown
+13,425,438,0x21 = No Disc
+13,444,32,HDMI resolution
+13,449,407,Byte:,438,Description:
+13,454,32,Change the HDMI resolution
+13,460,407,ZN,438,0x01 (Zone 1)
+13,471,407,CC,438,0x47 (Command code)
+13,483,407,NB,438,0x01 (Number of bytes)
+13,490,32,Example
+13,494,407,DATA,438,0x01 = SD interlaced
+13,502,32,Command/response sequence to change the resolution to 720p:,438,0x02 = SD progressive
+13,510,32,Command: 0x21 0x01 0x47 0x01 0x03 0x0D,438,0x03 = 720p
+13,518,438,0x04 = 1080i
+13,523,32,Response: 0x21 0x01 0x47 0x02 0x01 0x03 0x0D
+13,526,438,0x06 = 768p
+13,534,438,0x80 = Auto
+13,542,438,0xF0 = Query
+13,797,112,"Arcam (A&R Cambridge Ltd), Pembroke Avenue, Waterbeach, CAMBRIDGE, CB25 9QR, England",523,RS232
+13,806,513,(solo movie)
+13,810,200,+44 (0)1223 203200 www.arcam.co.uk/extranet
+13,815,530,13
+14,33,32,Audio stream decode mode
+14,37,407,Byte:,438,Description:
+14,43,32,Query current audio stream
+14,48,407,ZN,438,0x01
+14,60,407,CC,438,0xEE (Command code)
+14,71,407,NB,438,0x01 (Number of bytes)
+14,78,32,"The number of channels indicated is from the original audio stream (e.g., two channels from"
+14,82,407,DATA,438,0xF0 = Query
+14,87,32,"the disc with Dolby Prologic II decoding will return two channels of audio, even though audio"
+14,94,407,RESPONSE
+14,96,32,may be also present on more than two channels).
+14,106,407,Byte:,438,Description:
+14,117,407,ZN,438,0x01 (Zone)
+14,120,32,Example
+14,129,32,COMMAND: 0x21 0x01 0xEE 0x01 0xF0 0x0D,407,RC,438,0xEE (Reply Code)
+14,140,32,Response: 0x21 0x01 0xEE 0x01 0x07 0x01 0x05 0x01 0x45 0x4E 0x85 0x00,407,AC,438,0x01 (Answer code)
+14,151,32,0x0D,407,NB,438,0x07 (Number of bytes)
+14,163,32,"– indicates command processing and that the current audio is Dolby Digital, 5.1, ISO639-1",407,D1,438,Current audio stream
+14,173,32,"language code ‘EN’, with PLII Off, and is the first from a total of 5 audio streams available.",407,D2,438,Total audio streams
+14,187,407,D3,438,Stream type
+14,195,438,0x00 = None
+14,203,438,0x01 = Dolby Digital
+14,211,438,0x02 = DTS
+14,219,438,0x03 = MPEG
+14,227,438,0x04 = MP3
+14,235,438,0x05 = WMA
+14,243,438,0x07 = PCM
+14,251,438,0x0A = SACD
+14,259,438,0x0B = MLP
+14,267,438,0x0C = AAC
+14,275,438,0x0D = OGG
+14,286,407,D4 ~,438,ISO639-1 Language code
+14,294,407,D5
+14,305,407,D6,438,(0x80 & LFE) | (0x7F & Number of
+14,313,438,channels)
+14,325,407,D7,438,Decode mode
+14,336,438,0x00 = Prologic II Off
+14,344,438,0x01 = Prologic II Emulation
+14,352,438,0x02 = Prologic II Matrix
+14,360,438,0x03 = Prologic II Music
+14,368,438,0x04 = Prologic II Movie
+14,376,438,0x05 = Stereo direct
+14,395,32,DVD Popup menu
+14,399,407,Byte:,438,Description:
+14,405,32,Query current state of popup menu
+14,410,407,ZN,438,0x01
+14,422,407,CC,438,0xF4 (Command code)
+14,433,407,NB,438,0x01 (Number of bytes)
+14,440,32,Example
+14,445,407,DATA,438,0xF0 = Query
+14,452,32,Search popup currently on display:
+14,456,407,RESPONSE
+14,462,32,COMMAND: 0x21 0x01 0xF4 0x01 0xF0 0x0D
+14,468,407,Byte:,438,Description:
+14,474,32,Response: 0x21 0x01 0xF4 0x01 0x01 0x05 0x0D
+14,479,407,ZN,438,0x01 (Zone)
+14,491,407,RC,438,0xF4 (Reply Code)
+14,502,407,AC,438,0x01 (Answer code)
+14,514,407,NB,438,0x01 (Number of bytes)
+14,525,407,DATA,438,0x00 = Popup menus closed
+14,533,438,0x03 = Trims popup menu
+14,541,438,0x05 = Search popup menu
+14,549,438,0x06 = Lipsync popup menu
+14,568,32,Time command
+14,572,407,Byte:,438,Description:
+14,578,32,Gets/sets the Real-Time Clock (RTC)
+14,584,407,ZN,438,0x01
+14,590,32,"<i>(Query/set only, no status message is generated for this command)</i>"
+14,595,407,CC,438,0xF8 (Command code)
+14,606,407,NB,438,0x04 (Number of bytes)
+14,614,32,Example
+14,618,407,D1,438,Day
+14,625,32,Command/response sequence to set clock to 17:30 Friday:
+14,629,438,0x01 = Monday … 0x07 = Sunday
+14,635,32,Command: 0x21 0x01 0xF8 0x04 0x05 0x11 0x1E 0x00 0x0D
+14,640,407,D2,438,Hours
+14,647,32,Response: 0x21 0x01 0xF8 0x01 0x05 0x11 0x1E 0x00 0x0D
+14,651,438,0x00 = 00:00 (12:00am)
+14,659,438,0x01 = 01:00 (01:00am)
+14,667,438,…
+14,675,438,0x16 = 22:00 (10:00pm)
+14,683,438,0x17 = 23:00 (11:00pm))
+14,695,407,D3,438,Minutes
+14,706,438,0x00 = 0 minutes
+14,714,438,…
+14,722,438,0x3B = 59 minutes
+14,733,407,D4,438,Seconds
+14,744,438,0x00 = 0 seconds
+14,752,438,…
+14,760,438,0x3B = 59 seconds
+14,771,407,DATA,438,0xF0 = Query
+14,797,49,RS232,112,"Arcam (A&R Cambridge Ltd), Pembroke Avenue, Waterbeach, CAMBRIDGE, CB25 9QR, England"
+14,806,39,(solo movie)
+14,810,200,+44 (0)1223 203200 www.arcam.co.uk/extranet
+14,815,56,14
+15,23,28,IR remote commands
+15,77,28,The following tables give the IR (infrared) remote commands accepted by the Arcam Solo Movie.
+15,92,50,AMP commands,298,TUN commands
+15,108,50,System code 16,298,System code 17
+15,123,59,Decimal Code,120,Command,307,Decimal Code,371,Command
+15,134,59,16-0,120,Source SAT,307,17-0,371,Tuner Number 0
+15,145,59,16-2,120,Source AV,307,17-1,371,Tuner Number 1
+15,157,59,16-3,120,Source DAB,307,17-2,371,Tuner Number 2
+15,168,59,16-4,120,Source DVD,307,17-3,371,Tuner Number 3
+15,179,59,16-5,120,Source TAPE,307,17-4,371,Tuner Number 4
+15,190,59,16-8,120,Source AUX,307,17-5,371,Tuner Number 5
+15,201,59,16-12,120,Standby,307,17-6,371,Tuner Number 6
+15,212,59,16-13,120,Mute,307,17-7,371,Tuner Number 7
+15,223,59,16-14,120,Eject,307,17-8,371,Tuner Number 8
+15,234,59,16-16,120,Volume +,307,17-9,371,Tuner Number 9
+15,245,59,16-17,120,Volume –,307,17-12,371,Standby
+15,256,59,16-18,120,Bass Correction +,307,17-13,371,Mute
+15,267,59,16-19,120,Bass Correction –,307,17-15,371,Display Mode
+15,278,59,16-20,120,Sub Trim +,307,17-18,371,Display Brightness
+15,289,59,16-21,120,Sub Trim –,307,17-32,371,Preset +
+15,300,59,16-22,120,Bass +,307,17-33,371,Preset –
+15,311,59,16-23,120,Bass –,307,17-37,371,Preset/Tune
+15,322,59,16-24,120,Treble +,307,17-38,371,FM/Mono
+15,333,59,16-25,120,Treble –,307,17-52,371,Source DAB/AM
+15,344,59,16-26,120,Balance Right,307,17-53,371,Source FM
+15,355,59,16-27,120,Balance Left,307,17-55,371,Sub Trim
+15,366,59,16-31,120,Decode Mode Stereo Direct,307,17-77,371,Navigate Right
+15,377,59,16-32,120,Display Mode,307,17-78,371,Navigate Left
+15,388,59,16-33,120,Decode Mode PLII Movie,307,17-85,371,Navigate Down
+15,399,59,16-34,120,Decode Mode PLII Music,307,17-86,371,Navigate Up
+15,410,59,16-35,120,Decode Mode PLII Matrix,307,17-87,371,Ok
+15,421,59,16-36,120,Decode Mode Off,307,17-91,371,Direct Preset 1
+15,432,59,16-40,120,Setup,307,17-92,371,Direct Preset 2
+15,443,59,16-51,120,Sub Trim,307,17-93,371,Direct Preset 3
+15,454,59,16-52,120,Source DAB/AM,307,17-94,371,Direct Preset 4
+15,465,59,16-53,120,Source FM,307,17-95,371,Direct Preset 5
+15,476,59,16-55,120,Display Mode,307,17-96,371,Direct Preset 6
+15,487,59,16-59,120,Display Brightness,307,17-97,371,Direct Preset 7
+15,498,59,16-67,120,Zone 1 Volume +,307,17-98,371,Direct Preset 8
+15,509,59,16-68,120,Zone 1 Volume –,307,17-99,371,Direct Preset 9
+15,520,59,16-69,120,Zone 1 Mute,307,17-100,371,Direct Preset 10
+15,531,59,16-71,120,Zone 1 Mute On,307,17-101,371,Direct Preset 11
+15,542,59,16-72,120,Zone 1 Mute Off,307,17-102,371,Direct Preset 12
+15,553,59,16-73,120,Zone 2 Volume +,307,17-103,371,Direct Preset 13
+15,564,59,16-74,120,Zone 2 Volume –,307,17-104,371,Direct Preset 14
+15,575,59,16-75,120,Zone 2 Mute,307,17-105,371,Direct Preset 15
+15,586,59,16-76,120,Zone 2 Mute On,307,17-106,371,Direct Preset 16
+15,597,59,16-77,120,Zone 2 Mute Off,307,17-107,371,Direct Preset 17
+15,608,59,16-80,120,Navigate Right,307,17-108,371,Direct Preset 18
+15,619,59,16-81,120,Navigate Left,307,17-109,371,Direct Preset 19
+15,630,59,16-82,120,Menu,307,17-110,371,Direct Preset 20
+15,641,59,16-85,120,Navigate Down,307,17-111,371,Direct Preset 21
+15,652,59,16-86,120,Navigate Up,307,17-112,371,Direct Preset 22
+15,664,59,16-87,120,OK,307,17-113,371,Direct Preset 23
+15,675,59,16-113,120,Alarm 1 Toggle,307,17-114,371,Direct Preset 24
+15,686,59,16-114,120,Alarm 2 Toggle,307,17-115,371,Direct Preset 25
+15,697,59,16-115,120,Alarm 3 Toggle,307,17-116,371,Direct Preset 26
+15,708,59,16-116,120,Alarm 4 Toggle,307,17-117,371,Direct Preset 27
+15,719,59,16-117,120,Snooze,307,17-118,371,Direct Preset 28
+15,730,59,16-118,120,Sleep,307,17-119,371,Direct Preset 29
+15,741,59,16-119,120,Mute On,307,17-120,371,Direct Preset 30
+15,752,59,16-120,120,Mute Off,307,17-123,371,Standby Off
+15,763,59,16-123,120,Standby Off,307,17-124,371,Standby On
+15,774,59,16-124,120,Standby On,307,17-125,371,Menu
+15,797,112,"Arcam (A&R Cambridge Ltd), Pembroke Avenue, Waterbeach, CAMBRIDGE, CB25 9QR, England",523,RS232
+15,806,513,(solo movie)
+15,810,200,+44 (0)1223 203200 www.arcam.co.uk/extranet
+15,815,530,15
+16,26,50,AUX commands
+16,42,50,System code 21
+16,53,50,<i>Note that iPod ® commands require iPod control to be enabled and iPod</i>
+16,62,50,<i>input to be selected.</i>
+16,75,59,Decimal Code,155,Command,329,25-41,425,Program
+16,86,59,21-0,155,iPod Number 0,329,25-45,425,DVD Eject
+16,97,59,21-1,155,iPod Number 1,329,25-48,425,DVD Pause
+16,108,59,21-2,155,iPod Number 2,329,25-50,425,DVD Scan Back
+16,119,59,21-3,155,iPod Number 3,329,25-52,425,DVD Scan Forward
+16,130,59,21-4,155,iPod Number 4,329,25-53,425,DVD Play
+16,141,59,21-5,155,iPod Number 5,329,25-54,425,DVD Stop
+16,152,59,21-6,155,iPod Number 6,329,25-55,425,Sub
+16,163,59,21-7,155,iPod Number 7,329,25-58,425,Clear
+16,174,59,21-8,155,iPod Number 8,329,25-59,425,Repeat A-B
+16,185,59,21-9,155,iPod Number 9,329,25-60,425,Slow Backward x1/2
+16,196,59,21-13,155,Mute,329,25-611,425,Slow Backward x1/4
+16,207,59,21-16,155,Volume +,329,25-62,425,Slow Backward x1/6
+16,218,59,21-17,155,Volume –,329,25-63,425,Slow Backward x1/8
+16,229,59,21-32,155,iPod Track Forward,329,25-64,425,DVD Random
+16,240,59,21-33,155,iPod Track Back,329,25-65,425,Subtitle
+16,251,59,21-45,155,iPod Eject,329,25-66,425,Title
+16,262,59,21-48,155,iPod Pause,329,25-67,425,DVD Menu
+16,273,59,21-53,155,iPod Play,329,25-68,425,Zoom
+16,284,59,21-54,155,iPod Stop,329,25-69,425,Audio
+16,296,59,21-55,155,Display Mode,329,25-70,425,Lipsync
+16,306,59,21-69,155,iPod Random,329,25-73,425,Angle
+16,317,59,21-70,155,iPod Repeat,329,25-74,425,Setup
+16,329,59,21-80,155,Navigate Up,329,25-75,425,Status
+16,340,59,21-81,155,Navigate Down,329,25-76,425,Search
+16,351,59,21-85,155,Navigate Left,329,25-77,425,Display Mode
+16,362,59,21-86,155,Navigate Right,329,25-80,425,Navigate Right
+16,373,59,21-87,155,Ok,329,25-81,425,Navigate Left
+16,384,59,21-112,155,iPod Scan Back,329,25-85,425,Navigate Down
+16,395,59,21-113,155,iPod Scan Forward,329,25-86,425,Navigate Up
+16,406,59,21-114,155,Menu,329,25-87,425,Ok
+16,417,329,25-88,425,HDMI
+16,424,50,DVD commands
+16,428,329,25-89,425,HDMI Resolution Auto
+16,439,50,System code 25,329,25-90,425,HDMI Resolution SD
+16,448,439,Interlaced
+16,456,59,Decimal Code,154,Command
+16,459,329,25-91,425,HDMI Resolution SD
+16,467,59,25-0,154,DVD Number 0,439,Progressive
+16,478,59,25-1,154,DVD Number 1,329,25-92,425,HDMI Resolution 720p
+16,489,59,25-2,154,DVD Number 2,329,25-93,425,HDMI Resolution 1080i
+16,500,59,25-3,154,DVD Number 3,329,25-94,425,HDMI Resolution 1080p
+16,510,59,25-4,154,DVD Number 4,439,(DV137/9 only)
+16,521,59,25-5,154,DVD Number 5,329,25-95,425,HDMI Resolution 768p
+16,532,59,25-6,154,DVD Number 6,329,25-96,425,Zoom Off
+16,543,59,25-7,154,DVD Number 7,329,25-97,425,Zoom Level 1
+16,554,59,25-8,154,DVD Number 8,329,25-98,425,Zoom Level 2
+16,565,59,25-9,154,DVD Number 9,329,25-99,425,Zoom Level 3
+16,576,59,25-12,154,Standby,329,25-100,425,Zoom Level 4
+16,587,59,25-18,154,Display Brightness,329,25-104,425,Scan Backward x2
+16,598,59,25-19,154,Scan Forward x2,329,25-105,425,Scan Backward x4
+16,609,59,25-20,154,Scan Forward x4,329,25-106,425,Scan Backward x8
+16,620,59,25-21,154,Scan Forward x8,329,25-107,425,Scan Backward x16
+16,631,59,25-22,154,Scan Forward x16,329,25-108,425,Scan Backward x50
+16,642,59,25-23,154,Scan Forward x50,329,25-109,425,Scan Backward x100
+16,653,59,25-24,154,Scan Forward x100,329,25-115,425,Repeat All
+16,665,59,25-25,154,Slow Forward x1/2,329,25-116,425,Repeat Single
+16,676,59,25-26,154,Slow Forward x1/4,329,25-117,425,Repeat Off
+16,687,59,25-27,154,Slow Forward x1/6,329,25-118,425,Shuffle On
+16,698,59,25-28,154,Slow Forward x1/8,329,25-119,425,Shuffle Off
+16,709,59,25-29,154,DVD Repeat,329,25-123,425,Standby Off
+16,720,59,25-30,154,DVD Slow Play Forward,329,25-124,425,Standby On
+16,731,59,25-31,154,DVD Slow Play Back
+16,742,59,25-32,154,DVD Track Forward
+16,753,59,25-33,154,DVD Track Back
+16,764,59,25-37,154,Trims
+16,797,49,RS232,112,"Arcam (A&R Cambridge Ltd), Pembroke Avenue, Waterbeach, CAMBRIDGE, CB25 9QR, England"
+16,806,39,(solo movie)
+16,810,200,+44 (0)1223 203200 www.arcam.co.uk/extranet
+16,815,56,16
+17,778,28,SH194,541,Issue 3
+17,798,129,"A&R Cambridge Ltd, Pembroke Avenue, Waterbeach, CAMBRIDGE, CB25 9QR, England"
+17,810,199,+44 (0)1223 203200 www.arcam.co.uk/extranet
