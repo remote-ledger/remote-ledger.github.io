@@ -58,9 +58,11 @@ dropped silently (SPEC R19, condition 5).
 | classe: SSP-300_600_IR_codes_v1-20.pdf: rows read | 98 |
 | classe: files | 18 |
 | classe: keys | 1,170 |
-| denon: files | 4 |
+| denon: files | 61 |
 | denon: kaseikyo rows read | 746 |
-| denon: keys | 1,024 |
+| denon: keys | 3,794 |
+| denon: master: rows whose Device Code and Function# the hex agrees with | 481 |
+| denon: master: strings | 2,780 |
 | denon: parity bytes that disagree | 86 |
 | denon: sharp rows read | 278 |
 | emotiva: ERC-3_IR_CODES.pdf: strings | 24 |
@@ -272,11 +274,15 @@ dropped silently (SPEC R19, condition 5).
 | simaudio: files | 8 |
 | simaudio: keys | 170 |
 
-## Rows that become no key (12)
+## Rows that become no key (16)
 
 | Maker | Document | Reason | Rows |
 |---|---|---|---|
 | `arcam` | `Solo_Movie_2.1-5.1_RS232_SH194_3.pdf` | `does not compile: RC5 function is 611; F is 0-127` | 2 |
+| `denon` | `Denon_Master_IR_Hex.xls sheet 'Main Zone ID#1'` | `neither a Sharp nor a Kaseikyo frame` | 3 |
+| `denon` | `Denon_Master_IR_Hex.xls sheet 'Main Zone ID#1'` | `the leader is not eight units and four` | 2 |
+| `denon` | `Denon_Master_IR_Hex.xls sheet 'RCD-N7'` | `neither a Sharp nor a Kaseikyo frame` | 4 |
+| `denon` | `Denon_Master_IR_Hex.xls sheet 'RCD-N7'` | `the two frames of a Sharp string are not a function and its inverse` | 1 |
 | `hegel` | `Hegel_H390_H590_IR_codes_v1.pdf` | `'Network' has no command ('N/A')` | 1 |
 | `hegel` | `Hegel_H390_H590_IR_codes_v1.pdf` | `'Optical 3' has no command ('N/A')` | 1 |
 | `jvc` | `DILA_Remote_Code_Emulation_Long_Hex.pdf` | `a model the cover does not list: X79` | 1 |
