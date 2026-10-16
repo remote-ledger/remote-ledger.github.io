@@ -12,7 +12,7 @@ from pathlib import Path
 import pytest
 
 from remote_ledger.errors import ValidationError
-from remote_ledger.official import anthem, arcam, cambridge, cary, denon, emotiva, hegel, hitachi, infocus, jvc, kef, lyngdorf, marantz, nad, oppo, rotel, simaudio
+from remote_ledger.official import anthem, arcam, cambridge, cary, classe, denon, emotiva, hegel, hitachi, infocus, jvc, kef, lyngdorf, marantz, nad, oppo, rotel, simaudio
 from remote_ledger.official import importer as oi
 from remote_ledger.official.common import MANIFEST, Report, load_snapshot
 from remote_ledger.serialize import load
@@ -26,7 +26,7 @@ SNAPSHOT = ROOT / oi.SNAPSHOT
 
 def test_every_document_and_csv_is_the_one_the_manifest_pins():
     for maker, retrieved in (("marantz", "2026-10-08"), ("anthem", "2026-10-08"), ("oppo", "2026-10-09"), ("kef", "2026-10-13"),
-                             ("jvc", "2026-10-13"), ("arcam", "2026-10-13"), ("cambridge", "2026-10-13"), ("hegel", "2026-10-13"), ("cary", "2026-10-13"), ("infocus", "2026-10-15"), ("lyngdorf", "2026-10-16"), ("emotiva", "2026-10-16"), ("denon", "2026-10-16"), ("hitachi", "2026-10-16"), ("nad", "2026-10-14"), ("simaudio", "2026-10-13"), ("rotel", "2026-10-13")):
+                             ("jvc", "2026-10-13"), ("arcam", "2026-10-13"), ("cambridge", "2026-10-13"), ("hegel", "2026-10-13"), ("cary", "2026-10-13"), ("infocus", "2026-10-15"), ("lyngdorf", "2026-10-16"), ("emotiva", "2026-10-16"), ("denon", "2026-10-16"), ("hitachi", "2026-10-16"), ("classe", "2026-10-16"), ("nad", "2026-10-14"), ("simaudio", "2026-10-13"), ("rotel", "2026-10-13")):
         snap = load_snapshot(SNAPSHOT / maker)
         assert snap.maker == maker and snap.retrieved == retrieved
         assert snap.documents and snap.sheets
@@ -443,12 +443,12 @@ def test_the_committed_official_import_keeps_r19():
     or Untested, and a citation that names a document the manifest pins, by hash."""
     assert (ROOT / oi.IMPORT_ROOT / "README.md").is_file() and (ROOT / oi.IMPORT_ROOT / oi.REPORT).is_file()
     hashes, dates, snapshots = {}, {}, {}
-    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "arcam", "cambridge", "hegel", "cary", "infocus", "lyngdorf", "emotiva", "denon", "hitachi", "nad", "simaudio", "rotel"):
+    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "arcam", "cambridge", "hegel", "cary", "infocus", "lyngdorf", "emotiva", "denon", "hitachi", "classe", "nad", "simaudio", "rotel"):
         manifest = json.loads((SNAPSHOT / maker / MANIFEST).read_text(encoding="utf-8"))
         for name, entry in manifest["documents"].items():
             hashes[name], dates[name], snapshots[name] = entry["sha256"], entry.get("retrieved", manifest["retrieved"]), entry.get("snapshot")
     shape = re.compile(r"^(?:marantz\.com archive-downloads|anthemav\.com \(storage\.googleapis\.com/sandbox1-anthemav/an\)"
-                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|infocus\.com IR code PDFs|lyngdorf\.com IR code PDF|emotiva\.com IR code PDFs|denon\.co\.uk RC code list|hitachi-america\.us IR code documents|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
+                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|infocus\.com IR code PDFs|lyngdorf\.com IR code PDF|emotiva\.com IR code PDFs|denon\.co\.uk RC code list|hitachi-america\.us IR code documents|classeaudio\.com IR code documents|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
                        r"(?:, from the Wayback Machine snapshot (\d{14}))?\) (?:sheet '[^']+' row \d+|page \d+ row \d+|page \d+ '|page \d+ table \d+ row '|page \d+ row '|key \d+ ')")
     files = sorted((ROOT / oi.IMPORT_ROOT).rglob("*.json"))
     assert len(files) > 180
@@ -2563,3 +2563,105 @@ def test_other_sources_hitachi_remotes_have_the_codes_of_the_tvs_tables_and_the_
             by_label.setdefault(squash(label), {})[name] = function
     repeated = {k: v for k, v in by_label.items() if len(v) > 1}
     assert len(repeated) == 80 and sorted(k for k, v in repeated.items() if len(set(v.values())) > 1) == ["169zoom", "43expanded", "43zoom2", "cc", "expanded", "info", "night"]
+
+
+# --- Classé --------------------------------------------------------------------------------------------------------
+
+
+def runs_to_pronto(levels, word, unit, gap=0x1275):
+    """A Pronto string of the levels (1 a mark) at ``unit`` words a unit: a mark and a space for each pair, and the gap for the last space."""
+    while levels and levels[-1] == 0:
+        levels = levels[:-1]
+    pairs, i = [], 0
+    while i < len(levels):
+        mark = 0
+        while i < len(levels) and levels[i] == 1:
+            mark, i = mark + 1, i + 1
+        space = 0
+        while i < len(levels) and levels[i] == 0:
+            space, i = space + 1, i + 1
+        pairs.append((mark * unit, space * unit if i < len(levels) else gap))
+    return " ".join(f"{w:04X}" for w in [0, word, 0, len(pairs), *[x for pair in pairs for x in pair]])
+
+
+def rc6_pronto(system, code, toggle):
+    levels = [1] * 6 + [0] * 2 + [1, 0] + [0, 1] * 3 + ([1, 1, 0, 0] if toggle else [0, 0, 1, 1])
+    for bit in [int(b) for b in f"{system:08b}{code:08b}"]:
+        levels += [1, 0] if bit else [0, 1]
+    return runs_to_pronto(levels, 0x4A, 0x19)
+
+
+def rc5_pronto(system, command, toggle):
+    bits = [1, 1 - (command >> 6), toggle] + [int(b) for b in f"{system:05b}{command & 0x3F:06b}"]
+    levels = []
+    for bit in bits:
+        levels += [0, 1] if bit else [1, 0]
+    return runs_to_pronto(levels[1:], 0x6D, 0x22)
+
+
+def test_classes_rc6_and_rc5_pronto_hex_decode_to_the_system_the_code_and_the_toggle_bit():
+    for system, code, toggle in ((16, 0, 0), (200, 153, 1), (116, 255, 0), (201, 12, 1)):
+        assert classe.decode_rc6(rc6_pronto(system, code, toggle)) == (0, toggle, system, code)
+    for system, command, toggle in ((25, 12, 0), (25, 62, 1), (25, 127, 0)):
+        assert classe.decode_rc5(rc5_pronto(system, command, toggle)) == (system, command, toggle)
+    assert "leader" in classe.decode_rc6(rc6_pronto(16, 0, 0).replace("0096", "0050", 1))
+    assert "header says" in classe.decode_rc6("0000 004A 0000 0003 0095 0032")
+    two = rc6_pronto(200, 153, 0) + " " + rc6_pronto(200, 153, 1)
+    assert classe.prontos(two) == [rc6_pronto(200, 153, 0), rc6_pronto(200, 153, 1)] and classe.prontos("not hex") == ["not hex"]
+
+
+def test_a_classe_list_is_the_rows_of_system_code_ir_code_and_action_and_a_line_in_the_action_column_goes_on_the_action():
+    rows = [["1", "86", "90", "The Classé CAP-2100 uses RC6 protocol for infrared communications. The"], ["1", "197", "109", "Sys code", "181", "IR code", "239", "Action"],
+            ["1", "211", "125", "016", "199", "1", "239", "Toggle Tape Monitor on/off"], ["1", "354", "125", "016", "196", "15", "239", "Cycle through display intensities"],
+            ["1", "368", "239", "(low/medium/high)"], ["1", "382", "125", "200", "196", "16", "239", "Volume up (volume +)"], ["1", "500", "90", "A note that is no row"]]
+    got = classe.read_list(rows)
+    assert [(e.protocol, e.system, e.code, e.label) for e in got] == [
+        ("RC6", 16, 1, "Toggle Tape Monitor on/off"), ("RC6", 16, 15, "Cycle through display intensities (low/medium/high)"), ("RC6", 200, 16, "Volume up (volume +)")]
+    commands = classe.read_commands([["1", "100", "77", "RC6 Coded Mode 0 system 201"], ["1", "178", "120", "1", "148", "#1", "261", "Direct Power Toggle AMP 1"],
+                                     ["1", "339", "114", "68", "148", "Program Mode Toggle Same as front panel mode button"]])
+    assert [(e.system, e.code, e.label, e.where) for e in commands] == [
+        (201, 1, "#1", "the description 'Direct Power Toggle AMP 1'"), (201, 68, "Program Mode Toggle Same as front panel mode button", "")]
+
+
+def test_a_classe_hex_pdf_is_read_by_its_headings_and_every_string_must_be_its_systems_code_and_a_toggle_and_a_second_string_in_an_item_is_a_note():
+    hexlines = lambda text: [text[i:i + 90].strip() for i in range(0, len(text), 90)]            # noqa: E731
+    rows = [["1", "RC6 MODE 0, SYSTEM CODE 016"], ["1", "IR CODE 0 TOGGLE 0"], ["1", "INPUT 1"],
+            *[["1", line] for line in hexlines(rc6_pronto(16, 0, 0))], ["1", "IR CODE 0 TOGGLE 1"], ["1", "INPUT 1"], *[["1", line] for line in hexlines(rc6_pronto(16, 0, 1))],
+            ["2", "IR CODE 12 TOGGLE 0"], ["2", "STANDBY/"], ["2", "OPERATE"], *[["2", line] for line in hexlines(rc6_pronto(16, 12, 0))],
+            ["2", "IR CODE 13 TOGGLE 0"], ["2", "MUTE"], *[["2", line] for line in hexlines(rc6_pronto(16, 14, 0))],
+            ["3", "IR CODE 153 TOGGLE 0"], ["3", "UNMUTE"], *[["3", line] for line in hexlines(rc6_pronto(16, 153, 0) + " " + rc6_pronto(16, 153, 1))]]
+    entries, notes = classe.read_hex(rows)
+    assert [(e.label, e.system, e.code, e.doubts) for e in entries] == [
+        ("INPUT 1", 16, 0, []), ("STANDBY/ OPERATE", 16, 12, []),
+        ("MUTE", 16, 13, ["a Pronto hex of its TOGGLE 0 item decodes to system 16 code 14"]), ("UNMUTE", 16, 153, [])]
+    assert len(notes) == 1 and "has 2 Pronto strings" in notes[0]
+    with pytest.raises(ValueError, match="not mode 0"):
+        classe.read_hex([["1", "RC6 MODE 6, SYSTEM CODE 16"]])
+
+
+def test_classes_twelve_documents_are_eighteen_files_and_1170_keys_all_plausible_and_the_lists_and_the_hex_pdfs_of_a_product_have_the_same_codes():
+    files = {p.stem: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "classe").glob("*.json"))}
+    assert {n: len(f["keys"]) for n, f in files.items()} == {
+        "CAP-2100": 32, "CDP-100": 47, "CDP-102": 88, "CDP-202": 88, "CDP-300": 88, "CDP-502": 88, "CDT-300": 88, "CP-500": 33, "CP-700": 39,
+        "CP-800__HEX_codes": 54, "CT-SSP__HEX_codes": 86, "Delta_amplifiers": 25, "Delta_and_CT_amplifiers__HEX_codes": 22, "SSP-25": 24,
+        "SSP-300": 98, "SSP-600": 98, "SSP-800": 86, "SSP-800__HEX_codes": 86}
+    assert sum(len(f["keys"]) for f in files.values()) == 1_170
+    assert all(s["forms"][0]["confidence"] == "plausible" for f in files.values() for s in f["keys"].values())
+    assert {n: f["protocol"] for n, f in files.items() if f["protocol"]["name"] == "RC5"} == {"SSP-25": {"name": "RC5", "carrierHz": 36000, "minSends": 1}}
+    assert {f["protocol"]["carrierHz"] for n, f in files.items() if n != "SSP-25"} == {56000}
+    assert files["CDP-102"]["keys"] == files["CDT-300"]["keys"] == files["CDP-502"]["keys"] and files["SSP-300"]["keys"] == files["SSP-600"]["keys"]
+
+    def codes(name):
+        return {(int(s["forms"][0]["device"], 0), int(s["forms"][0]["function"], 0)): s["label"] for s in files[name]["keys"].values()}
+    ssp, ssp_hex = codes("SSP-800"), codes("SSP-800__HEX_codes")
+    assert set(ssp) == set(ssp_hex) and codes("SSP-800__HEX_codes") == codes("CT-SSP__HEX_codes")
+    squash = lambda text: re.sub(r"[^a-z0-9]", "", text.lower())            # noqa: E731
+    assert sum(squash(ssp[k]) == squash(ssp_hex[k]) for k in ssp) == 43
+    delta, delta_hex = codes("Delta_amplifiers"), codes("Delta_and_CT_amplifiers__HEX_codes")
+    assert set(delta_hex) < set(delta) and sorted(set(delta) - set(delta_hex)) == [(201, 68), (201, 70), (201, 92)]
+    assert {k[0] for k in codes("CP-800__HEX_codes")} == {16, 200} and {k[0] for k in codes("CDP-102")} == {4, 200}
+    assert codes("SSP-800")[(116, 2)] == "Input01" and codes("SSP-800__HEX_codes")[(116, 2)] == "INPUT 1" and codes("CAP-2100")[(200, 16)] == "Volume up (volume +)"
+    source = files["CAP-2100"]["keys"]["KEY_VOLUME_UP_VOLUME_PLUS"]["forms"][0]["source"]
+    assert "CAP-2100_IR_codes.pdf@f6bbfefe (retrieved 2026-10-16, from the Wayback Machine snapshot 20101217163929)" in source and "RC6 mode 0 system code 200, IR code 16" in source
+    hex_source = files["CP-800__HEX_codes"]["keys"]["KEY_INPUT_1"]["forms"][0]["source"]
+    assert "CLASSE_CP-800_HEX.pdf@2e511a04 (retrieved 2026-10-16) page 1" in hex_source and hex_source.endswith("the Pronto hex decoded and agreeing")

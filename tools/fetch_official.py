@@ -7,7 +7,7 @@ size, SHA-256, the retrieval date (today: do not pass --date) and the server's `
 (and, for a copy from the Wayback Machine, the address and snapshot it was archived from). Run it, then
 ``tools/official_sheets_to_csv.py <maker>`` for the spreadsheets, review the diff, and import.
 
-    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc|arcam|infocus|lyngdorf|emotiva|denon|hitachi|cambridge|hegel|cary|nad|simaudio|rotel
+    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc|arcam|infocus|lyngdorf|emotiva|denon|hitachi|classe|cambridge|hegel|cary|nad|simaudio|rotel
 """
 
 from __future__ import annotations
@@ -206,6 +206,22 @@ DOCUMENTS = {
         ("2009_Discrete_Codes_L32_and_larger_0211.pdf", "https://web.archive.org/web/20111226050752id_/http://www.hitachi-america.us:80/supportingdocs/forhome/ubcg/remote_ir_codes/2009_Discrete_Codes_L32_and_larger_0211.pdf", None),
         ("2009_RC_Layouts_and_IR_Codes_L19_L26.pdf", "https://web.archive.org/web/20111226052349id_/http://www.hitachi-america.us:80/supportingdocs/forhome/ubcg/remote_ir_codes/2009_RC_Layouts_and_IR_Codes_L19_L26.pdf", None),
         ("AVC_56_Discrete_Codes_UT_Monitor_PDP_Pronto_Hex.pdf", "https://web.archive.org/web/20110104115920id_/http://hitachi-america.us/supportingdocs/forhome/ubcg/remote_ir_codes/AVC_56_Discrete_Codes_UT_Monitor_PDP_Pronto_Hex.pdf", None),
+    ],
+    # Classé's IR code lists and HEX code PDFs (DESIGN section 83): the seven of the current support site are its own server's (the plain address), and the six
+    # of the Delta series, which that site does not have, are the Wayback Machine's copies of the old downloads page's (a `Download.htm` that is the PDF).
+    "classe": [
+        ("CAP-2100_IR_codes.pdf", "https://web.archive.org/web/20101217163929id_/http://classeaudio.com/downloads/Download.htm?Path=IR_CODES/Delta_Series/IR_and_HEX_CODES&File=Class%E9%20CAP-2100%20IR%20codes.pdf", None),
+        ("CDP-100_IR_codes_v1-20.pdf", "https://web.archive.org/web/20101217164414id_/http://classeaudio.com/downloads/Download.htm?Path=IR_CODES/Delta_Series/IR_and_HEX_CODES&File=Class%E9%20CDP-100%20IR%20codes%20v1-20.pdf", None),
+        ("CDP-102_202_300_500_and_CDT-300_IR_codes_v1-19.pdf", "https://web.archive.org/web/20101217164041id_/http://classeaudio.com/downloads/Download.htm?Path=IR_CODES/Delta_Series/IR_and_HEX_CODES&File=Class%E9%20CDP-102_202_300_500%20and%20CDT-300%20IR%20codes%20v1-19.pdf", None),
+        ("CP-500_IR_codes.pdf", "https://web.archive.org/web/20101217164333id_/http://classeaudio.com/downloads/Download.htm?Path=IR_CODES/Delta_Series/IR_and_HEX_CODES&File=Class%E9%20CP-500%20IR%20codes.pdf", None),
+        ("CP-700_IR_codes.pdf", "https://web.archive.org/web/20101217164253id_/http://classeaudio.com/downloads/Download.htm?Path=IR_CODES/Delta_Series/IR_and_HEX_CODES&File=Class%E9%20CP-700%20IR%20codes.pdf", None),
+        ("SSP-300_600_IR_codes_v1-20.pdf", "https://web.archive.org/web/20101217164203id_/http://classeaudio.com/downloads/Download.htm?Path=IR_CODES/Delta_Series/IR_and_HEX_CODES&File=Class%E9%20SSP-300_600%20IR%20codes%20v1-20.pdf", None),
+        ("CLASSE_CP-800_HEX.pdf", "https://support.classeaudio.com/files/documents/automation_and_control/ir_remote_codes/delta_1_2/ir_and_hex_codes/CLASSE_CP-800_HEX.pdf", None),
+        ("CLASSE_Delta_1_2_Amplifier_IR_Commands.pdf", "https://support.classeaudio.com/files/documents/automation_and_control/ir_remote_codes/delta_1_2/ir_and_hex_codes/CLASSE_Delta_1_2_Amplifier_IR_Commands.pdf", None),
+        ("CLASSE_Delta_1_2_Amplifiers_HEX.pdf", "https://support.classeaudio.com/files/documents/automation_and_control/ir_remote_codes/delta_1_2/ir_and_hex_codes/CLASSE_Delta_1_2_Amplifiers_HEX.pdf", None),
+        ("CLASSE_SSP-800_CT-SSP_HEX.pdf", "https://support.classeaudio.com/files/documents/automation_and_control/ir_remote_codes/delta_1_2/ir_and_hex_codes/CLASSE_SSP-800_CT-SSP_HEX.pdf", None),
+        ("CLASSE_SSP-800_IR_codes_v1-24.pdf", "https://support.classeaudio.com/files/documents/automation_and_control/ir_remote_codes/delta_1_2/ir_and_hex_codes/CLASSE_SSP-800_IR_codes_v1-24.pdf", None),
+        ("CLASSE_SSP-25_HEX.pdf", "https://support.classeaudio.com/files/documents/automation_and_control/ir_remote_codes/omega_and_legacy/hex_codes/CLASSE_SSP-25_HEX.pdf", None),
     ],
     # Cambridge Audio's driver-updates page lists 16 PDFs of IR codes and a list of the 752BD, CXU and CXUHD remotes' NEC codes.
     # Only two carry no copyright or rights notice (the others do, so they are held in the private repository): the AXR85/AXR100

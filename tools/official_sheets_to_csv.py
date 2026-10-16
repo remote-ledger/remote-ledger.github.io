@@ -96,6 +96,10 @@ SHEETS = {
         "X3_IRCodes.pdf",
     )}},
     "lyngdorf": {"Lyngdorf-IR-Codes.pdf": ["lines"]},
+    "classe": {name: ["cells"] for name in (
+        "CAP-2100_IR_codes.pdf", "CDP-100_IR_codes_v1-20.pdf", "CDP-102_202_300_500_and_CDT-300_IR_codes_v1-19.pdf", "CP-500_IR_codes.pdf", "CP-700_IR_codes.pdf",
+        "SSP-300_600_IR_codes_v1-20.pdf", "CLASSE_Delta_1_2_Amplifier_IR_Commands.pdf", "CLASSE_SSP-800_IR_codes_v1-24.pdf")} |
+        {name: ["pages"] for name in ("CLASSE_CP-800_HEX.pdf", "CLASSE_Delta_1_2_Amplifiers_HEX.pdf", "CLASSE_SSP-800_CT-SSP_HEX.pdf", "CLASSE_SSP-25_HEX.pdf")},
     "denon": {"AVR4311CI_AVR4311_IR-Codes.pdf": ["words"]},
     "hitachi": {"2003_and_2004_HITACHI_IR.xls": ["Sheet1", "Sheet2"], "2004_IR_Codes-1.xls": ["2004 Codes", "Additional Codes"],
                 **{name: ["cells"] for name in ("2007_Discrete_Codes-DW3.pdf", "2009_Discrete_Codes_L32_and_larger_0211.pdf",
