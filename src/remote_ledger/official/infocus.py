@@ -47,6 +47,7 @@ class Document:
     default_customer: int = DEFAULT_CUSTOMER   # the customer code a document that states none is read with
     default_why: str = ""          # why that one, when it is not the one every other document gives
     skip_names: tuple[str, ...] = ()           # the names of rows that are no key (the specification's ``N/A``: a reserved code)
+    note: str = ""                 # what the citation of each key says besides (where the document is from, when no snapshot says so)
 
 
 DOCUMENTS: tuple[Document, ...] = (
@@ -67,6 +68,12 @@ DOCUMENTS: tuple[Document, ...] = (
     Document("InFocus-IN32-IRcodes.pdf", ("IN32", "IN34"), "name_code", unnamed=("IN32", "IN34")),
     Document("InFocus-IN5300-IRCodes.pdf", ("IN5302", "IN5304"), "name_desc_code"),
     Document("InFocus-IN5310-IRCodes.pdf", ("IN5310", "IN5310HD"), "numbered", sheet="pages", unnamed=("IN5310", "IN5310HD")),
+    # the two of the "a" series: the file is served by InFocus's image host (the Wayback Machine holds no copy), its name is the only place that names the model,
+    # and its table is the IN5310's: 29 codes, the same ones
+    Document("IN5312a_IRCodes.pdf", ("IN5312a",), "numbered", sheet="pages",
+             note="the document names no model: the file is `IN5312a_IRCodes.pdf` on InFocus's image host, and its table is the IN5310's"),
+    Document("IN5316HDa_IRCodes.pdf", ("IN5316HDa",), "numbered", sheet="pages",
+             note="the document names no model: the file is `IN5316HDa_IRCodes.pdf` on InFocus's image host, and its table is the IN5310's"),
     # the four whose table is an image (D298), read from the transcription; the customer code's sentence is in the text layer
     Document("InFocus-IN110-IRCodes.pdf", ("IN112", "IN114", "IN116"), "transcribed", sheet="transcribed", text_sheet="lines"),
     Document("IN3114_IN3116_IRCodes.pdf", ("IN2112", "IN2114", "IN2116", "IN3114", "IN3116"), "transcribed", sheet="transcribed", text_sheet="lines"),
@@ -423,7 +430,8 @@ def build(snapshot: Snapshot, authored: dict[tuple[str, str], str], report: Repo
                 if gate[key]:
                     report.unrepresented[(MAKER, document.file, f"does not compile: {gate[key]}")] += 1
                     continue
-                cite = (f"{where}@{sha} (retrieved {entry.get('retrieved', snapshot.retrieved)}, from the Wayback Machine snapshot {entry['snapshot']}) "
+                cite = (f"{where}@{sha} (retrieved {entry.get('retrieved', snapshot.retrieved)}"
+                        + (f", from the Wayback Machine snapshot {entry['snapshot']}" if "snapshot" in entry else "") + ") "
                         f"page {e.page} row '{e.name}' ({e.written}): NEC1 device {device} subdevice {subdevice} function {e.code}, "
                         f"customer code 0x{customer:04X}" + (" written in the order it is sent" if document.high_first else ""))
                 doubts = []
@@ -447,6 +455,8 @@ def build(snapshot: Snapshot, authored: dict[tuple[str, str], str], report: Repo
                     cite += "; " + e.note
                 if document.sheet == "transcribed":
                     cite += "; the table is an image in the PDF, and this row was read from it by eye (DESIGN D298)"
+                if document.note:
+                    cite += "; " + document.note
                 if model in document.unnamed:
                     cite += f"; the document does not name {model}, and the PDF is served on the page of {model}"
                 members.append((e.name, {"id": "primary.irp", "type": "irp", "device": device, "subdevice": subdevice, "function": e.code,

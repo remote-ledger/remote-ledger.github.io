@@ -61,7 +61,7 @@ SHEETS = {
         "Solo_bar_IR_codes_V2.0.pdf": ["lines"],
         "Solo_Movie-Movie_2.1-Music_2_RS232_SH284E_A.pdf": ["tables"],
     },
-    "infocus": {"InFocus-IN5310-IRCodes.pdf": ["pages"],         # the four whose table is an image (D298) have the text layer and a transcription
+    "infocus": {"InFocus-IN5310-IRCodes.pdf": ["pages"], "IN5312a_IRCodes.pdf": ["pages"], "IN5316HDa_IRCodes.pdf": ["pages"],         # the four whose table is an image (D298) have the text layer and a transcription
                 **{name: ["lines", "transcribed"] for name in ("InFocus-IN110-IRCodes.pdf", "InFocus-IN3118HD-IRCodes.pdf", "IN3114_IN3116_IRCodes.pdf", "InFocus-IN3910-IRCodes.pdf")},
                 "SP8604_IRCodes.pdf": ["transcribed"],        # no text layer at all: the whole page is pictures (D301)
                 **{name: ["lines"] for name in ("IN5550-IR-Codes.pdf", "InFocus-IN3900LB-IRCodes.pdf")},
