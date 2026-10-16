@@ -12,7 +12,7 @@ from pathlib import Path
 import pytest
 
 from remote_ledger.errors import ValidationError
-from remote_ledger.official import anthem, arcam, cambridge, cary, classe, denon, emotiva, hegel, hitachi, infocus, jvc, kef, lyngdorf, marantz, nad, oppo, rotel, simaudio
+from remote_ledger.official import anthem, arcam, cambridge, cary, classe, cyrus, denon, emotiva, hegel, hitachi, infocus, jvc, kef, lyngdorf, marantz, nad, oppo, rotel, simaudio
 from remote_ledger.official import importer as oi
 from remote_ledger.official.common import MANIFEST, Report, load_snapshot
 from remote_ledger.serialize import load
@@ -26,7 +26,7 @@ SNAPSHOT = ROOT / oi.SNAPSHOT
 
 def test_every_document_and_csv_is_the_one_the_manifest_pins():
     for maker, retrieved in (("marantz", "2026-10-08"), ("anthem", "2026-10-08"), ("oppo", "2026-10-09"), ("kef", "2026-10-13"),
-                             ("jvc", "2026-10-13"), ("arcam", "2026-10-13"), ("cambridge", "2026-10-13"), ("hegel", "2026-10-13"), ("cary", "2026-10-13"), ("infocus", "2026-10-15"), ("lyngdorf", "2026-10-16"), ("emotiva", "2026-10-16"), ("denon", "2026-10-16"), ("hitachi", "2026-10-16"), ("classe", "2026-10-16"), ("nad", "2026-10-14"), ("simaudio", "2026-10-13"), ("rotel", "2026-10-13")):
+                             ("jvc", "2026-10-13"), ("arcam", "2026-10-13"), ("cambridge", "2026-10-13"), ("hegel", "2026-10-13"), ("cary", "2026-10-13"), ("infocus", "2026-10-15"), ("lyngdorf", "2026-10-16"), ("emotiva", "2026-10-16"), ("denon", "2026-10-16"), ("hitachi", "2026-10-16"), ("classe", "2026-10-16"), ("cyrus", "2026-10-16"), ("nad", "2026-10-14"), ("simaudio", "2026-10-13"), ("rotel", "2026-10-13")):
         snap = load_snapshot(SNAPSHOT / maker)
         assert snap.maker == maker and snap.retrieved == retrieved
         assert snap.documents and snap.sheets
@@ -443,12 +443,12 @@ def test_the_committed_official_import_keeps_r19():
     or Untested, and a citation that names a document the manifest pins, by hash."""
     assert (ROOT / oi.IMPORT_ROOT / "README.md").is_file() and (ROOT / oi.IMPORT_ROOT / oi.REPORT).is_file()
     hashes, dates, snapshots = {}, {}, {}
-    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "arcam", "cambridge", "hegel", "cary", "infocus", "lyngdorf", "emotiva", "denon", "hitachi", "classe", "nad", "simaudio", "rotel"):
+    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "arcam", "cambridge", "hegel", "cary", "infocus", "lyngdorf", "emotiva", "denon", "hitachi", "classe", "cyrus", "nad", "simaudio", "rotel"):
         manifest = json.loads((SNAPSHOT / maker / MANIFEST).read_text(encoding="utf-8"))
         for name, entry in manifest["documents"].items():
             hashes[name], dates[name], snapshots[name] = entry["sha256"], entry.get("retrieved", manifest["retrieved"]), entry.get("snapshot")
     shape = re.compile(r"^(?:marantz\.com archive-downloads|anthemav\.com \(storage\.googleapis\.com/sandbox1-anthemav/an\)"
-                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|infocus\.com IR code PDFs|lyngdorf\.com IR code PDF|emotiva\.com IR code PDFs|denon\.co\.uk RC code list|denon\.com Master IR Hex|hitachi-america\.us IR code documents|classeaudio\.com IR code documents|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
+                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|infocus\.com IR code PDFs|lyngdorf\.com IR code PDF|emotiva\.com IR code PDFs|denon\.co\.uk RC code list|denon\.com Master IR Hex|hitachi-america\.us IR code documents|classeaudio\.com IR code documents|cyrusaudio\.com remote code tables|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
                        r"(?:, from the Wayback Machine snapshot (\d{14}))?\) (?:sheet '[^']+' row \d+|page \d+ row \d+|page \d+ '|page \d+ table \d+ row '|page \d+ row '|key \d+ ')")
     files = sorted((ROOT / oi.IMPORT_ROOT).rglob("*.json"))
     assert len(files) > 180
@@ -2724,3 +2724,47 @@ def test_denons_master_spreadsheet_is_57_files_and_2770_keys_that_decode_and_the
     checked = [s for n, f in files.items() if n.startswith("AVRxx07") for s in f["keys"].values()]
     assert len(checked) == 482 and sum("sheet's own Device Code" in s["forms"][0]["source"] for s in checked) == 1
     assert all(f["keys"] for f in files.values()) and {f["manufacturer"] for f in files.values()} == {"Denon"}
+
+
+# --- Cyrus ---------------------------------------------------------------------------------------------------------
+
+
+def test_a_cyrus_table_is_the_codes_and_the_products_names_told_from_the_standards_by_place_and_a_blank_cell_is_no_key():
+    document = cyrus.Document("x.pdf", 19, ("AV5",), 153, (320, 408))
+    rows = [["1", "73", "56", "CYRUS AV5 REMOTE CODES"], ["1", "121", "64", "Code", "105", "RC5 Amplifier 2 (19)", "201", "Cyrus AV5 & AV8", "320", "Code"],
+            ["1", "130", "71", "0", "138", "0", "325", "64"], ["1", "140", "71", "1", "138", "1", "218", "Input 1*", "325", "65"],
+            ["1", "241", "69", "12", "127", "Standby", "218", "Standby", "325", "76"], ["1", "250", "69", "13", "118", "Mute/Demute", "223", "Mute", "325", "77"],
+            ["1", "287", "69", "16", "125", "Volume +", "325", "80", "472", "Adjust up"], ["1", "731", "56", "NOTE:- Codes marked * are available from version 1.2"]]
+    got = cyrus.parse(rows, document)
+    assert [(r.code, r.name, r.standard) for r in got] == [(1, "Input 1*", "1"), (12, "Standby", "Standby"), (13, "Mute", "Mute/Demute"), (80, "Adjust up", "")]
+    assert [(lo, split, end) for lo, split, end in cyrus.tables(document)] == [(60, 153, 305), (305, 408, 10_000)]
+    assert cyrus.tables(cyrus.Document("y.pdf", 16, ("3i",), 181)) == [(60, 181, 10_000)]
+
+
+def test_cyrus_thirteen_one_page_tables_are_twenty_files_and_435_keys_and_a_second_table_is_the_codes_64_to_127():
+    files = {p.stem: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "cyrus").glob("*.json"))}
+    assert {n: len(f["keys"]) for n, f in files.items()} == {
+        "3": 14, "3i": 16, "5": 16, "6": 16, "7": 16, "8": 16, "AV5": 31, "AV8": 31, "AV_Master": 39, "CD_player": 25, "DVD_7": 32, "FM7.5": 21, "FM7": 21,
+        "FMX": 21, "Pre": 16, "PreX": 16, "Quattro": 26, "aCA7.5": 16, "dAD1": 26, "original_tuner": 20}
+    assert sum(len(f["keys"]) for f in files.values()) == 435 and all(s["forms"][0]["confidence"] == "plausible" for f in files.values() for s in f["keys"].values())
+    assert {n: {s["forms"][0]["device"] for s in f["keys"].values()} for n, f in files.items() if n in ("3i", "AV5", "CD_player", "DVD_7", "Quattro", "original_tuner")} == {
+        "3i": {"0x10"}, "AV5": {"0x13"}, "CD_player": {"0x14"}, "DVD_7": {"0x19"}, "Quattro": {"0x15"}, "original_tuner": {"0x11"}}
+    assert all(f["protocol"] == {"name": "RC5", "carrierHz": 36000, "minSends": 1} for f in files.values())
+    assert files["AV5"]["keys"] == files["AV8"]["keys"] and files["FM7"]["keys"] == files["FMX"]["keys"] == files["FM7.5"]["keys"] and files["5"]["keys"] == files["8"]["keys"]
+    high = {s["label"]: int(s["forms"][0]["function"], 0) for s in files["AV5"]["keys"].values() if int(s["forms"][0]["function"], 0) >= 64}
+    assert high["Adjust up"] == 80 and high["Subwoofer select"] == 118 and len(high) == 12
+    source = files["3i"]["keys"]["KEY_STANDBY"]["forms"][0]["source"]
+    assert source.startswith("cyrusaudio.com remote code tables/Cyrus3iremotecodes.pdf@8178e865 (retrieved 2026-10-16, from the Wayback Machine snapshot 20070306121238) page 1 row 'Standby' (RC-5 system code 16, code 12, the standard's name for it 'Standby')")
+    assert "the document names the Cyrus 5 and Cyrus 7" in files["6"]["keys"]["KEY_STANDBY"]["forms"][0]["source"]
+
+
+def test_the_ledgers_jp1_cyrus_remotes_have_the_codes_of_the_acA75_and_the_tuner_tables_but_the_power_on_and_the_stores_code():
+    def codes(path):
+        return {(int(s["forms"][0]["device"], 0), int(s["forms"][0]["function"], 0)): s["label"] for s in load(ROOT / path)["keys"].values()}
+    jp1, ours = codes("remotes/jp1/Cyrus/Audio-Cyrus_aCA7.5_Pre.json"), codes("remotes/official/cyrus/aCA7.5.json")
+    assert (len(jp1), len(ours), len(set(jp1) & set(ours))) == (16, 16, 15)
+    assert jp1[(16, 59)] == "Power on" and ours[(16, 58)] == "Power on" and (16, 59) not in ours             # the table's `Power on` is 58, the 3i's and the JP1's 59
+    assert codes("remotes/official/cyrus/3i.json")[(16, 59)] == "Power on"
+    tuner, table = codes("remotes/jp1/Cyrus/Audio-Cyrus_AM-FM_Tuner.json"), codes("remotes/official/cyrus/original_tuner.json")
+    assert (len(tuner), len(table), len(set(tuner) & set(table))) == (22, 20, 19)
+    assert tuner[(17, 10)] == "Store" and table[(17, 17)] == "Store"
