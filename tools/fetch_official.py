@@ -7,7 +7,7 @@ size, SHA-256, the retrieval date (today: do not pass --date) and the server's `
 (and, for a copy from the Wayback Machine, the address and snapshot it was archived from). Run it, then
 ``tools/official_sheets_to_csv.py <maker>`` for the spreadsheets, review the diff, and import.
 
-    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc|arcam|infocus|lyngdorf|emotiva|denon|hitachi|classe|cyrus|yamaha|cambridge|hegel|cary|nad|simaudio|rotel
+    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc|arcam|infocus|lyngdorf|emotiva|denon|hitachi|classe|cyrus|yamaha|harman|cambridge|hegel|cary|nad|simaudio|rotel
 """
 
 from __future__ import annotations
@@ -194,6 +194,15 @@ DOCUMENTS = {
         ("WXA-50_WXC-50_Extended_IR_Codes_1.pdf", WB + "20240223031354id_/https://www.snapav.com/wcsstore/ExtendedSitesCatalogAssetStore/attachments/documents/Amplifiers/SupportDocuments/WXA-50_WXC-50_Extended_IR_Codes_1.pdf", None),
         ("WXA-50_WXC-50_Standard_IR_Codes_1.pdf", WB + "20240222115523id_/https://www.snapav.com/wcsstore/ExtendedSitesCatalogAssetStore/attachments/documents/Amplifiers/SupportDocuments/WXA-50_WXC-50_Standard_IR_Codes_1.pdf", None),
         ("XDA-QS5400_XDA-AMP5400_IR_Commands.pdf", WB + "20201023055732id_/https://www.snapav.com/wcsstore/ExtendedSitesCatalogAssetStore/attachments/documents/Amplifiers/SupportDocuments/XDA-QS5400_XDA-AMP5400_IR_Commands.pdf", None),
+    ],
+    # The custom installation notes of Harman's JBL Synthesis AV receivers (the SDR-35, SDR-38, SDP-55 and SDP-58: issue E, whose RC-5 rows are the same as issue D's of 2020 for the two models D names, which is not pinned) and Lexicon's MC-10, RV-9 and RV-6
+    # (DESIGN section 88): serial control and **the RC-5 code set** (Arcam's platform: the tables are Arcam's layout). The JBL ones are the Wayback Machine's copies of
+    # jblsynthesis.com, each the snapshot named in its URL; Lexicon's is the live file of lexicon.com (the archive holds no copy of its address).
+    "harman": [
+        ("RS232_SDR35_38_SDP55_58_SH289E_E_2Jun21.pdf",
+         WB + "20240617062157id_/https://www.jblsynthesis.com/on/demandware.static/-/Sites-masterCatalog_Harman/default/dw0dd5137e/pdfs/RS232_SDR35_38_SDP55_58_SH289E_E_2Jun21.pdf", None),
+        ("RS232_Protocol_Documentation.pdf",
+         "https://www.lexicon.com/on/demandware.static/-/Sites-masterCatalog_Harman/default/dw64424e91/pdfs/RS232_Protocol_Documentation.pdf", None),
     ],
     # Lyngdorf's one-page "NEC IR Code Format for Lyngdorf products" (DESIGN section 79): the same PDF is on the DPA-1's and the SDAI 2175's pages of its
     # site (lyngdorf.com/wp-content/uploads/2017/09/), which no longer serves it, so it is the Wayback Machine's copy.

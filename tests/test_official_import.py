@@ -12,7 +12,7 @@ from pathlib import Path
 import pytest
 
 from remote_ledger.errors import ValidationError
-from remote_ledger.official import anthem, arcam, cambridge, cary, classe, cyrus, denon, emotiva, hegel, hitachi, infocus, jvc, kef, lyngdorf, marantz, nad, oppo, rotel, simaudio, yamaha
+from remote_ledger.official import anthem, arcam, cambridge, cary, classe, cyrus, denon, emotiva, harman, hegel, hitachi, infocus, jvc, kef, lyngdorf, marantz, nad, oppo, rotel, simaudio, yamaha, harman
 from remote_ledger.official import importer as oi
 from remote_ledger.official.common import MANIFEST, Report, load_snapshot
 from remote_ledger.serialize import load
@@ -26,7 +26,7 @@ SNAPSHOT = ROOT / oi.SNAPSHOT
 
 def test_every_document_and_csv_is_the_one_the_manifest_pins():
     for maker, retrieved in (("marantz", "2026-10-08"), ("anthem", "2026-10-08"), ("oppo", "2026-10-09"), ("kef", "2026-10-13"),
-                             ("jvc", "2026-10-13"), ("arcam", "2026-10-13"), ("cambridge", "2026-10-13"), ("hegel", "2026-10-13"), ("cary", "2026-10-13"), ("infocus", "2026-10-15"), ("lyngdorf", "2026-10-16"), ("emotiva", "2026-10-16"), ("denon", "2026-10-16"), ("hitachi", "2026-10-16"), ("classe", "2026-10-16"), ("cyrus", "2026-10-16"), ("yamaha", "2026-10-16"), ("nad", "2026-10-14"), ("simaudio", "2026-10-13"), ("rotel", "2026-10-13")):
+                             ("jvc", "2026-10-13"), ("arcam", "2026-10-13"), ("cambridge", "2026-10-13"), ("hegel", "2026-10-13"), ("cary", "2026-10-13"), ("infocus", "2026-10-15"), ("lyngdorf", "2026-10-16"), ("emotiva", "2026-10-16"), ("denon", "2026-10-16"), ("hitachi", "2026-10-16"), ("classe", "2026-10-16"), ("cyrus", "2026-10-16"), ("yamaha", "2026-10-16"), ("harman", "2026-10-16"), ("nad", "2026-10-14"), ("simaudio", "2026-10-13"), ("rotel", "2026-10-13")):
         snap = load_snapshot(SNAPSHOT / maker)
         assert snap.maker == maker and snap.retrieved == retrieved
         assert snap.documents and snap.sheets
@@ -443,12 +443,12 @@ def test_the_committed_official_import_keeps_r19():
     or Untested, and a citation that names a document the manifest pins, by hash."""
     assert (ROOT / oi.IMPORT_ROOT / "README.md").is_file() and (ROOT / oi.IMPORT_ROOT / oi.REPORT).is_file()
     hashes, dates, snapshots = {}, {}, {}
-    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "arcam", "cambridge", "hegel", "cary", "infocus", "lyngdorf", "emotiva", "denon", "hitachi", "classe", "cyrus", "yamaha", "nad", "simaudio", "rotel"):
+    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "arcam", "cambridge", "hegel", "cary", "infocus", "lyngdorf", "emotiva", "denon", "hitachi", "classe", "cyrus", "yamaha", "harman", "nad", "simaudio", "rotel"):
         manifest = json.loads((SNAPSHOT / maker / MANIFEST).read_text(encoding="utf-8"))
         for name, entry in manifest["documents"].items():
             hashes[name], dates[name], snapshots[name] = entry["sha256"], entry.get("retrieved", manifest["retrieved"]), entry.get("snapshot")
     shape = re.compile(r"^(?:marantz\.com archive-downloads|anthemav\.com \(storage\.googleapis\.com/sandbox1-anthemav/an\)"
-                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|infocus\.com IR code PDFs|lyngdorf\.com IR code PDF|emotiva\.com IR code PDFs|denon\.co\.uk RC code list|denon\.com Master IR Hex|hitachi-america\.us IR code documents|classeaudio\.com IR code documents|cyrusaudio\.com remote code tables|snapav\.com Yamaha IR code PDFs|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
+                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|infocus\.com IR code PDFs|lyngdorf\.com IR code PDF|emotiva\.com IR code PDFs|denon\.co\.uk RC code list|denon\.com Master IR Hex|hitachi-america\.us IR code documents|classeaudio\.com IR code documents|cyrusaudio\.com remote code tables|snapav\.com Yamaha IR code PDFs|jblsynthesis\.com custom installation notes|lexicon\.com custom installation notes|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
                        r"(?:, from the Wayback Machine snapshot (\d{14}))?\) (?:sheet '[^']+' row \d+|page \d+ row \d+|page \d+ '|page \d+ table \d+ row '|page \d+ row '|key \d+ ')")
     files = sorted((ROOT / oi.IMPORT_ROOT).rglob("*.json"))
     assert len(files) > 180
@@ -2943,3 +2943,46 @@ def test_the_ledgers_other_yamaha_nec_remotes_have_90_percent_of_these_frames_un
                     if "device" in f and "function" in f:
                         theirs.add(frame(f, doc["protocol"]["name"]))
     assert (len(ours), len(set(ours) & theirs)) == (1_062, 960)
+
+
+# --- Harman: JBL Synthesis and Lexicon -----------------------------------------------------------------------------------------
+
+
+def harman_files() -> dict[str, dict]:
+    return {load(p)["model"]: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "harman").glob("*.json"))}
+
+
+def test_harmans_two_custom_installation_notes_are_seven_files_and_828_keys_the_codes_of_arcams_platform_under_the_products_names():
+    """JBL Synthesis's SDR-35, SDR-38, SDP-55 and SDP-58 (one document of 120 rows) and Lexicon's MC-10, RV-9 and RV-6 (116): a file for each, the same keys. **Every one of the 118 and 114
+    distinct codes is in the public Arcam tables already**, so these files are the products' names for them. **Four keys of each file are Untested**: the table gives `HOME` and `Yellow` 16-43
+    and `INFO` (`Cycle between VFD information panels` in Lexicon's) and `Blue` 16-55."""
+    files = harman_files()
+    assert sorted(files) == ["MC-10", "RV-6", "RV-9", "Synthesis SDP-55", "Synthesis SDP-58", "Synthesis SDR-35", "Synthesis SDR-38"]
+    assert {n: len(f["keys"]) for n, f in files.items()} == {"Synthesis SDR-35": 120, "Synthesis SDR-38": 120, "Synthesis SDP-55": 120, "Synthesis SDP-58": 120, "MC-10": 116, "RV-9": 116, "RV-6": 116}
+    assert {n: f["manufacturer"] for n, f in files.items()} == {**{m: "JBL" for m in files if m.startswith("Synthesis")}, "MC-10": "Lexicon", "RV-9": "Lexicon", "RV-6": "Lexicon"}
+    assert all(f["protocol"] == {"name": "RC5", "carrierHz": 36000, "minSends": 1} for f in files.values()) and files["Synthesis SDP-58"]["controls"] == ["JBL Synthesis SDP-58"]
+    for group in (("Synthesis SDR-35", "Synthesis SDR-38", "Synthesis SDP-55", "Synthesis SDP-58"), ("MC-10", "RV-9", "RV-6")):
+        assert all(files[m]["keys"] == files[group[0]]["keys"] for m in group)
+    untested = {n: sorted(s["label"] for s in f["keys"].values() if s["forms"][0]["confidence"] == "untested") for n, f in files.items()}
+    assert untested["Synthesis SDR-35"] == ["Blue", "HOME", "INFO - Cycle between VFD information panels", "Yellow"] and untested["RV-9"] == ["Blue", "Cycle between VFD information panels", "HOME", "Yellow"]
+    assert all(len(u) == 4 for u in untested.values())
+    standby = files["Synthesis SDR-35"]["keys"]["KEY_STANDBY"]["forms"][0]
+    assert (standby["device"], standby["function"], standby["confidence"]) == ("0x10", "0x0C", "plausible")
+    assert standby["source"] == ("jblsynthesis.com custom installation notes/RS232_SDR35_38_SDP55_58_SH289E_E_2Jun21.pdf@fd366c5d (retrieved 2026-10-16, from the Wayback Machine snapshot 20240617062157) "
+                                 "page 39 table 1 row 'Standby' (16-12 / 0x10 - 0x0C): RC5 system 16 command 12; the table's decimal and hex say the same")
+    zone2 = files["RV-9"]["keys"]["KEY_ZONE_2_POWER_OFF"]["forms"][0]
+    assert (zone2["device"], zone2["function"]) == ("0x17", "0x7C") and zone2["source"].startswith("lexicon.com custom installation notes/RS232_Protocol_Documentation.pdf@14e18e39 (retrieved 2026-10-16) page 27 ")
+
+
+def test_every_code_of_the_harman_documents_is_in_the_public_arcam_tables_under_the_same_function():
+    arcam_codes: dict[tuple[int, int], set[str]] = {}
+    for path in sorted((ROOT / oi.IMPORT_ROOT / "arcam").glob("*.json")):
+        for spec in load(path)["keys"].values():
+            f = spec["forms"][0]
+            arcam_codes.setdefault((int(f["device"], 0), int(f["function"], 0)), set()).add(spec["label"])
+    for model, doc in harman_files().items():
+        codes = {(int(s["forms"][0]["device"], 0), int(s["forms"][0]["function"], 0)) for s in doc["keys"].values()}
+        assert codes <= set(arcam_codes), model
+    files = harman_files()
+    mute = files["Synthesis SDR-35"]["keys"]["KEY_MUTE"]["forms"][0]
+    assert any("Mute" in n or "MUTE" in n for n in arcam_codes[(int(mute["device"], 0), int(mute["function"], 0))])
