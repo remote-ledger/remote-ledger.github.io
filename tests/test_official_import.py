@@ -12,7 +12,7 @@ from pathlib import Path
 import pytest
 
 from remote_ledger.errors import ValidationError
-from remote_ledger.official import anthem, arcam, cambridge, cary, hegel, infocus, jvc, kef, marantz, nad, oppo, rotel, simaudio
+from remote_ledger.official import anthem, arcam, cambridge, cary, hegel, infocus, jvc, kef, lyngdorf, marantz, nad, oppo, rotel, simaudio
 from remote_ledger.official import importer as oi
 from remote_ledger.official.common import MANIFEST, Report, load_snapshot
 from remote_ledger.serialize import load
@@ -26,7 +26,7 @@ SNAPSHOT = ROOT / oi.SNAPSHOT
 
 def test_every_document_and_csv_is_the_one_the_manifest_pins():
     for maker, retrieved in (("marantz", "2026-10-08"), ("anthem", "2026-10-08"), ("oppo", "2026-10-09"), ("kef", "2026-10-13"),
-                             ("jvc", "2026-10-13"), ("arcam", "2026-10-13"), ("cambridge", "2026-10-13"), ("hegel", "2026-10-13"), ("cary", "2026-10-13"), ("infocus", "2026-10-15"), ("nad", "2026-10-14"), ("simaudio", "2026-10-13"), ("rotel", "2026-10-13")):
+                             ("jvc", "2026-10-13"), ("arcam", "2026-10-13"), ("cambridge", "2026-10-13"), ("hegel", "2026-10-13"), ("cary", "2026-10-13"), ("infocus", "2026-10-15"), ("lyngdorf", "2026-10-16"), ("nad", "2026-10-14"), ("simaudio", "2026-10-13"), ("rotel", "2026-10-13")):
         snap = load_snapshot(SNAPSHOT / maker)
         assert snap.maker == maker and snap.retrieved == retrieved
         assert snap.documents and snap.sheets
@@ -443,12 +443,12 @@ def test_the_committed_official_import_keeps_r19():
     or Untested, and a citation that names a document the manifest pins, by hash."""
     assert (ROOT / oi.IMPORT_ROOT / "README.md").is_file() and (ROOT / oi.IMPORT_ROOT / oi.REPORT).is_file()
     hashes, dates, snapshots = {}, {}, {}
-    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "arcam", "cambridge", "hegel", "cary", "infocus", "nad", "simaudio", "rotel"):
+    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "arcam", "cambridge", "hegel", "cary", "infocus", "lyngdorf", "nad", "simaudio", "rotel"):
         manifest = json.loads((SNAPSHOT / maker / MANIFEST).read_text(encoding="utf-8"))
         for name, entry in manifest["documents"].items():
             hashes[name], dates[name], snapshots[name] = entry["sha256"], entry.get("retrieved", manifest["retrieved"]), entry.get("snapshot")
     shape = re.compile(r"^(?:marantz\.com archive-downloads|anthemav\.com \(storage\.googleapis\.com/sandbox1-anthemav/an\)"
-                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|infocus\.com IR code PDFs|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
+                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|infocus\.com IR code PDFs|lyngdorf\.com IR code PDF|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
                        r"(?:, from the Wayback Machine snapshot (\d{14}))?\) (?:sheet '[^']+' row \d+|page \d+ row \d+|page \d+ '|page \d+ table \d+ row '|page \d+ row '|key \d+ ')")
     files = sorted((ROOT / oi.IMPORT_ROOT).rglob("*.json"))
     assert len(files) > 180
@@ -2186,3 +2186,67 @@ def test_other_sources_rotel_nec_remotes_send_the_codes_the_pdfs_list():
                         disagree += 1
     assert (remotes, total, hit, agree, disagree) == (19, 550, 528, 306, 12)
 
+
+
+# --- Lyngdorf ------------------------------------------------------------------------------------------------------
+
+
+def test_a_lyngdorf_cell_is_the_device_and_the_byte_after_it_then_the_function_and_its_complement_and_a_cell_that_lacks_a_digit_is_doubtful():
+    assert lyngdorf.read_cell("0x10EF 0x0FF0", 0x10EF) == (0x10, 0xEF, 0x0F, "")
+    assert lyngdorf.read_cell("0x10E0 0x30CF", 0x10E0) == (0x10, 0xE0, 0x30, "")
+    assert lyngdorf.read_cell("-", 0x10E1) is None
+    device, subdevice, function, doubt = lyngdorf.read_cell("0x10E 0x16E9", 0x10E1)
+    assert (device, subdevice, function) == (0x10, 0xE1, 0x16) and "lacks its last digit" in doubt
+    assert "not a function and its complement" in lyngdorf.read_cell("0x10EF 0x16E8", 0x10EF)[3]
+    with pytest.raises(ValueError, match="does not complete it"):
+        lyngdorf.read_cell("0x10E 0x16E9", 0x10F0)                  # the column's own word does not begin with them
+    with pytest.raises(ValueError, match="cannot read"):
+        lyngdorf.read_cell("0x10EF", 0x10EF)
+    names, rows = lyngdorf.cells_of([
+        ["1", "121", "153", "TDAI 2200"], ["1", "153", "60", "Button", "153", "SDAI 2175", "246", "RP-1", "339", "CD-1"],
+        ["1", "165", "60", "Stand By", "153", "0x10EF 0x0FF0", "246", "0x10E0 0x0FF0", "339", "0x10E1 0x0FF0"],
+        ["1", "562", "60", "Video", "153", "0x10EF 0x09F6", "246", "-", "339", "-"],
+        ["1", "646", "57", "Note: Mute and Volume commands are the same for all products."]])
+    assert names[153] == ["TDAI 2200", "SDAI 2175"] and names[246] == ["RP-1"]
+    assert [r[0] for r in rows] == ["Stand By", "Video"] and rows[1][1][246] == "-"
+
+
+def test_lyngdorfs_one_page_is_six_files_and_218_keys_and_the_17_untested_are_the_cd1s_cells_that_lack_a_digit():
+    files = {p.stem: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "lyngdorf").glob("*.json"))}
+    assert sorted(files) == ["CD-1", "DPA-1", "Millennium_Mk._III+IV", "RP-1", "SDAI_2175", "TDAI_2200"]
+    assert {n: len(f["keys"]) for n, f in files.items()} == {"CD-1": 33, "DPA-1": 38, "Millennium_Mk._III+IV": 38, "RP-1": 33, "SDAI_2175": 38, "TDAI_2200": 38}
+    triples = {n: {k: (f["forms"][0]["device"], f["forms"][0]["subdevice"], f["forms"][0]["function"]) for k, f in doc["keys"].items()}
+               for n, doc in files.items()}
+    # the four products of the first column send the same codes; the RP-1 and CD-1 differ in the subdevice, but for Mute and the two Volumes
+    assert triples["DPA-1"] == triples["TDAI_2200"] == triples["SDAI_2175"] == triples["Millennium_Mk._III+IV"]
+    assert triples["TDAI_2200"]["KEY_STAND_BY"] == ("0x10", "0xEF", "0x0F") and triples["RP-1"]["KEY_STAND_BY"] == ("0x10", "0xE0", "0x0F")
+    assert triples["CD-1"]["KEY_STAND_BY"] == ("0x10", "0xE1", "0x0F") and triples["CD-1"]["KEY_MENU"] == ("0x10", "0xE1", "0x16")
+    for name in ("KEY_MUTE", "KEY_VOLUME_PLUS", "KEY_VOLUME_MINUS"):
+        assert {triples[n][name][1] for n in triples} == {"0xEF"}, name
+    untested = {n: sorted(k for k, s in doc["keys"].items() if s["forms"][0]["confidence"] == "untested") for n, doc in files.items()}
+    assert [n for n, u in untested.items() if u] == ["CD-1"] and len(untested["CD-1"]) == 17
+    assert "KEY_MUTE" not in untested["CD-1"] and "KEY_STAND_BY" not in untested["CD-1"]
+    for doc in files.values():
+        for spec in doc["keys"].values():
+            for form in spec["forms"]:
+                assert "from the Wayback Machine snapshot 20190426003950" in form["source"] and "Lyngdorf-IR-Codes.pdf@4746d773" in form["source"]
+    # every second word of the page is a function and its complement: nothing is doubtful for that
+    assert not any("not a function and its complement" in s["forms"][0]["source"] for doc in files.values() for s in doc["keys"].values())
+
+
+def test_the_ledgers_jp1_tdai_1120_sends_21_of_the_tdai_2200s_codes_under_the_same_functions():
+    jp = load(ROOT / "remotes" / "jp1" / "Lyngdorf" / "Audio-Lyngdorf_TDAI-1120_amplifier.json")
+    theirs = {}
+    for spec in jp["keys"].values():
+        f = spec["forms"][0]
+        theirs[(int(f["device"], 0), int(f["subdevice"], 0), int(f["function"], 0))] = spec["label"]
+    ours = load(ROOT / oi.IMPORT_ROOT / "lyngdorf" / "TDAI_2200.json")
+    same = {}
+    for spec in ours["keys"].values():
+        f = spec["forms"][0]
+        key = (int(f["device"], 0), int(f["subdevice"], 0), int(f["function"], 0))
+        if key in theirs:
+            same[spec["label"]] = theirs[key]
+    assert len(theirs) == 48 and len(same) == 21
+    assert same["Stand By"] == "Standby" and same["Volume +"] == "Volume Up" and same["Channel -"] == "SRC Down" and same["Random"] == "Shuffle"
+    assert all(v.startswith("Digit ") for k, v in same.items() if k.isdigit()) and sum(k.isdigit() for k in same) == 10
