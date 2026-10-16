@@ -67,14 +67,14 @@ def test_state_two_checked_and_not_found(index):
 
 
 def test_state_three_nobody_has_looked(index):
-    out = render(search(index, "Yamaha RX-V385"), "Yamaha RX-V385")
+    out = render(search(index, "Yamaha RX-V4A"), "Yamaha RX-V4A")
     assert "nobody has looked" in out
 
 
 def test_the_three_states_render_differently(index):
     found = render(search(index, "DX3 Pro"), "q")
     unresolved = render(search(index, "Sony BDP-BX510"), "q")
-    absent = render(search(index, "Yamaha RX-V385"), "q")
+    absent = render(search(index, "Yamaha RX-V4A"), "q")
     assert len({found, unresolved, absent}) == 3
     assert "[checked, nothing found]" not in found
     assert "nobody has looked" not in unresolved

@@ -96,6 +96,10 @@ SHEETS = {
         "X3_IRCodes.pdf",
     )}},
     "lyngdorf": {"Lyngdorf-IR-Codes.pdf": ["lines"]},
+    "yamaha": {name: ["grid"] for name in (
+        "Extended_IR_Codes_RX-V685RX-A780-RX-A3080CX-A5200_6.pdf", "Standard_IR_Codes_RX-V685RX-A780-RX-A3080CX-A5200_4.pdf",
+        "RX-V385_RX-V485_RX-V585_IR_Codes_2.pdf", "WXA-50_WXC-50_Extended_IR_Codes_1.pdf", "WXA-50_WXC-50_Standard_IR_Codes_1.pdf",
+        "XDA-QS5400_XDA-AMP5400_IR_Commands.pdf")},
     "classe": {name: ["cells"] for name in (
         "CAP-2100_IR_codes.pdf", "CDP-100_IR_codes_v1-20.pdf", "CDP-102_202_300_500_and_CDT-300_IR_codes_v1-19.pdf", "CP-500_IR_codes.pdf", "CP-700_IR_codes.pdf",
         "SSP-300_600_IR_codes_v1-20.pdf", "CLASSE_Delta_1_2_Amplifier_IR_Commands.pdf", "CLASSE_SSP-800_IR_codes_v1-24.pdf")} |
@@ -371,6 +375,41 @@ def rows_of(path: Path, sheet: str) -> list[list[str]]:
                     out.append([str(n), str(round(y))] + [v for x, cell in sorted(cells) for v in (str(round(x)), cell)])
                 for table in page.find_tables().tables:
                     out.extend([str(n), "R", str(round(row.bbox[1])), str(round(row.bbox[3]))] for row in table.rows)
+            return out
+        if sheet == "grid":         # a ruled table with merged cells (Yamaha's, D332): each row of each page's tables is ``page, y, one cell for each column``, then the
+            out = []                # two columns of names again as the words on the row's own height. A name, a device and a zone are the cell the row is in, and a
+            for n, page in enumerate(pdf, 1):       # cell a merged cell covers holds the merged cell's text (a name written once for the rows of its zones, the device and
+                words = page.get_text("words")      # the zone of a function); a cell the library finds no merge for is empty, as the document shows it. The codes and the
+                for table in page.find_tables().tables:     # models' YES and NO are the words on the row's own height, since a merged cell of two rows may hold two codes,
+                    boxes = [c for row in table.rows for c in row.cells if c]       # one on each row's line; and the names are those words too, which say where a merged
+                    edges: list[float] = []                 # cell holds the names of several functions (Yamaha's MUTE: ``ON (FULL)``, ``ON (-40dB)``, ``ON (-20dB)``)
+                    for x in sorted({b[0] for b in boxes} | {b[2] for b in boxes}):
+                        if not edges or x - edges[-1] > 2:
+                            edges.append(x)
+                    slots = list(zip(edges[:-1], edges[1:]))
+                    for row in table.rows:
+                        own = [c for c in row.cells if c]
+                        if not own:
+                            continue
+                        small = min(own, key=lambda c: c[3] - c[1])          # the row's own height: its tallest cells may span several rows
+                        middle = (small[1] + small[3]) / 2
+
+                        def text_of(box) -> str:
+                            inside = sorted((w for w in words if box and box[0] - 1 <= (w[0] + w[2]) / 2 <= box[2] + 1 and box[1] - 1 <= (w[1] + w[3]) / 2 <= box[3] + 1),
+                                            key=lambda w: (round(w[1] / 3), w[0]))
+                            return " ".join(w[4] for w in inside)
+
+                        cells, banded = [], []
+                        for column, (a, b) in enumerate(slots):
+                            band = (a, small[1], b, small[3])
+                            if column in (0, 1, 2, 3, 4):
+                                box = next((c for c in boxes if c[0] - 1 <= (a + b) / 2 <= c[2] + 1 and c[1] - 1 <= middle <= c[3] + 1), None)
+                            else:
+                                box = band
+                            cells.append(text_of(box))
+                            if column in (1, 2):
+                                banded.append(text_of(band))
+                        out.append([str(n), str(round(small[1]))] + cells + banded)
             return out
         if sheet == "pages":        # every page: a row is the page number and one line of its text
             return [[str(n), line.strip()] for n, page in enumerate(pdf, 1) for line in page.get_text("text").splitlines()
