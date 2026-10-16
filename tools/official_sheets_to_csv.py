@@ -97,6 +97,9 @@ SHEETS = {
     )}},
     "lyngdorf": {"Lyngdorf-IR-Codes.pdf": ["lines"]},
     "denon": {"AVR4311CI_AVR4311_IR-Codes.pdf": ["words"]},
+    "hitachi": {"2003_and_2004_HITACHI_IR.xls": ["Sheet1", "Sheet2"], "2004_IR_Codes-1.xls": ["2004 Codes", "Additional Codes"],
+                **{name: ["cells"] for name in ("2007_Discrete_Codes-DW3.pdf", "2009_Discrete_Codes_L32_and_larger_0211.pdf",
+                                                "2009_RC_Layouts_and_IR_Codes_L19_L26.pdf", "AVC_56_Discrete_Codes_UT_Monitor_PDP_Pronto_Hex.pdf")}},
     "emotiva": {name: ["pages"] for name in ("UMC_remote_codes.pdf", "remoteCodes_1-25-11.pdf", "umc200_remote_codes.pdf", "usp_remote_codes.pdf", "erc1_hex.pdf", "ERC-3_IR_CODES.pdf")},
     "cambridge": {"AXR85_100_IR_Codes.pdf": ["tables"], "752BD-CXU-CXUHD_remotes_Sept_2024_v2.pdf": ["tables"]},
     "hegel": {name: ["flow"] for name in (
@@ -284,12 +287,12 @@ def rows_of(path: Path, sheet: str) -> list[list[str]]:
                         items.append((row.bbox[1], 1, [str(n), "row", str(i), str(round(row.bbox[1]))] + shown))
                 for block in page.get_text("dict")["blocks"]:
                     for line in block.get("lines", []):
-                        text = " ".join("".join(span["text"] for span in line["spans"]).split())
+                        words = " ".join("".join(span["text"] for span in line["spans"]).split())
                         x0, y0 = line["bbox"][0], line["bbox"][1]
                         inside = any(t.bbox[0] - 2 <= x0 <= t.bbox[2] + 2 and t.bbox[1] - 2 <= y0 <= t.bbox[3] + 2 for t in tables)
                         in_block = any(b[0] - 2 <= x0 <= b[2] + 2 and b[1] - 2 <= y0 <= b[3] + 2 for b in blocks)
-                        if text and (not inside or in_block):
-                            items.append((y0, 0, [str(n), "text", str(round(y0)), text]))
+                        if words and (not inside or in_block):
+                            items.append((y0, 0, [str(n), "text", str(round(y0)), words]))
                 out.extend(row for _, _, row in sorted(items, key=lambda item: (item[0], item[1])))
             return out
         if sheet == "cells":        # a table with no ruling lines (NAD's, D283): the text of every page as rows of cells at a place: a row is
