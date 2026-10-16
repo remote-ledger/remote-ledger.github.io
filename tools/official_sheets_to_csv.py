@@ -96,6 +96,7 @@ SHEETS = {
         "X3_IRCodes.pdf",
     )}},
     "lyngdorf": {"Lyngdorf-IR-Codes.pdf": ["lines"]},
+    "harman": {"RS232_SDR35_38_SDP55_58_SH289E_E_2Jun21.pdf": ["tables"], "RS232_Protocol_Documentation.pdf": ["tables"]},
     "yamaha": {name: ["grid"] for name in (
         "Extended_IR_Codes_RX-V685RX-A780-RX-A3080CX-A5200_6.pdf", "Standard_IR_Codes_RX-V685RX-A780-RX-A3080CX-A5200_4.pdf",
         "RX-V385_RX-V485_RX-V585_IR_Codes_2.pdf", "WXA-50_WXC-50_Extended_IR_Codes_1.pdf", "WXA-50_WXC-50_Standard_IR_Codes_1.pdf",
