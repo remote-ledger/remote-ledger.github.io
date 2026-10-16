@@ -334,7 +334,7 @@ class Member:
     doubts: list[str] = field(default_factory=list)
 
 
-def build(snapshot: Snapshot, authored: dict[tuple[str, str], str], report: Report) -> list[tuple[str, dict[str, Any]]]:
+def build_pdf(snapshot: Snapshot, authored: dict[tuple[str, str], str], report: Report) -> list[tuple[str, dict[str, Any]]]:
     rows = snapshot.sheet_of(DOCUMENT, "words")
     entry = snapshot.documents[DOCUMENT]
     sha = snapshot.sha(DOCUMENT)
@@ -411,3 +411,166 @@ def build(snapshot: Snapshot, authored: dict[tuple[str, str], str], report: Repo
                         {"manufacturer": BRAND, "model": name, "aliases": [], "controls": [f"{BRAND} {model}"],
                          "protocol": dict(protocol), "keys": keys}))
     return out
+
+
+# --- the master spreadsheet ---------------------------------------------------------------------------------------------
+
+
+MASTER = "Denon_Master_IR_Hex.xls"
+MASTER_HOST = "denon.com Master IR Hex"
+#: sheet -> the model the file is for (the legend: ``Denon AVRxx08 Receiver IR Codes`` and ``Denon Receiver IR Codes xx07 and earlier``)
+SHEETS: dict[str, str] = {
+    **{f"{sheet} ID#{n}": f"AVRxx08 {model} ID#{n}" for sheet, model in (("Main Zone", "Main Zone"), ("Zone 2", "Zone 2"), ("Zone 3", "Zone 3"), ("Analog Tuner", "Tuner"),
+                                                                              ("Net Audio", "Network Audio"), ("iPod", "iPod"), ("XM", "XM")) for n in range(1, 5)},
+    **{f"Zone 4 ID#{n}" if n != 2 else "Zone 4 ID #2": f"AVRxx08 Zone 4 ID#{n}" for n in range(1, 5)},
+    "HD Radio ID#1": "AVRxx08 HD Radio ID#1", "Sirius ID#1": "AVRxx08 Sirius ID#1",
+    "RCD-N7": "RCD-N7", "CD Player": "CD Player", "DBP-1611UD": "DBP-1611UD", "BD Players": "BD Players", "S5-BD": "S5-BD", "ASD-51NW": "ASD-51NW",
+    "M33 CD Receiver": "D-M33 CD Receiver", "DRA": "DRA",
+    "Sharp Device 2": "AVRxx07 and earlier Sharp Device 2", "Sharp device 4": "AVRxx07 and earlier Sharp Device 4", "Sharp Device 12": "AVRxx07 and earlier Sharp Device 12",
+    **{f"Denon K {k}": f"AVRxx07 and earlier Kaseikyo {k}" for k in ("4.1", "4.3", "4.5", "4.7", "7.6", "7.7", "7.8")},
+}
+
+
+@dataclass
+class MRow:
+    row: int                       # the sheet's row
+    name: str
+    pronto: str
+    section: str                   # the heading above it (`Source Input`)
+    given: tuple[str, ...] = ()    # the cells before the name: a Sharp or Kaseikyo sheet's `Device Code` and `Function#`
+
+
+@dataclass(frozen=True)
+class Frame:
+    protocol: str                  # Denon or Denon-K
+    device: int
+    subdevice: int | None
+    function: int
+    carrier: int                   # the Pronto's frequency word
+
+
+def decode_pronto(text: str) -> Frame | str:
+    """The Denon (Sharp, 15 bits and its inverse) or Denon-K (Kaseikyo, 48 bits) frame of a Pronto hex, or why it is not one: a Sharp string is
+    two frames of 16 pairs (a mark and a space of three marks for a 0 and seven for a 1), the second with the function inverted and the extension
+    bits 3; a Kaseikyo one a leader of eight and four units and 48 bits (a space of a mark for a 0 and three for a 1) whose parity byte is the
+    exclusive or of the 3rd, 4th and 5th bytes. The frequency word is the capture's and is not kept: the protocols' own carriers are."""
+    try:
+        w = [int(x, 16) for x in text.split()]
+    except ValueError:
+        return "not hex"
+    if len(w) < 8 or w[0] != 0 or len(w) != 4 + 2 * (w[2] + w[3]):
+        return "the Pronto header does not match the string"
+    pairs = [(w[i], w[i + 1]) for i in range(4, len(w), 2)]
+    if w[2] == 0 and len(pairs) in (32, 48):
+        half = len(pairs) // 2
+        frames = []
+        for part in (pairs[:half], pairs[half:]):
+            bits = [1 if space > 5 * mark else 0 for mark, space in part[:15]]
+            frames.append((value(bits[:5]), value(bits[5:13]), value(bits[13:15])))
+        (d1, f1, e1), (d2, f2, e2) = frames
+        if len(pairs) == 32 and (d1, f1 ^ 0xFF, e1, e2) == (d2, f2, 0, 3):
+            return Frame("Denon", d1, None, f1, w[1])
+        return "the two frames of a Sharp string are not a function and its inverse"
+    if w[2] == 0 and len(pairs) >= 50:
+        lead_mark, lead_space = pairs[0]
+        if lead_mark < 5 * pairs[1][0] or not 1.5 <= lead_mark / max(lead_space, 1) <= 2.5:
+            return "the leader is not eight units and four"
+        bits = [1 if space > 2 * mark else 0 for mark, space in pairs[1:49]]
+        by = [value(bits[8 * k:8 * k + 8]) for k in range(6)]
+        if (by[0], by[1], by[2] & 15) != (0x54, 0x32, 0):
+            return "the vendor bytes are not 0x54 0x32 and a 0 parity nibble"
+        if by[2] ^ by[3] ^ by[4] != by[5]:
+            return "the parity byte is not the exclusive or of the 3rd, 4th and 5th bytes"
+        return Frame("Denon-K", by[2] >> 4, by[3] & 15, (by[3] >> 4) | (by[4] << 4), w[1])
+    return "neither a Sharp nor a Kaseikyo frame"
+
+
+def parse_master_sheet(rows: list[list[str]]) -> list[MRow]:
+    """The rows of a sheet: a row with a Pronto hex is a key named by the last cell before it, and a row with a name only (after the title and the
+    column heads) is the heading of the rows below it."""
+    out: list[MRow] = []
+    section = ""
+    for i, row in enumerate(rows, 1):
+        cells = [c.strip() for c in row]
+        at = next((j for j, c in enumerate(cells) if c.startswith("0000 ")), None)
+        if at is None:
+            filled = [c for c in cells[:3] if c]
+            if i > 2 and len(filled) == 1 and cells[0] and cells[0] != "Legend":
+                section = " ".join(cells[0].split())
+            continue
+        names = [c for c in cells[:at] if c]
+        if names:
+            label = " ".join(names[-1].split())
+            out.append(MRow(i, label[:-2] if re.fullmatch(r"\d+\.0", label) else label, cells[at], section, tuple(names[:-1])))
+    return out
+
+
+def build_master(snapshot: Snapshot, authored: dict[tuple[str, str], str], report: Report) -> list[tuple[str, dict[str, Any]]]:
+    entry = snapshot.documents[MASTER]
+    sha = snapshot.sha(MASTER)
+    when = f"retrieved {entry.get('retrieved', snapshot.retrieved)}, from the Wayback Machine snapshot {entry['snapshot']}"
+    gate: dict[tuple, str | None] = {}
+    out: list[tuple[str, dict[str, Any]]] = []
+    for sheet, model in SHEETS.items():
+        rows = parse_master_sheet(snapshot.sheet_of(MASTER, sheet))
+        by_protocol: dict[str, list[tuple[MRow, Frame]]] = {"Denon": [], "Denon-K": []}
+        for row in rows:
+            report.count(MAKER, f"master: strings")
+            frame = decode_pronto(row.pronto)
+            if isinstance(frame, str):
+                report.unrepresented[(MAKER, f"{MASTER} sheet '{sheet}'", frame)] += 1
+                continue
+            by_protocol[frame.protocol].append((row, frame))
+        for protocol, members in by_protocol.items():
+            if not members:
+                continue
+            twins: dict[tuple, list[str]] = {}
+            for row, frame in members:
+                twins.setdefault((frame.device, frame.subdevice, frame.function), []).append(row.name)
+            keys_in: list[tuple[str, dict[str, Any]]] = []
+            for row, frame in members:
+                fields = {"device": frame.device, **({"subdevice": frame.subdevice} if frame.subdevice is not None else {}), "function": frame.function}
+                proto = SHARP if protocol == "Denon" else KASEIKYO
+                code = (protocol, frame.device, frame.subdevice, frame.function)
+                if code not in gate:
+                    gate[code] = form_compiles(IMPORT_ROOT, proto, "K", {"id": "primary.irp", "type": "irp", **fields, "confidence": TIER, "source": "probe"})
+                if gate[code]:
+                    report.unrepresented[(MAKER, f"{MASTER} sheet '{sheet}'", f"does not compile: {gate[code]}")] += 1
+                    continue
+                shown = f"{protocol} device {frame.device}" + (f" subdevice {frame.subdevice}" if frame.subdevice is not None else "") + f" function {frame.function}"
+                cite = (f"{MASTER_HOST}/{MASTER}@{sha} ({when}) sheet '{sheet}' row {row.row} '{row.name}' (Pronto hex, frequency word 0x{frame.carrier:04X}"
+                        + (f", section '{row.section}'" if row.section else "") + f"): {shown}, decoded from the hex")
+                doubts = []
+                if len(twins[(frame.device, frame.subdevice, frame.function)]) > 1:
+                    doubts.append("the sheet gives this code to " + " and ".join(f"'{n}'" for n in twins[(frame.device, frame.subdevice, frame.function)]) + ", and a code is one function")
+                if len(row.given) >= 2 and sheet.startswith(("Sharp", "Denon K")):
+                    try:
+                        device_code, function_no = float(row.given[0]), int(float(row.given[1]))
+                    except ValueError:
+                        device_code, function_no = -1.0, -1
+                    stated = f"{frame.device}.{frame.subdevice}" if frame.subdevice is not None else f"{frame.device}"
+                    if function_no != frame.function or f"{device_code:g}" != stated:
+                        doubts.append(f"the sheet's own Device Code {row.given[0]} and Function# {row.given[1]} are not the hex's {stated} and {frame.function}")
+                    else:
+                        report.count(MAKER, "master: rows whose Device Code and Function# the hex agrees with")
+                if doubts:
+                    cite += "; " + "; ".join(doubts)
+                keys_in.append((row.name, {"id": "primary.irp", "type": "irp", **fields, "confidence": DOUBTFUL_TIER if doubts else TIER, "source": cite}))
+            if not keys_in:
+                continue
+            name = model if protocol == "Denon" else f"{model} (Kaseikyo)"
+            while (BRAND.casefold(), name.casefold()) in authored:
+                renamed = f"{name} (Denon table)"
+                report.notes.append((MAKER, name, f"kept as '{renamed}': the ledger's {authored[(BRAND.casefold(), name.casefold())]} has the name (R15)"))
+                name = renamed
+            keys = {n: {"label": f[0], "forms": [f[1]]} for n, f in zip(key_names([f[0] for f in keys_in]), keys_in)}
+            report.count(MAKER, "files")
+            report.count(MAKER, "keys", len(keys))
+            out.append((f"{IMPORT_ROOT}/{MAKER}/{slug(name)}.json",
+                        {"manufacturer": BRAND, "model": name, "aliases": [], "controls": [f"{BRAND} {model}"],
+                         "protocol": dict(SHARP if protocol == "Denon" else KASEIKYO), "keys": keys}))
+    return out
+
+
+def build(snapshot: Snapshot, authored: dict[tuple[str, str], str], report: Report) -> list[tuple[str, dict[str, Any]]]:
+    return build_pdf(snapshot, authored, report) + build_master(snapshot, authored, report)

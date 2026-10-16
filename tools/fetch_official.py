@@ -196,6 +196,8 @@ DOCUMENTS = {
     # Denon's own site no longer serves the AVR-4311CI/AVR-4311 remote code list (DESIGN section 81): the Wayback Machine's copy of the UK site's.
     "denon": [
         ("AVR4311CI_AVR4311_IR-Codes.pdf", "https://web.archive.org/web/20110813053037id_/http://denon.co.uk:80/DocumentMaster/UK/AVR4311CI_AVR4311_IR-Codes.pdf", None),
+        # the master spreadsheet of Denon's US site (DESIGN section 84): 52 sheets of command names and Pronto hex (two earlier versions of 2014 and 2016 are not pinned)
+        ("Denon_Master_IR_Hex.xls", "https://web.archive.org/web/20220505222023id_/https://assets.denon.com/DocumentMaster/us/Denon%20Master%20IR%20Hex.xls", None),
     ],
     # Hitachi America's remote IR code documents for its televisions (DESIGN section 82): its site no longer serves them, so the Wayback Machine's copies
     # (the two RS-232 specifications and the Roll-and-Click page, which has names and no codes, are not IR code tables and are not pinned).

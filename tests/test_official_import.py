@@ -448,7 +448,7 @@ def test_the_committed_official_import_keeps_r19():
         for name, entry in manifest["documents"].items():
             hashes[name], dates[name], snapshots[name] = entry["sha256"], entry.get("retrieved", manifest["retrieved"]), entry.get("snapshot")
     shape = re.compile(r"^(?:marantz\.com archive-downloads|anthemav\.com \(storage\.googleapis\.com/sandbox1-anthemav/an\)"
-                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|infocus\.com IR code PDFs|lyngdorf\.com IR code PDF|emotiva\.com IR code PDFs|denon\.co\.uk RC code list|hitachi-america\.us IR code documents|classeaudio\.com IR code documents|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
+                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|infocus\.com IR code PDFs|lyngdorf\.com IR code PDF|emotiva\.com IR code PDFs|denon\.co\.uk RC code list|denon\.com Master IR Hex|hitachi-america\.us IR code documents|classeaudio\.com IR code documents|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
                        r"(?:, from the Wayback Machine snapshot (\d{14}))?\) (?:sheet '[^']+' row \d+|page \d+ row \d+|page \d+ '|page \d+ table \d+ row '|page \d+ row '|key \d+ ')")
     files = sorted((ROOT / oi.IMPORT_ROOT).rglob("*.json"))
     assert len(files) > 180
@@ -2426,7 +2426,7 @@ def test_a_denon_kaseikyo_row_is_genre1_genre2_and_twelve_function_bits_first_bi
 
 
 def test_the_four_denon_files_are_the_sharp_and_the_kaseikyo_codes_of_each_model_with_the_parity_that_does_not_agree_untested():
-    files = {p.stem: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "denon").glob("*.json"))}
+    files = {p.stem: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "denon").glob("AVR-4311*.json"))}
     assert sorted(files) == ["AVR-4311", "AVR-4311CI", "AVR-4311CI__Kaseikyo", "AVR-4311__Kaseikyo"]
     assert {n: (f["protocol"]["name"], len(f["keys"])) for n, f in files.items()} == {
         "AVR-4311": ("Denon", 155), "AVR-4311CI": ("Denon", 123), "AVR-4311CI__Kaseikyo": ("Denon-K", 369), "AVR-4311__Kaseikyo": ("Denon-K", 377)}
@@ -2665,3 +2665,62 @@ def test_classes_twelve_documents_are_eighteen_files_and_1170_keys_all_plausible
     assert "CAP-2100_IR_codes.pdf@f6bbfefe (retrieved 2026-10-16, from the Wayback Machine snapshot 20101217163929)" in source and "RC6 mode 0 system code 200, IR code 16" in source
     hex_source = files["CP-800__HEX_codes"]["keys"]["KEY_INPUT_1"]["forms"][0]["source"]
     assert "CLASSE_CP-800_HEX.pdf@2e511a04 (retrieved 2026-10-16) page 1" in hex_source and hex_source.endswith("the Pronto hex decoded and agreeing")
+
+
+def sharp_pronto(device, function, word=0x6D, mark=10):
+    pairs = []
+    for d, f, e in ((device, function, 0), (device, function ^ 0xFF, 3)):
+        bits = [(d >> i) & 1 for i in range(5)] + [(f >> i) & 1 for i in range(8)] + [(e >> i) & 1 for i in range(2)]
+        pairs += [(mark, mark * (7 if b else 3)) for b in bits] + [(mark, 0x0D00)]
+    return " ".join(f"{x:04X}" for x in [0, word, 0, len(pairs), *[v for pair in pairs for v in pair]])
+
+
+def kaseikyo_pronto(device, subdevice, function, word=0x70, unit=0x10):
+    by = [0x54, 0x32, device << 4, subdevice | ((function & 15) << 4), function >> 4]
+    by.append(by[2] ^ by[3] ^ by[4])
+    bits = [(b >> i) & 1 for b in by for i in range(8)]
+    pairs = [(unit * 8, unit * 4)] + [(unit, unit * (3 if b else 1)) for b in bits] + [(unit, 0x0E5A)]
+    return " ".join(f"{x:04X}" for x in [0, word, 0, len(pairs), *[v for pair in pairs for v in pair]])
+
+
+def test_a_denon_master_pronto_hex_is_a_sharp_or_a_kaseikyo_frame_with_its_second_frame_or_parity_byte_checked():
+    assert denon.decode_pronto(sharp_pronto(2, 0xC1)) == denon.Frame("Denon", 2, None, 0xC1, 0x6D)
+    assert denon.decode_pronto(sharp_pronto(12, 0x5A, word=0x6B, mark=9)) == denon.Frame("Denon", 12, None, 0x5A, 0x6B)
+    assert denon.decode_pronto(kaseikyo_pronto(4, 1, 2)) == denon.Frame("Denon-K", 4, 1, 2, 0x70)
+    assert denon.decode_pronto(kaseikyo_pronto(4, 7, 0x2A5, word=0x6C, unit=0x0F)) == denon.Frame("Denon-K", 4, 7, 0x2A5, 0x6C)
+    bad_second = sharp_pronto(2, 0xC1).split()
+    bad_second[4 + 2 * 17 + 1] = "000A"                                         # the second frame's second space is a 0 where it was a 1
+    assert "not a function and its inverse" in denon.decode_pronto(" ".join(bad_second))
+    words = kaseikyo_pronto(4, 1, 2).split()
+    words[4 + 2 * 25 + 1] = "0010"                                              # a bit of the data flipped: the parity byte no longer agrees
+    assert "parity byte" in denon.decode_pronto(" ".join(words))
+    other = kaseikyo_pronto(4, 1, 2).split()
+    other[4 + 2 * 1 + 1] = "0030"                                               # the first bit of the vendor byte
+    assert "vendor" in denon.decode_pronto(" ".join(other))
+    assert "header" in denon.decode_pronto("0000 006D 0000 0020 000A") and denon.decode_pronto("zzzz") == "not hex"
+    assert "neither" in denon.decode_pronto("0000 006D 0000 0004 000A 001E 000A 0046 000A 001E 000A 0046")
+
+
+def test_a_denon_master_sheet_is_names_and_pronto_hex_with_the_headings_above_them_and_a_sharp_sheet_has_its_device_code_and_function_before_the_name():
+    pronto = sharp_pronto(2, 72)
+    rows = [["Denon Main Zone ID#1", "", "", "Legend"], [" ", "Pronto Hex Code", "", ""], ["Power", "", "", ""], ["Main Zone ON", pronto, "", ""], ["", "", "", ""],
+            ["Source Input", "", "", ""], ["1.0", "", pronto, ""], ["Device Code", "Function#", "Function Name", "Pronto Hex Code"], ["2", "72", "Zone3 Tuner", pronto]]
+    got = denon.parse_master_sheet(rows)
+    assert [(r.row, r.name, r.section, r.given) for r in got] == [(4, "Main Zone ON", "Power", ()), (7, "1", "Source Input", ()), (9, "Zone3 Tuner", "Source Input", ("2", "72"))]
+    assert denon.SHEETS["Zone 4 ID #2"] == "AVRxx08 Zone 4 ID#2" and denon.SHEETS["Sharp device 4"] == "AVRxx07 and earlier Sharp Device 4" and len(denon.SHEETS) == 52
+
+
+def test_denons_master_spreadsheet_is_57_files_and_2770_keys_that_decode_and_the_sheets_own_codes_agree_with_the_hex():
+    files = {p.stem: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "denon").glob("*.json")) if not p.name.startswith("AVR-4311")}
+    assert len(files) == 57 and sum(len(f["keys"]) for f in files.values()) == 2_770
+    sharp = {n: f for n, f in files.items() if f["protocol"]["name"] == "Denon"}
+    kaseikyo = {n: f for n, f in files.items() if f["protocol"]["name"] == "Denon-K"}
+    assert (len(sharp), len(kaseikyo)) == (10, 47)
+    main = files["AVRxx08_Main_Zone_ID_1"]["keys"]
+    on = main["KEY_MAIN_ZONE_ON"]["forms"][0]
+    assert (on["device"], on["function"], "subdevice" in on) == ("0x02", "0x79", False)               # `MAIN ZONE ON` of the AVR-4311's Sharp table: 57 and the extension 01
+    assert "denon.com Master IR Hex/Denon_Master_IR_Hex.xls@133b7db2 (retrieved 2026-10-16, from the Wayback Machine snapshot 20220505222023) sheet 'Main Zone ID#1' row 4 'Main Zone ON' (Pronto hex, frequency word 0x006D, section 'Power')" in on["source"]
+    # the Sharp and Kaseikyo sheets give each row's device code and function number beside the hex, and the hex says the same in every row but one
+    checked = [s for n, f in files.items() if n.startswith("AVRxx07") for s in f["keys"].values()]
+    assert len(checked) == 482 and sum("sheet's own Device Code" in s["forms"][0]["source"] for s in checked) == 1
+    assert all(f["keys"] for f in files.values()) and {f["manufacturer"] for f in files.values()} == {"Denon"}
