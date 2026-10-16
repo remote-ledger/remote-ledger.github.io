@@ -5,7 +5,7 @@ snapshots in `sources/official/`. It is **not authored here**. SPEC.md R19 sets 
 import must meet, and DESIGN.md section 29 describes how this one meets them.
 
 - **Upstream:** each manufacturer's own published table, so far **Marantz's** AV receiver and processor
-  command charts (<https://www.marantz.com/>, the Archive pages of each model), **Anthem's** MRX and AVM
+  command charts (<https://www.marantz.com/>, the Archive pages of each model, and the FY20 chart of five receivers of 2019, SnapAV's copy that the Wayback Machine has, DESIGN.md section 89), **Anthem's** MRX and AVM
   IR hex sheet (<https://www.anthemav.com/>) and **Oppo's** remote code workbooks for its Blu-ray and Ultra HD
   players (Oppo's download host is gone, so they are the Wayback Machine's copies of
   `download.oppodigital.com`, DESIGN.md section 31) and **KEF's** one-page IR code sheets for its LS50 Wireless,

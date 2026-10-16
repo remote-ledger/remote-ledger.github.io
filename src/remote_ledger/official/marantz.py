@@ -40,7 +40,9 @@ HOST = "marantz.com archive-downloads"
 SHEET = "AVR Commands"
 #: Oldest first: a later workbook replaces an earlier one's file for a model both list.
 DOCUMENTS = ("marantz-master-ir.xls", "marantz-2014-ir-command-sheet.xls",
-             "marantz_fy18_av_sr_nr_ir_code_v02-02072018.xls")
+             "marantz_fy18_av_sr_nr_ir_code_v02-02072018.xls", "Marantz_FY20_SR_NR_IR_CODE_V03_20190827182355425.xls")
+#: where a document is from, when it is not marantz.com's archive downloads: the FY20 workbook is the Wayback Machine's copy of SnapAV's (DESIGN section 89)
+HOSTS = {"Marantz_FY20_SR_NR_IR_CODE_V03_20190827182355425.xls": "snapav.com Marantz IR code workbook"}
 _PRONTO = re.compile(r"^(?:[0-9A-Fa-f]{4} ?)+$")
 _SUPPORTED = ("X", "@")
 RC5_WORD = 0x0073
@@ -189,6 +191,14 @@ def key_names(commands: list[Command]) -> dict[int, str]:
     return out
 
 
+def where(snapshot: Snapshot, document: str) -> str:
+    """``host/document@hash (retrieved date[, from the Wayback Machine snapshot ...])``: a document fetched later than the rest has its own date, and a copy of
+    the Wayback Machine's names its snapshot."""
+    entry = snapshot.documents[document]
+    return (f"{HOSTS.get(document, HOST)}/{document}@{snapshot.sha(document)} (retrieved {entry.get('retrieved', snapshot.retrieved)}"
+            + (f", from the Wayback Machine snapshot {entry['snapshot']}" if "snapshot" in entry else "") + ")")
+
+
 def build(snapshot: Snapshot, authored: dict[tuple[str, str], str], report: Report) -> list[tuple[str, dict[str, Any]]]:
     """Every file the maker's documents yield, as ``(repo path, document)``."""
     refused: dict[tuple[str, int], str] = {}
@@ -286,7 +296,7 @@ def _direct_files(snapshot: Snapshot, model: Model, rows: list[tuple[str, Model,
         sha = snapshot.sha(document)
         how = (f"RC-5x system {system} command {cmd} extension {extension}, read as RC5x device {system} subdevice {cmd} function {extension}"
                f" (the chart's extension is decimal)")
-        form["source"] = (f"{HOST}/{document}@{sha} (retrieved {snapshot.retrieved}) sheet '{command.sheet}' row {command.row} "
+        form["source"] = (f"{where(snapshot, document)} sheet '{command.sheet}' row {command.row} "
                           f"'{command.name}' (RC-5 {command.triple}), the column of {' '.join([column.name, *column.aliases])}: {how}")
         if mark.upper() != "X":
             form["source"] += f"; the chart marks it '{mark}'"
@@ -374,7 +384,7 @@ def _model_files(snapshot: Snapshot, document: str, model: Model, commands: list
         if signature in seen:
             continue
         seen.add(signature)
-        source = (f"{HOST}/{document}@{sha} (retrieved {snapshot.retrieved}) sheet '{SHEET}' row {command.row} "
+        source = (f"{where(snapshot, document)} sheet '{SHEET}' row {command.row} "
                   f"'{command.name}' (RC-5 {command.triple}), the column of {model.name}: {how}")
         if mark.upper() != "X":
             source += f"; the chart marks it '{mark}'"
