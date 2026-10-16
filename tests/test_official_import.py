@@ -219,7 +219,7 @@ def test_marantzs_rc5_pronto_hex_decodes_to_the_system_and_command_beside_it():
                 matched += 1
             else:
                 wrong.append(f"{path.name}:{key}")
-    assert wrong == [] and (matched, extension) == (1_640, 31)
+    assert wrong == [] and (matched, extension) == (1_750, 31)
 
 
 DIRECT = [
@@ -283,9 +283,10 @@ def test_the_direct_rows_a_column_marks_are_a_file_of_its_own_with_the_rc5x_trip
     assert report.unrepresented[("marantz", document, "an RC-5x extension that is a range of values, a command for each")] == 1
 
 
-def test_a_model_takes_each_direct_sheet_from_the_newest_workbook_that_lists_it_and_the_one_column_of_the_2015_workbook_is_all_of_its_models(tmp_path):
+def test_a_model_takes_each_direct_sheet_from_the_newest_workbook_that_lists_it_and_the_one_column_of_the_2015_workbook_is_all_of_its_models(tmp_path, monkeypatch):
     from remote_ledger.official.common import Snapshot
 
+    monkeypatch.setattr(marantz, "DOCUMENTS", marantz.DOCUMENTS[:3])           # the three of marantz.com: the fourth, of 2019, is SnapAV's copy (its own host)
     old, new = marantz.DOCUMENTS[0], marantz.DOCUMENTS[-1]
     older = [list(r) for r in DIRECT]
     older[5][2:5] = ["16", "99", "01"]          # the older workbook says something else for the second row
@@ -336,7 +337,7 @@ def test_the_committed_direct_files_cite_the_row_they_read_and_one_jp1_upgrades_
             fields = tuple(int(str(form[name]), 0) for name in ("device", "subdevice", "function"))
             assert fields == tuple(int(g) for g in cited.groups()), (path.name, key)
             assert fields[0] <= 31 and fields[1] <= 127 and fields[2] <= 63
-    assert (files, keys) == (44, 15_995)
+    assert (files, keys) == (49, 16_880)
     jp1 = load(ROOT / "remotes" / "jp1" / "Marantz" / "Audio-Marantz_NR1402-rc5x.json")
     (form,) = [v["forms"][0] for v in jp1["keys"].values() if v["label"] == "Direct VOLUME"]
     assert (int(form["device"], 0), int(form["subdevice"], 0), int(form["function"], 0)) == (16, 111, 0)
@@ -364,7 +365,27 @@ def test_every_rc5x_key_of_the_tree_says_the_chart_row_it_reads_and_the_forms_ar
             fields = tuple(int(str(form[name]), 0) for name in ("device", "subdevice", "function"))   # a file writes them as 0x..
             assert fields == tuple(int(g) for g in cited.groups()), (path.name, key)
             assert fields[0] <= 31 and fields[1] <= 127 and fields[2] <= 63
-    assert (files, keys) == (75, 5_589)
+    assert (files, keys) == (80, 6_175)
+
+
+def test_the_fy20_workbook_is_the_wayback_copy_of_snapavs_and_gives_five_models_25_files_and_2209_keys():
+    """`Marantz_FY20_SR_NR_IR_CODE_V03` (27 August 2019, by Marantz America: the SR6014, SR5014, NR1710, NR1510 and NR1200): the same chart as the 2015 workbook's, so each model is the files
+    of its name (the Pronto hex of the basic commands), `[RC-5]`, `[RC-5x]`, `[37.3 kHz]` and `[direct]` (the workbook's one `FY18AVR` column is all five). No model of the earlier workbooks is in it."""
+    counts = {}
+    for path in sorted((ROOT / oi.IMPORT_ROOT / "marantz").glob("*.json")):
+        m = re.match(r"(SR6014|SR5014|NR1710|NR1510|NR1200)(.*)\.json$", path.name)
+        if m:
+            counts.setdefault(m[1], {})[m[2] or "main"] = len(load(path)["keys"])
+    assert counts == {
+        "SR6014": {"main": 138, "__37.3_kHz": 5, "__RC-5": 24, "__RC-5x": 151, "__direct": 177}, "SR5014": {"main": 137, "__37.3_kHz": 2, "__RC-5": 24, "__RC-5x": 137, "__direct": 177},
+        "NR1710": {"main": 134, "__37.3_kHz": 2, "__RC-5": 24, "__RC-5x": 137, "__direct": 177}, "NR1510": {"main": 88, "__37.3_kHz": 2, "__RC-5": 23, "__RC-5x": 70, "__direct": 177},
+        "NR1200": {"main": 107, "__37.3_kHz": 2, "__RC-5": 26, "__RC-5x": 91, "__direct": 177}}
+    assert sum(sum(c.values()) for c in counts.values()) == 2_209
+    source = load(ROOT / oi.IMPORT_ROOT / "marantz" / "NR1710.json")["keys"]["KEY_POWER_ON_16_12_01"]["forms"][0]["source"]
+    assert source.startswith("snapav.com Marantz IR code workbook/Marantz_FY20_SR_NR_IR_CODE_V03_20190827182355425.xls@9ebaf099 (retrieved 2026-10-16, from the Wayback Machine snapshot 20251122141557) "
+                             "sheet 'AVR Commands' row 8 'POWER ON' (RC-5 16 12 01), the column of NR1710")
+    manifest = json.loads((SNAPSHOT / "marantz" / MANIFEST).read_text(encoding="utf-8"))
+    assert manifest["retrieved"] == "2026-10-08" and manifest["documents"][marantz.DOCUMENTS[-1]]["retrieved"] == "2026-10-16"       # the others keep their date
 
 
 def test_the_power_toggle_has_the_signal_marantz_lists_for_system_16_command_12():
@@ -448,7 +469,7 @@ def test_the_committed_official_import_keeps_r19():
         for name, entry in manifest["documents"].items():
             hashes[name], dates[name], snapshots[name] = entry["sha256"], entry.get("retrieved", manifest["retrieved"]), entry.get("snapshot")
     shape = re.compile(r"^(?:marantz\.com archive-downloads|anthemav\.com \(storage\.googleapis\.com/sandbox1-anthemav/an\)"
-                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|infocus\.com IR code PDFs|lyngdorf\.com IR code PDF|emotiva\.com IR code PDFs|denon\.co\.uk RC code list|denon\.com Master IR Hex|hitachi-america\.us IR code documents|classeaudio\.com IR code documents|cyrusaudio\.com remote code tables|snapav\.com Yamaha IR code PDFs|jblsynthesis\.com custom installation notes|lexicon\.com custom installation notes|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
+                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|infocus\.com IR code PDFs|lyngdorf\.com IR code PDF|emotiva\.com IR code PDFs|denon\.co\.uk RC code list|denon\.com Master IR Hex|hitachi-america\.us IR code documents|classeaudio\.com IR code documents|cyrusaudio\.com remote code tables|snapav\.com Yamaha IR code PDFs|snapav\.com Marantz IR code workbook|jblsynthesis\.com custom installation notes|lexicon\.com custom installation notes|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
                        r"(?:, from the Wayback Machine snapshot (\d{14}))?\) (?:sheet '[^']+' row \d+|page \d+ row \d+|page \d+ '|page \d+ table \d+ row '|page \d+ row '|key \d+ ')")
     files = sorted((ROOT / oi.IMPORT_ROOT).rglob("*.json"))
     assert len(files) > 180

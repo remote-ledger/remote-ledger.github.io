@@ -31,6 +31,7 @@ SHEETS = {
                                   "XM SIRIUS Preset Direct", "XM SIRIUS Ch. Direct"],
         "marantz-2014-ir-command-sheet.xls": ["AVR Commands", "Direct Vol."],
         "marantz_fy18_av_sr_nr_ir_code_v02-02072018.xls": ["AVR Commands", "Direct Vol."],
+        "Marantz_FY20_SR_NR_IR_CODE_V03_20190827182355425.xls": ["AVR Commands", "Direct Vol."],
     },
     "oppo": {
         "BDP-103_BDP-103D_Remote_Code_v1.2.xls": ["Remote Code 1", "Remote Code 2", "Remote Code 3", "Notes"],

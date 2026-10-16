@@ -38,6 +38,10 @@ DOCUMENTS = {
         ("marantz-2014-ir-command-sheet.xls", MARANTZ + "marantz-2014-ir-command-sheet.xls", None),
         ("marantz_fy18_av_sr_nr_ir_code_v02-02072018.xls",
          MARANTZ + "marantz_fy18_av_sr_nr_ir_code_v02-02072018.xls", None),
+        # the FY20 workbook (V03, 27 August 2019: the SR6014, SR5014, NR1710, NR1510 and NR1200) is not on marantz.com's archive-downloads any more: it is the Wayback Machine's copy of
+        # the one on SnapAV's protocols-and-drivers folder for amplifiers (DESIGN section 89)
+        ("Marantz_FY20_SR_NR_IR_CODE_V03_20190827182355425.xls",
+         WB + "20251122141557id_/https://www.snapav.com/wcsstore/ExtendedSitesCatalogAssetStore/attachments/documents/Amplifiers/ProtocolsAndDrivers/Marantz_FY20_SR_NR_IR_CODE_V03_20190827182355425.xls", None),
     ],
     # Oppo's own host no longer resolves (the company stopped in 2018 and 2019): these are the Wayback Machine's
     # copies, each the snapshot named in its URL (``id_``, the raw bytes: the plain form answers a script with a
