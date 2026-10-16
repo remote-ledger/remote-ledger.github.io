@@ -7,7 +7,7 @@ size, SHA-256, the retrieval date (today: do not pass --date) and the server's `
 (and, for a copy from the Wayback Machine, the address and snapshot it was archived from). Run it, then
 ``tools/official_sheets_to_csv.py <maker>`` for the spreadsheets, review the diff, and import.
 
-    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc|arcam|infocus|lyngdorf|emotiva|denon|hitachi|classe|cyrus|cambridge|hegel|cary|nad|simaudio|rotel
+    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc|arcam|infocus|lyngdorf|emotiva|denon|hitachi|classe|cyrus|yamaha|cambridge|hegel|cary|nad|simaudio|rotel
 """
 
 from __future__ import annotations
@@ -27,6 +27,7 @@ from pathlib import Path
 
 WAYBACK = re.compile(r"^https://web\.archive\.org/web/(?P<snapshot>\d{14})id_/(?P<original>https?://.+)$")
 USER_AGENT = "remote-ledger snapshot (+https://github.com/remote-ledger)"
+WB = "https://web.archive.org/web/"
 NAD = "https://cdn.shopify.com/s/files/1/0784/9751/3722/files/"
 MARANTZ = ("https://www.marantz.com/on/demandware.static/-/Library-Sites-marantz_europe_shared/default/"
            "dw78eade36/archive-downloads/")
@@ -182,6 +183,17 @@ DOCUMENTS = {
          "https://web.archive.org/web/20140705065926id_/http://infocus.com/resources/documents/X/X2_IRCodes.pdf", None),
         ("X3_IRCodes.pdf",
          "https://web.archive.org/web/20140705064703id_/http://infocus.com/resources/documents/X/X3_IRCodes.pdf", None),
+    ],
+    # Yamaha's standard and extended IR code tables for its receivers and amplifiers (DESIGN section 87): the PDFs are on the support-documents folder of
+    # SnapAV's site (snapav.com, an American distributor of Yamaha's), the Wayback Machine's copies, each the snapshot named in its URL (the live files are the
+    # same bytes). Not pinned: SnapAV's CD-C600 sheet (`Copyright (c) 2009 YAMAHA CORPORATION`: the private repository's) and its Marantz MM7055 manual.
+    "yamaha": [
+        ("Extended_IR_Codes_RX-V685RX-A780-RX-A3080CX-A5200_6.pdf", WB + "20201031044639id_/https://www.snapav.com/wcsstore/ExtendedSitesCatalogAssetStore/attachments/documents/Amplifiers/SupportDocuments/Extended_IR_Codes_RX-V685RX-A780-RX-A3080CX-A5200_6.pdf", None),
+        ("Standard_IR_Codes_RX-V685RX-A780-RX-A3080CX-A5200_4.pdf", WB + "20201031045629id_/https://www.snapav.com/wcsstore/ExtendedSitesCatalogAssetStore/attachments/documents/Amplifiers/SupportDocuments/Standard_IR_Codes_RX-V685RX-A780-RX-A3080CX-A5200_4.pdf", None),
+        ("RX-V385_RX-V485_RX-V585_IR_Codes_2.pdf", WB + "20201023045904id_/https://www.snapav.com/wcsstore/ExtendedSitesCatalogAssetStore/attachments/documents/Amplifiers/SupportDocuments/RX-V385_RX-V485_RX-V585_IR_Codes_2.pdf", None),
+        ("WXA-50_WXC-50_Extended_IR_Codes_1.pdf", WB + "20240223031354id_/https://www.snapav.com/wcsstore/ExtendedSitesCatalogAssetStore/attachments/documents/Amplifiers/SupportDocuments/WXA-50_WXC-50_Extended_IR_Codes_1.pdf", None),
+        ("WXA-50_WXC-50_Standard_IR_Codes_1.pdf", WB + "20240222115523id_/https://www.snapav.com/wcsstore/ExtendedSitesCatalogAssetStore/attachments/documents/Amplifiers/SupportDocuments/WXA-50_WXC-50_Standard_IR_Codes_1.pdf", None),
+        ("XDA-QS5400_XDA-AMP5400_IR_Commands.pdf", WB + "20201023055732id_/https://www.snapav.com/wcsstore/ExtendedSitesCatalogAssetStore/attachments/documents/Amplifiers/SupportDocuments/XDA-QS5400_XDA-AMP5400_IR_Commands.pdf", None),
     ],
     # Lyngdorf's one-page "NEC IR Code Format for Lyngdorf products" (DESIGN section 79): the same PDF is on the DPA-1's and the SDAI 2175's pages of its
     # site (lyngdorf.com/wp-content/uploads/2017/09/), which no longer serves it, so it is the Wayback Machine's copy.

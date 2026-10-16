@@ -17,8 +17,8 @@ sources have been imported under SPEC R19:
 - **Manufacturers' own IR tables**: Marantz's AV receiver charts, Anthem's IR
   hex sheet, Oppo's remote code workbooks, KEF's IR code sheets, JVC's
   projector guide, Arcam's custom installation notes, two of Cambridge Audio's lists
-  of NEC codes, Hegel's RC-5 tables, Cary Audio's DMS table, InFocus's projector IR code PDFs, Lyngdorf's NEC code table, Emotiva's Pronto hex PDFs, Denon's AVR-4311 remote code list and master IR hex spreadsheet, Hitachi America's TV remote IR codes, Classé's IR code lists and HEX PDFs, Cyrus Audio's RC-5 tables, NAD's T-series IR tables and Crestron IR files, Simaudio's table of IR codes and Rotel's IR hex code PDFs, 770 files, 58,941
-  keys (DESIGN §29, §31, §58, §60, §62, §63, §64, §65, §66, §68, §69, §71, §72, §73, §74, §75, §76, §77, §78, §79, §80, §81, §82, §83, §84, §85, §86; Linn's RC-5 table moved to the private repository, §70).
+  of NEC codes, Hegel's RC-5 tables, Cary Audio's DMS table, InFocus's projector IR code PDFs, Lyngdorf's NEC code table, Emotiva's Pronto hex PDFs, Denon's AVR-4311 remote code list and master IR hex spreadsheet, Hitachi America's TV remote IR codes, Classé's IR code lists and HEX PDFs, Cyrus Audio's RC-5 tables, Yamaha's standard and extended IR code tables, NAD's T-series IR tables and Crestron IR files, Simaudio's table of IR codes and Rotel's IR hex code PDFs, 798 files, 65,949
+  keys (DESIGN §29, §31, §58, §60, §62, §63, §64, §65, §66, §68, §69, §71, §72, §73, §74, §75, §76, §77, §78, §79, §80, §81, §82, §83, §84, §85, §86, §87; Linn's RC-5 table moved to the private repository, §70).
 
 SPEC v0.11 makes growing coverage from every source whose licence permits
 it the standing goal, with no fixed list of sources (DESIGN §8, Phase 8).
@@ -82,7 +82,10 @@ Land it in two PRs, code and then data.
       Sirius and HD Radio ones (the document writes their ID and parity bits as `*`; for ID 1 the document's own notes give them, so they could be derived: not done); **Classé's `CP-800 IR codes Rev1`** (§83; a spreadsheet page whose one system heading `016(019)` covers every row, where the HEX PDF of the same product has Mute and Volume under system 200: not read, the HEX PDF has the product), **Denon's other documents on `assets.denon.com`** (§84 reads its master spreadsheet of 2022; the archive also has the 2014 and 2016 versions of it and about 75 per-model IR code PDFs of 2003 to 2013 for the AVR-1508 to AVR-5805 and the later xx11 to xx13, in the layout of §81's AVR-4311 list, each 0.5 to 4 MB: not pinned, the master has the families' codes), **Cyrus's DAB 8 and DVD 8 tables** (§85: they state no system code, so a key's device is unknown; the Cyrus 3 and 5's `Up`/`Down` and similar codes of its second table are read), and Cambridge Audio's support archive (the live driver-updates page answers a
       script with 403) has nothing left: the Wayback Machine's copy of that page of 6 June 2026 lists exactly the IR PDFs already read
       (the 15 files of 13 documents in the private repository and the two public ones of §65), and its other files are serial and RS-232
-      protocols, not IR codes. A document is
+      protocols, not IR codes. **Leads of 2026-10-16:** SnapAV's `CD-C600_IR_Commands` (one page of Yamaha's CD player, `Copyright© 2009 YAMAHA CORPORATION`: the
+      private repository's, not done; the rest of that folder is read in §87 or is no IR table); **Pioneer's two AV receiver IR workbooks** of 2010 and FY15 (`Copyright (c) Pioneer
+      Corporation, all rights reserved`: 131 files in the private repository, its pull request #9, awaiting the owner); the Wayback Machine's index answers a narrow path
+      prefix (`pioneerelectronics.com/StaticFiles/PUSA/Files/Home%20Custom%20Install/`) where a whole host times out. A document is
       pinned by hash as D123 does it; a PDF is read as the lines of text of its
       pages (KEF's was the first, D243, JVC's the second, D247), which suits a
       table and not prose. Kaleidescape's PDF says "All rights reserved": a source

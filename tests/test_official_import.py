@@ -12,7 +12,7 @@ from pathlib import Path
 import pytest
 
 from remote_ledger.errors import ValidationError
-from remote_ledger.official import anthem, arcam, cambridge, cary, classe, cyrus, denon, emotiva, hegel, hitachi, infocus, jvc, kef, lyngdorf, marantz, nad, oppo, rotel, simaudio
+from remote_ledger.official import anthem, arcam, cambridge, cary, classe, cyrus, denon, emotiva, hegel, hitachi, infocus, jvc, kef, lyngdorf, marantz, nad, oppo, rotel, simaudio, yamaha
 from remote_ledger.official import importer as oi
 from remote_ledger.official.common import MANIFEST, Report, load_snapshot
 from remote_ledger.serialize import load
@@ -26,7 +26,7 @@ SNAPSHOT = ROOT / oi.SNAPSHOT
 
 def test_every_document_and_csv_is_the_one_the_manifest_pins():
     for maker, retrieved in (("marantz", "2026-10-08"), ("anthem", "2026-10-08"), ("oppo", "2026-10-09"), ("kef", "2026-10-13"),
-                             ("jvc", "2026-10-13"), ("arcam", "2026-10-13"), ("cambridge", "2026-10-13"), ("hegel", "2026-10-13"), ("cary", "2026-10-13"), ("infocus", "2026-10-15"), ("lyngdorf", "2026-10-16"), ("emotiva", "2026-10-16"), ("denon", "2026-10-16"), ("hitachi", "2026-10-16"), ("classe", "2026-10-16"), ("cyrus", "2026-10-16"), ("nad", "2026-10-14"), ("simaudio", "2026-10-13"), ("rotel", "2026-10-13")):
+                             ("jvc", "2026-10-13"), ("arcam", "2026-10-13"), ("cambridge", "2026-10-13"), ("hegel", "2026-10-13"), ("cary", "2026-10-13"), ("infocus", "2026-10-15"), ("lyngdorf", "2026-10-16"), ("emotiva", "2026-10-16"), ("denon", "2026-10-16"), ("hitachi", "2026-10-16"), ("classe", "2026-10-16"), ("cyrus", "2026-10-16"), ("yamaha", "2026-10-16"), ("nad", "2026-10-14"), ("simaudio", "2026-10-13"), ("rotel", "2026-10-13")):
         snap = load_snapshot(SNAPSHOT / maker)
         assert snap.maker == maker and snap.retrieved == retrieved
         assert snap.documents and snap.sheets
@@ -443,12 +443,12 @@ def test_the_committed_official_import_keeps_r19():
     or Untested, and a citation that names a document the manifest pins, by hash."""
     assert (ROOT / oi.IMPORT_ROOT / "README.md").is_file() and (ROOT / oi.IMPORT_ROOT / oi.REPORT).is_file()
     hashes, dates, snapshots = {}, {}, {}
-    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "arcam", "cambridge", "hegel", "cary", "infocus", "lyngdorf", "emotiva", "denon", "hitachi", "classe", "cyrus", "nad", "simaudio", "rotel"):
+    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "arcam", "cambridge", "hegel", "cary", "infocus", "lyngdorf", "emotiva", "denon", "hitachi", "classe", "cyrus", "yamaha", "nad", "simaudio", "rotel"):
         manifest = json.loads((SNAPSHOT / maker / MANIFEST).read_text(encoding="utf-8"))
         for name, entry in manifest["documents"].items():
             hashes[name], dates[name], snapshots[name] = entry["sha256"], entry.get("retrieved", manifest["retrieved"]), entry.get("snapshot")
     shape = re.compile(r"^(?:marantz\.com archive-downloads|anthemav\.com \(storage\.googleapis\.com/sandbox1-anthemav/an\)"
-                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|infocus\.com IR code PDFs|lyngdorf\.com IR code PDF|emotiva\.com IR code PDFs|denon\.co\.uk RC code list|denon\.com Master IR Hex|hitachi-america\.us IR code documents|classeaudio\.com IR code documents|cyrusaudio\.com remote code tables|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
+                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|infocus\.com IR code PDFs|lyngdorf\.com IR code PDF|emotiva\.com IR code PDFs|denon\.co\.uk RC code list|denon\.com Master IR Hex|hitachi-america\.us IR code documents|classeaudio\.com IR code documents|cyrusaudio\.com remote code tables|snapav\.com Yamaha IR code PDFs|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
                        r"(?:, from the Wayback Machine snapshot (\d{14}))?\) (?:sheet '[^']+' row \d+|page \d+ row \d+|page \d+ '|page \d+ table \d+ row '|page \d+ row '|key \d+ ')")
     files = sorted((ROOT / oi.IMPORT_ROOT).rglob("*.json"))
     assert len(files) > 180
@@ -2775,3 +2775,171 @@ def test_the_ledgers_jp1_cyrus_remotes_have_the_codes_of_the_acA75_and_the_tuner
     tuner, table = codes("remotes/jp1/Cyrus/Audio-Cyrus_AM-FM_Tuner.json"), codes("remotes/official/cyrus/original_tuner.json")
     assert (len(tuner), len(table), len(set(tuner) & set(table))) == (22, 20, 19)
     assert tuner[(17, 10)] == "Store" and table[(17, 17)] == "Store"
+
+
+# --- Yamaha --------------------------------------------------------------------------------------------------------
+
+
+def ygrid(*rows) -> list[list[str]]:
+    """A table's grid rows as the CSV has them for a document of one model column (``385``): the heading's two rows, then ``page, y, group, name, name, device,
+    zone, ID1, ID2, mark``, and the two names again as the words on the row's own height."""
+    heading = [["1", "127", "Function", "Function", "Function", "Device Zone", "Device Zone", "Code", "Code", "385", "", ""],
+               ["1", "134", "Group", "Name", "Name", "Device Zone", "Device Zone", "(ID1)", "(ID2)", "", "", ""]]
+    return heading + [list(r) + [""] * (12 - len(r)) for r in rows]
+
+
+YDOC = yamaha.Document("t.pdf", (("385", ("RX-V385",)),))
+
+
+def test_yamahas_notation_is_a_byte_and_its_complement_or_two_bytes_as_its_hex_converter_has_it():
+    """``7F-4A`` is ``7F 80 4A B5`` (8 bit: each byte is followed by its complement), ``7F01-4A`` is ``7F 01 4A B5``, ``7F01-4A33`` is ``7F 01 4A 33``: the four bytes in the
+    order sent (Yamaha's IR Hex Converter, which the Wayback Machine has)."""
+    assert yamaha.frame_of("7F-4A") == (0x7F, 0x80, 0x4A, 0xB5)
+    assert yamaha.frame_of("7F01-4A") == (0x7F, 0x01, 0x4A, 0xB5)
+    assert yamaha.frame_of("7F01-4A33") == (0x7F, 0x01, 0x4A, 0x33)
+    assert yamaha.frame_of("7E-7E80") == (0x7E, 0x81, 0x7E, 0x80)            # ID2: the last byte is not the complement
+    for bad in ("7E", "7E-7", "7E-7E8", "7G-7E", "7E-B8C7 7E-69", "", "\u3000\u3000"):
+        assert isinstance(yamaha.frame_of(bad), str), bad
+
+
+def test_a_mark_says_the_model_has_the_code_and_what_it_adds_and_a_name_is_tidied():
+    assert [yamaha.mark_of(m) for m in ("YES", "Yes", "NO", "", "YES*J", "YES*No key", "YES(No Key)")] == [
+        (True, ""), (True, ""), (False, ""), (False, ""), (True, "*J"), (True, "*No key"), (True, "(No Key)")]
+    assert yamaha.tidy("HDMI- 1") == "HDMI-1" and yamaha.tidy("HDMI-  1") == "HDMI-1" and yamaha.tidy("AV- 5") == "AV-5"
+    assert yamaha.tidy("a\u3000 b") == "a b" and yamaha.tidy("TUNING/ UP") == "TUNING/ UP"
+
+
+def test_a_function_is_the_rows_of_one_name_under_rising_zones_and_a_blank_cell_is_the_function_above():
+    rows = ygrid(("1", "142", "POWER", "POWER", "ON", "RECEIVER", "MAIN", "7E-7E", "7E-7E80", "YES"), ("1", "149", "POWER", "POWER", "ON", "RECEIVER", "ZONE2", "7E-BA", "7E-BA44", "YES"),
+                 ("1", "157", "POWER", "POWER", "ON", "RECEIVER", "ZONE3", "7A-ED", "7A-ED13", "NO"),
+                 ("1", "179", "POWER", "STANDBY", "OFF", "RECEIVER", "MAIN", "7E-7F", "7E-7F81", "YES"),
+                 ("2", "54", "", "", "", "", "ZONE2", "7E-BB", "7E-BB45", "YES"),                                 # a page break: the function above
+                 ("2", "66", "OUTPUT", "HDMI OUT 2", "ON", "RECEIVER", "ALL", "7E-215E", "7E-215F", "YES"),
+                 ("3", "54", "", "", "OFF", "", "ALL", "7E-B1CE", "7E-B1CF", "YES"))                               # no first line: the one above, with its own second
+    got = yamaha.parse(rows, YDOC)
+    assert [(r.group, r.name, r.device, r.zone) for r in got] == [
+        ("POWER", "POWER ON", "RECEIVER", "MAIN"), ("POWER", "POWER ON", "RECEIVER", "ZONE2"), ("POWER", "POWER ON", "RECEIVER", "ZONE3"),
+        ("POWER", "STANDBY OFF", "RECEIVER", "MAIN"), ("POWER", "STANDBY OFF", "RECEIVER", "ZONE2"), ("OUTPUT", "HDMI OUT 2 ON", "RECEIVER", "ALL"), ("OUTPUT", "HDMI OUT 2 OFF", "", "ALL")]
+
+
+def test_two_functions_of_one_name_that_alternate_over_the_zones_are_two_functions_and_a_first_line_repeated_with_a_blank_second_is_the_function_above():
+    rows = ygrid(("1", "179", "PROGRAM", "ENHANCER", "ON", "RECEIVER", "MAIN", "7E-D8", "7E-D826", "YES"), ("1", "186", "PROGRAM", "", "OFF", "RECEIVER", "MAIN", "7E-D9", "7E-D927", "YES"),
+                 ("1", "194", "PROGRAM", "", "ON", "RECEIVER", "ZONE2", "7E-B9C6", "7E-B9C7", "YES"), ("1", "201", "PROGRAM", "", "OFF", "RECEIVER", "ZONE2", "7E-BAC5", "7E-BAC4", "YES"),
+                 ("1", "300", "MEMORY", "SCENE", "5", "RECEIVER", "MAIN", "7A-0B74", "7A-0B75", "YES"), ("1", "308", "MEMORY", "SCENE", "5", "RECEIVER", "ZONE2", "7A-0C73", "7A-0C72", "YES"),
+                 ("1", "316", "MEMORY", "SCENE", "", "RECEIVER", "ZONE3", "7A-0D72", "7A-0D73", "YES"))               # the cell of the 5 is not found for this row
+    assert [r.name for r in yamaha.parse(rows, YDOC)] == ["ENHANCER ON", "ENHANCER OFF", "ENHANCER ON", "ENHANCER OFF", "SCENE 5", "SCENE 5", "SCENE 5"]
+
+
+def test_a_name_that_goes_on_over_the_rows_is_one_name_and_a_remark_in_a_zones_row_is_that_rows_extra():
+    rows = ygrid(("1", "100", "OPERATION", "PAUSE", "", "RECEIVER", "MAIN", "7F01-86", "7F01-8679", "YES"), ("1", "108", "OPERATION", "or", "", "RECEIVER", "ZONE2", "7F01-87", "7F01-8778", "YES"),
+                 ("1", "115", "OPERATION", "BAND", "", "RECEIVER", "ZONE3", "7F01-88", "7F01-8877", "YES"),
+                 ("1", "200", "INPUT", "CATEGORY/BAND", "FM", "RECEIVER", "MAIN", "7F01-5827", "7F01-5826", "YES"),
+                 ("1", "212", "INPUT", "CATEGORY/BAND", "If Another input, Swich input to TUNER", "RECEIVER", "ZONE2", "7F01-5926", "7F01-5927", "YES"),
+                 ("1", "224", "INPUT", "CATEGORY/BAND", "and select band FM", "RECEIVER", "ZONE4", "7F01-7D02", "7F01-7D03", "YES"))
+    got = yamaha.parse(rows, YDOC)
+    assert [r.name for r in got] == ["PAUSE or BAND"] * 3 + ["CATEGORY/BAND FM"] * 3
+    assert [r.extra for r in got] == ["", "", "", "", "If Another input, Swich input to TUNER", "and select band FM"]
+
+
+def test_one_merged_cell_that_holds_the_names_of_several_functions_gives_each_the_words_on_its_own_rows():
+    """Yamaha's MUTE: the second cell of nine rows is one merged cell, `ON (FULL)`, `ON (-40dB)` and `ON (-20dB)`, and each function's zones begin again."""
+    both = "ON (FULL) ON (-40dB) ON (-20dB)"
+    rows = ygrid(("1", "415", "VOLUME", "MUTE", both, "RECEIVER", "MAIN", "7E-A2", "7E-A25C", "YES", "MUTE", "ON"), ("1", "422", "VOLUME", "MUTE", both, "RECEIVER", "ZONE2", "7E-A0", "7E-A05E", "YES", "", "(FULL)"),
+                 ("1", "437", "VOLUME", "MUTE", both, "RECEIVER", "MAIN", "7E-63", "7E-631D", "YES", "", "ON"), ("1", "444", "VOLUME", "MUTE", both, "RECEIVER", "ZONE2", "7E-64", "7E-641A", "YES", "", "(-40dB)"),
+                 ("1", "459", "VOLUME", "MUTE", both, "RECEIVER", "MAIN", "7E-DF", "7E-DF21", "YES", "", "ON"), ("1", "466", "VOLUME", "MUTE", both, "RECEIVER", "ZONE2", "7E-29", "7E-2957", "YES", "", "(-20dB)"))
+    assert [r.name for r in yamaha.parse(rows, YDOC)] == ["MUTE ON (FULL)"] * 2 + ["MUTE ON (-40dB)"] * 2 + ["MUTE ON (-20dB)"] * 2
+
+
+def test_a_heading_that_is_not_the_documents_and_a_zone_that_is_none_are_refused():
+    bad = ygrid(("1", "142", "POWER", "POWER", "ON", "RECEIVER", "MAIN", "7E-7E", "7E-7E80", "YES"))
+    bad[1][9] = "485"
+    with pytest.raises(ValueError, match="the heading"):
+        yamaha.parse(bad, YDOC)
+    with pytest.raises(ValueError, match="the zone `ZONE9`"):
+        yamaha.parse(ygrid(("1", "142", "POWER", "POWER", "ON", "RECEIVER", "ZONE9", "7E-7E", "7E-7E80", "YES")), YDOC)
+    with pytest.raises(ValueError, match="before the heading"):
+        yamaha.parse([["1", "142", "POWER", "POWER", "ON", "RECEIVER", "MAIN", "7E-7E", "7E-7E80", "YES", "", ""]], YDOC)
+
+
+def yamaha_files() -> dict[str, dict]:
+    return {load(p)["model"]: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "yamaha").glob("*.json"))}
+
+
+def test_yamahas_six_tables_are_28_files_and_7008_keys_two_code_sets_for_each_of_14_models_and_60_keys_are_the_japan_models():
+    """RX-V385, RX-V485, RX-V585, RX-V685, RX-A780, RX-A880, RX-A1080, RX-A2080, RX-A3080, CX-A5200, WXA-50, WXC-50, XDA-QS5400RK and XDA-AMP5400RK, each with its ID1 and its ID2 codes.
+    **Untested are the 60 keys the table marks `YES*J`** (the Japan model's: 3 in each of the 20 files of the RX and CX families)."""
+    files = yamaha_files()
+    assert len(files) == 28 and sum(len(f["keys"]) for f in files.values()) == 7_008
+    assert {n: len(f["keys"]) for n, f in files.items()} == {
+        "CX-A5200 (ID1)": 463, "CX-A5200 (ID2)": 463, "RX-A1080 (ID1)": 307, "RX-A1080 (ID2)": 307, "RX-A2080 (ID1)": 453, "RX-A2080 (ID2)": 453, "RX-A3080 (ID1)": 456, "RX-A3080 (ID2)": 456,
+        "RX-A780 (ID1)": 284, "RX-A780 (ID2)": 284, "RX-A880 (ID1)": 286, "RX-A880 (ID2)": 286, "RX-V385 (ID1)": 158, "RX-V385 (ID2)": 158, "RX-V485 (ID1)": 255, "RX-V485 (ID2)": 255,
+        "RX-V585 (ID1)": 254, "RX-V585 (ID2)": 254, "RX-V685 (ID1)": 284, "RX-V685 (ID2)": 284, "WXA-50 (ID1)": 62, "WXA-50 (ID2)": 62, "WXC-50 (ID1)": 62, "WXC-50 (ID2)": 62,
+        "XDA-AMP5400RK (ID1)": 28, "XDA-AMP5400RK (ID2)": 28, "XDA-QS5400RK (ID1)": 152, "XDA-QS5400RK (ID2)": 152}
+    assert all(f["protocol"] == {"name": "NEC1-f16", "carrierHz": 38000, "minSends": 1} and f["manufacturer"] == "Yamaha" for f in files.values())
+    tiers = Counter(s["forms"][0]["confidence"] for f in files.values() for s in f["keys"].values())
+    assert tiers == {"plausible": 6_948, "untested": 60}
+    assert all("the Japan model's" in s["forms"][0]["source"] for f in files.values() for s in f["keys"].values() if s["forms"][0]["confidence"] == "untested")
+    for a, b in (("RX-V685", "RX-A780"), ("WXA-50", "WXC-50")):                  # one column of the table for two models: the same keys
+        for i in ("ID1", "ID2"):
+            assert files[f"{a} ({i})"]["keys"] == files[f"{b} ({i})"]["keys"]
+
+
+def test_the_id2_code_of_a_key_is_its_id1_code_with_the_low_bit_of_the_last_byte_flipped_in_every_row_of_every_table():
+    """The one rule of the two columns, which 1,316 rows of the six tables keep and the reader does not assume: the ID is a setting of the receiver and its remote."""
+    files = yamaha_files()
+    pairs = 0
+    for name, doc in files.items():
+        if not name.endswith("(ID1)"):
+            continue
+        other = files[name.replace("(ID1)", "(ID2)")]["keys"]
+        assert list(doc["keys"]) == list(other)
+        for key, spec in doc["keys"].items():
+            a, b = spec["forms"][0], other[key]["forms"][0]
+            assert (a["device"], a["subdevice"]) == (b["device"], b["subdevice"]) and int(a["function"], 0) ^ int(b["function"], 0) == 1, (name, key)
+            pairs += 1
+    assert pairs == 3_504
+
+
+def test_a_key_is_nec1_f16_the_custom_code_in_the_device_and_the_subdevice_and_the_data_and_its_check_byte_in_the_function():
+    v685, v685b = yamaha_files()["RX-V685 (ID1)"], yamaha_files()["RX-V685 (ID2)"]
+    on, on2 = v685["keys"]["KEY_POWER_ON"]["forms"][0], v685b["keys"]["KEY_POWER_ON"]["forms"][0]
+    assert (on["device"], on["subdevice"], on["function"]) == ("0x7E", "0x81", "0x7E81") and on2["function"] == "0x7E80"                  # `7E-7E` and `7E-7E80`
+    toggle = v685["keys"]["KEY_RECEIVER_POWER_ON_SLASH_OFF"]["forms"][0]
+    assert (toggle["device"], toggle["subdevice"], toggle["function"]) == ("0x7E", "0x81", "0x2AD5") and v685b["keys"]["KEY_RECEIVER_POWER_ON_SLASH_OFF"]["forms"][0]["function"] == "0x2AD4"
+    server = v685["keys"]["KEY_SUB_INPUT_SERVER"]["forms"][0]
+    assert (server["device"], server["subdevice"], server["function"]) == ("0x7F", "0x01", "0x6C13")                                       # `7F01-6C13`: a 16 bit custom code
+    assert v685["keys"]["KEY_POWER_ON_ZONE2"]["label"] == "POWER ON (ZONE2)" and v685["keys"]["KEY_VOLUME_UP"]["label"] == "VOLUME UP"
+    assert "page 1 row 'POWER / POWER ON' (RECEIVER MAIN, Code (ID1) '7E-7E'): NEC1-f16 device 126 subdevice 129 function 32385 (bytes 7E 81 7E 81)" in on["source"]
+    assert on["source"].startswith("snapav.com Yamaha IR code PDFs/Extended_IR_Codes_RX-V685RX-A780-RX-A3080CX-A5200_6.pdf@5e8f8a18 (retrieved 2026-10-16, from the Wayback Machine snapshot 20201031044639) ")
+
+
+def test_a_function_the_tables_name_alike_for_models_of_other_years_keeps_each_models_own_name_for_its_code():
+    """The extended tables of 2016 and 2018 give the same code a different service (`Radiko *J` in one, `Qobuz *BGEF` in the RX-V385's): a file's names are its own table's."""
+    files = yamaha_files()
+    assert files["RX-V685 (ID1)"]["keys"]["KEY_SUB_INPUT_RADIKO_STAR_J"]["forms"][0]["function"] == "0x9AE5"
+    assert files["RX-V485 (ID1)"]["keys"]["KEY_SUB_INPUT_QOBUZ_STAR_BGEF"]["forms"][0]["function"] == "0x9AE5"
+    mute = [s["label"] for s in files["RX-V385 (ID1)"]["keys"].values() if s["label"].startswith("MUTE")]
+    assert mute == ["MUTE TOGGLE", "MUTE ON (FULL)", "MUTE ON (-20dB)", "MUTE OFF"]                  # the RX-V385 has no zones and no -40dB mute
+
+
+def test_the_ledgers_other_yamaha_nec_remotes_have_90_percent_of_these_frames_under_the_same_names():
+    """The independent check: **960 of the 1,062 distinct frames are in the ledger's other Yamaha NEC remotes** (the IR Blaster database's, which cite the same tables, the JP1 upgrades'
+    and LIRC's), and where they meet the names agree (`POWER ON`, `CURSOR UP (ZONE2)`, `VOLUME UP`): 102 frames are new."""
+    def frame(form, protocol):
+        d, sub, fn = int(form["device"], 0), int(form.get("subdevice", "0"), 0), int(form["function"], 0)
+        return (d, sub, fn >> 8, fn & 0xFF) if protocol == "NEC1-f16" else (d, sub, fn, fn ^ 0xFF)
+    ours: dict[tuple, set[str]] = {}
+    for doc in yamaha_files().values():
+        for spec in doc["keys"].values():
+            ours.setdefault(frame(spec["forms"][0], "NEC1-f16"), set()).add(spec["label"])
+    theirs: set[tuple] = set()
+    for source in ("irblaster", "jp1", "lirc", "hifi-remote"):
+        for path in sorted((ROOT / "remotes" / source).rglob("*.json")):
+            doc = load(path)
+            if (doc.get("protocol") or {}).get("name") not in ("NEC1", "NEC1-f16", "NEC2") or "amaha" not in (path.as_posix() + doc.get("manufacturer", "")).replace("YAMAHA", "Yamaha"):
+                continue
+            for spec in doc["keys"].values():
+                for f in spec["forms"]:
+                    if "device" in f and "function" in f:
+                        theirs.add(frame(f, doc["protocol"]["name"]))
+    assert (len(ours), len(set(ours) & theirs)) == (1_062, 960)
