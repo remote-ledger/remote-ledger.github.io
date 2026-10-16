@@ -7,7 +7,7 @@ size, SHA-256, the retrieval date (today: do not pass --date) and the server's `
 (and, for a copy from the Wayback Machine, the address and snapshot it was archived from). Run it, then
 ``tools/official_sheets_to_csv.py <maker>`` for the spreadsheets, review the diff, and import.
 
-    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc|arcam|infocus|lyngdorf|cambridge|hegel|cary|nad|simaudio|rotel
+    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc|arcam|infocus|lyngdorf|emotiva|cambridge|hegel|cary|nad|simaudio|rotel
 """
 
 from __future__ import annotations
@@ -183,6 +183,15 @@ DOCUMENTS = {
     "lyngdorf": [
         ("Lyngdorf-IR-Codes.pdf",
          "https://web.archive.org/web/20190426003950id_/http://lyngdorf.com/wp-content/uploads/2017/09/Lyngdorf-DPA-1-IR-Codes.pdf", None),   # also Lyngdorf-SDAI-2175-IR-Codes.pdf
+    ],
+    # Emotiva's own site no longer has the pages of these PDFs of Pronto hex codes (DESIGN section 80): the Wayback Machine's copies.
+    "emotiva": [
+        ("UMC_remote_codes.pdf", "https://web.archive.org/web/20101202214530id_/http://emotiva.com/umc1/UMC_remote_codes.pdf", None),
+        ("remoteCodes_1-25-11.pdf", "https://web.archive.org/web/20111027061849id_/http://emotiva.com:80/umc1/remoteCodes_1-25-11.pdf", None),   # also resources/media/umc1/remote_codes.pdf
+        ("umc200_remote_codes.pdf", "https://web.archive.org/web/20160314022307id_/http://emotiva.com/resources/media/umc200/remote_codes.pdf", None),
+        ("usp_remote_codes.pdf", "https://web.archive.org/web/20111008155646id_/http://emotiva.com/manuals/emo.updates/usp_remote_codes.pdf", None),
+        ("erc1_hex.pdf", "https://web.archive.org/web/20111203162335id_/http://emotiva.com/manuals/erc1_hex.pdf", None),   # also resources/media/erc2/hexcodes.pdf
+        ("ERC-3_IR_CODES.pdf", "https://web.archive.org/web/20160909092702id_/http://emotiva.com/resources/ERC-3_IR_CODES.pdf", None),
     ],
     # Cambridge Audio's driver-updates page lists 16 PDFs of IR codes and a list of the 752BD, CXU and CXUHD remotes' NEC codes.
     # Only two carry no copyright or rights notice (the others do, so they are held in the private repository): the AXR85/AXR100
