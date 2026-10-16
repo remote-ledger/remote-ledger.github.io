@@ -1,0 +1,729 @@
+{
+  "manufacturer": "Emotiva",
+  "model": "UMC-200",
+  "aliases": [],
+  "controls": [
+    "Emotiva UMC-200"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_STANDBY": {
+      "label": "STANDBY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 2 row 'STANDBY' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 2, decoded from the hex"
+        }
+      ]
+    },
+    "KEY_ON": {
+      "label": "ON",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 2 row 'ON' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 16, decoded from the hex"
+        }
+      ]
+    },
+    "KEY_DIRECT": {
+      "label": "DIRECT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x0E",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 2 row 'DIRECT (MODES GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 14, decoded from the hex; the label is the table's name without its group 'MODES GROUP'"
+        }
+      ]
+    },
+    "KEY_STEREO": {
+      "label": "STEREO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 2 row 'STEREO (MODES GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 19, decoded from the hex; the label is the table's name without its group 'MODES GROUP'"
+        }
+      ]
+    },
+    "KEY_MODE_MINUS": {
+      "label": "MODE –",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 2 row 'MODE – (MODES GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 17, decoded from the hex; the label is the table's name without its group 'MODES GROUP'"
+        }
+      ]
+    },
+    "KEY_MODE_PLUS": {
+      "label": "MODE +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x19",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 3 row 'MODE + (MODES GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 25, decoded from the hex; the label is the table's name without its group 'MODES GROUP'"
+        }
+      ]
+    },
+    "KEY_TV": {
+      "label": "TV",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x1F",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 3 row 'TV (DIRECT GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 31, decoded from the hex; the label is the table's name without its group 'DIRECT GROUP'"
+        }
+      ]
+    },
+    "KEY_HDMI_1": {
+      "label": "HDMI 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 3 row 'HDMI 1 (DIRECT GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 3, decoded from the hex; the label is the table's name without its group 'DIRECT GROUP'"
+        }
+      ]
+    },
+    "KEY_HDMI_2": {
+      "label": "HDMI 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 3 row 'HDMI 2 (DIRECT GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 4, decoded from the hex; the label is the table's name without its group 'DIRECT GROUP'"
+        }
+      ]
+    },
+    "KEY_HDMI_3": {
+      "label": "HDMI 3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 3 row 'HDMI 3 (DIRECT GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 5, decoded from the hex; the label is the table's name without its group 'DIRECT GROUP'"
+        }
+      ]
+    },
+    "KEY_HDMI_4": {
+      "label": "HDMI 4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x1C",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 4 row 'HDMI 4 (DIRECT GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 28, decoded from the hex; the label is the table's name without its group 'DIRECT GROUP'"
+        }
+      ]
+    },
+    "KEY_BLUETOOTH": {
+      "label": "BLUETOOTH",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 4 row 'BLUETOOTH (DIRECT GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 6, decoded from the hex; the label is the table's name without its group 'DIRECT GROUP'"
+        }
+      ]
+    },
+    "KEY_ON_MINUS_OFF": {
+      "label": "ON-OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 4 row 'ON-OFF (TUNER GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 7, decoded from the hex; the label is the table's name without its group 'TUNER GROUP'"
+        }
+      ]
+    },
+    "KEY_FREQ_PLUS": {
+      "label": "FREQ +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 4 row 'FREQ + (TUNER GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 8, decoded from the hex; the label is the table's name without its group 'TUNER GROUP'"
+        }
+      ]
+    },
+    "KEY_CH_PLUS": {
+      "label": "CH +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x1D",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 4 row 'CH + (TUNER GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 29, decoded from the hex; the label is the table's name without its group 'TUNER GROUP'"
+        }
+      ]
+    },
+    "KEY_AM_MINUS_FM": {
+      "label": "AM-FM",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 5 row 'AM-FM (TUNER GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 9, decoded from the hex; the label is the table's name without its group 'TUNER GROUP'"
+        }
+      ]
+    },
+    "KEY_FREQ_MINUS": {
+      "label": "FREQ –",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 5 row 'FREQ – (TUNER GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 10, decoded from the hex; the label is the table's name without its group 'TUNER GROUP'"
+        }
+      ]
+    },
+    "KEY_CH_MINUS": {
+      "label": "CH –",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 5 row 'CH – (TUNER GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 11, decoded from the hex; the label is the table's name without its group 'TUNER GROUP'"
+        }
+      ]
+    },
+    "KEY_RETURN": {
+      "label": "RETURN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 5 row 'RETURN (MENU GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 20, decoded from the hex; the label is the table's name without its group 'MENU GROUP'"
+        }
+      ]
+    },
+    "KEY_MENU": {
+      "label": "MENU",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 5 row 'MENU (MENU GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 21, decoded from the hex; the label is the table's name without its group 'MENU GROUP'"
+        }
+      ]
+    },
+    "KEY_DIM": {
+      "label": "DIM",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x49",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 6 row 'DIM (MENU GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 73, decoded from the hex; the label is the table's name without its group 'MENU GROUP'"
+        }
+      ]
+    },
+    "KEY_ARROW_LEFT": {
+      "label": "ARROW LEFT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x17",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 6 row 'ARROW LEFT (MENU GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 23, decoded from the hex; the label is the table's name without its group 'MENU GROUP'"
+        }
+      ]
+    },
+    "KEY_ARROW_UP": {
+      "label": "ARROW UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 6 row 'ARROW UP (MENU GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 22, decoded from the hex; the label is the table's name without its group 'MENU GROUP'"
+        }
+      ]
+    },
+    "KEY_ARROW_RIGHT": {
+      "label": "ARROW RIGHT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 6 row 'ARROW RIGHT (MENU GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 12, decoded from the hex; the label is the table's name without its group 'MENU GROUP'"
+        }
+      ]
+    },
+    "KEY_ENTER": {
+      "label": "ENTER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x18",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 6 row 'ENTER (MENU GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 24, decoded from the hex; the label is the table's name without its group 'MENU GROUP'"
+        }
+      ]
+    },
+    "KEY_ARROW_DOWN": {
+      "label": "ARROW DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 7 row 'ARROW DOWN (MENU GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 18, decoded from the hex; the label is the table's name without its group 'MENU GROUP'"
+        }
+      ]
+    },
+    "KEY_DISPLAY": {
+      "label": "DISPLAY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 7 row 'DISPLAY (MENU GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 80, decoded from the hex; the label is the table's name without its group 'MENU GROUP'"
+        }
+      ]
+    },
+    "KEY_EXIT": {
+      "label": "EXIT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x4D",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 7 row 'EXIT (MENU GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 77, decoded from the hex; the label is the table's name without its group 'MENU GROUP'"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x4A",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 7 row 'MUTE (MENU GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 74, decoded from the hex; the label is the table's name without its group 'MENU GROUP'"
+        }
+      ]
+    },
+    "KEY_INPUT_PLUS": {
+      "label": "INPUT +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 7 row 'INPUT + (INPUT GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 1, decoded from the hex; the label is the table's name without its group 'INPUT GROUP'"
+        }
+      ]
+    },
+    "KEY_Z2": {
+      "label": "Z2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 8 row 'Z2' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 13, decoded from the hex"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x4B",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 8 row 'VOL + (VOLUME GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 75, decoded from the hex; the label is the table's name without its group 'VOLUME GROUP'"
+        }
+      ]
+    },
+    "KEY_INPUT_MINUS": {
+      "label": "INPUT –",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x1E",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 8 row 'INPUT – (INPUT GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 30, decoded from the hex; the label is the table's name without its group 'INPUT GROUP'"
+        }
+      ]
+    },
+    "KEY_Z3": {
+      "label": "Z3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 8 row 'Z3' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 0, decoded from the hex"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL –",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x4F",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 8 row 'VOL – (VOLUME GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 79, decoded from the hex; the label is the table's name without its group 'VOLUME GROUP'"
+        }
+      ]
+    },
+    "KEY_B_SUR_UP": {
+      "label": "B SUR UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 9 row 'B SUR UP (TRIMS GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 26, decoded from the hex; the label is the table's name without its group 'TRIMS GROUP'"
+        }
+      ]
+    },
+    "KEY_SUR_UP": {
+      "label": "SUR UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x44",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 9 row 'SUR UP (TRIMS GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 68, decoded from the hex; the label is the table's name without its group 'TRIMS GROUP'"
+        }
+      ]
+    },
+    "KEY_SUB_UP": {
+      "label": "SUB UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x5A",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 9 row 'SUB UP (TRIMS GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 90, decoded from the hex; the label is the table's name without its group 'TRIMS GROUP'"
+        }
+      ]
+    },
+    "KEY_CTR_UP": {
+      "label": "CTR UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x45",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 9 row 'CTR UP (TRIMS GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 69, decoded from the hex; the label is the table's name without its group 'TRIMS GROUP'"
+        }
+      ]
+    },
+    "KEY_B_SUR_DOWN": {
+      "label": "B SUR DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x1B",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 9 row 'B SUR DOWN (TRIMS GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 27, decoded from the hex; the label is the table's name without its group 'TRIMS GROUP'"
+        }
+      ]
+    },
+    "KEY_SUR_DOWN": {
+      "label": "SUR DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x42",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 10 row 'SUR DOWN (TRIMS GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 66, decoded from the hex; the label is the table's name without its group 'TRIMS GROUP'"
+        }
+      ]
+    },
+    "KEY_SUB_DOWN": {
+      "label": "SUB DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x40",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 10 row 'SUB DOWN (TRIMS GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 64, decoded from the hex; the label is the table's name without its group 'TRIMS GROUP'"
+        }
+      ]
+    },
+    "KEY_CTR_DOWN": {
+      "label": "CTR DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x48",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 10 row 'CTR DOWN (TRIMS GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 72, decoded from the hex; the label is the table's name without its group 'TRIMS GROUP'"
+        }
+      ]
+    },
+    "KEY_SEARCH_PREVIOUS": {
+      "label": "SEARCH PREVIOUS",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x51",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 10 row 'SEARCH PREVIOUS (CEC GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 81, decoded from the hex; the label is the table's name without its group 'CEC GROUP'"
+        }
+      ]
+    },
+    "KEY_SEARCH_ADVANCE": {
+      "label": "SEARCH ADVANCE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x52",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 10 row 'SEARCH ADVANCE (CEC GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 82, decoded from the hex; the label is the table's name without its group 'CEC GROUP'"
+        }
+      ]
+    },
+    "KEY_TRACK_PREVIOUS": {
+      "label": "TRACK PREVIOUS",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x43",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 11 row 'TRACK PREVIOUS (CEC GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 67, decoded from the hex; the label is the table's name without its group 'CEC GROUP'"
+        }
+      ]
+    },
+    "KEY_TRACK_ADVANCE": {
+      "label": "TRACK ADVANCE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x57",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 11 row 'TRACK ADVANCE (CEC GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 87, decoded from the hex; the label is the table's name without its group 'CEC GROUP'"
+        }
+      ]
+    },
+    "KEY_SUBTITLE": {
+      "label": "SUBTITLE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x4E",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 11 row 'SUBTITLE (CEC GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 78, decoded from the hex; the label is the table's name without its group 'CEC GROUP'"
+        }
+      ]
+    },
+    "KEY_AUDIO": {
+      "label": "AUDIO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x4C",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 11 row 'AUDIO (CEC GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 76, decoded from the hex; the label is the table's name without its group 'CEC GROUP'"
+        }
+      ]
+    },
+    "KEY_STOP": {
+      "label": "STOP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x47",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 11 row 'STOP (CEC GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 71, decoded from the hex; the label is the table's name without its group 'CEC GROUP'"
+        }
+      ]
+    },
+    "KEY_PLAY_SLASH_PAUSE": {
+      "label": "PLAY / PAUSE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x20",
+          "subdevice": "0x5F",
+          "function": "0x5B",
+          "confidence": "plausible",
+          "source": "emotiva.com IR code PDFs/umc200_remote_codes.pdf@f734af5c (retrieved 2026-10-16, from the Wayback Machine snapshot 20160314022307) page 12 row 'PLAY / PAUSE (CEC GROUP)' (Pronto hex, frequency word 0x006D): NEC1 device 32 subdevice 95 function 91, decoded from the hex; the label is the table's name without its group 'CEC GROUP'"
+        }
+      ]
+    }
+  }
+}

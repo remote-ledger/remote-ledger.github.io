@@ -83,7 +83,7 @@ FACTS: dict[str, dict[str, Any]] = {
                 "charts, Anthem's IR hex sheet, Oppo's remote code workbooks, KEF's IR code sheets, "
                 "JVC's projector IR emulation guide, Arcam's custom installation notes, Cambridge "
                 "Audio's two lists of NEC codes that carry no copyright notice, Hegel's RC-5 code tables, "
-                "Cary Audio's DMS IR remote codes, InFocus's projector IR code PDFs, Lyngdorf's NEC code table, NAD's IR command tables and Crestron IR files, Simaudio's table of IR codes, Rotel's IR hex code PDFs): tables of "
+                "Cary Audio's DMS IR remote codes, InFocus's projector IR code PDFs, Lyngdorf's NEC code table, Emotiva's PDFs of Pronto hex codes, NAD's IR command tables and Crestron IR files, Simaudio's table of IR codes, Rotel's IR hex code PDFs): tables of "
                 "reference remote codes, which the repository records no licence for "
                 "(DESIGN D110). JVC's guide (2012 version 3.0, (c) 2012 JVC, by Dale McWilliams of "
                 "JVC Consumer A/V Group) says it may be distributed freely as long as the author and "

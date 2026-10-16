@@ -12,7 +12,7 @@ from pathlib import Path
 import pytest
 
 from remote_ledger.errors import ValidationError
-from remote_ledger.official import anthem, arcam, cambridge, cary, hegel, infocus, jvc, kef, lyngdorf, marantz, nad, oppo, rotel, simaudio
+from remote_ledger.official import anthem, arcam, cambridge, cary, emotiva, hegel, infocus, jvc, kef, lyngdorf, marantz, nad, oppo, rotel, simaudio
 from remote_ledger.official import importer as oi
 from remote_ledger.official.common import MANIFEST, Report, load_snapshot
 from remote_ledger.serialize import load
@@ -26,7 +26,7 @@ SNAPSHOT = ROOT / oi.SNAPSHOT
 
 def test_every_document_and_csv_is_the_one_the_manifest_pins():
     for maker, retrieved in (("marantz", "2026-10-08"), ("anthem", "2026-10-08"), ("oppo", "2026-10-09"), ("kef", "2026-10-13"),
-                             ("jvc", "2026-10-13"), ("arcam", "2026-10-13"), ("cambridge", "2026-10-13"), ("hegel", "2026-10-13"), ("cary", "2026-10-13"), ("infocus", "2026-10-15"), ("lyngdorf", "2026-10-16"), ("nad", "2026-10-14"), ("simaudio", "2026-10-13"), ("rotel", "2026-10-13")):
+                             ("jvc", "2026-10-13"), ("arcam", "2026-10-13"), ("cambridge", "2026-10-13"), ("hegel", "2026-10-13"), ("cary", "2026-10-13"), ("infocus", "2026-10-15"), ("lyngdorf", "2026-10-16"), ("emotiva", "2026-10-16"), ("nad", "2026-10-14"), ("simaudio", "2026-10-13"), ("rotel", "2026-10-13")):
         snap = load_snapshot(SNAPSHOT / maker)
         assert snap.maker == maker and snap.retrieved == retrieved
         assert snap.documents and snap.sheets
@@ -443,12 +443,12 @@ def test_the_committed_official_import_keeps_r19():
     or Untested, and a citation that names a document the manifest pins, by hash."""
     assert (ROOT / oi.IMPORT_ROOT / "README.md").is_file() and (ROOT / oi.IMPORT_ROOT / oi.REPORT).is_file()
     hashes, dates, snapshots = {}, {}, {}
-    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "arcam", "cambridge", "hegel", "cary", "infocus", "lyngdorf", "nad", "simaudio", "rotel"):
+    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "arcam", "cambridge", "hegel", "cary", "infocus", "lyngdorf", "emotiva", "nad", "simaudio", "rotel"):
         manifest = json.loads((SNAPSHOT / maker / MANIFEST).read_text(encoding="utf-8"))
         for name, entry in manifest["documents"].items():
             hashes[name], dates[name], snapshots[name] = entry["sha256"], entry.get("retrieved", manifest["retrieved"]), entry.get("snapshot")
     shape = re.compile(r"^(?:marantz\.com archive-downloads|anthemav\.com \(storage\.googleapis\.com/sandbox1-anthemav/an\)"
-                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|infocus\.com IR code PDFs|lyngdorf\.com IR code PDF|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
+                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|infocus\.com IR code PDFs|lyngdorf\.com IR code PDF|emotiva\.com IR code PDFs|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
                        r"(?:, from the Wayback Machine snapshot (\d{14}))?\) (?:sheet '[^']+' row \d+|page \d+ row \d+|page \d+ '|page \d+ table \d+ row '|page \d+ row '|key \d+ ')")
     files = sorted((ROOT / oi.IMPORT_ROOT).rglob("*.json"))
     assert len(files) > 180
@@ -2250,3 +2250,94 @@ def test_the_ledgers_jp1_tdai_1120_sends_21_of_the_tdai_2200s_codes_under_the_sa
     assert len(theirs) == 48 and len(same) == 21
     assert same["Stand By"] == "Standby" and same["Volume +"] == "Volume Up" and same["Channel -"] == "SRC Down" and same["Random"] == "Shuffle"
     assert all(v.startswith("Digit ") for k, v in same.items() if k.isdigit()) and sum(k.isdigit() for k in same) == 10
+
+
+# --- Emotiva -------------------------------------------------------------------------------------------------------
+
+
+def test_an_emotiva_key_is_the_line_before_its_hex_and_every_other_line_is_no_key():
+    items = emotiva.parse([
+        ["1", "Emotiva UMC-1 Metal Remote Codes \u2013 rev 1/25/11"], ["1", "Here are the current complimentary IR codes."],
+        ["1", "Source\xa02 \u2013 UMC Source 1 - DVD"], ["1", "0000 006D 0022 0002"], ["1", "0157 00AB 0016 0015"],
+        ["1", "TUNER\xa0CH\u2010"], ["1", "0000 006C 0000 0026"],
+        ["2", "Emotiva UMC-1 Metal Remote Codes"], ["2", "Back Sur+"], ["2", "0000 006D 0022 0002"]])
+    assert [(i.page, i.name, i.hex) for i in items] == [
+        (1, "Source 2 \u2013 UMC Source 1 - DVD", "0000 006D 0022 0002 0157 00AB 0016 0015"), (1, "TUNER CH-", "0000 006C 0000 0026"),
+        (2, "Back Sur+", "0000 006D 0022 0002")]
+    with pytest.raises(ValueError, match="no key name before"):
+        emotiva.parse([["1", "0000 006D 0022 0002"]])
+
+
+def test_an_emotiva_pronto_hex_is_a_nec_frame_with_the_bytes_least_significant_bit_first_and_what_is_not_one_says_why():
+    frame = emotiva.decode_frame(nec_pronto(0x20, 0x5F, 0x0F))
+    assert frame == emotiva.Frame((0x20, 0x5F, 0x0F, 0xF0), 0x6D, False)
+    # the repeat sequence only (the 0 pairs of the once sequence, as the UMC-1's MUTE is): the frame is its first 34 pairs
+    words = nec_pronto(0x02, 0xFD, 0x5C).split()
+    repeat_only = " ".join(["0000", "006C", "0000", "0025", *words[4:4 + 68], "0016", "05F5", "0159", "0056", "0016", "05F5"])
+    assert emotiva.decode_frame(repeat_only) == emotiva.Frame((0x02, 0xFD, 0x5C, 0xA3), 0x6C, True)
+    assert "not hex" in emotiva.decode_frame("0000 006D 00G2 0002")
+    assert "first word" in emotiva.decode_frame("0100 006D 0022 0002")
+    assert "string has" in emotiva.decode_frame("0000 006D 0022 0002 0155 00AA")
+    assert "neither sequence" in emotiva.decode_frame(" ".join(["0000", "006D", "0010", "0000", *["0015"] * 32]))
+    assert "not a NEC leader" in emotiva.decode_frame(nec_pronto(1, 2, 3).replace("0155 00AA", "0155 0155", 1))
+    assert "neither a 0 nor a 1" in emotiva.decode_frame(nec_pronto(1, 2, 3).replace("0015 0040", "0015 0025", 1))
+
+
+def test_emotivas_six_documents_are_seven_files_and_239_keys_and_the_16_untested_are_a_code_two_keys_have():
+    files = {p.stem: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "emotiva").glob("*.json"))}
+    assert sorted(files) == ["ERC-1", "ERC-2", "ERC-3", "UMC-1_Metal__Emotiva_table", "UMC-1__Emotiva_table", "UMC-200", "USP"]
+    assert {n: len(f["keys"]) for n, f in files.items()} == {
+        "ERC-1": 24, "ERC-2": 24, "ERC-3": 24, "UMC-1_Metal__Emotiva_table": 52, "UMC-1__Emotiva_table": 51, "UMC-200": 51, "USP": 13}
+    assert files["UMC-1__Emotiva_table"]["model"] == "UMC-1 (Emotiva table)" and files["UMC-1_Metal__Emotiva_table"]["model"] == "UMC-1 Metal (Emotiva table)"
+    untested = {n: sorted(k for k, s in f["keys"].items() if s["forms"][0]["confidence"] == "untested") for n, f in files.items()}
+    assert {n: len(u) for n, u in untested.items() if u} == {"ERC-1": 2, "ERC-2": 2, "ERC-3": 2, "UMC-1_Metal__Emotiva_table": 2, "UMC-1__Emotiva_table": 8}
+    assert untested["UMC-1_Metal__Emotiva_table"] == ["KEY_BACK_SUR_PLUS", "KEY_STANDBACK_SUR_MINUS"]
+    assert untested["ERC-1"] == ["KEY_PAUSE", "KEY_PLAY"] and untested["ERC-1"] == untested["ERC-2"]
+    for name, doc in files.items():
+        triples = [tuple(int(doc["keys"][k]["forms"][0][x], 0) for x in ("device", "subdevice", "function")) for k in doc["keys"]]
+        for key, spec in doc["keys"].items():
+            form = spec["forms"][0]
+            assert form["type"] == "irp" and "from the Wayback Machine snapshot" in form["source"] and "frequency word 0x006" in form["source"], (name, key)
+            twins = triples.count(tuple(int(form[x], 0) for x in ("device", "subdevice", "function")))
+            assert (twins > 1) == (form["confidence"] == "untested" and "gives this code to" in form["source"]) or twins == 1, (name, key)
+    # the one document that names no model is pinned for the two it is served on, with the same keys
+    assert {k: s["forms"][0]["function"] for k, s in files["ERC-1"]["keys"].items()} == {k: s["forms"][0]["function"] for k, s in files["ERC-2"]["keys"].items()}
+    assert "names no model" in files["ERC-2"]["keys"]["KEY_STOP"]["forms"][0]["source"] and "names no model" not in files["ERC-3"]["keys"]["KEY_STOP"]["forms"][0]["source"]
+    assert "stray 'stand'" in files["UMC-1_Metal__Emotiva_table"]["keys"]["KEY_STANDBACK_SUR_MINUS"]["forms"][0]["source"]
+    # the UMC-200 table's group (`VOL + (VOLUME GROUP)`) is dropped from the label and cited, so its keys are named as the other tables' are
+    umc200 = files["UMC-200"]["keys"]
+    assert [umc200[k]["label"] for k in ("KEY_VOL_PLUS", "KEY_ARROW_UP", "KEY_STANDBY", "KEY_TRACK_ADVANCE", "KEY_VOL_MINUS")] == ["VOL +", "ARROW UP", "STANDBY", "TRACK ADVANCE", "VOL \u2013"]
+    assert "row 'VOL + (VOLUME GROUP)'" in umc200["KEY_VOL_PLUS"]["forms"][0]["source"] and "without its group 'VOLUME GROUP'" in umc200["KEY_VOL_PLUS"]["forms"][0]["source"]
+    assert "group" not in umc200["KEY_STANDBY"]["forms"][0]["source"] and not any("GROUP" in s["label"] for s in umc200.values())
+    # the three ERC documents are one remote: ERC-3's 24 codes are ERC-1's under the other names of the keys
+    erc1 = {s["forms"][0]["function"] for s in files["ERC-1"]["keys"].values()}
+    assert {s["forms"][0]["function"] for s in files["ERC-3"]["keys"].values()} == erc1
+
+
+def test_other_sources_emotiva_remotes_are_these_documents_codes_and_the_documents_disagree_where_they_do():
+    def triples(path):
+        out = {}
+        for key, spec in load(ROOT / path)["keys"].items():
+            f = spec["forms"][0]
+            out.setdefault(tuple(int(f[x], 0) for x in ("device", "subdevice", "function")), []).append(spec["label"])
+        return out
+    ours = {n: triples(f"remotes/official/emotiva/{n}.json") for n in ("UMC-1__Emotiva_table", "UMC-1_Metal__Emotiva_table", "UMC-200", "USP")}
+    receiver = triples("remotes/jp1/Emotiva/Audio-Emotiva_UMC_a-v_receiver.json")
+    metal = triples("remotes/jp1/Emotiva/Audio-Emotiva_UMC-1_Metal.json")
+    blaster = triples("remotes/irblaster/EMOTIVA/7001-NEC1.json")
+    umc1 = triples("remotes/jp1/Emotiva/Audio-Emotiva_UMC-1.json")
+    # each other source's remote that is a table's holds every code of it, and the JP1 receiver file has the 2010 document's own labels
+    assert (len(ours["UMC-1__Emotiva_table"]), sum(k in receiver for k in ours["UMC-1__Emotiva_table"])) == (47, 47)
+    # 37 of them have the same label (two more the same two in the other order); the other 8 are the source keys, which the receiver file names as the 2011 document does
+    other = [k for k in ours["UMC-1__Emotiva_table"] if sorted(ours["UMC-1__Emotiva_table"][k]) != sorted(receiver[k])]
+    assert len(other) == 8 and all(receiver[k] == ours["UMC-1_Metal__Emotiva_table"][k] for k in other)
+    assert (len(ours["UMC-1_Metal__Emotiva_table"]), sum(k in metal for k in ours["UMC-1_Metal__Emotiva_table"])) == (51, 51)
+    assert (len(ours["UMC-200"]), sum(k in blaster for k in ours["UMC-200"])) == (51, 41) and len(blaster) == 41
+    # where they differ: the 2011 document's `Back Sur+` is the row above it (0x58), where both JP1 files have 0x54, and the JP1 Metal file has the two Channel keys the other way round
+    assert ours["UMC-1_Metal__Emotiva_table"][(0x20, 0x5F, 0x58)] == ["standBack Sur-", "Back Sur+"]
+    assert umc1[(0x20, 0x5F, 0x54)] == ["VolBackSurrUp"] and metal[(0x20, 0x5F, 0x54)] == ["back sur+"] and metal[(0x20, 0x5F, 0x58)] == ["back sur-"]
+    assert ours["UMC-1_Metal__Emotiva_table"][(0x20, 0x5F, 0x55)] == ["Channel Down"] and umc1[(0x20, 0x5F, 0x55)] == ["TuneDown"] and metal[(0x20, 0x5F, 0x55)] == ["channel up"]
+    # the USP shares the receiver's address and its codes mean other keys there: only the power and volume keys are the same
+    receiver_names = {k: v[0].casefold() for k, v in receiver.items()}
+    same = [n for k, n in ((k, v[0]) for k, v in ours["USP"].items()) if k in receiver_names and receiver_names[k].replace("–", "").replace(" ", "") in (n.casefold().replace(" ", "").replace("down", "").replace("up", ""), "")]
+    assert sum(k in receiver for k in ours["USP"]) == 13 and len(same) <= 4
