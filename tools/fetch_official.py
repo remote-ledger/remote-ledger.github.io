@@ -7,7 +7,7 @@ size, SHA-256, the retrieval date (today: do not pass --date) and the server's `
 (and, for a copy from the Wayback Machine, the address and snapshot it was archived from). Run it, then
 ``tools/official_sheets_to_csv.py <maker>`` for the spreadsheets, review the diff, and import.
 
-    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc|arcam|infocus|lyngdorf|emotiva|denon|cambridge|hegel|cary|nad|simaudio|rotel
+    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc|arcam|infocus|lyngdorf|emotiva|denon|hitachi|cambridge|hegel|cary|nad|simaudio|rotel
 """
 
 from __future__ import annotations
@@ -196,6 +196,16 @@ DOCUMENTS = {
     # Denon's own site no longer serves the AVR-4311CI/AVR-4311 remote code list (DESIGN section 81): the Wayback Machine's copy of the UK site's.
     "denon": [
         ("AVR4311CI_AVR4311_IR-Codes.pdf", "https://web.archive.org/web/20110813053037id_/http://denon.co.uk:80/DocumentMaster/UK/AVR4311CI_AVR4311_IR-Codes.pdf", None),
+    ],
+    # Hitachi America's remote IR code documents for its televisions (DESIGN section 82): its site no longer serves them, so the Wayback Machine's copies
+    # (the two RS-232 specifications and the Roll-and-Click page, which has names and no codes, are not IR code tables and are not pinned).
+    "hitachi": [
+        ("2003_and_2004_HITACHI_IR.xls", "https://web.archive.org/web/20111226045850id_/http://www.hitachi-america.us:80/supportingdocs/forhome/ubcg/remote_ir_codes/2003_and_2004_HITACHI_IR.xls", None),
+        ("2004_IR_Codes-1.xls", "https://web.archive.org/web/20111226045856id_/http://www.hitachi-america.us:80/supportingdocs/forhome/ubcg/remote_ir_codes/2004_IR_Codes-1.xls", None),
+        ("2007_Discrete_Codes-DW3.pdf", "https://web.archive.org/web/20111226045907id_/http://www.hitachi-america.us:80/supportingdocs/forhome/ubcg/remote_ir_codes/2007_Discrete_Codes-DW3_(2).pdf", None),
+        ("2009_Discrete_Codes_L32_and_larger_0211.pdf", "https://web.archive.org/web/20111226050752id_/http://www.hitachi-america.us:80/supportingdocs/forhome/ubcg/remote_ir_codes/2009_Discrete_Codes_L32_and_larger_0211.pdf", None),
+        ("2009_RC_Layouts_and_IR_Codes_L19_L26.pdf", "https://web.archive.org/web/20111226052349id_/http://www.hitachi-america.us:80/supportingdocs/forhome/ubcg/remote_ir_codes/2009_RC_Layouts_and_IR_Codes_L19_L26.pdf", None),
+        ("AVC_56_Discrete_Codes_UT_Monitor_PDP_Pronto_Hex.pdf", "https://web.archive.org/web/20110104115920id_/http://hitachi-america.us/supportingdocs/forhome/ubcg/remote_ir_codes/AVC_56_Discrete_Codes_UT_Monitor_PDP_Pronto_Hex.pdf", None),
     ],
     # Cambridge Audio's driver-updates page lists 16 PDFs of IR codes and a list of the 752BD, CXU and CXUHD remotes' NEC codes.
     # Only two carry no copyright or rights notice (the others do, so they are held in the private repository): the AXR85/AXR100

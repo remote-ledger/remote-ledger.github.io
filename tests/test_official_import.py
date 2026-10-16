@@ -12,7 +12,7 @@ from pathlib import Path
 import pytest
 
 from remote_ledger.errors import ValidationError
-from remote_ledger.official import anthem, arcam, cambridge, cary, denon, emotiva, hegel, infocus, jvc, kef, lyngdorf, marantz, nad, oppo, rotel, simaudio
+from remote_ledger.official import anthem, arcam, cambridge, cary, denon, emotiva, hegel, hitachi, infocus, jvc, kef, lyngdorf, marantz, nad, oppo, rotel, simaudio
 from remote_ledger.official import importer as oi
 from remote_ledger.official.common import MANIFEST, Report, load_snapshot
 from remote_ledger.serialize import load
@@ -26,7 +26,7 @@ SNAPSHOT = ROOT / oi.SNAPSHOT
 
 def test_every_document_and_csv_is_the_one_the_manifest_pins():
     for maker, retrieved in (("marantz", "2026-10-08"), ("anthem", "2026-10-08"), ("oppo", "2026-10-09"), ("kef", "2026-10-13"),
-                             ("jvc", "2026-10-13"), ("arcam", "2026-10-13"), ("cambridge", "2026-10-13"), ("hegel", "2026-10-13"), ("cary", "2026-10-13"), ("infocus", "2026-10-15"), ("lyngdorf", "2026-10-16"), ("emotiva", "2026-10-16"), ("denon", "2026-10-16"), ("nad", "2026-10-14"), ("simaudio", "2026-10-13"), ("rotel", "2026-10-13")):
+                             ("jvc", "2026-10-13"), ("arcam", "2026-10-13"), ("cambridge", "2026-10-13"), ("hegel", "2026-10-13"), ("cary", "2026-10-13"), ("infocus", "2026-10-15"), ("lyngdorf", "2026-10-16"), ("emotiva", "2026-10-16"), ("denon", "2026-10-16"), ("hitachi", "2026-10-16"), ("nad", "2026-10-14"), ("simaudio", "2026-10-13"), ("rotel", "2026-10-13")):
         snap = load_snapshot(SNAPSHOT / maker)
         assert snap.maker == maker and snap.retrieved == retrieved
         assert snap.documents and snap.sheets
@@ -443,12 +443,12 @@ def test_the_committed_official_import_keeps_r19():
     or Untested, and a citation that names a document the manifest pins, by hash."""
     assert (ROOT / oi.IMPORT_ROOT / "README.md").is_file() and (ROOT / oi.IMPORT_ROOT / oi.REPORT).is_file()
     hashes, dates, snapshots = {}, {}, {}
-    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "arcam", "cambridge", "hegel", "cary", "infocus", "lyngdorf", "emotiva", "denon", "nad", "simaudio", "rotel"):
+    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "arcam", "cambridge", "hegel", "cary", "infocus", "lyngdorf", "emotiva", "denon", "hitachi", "nad", "simaudio", "rotel"):
         manifest = json.loads((SNAPSHOT / maker / MANIFEST).read_text(encoding="utf-8"))
         for name, entry in manifest["documents"].items():
             hashes[name], dates[name], snapshots[name] = entry["sha256"], entry.get("retrieved", manifest["retrieved"]), entry.get("snapshot")
     shape = re.compile(r"^(?:marantz\.com archive-downloads|anthemav\.com \(storage\.googleapis\.com/sandbox1-anthemav/an\)"
-                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|infocus\.com IR code PDFs|lyngdorf\.com IR code PDF|emotiva\.com IR code PDFs|denon\.co\.uk RC code list|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
+                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|infocus\.com IR code PDFs|lyngdorf\.com IR code PDF|emotiva\.com IR code PDFs|denon\.co\.uk RC code list|hitachi-america\.us IR code documents|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
                        r"(?:, from the Wayback Machine snapshot (\d{14}))?\) (?:sheet '[^']+' row \d+|page \d+ row \d+|page \d+ '|page \d+ table \d+ row '|page \d+ row '|key \d+ ')")
     files = sorted((ROOT / oi.IMPORT_ROOT).rglob("*.json"))
     assert len(files) > 180
@@ -2490,3 +2490,76 @@ def test_other_sources_denon_remotes_hold_every_sharp_code_of_the_table_and_most
     parity = [tuple(int(s["forms"][0][x], 0) for x in ("device", "subdevice", "function"))
               for s in load(ROOT / "remotes/official/denon/AVR-4311__Kaseikyo.json")["keys"].values() if "parity byte" in s["forms"][0]["source"]]
     assert (len(set(kas) & heldk), len(parity), sum(c in heldk for c in parity)) == (286, 44, 28)
+
+
+# --- Hitachi America -----------------------------------------------------------------------------------------------
+
+
+def test_the_hitachi_tables_are_read_by_layout_a_key_with_no_code_is_no_key_and_a_spreadsheets_number_is_not_a_label():
+    assert hitachi.tidy("1.0") == "1" and hitachi.tidy("VOL \x81\u00a31") == "VOL \u25b21" and hitachi.tidy("GUIDE\uff0fTV2") == "GUIDE/TV2"
+    assert hitachi.tidy("SLEEP  (+100 (VCR MODE))") == "SLEEP (+100 (VCR MODE))" and hitachi.tidy("4:3 ZOOM 2") == "4:3 ZOOM 2"
+    entries, modes = hitachi.keys_xls([
+        ["BASE MODEL:HL01322", "", "", "", "", "", ""], ["", "No.", "", "TV", "", "New for 2004 models", ""],
+        ["", "1.0", "POWER (TOGGLE)", "50AF 17E8", "", "POWER ON", "50AF 3EC1"], ["", "2.0", "(LIGHT)", "MODE KEY", "", "POWER OFF", "50AF 3FC0"],
+        ["", "11.0", "1.0", "50AF 0DF2", "", "", ""]])
+    assert modes == 1 and [(e.row, e.label, e.code, e.where) for e in entries] == [
+        (3, "POWER (TOGGLE)", "50AF 17E8", "No. 1"), (3, "POWER ON", "50AF 3EC1", "No. 1, 'New for 2004 models'"),
+        (4, "POWER OFF", "50AF 3FC0", "No. 2, 'New for 2004 models'"), (5, "1", "50AF 0DF2", "No. 11")]
+    assert [(e.label, e.code) for e in hitachi.label_code([["", "RC IR CODES", ""], ["", "POWER", "50AF 17E8"], ["VID1", "50AF 21DE"]])] == [("POWER", "50AF 17E8"), ("VID1", "50AF 21DE")]
+    pdf = [["1", "114", "90", "#1", "162", "Input1", "270", "50AF 21DE"], ["1", "103", "90", "RC KEY", "162", "FUNCTION", "270", "HEX CODE"],
+           ["1", "121", "65", "1", "82", "AV1", "215", "50AF 21DE"]]
+    assert [(e.label, e.where) for e in hitachi.function_hex(pdf)] == [("Input1", "the RC key '#1'"), ("AV1", "the item '1'")]
+    assert [(e.label, e.code) for e in hitachi.custom_key([["1", "75", "16", "1", "58", "POWER", "191", "50AF", "256", "17E8"], ["1", "65", "16", "No.", "58", "Key Label", "191", "Custom Code", "256", "Key Code"]])] == [("POWER", "50AF 17E8")]
+    items = hitachi.pronto_items([["1", "73", "56", "08 Hitachi AVC Discrete Hex codes + Pronto Hex Codes"],
+                                  ["1", "100", "56", "Input System", "165", "HDMI2", "262", "56AB 20DF", "346", "0000 006c 0022 0002"], ["1", "111", "346", "0157 00ac"],
+                                  ["4", "73", "56", "08 UT Monitor Discrete Codes"], ["4", "100", "56", "Power Control", "165", "Power On", "262", "50AF 3EC1", "346", "0000 006c"]],
+                                 "08 Hitachi AVC Discrete Hex codes + Pronto Hex Codes")
+    assert [(e.label, e.code, e.pronto) for e in items] == [("HDMI2", "56AB 20DF", "0000 006c 0022 0002 0157 00ac")]
+
+
+def test_hitachis_six_documents_are_ten_files_and_311_keys_and_the_nine_untested_are_codes_two_keys_have_or_a_pronto_that_disagrees():
+    files = {p.stem: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "hitachi").glob("*.json"))}
+    assert {n: len(f["keys"]) for n, f in files.items()} == {
+        "2004_TV_additional_codes": 22, "2004_TV_remote": 36, "AVC__2008": 17, "DW3": 22, "HL01322__2003": 48, "HL01322__2004": 63,
+        "L19_and_L26": 47, "L32_and_larger": 27, "PDP__2008": 24, "UT_Monitor__2008": 5}
+    untested = {n: sorted(s["label"] for s in f["keys"].values() if s["forms"][0]["confidence"] == "untested") for n, f in files.items()}
+    assert {n: u for n, u in untested.items() if u} == {
+        "2004_TV_additional_codes": ["OFF", "ON", "POWER OFF", "POWER ON"], "HL01322__2004": ["OFF", "ON", "POWER OFF", "POWER ON"], "PDP__2008": ["HDMI1"]}
+    assert "decodes to 50 AF 20 DF" in files["PDP__2008"]["keys"]["KEY_HDMI1"]["forms"][0]["source"]
+    avc = files["AVC__2008"]["keys"]
+    assert all("is decoded and agrees" in s["forms"][0]["source"] for s in avc.values())
+    assert (avc["KEY_HDMI2"]["forms"][0]["device"], avc["KEY_HDMI2"]["forms"][0]["subdevice"], avc["KEY_HDMI2"]["forms"][0]["function"]) == ("0x56", "0xAB", "0x20")
+    power = files["HL01322__2003"]["keys"]["KEY_POWER_TOGGLE"]["forms"][0]
+    assert (power["device"], power["subdevice"], power["function"]) == ("0x50", "0xAF", "0x17") and "sheet 'Sheet2' row 4 'POWER (TOGGLE)'" in power["source"]
+    assert {s["label"] for s in files["HL01322__2003"]["keys"].values()} >= {"VOL \u25b21", "VOL \u25bc1", "GUIDE/TV2", "1"}
+    assert files["L19_and_L26"]["keys"]["KEY_POWER"]["forms"][0]["function"] == "0x17" and files["DW3"]["keys"]["KEY_POWER_ON"]["forms"][0]["function"] == "0x3E"
+
+
+def test_other_sources_hitachi_remotes_have_the_codes_of_the_tvs_tables_and_the_avc_ones_are_new_and_the_documents_differ_in_seven_labels():
+    held = set()
+    for p in sorted((ROOT / "remotes").glob("*/*/*.json")):
+        if "official" in p.parts:
+            continue
+        doc = load(p)
+        if (doc.get("manufacturer") or "").lower() != "hitachi" or not str(doc["protocol"].get("name", "")).startswith("NEC"):
+            continue
+        for spec in doc["keys"].values():
+            for f in spec["forms"]:
+                if f.get("device") is not None and f.get("subdevice") is not None:
+                    held.add(tuple(int(f[x], 0) for x in ("device", "subdevice", "function")))
+    counts = {}
+    codes: dict[str, dict[str, str]] = {}
+    for path in sorted((ROOT / oi.IMPORT_ROOT / "hitachi").glob("*.json")):
+        doc = load(path)
+        triples = {tuple(int(s["forms"][0][x], 0) for x in ("device", "subdevice", "function")) for s in doc["keys"].values()}
+        counts[path.stem] = (len(triples), len(triples & held))
+        codes[path.stem] = {s["label"]: s["forms"][0]["function"] for s in doc["keys"].values()}
+    assert counts == {"2004_TV_additional_codes": (20, 20), "2004_TV_remote": (36, 36), "AVC__2008": (17, 0), "DW3": (22, 22), "HL01322__2003": (48, 48),
+                      "HL01322__2004": (61, 61), "L19_and_L26": (47, 34), "L32_and_larger": (27, 25), "PDP__2008": (24, 22), "UT_Monitor__2008": (5, 5)}
+    squash = lambda text: re.sub(r"[^a-z0-9]", "", text.lower())
+    by_label: dict[str, dict[str, str]] = {}
+    for name, labelled in codes.items():
+        for label, function in labelled.items():
+            by_label.setdefault(squash(label), {})[name] = function
+    repeated = {k: v for k, v in by_label.items() if len(v) > 1}
+    assert len(repeated) == 80 and sorted(k for k, v in repeated.items() if len(set(v.values())) > 1) == ["169zoom", "43expanded", "43zoom2", "cc", "expanded", "info", "night"]

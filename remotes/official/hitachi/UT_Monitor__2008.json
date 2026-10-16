@@ -1,0 +1,85 @@
+{
+  "manufacturer": "Hitachi",
+  "model": "UT Monitor (2008)",
+  "aliases": [],
+  "controls": [
+    "Hitachi UT Monitor (2008)"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER_ON": {
+      "label": "Power On",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x3E",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/AVC_56_Discrete_Codes_UT_Monitor_PDP_Pronto_Hex.pdf@aa028acd (retrieved 2026-10-16, from the Wayback Machine snapshot 20110104115920) page 4 row 'Power On' (50AF 3EC1, the category 'Power Control'): NEC1 device 80 subdevice 175 function 62, the code's bytes in the order they are sent; the Pronto hex (frequency word 0x006B) is decoded and agrees"
+        }
+      ]
+    },
+    "KEY_POWER_OFF": {
+      "label": "Power Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x3F",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/AVC_56_Discrete_Codes_UT_Monitor_PDP_Pronto_Hex.pdf@aa028acd (retrieved 2026-10-16, from the Wayback Machine snapshot 20110104115920) page 4 row 'Power Off' (50AF 3FC0, the category 'Power Control'): NEC1 device 80 subdevice 175 function 63, the code's bytes in the order they are sent; the Pronto hex (frequency word 0x006B) is decoded and agrees"
+        }
+      ]
+    },
+    "KEY_BACKLIGHT_ON_SLASH_OFF": {
+      "label": "Backlight On/Off",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x54",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/AVC_56_Discrete_Codes_UT_Monitor_PDP_Pronto_Hex.pdf@aa028acd (retrieved 2026-10-16, from the Wayback Machine snapshot 20110104115920) page 4 row 'Backlight On/Off' (50AF 54AB, the category 'Function'): NEC1 device 80 subdevice 175 function 84, the code's bytes in the order they are sent; the Pronto hex (frequency word 0x006B) is decoded and agrees"
+        }
+      ]
+    },
+    "KEY_HDMI": {
+      "label": "HDMI",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x3C",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/AVC_56_Discrete_Codes_UT_Monitor_PDP_Pronto_Hex.pdf@aa028acd (retrieved 2026-10-16, from the Wayback Machine snapshot 20110104115920) page 4 row 'HDMI' (50AF 3CC3, the category 'Input System'): NEC1 device 80 subdevice 175 function 60, the code's bytes in the order they are sent; the Pronto hex (frequency word 0x006B) is decoded and agrees"
+        }
+      ]
+    },
+    "KEY_RGB": {
+      "label": "RGB",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/AVC_56_Discrete_Codes_UT_Monitor_PDP_Pronto_Hex.pdf@aa028acd (retrieved 2026-10-16, from the Wayback Machine snapshot 20110104115920) page 4 row 'RGB' (50AF 13EC, the category 'Input System'): NEC1 device 80 subdevice 175 function 19, the code's bytes in the order they are sent; the Pronto hex (frequency word 0x006B) is decoded and agrees"
+        }
+      ]
+    }
+  }
+}

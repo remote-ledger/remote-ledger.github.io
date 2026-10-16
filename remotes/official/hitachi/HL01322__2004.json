@@ -1,0 +1,897 @@
+{
+  "manufacturer": "Hitachi",
+  "model": "HL01322 (2004)",
+  "aliases": [],
+  "controls": [
+    "Hitachi HL01322 (2004)"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER_TOGGLE": {
+      "label": "POWER (TOGGLE)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x17",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 4 'POWER (TOGGLE)' (50AF 17E8, No. 1): NEC1 device 80 subdevice 175 function 23, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_POWER_ON": {
+      "label": "POWER ON",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x3E",
+          "confidence": "untested",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 4 'POWER ON' (50AF 3EC1, No. 1, 'New for 2004 models'): NEC1 device 80 subdevice 175 function 62, the code's bytes in the order they are sent; the table gives this code to 'POWER ON' and 'ON', and a code is one function"
+        }
+      ]
+    },
+    "KEY_POWER_OFF": {
+      "label": "POWER OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x3F",
+          "confidence": "untested",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 5 'POWER OFF' (50AF 3FC0, No. 2, 'New for 2004 models'): NEC1 device 80 subdevice 175 function 63, the code's bytes in the order they are sent; the table gives this code to 'POWER OFF' and 'OFF', and a code is one function"
+        }
+      ]
+    },
+    "KEY_ANT_A": {
+      "label": "ANT A",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x65",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 6 'ANT A' (50AF 659A, No. 3, 'New for 2004 models'): NEC1 device 80 subdevice 175 function 101, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_ANT_B": {
+      "label": "ANT B",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x66",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 7 'ANT B' (50AF 6699, No. 4, 'New for 2004 models'): NEC1 device 80 subdevice 175 function 102, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_ANT_C": {
+      "label": "ANT C",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x67",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 8 'ANT C' (50AF 6798, No. 5, 'New for 2004 models'): NEC1 device 80 subdevice 175 function 103, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_DAY": {
+      "label": "DAY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x68",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 9 'DAY' (50AF 6897, No. 6, 'New for 2004 models'): NEC1 device 80 subdevice 175 function 104, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_NIGHT": {
+      "label": "NIGHT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x69",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 10 'NIGHT' (50AF 6996, No. 7, 'New for 2004 models'): NEC1 device 80 subdevice 175 function 105, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_VIRTUAL_HD_540P": {
+      "label": "VIRTUAL HD 540P",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x6A",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 11 'VIRTUAL HD 540P' (50AF 6A95, No. 8, 'New for 2004 models'): NEC1 device 80 subdevice 175 function 106, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_VIRTUAL_HD_1080I": {
+      "label": "VIRTUAL HD 1080i",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x6B",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 12 'VIRTUAL HD 1080i' (50AF 6B94, No. 9, 'New for 2004 models'): NEC1 device 80 subdevice 175 function 107, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_16_9_STANDARD": {
+      "label": "16:9 STANDARD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x74",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 13 '16:9 STANDARD' (50AF 748B, No. 10, 'New for 2004 models'): NEC1 device 80 subdevice 175 function 116, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_1": {
+      "label": "1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 14 '1' (50AF 0DF2, No. 11): NEC1 device 80 subdevice 175 function 13, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_16_9_ZOOM": {
+      "label": "16:9 ZOOM",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x75",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 14 '16:9 ZOOM' (50AF 758A, No. 11, 'New for 2004 models'): NEC1 device 80 subdevice 175 function 117, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_2": {
+      "label": "2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x0E",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 15 '2' (50AF 0EF1, No. 12): NEC1 device 80 subdevice 175 function 14, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_4_3_STANDARD": {
+      "label": "4:3 STANDARD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x76",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 15 '4:3 STANDARD' (50AF 7689, No. 12, 'New for 2004 models'): NEC1 device 80 subdevice 175 function 118, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_3": {
+      "label": "3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 16 '3' (50AF 0FF0, No. 13): NEC1 device 80 subdevice 175 function 15, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_4_3_EXPANDED": {
+      "label": "4:3 EXPANDED",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x77",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 16 '4:3 EXPANDED' (50AF 7788, No. 13, 'New for 2004 models'): NEC1 device 80 subdevice 175 function 119, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_4": {
+      "label": "4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x1C",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 17 '4' (50AF 1CE3, No. 14): NEC1 device 80 subdevice 175 function 28, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_4_3_ZOOM": {
+      "label": "4:3 ZOOM",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x78",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 17 '4:3 ZOOM' (50AF 7887, No. 14, 'New for 2004 models'): NEC1 device 80 subdevice 175 function 120, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_5": {
+      "label": "5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x1D",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 18 '5' (50AF 1DE2, No. 15): NEC1 device 80 subdevice 175 function 29, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_4_3_ZOOM_2": {
+      "label": "4:3 ZOOM 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x79",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 18 '4:3 ZOOM 2' (50AF 7986, No. 15, 'New for 2004 models'): NEC1 device 80 subdevice 175 function 121, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_6": {
+      "label": "6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x1E",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 19 '6' (50AF 1EE1, No. 16): NEC1 device 80 subdevice 175 function 30, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_7": {
+      "label": "7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x1F",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 20 '7' (50AF 1FE0, No. 17): NEC1 device 80 subdevice 175 function 31, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_8": {
+      "label": "8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 21 '8' (50AF 04FB, No. 18): NEC1 device 80 subdevice 175 function 4, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_9": {
+      "label": "9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 22 '9' (50AF 05FA, No. 19): NEC1 device 80 subdevice 175 function 5, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_0": {
+      "label": "0",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 23 '0' (50AF 0CF3, No. 20): NEC1 device 80 subdevice 175 function 12, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_SLEEP_PLUS_100_VCR_MODE": {
+      "label": "SLEEP (+100 (VCR MODE))",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 24 'SLEEP (+100 (VCR MODE))' (50AF 11EE, No. 21): NEC1 device 80 subdevice 175 function 17, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_LAST_CH": {
+      "label": "LAST CH",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 25 'LAST CH' (50AF 0AF5, No. 22): NEC1 device 80 subdevice 175 function 10, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_INPUT": {
+      "label": "INPUT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 26 'INPUT' (50AF 09F6, No. 23): NEC1 device 80 subdevice 175 function 9, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_C_C": {
+      "label": "C.C.",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x35",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 27 'C.C.' (50AF 35CA, No. 24): NEC1 device 80 subdevice 175 function 53, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_HELP": {
+      "label": "HELP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 28 'HELP' (50AF 14EB, No. 25): NEC1 device 80 subdevice 175 function 20, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_ASPECT": {
+      "label": "ASPECT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x6F",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 29 'ASPECT' (50AF 6F90, No. 26): NEC1 device 80 subdevice 175 function 111, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_C_S": {
+      "label": "C.S.",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x3C",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 30 'C.S.' (50AF 3CC3, No. 27): NEC1 device 80 subdevice 175 function 60, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 31 'MUTE' (50AF 0BF4, No. 28): NEC1 device 80 subdevice 175 function 11, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_RECALL": {
+      "label": "RECALL",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 32 'RECALL' (50AF 10EF, No. 29): NEC1 device 80 subdevice 175 function 16, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_VOL_1": {
+      "label": "VOL ▲1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 33 'VOL ▲1' (50AF 12ED, No. 30): NEC1 device 80 subdevice 175 function 18, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_VOL_1_2": {
+      "label": "VOL ▼1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 34 'VOL ▼1' (50AF 15EA, No. 31): NEC1 device 80 subdevice 175 function 21, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_CH": {
+      "label": "CH ▲",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x19",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 35 'CH ▲' (50AF 19E6, No. 32): NEC1 device 80 subdevice 175 function 25, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_CH_2": {
+      "label": "CH ▼",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x18",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 36 'CH ▼' (50AF 18E7, No. 33): NEC1 device 80 subdevice 175 function 24, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_UP_ARROW": {
+      "label": "UP ARROW",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x70",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 37 'UP ARROW' (50AF 708F, No. 34): NEC1 device 80 subdevice 175 function 112, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_DOWN_ARROW": {
+      "label": "DOWN ARROW",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x71",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 38 'DOWN ARROW' (50AF 718E, No. 35): NEC1 device 80 subdevice 175 function 113, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_LEFT_ARROW": {
+      "label": "LEFT ARROW",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x73",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 39 'LEFT ARROW' (50AF 738C, No. 36): NEC1 device 80 subdevice 175 function 115, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_RIGHT_ARROW": {
+      "label": "RIGHT ARROW",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x72",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 40 'RIGHT ARROW' (50AF 728D, No. 37): NEC1 device 80 subdevice 175 function 114, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_SELECT": {
+      "label": "SELECT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x2E",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 41 'SELECT' (50AF 2ED1, No. 38): NEC1 device 80 subdevice 175 function 46, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_MENU": {
+      "label": "MENU",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x53",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 42 'MENU' (50AF 53AC, No. 39): NEC1 device 80 subdevice 175 function 83, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_EXIT": {
+      "label": "EXIT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x64",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 43 'EXIT' (50AF 649B, No. 40): NEC1 device 80 subdevice 175 function 100, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_SVCS": {
+      "label": "SVCS",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x2D",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 44 'SVCS' (50AF 2DD2, No. 41): NEC1 device 80 subdevice 175 function 45, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_GUIDE_SLASH_TV2": {
+      "label": "GUIDE/TV2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x44",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 45 'GUIDE/TV2' (50AF 44BB, No. 42): NEC1 device 80 subdevice 175 function 68, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_INFO": {
+      "label": "INFO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x2F",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 46 'INFO' (50AF 2FD0, No. 43): NEC1 device 80 subdevice 175 function 47, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_SCHD": {
+      "label": "SCHD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x2C",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 47 'SCHD' (50AF 2CD3, No. 44): NEC1 device 80 subdevice 175 function 44, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_PIP": {
+      "label": "PIP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x58",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 48 'PIP' (50AF 58A7, No. 45): NEC1 device 80 subdevice 175 function 88, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_PIP_CH": {
+      "label": "PIP CH",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 49 'PIP CH' (50AF 07F8, No. 46): NEC1 device 80 subdevice 175 function 7, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_FRZ": {
+      "label": "FRZ",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x61",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 50 'FRZ' (50AF 619E, No. 47): NEC1 device 80 subdevice 175 function 97, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_PIP_MODE_PROG": {
+      "label": "PIP MODE PROG",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x5A",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 51 'PIP MODE PROG' (50AF 5AA5, No. 48): NEC1 device 80 subdevice 175 function 90, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_SWAP_TV_SLASH_VCR": {
+      "label": "SWAP TV/VCR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x59",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 52 'SWAP TV/VCR' (50AF 59A6, No. 49): NEC1 device 80 subdevice 175 function 89, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_VCR_PLUS_PLUS": {
+      "label": "VCR PLUS+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x51",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 53 'VCR PLUS+' (50AF 51AE, No. 50): NEC1 device 80 subdevice 175 function 81, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_VID1": {
+      "label": "VID1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x21",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 54 'VID1' (50AF 21DE, No. 51): NEC1 device 80 subdevice 175 function 33, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_VID2": {
+      "label": "VID2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x22",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 55 'VID2' (50AF 22DD, No. 52): NEC1 device 80 subdevice 175 function 34, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_VID3": {
+      "label": "VID3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x23",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 56 'VID3' (50AF 23DC, No. 53): NEC1 device 80 subdevice 175 function 35, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_VID4": {
+      "label": "VID4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x24",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 57 'VID4' (50AF 24DB, No. 54): NEC1 device 80 subdevice 175 function 36, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_VID5": {
+      "label": "VID5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x3D",
+          "confidence": "plausible",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 58 'VID5' (50AF 3DC2, No. 55): NEC1 device 80 subdevice 175 function 61, the code's bytes in the order they are sent"
+        }
+      ]
+    },
+    "KEY_ON": {
+      "label": "ON",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x3E",
+          "confidence": "untested",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 59 'ON' (50AF 3EC1, No. 56): NEC1 device 80 subdevice 175 function 62, the code's bytes in the order they are sent; the table gives this code to 'POWER ON' and 'ON', and a code is one function"
+        }
+      ]
+    },
+    "KEY_OFF": {
+      "label": "OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x3F",
+          "confidence": "untested",
+          "source": "hitachi-america.us IR code documents/2003_and_2004_HITACHI_IR.xls@6ee9d935 (retrieved 2026-10-16, from the Wayback Machine snapshot 20111226045850) sheet 'Sheet1' row 60 'OFF' (50AF 3FC0, No. 57): NEC1 device 80 subdevice 175 function 63, the code's bytes in the order they are sent; the table gives this code to 'POWER OFF' and 'OFF', and a code is one function"
+        }
+      ]
+    }
+  }
+}

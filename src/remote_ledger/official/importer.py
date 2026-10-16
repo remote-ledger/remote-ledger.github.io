@@ -15,11 +15,11 @@ from typing import Any
 from ..fmt import format_document
 from ..import_common import authored_names as _authored_names
 from ..serialize import dumps
-from . import anthem, arcam, cambridge, cary, denon, emotiva, hegel, infocus, jvc, kef, lyngdorf, marantz, nad, oppo, rotel, simaudio
+from . import anthem, arcam, cambridge, cary, denon, emotiva, hegel, hitachi, infocus, jvc, kef, lyngdorf, marantz, nad, oppo, rotel, simaudio
 from .common import IMPORT_ROOT, MANIFEST, REPORT, SNAPSHOT, Report, load_snapshot
 
 #: maker -> its reader. A maker is imported when its directory is in the snapshot.
-MAKERS = {"anthem": anthem, "arcam": arcam, "cambridge": cambridge, "cary": cary, "denon": denon, "emotiva": emotiva, "hegel": hegel, "infocus": infocus, "jvc": jvc, "kef": kef, "lyngdorf": lyngdorf, "marantz": marantz, "nad": nad, "oppo": oppo, "rotel": rotel, "simaudio": simaudio}
+MAKERS = {"anthem": anthem, "arcam": arcam, "cambridge": cambridge, "cary": cary, "denon": denon, "emotiva": emotiva, "hegel": hegel, "hitachi": hitachi, "infocus": infocus, "jvc": jvc, "kef": kef, "lyngdorf": lyngdorf, "marantz": marantz, "nad": nad, "oppo": oppo, "rotel": rotel, "simaudio": simaudio}
 
 
 def import_tree(root: Path, snapshot: Path, authored: dict[tuple[str, str], str]):

@@ -17,8 +17,8 @@ sources have been imported under SPEC R19:
 - **Manufacturers' own IR tables**: Marantz's AV receiver charts, Anthem's IR
   hex sheet, Oppo's remote code workbooks, KEF's IR code sheets, JVC's
   projector guide, Arcam's custom installation notes, two of Cambridge Audio's lists
-  of NEC codes, Hegel's RC-5 tables, Cary Audio's DMS table, InFocus's projector IR code PDFs, Lyngdorf's NEC code table, Emotiva's Pronto hex PDFs, Denon's AVR-4311 remote code list, NAD's T-series IR tables and Crestron IR files, Simaudio's table of IR codes and Rotel's IR hex code PDFs, 663 files, 54,197
-  keys (DESIGN §29, §31, §58, §60, §62, §63, §64, §65, §66, §68, §69, §71, §72, §73, §74, §75, §76, §77, §78, §79, §80, §81; Linn's RC-5 table moved to the private repository, §70).
+  of NEC codes, Hegel's RC-5 tables, Cary Audio's DMS table, InFocus's projector IR code PDFs, Lyngdorf's NEC code table, Emotiva's Pronto hex PDFs, Denon's AVR-4311 remote code list, Hitachi America's TV remote IR codes, NAD's T-series IR tables and Crestron IR files, Simaudio's table of IR codes and Rotel's IR hex code PDFs, 673 files, 54,508
+  keys (DESIGN §29, §31, §58, §60, §62, §63, §64, §65, §66, §68, §69, §71, §72, §73, §74, §75, §76, §77, §78, §79, §80, §81, §82; Linn's RC-5 table moved to the private repository, §70).
 
 SPEC v0.11 makes growing coverage from every source whose licence permits
 it the standing goal, with no fixed list of sources (DESIGN §8, Phase 8).
