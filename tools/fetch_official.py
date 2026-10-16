@@ -7,7 +7,7 @@ size, SHA-256, the retrieval date (today: do not pass --date) and the server's `
 (and, for a copy from the Wayback Machine, the address and snapshot it was archived from). Run it, then
 ``tools/official_sheets_to_csv.py <maker>`` for the spreadsheets, review the diff, and import.
 
-    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc|arcam|infocus|cambridge|hegel|cary|nad|simaudio|rotel
+    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc|arcam|infocus|lyngdorf|cambridge|hegel|cary|nad|simaudio|rotel
 """
 
 from __future__ import annotations
@@ -177,6 +177,12 @@ DOCUMENTS = {
          "https://web.archive.org/web/20140705065926id_/http://infocus.com/resources/documents/X/X2_IRCodes.pdf", None),
         ("X3_IRCodes.pdf",
          "https://web.archive.org/web/20140705064703id_/http://infocus.com/resources/documents/X/X3_IRCodes.pdf", None),
+    ],
+    # Lyngdorf's one-page "NEC IR Code Format for Lyngdorf products" (DESIGN section 79): the same PDF is on the DPA-1's and the SDAI 2175's pages of its
+    # site (lyngdorf.com/wp-content/uploads/2017/09/), which no longer serves it, so it is the Wayback Machine's copy.
+    "lyngdorf": [
+        ("Lyngdorf-IR-Codes.pdf",
+         "https://web.archive.org/web/20190426003950id_/http://lyngdorf.com/wp-content/uploads/2017/09/Lyngdorf-DPA-1-IR-Codes.pdf", None),   # also Lyngdorf-SDAI-2175-IR-Codes.pdf
     ],
     # Cambridge Audio's driver-updates page lists 16 PDFs of IR codes and a list of the 752BD, CXU and CXUHD remotes' NEC codes.
     # Only two carry no copyright or rights notice (the others do, so they are held in the private repository): the AXR85/AXR100

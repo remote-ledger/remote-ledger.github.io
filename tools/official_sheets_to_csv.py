@@ -95,6 +95,7 @@ SHEETS = {
         "X2_IRCodes.pdf",
         "X3_IRCodes.pdf",
     )}},
+    "lyngdorf": {"Lyngdorf-IR-Codes.pdf": ["lines"]},
     "cambridge": {"AXR85_100_IR_Codes.pdf": ["tables"], "752BD-CXU-CXUHD_remotes_Sept_2024_v2.pdf": ["tables"]},
     "hegel": {name: ["flow"] for name in (
         "Hegel_Rost_IR_Codes.pdf", "Hegel_H190_IR_Codes.pdf", "Hegel_H360_IR_Codes.pdf", "Hegel_H590_IR_Codes.pdf", "Hegel_H90_IR_Codes.pdf",
