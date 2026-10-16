@@ -839,7 +839,7 @@ def test_the_jp1_rc5_5x_combo_upgrades_send_the_system_command_and_extension_mar
 
 def test_the_jp1_rc5_6_combo_upgrades_send_the_codes_the_other_sources_have_and_philips_cursor_keys_by_name():
     """An independent check of the RC5/6 combo rules, from the ledger's other sources (IR Blaster, LIRC, SmartIR, hifi-remote
-    and the manufacturers' tables: 2,585 distinct RC-5 codes and 1,480 RC-6). The twelve upgrades send **219 of their 228 RC-5
+    and the manufacturers' tables: 2,605 distinct RC-5 codes and 1,480 RC-6). The twelve upgrades send **219 of their 228 RC-5
     keys and 257 of 273 RC-6 keys among them** (95.0%). The seventh command bit is the first byte's ``0x40``: 34 functions
     have it (a function above 63) and 26 of them are among the other sources' codes, which cannot tell it from the six bits
     alone (227 of 228 are among them without it); **what tells them apart is the names**: the Philips 47PFL7422D upgrade's
@@ -863,7 +863,7 @@ def test_the_jp1_rc5_6_combo_upgrades_send_the_codes_the_other_sources_have_and_
                         codes[protocol].add((device, function))
                         if protocol == "RC5" and device == 0:
                             labels.setdefault(function, Counter())[key] += 1
-    assert (len(codes["RC5"]), len(codes["RC6"])) == (2_585, 1_480)
+    assert (len(codes["RC5"]), len(codes["RC6"])) == (2_605, 1_480)
     counts: Counter = Counter()
     cursor: dict[str, int] = {}
     for protocol in ("RC5", "RC6"):

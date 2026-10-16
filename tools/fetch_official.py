@@ -7,7 +7,7 @@ size, SHA-256, the retrieval date (today: do not pass --date) and the server's `
 (and, for a copy from the Wayback Machine, the address and snapshot it was archived from). Run it, then
 ``tools/official_sheets_to_csv.py <maker>`` for the spreadsheets, review the diff, and import.
 
-    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc|arcam|infocus|lyngdorf|emotiva|denon|hitachi|classe|cambridge|hegel|cary|nad|simaudio|rotel
+    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc|arcam|infocus|lyngdorf|emotiva|denon|hitachi|classe|cyrus|cambridge|hegel|cary|nad|simaudio|rotel
 """
 
 from __future__ import annotations
@@ -224,6 +224,23 @@ DOCUMENTS = {
         ("CLASSE_SSP-800_CT-SSP_HEX.pdf", "https://support.classeaudio.com/files/documents/automation_and_control/ir_remote_codes/delta_1_2/ir_and_hex_codes/CLASSE_SSP-800_CT-SSP_HEX.pdf", None),
         ("CLASSE_SSP-800_IR_codes_v1-24.pdf", "https://support.classeaudio.com/files/documents/automation_and_control/ir_remote_codes/delta_1_2/ir_and_hex_codes/CLASSE_SSP-800_IR_codes_v1-24.pdf", None),
         ("CLASSE_SSP-25_HEX.pdf", "https://support.classeaudio.com/files/documents/automation_and_control/ir_remote_codes/omega_and_legacy/hex_codes/CLASSE_SSP-25_HEX.pdf", None),
+    ],
+    # Cyrus Audio's one-page RC-5 code tables for its amplifiers, CD players, tuners and DVD player (DESIGN section 85): its site no longer has the downloads folder,
+    # so the Wayback Machine's copies (the DAB 8 and DVD 8's tables, which state no system code, are not pinned).
+    "cyrus": [
+        ("ACA75PreXremotecodes.pdf", "https://web.archive.org/web/20070306201902id_/http://www.cyrusaudio.com:80/cms_downloads/ACA75PreXremotecodes.pdf", None),
+        ("AV5_AV8remotecodes.pdf", "https://web.archive.org/web/20070306121228id_/http://www.cyrusaudio.com:80/cms_downloads/AV5&AV8remotecodes.pdf", None),
+        ("AVMasterremotecodes.pdf", "https://web.archive.org/web/20070306121247id_/http://www.cyrusaudio.com:80/cms_downloads/AVMasterremotecodes.pdf", None),
+        ("CDremotecodes.pdf", "https://web.archive.org/web/20070306120923id_/http://www.cyrusaudio.com:80/cms_downloads/CDremotecodes.pdf", None),
+        ("Cyrus3iremotecodes.pdf", "https://web.archive.org/web/20070306121238id_/http://www.cyrusaudio.com:80/cms_downloads/Cyrus3iremotecodes.pdf", None),
+        ("Cyrus3remotecodes.pdf", "https://web.archive.org/web/20070306121208id_/http://www.cyrusaudio.com:80/cms_downloads/Cyrus3remotecodes.pdf", None),
+        ("Cyrus5_6_7_8remotecodes.pdf", "https://web.archive.org/web/20081203004825id_/http://www.cyrusaudio.com:80/cms_downloads/Cyrus5&6&7&8remotecodes.pdf", None),
+        ("CyrusPreremotecodes.pdf", "https://web.archive.org/web/20070306121258id_/http://www.cyrusaudio.com:80/cms_downloads/CyrusPreremotecodes.pdf", None),
+        ("dad1remotecodes.pdf", "https://web.archive.org/web/20070306170717id_/http://www.cyrusaudio.com:80/cms_downloads/dad1remotecodes.pdf", None),
+        ("DVD7remotecodes.pdf", "https://web.archive.org/web/20070306120944id_/http://www.cyrusaudio.com:80/cms_downloads/DVD7remotecodes.pdf", None),
+        ("FM7FM7.5andFMXremotecodes.pdf", "https://web.archive.org/web/20070306121847id_/http://www.cyrusaudio.com:80/cms_downloads/FM7FM7.5andFMXremotecodes.pdf", None),
+        ("originaltunerremotecodes.pdf", "https://web.archive.org/web/20070306120547id_/http://www.cyrusaudio.com:80/cms_downloads/originaltunerremotecodes.pdf", None),
+        ("Quattroremotecodes.pdf", "https://web.archive.org/web/20070306170732id_/http://www.cyrusaudio.com:80/cms_downloads/Quattroremotecodes.pdf", None),
     ],
     # Cambridge Audio's driver-updates page lists 16 PDFs of IR codes and a list of the 752BD, CXU and CXUHD remotes' NEC codes.
     # Only two carry no copyright or rights notice (the others do, so they are held in the private repository): the AXR85/AXR100

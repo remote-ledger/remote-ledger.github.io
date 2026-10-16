@@ -56,8 +56,8 @@ def test_the_dedupe_numbers_the_design_quotes(real):
             distinct.setdefault(record.source, set()).add(key[4])
     assert (keys["irblaster"], len(distinct["irblaster"])) == (412_775, 58_344)
     assert (keys["lirc"], keys["smartir"], keys["authored"]) == (112_789, 914, 128)
-    assert sum(keys.values()) == 707_868 and len(records) == 17_126
-    assert len(set().union(*distinct.values())) == 183_574
+    assert sum(keys.values()) == 708_303 and len(records) == 17_146
+    assert len(set().union(*distinct.values())) == 183_582
     # the IR Blaster signals as blobs, with their two-byte counts: 8.8 MB of binary words
     assert sum(len(b) for b in distinct["irblaster"]) == 8_889_348
 
@@ -157,7 +157,7 @@ def test_design_quotes_the_numbers_of_the_real_build(real, selected, selection):
         f"{len(records):,} | {len(kept):,}",                                  # the remote files
         f"{len(records) - collected.folded.folded:,} | {len(assembled.remotes):,}",   # the remotes, D103
         f"{keys:,} | {len(assembled.keys):,}",
-        f"183,574 | {len(assembled.signals):,}",
+        f"183,582 | {len(assembled.signals):,}",
         f"{len(assembled.excluded):,} brands, {len(left_out):,} remotes, "
         f"{sum(len(r.keys) for r in left_out):,} keys",
         f"{len(selection.curated)} brands of the list and {len(selection.proxy_added):,} by the proxy",
