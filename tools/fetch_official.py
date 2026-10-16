@@ -7,7 +7,7 @@ size, SHA-256, the retrieval date (today: do not pass --date) and the server's `
 (and, for a copy from the Wayback Machine, the address and snapshot it was archived from). Run it, then
 ``tools/official_sheets_to_csv.py <maker>`` for the spreadsheets, review the diff, and import.
 
-    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc|arcam|infocus|lyngdorf|emotiva|cambridge|hegel|cary|nad|simaudio|rotel
+    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc|arcam|infocus|lyngdorf|emotiva|denon|cambridge|hegel|cary|nad|simaudio|rotel
 """
 
 from __future__ import annotations
@@ -192,6 +192,10 @@ DOCUMENTS = {
         ("usp_remote_codes.pdf", "https://web.archive.org/web/20111008155646id_/http://emotiva.com/manuals/emo.updates/usp_remote_codes.pdf", None),
         ("erc1_hex.pdf", "https://web.archive.org/web/20111203162335id_/http://emotiva.com/manuals/erc1_hex.pdf", None),   # also resources/media/erc2/hexcodes.pdf
         ("ERC-3_IR_CODES.pdf", "https://web.archive.org/web/20160909092702id_/http://emotiva.com/resources/ERC-3_IR_CODES.pdf", None),
+    ],
+    # Denon's own site no longer serves the AVR-4311CI/AVR-4311 remote code list (DESIGN section 81): the Wayback Machine's copy of the UK site's.
+    "denon": [
+        ("AVR4311CI_AVR4311_IR-Codes.pdf", "https://web.archive.org/web/20110813053037id_/http://denon.co.uk:80/DocumentMaster/UK/AVR4311CI_AVR4311_IR-Codes.pdf", None),
     ],
     # Cambridge Audio's driver-updates page lists 16 PDFs of IR codes and a list of the 752BD, CXU and CXUHD remotes' NEC codes.
     # Only two carry no copyright or rights notice (the others do, so they are held in the private repository): the AXR85/AXR100

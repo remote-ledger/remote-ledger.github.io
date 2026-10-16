@@ -17,8 +17,8 @@ sources have been imported under SPEC R19:
 - **Manufacturers' own IR tables**: Marantz's AV receiver charts, Anthem's IR
   hex sheet, Oppo's remote code workbooks, KEF's IR code sheets, JVC's
   projector guide, Arcam's custom installation notes, two of Cambridge Audio's lists
-  of NEC codes, Hegel's RC-5 tables, Cary Audio's DMS table, InFocus's projector IR code PDFs, Lyngdorf's NEC code table, Emotiva's Pronto hex PDFs, NAD's T-series IR tables and Crestron IR files, Simaudio's table of IR codes and Rotel's IR hex code PDFs, 659 files, 53,173
-  keys (DESIGN §29, §31, §58, §60, §62, §63, §64, §65, §66, §68, §69, §71, §72, §73, §74, §75, §76, §77, §78, §79, §80; Linn's RC-5 table moved to the private repository, §70).
+  of NEC codes, Hegel's RC-5 tables, Cary Audio's DMS table, InFocus's projector IR code PDFs, Lyngdorf's NEC code table, Emotiva's Pronto hex PDFs, Denon's AVR-4311 remote code list, NAD's T-series IR tables and Crestron IR files, Simaudio's table of IR codes and Rotel's IR hex code PDFs, 663 files, 54,197
+  keys (DESIGN §29, §31, §58, §60, §62, §63, §64, §65, §66, §68, §69, §71, §72, §73, §74, §75, §76, §77, §78, §79, §80, §81; Linn's RC-5 table moved to the private repository, §70).
 
 SPEC v0.11 makes growing coverage from every source whose licence permits
 it the standing goal, with no fixed list of sources (DESIGN §8, Phase 8).
@@ -78,7 +78,8 @@ Land it in two PRs, code and then data.
       already** (§72, §73), so there is nothing to import; Linn's 22-page legacy PDF is **read into the private repository** (§70: private
       pull request #6, its `docs/linn.md` LN-4 and LN-5); **Emotiva's 2006 "Emotiva Pronto codes revE2"** (a Sunfire Corporation document: 153 commands of a
       12-bit code with its complement and no NEC, which §80 does not read: the ledger has no protocol for it, and as Pronto-only files its names and
-      numbers, which are in the text apart from the strings, would have to be paired by place); and Cambridge Audio's support archive (the live driver-updates page answers a
+      numbers, which are in the text apart from the strings, would have to be paired by place); **Denon's AVR-4311CI/AVR-4311 list** (§81) leaves its Kaseikyo tables for remote IDs 2 to 4 and the iPod,
+      Sirius and HD Radio ones (the document writes their ID and parity bits as `*`; for ID 1 the document's own notes give them, so they could be derived: not done); and Cambridge Audio's support archive (the live driver-updates page answers a
       script with 403) has nothing left: the Wayback Machine's copy of that page of 6 June 2026 lists exactly the IR PDFs already read
       (the 15 files of 13 documents in the private repository and the two public ones of §65), and its other files are serial and RS-232
       protocols, not IR codes. A document is

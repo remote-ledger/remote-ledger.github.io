@@ -96,6 +96,7 @@ SHEETS = {
         "X3_IRCodes.pdf",
     )}},
     "lyngdorf": {"Lyngdorf-IR-Codes.pdf": ["lines"]},
+    "denon": {"AVR4311CI_AVR4311_IR-Codes.pdf": ["words"]},
     "emotiva": {name: ["pages"] for name in ("UMC_remote_codes.pdf", "remoteCodes_1-25-11.pdf", "umc200_remote_codes.pdf", "usp_remote_codes.pdf", "erc1_hex.pdf", "ERC-3_IR_CODES.pdf")},
     "cambridge": {"AXR85_100_IR_Codes.pdf": ["tables"], "752BD-CXU-CXUHD_remotes_Sept_2024_v2.pdf": ["tables"]},
     "hegel": {name: ["flow"] for name in (
@@ -332,6 +333,22 @@ def rows_of(path: Path, sheet: str) -> list[list[str]]:
                         rows.append([y, [(x, cell)]])
                 for y, cells in rows:
                     out.append([str(n), str(round(y))] + [v for x, cell in sorted(cells) for v in (str(round(x)), cell)])
+            return out
+        if sheet == "words":        # a table of single characters (Denon's bit matrices, D314): every word of every page by its place, a row is
+            out = []                # ``page, y, x, word, x, word...``, the words of one line (``y`` within 3.5 points of the line's first word) by ``x``;
+                                    # after a page's lines come its ruled tables' rows, ``page, R, y0, y1``, which say which lines a row's cells hold
+            for n, page in enumerate(pdf, 1):
+                words = sorted(page.get_text("words"), key=lambda w: (w[1], w[0]))
+                rows: list[list] = []
+                for w in words:
+                    if rows and abs(rows[-1][0] - w[1]) <= 3.5:
+                        rows[-1][1].append((w[0], w[4]))
+                    else:
+                        rows.append([w[1], [(w[0], w[4])]])
+                for y, cells in rows:
+                    out.append([str(n), str(round(y))] + [v for x, cell in sorted(cells) for v in (str(round(x)), cell)])
+                for table in page.find_tables().tables:
+                    out.extend([str(n), "R", str(round(row.bbox[1])), str(round(row.bbox[3]))] for row in table.rows)
             return out
         if sheet == "pages":        # every page: a row is the page number and one line of its text
             return [[str(n), line.strip()] for n, page in enumerate(pdf, 1) for line in page.get_text("text").splitlines()

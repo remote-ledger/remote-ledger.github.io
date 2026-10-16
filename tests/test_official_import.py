@@ -12,7 +12,7 @@ from pathlib import Path
 import pytest
 
 from remote_ledger.errors import ValidationError
-from remote_ledger.official import anthem, arcam, cambridge, cary, emotiva, hegel, infocus, jvc, kef, lyngdorf, marantz, nad, oppo, rotel, simaudio
+from remote_ledger.official import anthem, arcam, cambridge, cary, denon, emotiva, hegel, infocus, jvc, kef, lyngdorf, marantz, nad, oppo, rotel, simaudio
 from remote_ledger.official import importer as oi
 from remote_ledger.official.common import MANIFEST, Report, load_snapshot
 from remote_ledger.serialize import load
@@ -26,7 +26,7 @@ SNAPSHOT = ROOT / oi.SNAPSHOT
 
 def test_every_document_and_csv_is_the_one_the_manifest_pins():
     for maker, retrieved in (("marantz", "2026-10-08"), ("anthem", "2026-10-08"), ("oppo", "2026-10-09"), ("kef", "2026-10-13"),
-                             ("jvc", "2026-10-13"), ("arcam", "2026-10-13"), ("cambridge", "2026-10-13"), ("hegel", "2026-10-13"), ("cary", "2026-10-13"), ("infocus", "2026-10-15"), ("lyngdorf", "2026-10-16"), ("emotiva", "2026-10-16"), ("nad", "2026-10-14"), ("simaudio", "2026-10-13"), ("rotel", "2026-10-13")):
+                             ("jvc", "2026-10-13"), ("arcam", "2026-10-13"), ("cambridge", "2026-10-13"), ("hegel", "2026-10-13"), ("cary", "2026-10-13"), ("infocus", "2026-10-15"), ("lyngdorf", "2026-10-16"), ("emotiva", "2026-10-16"), ("denon", "2026-10-16"), ("nad", "2026-10-14"), ("simaudio", "2026-10-13"), ("rotel", "2026-10-13")):
         snap = load_snapshot(SNAPSHOT / maker)
         assert snap.maker == maker and snap.retrieved == retrieved
         assert snap.documents and snap.sheets
@@ -443,12 +443,12 @@ def test_the_committed_official_import_keeps_r19():
     or Untested, and a citation that names a document the manifest pins, by hash."""
     assert (ROOT / oi.IMPORT_ROOT / "README.md").is_file() and (ROOT / oi.IMPORT_ROOT / oi.REPORT).is_file()
     hashes, dates, snapshots = {}, {}, {}
-    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "arcam", "cambridge", "hegel", "cary", "infocus", "lyngdorf", "emotiva", "nad", "simaudio", "rotel"):
+    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "arcam", "cambridge", "hegel", "cary", "infocus", "lyngdorf", "emotiva", "denon", "nad", "simaudio", "rotel"):
         manifest = json.loads((SNAPSHOT / maker / MANIFEST).read_text(encoding="utf-8"))
         for name, entry in manifest["documents"].items():
             hashes[name], dates[name], snapshots[name] = entry["sha256"], entry.get("retrieved", manifest["retrieved"]), entry.get("snapshot")
     shape = re.compile(r"^(?:marantz\.com archive-downloads|anthemav\.com \(storage\.googleapis\.com/sandbox1-anthemav/an\)"
-                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|infocus\.com IR code PDFs|lyngdorf\.com IR code PDF|emotiva\.com IR code PDFs|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
+                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|infocus\.com IR code PDFs|lyngdorf\.com IR code PDF|emotiva\.com IR code PDFs|denon\.co\.uk RC code list|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
                        r"(?:, from the Wayback Machine snapshot (\d{14}))?\) (?:sheet '[^']+' row \d+|page \d+ row \d+|page \d+ '|page \d+ table \d+ row '|page \d+ row '|key \d+ ')")
     files = sorted((ROOT / oi.IMPORT_ROOT).rglob("*.json"))
     assert len(files) > 180
@@ -2341,3 +2341,152 @@ def test_other_sources_emotiva_remotes_are_these_documents_codes_and_the_documen
     receiver_names = {k: v[0].casefold() for k, v in receiver.items()}
     same = [n for k, n in ((k, v[0]) for k, v in ours["USP"].items()) if k in receiver_names and receiver_names[k].replace("–", "").replace(" ", "") in (n.casefold().replace(" ", "").replace("down", "").replace("up", ""), "")]
     assert sum(k in receiver for k in ours["USP"]) == 13 and len(same) <= 4
+
+
+# --- Denon ---------------------------------------------------------------------------------------------------------
+
+
+def denon_cells(*cells):
+    return [v for x, t in cells for v in (str(x), t)]
+
+
+def test_a_denon_name_says_which_models_it_is_for_and_a_cell_of_two_lines_is_two_names():
+    ci, avr = frozenset({"AVR4311CI"}), frozenset({"AVR4311"})
+    a = denon.read_name("TUNER(except AVR4311CI)")
+    assert (a.label, a.models) == ("TUNER", avr)
+    b = denon.read_name("HD RADIO(AVR4311CI only)")
+    assert (b.label, b.models) == ("HD RADIO", ci)
+    c = denon.read_name("TUNER SHIFT A \u203b1")
+    assert (c.label, c.models, c.marks) == ("TUNER SHIFT A", avr, ("1",))
+    d = denon.read_name("DIRECT SEARCH\u203b1 (RDS SEARCH \u203b2)")
+    assert (d.label, d.models, d.marks) == ("DIRECT SEARCH (RDS SEARCH)", avr, ("1", "2"))
+    assert denon.read_name("ZONE2 HD RADIO (AVR4311 only)").models == avr and denon.read_name("POWER").models == denon.ALL
+    # a line that begins with `(` goes on the line before it; `/HD RADIO...` after a qualified name is its other name, and after a plain one the rest of it
+    two = denon.alternatives(["ZONE2 TUNER", "(except AVR4311CI)", "ZONE2 HD RADIO", "(AVR4311 only)"])
+    assert [(a.label, a.models) for a in two] == [("ZONE2 TUNER", avr), ("ZONE2 HD RADIO", avr)]
+    slash = denon.alternatives(["TUNER(except AVR4311CI)", "/HD RADIO(AVR4311CI only)"])
+    assert [(a.label, a.models) for a in slash] == [("TUNER", avr), ("HD RADIO", ci)]
+    rest = denon.alternatives(["MAIN ZONE TUNING MODE AUTO/MANU.", "/Fast Forward"])
+    assert [a.label for a in rest] == ["MAIN ZONE TUNING MODE AUTO/MANU./Fast Forward"]
+
+
+def test_a_denon_sharp_row_is_its_number_and_data_and_the_address_and_extension_of_its_table_first_bit_first():
+    rows = [["2", "R", "204", "221"], ["2", "R", "221", "238"], ["2", "R", "238", "254"], ["2", "R", "302", "331"], ["2", "R", "331", "347"],
+            ["2", "191"] + denon_cells((70, "SYSTEM"), (116, "ADDRESS(C1\uff5eC5)"), (212, ":"), (219, "\uff10\uff11\uff10\uff10\uff10"), (257, ","), (264, "EXTENSION"),
+                                       (327, "BIT(C12,C13)"), (394, ":"), (401, "\uff11\uff11")),
+            ["2", "208"] + denon_cells((70, "No."), (97, "Data"), (222, "Key"), (244, "Name")),
+            ["2", "225"] + denon_cells((75, "0"), (114, "\uff10\uff10\uff10\uff10\uff10\uff10"), (326, "16"), (370, "\uff10\uff10\uff10\uff10\uff11\uff10"), (437, "FR"), (453, "LEVEL"), (486, "DOWN")),
+            ["2", "241"] + denon_cells((75, "1"), (114, "\uff11\uff10\uff10\uff10\uff10\uff10"), (181, "POWER"), (326, "17"), (370, "\uff11\uff10\uff10\uff10\uff11\uff10")),
+            ["2", "305"] + denon_cells((181, "TUNER(except"), (247, "AVR4311CI)")),
+            ["2", "313"] + denon_cells((75, "5"), (114, "\uff11\uff10\uff11\uff10\uff10\uff10"), (326, "21"), (370, "\uff11\uff10\uff11\uff10\uff11\uff10")),
+            ["2", "319"] + denon_cells((181, "HD"), (199, "RADIO(AVR4311CI"), (284, "only)")),
+            ["2", "335"] + denon_cells((75, "6"), (114, "\uff10\uff11\uff11\uff10\uff10\uff10"), (326, "22"), (370, "\uff10\uff11\uff11\uff10\uff11\uff10"), (437, "SR"), (454, "LEVEL"), (486, "UP"))]
+    got = denon.parse_sharp(rows)
+    assert [(r.number, [a.label for a in r.names]) for r in got] == [
+        (0, []), (16, ["FR LEVEL DOWN"]), (1, ["POWER"]), (17, []), (5, ["TUNER", "HD RADIO"]), (21, []), (6, []), (22, ["SR LEVEL UP"])]
+    power, down = got[2], got[1]
+    assert (power.device, power.function) == (2, 0xC1) and (down.device, down.function) == (2, 0xD0)      # 01000 is 2, 100000 is 1 and the extension 11 is +192
+    assert denon.SharpRow(4, "00110", "01", 3, "110000", []).function == 3 + 128 and denon.SharpRow(4, "00110", "01", 3, "110000", []).device == 12
+    bad = [r if r[1] != "241" else ["2", "241"] + denon_cells((75, "1"), (114, "\uff10\uff10\uff10\uff10\uff10\uff11"), (181, "POWER")) for r in rows]
+    with pytest.raises(ValueError, match="whose value is not its number"):
+        denon.parse_sharp(bad)
+
+
+def denon_bits(y, bits, name="", first=False):
+    """A line of the Kaseikyo table: the bits at their places (the first row's four GENRE2 bits before the 20) and the name at 393."""
+    xs = ([80, 93, 106, 119] if first else []) + [133 + 12.6 * i for i in range(20)]
+    return ["10", str(y)] + denon_cells(*[(round(x), b) for x, b in zip(xs, bits)], *([(393, name)] if name else []))
+
+
+def test_a_denon_kaseikyo_row_is_genre1_genre2_and_twelve_function_bits_first_bit_first_and_its_parity_is_the_xor_of_the_bytes_before_it():
+    header = "0010101001001100" + "0000" + "0010"            # the vendor 0x54 and 0x32, a 0 parity nibble and GENRE1 4
+    rows = [["10", "26"] + denon_cells((70, "MAIN"), (101, "ZONE")),
+            ["10", "40"] + denon_cells((172, "DENON"), (227, "CODE"), (382, "Parity"), (447, "GENRE1")),
+            ["10", "81"] + denon_cells(*[(79 + 17 * i, b) for i, b in enumerate(header)]),
+            ["10", "108"] + denon_cells((70, "REMOTE"), (121, "ID"), (136, "SET"), (153, ":"), (159, "1")),
+            ["10", "124"] + denon_cells((276, "K4-1"), (300, ":"), (307, "MAIN"), (335, "ZONE")),
+            ["10", "138"] + denon_cells((83, "GENRE2"), (184, "Data"), (268, "ID"), (329, "parity"), (455, "Key"), (475, "Name")),
+            denon_bits(167, "1000" + "01000000000010000110", "ALL POWER ON", first=True),
+            denon_bits(184, "11000000000010001110", "ALL POWER OFF"),
+            # a name of two lines: the first above the bits, the bits 39 and 40 a line above the rest, the second on their line
+            ["10", "200"] + denon_cells((393, "TUNER(except"), (462, "AVR4311CI)")),
+            ["10", "207"] + denon_cells(*[(round(133 + 12.6 * i), b) for i, b in zip(range(10, 12), "00")]),
+            ["10", "214"] + denon_cells(*[(round(133 + 12.6 * i), b) for i, b in zip(list(range(10)) + list(range(12, 20)), "0000100000" + "00000010")], (393, "/HD"), (414, "RADIO(AVR4311CI"), (500, "only)")),
+            # the parity byte is not what the data give: reported, and the data read
+            denon_bits(230, "00001000000000000000", "KEY1")]
+    got, skipped = denon.parse_kaseikyo(rows)
+    assert skipped == [] and [(r.group, r.device, r.subdevice, r.function, r.names) for r in got] == [
+        ("MAIN ZONE", 4, 1, 2, ["ALL POWER ON"]), ("MAIN ZONE", 4, 1, 3, ["ALL POWER OFF"]),
+        ("MAIN ZONE", 4, 1, 16, ["TUNER(except AVR4311CI)", "/HD RADIO(AVR4311CI only)"]), ("MAIN ZONE", 4, 1, 16, ["KEY1"])]
+    assert [r.computed_parity() == r.parity for r in got] == [True, True, True, False]
+    with pytest.raises(ValueError, match="ID bits"):
+        denon.parse_kaseikyo(rows[:-1] + [denon_bits(230, "00001000001100000000", "KEY1")])
+    with pytest.raises(ValueError, match="no header"):
+        denon.parse_kaseikyo(rows[:2] + rows[3:])
+
+
+def test_the_four_denon_files_are_the_sharp_and_the_kaseikyo_codes_of_each_model_with_the_parity_that_does_not_agree_untested():
+    files = {p.stem: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "denon").glob("*.json"))}
+    assert sorted(files) == ["AVR-4311", "AVR-4311CI", "AVR-4311CI__Kaseikyo", "AVR-4311__Kaseikyo"]
+    assert {n: (f["protocol"]["name"], len(f["keys"])) for n, f in files.items()} == {
+        "AVR-4311": ("Denon", 155), "AVR-4311CI": ("Denon", 123), "AVR-4311CI__Kaseikyo": ("Denon-K", 369), "AVR-4311__Kaseikyo": ("Denon-K", 377)}
+    untested = {n: [k for k, s in f["keys"].items() if s["forms"][0]["confidence"] == "untested"] for n, f in files.items()}
+    assert {n: len(u) for n, u in untested.items()} == {"AVR-4311": 4, "AVR-4311CI": 0, "AVR-4311CI__Kaseikyo": 42, "AVR-4311__Kaseikyo": 44}
+    for n in ("AVR-4311CI__Kaseikyo", "AVR-4311__Kaseikyo"):          # every Untested Kaseikyo key is a parity byte that does not agree, and every parity that does not is Untested
+        assert all("parity byte" in files[n]["keys"][k]["forms"][0]["source"] for k in untested[n])
+        assert sum("parity byte" in s["forms"][0]["source"] for s in files[n]["keys"].values()) == len(untested[n])
+    assert sorted(files["AVR-4311"]["keys"][k]["label"] for k in untested["AVR-4311"]) == ["ZONE2 HD RADIO", "ZONE2 TUNER", "ZONE3 HD RADIO", "ZONE3 TUNER"]
+    sharp, sharp_ci = files["AVR-4311"]["keys"], files["AVR-4311CI"]["keys"]
+    power = sharp["KEY_POWER"]["forms"][0]
+    assert (power["device"], power["function"], "subdevice" in power) == ("0x02", "0xC1", False)
+    assert files["AVR-4311CI"]["keys"]["KEY_HD_RADIO"]["forms"][0]["function"] == sharp["KEY_TUNER"]["forms"][0]["function"] == "0xC5" and "KEY_TUNER" not in sharp_ci and "KEY_HD_RADIO" not in sharp
+    assert set(sharp_ci) - {"KEY_HD_RADIO"} <= set(sharp) and len(set(sharp) - set(sharp_ci)) == 33     # the 32 `※1` and `except AVR4311CI` keys and the TUNER the CI calls HD RADIO
+    k4 = files["AVR-4311__Kaseikyo"]["keys"]
+    on = k4["KEY_ALL_POWER_ON"]["forms"][0]
+    assert (on["device"], on["subdevice"], on["function"]) == ("0x04", "0x01", "0x02") and "bits 29 to 48 01000000000010000110" in on["source"]
+    assert "KEY_BAND_FM" in k4 and "KEY_BAND_FM" not in files["AVR-4311CI__Kaseikyo"]["keys"]            # the analog tuner's table is `(Except AVR4311CI)`
+    assert len(k4) - len(files["AVR-4311CI__Kaseikyo"]["keys"]) == 8
+    assert "ZONE2 MODE AUTO/MANU./ZONE2 Fast Forward" in {s["label"] for s in k4.values()}
+    assert "denon.co.uk RC code list/AVR4311CI_AVR4311_IR-Codes.pdf@4cc989d3" in power["source"] and "snapshot 20110813053037" in power["source"]
+
+
+def test_other_sources_denon_remotes_hold_every_sharp_code_of_the_table_and_most_kaseikyo_ones_and_the_parity_that_disagrees_is_not_the_data():
+    def triples(path, kind):
+        out = {}
+        for key, spec in load(ROOT / path)["keys"].items():
+            f = spec["forms"][0]
+            fields = ("device", "function") if kind == "Denon" else ("device", "subdevice", "function")
+            out.setdefault(tuple(int(f[x], 0) for x in fields), []).append(spec["label"])
+        return out
+    ours = triples("remotes/official/denon/AVR-4311.json", "Denon")
+    held = set()
+    for p in sorted((ROOT / "remotes").glob("*/*/*.json")):
+        if "official" in p.parts:
+            continue
+        doc = load(p)
+        if doc["protocol"].get("name") == "Denon":
+            for spec in doc["keys"].values():
+                for f in spec["forms"]:
+                    if f.get("device") is not None and f.get("function") is not None:
+                        held.add((int(f["device"], 0), int(f["function"], 0)))
+    assert (len(ours), sum(k in held for k in ours)) == (153, 153)
+    avr3310 = triples("remotes/jp1/Denon/Audio-Denon_AVR3310.json", "Denon")
+    squash = lambda text: re.sub(r"[^a-z0-9]", "", text.lower())
+    both = [k for k in ours if k in avr3310]
+    assert len(both) == 150 and sum(bool({squash(x) for x in ours[k]} & {squash(x) for x in avr3310[k]}) for k in both) == 138
+    kas = triples("remotes/official/denon/AVR-4311__Kaseikyo.json", "Denon-K")
+    x4000 = triples("remotes/jp1/Denon/Audio-Denon_AVR-x4000_ALL.json", "Denon-K")
+    assert (len(kas), sum(k in x4000 for k in kas)) == (377, 246)
+    heldk = set()
+    for p in sorted((ROOT / "remotes").glob("*/*/*.json")):
+        if "official" in p.parts:
+            continue
+        doc = load(p)
+        if doc["protocol"].get("name") == "Denon-K":
+            for spec in doc["keys"].values():
+                for f in spec["forms"]:
+                    if f.get("device") is not None and f.get("subdevice") is not None:
+                        heldk.add(tuple(int(f[x], 0) for x in ("device", "subdevice", "function")))
+    parity = [tuple(int(s["forms"][0][x], 0) for x in ("device", "subdevice", "function"))
+              for s in load(ROOT / "remotes/official/denon/AVR-4311__Kaseikyo.json")["keys"].values() if "parity byte" in s["forms"][0]["source"]]
+    assert (len(set(kas) & heldk), len(parity), sum(c in heldk for c in parity)) == (286, 44, 28)
