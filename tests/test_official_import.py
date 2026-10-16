@@ -1228,7 +1228,7 @@ def infocus_doc_of(doc: dict) -> str:
     return next(iter(doc["keys"].values()))["forms"][0]["source"].split("/")[1].split("@")[0]
 
 
-def test_the_36_infocus_documents_are_90_files_and_3995_keys_and_618_of_them_are_untested_for_the_reason_each_says():
+def test_the_38_infocus_documents_are_92_files_and_4053_keys_and_618_of_them_are_untested_for_the_reason_each_says():
     """Files, keys per file and Untested keys per file of each document (the models are the title's: the IN1100's are eight, the IN3100's
     twelve; the tables of the IN110's, IN3114's, IN3910's, IN3118HD's and SP8604's are images, read by eye: D298, D301). **Untested are the 618 keys of 16 documents' files**: the IN100's 13 (the customer code's byte order is in doubt, below), and
     the keys of the 12 documents that state no customer code (the IN2100's, LP650's, SP4800's, SP4805's, X2's and X3's, and the hex16 ones),
@@ -1243,7 +1243,7 @@ def test_the_36_infocus_documents_are_90_files_and_3995_keys_and_618_of_them_are
         "InFocus-IN3100-IRCodes.pdf": (12, 59, 0), "InFocus-IN100-IRCodes.pdf": (2, 13, 13), "InFocus-IN1100-IRCodes.pdf": (8, 59, 0),
         "InFocus-IN2100-IRCodes.pdf": (1, 55, 55), "InFocus-IN20-IRCodes.pdf": (6, 59, 0), "InFocus-IN32-IRcodes.pdf": (2, 41, 0),
         "IN5140_IRCodes.pdf": (1, 50, 0), "IN5148HD-IR-Codes.pdf": (1, 44, 1), "InFocus-IN5300-IRCodes.pdf": (2, 62, 0),
-        "InFocus-IN5310-IRCodes.pdf": (2, 29, 0), "InFocus-IN5500-IRCodes.pdf": (8, 62, 0), "IN7x_IR_Codes.pdf": (3, 32, 0),
+        "InFocus-IN5310-IRCodes.pdf": (2, 29, 0), "IN5312a_IRCodes.pdf": (1, 29, 0), "IN5316HDa_IRCodes.pdf": (1, 29, 0), "InFocus-IN5500-IRCodes.pdf": (8, 62, 0), "IN7x_IR_Codes.pdf": (3, 32, 0),
         "IN2x_IR_Codes.pdf": (3, 41, 0), "Mondopad_IR_codes.pdf": (3, 22, 0), "InFocus-LP120-IRCodes.pdf": (1, 29, 0),
         "InFocus-LP240-LP250-IRCodes.pdf": (2, 20, 20), "540-640-IR_codes.pdf": (2, 20, 20), "InFocus-LP600-IRCodes.pdf": (1, 29, 0),
         "InFocus-LP650-IRCodes.pdf": (1, 46, 46), "InFocus-LP815-IRCodes.pdf": (2, 20, 20), "InFocus-LP840-IRCodes.pdf": (3, 19, 19),
@@ -1254,9 +1254,9 @@ def test_the_36_infocus_documents_are_90_files_and_3995_keys_and_618_of_them_are
         "InFocus-IN3118HD-IRCodes.pdf": (1, 29, 0),
         "InFocus-IN3900LB-IRCodes.pdf": (1, 62, 62), "SP8604_IRCodes.pdf": (2, 30, 0), "IN5550-IR-Codes.pdf": (2, 34, 34)}
     files = infocus_files()
-    assert len(files) == 90 and sum(len(d["keys"]) for d in files.values()) == 3_995
+    assert len(files) == 92 and sum(len(d["keys"]) for d in files.values()) == 4_053
     tiers = Counter(s["forms"][0]["confidence"] for d in files.values() for s in d["keys"].values())
-    assert tiers == {"plausible": 3_377, "untested": 618}
+    assert tiers == {"plausible": 3_435, "untested": 618}
     assert {d["protocol"]["name"] for d in files.values()} == {"NEC1"} and all(d["manufacturer"] == "InFocus" for d in files.values())
     # the two documents of the IN72, IN74 and IN76, and the names other sources already have (R15)
     assert {"IN72 (InFocus table)", "IN74", "IN76", "IN72 (IN7x_IR_Codes.pdf)", "IN74 (IN7x_IR_Codes.pdf)", "IN76 (IN7x_IR_Codes.pdf)",
@@ -1276,6 +1276,13 @@ def test_the_36_infocus_documents_are_90_files_and_3995_keys_and_618_of_them_are
     assert computer["confidence"] == "untested" and "binary 1000 1001 (0x89) are not one code" in computer["source"]
     assert files["LP840"]["keys"]["KEY_EFFECT"]["forms"][0]["function"] == files["LP840"]["keys"]["KEY_SOURCE_1"]["forms"][0]["function"] == "0x2B"
     assert "the table gives this code to 'Effect' and 'Source 1'" in files["LP840"]["keys"]["KEY_EFFECT"]["forms"][0]["source"]
+    # the "a" series' two documents (served by InFocus's image host: no Wayback snapshot to name) are the IN5310's table, key for key, and each says whose file it is
+    twin = {n: (s["label"], s["forms"][0]["function"]) for n, s in files["IN5310"]["keys"].items()}
+    for model in ("IN5312a", "IN5316HDa"):
+        assert {n: (s["label"], s["forms"][0]["function"]) for n, s in files[model]["keys"].items()} == twin
+        source = files[model]["keys"]["KEY_POWER_ON"]["forms"][0]["source"]
+        assert f"(retrieved 2026-10-16) page 1 row 'Power On' (3Ah): NEC1 device 135 subdevice 78 function 58, customer code 0x4E87, as the document states; " \
+               f"the document names no model: the file is `{model}_IRCodes.pdf` on InFocus's image host" in source and "Wayback" not in source
     # the IN5310's arrow keys are named and its Light key sends no code
     assert {"Up", "Down", "Left", "Right"} <= {s["label"] for s in files["IN5310"]["keys"].values()} and "Light" not in {s["label"] for s in files["IN5310"]["keys"].values()}
 
@@ -1285,7 +1292,7 @@ def test_every_code_like_cell_of_an_infocus_document_is_a_row_of_it():
     5 of the IN2100's): in each pinned document the cells that look like a data code (`0x02`, `02h`, a four-digit `0xE817`, a `K01` row's
     code) are as many as the entries read from it, and the IN5310's one row with no code is the one `n/a`."""
     snapshot = load_snapshot(SNAPSHOT / "infocus")
-    assert len({d.file for d in infocus.DOCUMENTS}) == len(snapshot.documents) == 36
+    assert len({d.file for d in infocus.DOCUMENTS}) == len(snapshot.documents) == 38
     read: dict[str, list] = {}
     for document in infocus.DOCUMENTS:
         rows = snapshot.sheet_of(document.file, document.sheet)

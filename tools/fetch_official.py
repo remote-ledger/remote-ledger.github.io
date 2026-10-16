@@ -147,6 +147,11 @@ DOCUMENTS = {
          "https://web.archive.org/web/20140705075434id_/http://infocus.com/resources/documents/IN5310/InFocus-IN5310-IRCodes.pdf", None),  # also InFocus-IN5310HD-IRCodes.pdf
         ("InFocus-IN5500-IRCodes.pdf",
          "https://web.archive.org/web/20140705081359id_/http://infocus.com/resources/documents/IN5500/InFocus-IN5500-IRCodes.pdf", None),  # also InFocus-IN5532-IN5534-IRCodes.pdf, InFocus-IN5533-IN5535-IRCodes.pdf
+        # the two of the "a" series: InFocus's image host serves them (the Wayback Machine holds no copy), one table whose 29 codes are the IN5310's
+        ("IN5312a_IRCodes.pdf",
+         "https://res.cloudinary.com/iwh/image/upload/q_auto,g_center/assets/1/26/IN5312a_IRCodes.pdf", None),
+        ("IN5316HDa_IRCodes.pdf",
+         "https://res.cloudinary.com/iwh/image/upload/q_auto,g_center/assets/1/26/IN5316HDa_IRCodes.pdf", None),
         ("InFocus-LP120-IRCodes.pdf",
          "https://web.archive.org/web/20140705074143id_/http://infocus.com/resources/documents/LP100/InFocus-LP120-IRCodes.pdf", None),
         ("InFocus-LP240-LP250-IRCodes.pdf",
