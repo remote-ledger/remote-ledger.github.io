@@ -13,7 +13,7 @@ the page, the table's number on it and the cells of one table row, so a table's 
 text and how it ended, ``cell`` (the mark that ends a table's cell, and a table's row: an empty ``cell`` is an empty cell or a row's end) or
 ``para``, in the document's order.
 
-    python3 tools/official_sheets_to_csv.py marantz|anthem|oppo|kef|jvc|benq|arcam|cambridge|hegel|cary|nad|simaudio|rotel
+    python3 tools/official_sheets_to_csv.py marantz|anthem|oppo|kef|jvc|benq|peerless|arcam|cambridge|hegel|cary|nad|simaudio|rotel
 """
 
 from __future__ import annotations
@@ -45,6 +45,7 @@ SHEETS = {
     "jvc": {"DILA_Remote_Code_Emulation_Long_Hex.pdf": ["pages"], "RCU Code of LX-NZ3_20191114.pdf": ["tables", "pages"], "LX-UH1 Remote Control Codes.pdf": ["tables"],
             "LX-NZ3 long hex commands.pdf": ["pages"], "Firmware 3.1 IR Control.pdf": ["tables", "lines"], "LEO3_Remote_Control_Codes_Table_ver_1-0.pdf": ["tables", "lines"]},
     "benq": {"BenQ_LK952_IR_Codes.pdf": ["tables"]},
+    "peerless": {"Remote_Control_Codes_2025_Final.pdf": ["tables"]},
     "arcam": {
         "AVR380-450-750_RS232_SH256E_2.pdf": ["tables"],
         "AVR5-10-20-30-40-11-21-31-41_RS232_SH289E_F.pdf": ["tables"],

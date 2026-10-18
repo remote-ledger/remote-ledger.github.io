@@ -7,7 +7,7 @@ size, SHA-256, the retrieval date (today: do not pass --date) and the server's `
 (and, for a copy from the Wayback Machine, the address and snapshot it was archived from). Run it, then
 ``tools/official_sheets_to_csv.py <maker>`` for the spreadsheets, review the diff, and import.
 
-    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc|benq|arcam|infocus|lyngdorf|emotiva|denon|hitachi|classe|cyrus|yamaha|harman|cambridge|hegel|cary|nad|simaudio|rotel
+    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc|benq|peerless|arcam|infocus|lyngdorf|emotiva|denon|hitachi|classe|cyrus|yamaha|harman|cambridge|hegel|cary|nad|simaudio|rotel
 """
 
 from __future__ import annotations
@@ -81,6 +81,10 @@ DOCUMENTS = {
         # section 92): the same folder of SnapAV's site, the Wayback Machine's copies (the LEO3 table is the same bytes as a live file on images.salsify.com)
         ("Firmware 3.1 IR Control.pdf", WB + "20220522043523id_/https://www.snapav.com/wcsstore/ExtendedSitesCatalogAssetStore/attachments/documents/ProjectionScreens/ProtocolsAndDrivers/Firmware%203.1%20IR%20Control.pdf", None),
         ("LEO3_Remote_Control_Codes_Table_ver_1-0.pdf", WB + "20220118222555id_/https://www.snapav.com/wcsstore/ExtendedSitesCatalogAssetStore/attachments/documents/ProjectionScreens/SupportDocuments/LEO3_Remote_Control_Codes_Table_ver_1-0.pdf", None),
+    ],
+    # Peerless-AV's IR code sheet for its Neptune outdoor TVs (DESIGN section 93): a live file on a Shopify CDN (the sheet's own title names the Neptune Partial Sun and Full Sun TVs)
+    "peerless": [
+        ("Remote_Control_Codes_2025_Final.pdf", "https://cdn.shopify.com/s/files/1/0508/3732/3934/files/Remote_Control_Codes_2025_Final.pdf", None),
     ],
     # BenQ's LK952 code list (DESIGN section 91): the IR, RS-232 and DDC codes of the projector, on the same folder of SnapAV's site; the Wayback Machine's copy
     "benq": [

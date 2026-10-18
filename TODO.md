@@ -16,9 +16,9 @@ sources have been imported under SPEC R19:
   fifty-eight executors (DESIGN §28, §32, §33, §34, §35, §36, §39, §42, §44, §46, §48, §49, §51, §53, §56, §59, §61).
 - **Manufacturers' own IR tables**: Marantz's AV receiver charts, Anthem's IR
   hex sheet, Oppo's remote code workbooks, KEF's IR code sheets, JVC's
-  projector guide, LX-NZ3 and LX-UH1 sheets and 2018 and LEO3 code tables, BenQ's LK952 code list, Arcam's custom installation notes, two of Cambridge Audio's lists
+  projector guide, LX-NZ3 and LX-UH1 sheets and 2018 and LEO3 code tables, BenQ's LK952 code list, Peerless-AV's Neptune TV code sheet, Arcam's custom installation notes, two of Cambridge Audio's lists
   of NEC codes, Hegel's RC-5 tables, Cary Audio's DMS table, InFocus's projector IR code PDFs, Lyngdorf's NEC code table, Emotiva's Pronto hex PDFs, Denon's AVR-4311 remote code list, master IR hex spreadsheet and X-series remote code lists of 2020, Hitachi America's TV remote IR codes, Classé's IR code lists and HEX PDFs, Cyrus Audio's RC-5 tables, Yamaha's standard and extended IR code tables, JBL Synthesis's and Lexicon's RC-5 code sets, NAD's T-series IR tables and Crestron IR files, Simaudio's table of IR codes and Rotel's IR hex code PDFs, 830 files, 68,986
-  keys (DESIGN §29, §31, §58, §60, §62, §63, §64, §65, §66, §68, §69, §71, §72, §73, §74, §75, §76, §77, §78, §79, §80, §81, §82, §83, §84, §85, §86, §87, §88, §89, §90, §91, §92; Linn's RC-5 table moved to the private repository, §70).
+  keys (DESIGN §29, §31, §58, §60, §62, §63, §64, §65, §66, §68, §69, §71, §72, §73, §74, §75, §76, §77, §78, §79, §80, §81, §82, §83, §84, §85, §86, §87, §88, §89, §90, §91, §92, §93; Linn's RC-5 table moved to the private repository, §70).
 
 SPEC v0.11 makes growing coverage from every source whose licence permits
 it the standing goal, with no fixed list of sources (DESIGN §8, Phase 8).
@@ -100,7 +100,7 @@ Land it in two PRs, code and then data.
       private repository's, not done; the rest of that folder is read in §87 or is no IR table); **Pioneer's two AV receiver IR workbooks** of 2010 and FY15 (`Copyright (c) Pioneer
       Corporation, all rights reserved`: 131 files in the private repository, its pull request #9, awaiting the owner); the Wayback Machine's index answers a narrow path
       prefix (`pioneerelectronics.com/StaticFiles/PUSA/Files/Home%20Custom%20Install/`) where a whole host times out. **Leads of 2026-10-18** (SnapAV's other folders; §90 reads
-      Denon's X-series lists of the amplifiers folder and §91 and §92 the projection-screens folder's BenQ and JVC sheets): the image-only `HT5550_IR_Codes.pdf` (no text layer) is left. A document is
+      Denon's X-series lists of the amplifiers folder and §91 and §92 the projection-screens folder's BenQ and JVC sheets): the image-only `HT5550_IR_Codes.pdf` (no text layer) is left; **§93 reads Peerless-AV's Neptune sheet; looked at and not read:** Digital Projection's `VIP 2000 IRcodes` (Wayback Machine, 2006: 41 hex frames in an unknown bit order: the digits read naturally bit-reversed and the picture formats directly, and no other source has the custom code), Eiki's `LC-WXN200`/`EK-308U` sheets (live on eiki.com: Sanyo LC7461 format, which the registry has no protocol for: adding one is D18's three gates), the Binary B-660/B-200/B-500 matrix IR hex sheets (SnapAV's MediaDistribution folder: routing codes, niche), Episode's `EA-MINI-xD-35_IRHex_Protocol` (`(c) 2013 Episode`: the private repository's) and Denon's per-model PDFs of 2012 and 2013 on `assets.denon.com` (the PDF text has the row identifiers `RCSHP...` and `RCKSK...` but not the bits: the identifiers alone give the codes, which §90 found wrong in 5 rows of 4 documents). A document is
       pinned by hash as D123 does it; a PDF is read as the lines of text of its
       pages (KEF's was the first, D243, JVC's the second, D247), which suits a
       table and not prose. Kaleidescape's PDF says "All rights reserved": a source
