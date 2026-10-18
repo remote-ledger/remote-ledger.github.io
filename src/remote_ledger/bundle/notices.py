@@ -81,9 +81,9 @@ FACTS: dict[str, dict[str, Any]] = {
         "upstream_url": "https://www.marantz.com/",
         "note": "Manufacturers' own IR code tables, as they publish them (Marantz's command "
                 "charts, Anthem's IR hex sheet, Oppo's remote code workbooks, KEF's IR code sheets, "
-                "JVC's projector IR emulation guide, Arcam's custom installation notes, Cambridge "
+                "JVC's projector IR emulation guide and LX-NZ3 and LX-UH1 IR code sheets, BenQ's LK952 IR code sheet, Arcam's custom installation notes, Cambridge "
                 "Audio's two lists of NEC codes that carry no copyright notice, Hegel's RC-5 code tables, "
-                "Cary Audio's DMS IR remote codes, InFocus's projector IR code PDFs, Lyngdorf's NEC code table, Emotiva's PDFs of Pronto hex codes, Denon's AVR-4311 remote code list and master IR hex spreadsheet, Hitachi America's TV remote IR code documents, Classé's IR code lists and HEX code PDFs, Cyrus Audio's RC-5 code tables, Yamaha's standard and extended IR code tables, the custom installation notes of Harman's JBL Synthesis and Lexicon receivers, NAD's IR command tables and Crestron IR files, Simaudio's table of IR codes, Rotel's IR hex code PDFs): tables of "
+                "Cary Audio's DMS IR remote codes, InFocus's projector IR code PDFs, Lyngdorf's NEC code table, Emotiva's PDFs of Pronto hex codes, Denon's AVR-4311 remote code list, X-series remote code lists and master IR hex spreadsheet, Hitachi America's TV remote IR code documents, Classé's IR code lists and HEX code PDFs, Cyrus Audio's RC-5 code tables, Yamaha's standard and extended IR code tables, the custom installation notes of Harman's JBL Synthesis and Lexicon receivers, NAD's IR command tables and Crestron IR files, Simaudio's table of IR codes, Rotel's IR hex code PDFs): tables of "
                 "reference remote codes, which the repository records no licence for "
                 "(DESIGN D110). JVC's guide (2012 version 3.0, (c) 2012 JVC, by Dale McWilliams of "
                 "JVC Consumer A/V Group) says it may be distributed freely as long as the author and "

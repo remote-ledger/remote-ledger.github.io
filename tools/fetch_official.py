@@ -7,7 +7,7 @@ size, SHA-256, the retrieval date (today: do not pass --date) and the server's `
 (and, for a copy from the Wayback Machine, the address and snapshot it was archived from). Run it, then
 ``tools/official_sheets_to_csv.py <maker>`` for the spreadsheets, review the diff, and import.
 
-    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc|arcam|infocus|lyngdorf|emotiva|denon|hitachi|classe|cyrus|yamaha|harman|cambridge|hegel|cary|nad|simaudio|rotel
+    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc|benq|arcam|infocus|lyngdorf|emotiva|denon|hitachi|classe|cyrus|yamaha|harman|cambridge|hegel|cary|nad|simaudio|rotel
 """
 
 from __future__ import annotations
@@ -73,6 +73,14 @@ DOCUMENTS = {
     "jvc": [
         ("DILA_Remote_Code_Emulation_Long_Hex.pdf",
          "https://support.jvc.com/consumer/support/documents/DILA_Remote_Code_Emulation_Long_Hex.pdf", None),
+        # the IR code sheets of the LX-NZ3 and LX-UH1 projectors (DESIGN section 91): on the protocols-and-drivers folder for projection screens of SnapAV's site, the
+        # Wayback Machine's copies (the live files are the same bytes). Not pinned: the External Command Lists (RS-232) and the private repository's candidates
+        *[(name, WB + stamp + "id_/https://www.snapav.com/wcsstore/ExtendedSitesCatalogAssetStore/attachments/documents/ProjectionScreens/ProtocolsAndDrivers/" + name.replace(" ", "%20"), None)
+          for name, stamp in (("RCU Code of LX-NZ3_20191114.pdf", "20220122184353"), ("LX-UH1 Remote Control Codes.pdf", "20240413200335"), ("LX-NZ3 long hex commands.pdf", "20220127000738"))],
+    ],
+    # BenQ's LK952 code list (DESIGN section 91): the IR, RS-232 and DDC codes of the projector, on the same folder of SnapAV's site; the Wayback Machine's copy
+    "benq": [
+        ("BenQ_LK952_IR_Codes.pdf", WB + "20230207112239id_/https://www.snapav.com/wcsstore/ExtendedSitesCatalogAssetStore/attachments/documents/ProjectionScreens/ProtocolsAndDrivers/BenQ_LK952_IR_Codes.pdf", None),
     ],
     # Arcam's custom installation notes: for each product family a PDF of the serial control commands and the RC-5
     # remote codes (a table of system and command codes in decimal and hex). They are on Arcam's own host, arcam.co.uk.

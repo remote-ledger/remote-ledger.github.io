@@ -13,7 +13,7 @@ the page, the table's number on it and the cells of one table row, so a table's 
 text and how it ended, ``cell`` (the mark that ends a table's cell, and a table's row: an empty ``cell`` is an empty cell or a row's end) or
 ``para``, in the document's order.
 
-    python3 tools/official_sheets_to_csv.py marantz|anthem|oppo|kef|jvc|arcam|cambridge|hegel|cary|nad|simaudio|rotel
+    python3 tools/official_sheets_to_csv.py marantz|anthem|oppo|kef|jvc|benq|arcam|cambridge|hegel|cary|nad|simaudio|rotel
 """
 
 from __future__ import annotations
@@ -42,7 +42,9 @@ SHEETS = {
         "UDP-203_Remote_Code_v1.2.xls": ["Remote Code 1", "Remote Code 2", "Remote Code 3", "Notes"],
     },
     "anthem": {"AVM-MRXx40-IR-hex-20251202185749500.xlsx": ["MRX x10-x40 remote layout", "MRX x10-x40 IR hex codes"]},
-    "jvc": {"DILA_Remote_Code_Emulation_Long_Hex.pdf": ["pages"]},
+    "jvc": {"DILA_Remote_Code_Emulation_Long_Hex.pdf": ["pages"], "RCU Code of LX-NZ3_20191114.pdf": ["tables", "pages"], "LX-UH1 Remote Control Codes.pdf": ["tables"],
+            "LX-NZ3 long hex commands.pdf": ["pages"]},
+    "benq": {"BenQ_LK952_IR_Codes.pdf": ["tables"]},
     "arcam": {
         "AVR380-450-750_RS232_SH256E_2.pdf": ["tables"],
         "AVR5-10-20-30-40-11-21-31-41_RS232_SH289E_F.pdf": ["tables"],

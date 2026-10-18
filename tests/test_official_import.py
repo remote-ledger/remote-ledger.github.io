@@ -12,7 +12,7 @@ from pathlib import Path
 import pytest
 
 from remote_ledger.errors import ValidationError
-from remote_ledger.official import anthem, arcam, cambridge, cary, classe, cyrus, denon, emotiva, harman, hegel, hitachi, infocus, jvc, kef, lyngdorf, marantz, nad, oppo, rotel, simaudio, yamaha, harman
+from remote_ledger.official import anthem, arcam, benq, cambridge, cary, classe, cyrus, denon, emotiva, harman, hegel, hitachi, infocus, jvc, kef, lyngdorf, marantz, nad, oppo, rotel, simaudio, yamaha, harman
 from remote_ledger.official import importer as oi
 from remote_ledger.official.common import MANIFEST, Report, load_snapshot
 from remote_ledger.serialize import load
@@ -26,7 +26,7 @@ SNAPSHOT = ROOT / oi.SNAPSHOT
 
 def test_every_document_and_csv_is_the_one_the_manifest_pins():
     for maker, retrieved in (("marantz", "2026-10-08"), ("anthem", "2026-10-08"), ("oppo", "2026-10-09"), ("kef", "2026-10-13"),
-                             ("jvc", "2026-10-13"), ("arcam", "2026-10-13"), ("cambridge", "2026-10-13"), ("hegel", "2026-10-13"), ("cary", "2026-10-13"), ("infocus", "2026-10-15"), ("lyngdorf", "2026-10-16"), ("emotiva", "2026-10-16"), ("denon", "2026-10-16"), ("hitachi", "2026-10-16"), ("classe", "2026-10-16"), ("cyrus", "2026-10-16"), ("yamaha", "2026-10-16"), ("harman", "2026-10-16"), ("nad", "2026-10-14"), ("simaudio", "2026-10-13"), ("rotel", "2026-10-13")):
+                             ("jvc", "2026-10-13"), ("arcam", "2026-10-13"), ("cambridge", "2026-10-13"), ("hegel", "2026-10-13"), ("cary", "2026-10-13"), ("infocus", "2026-10-15"), ("lyngdorf", "2026-10-16"), ("emotiva", "2026-10-16"), ("denon", "2026-10-16"), ("hitachi", "2026-10-16"), ("classe", "2026-10-16"), ("cyrus", "2026-10-16"), ("yamaha", "2026-10-16"), ("harman", "2026-10-16"), ("benq", "2026-10-18"), ("nad", "2026-10-14"), ("simaudio", "2026-10-13"), ("rotel", "2026-10-13")):
         snap = load_snapshot(SNAPSHOT / maker)
         assert snap.maker == maker and snap.retrieved == retrieved
         assert snap.documents and snap.sheets
@@ -464,13 +464,13 @@ def test_the_committed_official_import_keeps_r19():
     or Untested, and a citation that names a document the manifest pins, by hash."""
     assert (ROOT / oi.IMPORT_ROOT / "README.md").is_file() and (ROOT / oi.IMPORT_ROOT / oi.REPORT).is_file()
     hashes, dates, snapshots = {}, {}, {}
-    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "arcam", "cambridge", "hegel", "cary", "infocus", "lyngdorf", "emotiva", "denon", "hitachi", "classe", "cyrus", "yamaha", "harman", "nad", "simaudio", "rotel"):
+    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "benq", "arcam", "cambridge", "hegel", "cary", "infocus", "lyngdorf", "emotiva", "denon", "hitachi", "classe", "cyrus", "yamaha", "harman", "nad", "simaudio", "rotel"):
         manifest = json.loads((SNAPSHOT / maker / MANIFEST).read_text(encoding="utf-8"))
         for name, entry in manifest["documents"].items():
             hashes[name], dates[name], snapshots[name] = entry["sha256"], entry.get("retrieved", manifest["retrieved"]), entry.get("snapshot")
     shape = re.compile(r"^(?:marantz\.com archive-downloads|anthemav\.com \(storage\.googleapis\.com/sandbox1-anthemav/an\)"
-                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|infocus\.com IR code PDFs|lyngdorf\.com IR code PDF|emotiva\.com IR code PDFs|denon\.co\.uk RC code list|denon\.com Master IR Hex|snapav\.com Denon IR code documents|hitachi-america\.us IR code documents|classeaudio\.com IR code documents|cyrusaudio\.com remote code tables|snapav\.com Yamaha IR code PDFs|snapav\.com Marantz IR code workbook|jblsynthesis\.com custom installation notes|lexicon\.com custom installation notes|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/(\S+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
-                       r"(?:, from the Wayback Machine snapshot (\d{14}))?\) (?:sheet '[^']+' row \d+|page \d+ row \d+|page \d+ '|page \d+ table \d+ row '|page \d+ row '|key \d+ '|row 'RC(?:SHP|KSK)\w+' \(')")
+                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|infocus\.com IR code PDFs|lyngdorf\.com IR code PDF|emotiva\.com IR code PDFs|denon\.co\.uk RC code list|denon\.com Master IR Hex|snapav\.com Denon IR code documents|hitachi-america\.us IR code documents|classeaudio\.com IR code documents|cyrusaudio\.com remote code tables|snapav\.com Yamaha IR code PDFs|snapav\.com Marantz IR code workbook|jblsynthesis\.com custom installation notes|snapav\.com JVC LX projector code sheets|snapav\.com BenQ IR code sheet|lexicon\.com custom installation notes|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/([^@]+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
+                       r"(?:, from the Wayback Machine snapshot (\d{14}))?\) (?:sheet '[^']+' row \d+|page \d+ row \d+|page \d+ '|page \d+ table \d+ row '|page \d+ row '|key \d+ '|row 'RC(?:SHP|KSK)\w+' \(|page \d+ table row ')")
     files = sorted((ROOT / oi.IMPORT_ROOT).rglob("*.json"))
     assert len(files) > 180
     bad = []
@@ -747,7 +747,7 @@ def test_a_jvc_title_is_names_with_the_models_each_applies_to_and_a_note_per_gro
 
 
 def jvc_files() -> dict[str, dict]:
-    return {p.stem: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "jvc").glob("*.json"))}
+    return {p.stem: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "jvc").glob("DLA-*.json"))}
 
 
 def test_the_22_jvc_files_are_the_covers_models_and_the_three_damaged_entries_are_untested():
@@ -2935,6 +2935,151 @@ def test_other_sources_denon_remotes_hold_every_sharp_code_of_the_x_series_and_a
     # of the five rows that disagree with themselves the other sources have the bits' value of two (Graphic EQ ON 799, ZONE2 SLEEP 836) and the identifier's of one (the mute, 370)
     held = {code for code in others["Denon-K"] if code[:2] in ((4, 1), (4, 3), (4, 5))}
     assert (4, 1, 799) in held and (4, 3, 836) in held and (4, 3, 370) in held and (4, 3, 371) not in held and (4, 5, 371) not in held
+
+
+
+# --- SnapAV's projector sheets: JVC's LX-NZ3 and LX-UH1 and BenQ's LK952 (D341, D342) -----------------------------------
+
+
+def lx_table(*rows: tuple[str, ...]) -> list[list[str]]:
+    """A sheet's ``tables`` rows (``page, table, cells``): the header and the keys' rows."""
+    return [["1", "1", "KEY NAME", "Custom code (HEX)", "Custom code' (HEX)", "DATA CODE (HEX)", "DATA CODE' (HEX)"]] + [["1", "1", *r] for r in rows]
+
+
+def test_a_jvc_lx_name_is_its_key_and_an_asterisk_is_the_footnote_and_a_parenthesis_a_note():
+    assert jvc.lx_name("POWER", None) == ("POWER", ())
+    assert jvc.lx_name("PC*", "Remote Code only") == ("PC", ("Remote Code only",))
+    assert jvc.lx_name("POWER ON (for Remote only)", None) == ("POWER ON", ("for Remote only",))
+    assert jvc.lx_name("HDMI 1(Direct Input Sel.) (for Remote only)", None) == ("HDMI 1", ("Direct Input Sel.", "for Remote only"))
+    with pytest.raises(ValueError, match="an asterisk and no footnote"):
+        jvc.lx_name("PC*", None)
+
+
+def test_a_jvc_lx_sheet_is_a_key_name_the_custom_code_and_its_second_byte_the_data_code_and_its_complement_and_a_row_of_dashes_is_no_key():
+    table = lx_table(("INPUT", "00", "6A", "5E", "A1"), ("LIGHT", "-", "-", "-", "-"), ("POWER ON*", "00", "6A", "80", "7F"), ("ODD", "00", "6A", "10", "11"))
+    pages = [["1", "KEY NAME"], ["1", "*Remote Code only"]]
+    got = jvc.parse_lx(table, pages)
+    assert [(r.label, r.custom, r.custom2, r.data, r.data2, r.complement, r.notes) for r in got] == [
+        ("INPUT", 0, 0x6A, 0x5E, 0xA1, True, ()), ("LIGHT", None, None, None, None, False, ()), ("POWER ON", 0, 0x6A, 0x80, 0x7F, True, ("Remote Code only",)),
+        ("ODD", 0, 0x6A, 0x10, 0x11, False, ())]                                           # a data code whose neighbour is not its complement is kept: its key is Untested
+    with pytest.raises(ValueError, match="not four hex bytes"):
+        jvc.parse_lx(lx_table(("INPUT", "00", "6A", "5E", "A")), pages)
+    with pytest.raises(ValueError, match="no rows"):
+        jvc.parse_lx([["1", "1", "nothing"]], pages)
+    with pytest.raises(ValueError, match="an asterisk and no footnote"):
+        jvc.parse_lx(table, [["1", "KEY NAME"]])
+
+
+def test_the_lx_nz3_long_hex_is_a_name_the_codes_stated_and_the_pronto_hex_after_them():
+    rows = [["1", "LX-NZ3 IR LONG HEX"], ["1", "INPUT: NEC1 Device: 0.106 Function: 94 S=106"], ["1", "0000 006C 0022 0002 015B 00AD 0016 0016"], ["1", "0016 0041 0016 06A4 015B 0057 0016 0E6C"],
+            ["2", "RGB: NEC1 Device: 0.106 Function: 89 S=106"], ["2", "0000 006C 0000"]]
+    got = jvc.parse_long_hex(rows)
+    assert [(g.page, g.name, g.stated, g.device, g.subdevice, g.function, g.pronto) for g in got] == [
+        (1, "INPUT", "NEC1 Device: 0.106 Function: 94 S=106", 0, 106, 94, "0000 006C 0022 0002 015B 00AD 0016 0016 0016 0041 0016 06A4 015B 0057 0016 0E6C"),
+        (2, "RGB", "NEC1 Device: 0.106 Function: 89 S=106", 0, 106, 89, "0000 006C 0000")]
+    with pytest.raises(ValueError, match="says S=105 and a subdevice of 106"):
+        jvc.parse_long_hex([["1", "INPUT: NEC1 Device: 0.106 Function: 94 S=105"]])
+
+
+def lx_files() -> dict[str, dict]:
+    return {p.stem: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "jvc").glob("LX-*.json"))}
+
+
+def test_the_two_jvc_lx_files_are_24_nec1_keys_each_and_the_long_hex_says_the_nz3s_codes_again():
+    files = lx_files()
+    assert sorted(files) == ["LX-NZ3", "LX-UH1"]
+    for name, doc in files.items():
+        assert doc["manufacturer"] == "JVC" and doc["protocol"] == {"name": "NEC1", "carrierHz": 38400, "minSends": 1} and len(doc["keys"]) == 24
+        for spec in doc["keys"].values():
+            (form,) = spec["forms"]
+            assert (form["device"], form["subdevice"], form["confidence"]) == ("0x00", "0x6A", "plausible")
+            assert form["source"].startswith(f"snapav.com JVC LX projector code sheets/") and "(retrieved 2026-10-18, from the Wayback Machine snapshot " in form["source"]
+    nz3, uh1 = files["LX-NZ3"]["keys"], files["LX-UH1"]["keys"]
+    assert {s["forms"][0]["function"]: s["label"] for s in nz3.values()} == {
+        "0x5E": "INPUT", "0x40": "POWER", "0x61": "NATURAL", "0x63": "CINEMA", "0x6B": "DYNAMIC", "0x6E": "USER1", "0x79": "USER2", "0x8D": "GAMMA", "0x58": "HIDE", "0x47": "UP",
+        "0x8F": "TEST", "0x49": "LEFT", "0x5A": "OK", "0x4A": "RIGHT", "0x41": "MENU", "0x48": "DOWN", "0x90": "BACK", "0x94": "BRIGHTNESS", "0x9A": "CONTRAST", "0x80": "POWER ON",
+        "0x84": "POWER OFF", "0x50": "HDMI 1", "0x55": "HDMI 2", "0x59": "PC"}
+    assert {s["forms"][0]["function"] for s in nz3.values()} == {s["forms"][0]["function"] for s in uh1.values()}          # the two sheets are one table
+    assert uh1["KEY_RGB"]["forms"][0]["function"] == nz3["KEY_PC"]["forms"][0]["function"] == "0x59" and "KEY_RGB" not in nz3
+    # the LX-NZ3's keys cite the long hex document, whose Pronto hex decodes to the same four bytes; the UH1's have no second document
+    assert all("the long hex document says the same" in s["forms"][0]["source"] for s in nz3.values())
+    assert not any("long hex" in s["forms"][0]["source"] for s in uh1.values())
+    pc = nz3["KEY_PC"]["forms"][0]["source"]
+    assert "the sheet says of it: Remote Code only" in pc and "page 4 'RGB: NEC1 Device: 0.106 Function: 89 S=106'" in pc and pc.endswith("under the name 'RGB'")
+    assert "frequency word 0x006C" in nz3["KEY_INPUT"]["forms"][0]["source"] and "(Direct Input Sel.)" not in uh1["KEY_HDMI_1"]["label"]
+    assert "the sheet says of it: Direct Input Sel.; for Remote only" in uh1["KEY_HDMI_1"]["forms"][0]["source"]
+
+
+def test_other_sources_projector_remotes_send_eight_of_the_lx_codes_under_the_same_names():
+    """Nine remotes of other sources send NEC1 or NEC2 with device 0 and subdevice 0x6A (Canon projectors' among them): **eight of the LX-NZ3's 24 codes are theirs, with the
+    same names** (power 0x40, input 0x5E, the cursor keys 0x47, 0x48, 0x49 and 0x4A, menu 0x41 and ok 0x5A)."""
+    held: dict[int, set[str]] = {}
+    for path in (ROOT / "remotes").rglob("*.json"):
+        if path.parent.name == "jvc" and path.parent.parent.name == "official":
+            continue
+        doc = load(path)
+        if not isinstance(doc, dict) or doc.get("protocol", {}).get("name") not in ("NEC1", "NEC2", "NECx1"):
+            continue
+        for spec in doc["keys"].values():
+            form = spec["forms"][0]
+            if form.get("device") == "0x00" and form.get("subdevice") == "0x6A":
+                held.setdefault(int(form["function"], 16), set()).add(spec["label"].upper())
+    nz3 = {int(s["forms"][0]["function"], 16): s["label"] for s in lx_files()["LX-NZ3"]["keys"].values()}
+    assert len(held) == 9 and sum(1 for f in nz3 if f in held) == 8
+    for function in (0x40, 0x5E, 0x47, 0x48, 0x49, 0x4A, 0x41, 0x5A):
+        assert any(nz3[function] in name for name in held[function]), (function, nz3[function], held[function])
+
+
+def benq_table(*rows: tuple[str, ...], fmt: bool = True) -> list[list[str]]:
+    """A sheet's ``tables`` rows: the header, a blank row and the codes' rows with the IR format cells beside the first three."""
+    out = [["1", "1", "Key", "Function", "Description", "Code", "Support", "ID and Protocol", ""], ["1", "1", "", "", "", "", "", "", ""]]
+    beside = [("Frequency", "38 KHz"), ("Protocol", "NEC Format"), ("Custom Code", "0x0030")] if fmt else []
+    for i, r in enumerate(rows):
+        out.append(["1", "1", *r, *(beside[i] if i < len(beside) else ("", ""))])
+    return out
+
+
+def test_a_benq_sheet_row_is_a_number_a_function_a_code_and_whether_the_model_supports_it():
+    table = benq_table(("1", "Wireless", "", "0x00", "No"), ("2", "Power On", "Turns on the projector.", "Ox4F", "Yes"), ("3", "Freeze", "Will show unsupported logo", "0x03", "Yes"))
+    got = benq.parse(table)
+    assert [(r.number, r.function, r.description, r.code, r.written, r.supported) for r in got] == [
+        (1, "Wireless", "", 0, "0x00", False), (2, "Power On", "Turns on the projector.", 0x4F, "Ox4F", True), (3, "Freeze", "Will show unsupported logo", 3, "0x03", True)]
+    with pytest.raises(ValueError, match="the row 3 is not the next one after 1"):
+        benq.parse(benq_table(("1", "Wireless", "", "0x00", "No"), ("3", "Freeze", "", "0x03", "Yes")))
+    with pytest.raises(ValueError, match="code 'zz' and support 'Maybe'"):
+        benq.parse(benq_table(("1", "Wireless", "", "zz", "Maybe")))
+    with pytest.raises(ValueError, match="the IR format of the sheet is"):
+        benq.parse(benq_table(("1", "Wireless", "", "0x00", "No"), fmt=False))
+
+
+def test_the_benq_lk952_file_is_the_34_codes_the_model_supports_and_the_96_it_does_not_are_reported():
+    (doc,) = [load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "benq").glob("*.json"))]
+    assert doc["manufacturer"] == "BenQ" and doc["model"] == "LK952" and doc["protocol"] == {"name": "NEC1", "carrierHz": 38000, "minSends": 1} and len(doc["keys"]) == 34
+    assert all(s["forms"][0]["confidence"] == "plausible" and (s["forms"][0]["device"], s["forms"][0]["subdevice"]) == ("0x00", "0x30") for s in doc["keys"].values())
+    by_label = {s["label"]: s["forms"][0] for s in doc["keys"].values()}
+    assert {l: f["function"] for l, f in by_label.items() if l in ("Power Off", "Power On", "Menu/Exit", "Source", "Smart Eco Light Mode", "0", "1", "Quick Install")} == {
+        "Power Off": "0x4E", "Power On": "0x4F", "Menu/Exit": "0x0F", "Source": "0x04", "Smart Eco Light Mode": "0x30", "0": "0x3A", "1": "0x31", "Quick Install": "0x94"}
+    assert "Wireless" not in by_label and "Power" not in by_label and "Wireless" not in {s["label"] for s in doc["keys"].values()}      # `Support: No`
+    on = by_label["Power On"]["source"]
+    assert on.startswith("snapav.com BenQ IR code sheet/BenQ_LK952_IR_Codes.pdf@3187b13b (retrieved 2026-10-18, from the Wayback Machine snapshot 20230207112239) page 4 table row 'No. 67 Power On' (code Ox4F, Support Yes)")
+    assert "with a letter O, read as 0x4F" in on and "Will show unsupported logo" in by_label["Freeze"]["source"]
+    report = (ROOT / oi.IMPORT_ROOT / oi.REPORT).read_text(encoding="utf-8")
+    assert "| benq: rows read | 130 |" in report and "the sheet says the model does not support the code (Support: No)" in report
+    # 21 of the 34 codes are in other sources' BenQ remotes under the same custom code, with the same names for the power, source, menu and 3D keys
+    held: dict[int, set[str]] = {}
+    for path in (ROOT / "remotes").rglob("*.json"):
+        if path.parent.name == "benq" and path.parent.parent.name == "official":
+            continue
+        other = load(path)
+        if not isinstance(other, dict) or other.get("protocol", {}).get("name") not in ("NEC1", "NEC2", "NECx1"):
+            continue
+        for spec in other["keys"].values():
+            form = spec["forms"][0]
+            if form.get("device") == "0x00" and form.get("subdevice") == "0x30":
+                held.setdefault(int(form["function"], 16), set()).add(spec["label"].upper())
+    mine = {int(f["function"], 16): l for l, f in by_label.items()}
+    assert sum(1 for f in mine if f in held) == 21 and len(mine) == 34
+    assert "POWER OFF" in held[0x4E] and "POWERON" in held[0x4F] and "FREEZE" in " ".join(held[0x03]) and "3D" in held[0x8D]
 
 
 # --- Cyrus ---------------------------------------------------------------------------------------------------------

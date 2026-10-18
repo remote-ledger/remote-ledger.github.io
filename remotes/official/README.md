@@ -12,7 +12,7 @@ import must meet, and DESIGN.md section 29 describes how this one meets them.
   LS50 Wireless II, LS60 Wireless, LSX, LSX II and XIO (PDFs on <https://assets.kef.com/> and the
   product pages of <https://www.kef.com/>, DESIGN.md section 62) and **JVC's** infrared remote control command emulation
   guide (long hex format) for its D-ILA projectors (DLA-HD, X and RS series, <https://support.jvc.com/>, DESIGN.md
-  section 63) and **Arcam's** custom installation notes, whose RC-5 code tables cover its AVR, AV and SA amplifiers and
+  section 63, and the IR code sheets of its LX-NZ3 and LX-UH1 laser projectors, SnapAV's copies that the Wayback Machine has, section 91) and **BenQ's** LK952 code list (the same folder of SnapAV's site, section 91) and **Arcam's** custom installation notes, whose RC-5 code tables cover its AVR, AV and SA amplifiers and
   receivers, the CDS50 and UDP411 players and the Solo and Solo Mini (PDFs on <https://www.arcam.co.uk/>, DESIGN.md
   section 64), and its older products' two IR sheets for the DiVA and FMJ amplifiers and CD players, eight more notes
   (the AVR400, AVR500/600 and AV888, the AVR390 family, BDP100/300, CDS27, D33, ST60 and the Solo Movie and Music 2) and the Solo bar's one-page table
