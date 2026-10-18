@@ -15,6 +15,12 @@ function, each first bit first, which the 8 parity bits must agree with as the l
 ``REMOTE ID : 1`` that give all 48 bits are read**: the tables for IDs 2 to 4 and the iPod, Sirius and HD Radio ones write the ID and parity
 bits as ``*`` and are not read. A name that says ``(except AVR4311CI)``, ``(AVR4311CI only)``, ``(AVR4311 only)`` or ``※1`` (the page's note:
 ``Except AVR4311CI``) or ``※2`` (``EU only``, read as the AVR-4311's) is in the file of the models it names.
+
+**The X-series code lists of 2020 (DESIGN section 90)** are Word documents (the AVR-X2700H, X2700H DAB and S960H; the AVR and AVC-X3700H, X4700H and X6700H) in the same two
+formats, as the cells of their tables (``paragraphs`` of ``tools/official_sheets_to_csv.py``). Each key row has an identifier of its own (``RCSHP0230016``: the Sharp
+table of address 02 and extension bits 3, row 16; ``RCKSK0470785``: the Kaseikyo table K4-7, function 785), which the reader checks against the table's header and the row's
+bits. A table of Kaseikyo rows writes the ID bits and the parity as ``*`` and takes its ``GENRE1`` and ``GENRE2`` from the group's header (remote ID 1's: the document's
+table of IDs 2 to 4 is not read, as the AVR-4311's was not).
 """
 
 from __future__ import annotations
@@ -572,5 +578,272 @@ def build_master(snapshot: Snapshot, authored: dict[tuple[str, str], str], repor
     return out
 
 
+# --- the X-series word documents ----------------------------------------------------------------------------------------
+
+DOC_HOST = "snapav.com Denon IR code documents"
+REGIONS = ("NA", "EU", "CHI", "JP")
+
+
+@dataclass(frozen=True)
+class DocDocument:
+    file: str
+    models: tuple[str, ...]        # the products the title names: a file for each of the two formats (``AVR-X2700H``, ``AVR-X2700H (Kaseikyo)``)
+
+
+DOC_DOCUMENTS: tuple[DocDocument, ...] = (
+    DocDocument("AVR-X2700H_S960H_IR_CODE_V01.doc", ("AVR-X2700H", "AVR-X2700H DAB", "AVR-S960H")),
+    DocDocument("AVR-X3700H_AVC-X3700H_IR_CODE_V01_04062020.doc", ("AVR-X3700H", "AVC-X3700H")),
+    DocDocument("AVR-X4700H_AVC-X4700H_IR_CODE_V01.doc", ("AVR-X4700H", "AVC-X4700H")),
+    DocDocument("AVR-X6700H_AVC-X6700H_IR_CODE_V01.doc", ("AVR-X6700H", "AVC-X6700H")),
+)
+_DOC_ADDRESS = re.compile(r"SYSTEM ADDRESS ?\(C1[~\u301c]C5\) : ([01]{5}) , EXTENSION BIT ?\(C12,C13\) : ([01]{2})")
+_DOC_MARK = re.compile(r"\s*\u203b+\s*([^\u203b]*?)\s+only\b|\s*\(([^()]*?)\s+only\)", re.I)
+_DOC_VARIANT = re.compile(r"\s*\((AVR-\w+ DAB)\)")
+_DOC_REGIONS = re.compile(r"\(([A-Z/]+)\)")
+
+
+def marks_of(text: str, models: tuple[str, ...]) -> tuple[str, frozenset[str]]:
+    """``(the label, the models it is for)`` of one printed name of an X-series list. **A mark that names models restricts the key to them** (``\u203bAVR only``: the
+    AVR-X4700H and not the AVC-X4700H, which has no tuner; ``\u203bX2700H only``: the AVR-X2700H and its DAB; ``(AVR-X2700H DAB only)``: the DAB; ``(AVR-X2700H/S960H EU
+    only)``: those two and the DAB, which is an X2700H), **and a region stays in the label where the mark was**: ``PTY \u203bEU only`` is ``PTY (EU only)``, ``MEMORY
+    \u203bAVR(NA/CHI/JP) only`` is ``MEMORY (NA/CHI/JP only)``. A name is for every model when it has no mark."""
+    kept = set(models)
+
+    def one(found: re.Match) -> str:
+        nonlocal kept
+        what = found.group(1) if found.group(1) is not None else found.group(2)
+        regions: list[str] = []
+        listed = _DOC_REGIONS.search(what)
+        if listed:                                            # ``AVR(NA/CHI/JP)``: the family, and its regions
+            regions += listed.group(1).split("/")
+            what = what[:listed.start()] + what[listed.end():]
+        tail = re.search(r"\s+(" + "|".join(REGIONS) + r")$", what)
+        if tail:                                              # ``AVR-X2700H/S960H EU``
+            regions.append(tail.group(1))
+            what = what[:tail.start()]
+        refs = [r.strip() for r in what.split("/") if r.strip()]
+        for ref in list(refs):
+            if ref in REGIONS:
+                regions.append(ref)
+                refs.remove(ref)
+        if refs:
+            kept &= {m for m in models if any(ref in m for ref in refs)}
+        return " (" + "/".join(dict.fromkeys(regions)) + " only)" if regions else ""
+
+    def variant(found: re.Match) -> str:
+        nonlocal kept
+        kept &= {m for m in models if found.group(1) in m}
+        return ""
+
+    rest = _DOC_VARIANT.sub(variant, text)
+    rest = _DOC_MARK.sub(one, rest)
+    label = re.sub(r"\(\s+", "(", re.sub(r"\s+\)", ")", " ".join(rest.split())))
+    return label, frozenset(kept)
+
+
+def doc_names(parts: list[str], models: tuple[str, ...]) -> list[tuple[str, frozenset[str]]]:
+    """The names of a key's cell and the models each is for. **A paragraph that is only a mark (``(AVR-X2700H DAB only)``), begins with ``/`` or follows one that ends
+    with ``/`` goes on the paragraph before** (``DIRECT SEARCH/`` and ``RDS SEARCH (AVR-X2700H/S960H EU only)`` are one name for the markets); **another paragraph is
+    another name** (``(FM/AM)TUNING UP`` and ``(DAB) STATION UP (AVR-X2700H DAB only)``), and a name with no mark of models is for the models the others are not for."""
+    joined: list[str] = []
+    for part in parts:
+        if joined and (joined[-1].endswith("/") or part.startswith("/") or re.fullmatch(r"\([^()]*only\)|\(AVR-\w+ DAB\)", part)):
+            joined[-1] += ("" if joined[-1].endswith("/") or part.startswith("/") else " ") + part
+        else:
+            joined.append(part)
+    names = [marks_of(text, models) for text in joined]
+    if len(names) > 1:
+        taken = frozenset().union(*(kept for _, kept in names if len(kept) < len(models)))
+        names = [(label, kept if len(kept) < len(models) or not taken or set(models) == taken else frozenset(models) - taken) for label, kept in names]
+    return names
+
+
+@dataclass
+class DocRow:
+    kind: str                      # ``sharp`` or ``kaseikyo``
+    ident: str                     # ``RCSHP0230016``
+    table: str                     # Sharp: ``01000 11`` (the address and the extension bits); Kaseikyo: ``K4-7``
+    group: str                     # a Kaseikyo group's title as written (``MAIN ZONE``, ``ANALOG TUNER \u203bAVR (NA/CHI) only``); empty for Sharp
+    printed: str                   # the name cell as written: its paragraphs with `` | `` between them
+    names: list[tuple[str, frozenset[str]]]       # the names it gives and the models each is for (a group's title taken in)
+    bits: str                      # Sharp: the data (C6 to C11); Kaseikyo: bits 29 to 38
+    device: int
+    subdevice: int | None
+    function: int
+    number: int                    # the row's number its identifier gives
+    note: str = ""                 # what the citation says besides the row (a header that is not the table's)
+
+
+@dataclass
+class Group:
+    printed: str                   # the title as written
+    title: str                     # its label: a mark removed
+    models: frozenset[str]
+    genre1: int                    # the header's
+    genre2: int
+    table: tuple[int, int] | None = None       # the rows' identifiers'
+
+
+def doc_cells(rows: list[list[str]]) -> list[tuple[str, str]]:
+    return [(nf(text).strip(), end) for text, end in rows]
+
+
+def parse_doc(rows: list[list[str]], models: tuple[str, ...]) -> list[DocRow]:
+    """The key rows of a document's ``paragraphs`` in order. A Sharp table has the line ``SYSTEM ADDRESS(C1~C5) : 01000 , EXTENSION BIT(C12,C13) : 11`` and rows of two
+    ``RCSHP``, 6 data bits and a name (empty for a code with none); a Kaseikyo group has a title, a ``REMOTE ID SET: 1`` line, the 28 bits of the header (the vendor, the parity
+    nibble, ``GENRE1`` and ``GENRE2``, after the numbers 1 to 28) and rows of one ``RCKSK``, bits 29 to 38, ten ``*`` (the ID and the parity) and a name. A row whose identifier
+    is not its table's, or whose bits are not 0 and 1, is an error; **a row whose number is not its data's value is kept and its key is Untested**. **A group's table is its
+    rows' identifiers' (K4-5), which the document's table of remote IDs agrees with** (its first block lists the groups' tables in order): a header that gives another
+    ``GENRE2`` (the X4700H's and X6700H's ``ZONE3`` has the ``ZONE2``'s, 3) is a slip of the header, which the rows' citations say."""
+    cells = doc_cells(rows)
+    out: list[DocRow] = []
+    address: tuple[str, str] | None = None
+    group: Group | None = None
+    groups: list[Group] = []
+    i = 0
+
+    def name_at(j: int) -> tuple[list[str], int]:
+        parts: list[str] = []
+        while j < len(cells):
+            text, end = cells[j]
+            if text:
+                parts.append(text)
+            j += 1
+            if end == "cell":
+                break
+        return parts, j
+
+    while i < len(cells):
+        text, _ = cells[i]
+        if m := _DOC_ADDRESS.search(text):
+            address, group = (m.group(1), m.group(2)), None
+            i += 1
+        elif text == "REMOTE ID SET: 1":
+            title = next((t for t, _ in reversed(cells[:i]) if t), "")
+            numbers = next(j for j in range(i, len(cells)) if cells[j][0] == "28")
+            header = "".join(t for t, _ in cells[numbers + 1:numbers + 30] if t)
+            if not re.fullmatch(r"[01]{28}", header):
+                raise ValueError(f"cell {i}: the header of the group {title!r} is {header!r}, not 28 bits")
+            if header[:16] != VENDOR or header[16:20] != "0000":
+                raise ValueError(f"cell {i}: the group {title!r} has no header of the vendor 0x54 0x32 and a 0 parity nibble")
+            label, kept = marks_of(title, models)
+            group, address = Group(title, label, kept, value(header[20:24]), value(header[24:28])), None
+            groups.append(group)
+            i = numbers + 30
+        elif m := re.fullmatch(r"RCSHP([0-9A-F]{2})(\d)(\d{4})", text):
+            if address is None:
+                raise ValueError(f"cell {i}: the row {text} is in no table of an address")
+            data = cells[i + 1][0]
+            if not re.fullmatch(r"[01]{6}", data):
+                raise ValueError(f"cell {i}: the row {text} has data {data!r}")
+            if (int(m.group(1), 16), int(m.group(2))) != (value(address[0]), value(address[1])):
+                raise ValueError(f"cell {i}: the row {text} is not of the table of address {address[0]} and extension bits {address[1]}")
+            parts, i = name_at(i + 2)
+            out.append(DocRow("sharp", text, f"{address[0]} {address[1]}", "", " | ".join(parts), doc_names(parts, models) if parts else [], data, value(address[0]), None,
+                              value(data) + 64 * value(address[1]), int(m.group(3)) % 64))
+        elif m := re.fullmatch(r"RCKSK0(\d)(\d)(\d{4})", text):
+            if group is None:
+                raise ValueError(f"cell {i}: the row {text} is in no group with a header")
+            table = (int(m.group(1)), int(m.group(2)))
+            if group.table is None:
+                group.table = table
+            if table != group.table or table[0] != group.genre1:
+                raise ValueError(f"cell {i}: the row {text} is not of the table K{group.table[0]}-{group.table[1]} of the group {group.printed!r} (header: GENRE1 {group.genre1})")
+            bits = "".join(cells[i + k][0] for k in range(1, 11))
+            if not re.fullmatch(r"[01]{10}", bits) or [cells[i + k][0] for k in range(11, 21)] != ["*"] * 10:
+                raise ValueError(f"cell {i}: the row {text} does not have 10 bits and 10 '*'")
+            parts, i = name_at(i + 21)
+            note = (f"the group's header gives GENRE2 {group.genre2}, not the rows' {table[1]} (the header of the group before, copied): its rows' identifiers and the document's "
+                    "table of remote IDs say K%d-%d" % table) if group.genre2 != table[1] else ""
+            names = [(label, kept & group.models) for label, kept in doc_names(parts, models)] if parts else []
+            out.append(DocRow("kaseikyo", text, f"K{table[0]}-{table[1]}", group.printed, " | ".join(parts), names, bits, table[0], table[1], value(bits), int(m.group(3)), note))
+        else:
+            i += 1
+    if groups:         # the document's table of remote IDs: its first block (ID 1) has the tag of each group, in the order of the groups
+        start = next(j for j, (t, _) in enumerate(cells) if t.startswith("REMOTE ID SETTING"))
+        tags = [(int(m.group(1)), int(m.group(2))) for t, _ in cells[start:] if (m := re.fullmatch(r"(?:SHARP&)?K(\d)-(\d)", t))][:len(groups)]
+        if tags != [g.table for g in groups]:
+            raise ValueError(f"the groups' tables {[g.table for g in groups]} are not the tags of the document's table of remote IDs {tags}")
+    return out
+
+
+def build_docs(snapshot: Snapshot, authored: dict[tuple[str, str], str], report: Report) -> list[tuple[str, dict[str, Any]]]:
+    gate: dict[tuple, str | None] = {}
+    out: list[tuple[str, dict[str, Any]]] = []
+    for document in DOC_DOCUMENTS:
+        rows = parse_doc(snapshot.sheet_of(document.file, "paragraphs"), document.models)
+        entry, sha = snapshot.documents[document.file], snapshot.sha(document.file)
+        where = f"{DOC_HOST}/{document.file}@{sha} (retrieved {entry.get('retrieved', snapshot.retrieved)}, from the Wayback Machine snapshot {entry['snapshot']})"
+        report.count(MAKER, f"{document.file}: key rows read", len(rows))
+        for model in document.models:
+            for kind, protocol in (("sharp", SHARP), ("kaseikyo", KASEIKYO)):
+                members: list[Member] = []
+                again: dict[tuple, list[str]] = {}
+                for row in rows:
+                    if row.kind != kind:
+                        continue
+                    for label, kept in row.names:
+                        if model not in kept:
+                            continue
+                        if kind == "sharp":
+                            code, fields = (row.device, row.function), {"device": row.device, "function": row.function}
+                            cite = (f"{where} row '{row.ident}' ('{row.printed}', system address {row.table.split()[0]}, extension bits {row.table.split()[1]}, data {row.bits}): "
+                                    f"Denon device {row.device} function {row.function}, each field first bit first, the extension bits above the data")
+                            agrees = value(row.bits) == row.number
+                        else:
+                            code, fields = (row.device, row.subdevice, row.function), {"device": row.device, "subdevice": row.subdevice, "function": row.function}
+                            cite = (f"{where} row '{row.ident}' ('{row.printed}', {row.table} : {row.group}, bits 29 to 38 {row.bits}, the ID and parity bits '*'): Denon-K device "
+                                    f"{row.device} subdevice {row.subdevice} function {row.function}, GENRE1, GENRE2 and the data each first bit first, the ID bits 0 as for remote ID 1")
+                            agrees = row.function == row.number
+                            if row.note:
+                                cite += "; " + row.note
+                        if (protocol["name"], code) not in gate:
+                            gate[(protocol["name"], code)] = form_compiles(IMPORT_ROOT, protocol, "K", {"id": "primary.irp", "type": "irp", **fields, "confidence": TIER, "source": "probe"})
+                        if gate[(protocol["name"], code)]:
+                            report.unrepresented[(MAKER, document.file, f"does not compile: {gate[(protocol['name'], code)]}")] += 1
+                            continue
+                        member = Member(label, code, fields, cite, re.sub(r"\s*\([A-Z/]+ only\)$", "", marks_of(row.group, document.models)[0]) if row.group else row.table)
+                        if not agrees:
+                            member.doubts.append(f"the row's identifier gives the number {row.number} and its bits the value {value(row.bits) if kind == 'sharp' else row.function}, "
+                                                 "which are not one function: the bits are read and the number is not")
+                            if model == document.models[0]:
+                                report.count(MAKER, "rows whose number and bits disagree")
+                        again.setdefault((code, label), []).append(row.ident)
+                        if len(again[(code, label)]) > 1:
+                            first = next(m for m in members if (m.code, m.label) == (code, label))
+                            first.cite += f"; the document gives the same name to the same code again in the row '{row.ident}'" + (f" of the group '{row.group}'" if row.group else "")
+                            continue
+                        members.append(member)
+                        report.count(MAKER, f"{kind} rows read")
+                if not members:
+                    continue
+                labels_of: dict[tuple, list[str]] = {}
+                for m in members:
+                    labels_of.setdefault(m.code, []).append(m.label)
+                seen_labels: dict[str, str] = {}
+                final: list[tuple[str, dict[str, Any]]] = []
+                for m in members:
+                    label = m.label
+                    if label in seen_labels and seen_labels[label] != m.table:
+                        label = f"{label} ({m.table})"
+                    seen_labels.setdefault(label, m.table)
+                    doubts = list(m.doubts)
+                    if len(labels_of[m.code]) > 1:
+                        doubts.append("the document gives this code to " + " and ".join(f"'{n}'" for n in labels_of[m.code]) + ", and a code is one function")
+                    final.append((label, {"id": "primary.irp", "type": "irp", **m.fields, "confidence": DOUBTFUL_TIER if doubts else TIER,
+                                          "source": m.cite + ("; " + "; ".join(doubts) if doubts else "")}))
+                name = model if kind == "sharp" else f"{model} (Kaseikyo)"
+                while (BRAND.casefold(), name.casefold()) in authored:
+                    renamed = f"{name} (Denon table)"
+                    report.notes.append((MAKER, name, f"kept as '{renamed}': the ledger's {authored[(BRAND.casefold(), name.casefold())]} has the name (R15)"))
+                    name = renamed
+                keys = {n: {"label": f[0], "forms": [f[1]]} for n, f in zip(key_names([f[0] for f in final]), final)}
+                report.count(MAKER, "files")
+                report.count(MAKER, "keys", len(keys))
+                out.append((f"{IMPORT_ROOT}/{MAKER}/{slug(name)}.json",
+                            {"manufacturer": BRAND, "model": name, "aliases": [], "controls": [f"{BRAND} {model}"], "protocol": dict(protocol), "keys": keys}))
+    return out
+
+
 def build(snapshot: Snapshot, authored: dict[tuple[str, str], str], report: Report) -> list[tuple[str, dict[str, Any]]]:
-    return build_pdf(snapshot, authored, report) + build_master(snapshot, authored, report)
+    return build_pdf(snapshot, authored, report) + build_master(snapshot, authored, report) + build_docs(snapshot, authored, report)

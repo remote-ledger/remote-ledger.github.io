@@ -9,6 +9,9 @@ that is not what the manifest says. **A PDF** (KEF's, DESIGN D243) is read as th
 every page, ``pages`` (it needs PyMuPDF): one non-empty line to a row, in the order the library reads the page (``pages``
 puts the page number in a first cell), which the importer parses; or as its tables, ``tables`` (Arcam's, D251): a row is
 the page, the table's number on it and the cells of one table row, so a table's merged cells are the library's reading.
+**A Word 97 to 2003 document** (``.doc``, Denon's, DESIGN D339; it needs ``olefile``) is read as its ``paragraphs``: a row is a paragraph's
+text and how it ended, ``cell`` (the mark that ends a table's cell, and a table's row: an empty ``cell`` is an empty cell or a row's end) or
+``para``, in the document's order.
 
     python3 tools/official_sheets_to_csv.py marantz|anthem|oppo|kef|jvc|arcam|cambridge|hegel|cary|nad|simaudio|rotel
 """
@@ -121,7 +124,9 @@ SHEETS = {
         "originaltunerremotecodes.pdf",
         "Quattroremotecodes.pdf",
     )},
-    "denon": {"AVR4311CI_AVR4311_IR-Codes.pdf": ["words"], "Denon_Master_IR_Hex.xls": ['Main Zone ID#1', 'Main Zone ID#2', 'Main Zone ID#3', 'Main Zone ID#4', 'Zone 2 ID#1', 'Zone 2 ID#2', 'Zone 2 ID#3', 'Zone 2 ID#4', 'Zone 3 ID#1', 'Zone 3 ID#2', 'Zone 3 ID#3', 'Zone 3 ID#4', 'Zone 4 ID#1', 'Zone 4 ID #2', 'Zone 4 ID#3', 'Zone 4 ID#4', 'Analog Tuner ID#1', 'Analog Tuner ID#2', 'Analog Tuner ID#3', 'Analog Tuner ID#4', 'HD Radio ID#1', 'Net Audio ID#1', 'Net Audio ID#2', 'Net Audio ID#3', 'Net Audio ID#4', 'iPod ID#1', 'iPod ID#2', 'iPod ID#3', 'iPod ID#4', 'XM ID#1', 'XM ID#2', 'XM ID#3', 'XM ID#4', 'Sirius ID#1', 'RCD-N7', 'CD Player', 'DBP-1611UD', 'BD Players', 'S5-BD', 'ASD-51NW', 'M33 CD Receiver', 'DRA', 'Sharp Device 2', 'Sharp device 4', 'Sharp Device 12', 'Denon K 4.1', 'Denon K 4.3', 'Denon K 4.5', 'Denon K 4.7', 'Denon K 7.6', 'Denon K 7.7', 'Denon K 7.8']},
+    "denon": {"AVR4311CI_AVR4311_IR-Codes.pdf": ["words"],
+              "AVR-X2700H_S960H_IR_CODE_V01.doc": ["paragraphs"], "AVR-X3700H_AVC-X3700H_IR_CODE_V01_04062020.doc": ["paragraphs"],
+              "AVR-X4700H_AVC-X4700H_IR_CODE_V01.doc": ["paragraphs"], "AVR-X6700H_AVC-X6700H_IR_CODE_V01.doc": ["paragraphs"], "Denon_Master_IR_Hex.xls": ['Main Zone ID#1', 'Main Zone ID#2', 'Main Zone ID#3', 'Main Zone ID#4', 'Zone 2 ID#1', 'Zone 2 ID#2', 'Zone 2 ID#3', 'Zone 2 ID#4', 'Zone 3 ID#1', 'Zone 3 ID#2', 'Zone 3 ID#3', 'Zone 3 ID#4', 'Zone 4 ID#1', 'Zone 4 ID #2', 'Zone 4 ID#3', 'Zone 4 ID#4', 'Analog Tuner ID#1', 'Analog Tuner ID#2', 'Analog Tuner ID#3', 'Analog Tuner ID#4', 'HD Radio ID#1', 'Net Audio ID#1', 'Net Audio ID#2', 'Net Audio ID#3', 'Net Audio ID#4', 'iPod ID#1', 'iPod ID#2', 'iPod ID#3', 'iPod ID#4', 'XM ID#1', 'XM ID#2', 'XM ID#3', 'XM ID#4', 'Sirius ID#1', 'RCD-N7', 'CD Player', 'DBP-1611UD', 'BD Players', 'S5-BD', 'ASD-51NW', 'M33 CD Receiver', 'DRA', 'Sharp Device 2', 'Sharp device 4', 'Sharp Device 12', 'Denon K 4.1', 'Denon K 4.3', 'Denon K 4.5', 'Denon K 4.7', 'Denon K 7.6', 'Denon K 7.7', 'Denon K 7.8']},
     "hitachi": {"2003_and_2004_HITACHI_IR.xls": ["Sheet1", "Sheet2"], "2004_IR_Codes-1.xls": ["2004 Codes", "Additional Codes"],
                 **{name: ["cells"] for name in ("2007_Discrete_Codes-DW3.pdf", "2009_Discrete_Codes_L32_and_larger_0211.pdf",
                                                 "2009_RC_Layouts_and_IR_Codes_L19_L26.pdf", "AVC_56_Discrete_Codes_UT_Monitor_PDP_Pronto_Hex.pdf")}},
@@ -281,7 +286,50 @@ def ir_records(data: bytes) -> list[list[str]]:
     return out
 
 
+def doc_paragraphs(path: Path) -> list[list[str]]:
+    """The paragraphs of a Word 97 to 2003 document (Denon's X-series code lists, D339) in order: the text is the pieces of the file's piece table
+    (8-bit or UTF-16), a ``\\x07`` ends a table's cell (and, alone, a row) and a ``\\r`` a paragraph; a row is ``text, end`` with ``end`` ``cell`` for
+    the last paragraph of a cell and ``para`` for the others. A line break is a space, the other control characters (a field's) are dropped, and a
+    blank ``para`` is not kept (an empty ``cell`` is: a cell with nothing in it, or a row's end)."""
+    import struct
+
+    import olefile
+    ole = olefile.OleFileIO(str(path))
+    word = ole.openstream("WordDocument").read()
+    table = ole.openstream("1Table" if struct.unpack_from("<H", word, 0x0A)[0] & 0x0200 else "0Table").read()
+    fc_clx, lcb_clx = struct.unpack_from("<II", word, 0x1A2)
+    clx = table[fc_clx:fc_clx + lcb_clx]
+    i = 0
+    while clx[i] == 1:                      # the property modifiers come first, then the piece table
+        i += 3 + struct.unpack_from("<H", clx, i + 1)[0]
+    if clx[i] != 2:
+        raise ValueError(f"{path}: no piece table")
+    size = struct.unpack_from("<I", clx, i + 1)[0]
+    plc = clx[i + 5:i + 5 + size]
+    n = (size - 4) // 12
+    cps = struct.unpack_from(f"<{n + 1}I", plc, 0)
+    chunks = []
+    for k in range(n):
+        fc = struct.unpack_from("<I", plc, 4 * (n + 1) + 8 * k + 2)[0]
+        length = cps[k + 1] - cps[k]
+        if fc & 0x40000000:
+            at = (fc & ~0x40000000) // 2
+            chunks.append(word[at:at + length].decode("cp1252", "replace"))
+        else:
+            chunks.append(word[fc:fc + 2 * length].decode("utf-16le", "replace"))
+    out: list[list[str]] = []
+    for piece in "".join(chunks).split("\x07"):
+        *paragraphs, last = piece.split("\r")
+        for end, text in [("para", t) for t in paragraphs] + [("cell", last)]:
+            text = " ".join(re.sub(r"[\x00-\x08\x0c-\x1f]", "", text.replace("\x0b", " ")).split())
+            if text or end == "cell":
+                out.append([text, end])
+    return out
+
+
 def rows_of(path: Path, sheet: str) -> list[list[str]]:
+    if path.suffix.lower() == ".doc":
+        return doc_paragraphs(path)
     if path.suffix.lower() == ".ir":
         return ir_records(path.read_bytes())
     if path.suffix.lower() == ".html":

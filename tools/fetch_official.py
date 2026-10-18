@@ -228,6 +228,11 @@ DOCUMENTS = {
         ("AVR4311CI_AVR4311_IR-Codes.pdf", "https://web.archive.org/web/20110813053037id_/http://denon.co.uk:80/DocumentMaster/UK/AVR4311CI_AVR4311_IR-Codes.pdf", None),
         # the master spreadsheet of Denon's US site (DESIGN section 84): 52 sheets of command names and Pronto hex (two earlier versions of 2014 and 2016 are not pinned)
         ("Denon_Master_IR_Hex.xls", "https://web.archive.org/web/20220505222023id_/https://assets.denon.com/DocumentMaster/us/Denon%20Master%20IR%20Hex.xls", None),
+        # the remote code lists of the X-series receivers and processors of 2020 (DESIGN section 90): Word documents, on the support-documents folder for amplifiers of SnapAV's
+        # site; the Wayback Machine's copies, and the live files are the same bytes (SHA-256 compared)
+        *[(name, WB + stamp + "id_/https://www.snapav.com/wcsstore/ExtendedSitesCatalogAssetStore/attachments/documents/Amplifiers/ProtocolsAndDrivers/" + name, None)
+          for name, stamp in (("AVR-X2700H_S960H_IR_CODE_V01.doc", "20220727164119"), ("AVR-X3700H_AVC-X3700H_IR_CODE_V01_04062020.doc", "20220727164117"),
+                              ("AVR-X4700H_AVC-X4700H_IR_CODE_V01.doc", "20220727192357"), ("AVR-X6700H_AVC-X6700H_IR_CODE_V01.doc", "20220727175013"))],
     ],
     # Hitachi America's remote IR code documents for its televisions (DESIGN section 82): its site no longer serves them, so the Wayback Machine's copies
     # (the two RS-232 specifications and the Roll-and-Click page, which has names and no codes, are not IR code tables and are not pinned).
@@ -489,8 +494,8 @@ def main(argv: list[str] | None = None) -> int:
         data, headers = fetch(url)
         if member is not None:
             data = zipfile.ZipFile(__import__("io").BytesIO(data)).read(member)
-        if name.endswith(".xls") and not data.startswith(b"\xd0\xcf\x11\xe0"):
-            raise SystemExit(f"{name}: {url} did not answer with a spreadsheet ({data[:40]!r}); nothing was pinned")
+        if name.endswith((".xls", ".doc")) and not data.startswith(b"\xd0\xcf\x11\xe0"):
+            raise SystemExit(f"{name}: {url} did not answer with a spreadsheet or a Word document ({data[:40]!r}); nothing was pinned")
         if name.endswith(".html") and b"<html" not in data[:2000].lower() and b"<!doctype" not in data[:200].lower():
             raise SystemExit(f"{name}: {url} did not answer with a web page ({data[:40]!r}); nothing was pinned")
         if name.endswith(".ir") and not data.startswith(b"\x04\xf0IR"):
