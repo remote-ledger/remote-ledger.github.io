@@ -12,7 +12,7 @@ from pathlib import Path
 import pytest
 
 from remote_ledger.errors import ValidationError
-from remote_ledger.official import anthem, arcam, benq, cambridge, cary, classe, cyrus, denon, emotiva, harman, hegel, hitachi, infocus, jvc, kef, lyngdorf, marantz, nad, oppo, rotel, simaudio, yamaha, harman
+from remote_ledger.official import anthem, arcam, benq, peerless, cambridge, cary, classe, cyrus, denon, emotiva, harman, hegel, hitachi, infocus, jvc, kef, lyngdorf, marantz, nad, oppo, rotel, simaudio, yamaha, harman
 from remote_ledger.official import importer as oi
 from remote_ledger.official.common import MANIFEST, Report, load_snapshot
 from remote_ledger.serialize import load
@@ -26,7 +26,7 @@ SNAPSHOT = ROOT / oi.SNAPSHOT
 
 def test_every_document_and_csv_is_the_one_the_manifest_pins():
     for maker, retrieved in (("marantz", "2026-10-08"), ("anthem", "2026-10-08"), ("oppo", "2026-10-09"), ("kef", "2026-10-13"),
-                             ("jvc", "2026-10-13"), ("arcam", "2026-10-13"), ("cambridge", "2026-10-13"), ("hegel", "2026-10-13"), ("cary", "2026-10-13"), ("infocus", "2026-10-15"), ("lyngdorf", "2026-10-16"), ("emotiva", "2026-10-16"), ("denon", "2026-10-16"), ("hitachi", "2026-10-16"), ("classe", "2026-10-16"), ("cyrus", "2026-10-16"), ("yamaha", "2026-10-16"), ("harman", "2026-10-16"), ("benq", "2026-10-18"), ("nad", "2026-10-14"), ("simaudio", "2026-10-13"), ("rotel", "2026-10-13")):
+                             ("jvc", "2026-10-13"), ("arcam", "2026-10-13"), ("cambridge", "2026-10-13"), ("hegel", "2026-10-13"), ("cary", "2026-10-13"), ("infocus", "2026-10-15"), ("lyngdorf", "2026-10-16"), ("emotiva", "2026-10-16"), ("denon", "2026-10-16"), ("hitachi", "2026-10-16"), ("classe", "2026-10-16"), ("cyrus", "2026-10-16"), ("yamaha", "2026-10-16"), ("harman", "2026-10-16"), ("benq", "2026-10-18"), ("peerless", "2026-10-18"), ("nad", "2026-10-14"), ("simaudio", "2026-10-13"), ("rotel", "2026-10-13")):
         snap = load_snapshot(SNAPSHOT / maker)
         assert snap.maker == maker and snap.retrieved == retrieved
         assert snap.documents and snap.sheets
@@ -464,12 +464,12 @@ def test_the_committed_official_import_keeps_r19():
     or Untested, and a citation that names a document the manifest pins, by hash."""
     assert (ROOT / oi.IMPORT_ROOT / "README.md").is_file() and (ROOT / oi.IMPORT_ROOT / oi.REPORT).is_file()
     hashes, dates, snapshots = {}, {}, {}
-    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "benq", "arcam", "cambridge", "hegel", "cary", "infocus", "lyngdorf", "emotiva", "denon", "hitachi", "classe", "cyrus", "yamaha", "harman", "nad", "simaudio", "rotel"):
+    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "benq", "peerless", "arcam", "cambridge", "hegel", "cary", "infocus", "lyngdorf", "emotiva", "denon", "hitachi", "classe", "cyrus", "yamaha", "harman", "nad", "simaudio", "rotel"):
         manifest = json.loads((SNAPSHOT / maker / MANIFEST).read_text(encoding="utf-8"))
         for name, entry in manifest["documents"].items():
             hashes[name], dates[name], snapshots[name] = entry["sha256"], entry.get("retrieved", manifest["retrieved"]), entry.get("snapshot")
     shape = re.compile(r"^(?:marantz\.com archive-downloads|anthemav\.com \(storage\.googleapis\.com/sandbox1-anthemav/an\)"
-                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|infocus\.com IR code PDFs|lyngdorf\.com IR code PDF|emotiva\.com IR code PDFs|denon\.co\.uk RC code list|denon\.com Master IR Hex|snapav\.com Denon IR code documents|hitachi-america\.us IR code documents|classeaudio\.com IR code documents|cyrusaudio\.com remote code tables|snapav\.com Yamaha IR code PDFs|snapav\.com Marantz IR code workbook|jblsynthesis\.com custom installation notes|snapav\.com JVC LX projector code sheets|snapav\.com JVC remote control code tables|snapav\.com BenQ IR code sheet|lexicon\.com custom installation notes|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/([^@]+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
+                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|infocus\.com IR code PDFs|lyngdorf\.com IR code PDF|emotiva\.com IR code PDFs|denon\.co\.uk RC code list|denon\.com Master IR Hex|snapav\.com Denon IR code documents|hitachi-america\.us IR code documents|classeaudio\.com IR code documents|cyrusaudio\.com remote code tables|snapav\.com Yamaha IR code PDFs|snapav\.com Marantz IR code workbook|jblsynthesis\.com custom installation notes|snapav\.com JVC LX projector code sheets|snapav\.com JVC remote control code tables|snapav\.com BenQ IR code sheet|cdn\.shopify\.com Peerless-AV Neptune IR code sheet|lexicon\.com custom installation notes|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/([^@]+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
                        r"(?:, from the Wayback Machine snapshot (\d{14}))?\) (?:sheet '[^']+' row \d+|page \d+ row \d+|page \d+ '|page \d+ table \d+ row '|page \d+ row '|key \d+ '|row 'RC(?:SHP|KSK)\w+' \(|page \d+ table row ')")
     files = sorted((ROOT / oi.IMPORT_ROOT).rglob("*.json"))
     assert len(files) > 180
@@ -3174,6 +3174,61 @@ def test_other_sources_jvc_remotes_hold_74_of_the_93_codes_of_the_fpj_and_leo3_t
             if form.get("device") == "0x73":
                 (new if is_mine else held).add(int(form["function"], 16))
     assert (len(held), len(new), len(new & held), sorted(new - held)) == (218, 93, 74, [0x33, 0x45, 0xCC, 0xD2, 0xD3, 0xDE, 0xE1, 0xE5, 0xE6, 0xE7, 0xE8, 0xE9, 0xEA, 0xEB, 0xEC, 0xF7, 0xF8, 0xF9, 0xFA])
+
+
+# --- Peerless-AV's Neptune IR code sheet (D345, D346) --------------------------------------------------------------------------
+
+
+def neptune_table(*rows: tuple[str, ...], title: str = "IR REMOTE CONTROL CODES Netptune\u2122 Partial Sun & Full Sun Outdoor Smart TVs") -> list[list[str]]:
+    out = [["1", "1", title, "", "", "", "", ""], ["1", "1", "COMMAND", "ENCODING", "DATA", "GROUP", "CODE", "Frequency"]]
+    return out + [["1", "1", *r] for r in rows]
+
+
+def test_a_peerless_sheet_is_a_title_naming_the_neptune_tvs_a_row_for_each_key_and_one_frequency_cell():
+    table = neptune_table(("\u2026", "NEC T/3T-32", "0x6996FB04", "0x04FB", "0x96", "38.1KHz"), ("Power", "NEC T/3T-32", "0xF708FB04", "0x04FB", "0x08", ""),
+                          ("HDMI 1", "NEC T/3T-33", "0X31CEFB04", "0x04FB", "0xCE", ""))
+    got = peerless.parse(table)
+    assert (got.models, got.written, got.carrier_hz) == (("Neptune Partial Sun", "Neptune Full Sun"), "Netptune", 38_100)
+    assert [(r.number, r.command, r.encoding, r.data, r.group, r.code) for r in got.rows] == [
+        (1, "\u2026", "NEC T/3T-32", 0x6996FB04, 0x04FB, 0x96), (2, "Power", "NEC T/3T-32", 0xF708FB04, 0x04FB, 0x08), (3, "HDMI 1", "NEC T/3T-33", 0x31CEFB04, 0x04FB, 0xCE)]
+    with pytest.raises(ValueError, match="does not name the Neptune"):
+        peerless.parse(neptune_table(("Power", "NEC T/3T-32", "0xF708FB04", "0x04FB", "0x08", "38.1KHz"), title="IR REMOTE CONTROL CODES Some TVs"))
+    with pytest.raises(ValueError, match="not hex"):
+        peerless.parse(neptune_table(("Power", "NEC T/3T-32", "F708FB04", "0x04FB", "0x08", "38.1KHz")))
+    with pytest.raises(ValueError, match="not one cell"):
+        peerless.parse(neptune_table(("Power", "NEC T/3T-32", "0xF708FB04", "0x04FB", "0x08", "38.1KHz"), ("Mute", "NEC T/3T-32", "0xF609FB04", "0x04FB", "0x09", "38.1KHz")))
+    with pytest.raises(ValueError, match="no frequency"):
+        peerless.parse(neptune_table(("Power", "NEC T/3T-32", "0xF708FB04", "0x04FB", "0x08", "")))
+
+
+def test_the_two_neptune_files_are_the_sheets_52_nec1_keys_and_the_six_of_another_encoding_are_untested():
+    files = {p.stem: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "peerless").glob("*.json"))}
+    assert sorted(files) == ["Neptune_Full_Sun", "Neptune_Partial_Sun"]
+    for doc in files.values():
+        assert doc["manufacturer"] == "Peerless-AV" and doc["protocol"] == {"name": "NEC1", "carrierHz": 38_100, "minSends": 1} and len(doc["keys"]) == 52
+        assert all((s["forms"][0]["device"], s["forms"][0]["subdevice"]) == ("0x04", "0xFB") for s in doc["keys"].values())
+    assert {s["label"] for s in files["Neptune_Full_Sun"]["keys"].values()} == {s["label"] for s in files["Neptune_Partial_Sun"]["keys"].values()}
+    keys = files["Neptune_Partial_Sun"]["keys"]
+    untested = {s["label"] for s in keys.values() if s["forms"][0]["confidence"] == "untested"}
+    assert untested == {"AV Input", "Discrete Off", "Discrete On", "HDMI 1", "HDMI 2", "HDMI 3"}
+    power = keys["KEY_POWER"]["forms"][0]
+    assert (power["function"], power["confidence"]) == ("0x08", "plausible")
+    assert power["source"].startswith("cdn.shopify.com Peerless-AV Neptune IR code sheet/Remote_Control_Codes_2025_Final.pdf@792422dc (retrieved 2026-10-18) page 1 table row 'No. 40 Power' "
+                                      "(encoding NEC T/3T-32, DATA 0xF708FB04, GROUP 0x04FB, CODE 0x08): NEC1 device 4 subdevice 251 function 8")
+    assert "not NEC T/3T-32, and the sheet does not say how they differ" in keys["KEY_HDMI_1"]["forms"][0]["source"]
+    # every one of the sheet's codes is in other sources' remotes under the same custom code (Vizio's, LG's, HiSense's and Haier's)
+    held: set[int] = set()
+    for path in (ROOT / "remotes").rglob("*.json"):
+        if path.parent.name == "peerless" and path.parent.parent.name == "official":
+            continue
+        other = load(path)
+        if not isinstance(other, dict) or other.get("protocol", {}).get("name") not in ("NEC1", "NEC2", "NECx1"):
+            continue
+        for spec in other["keys"].values():
+            form = spec["forms"][0]
+            if form.get("device") == "0x04" and form.get("subdevice") == "0xFB":
+                held.add(int(form["function"], 16))
+    assert {int(s["forms"][0]["function"], 16) for s in keys.values()} <= held
 
 
 # --- Cyrus ---------------------------------------------------------------------------------------------------------
