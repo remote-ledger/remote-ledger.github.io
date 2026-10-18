@@ -17,8 +17,8 @@ sources have been imported under SPEC R19:
 - **Manufacturers' own IR tables**: Marantz's AV receiver charts, Anthem's IR
   hex sheet, Oppo's remote code workbooks, KEF's IR code sheets, JVC's
   projector guide, Arcam's custom installation notes, two of Cambridge Audio's lists
-  of NEC codes, Hegel's RC-5 tables, Cary Audio's DMS table, InFocus's projector IR code PDFs, Lyngdorf's NEC code table, Emotiva's Pronto hex PDFs, Denon's AVR-4311 remote code list and master IR hex spreadsheet, Hitachi America's TV remote IR codes, Classé's IR code lists and HEX PDFs, Cyrus Audio's RC-5 tables, Yamaha's standard and extended IR code tables, JBL Synthesis's and Lexicon's RC-5 code sets, NAD's T-series IR tables and Crestron IR files, Simaudio's table of IR codes and Rotel's IR hex code PDFs, 830 files, 68,986
-  keys (DESIGN §29, §31, §58, §60, §62, §63, §64, §65, §66, §68, §69, §71, §72, §73, §74, §75, §76, §77, §78, §79, §80, §81, §82, §83, §84, §85, §86, §87, §88, §89; Linn's RC-5 table moved to the private repository, §70).
+  of NEC codes, Hegel's RC-5 tables, Cary Audio's DMS table, InFocus's projector IR code PDFs, Lyngdorf's NEC code table, Emotiva's Pronto hex PDFs, Denon's AVR-4311 remote code list, master IR hex spreadsheet and X-series remote code lists of 2020, Hitachi America's TV remote IR codes, Classé's IR code lists and HEX PDFs, Cyrus Audio's RC-5 tables, Yamaha's standard and extended IR code tables, JBL Synthesis's and Lexicon's RC-5 code sets, NAD's T-series IR tables and Crestron IR files, Simaudio's table of IR codes and Rotel's IR hex code PDFs, 830 files, 68,986
+  keys (DESIGN §29, §31, §58, §60, §62, §63, §64, §65, §66, §68, §69, §71, §72, §73, §74, §75, §76, §77, §78, §79, §80, §81, §82, §83, §84, §85, §86, §87, §88, §89, §90; Linn's RC-5 table moved to the private repository, §70).
 
 SPEC v0.11 makes growing coverage from every source whose licence permits
 it the standing goal, with no fixed list of sources (DESIGN §8, Phase 8).
@@ -85,7 +85,10 @@ Land it in two PRs, code and then data.
       protocols, not IR codes. **Leads of 2026-10-16:** SnapAV's `CD-C600_IR_Commands` (one page of Yamaha's CD player, `Copyright© 2009 YAMAHA CORPORATION`: the
       private repository's, not done; the rest of that folder is read in §87 or is no IR table); **Pioneer's two AV receiver IR workbooks** of 2010 and FY15 (`Copyright (c) Pioneer
       Corporation, all rights reserved`: 131 files in the private repository, its pull request #9, awaiting the owner); the Wayback Machine's index answers a narrow path
-      prefix (`pioneerelectronics.com/StaticFiles/PUSA/Files/Home%20Custom%20Install/`) where a whole host times out. A document is
+      prefix (`pioneerelectronics.com/StaticFiles/PUSA/Files/Home%20Custom%20Install/`) where a whole host times out. **Leads of 2026-10-18** (SnapAV's other folders; §90 reads
+      Denon's X-series lists of the amplifiers folder): `ProjectionScreens/ProtocolsAndDrivers/BenQ_LK952_IR_Codes.pdf` (no notice words; NEC, custom code 0x0030), JVC's `RCU Code of LX-NZ3`,
+      `LX-UH1 Remote Control Codes` and `LX-NZ3 long hex commands` (no notice words; NEC 00 6A and a data code, and the Pronto hex), JVC's `Firmware 3.1 IR Control` and
+      `LEO3_Remote_Control_Codes_Table_ver_1-0` (`(c)`: the private repository's), and the image-only `HT5550_IR_Codes.pdf` (no text layer). A document is
       pinned by hash as D123 does it; a PDF is read as the lines of text of its
       pages (KEF's was the first, D243, JVC's the second, D247), which suits a
       table and not prose. Kaleidescape's PDF says "All rights reserved": a source
