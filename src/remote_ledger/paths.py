@@ -54,6 +54,11 @@ IMPORTS: dict[str, dict[str, str]] = {
         "licence": "none: a table of reference codes",
         "readme": "remotes/jp1/README.md",
     },
+    "remotes/flipper-irdb/": {
+        "name": "Flipper-IRDB (the files added after its CC0 licence)",
+        "licence": "CC0-1.0",
+        "readme": "remotes/flipper-irdb/README.md",
+    },
 }
 
 

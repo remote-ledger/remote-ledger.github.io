@@ -155,8 +155,9 @@ citing it (R19.2).
   that way.
 - Importing, wholesale, any source whose licence does not permit
   republishing it here. That currently rules out IRDB's conditional,
-  revocable permission, Flipper-IRDB files from before its CC0 cutoff,
-  Global Caché and Remote Central. Only the licence excludes them, so the
+  revocable permission, Flipper-IRDB files from before its CC0 cutoff
+  (its files after it are a source: DESIGN §96), Global Caché and Remote
+  Central. Only the licence excludes them, so the
   exclusion ends when the licence changes. Until then, they can still
   inform a single key under R18 and R19, like any other citation. The
   IR Blaster database meets the licence condition by inheritance only

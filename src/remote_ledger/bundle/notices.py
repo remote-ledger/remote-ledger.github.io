@@ -90,6 +90,16 @@ FACTS: dict[str, dict[str, Any]] = {
                 "copyright information remain intact; it is kept whole in sources/official/jvc/. "
                 "Every key cites the document, its checksum and the row.",
     },
+    "flipper-irdb": {
+        "kind": "stated",
+        "licence_file": "LICENSE",
+        "upstream_url": "https://github.com/Lucaslhm/Flipper-IRDB",
+        "readme_sentences": [
+            "CC0-1.0, from 2025-08-07 only: that day the repository added its LICENSE file and a note in its README that a contributor "
+            "agrees to license their work under CC0 (its pull request #960).",
+            "A file that was written or added before it has no licence of its own and is not here (SPEC section 4).",
+        ],
+    },
     "irblaster": {
         "kind": "inherited",
         "licence_file": "LICENSE",

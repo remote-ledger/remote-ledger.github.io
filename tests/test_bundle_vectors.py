@@ -71,7 +71,7 @@ def test_it_covers_every_protocol_family_and_every_source(document):
             "Sharp", "Denon", "JVC", "Pioneer-2Part", "Panasonic", "Proton", "Thomson7", "Aiwa",
             "Blaupunkt", "RCA-38", "RECS80", "RECS80-0068", "F12_relaxed", "SharpDVD", "JVC-48",
             "Fujitsu", "Denon-K", "Teac-K", "(unnamed)", "XMP-1", "XMPff-1"} <= got
-    assert {v["source"] for v in document["vectors"]} == {"authored", "lirc", "smartir", "irblaster", "hifi-remote",
+    assert {v["source"] for v in document["vectors"]} == {"authored", "lirc", "smartir", "irblaster", "hifi-remote", "flipper-irdb",
                                                           "jp1", "official"}
     for protocol in got:
         assert sum(1 for v in document["vectors"] if (v["protocol"] or "(unnamed)") == protocol) >= 1
@@ -142,7 +142,7 @@ def test_a_vector_names_its_key_the_way_the_bundle_does(document):
         assert v["label"] is None or isinstance(v["label"], str)
         assert v["confidence"] in (0, 1, 2, 3) and v["n"] >= 0
         assert v["remote"].split("/")[0] in {"irblaster", "lirc", "smartir", "topping", "meridian",
-                                              "samsung", "sony", "hifi-remote", "jp1", "official"}
+                                              "samsung", "sony", "hifi-remote", "jp1", "official", "flipper-irdb"}
     assert len({(v["remote"], v["n"]) for v in document["vectors"]}) == len(document["vectors"])
 
 
