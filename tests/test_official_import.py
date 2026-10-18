@@ -469,7 +469,7 @@ def test_the_committed_official_import_keeps_r19():
         for name, entry in manifest["documents"].items():
             hashes[name], dates[name], snapshots[name] = entry["sha256"], entry.get("retrieved", manifest["retrieved"]), entry.get("snapshot")
     shape = re.compile(r"^(?:marantz\.com archive-downloads|anthemav\.com \(storage\.googleapis\.com/sandbox1-anthemav/an\)"
-                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|infocus\.com IR code PDFs|lyngdorf\.com IR code PDF|emotiva\.com IR code PDFs|denon\.co\.uk RC code list|denon\.com Master IR Hex|snapav\.com Denon IR code documents|hitachi-america\.us IR code documents|classeaudio\.com IR code documents|cyrusaudio\.com remote code tables|snapav\.com Yamaha IR code PDFs|snapav\.com Marantz IR code workbook|jblsynthesis\.com custom installation notes|snapav\.com JVC LX projector code sheets|snapav\.com BenQ IR code sheet|lexicon\.com custom installation notes|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/([^@]+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
+                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|infocus\.com IR code PDFs|lyngdorf\.com IR code PDF|emotiva\.com IR code PDFs|denon\.co\.uk RC code list|denon\.com Master IR Hex|snapav\.com Denon IR code documents|hitachi-america\.us IR code documents|classeaudio\.com IR code documents|cyrusaudio\.com remote code tables|snapav\.com Yamaha IR code PDFs|snapav\.com Marantz IR code workbook|jblsynthesis\.com custom installation notes|snapav\.com JVC LX projector code sheets|snapav\.com JVC remote control code tables|snapav\.com BenQ IR code sheet|lexicon\.com custom installation notes|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/([^@]+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
                        r"(?:, from the Wayback Machine snapshot (\d{14}))?\) (?:sheet '[^']+' row \d+|page \d+ row \d+|page \d+ '|page \d+ table \d+ row '|page \d+ row '|key \d+ '|row 'RC(?:SHP|KSK)\w+' \(|page \d+ table row ')")
     files = sorted((ROOT / oi.IMPORT_ROOT).rglob("*.json"))
     assert len(files) > 180
@@ -747,7 +747,7 @@ def test_a_jvc_title_is_names_with_the_models_each_applies_to_and_a_note_per_gro
 
 
 def jvc_files() -> dict[str, dict]:
-    return {p.stem: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "jvc").glob("DLA-*.json"))}
+    return {p.stem: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "jvc").glob("DLA-*.json")) if p.stem not in ("DLA-RS1000", "DLA-RS2000", "DLA-RS3000")}
 
 
 def test_the_22_jvc_files_are_the_covers_models_and_the_three_damaged_entries_are_untested():
@@ -3080,6 +3080,100 @@ def test_the_benq_lk952_file_is_the_34_codes_the_model_supports_and_the_96_it_do
     mine = {int(f["function"], 16): l for l, f in by_label.items()}
     assert sum(1 for f in mine if f in held) == 21 and len(mine) == 34
     assert "POWER OFF" in held[0x4E] and "POWERON" in held[0x4F] and "FREEZE" in " ".join(held[0x03]) and "3D" in held[0x8D]
+
+
+
+# --- JVC's 2018 and LEO3 remote control code tables (D343, D344) -------------------------------------------------------------
+
+
+def fpj_pronto(function: int) -> str:
+    """The 2018 table's Pronto hex of a code under the maker code 0x73: the lead-in and the sixteen bits of device 0x73 and the function."""
+    bits = [(0x73 >> i) & 1 for i in range(8)] + [(function >> i) & 1 for i in range(8)]
+    return "0000 006D 0001 0011 0141 00A0 " + " ".join("0014 003C" if b else "0014 0014" for b in bits) + " 0014 035E"
+
+
+def fpj_table(*rows: tuple[str, ...]) -> list[list[str]]:
+    head = ["Update", "Code", "Button", "MH-27G", "Repeat", "DLA-RS3000/NX9 etc.", "DLA-RS2000/NX7 etc.", "CONTENTS", "Type"]
+    return [["1", "1", "2.Operation code", "", "", "Remote Controller", "", "Model", "", "", ""], ["1", "1", *head]] + [["1", "1", "", *r] for r in rows]
+
+
+def fpj_lines(*texts: str) -> list[list[str]]:
+    return [["1", str(100 + 10 * i), "74", t] for i, t in enumerate(texts)]
+
+
+def test_a_jvc_fpj_model_column_is_a_model_and_its_other_name_or_the_platforms_head():
+    assert jvc.fpj_models("DLA-RS3000/NX9 etc.", "ILA-FPJ") == ("DLA-RS3000", ("DLA-NX9",))
+    assert jvc.fpj_models("DLA-RS1000/NX5 etc.", "ILA-FPJ") == ("DLA-RS1000", ("DLA-NX5",))
+    assert jvc.fpj_models("DLA-X5900BE/DLA-N5", "ILA-FPJ") == ("DLA-X5900BE", ("DLA-N5",))
+    assert jvc.fpj_models("ZL", "LEO3") == ("LEO3 ZL", ()) and jvc.fpj_models("P", "LEO3") == ("LEO3 P", ())
+
+
+def test_a_jvc_fpj_table_is_a_code_a_button_and_a_tick_or_dash_for_each_model_and_the_hex_is_decimal_first():
+    table = fpj_table(("01H", "↑", "✓", "✓", "✓", "✓", "UP", "Direct"), ("20H", "LENS.AP /", "-", "-", "✓", "-", "Displays the iris bar", "Gauge"),
+                      ("45H", "Anamorphic(D)*2", "-", "-", "✓", "✓", "Switches Anamorphic D", "Direct"), ("F8H", "Low Latency", "-", "-", "-", "✓", "Change", "Toggle"))
+    lines = fpj_lines("2018 ILA-FPJ Remote Control Codes Table (V1.20)", "1 " + fpj_pronto(1)) + [["1", "300", "74", "(*2)", "127", "This command is not effective for v2.xx."]]
+    got = jvc.parse_fpj(table, lines)
+    assert (got.platform, got.version, got.remote, got.columns) == ("ILA-FPJ", "V1.20", "MH-27G", ("DLA-RS3000/NX9 etc.", "DLA-RS2000/NX7 etc."))
+    assert [(r.code, r.button, r.label, r.mark, r.remote, r.models, r.kind) for r in got.rows] == [
+        (1, "↑", "UP", "", "✓", ("✓", "✓"), "Direct"), (0x20, "LENS.AP /", "LENS.AP", "", "-", ("✓", "-"), "Gauge"),
+        (0x45, "Anamorphic(D)*2", "Anamorphic(D)", "2", "-", ("✓", "✓"), "Direct"), (0xF8, "Low Latency", "Low Latency", "", "-", ("-", "✓"), "Toggle")]
+    assert got.pronto == {1: fpj_pronto(1)} and got.notes == {"2": "This command is not effective for v2.xx."}
+    assert jvc.decode(got.pronto[1]) == (0x73, 1)
+    with pytest.raises(ValueError, match="no title"):
+        jvc.parse_fpj(table, fpj_lines("nothing"))
+    with pytest.raises(ValueError, match="no table with the heads"):
+        jvc.parse_fpj([["1", "1", "x"]], lines)
+    with pytest.raises(ValueError, match="not in order"):
+        jvc.parse_fpj(fpj_table(("02H", "A", "-", "-", "✓", "✓", "a", "Direct"), ("01H", "B", "-", "-", "✓", "✓", "b", "Direct")), lines)
+    with pytest.raises(ValueError, match="two Pronto hex strings"):
+        jvc.parse_fpj(table, lines + fpj_lines("1 " + fpj_pronto(1)))
+
+
+def fpj_files() -> dict[str, dict]:
+    names = ("DLA-RS1000", "DLA-RS2000", "DLA-RS3000", "LEO3_P", "LEO3_ZL", "LEO3_ZM", "LEO3_ZH")
+    return {n: load(ROOT / oi.IMPORT_ROOT / "jvc" / f"{n}.json") for n in names}
+
+
+def test_the_seven_jvc_fpj_and_leo3_files_are_a_file_for_each_model_column_of_the_two_tables():
+    files = fpj_files()
+    assert {n: (f["model"], f["aliases"], len(f["keys"])) for n, f in files.items()} == {
+        "DLA-RS1000": ("DLA-RS1000", ["DLA-NX5"], 71), "DLA-RS2000": ("DLA-RS2000", ["DLA-NX7"], 74), "DLA-RS3000": ("DLA-RS3000", ["DLA-NX9"], 75),
+        "LEO3_P": ("LEO3 P", [], 89), "LEO3_ZL": ("LEO3 ZL", [], 89), "LEO3_ZM": ("LEO3 ZM", [], 92), "LEO3_ZH": ("LEO3 ZH", [], 92)}
+    assert files["DLA-RS3000"]["controls"] == ["JVC DLA-RS3000", "JVC DLA-NX9"]
+    for f in files.values():
+        assert f["manufacturer"] == "JVC" and f["protocol"] == {"name": "JVC", "carrierHz": 37900, "minSends": 1}
+        for spec in f["keys"].values():
+            (form,) = spec["forms"]
+            assert form["device"] == "0x73" and "subdevice" not in form and form["confidence"] == "plausible"
+    rs3000 = files["DLA-RS3000"]["keys"]
+    assert {s["label"]: s["forms"][0]["function"] for s in rs3000.values() if s["label"] in ("UP", "ON", "STAND BY", "Anamorphic(C)", "Low Latency", "LENS.AP", "RIGHT", "LEFT")} == {
+        "UP": "0x01", "ON": "0x05", "STAND BY": "0x06", "Anamorphic(C)": "0x33", "Low Latency": "0xF8", "LENS.AP": "0x20", "RIGHT": "0x34", "LEFT": "0x36"}
+    low = rs3000["KEY_LOW_LATENCY"]["forms"][0]["source"]
+    assert low.startswith("snapav.com JVC remote control code tables/Firmware 3.1 IR Control.pdf@c22cdd16 (retrieved 2026-10-18, from the Wayback Machine snapshot 20220522043523) "
+                          "page 1 table row 'F8H Low Latency' (on the remote MH-27G: -, repeat: -, type Toggle; the table says 'Change of \"Low Latency mode\"')")
+    assert low.endswith("JVC device 115 function 248, maker code 73H (Code A); the table's Pronto hex decodes to the same")
+    assert all("the table's Pronto hex decodes to the same" in s["forms"][0]["source"] for n in ("DLA-RS1000", "DLA-RS2000", "DLA-RS3000") for s in files[n]["keys"].values())
+    assert not any("Pronto" in s["forms"][0]["source"] for n in ("LEO3_P", "LEO3_ZH") for s in files[n]["keys"].values())      # the LEO3 table has no hex
+    assert "(2)" in files["DLA-RS3000"]["keys"]["KEY_ANAMORPHIC_D"]["forms"][0]["source"] and "not effective for v2.xx" in files["DLA-RS3000"]["keys"]["KEY_ANAMORPHIC_D"]["forms"][0]["source"]
+    # the model groups differ by their columns: the P has no FILM, the Z ones have it (and the dashes are reported)
+    assert {s["label"] for s in files["LEO3_ZH"]["keys"].values()} - {s["label"] for s in files["LEO3_P"]["keys"].values()} == {
+        "FILM", "Solenoid(Normal) / C.FILTER(Normal)", "Solenoid(Wide) / C.FILTER(Wide)"}
+
+
+def test_other_sources_jvc_remotes_hold_74_of_the_93_codes_of_the_fpj_and_leo3_tables_and_19_are_new():
+    mine = {n for n in fpj_files()}
+    held: set[int] = set()
+    new: set[int] = set()
+    for path in (ROOT / "remotes").rglob("*.json"):
+        doc = load(path)
+        if not isinstance(doc, dict) or doc.get("protocol", {}).get("name") != "JVC":
+            continue
+        is_mine = path.parent.name == "jvc" and path.parent.parent.name == "official" and path.stem in mine
+        for spec in doc["keys"].values():
+            form = spec["forms"][0]
+            if form.get("device") == "0x73":
+                (new if is_mine else held).add(int(form["function"], 16))
+    assert (len(held), len(new), len(new & held), sorted(new - held)) == (218, 93, 74, [0x33, 0x45, 0xCC, 0xD2, 0xD3, 0xDE, 0xE1, 0xE5, 0xE6, 0xE7, 0xE8, 0xE9, 0xEA, 0xEB, 0xEC, 0xF7, 0xF8, 0xF9, 0xFA])
 
 
 # --- Cyrus ---------------------------------------------------------------------------------------------------------

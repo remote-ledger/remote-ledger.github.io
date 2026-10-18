@@ -15,6 +15,11 @@ protocols-and-drivers folder for projection screens, and a third PDF of the LX-N
 (the frame's four bytes: the custom code ``00`` the device, its second byte ``6A`` the subdevice, which is not the device's complement, the data code the function and
 its complement), a file for each of the two products, **at 38.4 kHz: the long hex's frequency word is 0x006C, and the UH1's sheet gives none (read as the NZ3's)**. The long hex is
 decoded and must say the table's code (JVC's own check, as the guide's is); a data code whose complement is not the table's makes the key Untested.
+
+**The 2018 and LEO3 code tables (DESIGN section 92)** are JVC's remote control code tables of two later projector platforms (``2018 ILA-FPJ Remote Control Codes Table
+(V1.20)``, the SnapAV copy with a Pronto hex for each code, and ``LEO3 Remote Control Codes Table (ver 1.0)``): a table of **the operation codes of the ``JVC`` protocol under the
+maker code 73H (Code A: the guide's device 115)**, a row for each (``01H``, the button, ``UP``, the type ``Direct`` or ``Toggle``) and a column of ticks for each model group, so a
+file for each model group a column names. A tick is the model's key; a dash is a code the model does not take. The 2018 table's Pronto hex is decoded and must say the code.
 """
 
 from __future__ import annotations
@@ -501,4 +506,165 @@ def build_lx(snapshot: Snapshot, authored: dict[tuple[str, str], str], report: R
 
 
 def build(snapshot: Snapshot, authored: dict[tuple[str, str], str], report: Report) -> list[tuple[str, dict[str, Any]]]:
-    return build_guide(snapshot, authored, report) + build_lx(snapshot, authored, report)
+    return build_guide(snapshot, authored, report) + build_lx(snapshot, authored, report) + build_fpj(snapshot, authored, report)
+
+
+# --- the 2018 and LEO3 code tables ---------------------------------------------------------------------------------------
+
+FPJ_HOST = "snapav.com JVC remote control code tables"
+
+
+@dataclass(frozen=True)
+class FpjDocument:
+    file: str
+    pronto: bool                    # the table has a Pronto hex for each code (the 2018 table)
+
+
+FPJ_DOCUMENTS: tuple[FpjDocument, ...] = (
+    FpjDocument("Firmware 3.1 IR Control.pdf", True),
+    FpjDocument("LEO3_Remote_Control_Codes_Table_ver_1-0.pdf", False),
+)
+_FPJ_TITLE = re.compile(r"^(?:\d{4} )?(\S+)\s+Remote Control Codes Table \((.+)\)$")
+_FPJ_CODE = re.compile(r"^([0-9A-F]{2})H$")
+_FPJ_DECIMAL = re.compile(r"^(\d+) (0000(?: [0-9A-Fa-f]{4})+)$")
+_FPJ_ARROWS = {"\u2191": "UP", "\u2193": "DOWN", "\u2192": "RIGHT", "\u2190": "LEFT"}
+_FPJ_NOTE = re.compile(r"\*(\d)$")
+_FPJ_FOOT = re.compile(r"^\(\*(\d)\)$")
+
+
+@dataclass(frozen=True)
+class FpjRow:
+    page: int
+    code: int
+    button: str                     # as the table writes it
+    label: str                      # an arrow is its word and a footnote mark is gone
+    mark: str                       # the footnote's number, or ``""``
+    remote: str                     # the tick or dash of the remote's column (``""`` when empty)
+    repeat: str
+    models: tuple[str, ...]         # the ticks and dashes of the model columns
+    contents: str
+    kind: str                       # ``Direct``, ``Toggle``, ``Gauge`` (the 2018 table; empty in the LEO3's)
+
+
+@dataclass(frozen=True)
+class FpjTable:
+    platform: str                   # ``ILA-FPJ``, ``LEO3``
+    version: str                    # ``V1.20``
+    remote: str                     # the remote's column: ``MH-27G``
+    columns: tuple[str, ...]        # the model columns' heads
+    rows: tuple[FpjRow, ...]
+    pronto: dict[int, str]          # decimal function -> the Pronto text (the 2018 table)
+    notes: dict[str, str]           # footnote number -> its text
+
+
+def fpj_models(column: str, platform: str) -> tuple[str, tuple[str, ...]]:
+    """``(the model, its other names)`` of a model column: ``DLA-RS3000/NX9 etc.`` is the DLA-RS3000 and its other name DLA-NX9 (a name after the slash takes the
+    first's prefix up to the dash), and a head that is no model (``ZL``) is the platform's: ``LEO3 ZL``."""
+    head = column.replace(" etc.", "").strip()
+    if head.startswith("DLA-"):
+        first, *others = [part.strip() for part in head.split("/")]
+        prefix = first[:first.index("-") + 1]
+        return first, tuple(o if o.startswith("DLA-") else prefix + o for o in others)
+    return f"{platform} {head}", ()
+
+
+def parse_fpj(tables: list[list[str]], lines: list[list[str]]) -> FpjTable:
+    """The table of a code table PDF's ``tables`` (``page, table, cells``: a row is ``Update, Code, Button, <remote>, Repeat, <models>, CONTENTS`` and, in the 2018
+    table, ``Type``) and its ``lines`` (``page, y, x, text...``: the title, the decimal and Pronto hex of each code and the footnotes)."""
+    title = next((m for row in lines for text in row[3::2] if (m := _FPJ_TITLE.match(" ".join(text.split())))), None)
+    if title is None:
+        raise ValueError("no title 'Remote Control Codes Table (version)'")
+    head: list[str] | None = None
+    rows: list[FpjRow] = []
+    for row in tables:
+        cells = [" ".join(c.split()) for c in row[2:]]
+        if "Code" in cells and "Button" in cells and "CONTENTS" in cells:
+            head = cells
+            continue
+        if head is None or len(cells) != len(head) or not (m := _FPJ_CODE.match(cells[head.index("Code")])):
+            continue
+        button = cells[head.index("Button")]
+        mark = _FPJ_NOTE.search(button)
+        label = _FPJ_ARROWS.get(button, button)
+        label = re.sub(r"\s*/\s*$", "", _FPJ_NOTE.sub("", label).strip())            # ``LENS.AP /``: a name the table cuts at the slash
+        first, last = head.index("Button") + 1, head.index("CONTENTS")
+        rows.append(FpjRow(int(row[0]), int(m.group(1), 16), button, " ".join(label.split()), mark.group(1) if mark else "", cells[first], cells[first + 1],
+                           tuple(cells[first + 2:last]), cells[last], cells[last + 1] if "Type" in head else ""))
+    if head is None or not rows:
+        raise ValueError("no table with the heads Update, Code, Button and CONTENTS")
+    codes = [r.code for r in rows]
+    if codes != sorted(set(codes)):
+        raise ValueError(f"the operation codes are not in order and each once: {[hex(c) for c in codes]}")
+    first = head.index("Button") + 1
+    pronto: dict[int, str] = {}
+    for row in lines:
+        for text in row[3::2]:
+            if m := _FPJ_DECIMAL.match(" ".join(text.split())):
+                if int(m.group(1)) in pronto:
+                    raise ValueError(f"the decimal {m.group(1)} has two Pronto hex strings")
+                pronto[int(m.group(1))] = m.group(2)
+    notes: dict[str, str] = {}
+    last_note: str | None = None
+    for row in lines:
+        cells = row[3::2]
+        if cells and (m := _FPJ_FOOT.match(cells[0])):
+            last_note = m.group(1)
+            notes[last_note] = " ".join(cells[1:]).strip()
+        elif cells and last_note and cells[0].startswith("- "):
+            notes[last_note] += " " + cells[0]
+    return FpjTable(title.group(1), title.group(2), head[first], tuple(head[first + 2:head.index("CONTENTS")]), tuple(rows), pronto, notes)
+
+
+def build_fpj(snapshot: Snapshot, authored: dict[tuple[str, str], str], report: Report) -> list[tuple[str, dict[str, Any]]]:
+    gate: dict[int, str | None] = {}
+    out: list[tuple[str, dict[str, Any]]] = []
+    for document in FPJ_DOCUMENTS:
+        table = parse_fpj(snapshot.sheet_of(document.file, "tables"), snapshot.sheet_of(document.file, "lines"))
+        entry, sha = snapshot.documents[document.file], snapshot.sha(document.file)
+        prefix = f"{FPJ_HOST}/{document.file}@{sha} (retrieved {entry.get('retrieved', snapshot.retrieved)}, from the Wayback Machine snapshot {entry['snapshot']})"
+        report.count(MAKER, f"{document.file}: codes read", len(table.rows))
+        if document.pronto:
+            report.count(MAKER, f"{document.file}: Pronto hex strings read", len(table.pronto))
+        for column, ticks in zip(table.columns, range(len(table.columns))):
+            model, others = fpj_models(column, table.platform)
+            members: list[tuple[str, dict[str, Any]]] = []
+            for row in table.rows:
+                if row.models[ticks] != "\u2713":
+                    if row.models[ticks] not in ("-", ""):
+                        report.notes.append((MAKER, f"{document.file} page {row.page}", f"'{row.button}': the cell of {column} is '{row.models[ticks]}', not a tick or a dash"))
+                    report.unrepresented[(MAKER, document.file, "a code the model's column marks with a dash (the model does not take it)")] += 1
+                    continue
+                if row.code not in gate:
+                    gate[row.code] = form_compiles(IMPORT_ROOT, PROTOCOL, "K", {"id": "primary.irp", "type": "irp", "device": 115, "function": row.code, "confidence": TIER, "source": "probe"})
+                if gate[row.code]:
+                    report.unrepresented[(MAKER, document.file, f"does not compile: {gate[row.code]}")] += 1
+                    continue
+                cite = (f"{prefix} page {row.page} table row '{row.code:02X}H {row.button}' (on the remote {table.remote}: {row.remote or 'no cell'}, repeat: {row.repeat or 'no cell'}"
+                        + (f", type {row.kind}" if row.kind else "") + f"; the table says '{row.contents}'): JVC device 115 function {row.code}, maker code 73H (Code A)")
+                doubts: list[str] = []
+                if document.pronto:
+                    text = table.pronto.get(row.code)
+                    said = decode(text) if text else "the table has no Pronto hex for this code"
+                    if said == (115, row.code):
+                        cite += "; the table's Pronto hex decodes to the same"
+                    else:
+                        doubts.append("the table's Pronto hex does not say it (" + (said if isinstance(said, str) else f"it says device {said[0]}, function {said[1]}") + "), so the key rests on the code alone")
+                if row.mark:
+                    cite += f"; its name carries the note ({row.mark}): {table.notes.get(row.mark, 'not found in the table')}"
+                for d in doubts:
+                    report.notes.append((MAKER, f"{document.file} page {row.page}", f"'{row.button}': {d}"))
+                cite += "".join("; " + d for d in doubts)
+                members.append((row.label, {"id": "primary.irp", "type": "irp", "device": 115, "function": row.code,
+                                            "confidence": DOUBTFUL_TIER if doubts else TIER, "source": cite}))
+            name = model
+            while (BRAND.casefold(), name.casefold()) in authored:
+                renamed = f"{name} (JVC table)"
+                report.notes.append((MAKER, name, f"kept as '{renamed}': the ledger's {authored[(BRAND.casefold(), name.casefold())]} has the name (R15)"))
+                name = renamed
+            keys = {n: {"label": m[0], "forms": [m[1]]} for n, m in zip(key_names([m[0] for m in members]), members)}
+            report.count(MAKER, "files")
+            report.count(MAKER, "keys", len(keys))
+            out.append((f"{IMPORT_ROOT}/{MAKER}/{slug(name)}.json",
+                        {"manufacturer": BRAND, "model": name, "aliases": list(others), "controls": [f"{BRAND} {n}" for n in (model, *others)],
+                         "protocol": dict(PROTOCOL), "keys": keys}))
+    return out

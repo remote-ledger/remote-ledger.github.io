@@ -43,7 +43,7 @@ SHEETS = {
     },
     "anthem": {"AVM-MRXx40-IR-hex-20251202185749500.xlsx": ["MRX x10-x40 remote layout", "MRX x10-x40 IR hex codes"]},
     "jvc": {"DILA_Remote_Code_Emulation_Long_Hex.pdf": ["pages"], "RCU Code of LX-NZ3_20191114.pdf": ["tables", "pages"], "LX-UH1 Remote Control Codes.pdf": ["tables"],
-            "LX-NZ3 long hex commands.pdf": ["pages"]},
+            "LX-NZ3 long hex commands.pdf": ["pages"], "Firmware 3.1 IR Control.pdf": ["tables", "lines"], "LEO3_Remote_Control_Codes_Table_ver_1-0.pdf": ["tables", "lines"]},
     "benq": {"BenQ_LK952_IR_Codes.pdf": ["tables"]},
     "arcam": {
         "AVR380-450-750_RS232_SH256E_2.pdf": ["tables"],
