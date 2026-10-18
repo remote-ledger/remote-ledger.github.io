@@ -249,6 +249,15 @@ DOCUMENTS = {
         *[(name, WB + stamp + "id_/https://www.snapav.com/wcsstore/ExtendedSitesCatalogAssetStore/attachments/documents/Amplifiers/ProtocolsAndDrivers/" + name, None)
           for name, stamp in (("AVR-X2700H_S960H_IR_CODE_V01.doc", "20220727164119"), ("AVR-X3700H_AVC-X3700H_IR_CODE_V01_04062020.doc", "20220727164117"),
                               ("AVR-X4700H_AVC-X4700H_IR_CODE_V01.doc", "20220727192357"), ("AVR-X6700H_AVC-X6700H_IR_CODE_V01.doc", "20220727175013"))],
+        # the per-model remote code lists of 2003 to 2013 (DESIGN section 94): live files on Denon's own asset host (the 2008 and later lists that say CONFIDENTIAL on their pages are the
+        # private repository's)
+        *[(name, "https://assets.denon.com/documentmaster/" + folder + "/" + name, None)
+          for folder, name in (("us", "avr-2106-ircodes.pdf"), ("us", "avr-2805-ircodes.pdf"), ("us", "avr-2807-ircodes.pdf"), ("fr", "avr-2808_ir_code.pdf"), ("us", "avr-3803-ircodes.pdf"),
+                               ("us", "avr-3808ci-ircodes.pdf"), ("us", "avr-4308ci_ircodes.pdf"), ("us", "avr-4806-ircodes.pdf"), ("us", "avr-5805-ircodes.pdf"),
+                               ("us", "avr-5805ci_5805up_ir_codes.pdf"), ("us", "avr987-ircodes.pdf"), ("de", "417_avr3310_ir_code.pdf"), ("de", "457_avr3311ci_avr3311_991_ir_code_v01.pdf"),
+                               ("fr", "avr-1911_791_ir_code_v01.pdf"), ("fr", "avr-2311ci_avr2311_891_ir_code_v01.pdf"), ("fr", "avr-4310_ir_code_v01.pdf"), ("fr", "avr2809_ir_code_v01.pdf"),
+                               ("fr", "avr2309_ir_code_v01.pdf"), ("de", "avr2113_1913_ir_code_v02.pdf"), ("de", "avr2313_ir_code_v02.pdf"), ("de", "avr3313_ir_code_v02.pdf"),
+                               ("de", "avr4520_ir_code_v02.pdf"), ("fr", "avr3312_ir_code_v01.pdf"), ("fr", "avr2312_ir_code_v01.pdf"))],
     ],
     # Hitachi America's remote IR code documents for its televisions (DESIGN section 82): its site no longer serves them, so the Wayback Machine's copies
     # (the two RS-232 specifications and the Roll-and-Click page, which has names and no codes, are not IR code tables and are not pinned).

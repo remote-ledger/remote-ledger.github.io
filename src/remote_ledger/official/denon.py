@@ -209,6 +209,16 @@ class KRow:
         return (self.device << 4) ^ self.subdevice ^ ((f << 4) & 0xFF) ^ ((f >> 4) & 0xFF)
 
 
+def copied_zone(device: int, subdevice: int, function: int, parity: int) -> int | None:
+    """The GENRE2 (1, 3, 5 or 7: the main zone, zone 2, zone 3, zone 4) of another table whose parity byte a row's is, or ``None``. **A zone's table is copied from another's
+    and keeps that table's parity byte** (§94: the rows the other sources' remotes hold agree in their data bits with the copy's, and only the byte is the other table's), so
+    a row whose byte is another zone's has its data bits read as they are and is not doubted for it."""
+    for g in (1, 3, 5, 7):
+        if g != subdevice and parity == (device << 4) ^ g ^ ((function << 4) & 0xFF) ^ ((function >> 4) & 0xFF):
+            return g
+    return None
+
+
 @dataclass
 class Line:
     page: int
@@ -377,9 +387,14 @@ def build_pdf(snapshot: Snapshot, authored: dict[tuple[str, str], str], report: 
                         member = Member(alt.label, (row.device, row.subdevice, row.function),
                                         {"device": row.device, "subdevice": row.subdevice, "function": row.function}, cite, row.group)
                         if row.computed_parity() != row.parity:
-                            member.doubts.append(f"the document's parity byte {row.bits[12:20]} (0x{row.parity:02X}) is not 0x{row.computed_parity():02X}, which its data "
-                                                 "bits give (the exclusive or of the 3rd, 4th and 5th bytes): the data bits are read and the parity byte is not")
-                            report.count(MAKER, "parity bytes that disagree")
+                            copied = copied_zone(row.device, row.subdevice, row.function, row.parity)
+                            if copied is None:
+                                member.doubts.append(f"the document's parity byte {row.bits[12:20]} (0x{row.parity:02X}) is not 0x{row.computed_parity():02X}, which its data "
+                                                     "bits give (the exclusive or of the 3rd, 4th and 5th bytes): the data bits are read and the parity byte is not")
+                                report.count(MAKER, "parity bytes that disagree")
+                            else:
+                                member.cite += f"; the document's parity byte is the one GENRE2 {copied} gives, not this table's (a table copied from another's)"
+                                report.count(MAKER, "parity bytes of another zone's table")
                         members.append(member)
                         report.count(MAKER, "kaseikyo rows read")
             if not members:
@@ -672,6 +687,9 @@ class DocRow:
     function: int
     number: int                    # the row's number its identifier gives
     note: str = ""                 # what the citation says besides the row (a header that is not the table's)
+    page: int = 0                  # the page of a PDF the row is on (0: a Word document, whose rows are cited by their identifiers)
+    how: str = ""                  # a PDF's row's citation, from its bits on (the list's rows have no identifier of their own)
+    doubt: str = ""                # what makes the key Untested besides a number that is not its bits' value
 
 
 @dataclass
@@ -767,6 +785,103 @@ def parse_doc(rows: list[list[str]], models: tuple[str, ...]) -> list[DocRow]:
     return out
 
 
+def emit_rows(file: str, where: str, rows: list[DocRow], models: tuple[str, ...], authored: dict[tuple[str, str], str], report: Report,
+              gate: dict[tuple, str | None], aliases: dict[str, tuple[str, ...]] | None = None) -> list[tuple[str, dict[str, Any]]]:
+    """The files of a document's rows: a Sharp and a Kaseikyo file for each model, the keys of the rows (and names) that are for it."""
+    out: list[tuple[str, dict[str, Any]]] = []
+    report.count(MAKER, f"{file}: key rows read", len(rows))
+    report.count(MAKER, f"{file}: rows left unnamed (a code the list leaves free: no key)", sum(1 for r in rows if not r.names))
+    for model in models:
+        for kind, protocol in (("sharp", SHARP), ("kaseikyo", KASEIKYO)):
+            members: list[Member] = []
+            again: dict[tuple, list[str]] = {}
+            for row in rows:
+                if row.kind != kind:
+                    continue
+                for label, kept in row.names:
+                    if model not in kept:
+                        continue
+                    if kind == "sharp":
+                        code, fields = (row.device, row.function), {"device": row.device, "function": row.function}
+                        agrees = value(row.bits) == row.number
+                        if row.how:
+                            cite = f"{where} page {row.page} table row '{row.ident}' ('{row.printed}', {row.how}"
+                        else:
+                            cite = (f"{where} row '{row.ident}' ('{row.printed}', system address {row.table.split()[0]}, extension bits {row.table.split()[1]}, data {row.bits}): "
+                                    f"Denon device {row.device} function {row.function}, each field first bit first, the extension bits above the data")
+                    else:
+                        code, fields = (row.device, row.subdevice, row.function), {"device": row.device, "subdevice": row.subdevice, "function": row.function}
+                        agrees = row.function == row.number
+                        if row.how:
+                            cite = f"{where} page {row.page} table row '{row.ident}' ('{row.printed}', {row.how}"
+                        else:
+                            cite = (f"{where} row '{row.ident}' ('{row.printed}', {row.table} : {row.group}, bits 29 to 38 {row.bits}, the ID and parity bits '*'): Denon-K device "
+                                    f"{row.device} subdevice {row.subdevice} function {row.function}, GENRE1, GENRE2 and the data each first bit first, the ID bits 0 as for remote ID 1")
+                        if row.note:
+                            cite += "; " + row.note
+                    if (protocol["name"], code) not in gate:
+                        gate[(protocol["name"], code)] = form_compiles(IMPORT_ROOT, protocol, "K", {"id": "primary.irp", "type": "irp", **fields, "confidence": TIER, "source": "probe"})
+                    if gate[(protocol["name"], code)]:
+                        report.unrepresented[(MAKER, file, f"does not compile: {gate[(protocol['name'], code)]}")] += 1
+                        continue
+                    if row.how and row.group:                                  # a PDF's group title (``ZONE3 (Except AVR991)``): its marks are the models' (§94)
+                        from .denon_pdf import pdf_marks
+                        table = pdf_marks(row.group, models, {})[0]
+                    else:
+                        table = re.sub(r"\s*\([A-Z/]+ only\)$", "", marks_of(row.group, models)[0]) if row.group else row.table
+                    member = Member(label, code, fields, cite, table)
+                    if not agrees:
+                        member.doubts.append(f"the row's identifier gives the number {row.number} and its bits the value {value(row.bits) if kind == 'sharp' else row.function}, "
+                                             "which are not one function: the bits are read and the number is not")
+                        if model == models[0]:
+                            report.count(MAKER, "rows whose number and bits disagree")
+                    if row.doubt:
+                        member.doubts.append(row.doubt)
+                        if model == models[0]:
+                            report.count(MAKER, "rows with a doubt of their own")
+                    again.setdefault((code, label), []).append(row.ident)
+                    if len(again[(code, label)]) > 1:
+                        first = next(m for m in members if (m.code, m.label) == (code, label))
+                        first.cite += f"; the document gives the same name to the same code again in the row '{row.ident}'" + (f" of the group '{row.group}'" if row.group else "")
+                        continue
+                    members.append(member)
+                    report.count(MAKER, f"{kind} rows read")
+            if not members:
+                continue
+            labels_of: dict[tuple, list[str]] = {}
+            for m in members:
+                labels_of.setdefault(m.code, []).append(m.label)
+            seen_labels: dict[str, str] = {}
+            final: list[tuple[str, dict[str, Any]]] = []
+            for m in members:
+                label = m.label
+                if label in seen_labels and seen_labels[label] != m.table:
+                    label = f"{label} ({m.table})"
+                seen_labels.setdefault(label, m.table)
+                doubts = list(m.doubts)
+                if len(labels_of[m.code]) > 1:
+                    doubts.append("the document gives this code to " + " and ".join(f"'{n}'" for n in labels_of[m.code]) + ", and a code is one function")
+                final.append((label, {"id": "primary.irp", "type": "irp", **m.fields, "confidence": DOUBTFUL_TIER if doubts else TIER,
+                                      "source": m.cite + ("; " + "; ".join(doubts) if doubts else "")}))
+            name = model if kind == "sharp" else f"{model} (Kaseikyo)"
+            while (BRAND.casefold(), name.casefold()) in authored:
+                renamed = f"{name} (Denon table)"
+                report.notes.append((MAKER, name, f"kept as '{renamed}': the ledger's {authored[(BRAND.casefold(), name.casefold())]} has the name (R15)"))
+                name = renamed
+            keys = {n: {"label": f[0], "forms": [f[1]]} for n, f in zip(key_names([f[0] for f in final]), final)}
+            report.count(MAKER, "files")
+            report.count(MAKER, "keys", len(keys))
+            # a name is claimed by one file of the maker (R15): the model's other names are the Sharp file's aliases (and every file's controls), unless the ledger has the name
+            named = [a for a in (aliases or {}).get(model, ()) if kind == "sharp" and (BRAND.casefold(), a.casefold()) not in authored]
+            for a in (aliases or {}).get(model, ()):
+                if kind == "sharp" and a not in named:
+                    report.notes.append((MAKER, a, f"kept as a control of '{name}' and no alias: the ledger's {authored[(BRAND.casefold(), a.casefold())]} has the name (R15)"))
+            out.append((f"{IMPORT_ROOT}/{MAKER}/{slug(name)}.json",
+                        {"manufacturer": BRAND, "model": name, "aliases": named, "controls": [f"{BRAND} {n}" for n in (model, *(aliases or {}).get(model, ()))],
+                         "protocol": dict(protocol), "keys": keys}))
+    return out
+
+
 def build_docs(snapshot: Snapshot, authored: dict[tuple[str, str], str], report: Report) -> list[tuple[str, dict[str, Any]]]:
     gate: dict[tuple, str | None] = {}
     out: list[tuple[str, dict[str, Any]]] = []
@@ -774,76 +889,11 @@ def build_docs(snapshot: Snapshot, authored: dict[tuple[str, str], str], report:
         rows = parse_doc(snapshot.sheet_of(document.file, "paragraphs"), document.models)
         entry, sha = snapshot.documents[document.file], snapshot.sha(document.file)
         where = f"{DOC_HOST}/{document.file}@{sha} (retrieved {entry.get('retrieved', snapshot.retrieved)}, from the Wayback Machine snapshot {entry['snapshot']})"
-        report.count(MAKER, f"{document.file}: key rows read", len(rows))
-        for model in document.models:
-            for kind, protocol in (("sharp", SHARP), ("kaseikyo", KASEIKYO)):
-                members: list[Member] = []
-                again: dict[tuple, list[str]] = {}
-                for row in rows:
-                    if row.kind != kind:
-                        continue
-                    for label, kept in row.names:
-                        if model not in kept:
-                            continue
-                        if kind == "sharp":
-                            code, fields = (row.device, row.function), {"device": row.device, "function": row.function}
-                            cite = (f"{where} row '{row.ident}' ('{row.printed}', system address {row.table.split()[0]}, extension bits {row.table.split()[1]}, data {row.bits}): "
-                                    f"Denon device {row.device} function {row.function}, each field first bit first, the extension bits above the data")
-                            agrees = value(row.bits) == row.number
-                        else:
-                            code, fields = (row.device, row.subdevice, row.function), {"device": row.device, "subdevice": row.subdevice, "function": row.function}
-                            cite = (f"{where} row '{row.ident}' ('{row.printed}', {row.table} : {row.group}, bits 29 to 38 {row.bits}, the ID and parity bits '*'): Denon-K device "
-                                    f"{row.device} subdevice {row.subdevice} function {row.function}, GENRE1, GENRE2 and the data each first bit first, the ID bits 0 as for remote ID 1")
-                            agrees = row.function == row.number
-                            if row.note:
-                                cite += "; " + row.note
-                        if (protocol["name"], code) not in gate:
-                            gate[(protocol["name"], code)] = form_compiles(IMPORT_ROOT, protocol, "K", {"id": "primary.irp", "type": "irp", **fields, "confidence": TIER, "source": "probe"})
-                        if gate[(protocol["name"], code)]:
-                            report.unrepresented[(MAKER, document.file, f"does not compile: {gate[(protocol['name'], code)]}")] += 1
-                            continue
-                        member = Member(label, code, fields, cite, re.sub(r"\s*\([A-Z/]+ only\)$", "", marks_of(row.group, document.models)[0]) if row.group else row.table)
-                        if not agrees:
-                            member.doubts.append(f"the row's identifier gives the number {row.number} and its bits the value {value(row.bits) if kind == 'sharp' else row.function}, "
-                                                 "which are not one function: the bits are read and the number is not")
-                            if model == document.models[0]:
-                                report.count(MAKER, "rows whose number and bits disagree")
-                        again.setdefault((code, label), []).append(row.ident)
-                        if len(again[(code, label)]) > 1:
-                            first = next(m for m in members if (m.code, m.label) == (code, label))
-                            first.cite += f"; the document gives the same name to the same code again in the row '{row.ident}'" + (f" of the group '{row.group}'" if row.group else "")
-                            continue
-                        members.append(member)
-                        report.count(MAKER, f"{kind} rows read")
-                if not members:
-                    continue
-                labels_of: dict[tuple, list[str]] = {}
-                for m in members:
-                    labels_of.setdefault(m.code, []).append(m.label)
-                seen_labels: dict[str, str] = {}
-                final: list[tuple[str, dict[str, Any]]] = []
-                for m in members:
-                    label = m.label
-                    if label in seen_labels and seen_labels[label] != m.table:
-                        label = f"{label} ({m.table})"
-                    seen_labels.setdefault(label, m.table)
-                    doubts = list(m.doubts)
-                    if len(labels_of[m.code]) > 1:
-                        doubts.append("the document gives this code to " + " and ".join(f"'{n}'" for n in labels_of[m.code]) + ", and a code is one function")
-                    final.append((label, {"id": "primary.irp", "type": "irp", **m.fields, "confidence": DOUBTFUL_TIER if doubts else TIER,
-                                          "source": m.cite + ("; " + "; ".join(doubts) if doubts else "")}))
-                name = model if kind == "sharp" else f"{model} (Kaseikyo)"
-                while (BRAND.casefold(), name.casefold()) in authored:
-                    renamed = f"{name} (Denon table)"
-                    report.notes.append((MAKER, name, f"kept as '{renamed}': the ledger's {authored[(BRAND.casefold(), name.casefold())]} has the name (R15)"))
-                    name = renamed
-                keys = {n: {"label": f[0], "forms": [f[1]]} for n, f in zip(key_names([f[0] for f in final]), final)}
-                report.count(MAKER, "files")
-                report.count(MAKER, "keys", len(keys))
-                out.append((f"{IMPORT_ROOT}/{MAKER}/{slug(name)}.json",
-                            {"manufacturer": BRAND, "model": name, "aliases": [], "controls": [f"{BRAND} {model}"], "protocol": dict(protocol), "keys": keys}))
+        out += emit_rows(document.file, where, rows, document.models, authored, report, gate)
     return out
 
 
 def build(snapshot: Snapshot, authored: dict[tuple[str, str], str], report: Report) -> list[tuple[str, dict[str, Any]]]:
-    return build_pdf(snapshot, authored, report) + build_master(snapshot, authored, report) + build_docs(snapshot, authored, report)
+    from . import denon_pdf
+
+    return build_pdf(snapshot, authored, report) + build_master(snapshot, authored, report) + build_docs(snapshot, authored, report) + denon_pdf.build_pdfs(snapshot, authored, report)
