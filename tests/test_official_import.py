@@ -2868,8 +2868,19 @@ def test_the_sheet_tool_reads_the_paragraphs_of_a_word_document_as_the_pinned_cs
     assert snapshot.sheet_of(denon.DOC_DOCUMENTS[0].file, "paragraphs")[:2] == [["AVR-X2700H/AVR-X2700H DAB/AVR-S960H Remote Code List", "para"], ["Ver. 01", "para"]]
 
 
+def denon_files_of(host_and_file: str) -> dict[str, dict]:
+    """The files of the Denon documents whose citations begin with ``host_and_file`` (a host label, or one with the start of a file name)."""
+    out = {}
+    for path in sorted((ROOT / oi.IMPORT_ROOT / "denon").glob("*.json")):
+        doc = load(path)
+        if re.match(host_and_file, next(iter(doc["keys"].values()))["forms"][0]["source"]):
+            out[path.stem] = doc
+    return out
+
+
 def xs_files() -> dict[str, dict]:
-    return {p.stem: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "denon").glob("*.json")) if p.name.startswith(("AVR-X", "AVR-S", "AVC-X"))}
+    """The files of §90's four Word lists (the Wayback Machine's copies from SnapAV's site)."""
+    return denon_files_of(r"snapav\.com Denon IR code documents/")
 
 
 def test_the_denon_x_series_files_are_a_sharp_and_a_kaseikyo_file_for_each_product_and_a_row_that_disagrees_with_itself_is_untested():
@@ -2922,7 +2933,8 @@ def test_the_models_of_a_denon_x_series_document_differ_by_the_marks_of_their_na
     assert "DIRECT SEARCH/RDS SEARCH (EU only)" in labels("AVR-S960H") and "PTY (EU only)" in labels("AVR-S960H")
 
 
-def test_other_sources_denon_remotes_hold_every_sharp_code_of_the_x_series_and_all_but_14_kaseikyo_ones():
+def test_other_sources_denon_remotes_hold_every_sharp_code_of_the_x_series_and_all_but_13_kaseikyo_ones():
+    x_series = set(xs_files())
     mine: dict[str, set] = {"Denon": set(), "Denon-K": set()}
     others: dict[str, set] = {"Denon": set(), "Denon-K": set()}
     for path in (ROOT / "remotes").rglob("*.json"):
@@ -2930,12 +2942,12 @@ def test_other_sources_denon_remotes_hold_every_sharp_code_of_the_x_series_and_a
         protocol = doc["protocol"].get("name")
         if protocol not in mine:
             continue
-        target = mine if path.parent.name == "denon" and path.parent.parent.name == "official" and path.name.startswith(("AVR-X", "AVR-S96", "AVC-X")) else others
+        target = mine if path.parent.name == "denon" and path.parent.parent.name == "official" and path.stem in x_series else others
         for spec in doc["keys"].values():
             form = spec["forms"][0]
             target[protocol].add((int(form["device"], 16), int(form.get("subdevice", "0x00"), 16) if protocol == "Denon-K" else 0, int(form["function"], 16)))
     assert (len(mine["Denon"]), len(mine["Denon"] & others["Denon"])) == (137, 137)
-    assert (len(mine["Denon-K"]), len(mine["Denon-K"] & others["Denon-K"])) == (454, 440)               # (418 before §94's lists of 2003 to 2013, which hold 22 of the 36 more)
+    assert (len(mine["Denon-K"]), len(mine["Denon-K"] & others["Denon-K"])) == (454, 441)               # (418 before §94's lists of 2003 to 2012, which hold 22 of the 36 more, and §95's two hold one more)
     # of the five rows that disagree with themselves the other sources have the bits' value of two (Graphic EQ ON 799, ZONE2 SLEEP 836) and the identifier's of one (the mute, 370)
     held = {code for code in others["Denon-K"] if code[:2] in ((4, 1), (4, 3), (4, 5))}
     assert (4, 1, 799) in held and (4, 3, 836) in held and (4, 3, 370) in held
@@ -3713,13 +3725,8 @@ def test_the_generic_denon_pdf_readers_read_the_avr_4311_list_as_the_fixed_reade
 
 
 def denon_pdf_files() -> dict[str, dict]:
-    """The files of §94's lists: those whose keys cite ``assets.denon.com IR code documents``."""
-    out = {}
-    for path in sorted((ROOT / oi.IMPORT_ROOT / "denon").glob("*.json")):
-        doc = load(path)
-        if next(iter(doc["keys"].values()))["forms"][0]["source"].startswith("assets.denon.com IR code documents/"):
-            out[path.stem] = doc
-    return out
+    """The files of §94's lists: those whose keys cite a PDF of ``assets.denon.com IR code documents`` (§95's two Word lists are there too)."""
+    return denon_files_of(r"assets\.denon\.com IR code documents/[^@]+\.pdf@")
 
 
 def test_the_24_denon_pdf_lists_are_72_files_a_sharp_and_a_kaseikyo_file_for_each_model_and_their_untested_keys_are_the_parity_the_number_or_the_two_names():
@@ -3807,7 +3814,7 @@ def test_the_denon_pdf_lists_differ_in_their_layouts_and_the_reader_finds_each_o
     assert sum(s["forms"][0]["confidence"] == "untested" for s in files["AVR-5805__Kaseikyo"]["keys"].values()) == 87 and all(s["forms"][0]["confidence"] == "plausible" for s in files["AVR-5805"]["keys"].values())
 
 
-def test_other_sources_denon_remotes_hold_181_of_the_196_sharp_codes_and_715_of_the_791_kaseikyo_codes_of_the_pdf_lists_under_the_same_names_mostly():
+def test_other_sources_denon_remotes_hold_181_of_the_196_sharp_codes_and_724_of_the_791_kaseikyo_codes_of_the_pdf_lists_under_the_same_names_mostly():
     mine: dict[str, dict[tuple, set]] = {"Denon": {}, "Denon-K": {}}
     others: dict[str, dict[tuple, set]] = {"Denon": {}, "Denon-K": {}}
     ours = set(denon_pdf_files())
@@ -3822,7 +3829,7 @@ def test_other_sources_denon_remotes_hold_181_of_the_196_sharp_codes_and_715_of_
             form = spec["forms"][0]
             code = (int(form["device"], 16), int(form.get("subdevice", "0x00"), 16) if protocol == "Denon-K" else 0, int(form["function"], 16))
             target[protocol].setdefault(code, set()).add(squash(spec["label"]))
-    for protocol, (total, held, named) in {"Denon": (196, 181, 173), "Denon-K": (791, 715, 572)}.items():
+    for protocol, (total, held, named) in {"Denon": (196, 181, 173), "Denon-K": (791, 724, 590)}.items():       # (715 and 572 before §95's lists, which hold 9 of the 76 Kaseikyo codes then new)
         both = [c for c in mine[protocol] if c in others[protocol]]
         assert (len(mine[protocol]), len(both), sum(bool(mine[protocol][c] & others[protocol][c]) for c in both)) == (total, held, named)
 
@@ -3882,3 +3889,65 @@ def test_a_denon_pdf_identifier_list_of_2011_has_a_24_bit_header_a_first_rows_ge
     assert "nor any zone's" in dp.id_rows(bad, models)[0][0].doubt
     with pytest.raises(ValueError, match="GENRE2 bits"):
         dp.id_rows(rows[:4] + [pdf_line(100, (35, "RCKSK0410001"), *[(119 + 21 * i, b) for i, b in enumerate(xs_bits(3, 4))], *[(212 + 21 * i, b) for i, b in enumerate(pdf_row_bits(1, 4, 1))], (630, "X"))], models)
+
+
+# --- Denon's X-series lists of 2013 and 2018 (D351, D352) ---------------------------------------------------------------------
+
+
+def xs_group_2013(title: str, genre1: int, genre2: int, rows: list[tuple[str, int, object]], header_genre2: int | None = None) -> list[list[str]]:
+    """A Kaseikyo group as the lists of 2013 and 2018 have it: a row is its identifier, four cells for the GENRE2 (its bits in the group's first row, empty after that), ten bits,
+    ten ``*`` and a name."""
+    header = denon.VENDOR + "0000" + xs_bits(genre1, 4) + xs_bits(genre2 if header_genre2 is None else header_genre2, 4)
+    out = [[title, "para"], ["REMOTE ID SET: 1", "para"], *xs_cells("DENON CODE", "Parity", "GENRE1", "GENRE2", "", "4", "1", ""), *xs_cells(*map(str, range(1, 29))), *xs_cells("", *header, ""),
+           ["REMOTE ID SET: 2-4", "para"], *xs_cells("No.", "Data", "ID", "parity", "Key Name")]
+    for k, (ident, value_of, name) in enumerate(rows):
+        out += xs_cells(ident, *(xs_bits(genre2, 4) if k == 0 else ["", "", "", ""]), *xs_bits(value_of, 10), *["*"] * 10) + xs_name(name) + xs_cells("")
+    return out
+
+
+def test_a_denon_x_series_row_of_2013_has_four_cells_for_its_genre2_which_are_its_bits_in_a_groups_first_row_and_a_parenthesis_goes_on_the_name_before():
+    models = ("AVR-X1000", "AVR-E300")
+    tags = [["REMOTE ID SETTING: (default ID 1)", "para"], *xs_cells("ZONE/DEVICE", "NETWORK AUDIO", "K4-7")]
+    group = xs_group_2013("NETWORK AUDIO", 4, 7, [("RCKSK0470027", 27, "CURSOR UP"), ("RCKSK0470028", 28, "CURSOR DOWN")])
+    got = denon.parse_doc(group + tags, models)
+    assert [(r.ident, r.table, r.subdevice, r.function, r.number, [n for n, _ in r.names]) for r in got] == [
+        ("RCKSK0470027", "K4-7", 7, 27, 27, ["CURSOR UP"]), ("RCKSK0470028", "K4-7", 7, 28, 28, ["CURSOR DOWN"])]
+    bad = [list(c) for c in group]
+    at = next(i for i, c in enumerate(bad) if c[0] == "RCKSK0470027")
+    bad[at + 1:at + 5] = xs_cells("1", "0", "1", "0")                                                   # GENRE2 5, not the identifier's 7
+    with pytest.raises(ValueError, match="GENRE2 bits"):
+        denon.parse_doc(bad + tags, models)
+    assert denon.whole_parenthesis("(RDS SEARCH ※EU only )") and not denon.whole_parenthesis("(FM/AM)TUNING UP") and not denon.whole_parenthesis("(DAB) STATION UP (AVR-X2700H DAB only)")
+    assert denon.doc_names(["DIRECT SEARCH", "(RDS SEARCH ※EU only )"], models) == [("DIRECT SEARCH (RDS SEARCH (EU only))", frozenset(models))]
+    assert denon.doc_names(["(FM/AM)TUNING UP", "TUNER"], models)[0][0] == "(FM/AM)TUNING UP" and len(denon.doc_names(["(FM/AM)TUNING UP", "TUNER"], models)) == 2
+
+
+def test_denons_x1000_and_x2500h_lists_are_four_products_in_eight_files_and_the_zone_keys_of_a_model_with_no_zone_are_not_there():
+    files = denon_files_of(r"assets\.denon\.com IR code documents/[^@]+\.doc@")
+    assert {n: (f["protocol"]["name"], len(f["keys"]), sum(s["forms"][0]["confidence"] == "untested" for s in f["keys"].values())) for n, f in files.items()} == {
+        "AVR-X1000": ("Denon", 138, 0), "AVR-X1000__Kaseikyo": ("Denon-K", 376, 4), "AVR-E300": ("Denon", 119, 0), "AVR-E300__Kaseikyo": ("Denon-K", 278, 2),
+        "AVR-X2500H": ("Denon", 137, 0), "AVR-X2500H__Kaseikyo": ("Denon-K", 344, 1), "AVR-S940H": ("Denon", 134, 0), "AVR-S940H__Kaseikyo": ("Denon-K", 341, 1)}
+    assert sum(len(f["keys"]) for f in files.values()) == 1_867
+
+    def labels(name: str) -> set[str]:
+        return {s["label"] for s in files[name]["keys"].values()}
+
+    # the AVR-X1000's zone 2 group is `ZONE2 (X1000 NA only)`: the AVR-E300 has none; the AVR-X2500H and the AVR-S940H both have the 76 zone 2 names
+    assert any(l.startswith("ZONE2") for l in labels("AVR-X1000__Kaseikyo")) and not any(l.startswith("ZONE2") for l in labels("AVR-E300__Kaseikyo"))
+    assert labels("AVR-E300__Kaseikyo") < labels("AVR-X1000__Kaseikyo") and len(labels("AVR-X1000__Kaseikyo") - labels("AVR-E300__Kaseikyo")) == 93
+    assert {"All Zone Stereo ON (NA only)", "PURE DIRECT (NA only)"} <= labels("AVR-X1000__Kaseikyo") - labels("AVR-E300__Kaseikyo")                 # a region stays in the label
+    assert sum(l.startswith("ZONE2") for l in labels("AVR-X2500H__Kaseikyo")) == sum(l.startswith("ZONE2") for l in labels("AVR-S940H__Kaseikyo")) == 76
+    assert any("HEOS MUSIC" in l for l in labels("AVR-X2500H__Kaseikyo")) and "DIRECT SEARCH (RDS SEARCH (EU only))" in labels("AVR-X2500H") & labels("AVR-S940H")
+    # a row of the group's first line has its GENRE2 before its bits, and the lists' own slips are Untested as §90's are
+    first = files["AVR-X1000__Kaseikyo"]["keys"]["KEY_ALL_POWER_ON_SLASH_OFF"]["forms"][0]
+    assert first["function"] == "0x01" and first["source"].startswith(
+        "assets.denon.com IR code documents/avrx1000_e300_ir_code_v01.doc@fe6f09ce (retrieved 2026-10-18) row 'RCKSK0410001' ('ALL POWER ON/OFF', K4-1 : MAIN ZONE, bits 29 to 38 1000000000, the ID and parity bits '*')")
+    untested = {s["label"]: s["forms"][0]["source"] for s in files["AVR-X1000__Kaseikyo"]["keys"].values() if s["forms"][0]["confidence"] == "untested"}
+    assert sorted(untested) == ["M.VR PRESET1(0dB)", "M.VR PRESET3(-40dB)", "ZONE2 SLEEP", "ZONE2 VR MUTE"]                           # the same slips as §90's X-series lists
+    assert "identifier gives the number 374 and its bits the value 372" in untested["M.VR PRESET3(-40dB)"]
+    manifest = json.loads((SNAPSHOT / "denon" / MANIFEST).read_text(encoding="utf-8"))
+    for name, url in (("avrx1000_e300_ir_code_v01.doc", "https://assets.denon.com/documentmaster/uk/avrx1000_e300_ir_code_v01.doc"),
+                      ("avr-x2500h_s940h_ir_code_v01-02072018.doc", "https://assets.denon.com/documentmaster/us/avr-x2500h_s940h_ir_code_v01-02072018.doc")):
+        entry = manifest["documents"][name]
+        assert entry["url"] == url and entry["retrieved"] == "2026-10-18" and "snapshot" not in entry and (SNAPSHOT / "denon" / name).read_bytes()[:4] == b"\xd0\xcf\x11\xe0"
+    assert [d.file for d in denon.DOC_DOCUMENTS[-2:]] == ["avrx1000_e300_ir_code_v01.doc", "avr-x2500h_s940h_ir_code_v01-02072018.doc"]
