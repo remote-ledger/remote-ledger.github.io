@@ -1,0 +1,2633 @@
+{
+  "manufacturer": "Denon",
+  "model": "AVR-4310CI (Kaseikyo)",
+  "aliases": [],
+  "controls": [
+    "Denon AVR-4310CI"
+  ],
+  "protocol": {
+    "name": "Denon-K",
+    "carrierHz": 37000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_RETURN": {
+      "label": "RETURN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x22",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #1' ('RETURN', K4-1 : MAIN ZONE, bits 29 to 48 01000100000011000110): Denon-K device 4 subdevice 1 function 34, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_GUI_MENU": {
+      "label": "GUI MENU",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x23",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #2' ('GUI MENU', K4-1 : MAIN ZONE, bits 29 to 48 11000100000011001110): Denon-K device 4 subdevice 1 function 35, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_MEMORY_SUB_RC": {
+      "label": "MEMORY(SUB RC)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x24",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #3' ('MEMORY(SUB RC)', K4-1 : MAIN ZONE, bits 29 to 48 00100100000011000000): Denon-K device 4 subdevice 1 function 36, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_UPGRADE_ID_ON": {
+      "label": "UPGRADE ID ON",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x2A",
+          "confidence": "untested",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #4' ('UPGRADE ID ON', K4-1 : MAIN ZONE, bits 29 to 48 01010100000000000111): Denon-K device 4 subdevice 1 function 42, GENRE1, GENRE2 and the data each first bit first; the document's parity byte 00000111 (0xE0) is not 0xE3, which its data bits give (the exclusive or of the 3rd, 4th and 5th bytes), nor any zone's: the data bits are read and the parity byte is not"
+        }
+      ]
+    },
+    "KEY_QUICK_SELECT_1": {
+      "label": "QUICK SELECT 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x124",
+          "confidence": "untested",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #5' ('QUICK SELECT 1', K4-1 : MAIN ZONE, bits 29 to 48 00100100100001001000): Denon-K device 4 subdevice 1 function 292, GENRE1, GENRE2 and the data each first bit first; the document's parity byte 01001000 (0x12) is not 0x13, which its data bits give (the exclusive or of the 3rd, 4th and 5th bytes), nor any zone's: the data bits are read and the parity byte is not"
+        }
+      ]
+    },
+    "KEY_QUICK_SELECT_2": {
+      "label": "QUICK SELECT 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x125",
+          "confidence": "untested",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #6' ('QUICK SELECT 2', K4-1 : MAIN ZONE, bits 29 to 48 10100100100001001000): Denon-K device 4 subdevice 1 function 293, GENRE1, GENRE2 and the data each first bit first; the document's parity byte 01001000 (0x12) is not 0x03, which its data bits give (the exclusive or of the 3rd, 4th and 5th bytes), nor any zone's: the data bits are read and the parity byte is not"
+        }
+      ]
+    },
+    "KEY_QUICK_SELECT_3": {
+      "label": "QUICK SELECT 3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x126",
+          "confidence": "untested",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #7' ('QUICK SELECT 3', K4-1 : MAIN ZONE, bits 29 to 48 01100100100001001000): Denon-K device 4 subdevice 1 function 294, GENRE1, GENRE2 and the data each first bit first; the document's parity byte 01001000 (0x12) is not 0x33, which its data bits give (the exclusive or of the 3rd, 4th and 5th bytes), nor any zone's: the data bits are read and the parity byte is not"
+        }
+      ]
+    },
+    "KEY_QUICK_SELECT_4": {
+      "label": "QUICK SELECT 4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x127",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #8' ('QUICK SELECT 4', K4-1 : MAIN ZONE, bits 29 to 48 11100100100011000100): Denon-K device 4 subdevice 1 function 295, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_QUICK_SELECT_5": {
+      "label": "QUICK SELECT 5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x128",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #9' ('QUICK SELECT 5', K4-1 : MAIN ZONE, bits 29 to 48 00010100100011001011): Denon-K device 4 subdevice 1 function 296, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_DIRECT_SLASH_STEREO": {
+      "label": "DIRECT/STEREO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x131",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #10' ('DIRECT/STEREO', K4-1 : MAIN ZONE, bits 29 to 48 10001100100001000010): Denon-K device 4 subdevice 1 function 305, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_NEURAL": {
+      "label": "NEURAL",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x15B",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #11' ('NEURAL', K4-1 : MAIN ZONE, bits 29 to 48 11011010100000100111): Denon-K device 4 subdevice 1 function 347, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_INPUT_MODE_HDMI": {
+      "label": "INPUT MODE HDMI",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x165",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #12' ('INPUT MODE HDMI', K4-1 : MAIN ZONE, bits 29 to 48 10100110100011100000): Denon-K device 4 subdevice 1 function 357, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_INPUT_MODE_DIGITAL": {
+      "label": "INPUT MODE DIGITAL",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x167",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #13' ('INPUT MODE DIGITAL', K4-1 : MAIN ZONE, bits 29 to 48 11100110100011100100): Denon-K device 4 subdevice 1 function 359, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_DECODE_MODE": {
+      "label": "DECODE MODE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x16C",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #14' ('DECODE MODE', K4-1 : MAIN ZONE, bits 29 to 48 00110110100011101001): Denon-K device 4 subdevice 1 function 364, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_DSX_ON_SLASH_OFF": {
+      "label": "DSX ON/OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x211",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #15' ('DSX ON/OFF', K4-1 : MAIN ZONE, bits 29 to 48 10001000010000001110): Denon-K device 4 subdevice 1 function 529, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_FRONT_HEIGHT_ON_SLASH_OFF": {
+      "label": "Front Height ON/OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x215",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #16' ('Front Height ON/OFF', K4-1 : MAIN ZONE, bits 29 to 48 10101000010000001100): Denon-K device 4 subdevice 1 function 533, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_DYNAMIC_VOLUME": {
+      "label": "DYNAMIC VOLUME",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x221",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #17' ('DYNAMIC VOLUME', K4-1 : MAIN ZONE, bits 29 to 48 10000100010011001110): Denon-K device 4 subdevice 1 function 545, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_DYNAMIC_EQ": {
+      "label": "DYNAMIC EQ",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x223",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #18' ('DYNAMIC EQ', K4-1 : MAIN ZONE, bits 29 to 48 11000100010011001010): Denon-K device 4 subdevice 1 function 547, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_AUDIO_RESTORER": {
+      "label": "AUDIO RESTORER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x224",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #19' ('AUDIO RESTORER', K4-1 : MAIN ZONE, bits 29 to 48 00100100010011000100): Denon-K device 4 subdevice 1 function 548, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_DYNAMIC_EQ_SLASH_VOLUME": {
+      "label": "DYNAMIC EQ/VOLUME",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x225",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #20' ('DYNAMIC EQ/VOLUME', K4-1 : MAIN ZONE, bits 29 to 48 10100100010011001100): Denon-K device 4 subdevice 1 function 549, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_RESTORER_OFF": {
+      "label": "RESTORER(OFF)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x22C",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #21' ('RESTORER(OFF)', K4-1 : MAIN ZONE, bits 29 to 48 00110100010011000101): Denon-K device 4 subdevice 1 function 556, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_RESTORER_MODE1": {
+      "label": "RESTORER(Mode1)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x22D",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #22' ('RESTORER(Mode1)', K4-1 : MAIN ZONE, bits 29 to 48 10110100010011001101): Denon-K device 4 subdevice 1 function 557, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_RESTORER_MODE2": {
+      "label": "RESTORER(Mode2)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x22E",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #23' ('RESTORER(Mode2)', K4-1 : MAIN ZONE, bits 29 to 48 01110100010011000001): Denon-K device 4 subdevice 1 function 558, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_RESTORER_MODE3": {
+      "label": "RESTORER(Mode3)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x22F",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #24' ('RESTORER(Mode3)', K4-1 : MAIN ZONE, bits 29 to 48 11110100010011001001): Denon-K device 4 subdevice 1 function 559, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_AUDIO_DELAY_MODE": {
+      "label": "AUDIO DELAY MODE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x26C",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #25' ('AUDIO DELAY MODE', K4-1 : MAIN ZONE, bits 29 to 48 00110110010011100101): Denon-K device 4 subdevice 1 function 620, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_AUDIO_DELAY_UP": {
+      "label": "AUDIO DELAY UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x26D",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #26' ('AUDIO DELAY UP', K4-1 : MAIN ZONE, bits 29 to 48 10110110010011101101): Denon-K device 4 subdevice 1 function 621, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_AUDIO_DELAY_DOWN": {
+      "label": "AUDIO DELAY DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x26E",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #27' ('AUDIO DELAY DOWN', K4-1 : MAIN ZONE, bits 29 to 48 01110110010011100001): Denon-K device 4 subdevice 1 function 622, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_FWL_LEVEL_UP": {
+      "label": "FWL LEVEL UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x27B",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #28' ('FWL LEVEL UP', K4-1 : MAIN ZONE, bits 29 to 48 11011110010001101011): Denon-K device 4 subdevice 1 function 635, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_FWL_LEVEL_DOWN": {
+      "label": "FWL LEVEL DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x27C",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #29' ('FWL LEVEL DOWN', K4-1 : MAIN ZONE, bits 29 to 48 00111110010001100101): Denon-K device 4 subdevice 1 function 636, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_FWR_LEVEL_UP": {
+      "label": "FWR LEVEL UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x27D",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #30' ('FWR LEVEL UP', K4-1 : MAIN ZONE, bits 29 to 48 10111110010001101101): Denon-K device 4 subdevice 1 function 637, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_FWR_LEVEL_DOWN": {
+      "label": "FWR LEVEL DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x27E",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #31' ('FWR LEVEL DOWN', K4-1 : MAIN ZONE, bits 29 to 48 01111110010001100001): Denon-K device 4 subdevice 1 function 638, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_STATUS_REQUEST_FOR_2WAY_RC": {
+      "label": "STATUS REQUEST(for 2way RC)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x285",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #32' ('STATUS REQUEST(for 2way RC)', K4-1 : MAIN ZONE, bits 29 to 48 10100001010010011100): Denon-K device 4 subdevice 1 function 645, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_FHL_LEVEL_UP": {
+      "label": "FHL LEVEL UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x289",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #33' ('FHL LEVEL UP', K4-1 : MAIN ZONE, bits 29 to 48 10010001010010011111): Denon-K device 4 subdevice 1 function 649, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_FHL_LEVEL_DOWN": {
+      "label": "FHL LEVEL DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x28A",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #34' ('FHL LEVEL DOWN', K4-1 : MAIN ZONE, bits 29 to 48 01010001010010010011): Denon-K device 4 subdevice 1 function 650, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_FHR_LEVEL_UP": {
+      "label": "FHR LEVEL UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x28B",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #35' ('FHR LEVEL UP', K4-1 : MAIN ZONE, bits 29 to 48 11010001010010011011): Denon-K device 4 subdevice 1 function 651, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_FHR_LEVEL_DOWN": {
+      "label": "FHR LEVEL DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x28C",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #36' ('FHR LEVEL DOWN', K4-1 : MAIN ZONE, bits 29 to 48 00110001010010010101): Denon-K device 4 subdevice 1 function 652, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_SOURCE_SELECT_MENU": {
+      "label": "Source Select Menu",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x2B5",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #37' ('Source Select Menu', K4-1 : MAIN ZONE, bits 29 to 48 10101101010001011100): Denon-K device 4 subdevice 1 function 693, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_INTERNETRADIO": {
+      "label": "InternetRadio",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x2B3",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #38' ('InternetRadio', K4-1 : MAIN ZONE, bits 29 to 48 11001101010001011010): Denon-K device 4 subdevice 1 function 691, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_RHAPSODY_NA_ONLY": {
+      "label": "Rhapsody(NA only)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x2B6",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #39' ('Rhapsody(NA only)', K4-1 : MAIN ZONE, bits 29 to 48 01101101010001010000): Denon-K device 4 subdevice 1 function 694, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_NAPSTER": {
+      "label": "Napster",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x2B7",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #40' ('Napster', K4-1 : MAIN ZONE, bits 29 to 48 11101101010001011000): Denon-K device 4 subdevice 1 function 695, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_SAT_TU_XM_OR_SIRIUS_NA_ONLY": {
+      "label": "SAT TU(XM or SIRIUS) (NA only)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x2B8",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #41' ('SAT TU(XM or SIRIUS) (NA only)', K4-1 : MAIN ZONE, bits 29 to 48 00011101010001010111): Denon-K device 4 subdevice 1 function 696, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_CD_SLASH_PHONO": {
+      "label": "CD / PHONO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x2BA",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #42' ('CD / PHONO', K4-1 : MAIN ZONE, bits 29 to 48 01011101010001010011): Denon-K device 4 subdevice 1 function 698, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_MEDIASERVER": {
+      "label": "MediaServer",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x2BB",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #43' ('MediaServer', K4-1 : MAIN ZONE, bits 29 to 48 11011101010001011011): Denon-K device 4 subdevice 1 function 699, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_SIRIUS_NA_ONLY": {
+      "label": "SIRIUS(NA only)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x2BD",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #44' ('SIRIUS(NA only)', K4-1 : MAIN ZONE, bits 29 to 48 10111101010001011101): Denon-K device 4 subdevice 1 function 701, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_NET_SLASH_USB": {
+      "label": "NET/USB",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x2C7",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #45' ('NET/USB', K4-1 : MAIN ZONE, bits 29 to 48 11100011010010111000): Denon-K device 4 subdevice 1 function 711, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_XM_NA_ONLY": {
+      "label": "XM(NA only)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x2CA",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #46' ('XM(NA only)', K4-1 : MAIN ZONE, bits 29 to 48 01010011010010110011): Denon-K device 4 subdevice 1 function 714, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_HD_RADIO_NA_ONLY": {
+      "label": "HD RADIO (NA only)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x2CB",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 9 table row 'K4-1 #47' ('HD RADIO (NA only)', K4-1 : MAIN ZONE, bits 29 to 48 11010011010010111011): Denon-K device 4 subdevice 1 function 715, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE2_CURSOR_UP": {
+      "label": "ZONE2 CURSOR UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x1B",
+          "confidence": "untested",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #1' ('ZONE2 CURSOR UP', K4-3 : ZONE2, bits 29 to 48 11011000000010000000): Denon-K device 4 subdevice 3 function 27, GENRE1, GENRE2 and the data each first bit first; the document's parity byte 10000000 (0x01) is not 0xF2, which its data bits give (the exclusive or of the 3rd, 4th and 5th bytes), nor any zone's: the data bits are read and the parity byte is not"
+        }
+      ]
+    },
+    "KEY_ZONE2_CURSOR_DOWN": {
+      "label": "ZONE2 CURSOR DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x1C",
+          "confidence": "untested",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #2' ('ZONE2 CURSOR DOWN', K4-3 : ZONE2, bits 29 to 48 00111000000010000000): Denon-K device 4 subdevice 3 function 28, GENRE1, GENRE2 and the data each first bit first; the document's parity byte 10000000 (0x01) is not 0x82, which its data bits give (the exclusive or of the 3rd, 4th and 5th bytes), nor any zone's: the data bits are read and the parity byte is not"
+        }
+      ]
+    },
+    "KEY_ZONE2_CURSOR_LEFT": {
+      "label": "ZONE2 CURSOR LEFT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x1D",
+          "confidence": "untested",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #3' ('ZONE2 CURSOR LEFT', K4-3 : ZONE2, bits 29 to 48 10111000000010000000): Denon-K device 4 subdevice 3 function 29, GENRE1, GENRE2 and the data each first bit first; the document's parity byte 10000000 (0x01) is not 0x92, which its data bits give (the exclusive or of the 3rd, 4th and 5th bytes), nor any zone's: the data bits are read and the parity byte is not"
+        }
+      ]
+    },
+    "KEY_ZONE2_CURSOR_RIGHT": {
+      "label": "ZONE2 CURSOR RIGHT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x1E",
+          "confidence": "untested",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #4' ('ZONE2 CURSOR RIGHT', K4-3 : ZONE2, bits 29 to 48 01111000000010000000): Denon-K device 4 subdevice 3 function 30, GENRE1, GENRE2 and the data each first bit first; the document's parity byte 10000000 (0x01) is not 0xA2, which its data bits give (the exclusive or of the 3rd, 4th and 5th bytes), nor any zone's: the data bits are read and the parity byte is not"
+        }
+      ]
+    },
+    "KEY_ZONE2_ENTER": {
+      "label": "ZONE2 ENTER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x1F",
+          "confidence": "untested",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #5' ('ZONE2 ENTER', K4-3 : ZONE2, bits 29 to 48 11111000000010000000): Denon-K device 4 subdevice 3 function 31, GENRE1, GENRE2 and the data each first bit first; the document's parity byte 10000000 (0x01) is not 0xB2, which its data bits give (the exclusive or of the 3rd, 4th and 5th bytes), nor any zone's: the data bits are read and the parity byte is not"
+        }
+      ]
+    },
+    "KEY_ZONE2_RETURN": {
+      "label": "ZONE2 RETURN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x22",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #6' ('ZONE2 RETURN', K4-3 : ZONE2, bits 29 to 48 01000100000010000110): Denon-K device 4 subdevice 3 function 34, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE2_MENU": {
+      "label": "ZONE2 MENU",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x23",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #7' ('ZONE2 MENU', K4-3 : ZONE2, bits 29 to 48 11000100000010001110): Denon-K device 4 subdevice 3 function 35, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_MEMORY_SUB_RC_ZONE2": {
+      "label": "MEMORY(SUB RC) (ZONE2)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x24",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #8' ('MEMORY(SUB RC)', K4-3 : ZONE2, bits 29 to 48 00100100000010000000): Denon-K device 4 subdevice 3 function 36, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_QUICK_SELECT1": {
+      "label": "Quick Select1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x124",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #9' ('Quick Select1', K4-3 : ZONE2, bits 29 to 48 00100100100010001000): Denon-K device 4 subdevice 3 function 292, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_QUICK_SELECT2": {
+      "label": "Quick Select2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x125",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #10' ('Quick Select2', K4-3 : ZONE2, bits 29 to 48 10100100100010000000): Denon-K device 4 subdevice 3 function 293, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_QUICK_SELECT3": {
+      "label": "Quick Select3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x126",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #11' ('Quick Select3', K4-3 : ZONE2, bits 29 to 48 01100100100010001100): Denon-K device 4 subdevice 3 function 294, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_QUICK_SELECT4": {
+      "label": "Quick Select4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x127",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #12' ('Quick Select4', K4-3 : ZONE2, bits 29 to 48 11100100100010000100): Denon-K device 4 subdevice 3 function 295, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_QUICK_SELECT5": {
+      "label": "Quick Select5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x128",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #13' ('Quick Select5', K4-3 : ZONE2, bits 29 to 48 00010100100010001011): Denon-K device 4 subdevice 3 function 296, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE2_VOLUME_MUTE": {
+      "label": "ZONE2 VOLUME MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x172",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #14' ('ZONE2 VOLUME MUTE', K4-3 : ZONE2, bits 29 to 48 01001110100000101110): Denon-K device 4 subdevice 3 function 370, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE2_SYSTEM_SETUP": {
+      "label": "ZONE2 SYSTEM SETUP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x230",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #15' ('ZONE2 SYSTEM SETUP', K4-3 : ZONE2, bits 29 to 48 00001100010000000110): Denon-K device 4 subdevice 3 function 560, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_STATUS_FOR_2WAY_RC": {
+      "label": "STATUS(for 2way RC)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x280",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #16' ('STATUS(for 2way RC)', K4-3 : ZONE2, bits 29 to 48 00000001010011010110): Denon-K device 4 subdevice 3 function 640, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_STATUS_REQUEST_FOR_2WAY_RC_ZONE2": {
+      "label": "STATUS REQUEST(for 2way RC) (ZONE2)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x285",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #17' ('STATUS REQUEST(for 2way RC)', K4-3 : ZONE2, bits 29 to 48 10100001010011011100): Denon-K device 4 subdevice 3 function 645, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_INTERNET_RADIO": {
+      "label": "Internet Radio",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x2B3",
+          "confidence": "untested",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #18' ('Internet Radio', K4-3 : ZONE2, bits 29 to 48 11001101010011011011): Denon-K device 4 subdevice 3 function 691, GENRE1, GENRE2 and the data each first bit first; the document's parity byte 11011011 (0xDB) is not 0x58, which its data bits give (the exclusive or of the 3rd, 4th and 5th bytes), nor any zone's: the data bits are read and the parity byte is not"
+        }
+      ]
+    },
+    "KEY_MAIN_ZONE_SOURCE_CALL": {
+      "label": "Main Zone Source CALL",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x2B4",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #19' ('Main Zone Source CALL', K4-3 : ZONE2, bits 29 to 48 00101101010000010100): Denon-K device 4 subdevice 3 function 692, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_RHAPSODY_NA_ONLY_ZONE2": {
+      "label": "Rhapsody(NA only) (ZONE2)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x2B6",
+          "confidence": "untested",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #20' ('Rhapsody(NA only)', K4-3 : ZONE2, bits 29 to 48 01101101010011011011): Denon-K device 4 subdevice 3 function 694, GENRE1, GENRE2 and the data each first bit first; the document's parity byte 11011011 (0xDB) is not 0x08, which its data bits give (the exclusive or of the 3rd, 4th and 5th bytes), nor any zone's: the data bits are read and the parity byte is not"
+        }
+      ]
+    },
+    "KEY_NAPSTER_ZONE2": {
+      "label": "Napster (ZONE2)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x2B7",
+          "confidence": "untested",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #21' ('Napster', K4-3 : ZONE2, bits 29 to 48 11101101010011011011): Denon-K device 4 subdevice 3 function 695, GENRE1, GENRE2 and the data each first bit first; the document's parity byte 11011011 (0xDB) is not 0x18, which its data bits give (the exclusive or of the 3rd, 4th and 5th bytes), nor any zone's: the data bits are read and the parity byte is not"
+        }
+      ]
+    },
+    "KEY_SAT_TU_XM_OR_SIRIUS_NA_ONLY_ZONE2": {
+      "label": "SAT TU(XM or SIRIUS) (NA only) (ZONE2)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x2B8",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #22' ('SAT TU(XM or SIRIUS) (NA only)', K4-3 : ZONE2, bits 29 to 48 00011101010000010111): Denon-K device 4 subdevice 3 function 696, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_CD_SLASH_PHONO_ZONE2": {
+      "label": "CD / PHONO (ZONE2)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x2BA",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #23' ('CD / PHONO', K4-3 : ZONE2, bits 29 to 48 01011101010000010011): Denon-K device 4 subdevice 3 function 698, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_MEDIA_SERVER": {
+      "label": "Media Server",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x2BB",
+          "confidence": "untested",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #24' ('Media Server', K4-3 : ZONE2, bits 29 to 48 11011101010011011011): Denon-K device 4 subdevice 3 function 699, GENRE1, GENRE2 and the data each first bit first; the document's parity byte 11011011 (0xDB) is not 0xD8, which its data bits give (the exclusive or of the 3rd, 4th and 5th bytes), nor any zone's: the data bits are read and the parity byte is not"
+        }
+      ]
+    },
+    "KEY_ZONE2_SIRIUS_NA_ONLY": {
+      "label": "ZONE2 SIRIUS(NA only)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x2BD",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #25' ('ZONE2 SIRIUS(NA only)', K4-3 : ZONE2, bits 29 to 48 10111101010000011101): Denon-K device 4 subdevice 3 function 701, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE2_NET_SLASH_USB": {
+      "label": "ZONE2 NET/USB",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x2C7",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #26' ('ZONE2 NET/USB', K4-3 : ZONE2, bits 29 to 48 11100011010011111000): Denon-K device 4 subdevice 3 function 711, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE2_XM_NA_ONLY": {
+      "label": "ZONE2 XM(NA only)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x2CA",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #27' ('ZONE2 XM(NA only)', K4-3 : ZONE2, bits 29 to 48 01010011010011110011): Denon-K device 4 subdevice 3 function 714, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE2_HD_RADIO_NA_ONLY": {
+      "label": "ZONE2 HD RADIO (NA only)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x2CB",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #28' ('ZONE2 HD RADIO (NA only)', K4-3 : ZONE2, bits 29 to 48 11010011010011111011): Denon-K device 4 subdevice 3 function 715, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE2_NET": {
+      "label": "ZONE2 NET",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x2CC",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #29' ('ZONE2 NET', K4-3 : ZONE2, bits 29 to 48 00110011010011110101): Denon-K device 4 subdevice 3 function 716, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE2_IPOD": {
+      "label": "ZONE2 iPod",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x2CD",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #30' ('ZONE2 iPod', K4-3 : ZONE2, bits 29 to 48 10110011010011111101): Denon-K device 4 subdevice 3 function 717, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE2_USB": {
+      "label": "ZONE2 USB",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x2CE",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #31' ('ZONE2 USB', K4-3 : ZONE2, bits 29 to 48 01110011010011110001): Denon-K device 4 subdevice 3 function 718, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE2_V_AUX": {
+      "label": "ZONE2 V.AUX",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x2D9",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #32' ('ZONE2 V.AUX', K4-3 : ZONE2, bits 29 to 48 10011011010001111111): Denon-K device 4 subdevice 3 function 729, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE2_DVD_SLASH_HDP": {
+      "label": "ZONE2 DVD/HDP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x2DC",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #33' ('ZONE2 DVD/HDP', K4-3 : ZONE2, bits 29 to 48 00111011010001110101): Denon-K device 4 subdevice 3 function 732, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE2_VCR_SLASH_DVR": {
+      "label": "ZONE2 VCR/DVR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x2DF",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #34' ('ZONE2 VCR/DVR', K4-3 : ZONE2, bits 29 to 48 11111011010001111001): Denon-K device 4 subdevice 3 function 735, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE2_SLEEP_MODE": {
+      "label": "ZONE2 Sleep Mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x344",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #35' ('ZONE2 Sleep Mode', K4-3 : ZONE2, bits 29 to 48 00100010110011101100): Denon-K device 4 subdevice 3 function 836, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE2_REPEAT": {
+      "label": "ZONE2 REPEAT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x3BC",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #36' ('ZONE2 REPEAT', K4-3 : ZONE2, bits 29 to 48 00111101110000011101): Denon-K device 4 subdevice 3 function 956, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE2_RANDOM_SLASH_SHUFFLE": {
+      "label": "ZONE2 RANDOM/SHUFFLE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x3BD",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #37' ('ZONE2 RANDOM/SHUFFLE', K4-3 : ZONE2, bits 29 to 48 10111101110000010101): Denon-K device 4 subdevice 3 function 957, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE2_USB_DIRECT_PLAY": {
+      "label": "ZONE2 USB DIRECT PLAY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x3BE",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #38' ('ZONE2 USB DIRECT PLAY', K4-3 : ZONE2, bits 29 to 48 01111101110000011001): Denon-K device 4 subdevice 3 function 958, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE2_FAVORITE_DIRECT_PLAY": {
+      "label": "ZONE2 FAVORITE DIRECT PLAY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x3BF",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #39' ('ZONE2 FAVORITE DIRECT PLAY', K4-3 : ZONE2, bits 29 to 48 11111101110000010001): Denon-K device 4 subdevice 3 function 959, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE2_PRESET_CH_UP": {
+      "label": "ZONE2 PRESET CH UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x3CC",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #40' ('ZONE2 PRESET CH UP', K4-3 : ZONE2, bits 29 to 48 00110011110011111101): Denon-K device 4 subdevice 3 function 972, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE2_PRESET_CH_DOWN": {
+      "label": "ZONE2 PRESET CH DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x3CD",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #41' ('ZONE2 PRESET CH DOWN', K4-3 : ZONE2, bits 29 to 48 10110011110011110101): Denon-K device 4 subdevice 3 function 973, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE2_PRESET_CH_SHIFT": {
+      "label": "ZONE2 PRESET CH SHIFT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x3CE",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #42' ('ZONE2 PRESET CH SHIFT', K4-3 : ZONE2, bits 29 to 48 01110011110011111001): Denon-K device 4 subdevice 3 function 974, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE2_SEARCH_RDS": {
+      "label": "ZONE2 SEARCH(RDS)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x3D7",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #43' ('ZONE2 SEARCH(RDS)', K4-3 : ZONE2, bits 29 to 48 11101011110001110000): Denon-K device 4 subdevice 3 function 983, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE2_PLAY_SLASH_PAUSE": {
+      "label": "ZONE2 PLAY/PAUSE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x3E0",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #44' ('ZONE2 PLAY/PAUSE', K4-3 : ZONE2, bits 29 to 48 00000111110010111110): Denon-K device 4 subdevice 3 function 992, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE2_STOP": {
+      "label": "ZONE2 STOP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x3E1",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #45' ('ZONE2 STOP', K4-3 : ZONE2, bits 29 to 48 10000111110010110110): Denon-K device 4 subdevice 3 function 993, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE2_SKIP_MINUS_SLASH_TUNING_DOWN": {
+      "label": "ZONE2 SKIP MINUS/TUNING DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x3E3",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 14 table row 'K4-3 #46' ('ZONE2 SKIP MINUS/TUNING DOWN', K4-3 : ZONE2, bits 29 to 48 11000111110010110010): Denon-K device 4 subdevice 3 function 995, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE2_SKIP_PLUS_SLASH_TUNING_UP": {
+      "label": "ZONE2 SKIP PLUS/TUNING UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x03",
+          "function": "0x3E4",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 15 table row 'K4-3 #47' ('ZONE2 SKIP PLUS/TUNING UP', K4-3 : ZONE2, bits 29 to 48 00100111110010111100): Denon-K device 4 subdevice 3 function 996, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE3_POWER_ON_SLASH_OFF": {
+      "label": "ZONE3 POWER ON/OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #1' ('ZONE3 POWER ON/OFF', K4-5 : ZONE3, bits 29 to 48 10100000000010101000): Denon-K device 4 subdevice 5 function 5, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE3_CURSOR_UP": {
+      "label": "ZONE3 CURSOR UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x1B",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #2' ('ZONE3 CURSOR UP', K4-5 : ZONE3, bits 29 to 48 11011000000000101111): Denon-K device 4 subdevice 5 function 27, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE3_CURSOR_DOWN": {
+      "label": "ZONE3 CURSOR DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x1C",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #3' ('ZONE3 CURSOR DOWN', K4-5 : ZONE3, bits 29 to 48 00111000000000100001): Denon-K device 4 subdevice 5 function 28, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE3_CURSOR_LEFT": {
+      "label": "ZONE3 CURSOR LEFT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x1D",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #4' ('ZONE3 CURSOR LEFT', K4-5 : ZONE3, bits 29 to 48 10111000000000101001): Denon-K device 4 subdevice 5 function 29, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE3_CURSOR_RIGHT": {
+      "label": "ZONE3 CURSOR RIGHT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x1E",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #5' ('ZONE3 CURSOR RIGHT', K4-5 : ZONE3, bits 29 to 48 01111000000000100101): Denon-K device 4 subdevice 5 function 30, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE3_ENTER": {
+      "label": "ZONE3 ENTER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x1F",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #6' ('ZONE3 ENTER', K4-5 : ZONE3, bits 29 to 48 11111000000000101101): Denon-K device 4 subdevice 5 function 31, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE3_RETURN": {
+      "label": "ZONE3 RETURN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x22",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #7' ('ZONE3 RETURN', K4-5 : ZONE3, bits 29 to 48 01000100000011100110): Denon-K device 4 subdevice 5 function 34, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE3_MENU": {
+      "label": "ZONE3 MENU",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x23",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #8' ('ZONE3 MENU', K4-5 : ZONE3, bits 29 to 48 11000100000011101110): Denon-K device 4 subdevice 5 function 35, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_MEMORY_SUB_RC_ZONE3": {
+      "label": "MEMORY(SUB RC) (ZONE3)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x24",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #9' ('MEMORY(SUB RC)', K4-5 : ZONE3, bits 29 to 48 00100100000010000000): Denon-K device 4 subdevice 5 function 36, GENRE1, GENRE2 and the data each first bit first; the document's parity byte is the one GENRE2 3 gives, not this table's (a table copied from another's)"
+        }
+      ]
+    },
+    "KEY_QUICK_SELECT1_ZONE3": {
+      "label": "Quick Select1 (ZONE3)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x124",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #10' ('Quick Select1', K4-5 : ZONE3, bits 29 to 48 00100100100011101000): Denon-K device 4 subdevice 5 function 292, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_QUICK_SELECT2_ZONE3": {
+      "label": "Quick Select2 (ZONE3)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x125",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #11' ('Quick Select2', K4-5 : ZONE3, bits 29 to 48 10100100100011100000): Denon-K device 4 subdevice 5 function 293, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_QUICK_SELECT3_ZONE3": {
+      "label": "Quick Select3 (ZONE3)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x126",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #12' ('Quick Select3', K4-5 : ZONE3, bits 29 to 48 01100100100011101100): Denon-K device 4 subdevice 5 function 294, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_QUICK_SELECT4_ZONE3": {
+      "label": "Quick Select4 (ZONE3)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x127",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #13' ('Quick Select4', K4-5 : ZONE3, bits 29 to 48 11100100100011100100): Denon-K device 4 subdevice 5 function 295, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_QUICK_SELECT5_ZONE3": {
+      "label": "Quick Select5 (ZONE3)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x128",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #14' ('Quick Select5', K4-5 : ZONE3, bits 29 to 48 00010100100011101011): Denon-K device 4 subdevice 5 function 296, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE3_VOLUME_MUTE": {
+      "label": "ZONE3 VOLUME MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x172",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #15' ('ZONE3 VOLUME MUTE', K4-5 : ZONE3, bits 29 to 48 01001110100001001110): Denon-K device 4 subdevice 5 function 370, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_STATUS_FOR_2WAY_RC_ZONE3": {
+      "label": "STATUS(for 2way RC) (ZONE3)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x280",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #16' ('STATUS(for 2way RC)', K4-5 : ZONE3, bits 29 to 48 00000001010010110110): Denon-K device 4 subdevice 5 function 640, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_STATUS_REQUEST_FOR_2WAY_RC_ZONE3": {
+      "label": "STATUS REQUEST(for 2way RC) (ZONE3)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x285",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #17' ('STATUS REQUEST(for 2way RC)', K4-5 : ZONE3, bits 29 to 48 10100001010010111100): Denon-K device 4 subdevice 5 function 645, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE3_INTERNET_RADIO": {
+      "label": "ZONE3 Internet Radio",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x2B3",
+          "confidence": "untested",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #18' ('ZONE3 Internet Radio', K4-5 : ZONE3, bits 29 to 48 11001101010011011011): Denon-K device 4 subdevice 5 function 691, GENRE1, GENRE2 and the data each first bit first; the document's parity byte 11011011 (0xDB) is not 0x5E, which its data bits give (the exclusive or of the 3rd, 4th and 5th bytes), nor any zone's: the data bits are read and the parity byte is not"
+        }
+      ]
+    },
+    "KEY_MAIN_ZONE_SOURCE_CALL_ZONE3": {
+      "label": "Main Zone Source CALL (ZONE3)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x2B4",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #19' ('Main Zone Source CALL', K4-5 : ZONE3, bits 29 to 48 00101101010001110100): Denon-K device 4 subdevice 5 function 692, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE3_RHAPSODY_NA_ONLY": {
+      "label": "ZONE3 Rhapsody(NA only)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x2B6",
+          "confidence": "untested",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #20' ('ZONE3 Rhapsody(NA only)', K4-5 : ZONE3, bits 29 to 48 01101101010011011011): Denon-K device 4 subdevice 5 function 694, GENRE1, GENRE2 and the data each first bit first; the document's parity byte 11011011 (0xDB) is not 0x0E, which its data bits give (the exclusive or of the 3rd, 4th and 5th bytes), nor any zone's: the data bits are read and the parity byte is not"
+        }
+      ]
+    },
+    "KEY_ZONE3_NAPSTER": {
+      "label": "ZONE3 Napster",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x2B7",
+          "confidence": "untested",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #21' ('ZONE3 Napster', K4-5 : ZONE3, bits 29 to 48 11101101010011011011): Denon-K device 4 subdevice 5 function 695, GENRE1, GENRE2 and the data each first bit first; the document's parity byte 11011011 (0xDB) is not 0x1E, which its data bits give (the exclusive or of the 3rd, 4th and 5th bytes), nor any zone's: the data bits are read and the parity byte is not"
+        }
+      ]
+    },
+    "KEY_ZONE3_SAT_TU_XM_OR_SIRIUS_NA_ONLY": {
+      "label": "ZONE3 SAT TU(XM or SIRIUS) (NA only)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x2B8",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #22' ('ZONE3 SAT TU(XM or SIRIUS) (NA only)', K4-5 : ZONE3, bits 29 to 48 00011101010001110111): Denon-K device 4 subdevice 5 function 696, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE3_CD_SLASH_PHONO": {
+      "label": "ZONE3 CD / PHONO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x2BA",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #23' ('ZONE3 CD / PHONO', K4-5 : ZONE3, bits 29 to 48 01011101010001110011): Denon-K device 4 subdevice 5 function 698, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE3_MEDIASERVER": {
+      "label": "ZONE3 MediaServer",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x2BB",
+          "confidence": "untested",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #24' ('ZONE3 MediaServer', K4-5 : ZONE3, bits 29 to 48 11011101010011011011): Denon-K device 4 subdevice 5 function 699, GENRE1, GENRE2 and the data each first bit first; the document's parity byte 11011011 (0xDB) is not 0xDE, which its data bits give (the exclusive or of the 3rd, 4th and 5th bytes), nor any zone's: the data bits are read and the parity byte is not"
+        }
+      ]
+    },
+    "KEY_ZONE3_SIRIUS_NA_ONLY": {
+      "label": "ZONE3 SIRIUS(NA only)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x2BD",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #25' ('ZONE3 SIRIUS(NA only)', K4-5 : ZONE3, bits 29 to 48 10111101010000011101): Denon-K device 4 subdevice 5 function 701, GENRE1, GENRE2 and the data each first bit first; the document's parity byte is the one GENRE2 3 gives, not this table's (a table copied from another's)"
+        }
+      ]
+    },
+    "KEY_ZONE3_NET_SLASH_USB": {
+      "label": "ZONE3 NET/USB",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x2C7",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #26' ('ZONE3 NET/USB', K4-5 : ZONE3, bits 29 to 48 11100011010010011000): Denon-K device 4 subdevice 5 function 711, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE3_XM_NA_ONLY": {
+      "label": "ZONE3 XM(NA only)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x2CA",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #27' ('ZONE3 XM(NA only)', K4-5 : ZONE3, bits 29 to 48 01010011010010010011): Denon-K device 4 subdevice 5 function 714, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE3_HD_RADIO_NA_ONLY": {
+      "label": "ZONE3 HD RADIO(NA only)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x2CB",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #28' ('ZONE3 HD RADIO(NA only)', K4-5 : ZONE3, bits 29 to 48 11010011010010011011): Denon-K device 4 subdevice 5 function 715, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE3_NET": {
+      "label": "ZONE3 NET",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x2CC",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #29' ('ZONE3 NET', K4-5 : ZONE3, bits 29 to 48 00110011010010010101): Denon-K device 4 subdevice 5 function 716, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE3_IPOD": {
+      "label": "ZONE3 iPod",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x2CD",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #30' ('ZONE3 iPod', K4-5 : ZONE3, bits 29 to 48 10110011010010011101): Denon-K device 4 subdevice 5 function 717, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE3_USB": {
+      "label": "ZONE3 USB",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x2CE",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #31' ('ZONE3 USB', K4-5 : ZONE3, bits 29 to 48 01110011010010010001): Denon-K device 4 subdevice 5 function 718, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE3_DVD_SLASH_HDP": {
+      "label": "ZONE3 DVD/HDP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x2DC",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #32' ('ZONE3 DVD/HDP', K4-5 : ZONE3, bits 29 to 48 00111011010000010101): Denon-K device 4 subdevice 5 function 732, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE3_VCR_SLASH_DVR": {
+      "label": "ZONE3 VCR/DVR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x2DF",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #33' ('ZONE3 VCR/DVR', K4-5 : ZONE3, bits 29 to 48 11111011010000011001): Denon-K device 4 subdevice 5 function 735, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE3_SLEEP_MODE": {
+      "label": "ZONE3 Sleep Mode",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x344",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #34' ('ZONE3 Sleep Mode', K4-5 : ZONE3, bits 29 to 48 00100010110010001100): Denon-K device 4 subdevice 5 function 836, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE3_REPEAT": {
+      "label": "ZONE3 REPEAT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x3BC",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #35' ('ZONE3 REPEAT', K4-5 : ZONE3, bits 29 to 48 00111101110001111101): Denon-K device 4 subdevice 5 function 956, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE3_RANDOM_SLASH_SHUFFLE": {
+      "label": "ZONE3 RANDOM/SHUFFLE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x3BD",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #36' ('ZONE3 RANDOM/SHUFFLE', K4-5 : ZONE3, bits 29 to 48 10111101110001110101): Denon-K device 4 subdevice 5 function 957, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE3_USB_DIRECT_PLAY": {
+      "label": "ZONE3 USB DIRECT PLAY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x3BE",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #37' ('ZONE3 USB DIRECT PLAY', K4-5 : ZONE3, bits 29 to 48 01111101110001111001): Denon-K device 4 subdevice 5 function 958, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE3_FAVORITE_DIRECT_PLAY": {
+      "label": "ZONE3 FAVORITE DIRECT PLAY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x3BF",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #38' ('ZONE3 FAVORITE DIRECT PLAY', K4-5 : ZONE3, bits 29 to 48 11111101110001110001): Denon-K device 4 subdevice 5 function 959, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE3_PRESET_CH_UP": {
+      "label": "ZONE3 PRESET CH UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x3CC",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #39' ('ZONE3 PRESET CH UP', K4-5 : ZONE3, bits 29 to 48 00110011110010011101): Denon-K device 4 subdevice 5 function 972, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE3_PRESET_CH_DOWN": {
+      "label": "ZONE3 PRESET CH DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x3CD",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #40' ('ZONE3 PRESET CH DOWN', K4-5 : ZONE3, bits 29 to 48 10110011110010010101): Denon-K device 4 subdevice 5 function 973, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE3_PRESET_CH_SHIFT": {
+      "label": "ZONE3 PRESET CH SHIFT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x3CE",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #41' ('ZONE3 PRESET CH SHIFT', K4-5 : ZONE3, bits 29 to 48 01110011110010011001): Denon-K device 4 subdevice 5 function 974, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE3_SEARCH_RDS": {
+      "label": "ZONE3 SEARCH(RDS)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x3D7",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #42' ('ZONE3 SEARCH(RDS)', K4-5 : ZONE3, bits 29 to 48 11101011110000010000): Denon-K device 4 subdevice 5 function 983, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE3_PLAY_SLASH_PAUSE": {
+      "label": "ZONE3 PLAY/PAUSE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x3E0",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #43' ('ZONE3 PLAY/PAUSE', K4-5 : ZONE3, bits 29 to 48 00000111110011011110): Denon-K device 4 subdevice 5 function 992, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE3_STOP": {
+      "label": "ZONE3 STOP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x3E1",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #44' ('ZONE3 STOP', K4-5 : ZONE3, bits 29 to 48 10000111110011010110): Denon-K device 4 subdevice 5 function 993, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE3_SKIP_MINUS_SLASH_TUNING_DOWN": {
+      "label": "ZONE3 SKIP MINUS/TUNING DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x3E3",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #45' ('ZONE3 SKIP MINUS/TUNING DOWN', K4-5 : ZONE3, bits 29 to 48 11000111110011010010): Denon-K device 4 subdevice 5 function 995, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ZONE3_SKIP_PLUS_SLASH_TUNING_UP": {
+      "label": "ZONE3 SKIP PLUS/TUNING UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x05",
+          "function": "0x3E4",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 18 table row 'K4-5 #46' ('ZONE3 SKIP PLUS/TUNING UP', K4-5 : ZONE3, bits 29 to 48 00100111110011011100): Denon-K device 4 subdevice 5 function 996, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_BAND_FM": {
+      "label": "BAND FM",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x99",
+          "confidence": "untested",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 21 table row 'K4-1 #48' ('BAND FM', K4-1 : ANALOG TUNER (EU only), bits 29 to 48 10011001000011011011): Denon-K device 4 subdevice 1 function 153, GENRE1, GENRE2 and the data each first bit first; the document's parity byte 11011011 (0xDB) is not 0xD8, which its data bits give (the exclusive or of the 3rd, 4th and 5th bytes), nor any zone's: the data bits are read and the parity byte is not"
+        }
+      ]
+    },
+    "KEY_BAND_AM": {
+      "label": "BAND AM",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0x9A",
+          "confidence": "untested",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 21 table row 'K4-1 #49' ('BAND AM', K4-1 : ANALOG TUNER (EU only), bits 29 to 48 01011001000011010111): Denon-K device 4 subdevice 1 function 154, GENRE1, GENRE2 and the data each first bit first; the document's parity byte 11010111 (0xEB) is not 0xE8, which its data bits give (the exclusive or of the 3rd, 4th and 5th bytes), nor any zone's: the data bits are read and the parity byte is not"
+        }
+      ]
+    },
+    "KEY_CURSOR_UP_TUNER": {
+      "label": "CURSOR UP(TUNER)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0xAA",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 21 table row 'K4-1 #50' ('CURSOR UP(TUNER)', K4-1 : ANALOG TUNER (EU only), bits 29 to 48 01010101000011010111): Denon-K device 4 subdevice 1 function 170, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_CURSOR_DOWN_TUNER": {
+      "label": "CURSOR DOWN(TUNER)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0xAB",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 21 table row 'K4-1 #51' ('CURSOR DOWN(TUNER)', K4-1 : ANALOG TUNER (EU only), bits 29 to 48 11010101000011011111): Denon-K device 4 subdevice 1 function 171, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_CURSOR_LEFT_TUNER": {
+      "label": "CURSOR LEFT(TUNER)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0xAD",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 21 table row 'K4-1 #52' ('CURSOR LEFT(TUNER)', K4-1 : ANALOG TUNER (EU only), bits 29 to 48 10110101000011011001): Denon-K device 4 subdevice 1 function 173, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_CURSOR_RIGHT_TUNER": {
+      "label": "CURSOR RIGHT(TUNER)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0xAE",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 21 table row 'K4-1 #53' ('CURSOR RIGHT(TUNER)', K4-1 : ANALOG TUNER (EU only), bits 29 to 48 01110101000011010101): Denon-K device 4 subdevice 1 function 174, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_CURSOR_ENTER_TUNER": {
+      "label": "CURSOR ENTER(TUNER)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0xAF",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 21 table row 'K4-1 #54' ('CURSOR ENTER(TUNER)', K4-1 : ANALOG TUNER (EU only), bits 29 to 48 11110101000011011101): Denon-K device 4 subdevice 1 function 175, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_RETURN_TUNER": {
+      "label": "RETURN(TUNER)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x01",
+          "function": "0xF1",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 21 table row 'K4-1 #55' ('RETURN(TUNER)', K4-1 : ANALOG TUNER (EU only), bits 29 to 48 10001111000001111010): Denon-K device 4 subdevice 1 function 241, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_CURSOR_UP": {
+      "label": "CURSOR UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x07",
+          "function": "0x1B",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 23 table row 'K4-7 #1' ('CURSOR UP', K4-7 : NET AUDIO, bits 29 to 48 11011000000001101111): Denon-K device 4 subdevice 7 function 27, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_CURSOR_DOWN": {
+      "label": "CURSOR DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x07",
+          "function": "0x1C",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 23 table row 'K4-7 #2' ('CURSOR DOWN', K4-7 : NET AUDIO, bits 29 to 48 00111000000001100001): Denon-K device 4 subdevice 7 function 28, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_CURSOR_LEFT": {
+      "label": "CURSOR LEFT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x07",
+          "function": "0x1D",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 23 table row 'K4-7 #3' ('CURSOR LEFT', K4-7 : NET AUDIO, bits 29 to 48 10111000000001101001): Denon-K device 4 subdevice 7 function 29, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_CURSOR_RIGHT": {
+      "label": "CURSOR RIGHT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x07",
+          "function": "0x1E",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 23 table row 'K4-7 #4' ('CURSOR RIGHT', K4-7 : NET AUDIO, bits 29 to 48 01111000000001100101): Denon-K device 4 subdevice 7 function 30, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_ENTER": {
+      "label": "ENTER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x07",
+          "function": "0x1F",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 23 table row 'K4-7 #5' ('ENTER', K4-7 : NET AUDIO, bits 29 to 48 11111000000001101101): Denon-K device 4 subdevice 7 function 31, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_JPEG_SKIP_PLUS": {
+      "label": "JPEG Skip +",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x07",
+          "function": "0x90",
+          "confidence": "untested",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 23 table row 'K4-7 #6' ('JPEG Skip +', K4-7 : NET AUDIO, bits 29 to 48 00001001000001110110): Denon-K device 4 subdevice 7 function 144, GENRE1, GENRE2 and the data each first bit first; the document's parity byte 01110110 (0x6E) is not 0x4E, which its data bits give (the exclusive or of the 3rd, 4th and 5th bytes), nor any zone's: the data bits are read and the parity byte is not"
+        }
+      ]
+    },
+    "KEY_JPEG_SKIP_MINUS": {
+      "label": "JPEG Skip -",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x07",
+          "function": "0x91",
+          "confidence": "untested",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 23 table row 'K4-7 #7' ('JPEG Skip -', K4-7 : NET AUDIO, bits 29 to 48 10001001000001111110): Denon-K device 4 subdevice 7 function 145, GENRE1, GENRE2 and the data each first bit first; the document's parity byte 01111110 (0x7E) is not 0x5E, which its data bits give (the exclusive or of the 3rd, 4th and 5th bytes), nor any zone's: the data bits are read and the parity byte is not"
+        }
+      ]
+    },
+    "KEY_PRESET_CH_UP": {
+      "label": "PRESET CH UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x07",
+          "function": "0x92",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 23 table row 'K4-7 #8' ('PRESET CH UP', K4-7 : NET AUDIO, bits 29 to 48 01001001000001110110): Denon-K device 4 subdevice 7 function 146, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_PRESET_CH_DOWN": {
+      "label": "PRESET CH DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x07",
+          "function": "0x93",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 23 table row 'K4-7 #9' ('PRESET CH DOWN', K4-7 : NET AUDIO, bits 29 to 48 11001001000001111110): Denon-K device 4 subdevice 7 function 147, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_PRESET_CH_SHIFT": {
+      "label": "PRESET CH SHIFT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x07",
+          "function": "0x94",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 23 table row 'K4-7 #10' ('PRESET CH SHIFT', K4-7 : NET AUDIO, bits 29 to 48 00101001000001110000): Denon-K device 4 subdevice 7 function 148, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_MEMORY": {
+      "label": "MEMORY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x07",
+          "function": "0xA0",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 23 table row 'K4-7 #11' ('MEMORY', K4-7 : NET AUDIO, bits 29 to 48 00000101000010110010): Denon-K device 4 subdevice 7 function 160, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_PAGE_SEARCH_SLASH_CHARA_SEARCH": {
+      "label": "PAGE SEARCH/CHARA SEARCH",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x07",
+          "function": "0xA3",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 23 table row 'K4-7 #12' ('PAGE SEARCH/CHARA SEARCH', K4-7 : NET AUDIO, bits 29 to 48 11000101000010111110): Denon-K device 4 subdevice 7 function 163, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_PRESET_1": {
+      "label": "PRESET 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x07",
+          "function": "0xB0",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 23 table row 'K4-7 #13' ('PRESET 1', K4-7 : NET AUDIO, bits 29 to 48 00001101000000110010): Denon-K device 4 subdevice 7 function 176, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_PRESET_2": {
+      "label": "PRESET 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x07",
+          "function": "0xB1",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 23 table row 'K4-7 #14' ('PRESET 2', K4-7 : NET AUDIO, bits 29 to 48 10001101000000111010): Denon-K device 4 subdevice 7 function 177, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_PRESET_3": {
+      "label": "PRESET 3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x07",
+          "function": "0xB2",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 23 table row 'K4-7 #15' ('PRESET 3', K4-7 : NET AUDIO, bits 29 to 48 01001101000000110110): Denon-K device 4 subdevice 7 function 178, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_PRESET_4": {
+      "label": "PRESET 4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x07",
+          "function": "0xB3",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 23 table row 'K4-7 #16' ('PRESET 4', K4-7 : NET AUDIO, bits 29 to 48 11001101000000111110): Denon-K device 4 subdevice 7 function 179, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_PRESET_5": {
+      "label": "PRESET 5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x07",
+          "function": "0xB4",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 23 table row 'K4-7 #17' ('PRESET 5', K4-7 : NET AUDIO, bits 29 to 48 00101101000000110000): Denon-K device 4 subdevice 7 function 180, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_PRESET_6": {
+      "label": "PRESET 6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x07",
+          "function": "0xB5",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 23 table row 'K4-7 #18' ('PRESET 6', K4-7 : NET AUDIO, bits 29 to 48 10101101000000111000): Denon-K device 4 subdevice 7 function 181, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_PRESET_7": {
+      "label": "PRESET 7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x07",
+          "function": "0xB6",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 23 table row 'K4-7 #19' ('PRESET 7', K4-7 : NET AUDIO, bits 29 to 48 01101101000000110100): Denon-K device 4 subdevice 7 function 182, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_PRESET_8": {
+      "label": "PRESET 8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x07",
+          "function": "0xB7",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 23 table row 'K4-7 #20' ('PRESET 8', K4-7 : NET AUDIO, bits 29 to 48 11101101000000111100): Denon-K device 4 subdevice 7 function 183, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_RETURN_NET_AUDIO": {
+      "label": "RETURN(NET AUDIO)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x07",
+          "function": "0xF1",
+          "confidence": "untested",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 23 table row 'K4-7 #21' ('RETURN(NET AUDIO)', K4-7 : NET AUDIO, bits 29 to 48 10001111000010111010): Denon-K device 4 subdevice 7 function 241, GENRE1, GENRE2 and the data each first bit first; the document's parity byte 10111010 (0x5D) is not 0x58, which its data bits give (the exclusive or of the 3rd, 4th and 5th bytes), nor any zone's: the data bits are read and the parity byte is not"
+        }
+      ]
+    },
+    "KEY_SHIFT_A": {
+      "label": "SHIFT A",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x07",
+          "function": "0xF8",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 23 table row 'K4-7 #22' ('SHIFT A', K4-7 : NET AUDIO, bits 29 to 48 00011111000000010011): Denon-K device 4 subdevice 7 function 248, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_SHIFT_B": {
+      "label": "SHIFT B",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x07",
+          "function": "0xF9",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 23 table row 'K4-7 #23' ('SHIFT B', K4-7 : NET AUDIO, bits 29 to 48 10011111000000011011): Denon-K device 4 subdevice 7 function 249, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_SHIFT_C": {
+      "label": "SHIFT C",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x07",
+          "function": "0xFA",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 23 table row 'K4-7 #24' ('SHIFT C', K4-7 : NET AUDIO, bits 29 to 48 01011111000000010111): Denon-K device 4 subdevice 7 function 250, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_SHIFT_D": {
+      "label": "SHIFT D",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x07",
+          "function": "0xFB",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 23 table row 'K4-7 #25' ('SHIFT D', K4-7 : NET AUDIO, bits 29 to 48 11011111000000011111): Denon-K device 4 subdevice 7 function 251, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_SHIFT_E": {
+      "label": "SHIFT E",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x07",
+          "function": "0xFC",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 23 table row 'K4-7 #26' ('SHIFT E', K4-7 : NET AUDIO, bits 29 to 48 00111111000000010001): Denon-K device 4 subdevice 7 function 252, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_SHIFT_F": {
+      "label": "SHIFT F",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x07",
+          "function": "0xFD",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 23 table row 'K4-7 #27' ('SHIFT F', K4-7 : NET AUDIO, bits 29 to 48 10111111000000011001): Denon-K device 4 subdevice 7 function 253, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_SHIFT_G": {
+      "label": "SHIFT G",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x07",
+          "function": "0xFE",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 23 table row 'K4-7 #28' ('SHIFT G', K4-7 : NET AUDIO, bits 29 to 48 01111111000000010101): Denon-K device 4 subdevice 7 function 254, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_PLAY": {
+      "label": "PLAY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x07",
+          "function": "0x305",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 23 table row 'K4-7 #29' ('PLAY', K4-7 : NET AUDIO, bits 29 to 48 10100000110011100100): Denon-K device 4 subdevice 7 function 773, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_PAUSE": {
+      "label": "PAUSE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x07",
+          "function": "0x306",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 23 table row 'K4-7 #30' ('PAUSE', K4-7 : NET AUDIO, bits 29 to 48 01100000110011101000): Denon-K device 4 subdevice 7 function 774, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_STOP": {
+      "label": "STOP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x07",
+          "function": "0x307",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 23 table row 'K4-7 #31' ('STOP', K4-7 : NET AUDIO, bits 29 to 48 11100000110011100000): Denon-K device 4 subdevice 7 function 775, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_SKIP_PLUS": {
+      "label": "SKIP PLUS",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x07",
+          "function": "0x308",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 23 table row 'K4-7 #32' ('SKIP PLUS', K4-7 : NET AUDIO, bits 29 to 48 00010000110011101111): Denon-K device 4 subdevice 7 function 776, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_SKIP_MINUS": {
+      "label": "SKIP MINUS",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x07",
+          "function": "0x309",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 23 table row 'K4-7 #33' ('SKIP MINUS', K4-7 : NET AUDIO, bits 29 to 48 10010000110011100111): Denon-K device 4 subdevice 7 function 777, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_REPEAT_ONE": {
+      "label": "REPEAT ONE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x07",
+          "function": "0x30A",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 23 table row 'K4-7 #34' ('REPEAT ONE', K4-7 : NET AUDIO, bits 29 to 48 01010000110011101011): Denon-K device 4 subdevice 7 function 778, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_REPEAT_OFF": {
+      "label": "REPEAT OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x07",
+          "function": "0x30B",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 23 table row 'K4-7 #35' ('REPEAT OFF', K4-7 : NET AUDIO, bits 29 to 48 11010000110011100011): Denon-K device 4 subdevice 7 function 779, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_RANDOM_ON": {
+      "label": "RANDOM ON",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x07",
+          "function": "0x30C",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 23 table row 'K4-7 #36' ('RANDOM ON', K4-7 : NET AUDIO, bits 29 to 48 00110000110011101101): Denon-K device 4 subdevice 7 function 780, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_RANDOM_OFF": {
+      "label": "RANDOM OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x07",
+          "function": "0x30D",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 23 table row 'K4-7 #37' ('RANDOM OFF', K4-7 : NET AUDIO, bits 29 to 48 10110000110011100101): Denon-K device 4 subdevice 7 function 781, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_REPEAT_ALL": {
+      "label": "REPEAT ALL",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x07",
+          "function": "0x311",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 23 table row 'K4-7 #38' ('REPEAT ALL', K4-7 : NET AUDIO, bits 29 to 48 10001000110001100110): Denon-K device 4 subdevice 7 function 785, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    },
+    "KEY_STATUS_REQUEST_FOR_2WAY_RC_NET_AUDIO": {
+      "label": "STATUS REQUEST(for 2way RC) (NET AUDIO)",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0x07",
+          "function": "0x316",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/avr-4310_ir_code_v01.pdf@587e928a (retrieved 2026-10-18) page 23 table row 'K4-7 #39' ('STATUS REQUEST(for 2way RC)', K4-7 : NET AUDIO, bits 29 to 48 01101000110001101000): Denon-K device 4 subdevice 7 function 790, GENRE1, GENRE2 and the data each first bit first"
+        }
+      ]
+    }
+  }
+}
