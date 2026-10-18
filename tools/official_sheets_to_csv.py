@@ -130,6 +130,7 @@ SHEETS = {
     "denon": {"AVR4311CI_AVR4311_IR-Codes.pdf": ["words"],
               "AVR-X2700H_S960H_IR_CODE_V01.doc": ["paragraphs"], "AVR-X3700H_AVC-X3700H_IR_CODE_V01_04062020.doc": ["paragraphs"],
               "AVR-X4700H_AVC-X4700H_IR_CODE_V01.doc": ["paragraphs"], "AVR-X6700H_AVC-X6700H_IR_CODE_V01.doc": ["paragraphs"],
+              "avrx1000_e300_ir_code_v01.doc": ["paragraphs"], "avr-x2500h_s940h_ir_code_v01-02072018.doc": ["paragraphs"],
               **{name: ["words"] for name in ("avr-2106-ircodes.pdf", "avr-2805-ircodes.pdf", "avr-2807-ircodes.pdf", "avr-2808_ir_code.pdf", "avr-3803-ircodes.pdf", "avr-3808ci-ircodes.pdf",
                                               "avr-4308ci_ircodes.pdf", "avr-4806-ircodes.pdf", "avr-5805-ircodes.pdf", "avr-5805ci_5805up_ir_codes.pdf", "avr987-ircodes.pdf",
                                               "417_avr3310_ir_code.pdf", "457_avr3311ci_avr3311_991_ir_code_v01.pdf", "avr-1911_791_ir_code_v01.pdf", "avr-2311ci_avr2311_891_ir_code_v01.pdf",

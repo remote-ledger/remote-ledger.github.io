@@ -610,6 +610,8 @@ DOC_DOCUMENTS: tuple[DocDocument, ...] = (
     DocDocument("AVR-X3700H_AVC-X3700H_IR_CODE_V01_04062020.doc", ("AVR-X3700H", "AVC-X3700H")),
     DocDocument("AVR-X4700H_AVC-X4700H_IR_CODE_V01.doc", ("AVR-X4700H", "AVC-X4700H")),
     DocDocument("AVR-X6700H_AVC-X6700H_IR_CODE_V01.doc", ("AVR-X6700H", "AVC-X6700H")),
+    DocDocument("avrx1000_e300_ir_code_v01.doc", ("AVR-X1000", "AVR-E300")),                      # §95: live files of Denon's own host
+    DocDocument("avr-x2500h_s940h_ir_code_v01-02072018.doc", ("AVR-X2500H", "AVR-S940H")),
 )
 _DOC_ADDRESS = re.compile(r"SYSTEM ADDRESS ?\(C1[~\u301c]C5\) : ([01]{5}) , EXTENSION BIT ?\(C12,C13\) : ([01]{2})")
 _DOC_MARK = re.compile(r"\s*\u203b+\s*([^\u203b]*?)\s+only\b|\s*\(([^()]*?)\s+only\)", re.I)
@@ -656,13 +658,25 @@ def marks_of(text: str, models: tuple[str, ...]) -> tuple[str, frozenset[str]]:
     return label, frozenset(kept)
 
 
+def whole_parenthesis(text: str) -> bool:
+    """Whether the whole of ``text`` is one parenthesis: ``(RDS SEARCH \u203bEU only)`` is, ``(FM/AM)TUNING UP`` and ``(DAB) STATION UP (... only)`` are not."""
+    depth = 0
+    for i, ch in enumerate(text):
+        depth += ch == "("
+        depth -= ch == ")"
+        if depth == 0 and i < len(text) - 1:
+            return False
+    return text.startswith("(") and depth == 0
+
+
 def doc_names(parts: list[str], models: tuple[str, ...]) -> list[tuple[str, frozenset[str]]]:
-    """The names of a key's cell and the models each is for. **A paragraph that is only a mark (``(AVR-X2700H DAB only)``), begins with ``/`` or follows one that ends
-    with ``/`` goes on the paragraph before** (``DIRECT SEARCH/`` and ``RDS SEARCH (AVR-X2700H/S960H EU only)`` are one name for the markets); **another paragraph is
-    another name** (``(FM/AM)TUNING UP`` and ``(DAB) STATION UP (AVR-X2700H DAB only)``), and a name with no mark of models is for the models the others are not for."""
+    """The names of a key's cell and the models each is for. **A paragraph that is only a mark (``(AVR-X2700H DAB only)``) or only a parenthesis (``(RDS SEARCH \u203bEU only)``
+    under ``DIRECT SEARCH``: the lists of 2013 and 2018), begins with ``/`` or follows one that ends with ``/`` goes on the paragraph before** (``DIRECT SEARCH/`` and ``RDS
+    SEARCH (AVR-X2700H/S960H EU only)`` are one name for the markets); **another paragraph is another name** (``(FM/AM)TUNING UP`` and ``(DAB) STATION UP (AVR-X2700H DAB
+    only)``), and a name with no mark of models is for the models the others are not for."""
     joined: list[str] = []
     for part in parts:
-        if joined and (joined[-1].endswith("/") or part.startswith("/") or re.fullmatch(r"\([^()]*only\)|\(AVR-\w+ DAB\)", part)):
+        if joined and (joined[-1].endswith("/") or part.startswith("/") or re.fullmatch(r"\([^()]*only\)|\(AVR-\w+ DAB\)", part) or whole_parenthesis(part)):
             joined[-1] += ("" if joined[-1].endswith("/") or part.startswith("/") else " ") + part
         else:
             joined.append(part)
@@ -767,10 +781,18 @@ def parse_doc(rows: list[list[str]], models: tuple[str, ...]) -> list[DocRow]:
                 group.table = table
             if table != group.table or table[0] != group.genre1:
                 raise ValueError(f"cell {i}: the row {text} is not of the table K{group.table[0]}-{group.table[1]} of the group {group.printed!r} (header: GENRE1 {group.genre1})")
-            bits = "".join(cells[i + k][0] for k in range(1, 11))
-            if not re.fullmatch(r"[01]{10}", bits) or [cells[i + k][0] for k in range(11, 21)] != ["*"] * 10:
+            first = [cells[i + k][0] for k in range(1, 15) if i + k < len(cells)]
+            skip = 0
+            if len(first) == 14 and first[:4] == [""] * 4 and all(re.fullmatch(r"[01]", t) for t in first[4:]) and [cells[i + k][0] for k in range(15, 25) if i + k < len(cells)] == ["*"] * 10:
+                skip = 4                                                    # the lists of 2013 to 2018 have four cells for the GENRE2 before each row's data, empty but in a group's first row
+            elif len(first) == 14 and all(re.fullmatch(r"[01]", t) for t in first) and [cells[i + k][0] for k in range(15, 25) if i + k < len(cells)] == ["*"] * 10:
+                if value("".join(first[:4])) != table[1]:                    # the first row of a group has its GENRE2 there
+                    raise ValueError(f"cell {i}: the row {text} has the GENRE2 bits {''.join(first[:4])}, not its identifier's")
+                skip = 4
+            bits = "".join(cells[i + skip + k][0] for k in range(1, 11))
+            if not re.fullmatch(r"[01]{10}", bits) or [cells[i + skip + k][0] for k in range(11, 21)] != ["*"] * 10:
                 raise ValueError(f"cell {i}: the row {text} does not have 10 bits and 10 '*'")
-            parts, i = name_at(i + 21)
+            parts, i = name_at(i + skip + 21)
             note = (f"the group's header gives GENRE2 {group.genre2}, not the rows' {table[1]} (the header of the group before, copied): its rows' identifiers and the document's "
                     "table of remote IDs say K%d-%d" % table) if group.genre2 != table[1] else ""
             names = [(label, kept & group.models) for label, kept in doc_names(parts, models)] if parts else []
@@ -888,7 +910,10 @@ def build_docs(snapshot: Snapshot, authored: dict[tuple[str, str], str], report:
     for document in DOC_DOCUMENTS:
         rows = parse_doc(snapshot.sheet_of(document.file, "paragraphs"), document.models)
         entry, sha = snapshot.documents[document.file], snapshot.sha(document.file)
-        where = f"{DOC_HOST}/{document.file}@{sha} (retrieved {entry.get('retrieved', snapshot.retrieved)}, from the Wayback Machine snapshot {entry['snapshot']})"
+        if "snapshot" in entry:
+            where = f"{DOC_HOST}/{document.file}@{sha} (retrieved {entry.get('retrieved', snapshot.retrieved)}, from the Wayback Machine snapshot {entry['snapshot']})"
+        else:                                                                    # a live file of Denon's own host (§95)
+            where = f"assets.denon.com IR code documents/{document.file}@{sha} (retrieved {entry.get('retrieved', snapshot.retrieved)})"
         out += emit_rows(document.file, where, rows, document.models, authored, report, gate)
     return out
 

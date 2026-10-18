@@ -258,6 +258,10 @@ DOCUMENTS = {
                                ("fr", "avr-1911_791_ir_code_v01.pdf"), ("fr", "avr-2311ci_avr2311_891_ir_code_v01.pdf"), ("fr", "avr-4310_ir_code_v01.pdf"), ("fr", "avr2809_ir_code_v01.pdf"),
                                ("fr", "avr2309_ir_code_v01.pdf"), ("de", "avr2113_1913_ir_code_v02.pdf"), ("de", "avr2313_ir_code_v02.pdf"), ("de", "avr3313_ir_code_v02.pdf"),
                                ("de", "avr4520_ir_code_v02.pdf"), ("fr", "avr3312_ir_code_v01.pdf"), ("fr", "avr2312_ir_code_v01.pdf"))],
+        # two more X-series Word lists of the same host (section 95): the AVR-X1000 and AVR-E300 of 2013 (`uk/`) and the AVR-X2500H and AVR-S940H of 2018 (`us/`; the host
+        # redirects its mixed-case path to the lower-case one, which is the address pinned)
+        ("avrx1000_e300_ir_code_v01.doc", "https://assets.denon.com/documentmaster/uk/avrx1000_e300_ir_code_v01.doc", None),
+        ("avr-x2500h_s940h_ir_code_v01-02072018.doc", "https://assets.denon.com/documentmaster/us/avr-x2500h_s940h_ir_code_v01-02072018.doc", None),
     ],
     # Hitachi America's remote IR code documents for its televisions (DESIGN section 82): its site no longer serves them, so the Wayback Machine's copies
     # (the two RS-232 specifications and the Roll-and-Click page, which has names and no codes, are not IR code tables and are not pinned).
