@@ -77,6 +77,10 @@ DOCUMENTS = {
         # Wayback Machine's copies (the live files are the same bytes). Not pinned: the External Command Lists (RS-232) and the private repository's candidates
         *[(name, WB + stamp + "id_/https://www.snapav.com/wcsstore/ExtendedSitesCatalogAssetStore/attachments/documents/ProjectionScreens/ProtocolsAndDrivers/" + name.replace(" ", "%20"), None)
           for name, stamp in (("RCU Code of LX-NZ3_20191114.pdf", "20220122184353"), ("LX-UH1 Remote Control Codes.pdf", "20240413200335"), ("LX-NZ3 long hex commands.pdf", "20220127000738"))],
+        # the remote control code tables of the 2018 D-ILA projectors (``Firmware 3.1 IR Control``: the table with a Pronto hex for each code) and of the LEO3 platform (DESIGN
+        # section 92): the same folder of SnapAV's site, the Wayback Machine's copies (the LEO3 table is the same bytes as a live file on images.salsify.com)
+        ("Firmware 3.1 IR Control.pdf", WB + "20220522043523id_/https://www.snapav.com/wcsstore/ExtendedSitesCatalogAssetStore/attachments/documents/ProjectionScreens/ProtocolsAndDrivers/Firmware%203.1%20IR%20Control.pdf", None),
+        ("LEO3_Remote_Control_Codes_Table_ver_1-0.pdf", WB + "20220118222555id_/https://www.snapav.com/wcsstore/ExtendedSitesCatalogAssetStore/attachments/documents/ProjectionScreens/SupportDocuments/LEO3_Remote_Control_Codes_Table_ver_1-0.pdf", None),
     ],
     # BenQ's LK952 code list (DESIGN section 91): the IR, RS-232 and DDC codes of the projector, on the same folder of SnapAV's site; the Wayback Machine's copy
     "benq": [

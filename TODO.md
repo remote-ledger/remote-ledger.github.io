@@ -16,9 +16,9 @@ sources have been imported under SPEC R19:
   fifty-eight executors (DESIGN §28, §32, §33, §34, §35, §36, §39, §42, §44, §46, §48, §49, §51, §53, §56, §59, §61).
 - **Manufacturers' own IR tables**: Marantz's AV receiver charts, Anthem's IR
   hex sheet, Oppo's remote code workbooks, KEF's IR code sheets, JVC's
-  projector guide and LX-NZ3 and LX-UH1 sheets, BenQ's LK952 code list, Arcam's custom installation notes, two of Cambridge Audio's lists
+  projector guide, LX-NZ3 and LX-UH1 sheets and 2018 and LEO3 code tables, BenQ's LK952 code list, Arcam's custom installation notes, two of Cambridge Audio's lists
   of NEC codes, Hegel's RC-5 tables, Cary Audio's DMS table, InFocus's projector IR code PDFs, Lyngdorf's NEC code table, Emotiva's Pronto hex PDFs, Denon's AVR-4311 remote code list, master IR hex spreadsheet and X-series remote code lists of 2020, Hitachi America's TV remote IR codes, Classé's IR code lists and HEX PDFs, Cyrus Audio's RC-5 tables, Yamaha's standard and extended IR code tables, JBL Synthesis's and Lexicon's RC-5 code sets, NAD's T-series IR tables and Crestron IR files, Simaudio's table of IR codes and Rotel's IR hex code PDFs, 830 files, 68,986
-  keys (DESIGN §29, §31, §58, §60, §62, §63, §64, §65, §66, §68, §69, §71, §72, §73, §74, §75, §76, §77, §78, §79, §80, §81, §82, §83, §84, §85, §86, §87, §88, §89, §90, §91; Linn's RC-5 table moved to the private repository, §70).
+  keys (DESIGN §29, §31, §58, §60, §62, §63, §64, §65, §66, §68, §69, §71, §72, §73, §74, §75, §76, §77, §78, §79, §80, §81, §82, §83, §84, §85, §86, §87, §88, §89, §90, §91, §92; Linn's RC-5 table moved to the private repository, §70).
 
 SPEC v0.11 makes growing coverage from every source whose licence permits
 it the standing goal, with no fixed list of sources (DESIGN §8, Phase 8).
@@ -35,7 +35,21 @@ Land it in two PRs, code and then data.
 - [ ] **Survey candidate sources.** Confirm each licence before any code.
       Candidates include Flipper-IRDB's files from after its CC0 cutoff and
       IrScrutinizer / JP1 exports. Record for each one why it does or does
-      not meet R19.
+      not meet R19. **Flipper-IRDB surveyed 2026-10-18** (`Lucaslhm/Flipper-IRDB`, 8,901 `.ir`
+      files, GitHub's licence API says CC0-1.0): the `LICENSE` and the README's "By submitting you
+      agree to license your work under CC0" were added on 2025-08-07 (PR #960), so **only a file
+      added after that is CC0** (the earlier ones have no licence of their own, which is the
+      exclusion of SPEC §4). **85 files were added after it; 3 are earlier files moved (the same
+      blob), so 82 qualify**, with 1,972 signals: NEC 524, raw 391, NECext 336, SIRC15 155, SIRC20 145,
+      RC5 132, Samsung32 110, Kaseikyo 96, SIRC 30, Pioneer 26, RC6 14, RC5X 13 (23 files are raw only:
+      air conditioners, fans). Many of the devices are not in the ledger (Fosi Audio ZD3, Wanbo T6
+      Max, Sony RM-PJ30, Canon LV-X320, Roksan K3...). **Not done: it needs a registered import root of
+      its own, and Talismote's `BundleVectorsTest` pins the set of sources (`authored`, `lirc`,
+      `smartir`, `irblaster`, `hifi-remote`, `jp1`, `official`), so a new source is a change in
+      both repositories: the owner's call.** The importer would read the checkout at a pinned commit,
+      take the files whose first commit is after the cutoff and whose blob is not in the history
+      before it, map NEC, NECext, Samsung32, SIRC, RC5, RC5X, RC6, Kaseikyo and Pioneer to the
+      ledger's protocols and keep the raw signals as raw forms (as SmartIR's).
 - [ ] **Decide the excluded sources**: IRDB, Global Caché and Remote
       Central (SPEC §4). They are excluded by their licences alone, and the
       owner's decision of 2026-10-08 (D110) is that a table of reference
@@ -86,8 +100,7 @@ Land it in two PRs, code and then data.
       private repository's, not done; the rest of that folder is read in §87 or is no IR table); **Pioneer's two AV receiver IR workbooks** of 2010 and FY15 (`Copyright (c) Pioneer
       Corporation, all rights reserved`: 131 files in the private repository, its pull request #9, awaiting the owner); the Wayback Machine's index answers a narrow path
       prefix (`pioneerelectronics.com/StaticFiles/PUSA/Files/Home%20Custom%20Install/`) where a whole host times out. **Leads of 2026-10-18** (SnapAV's other folders; §90 reads
-      Denon's X-series lists of the amplifiers folder and §91 the projection-screens folder's BenQ and JVC LX sheets): JVC's `Firmware 3.1 IR Control` and
-      `LEO3_Remote_Control_Codes_Table_ver_1-0` (`(c)`: the private repository's) and the image-only `HT5550_IR_Codes.pdf` (no text layer). A document is
+      Denon's X-series lists of the amplifiers folder and §91 and §92 the projection-screens folder's BenQ and JVC sheets): the image-only `HT5550_IR_Codes.pdf` (no text layer) is left. A document is
       pinned by hash as D123 does it; a PDF is read as the lines of text of its
       pages (KEF's was the first, D243, JVC's the second, D247), which suits a
       table and not prose. Kaleidescape's PDF says "All rights reserved": a source
