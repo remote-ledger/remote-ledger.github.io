@@ -8,6 +8,13 @@ code is read as the ledger's ``JVC`` ``irp`` form (device 115, the function), an
 (the guide's text has three that are damaged) is Untested and says so, as Oppo's rows are. The guide's last page says it
 "may be distributed freely, as long as the author and copyright information remain intact": the document is pinned whole and
 the notices say who wrote it.
+
+**The LX-NZ3 and LX-UH1 (DESIGN section 91)** are JVC's home laser projectors, and their IR code sheets are not the guide's: two PDFs of one table each
+(``RCU Code of LX-NZ3`` and ``LX-UH1 Remote Control Codes``: a key's name, the custom code and its second byte, the data code and its complement), on SnapAV's
+protocols-and-drivers folder for projection screens, and a third PDF of the LX-NZ3's codes as Pronto hex (``LX-NZ3 long hex commands``). **A key is the ledger's NEC1**
+(the frame's four bytes: the custom code ``00`` the device, its second byte ``6A`` the subdevice, which is not the device's complement, the data code the function and
+its complement), a file for each of the two products, **at 38.4 kHz: the long hex's frequency word is 0x006C, and the UH1's sheet gives none (read as the NZ3's)**. The long hex is
+decoded and must say the table's code (JVC's own check, as the guide's is); a data code whose complement is not the table's makes the key Untested.
 """
 
 from __future__ import annotations
@@ -20,6 +27,7 @@ from typing import Any
 from ..import_common import form_compiles
 from ..irblaster.importer import fold_label
 from .common import DOUBTFUL_TIER, IMPORT_ROOT, TIER, Report, Snapshot, slug
+from .emotiva import decode_frame
 
 MAKER = "jvc"
 BRAND = "JVC"
@@ -222,7 +230,7 @@ def key_names(labels: list[str]) -> list[str]:
     return out
 
 
-def build(snapshot: Snapshot, authored: dict[tuple[str, str], str], report: Report) -> list[tuple[str, dict[str, Any]]]:
+def build_guide(snapshot: Snapshot, authored: dict[tuple[str, str], str], report: Report) -> list[tuple[str, dict[str, Any]]]:
     guide = parse_pages(snapshot.sheet_of(DOCUMENT, SHEET))
     sha = snapshot.sha(DOCUMENT)
     where = f"jvc.com D-ILA remote emulation guide/{DOCUMENT}"
@@ -300,3 +308,197 @@ def build(snapshot: Snapshot, authored: dict[tuple[str, str], str], report: Repo
                     {"manufacturer": BRAND, "model": model, "aliases": [], "controls": [f"{BRAND} {model}"],
                      "protocol": dict(PROTOCOL), "keys": keys}))
     return out
+
+
+# --- the LX-NZ3 and LX-UH1 sheets ---------------------------------------------------------------------------------------
+
+LX_HOST = "snapav.com JVC LX projector code sheets"
+LX_PROTOCOL = {"name": "NEC1", "carrierHz": 38400, "minSends": 1}          # the long hex's frequency word is 0x006C, which is NEC1's own 38.4 kHz
+
+
+@dataclass(frozen=True)
+class LxDocument:
+    file: str
+    model: str
+    long_hex: str | None            # the document of the same codes as Pronto hex, where there is one
+    pages: bool = False             # the sheet's text is read too (the footnote of an asterisk)
+
+
+LX_DOCUMENTS: tuple[LxDocument, ...] = (
+    LxDocument("RCU Code of LX-NZ3_20191114.pdf", "LX-NZ3", "LX-NZ3 long hex commands.pdf", pages=True),
+    LxDocument("LX-UH1 Remote Control Codes.pdf", "LX-UH1", None),
+)
+_LX_HEX = re.compile(r"^[0-9A-Fa-f]{2}$")
+_LX_LONG = re.compile(r"^(.+?): NEC1 Device: (\d+)\.(\d+) Function: (\d+) S=(\d+)$")
+
+
+@dataclass(frozen=True)
+class LxRow:
+    page: int
+    printed: str                    # the key's name as the sheet writes it
+    label: str                      # without the asterisk and the notes
+    notes: tuple[str, ...]          # what the name says besides the key: ``Remote Code only``, ``Direct Input Sel.``
+    custom: int | None              # None: the row has no code (the sheet's dashes)
+    custom2: int | None
+    data: int | None
+    data2: int | None
+
+    @property
+    def complement(self) -> bool:
+        return self.data is not None and self.data2 == self.data ^ 0xFF
+
+
+def lx_name(printed: str, footnote: str | None) -> tuple[str, tuple[str, ...]]:
+    """``(the label, the notes)`` of a key's name: the asterisk is the sheet's footnote (``*Remote Code only``) and a parenthesis is a note (``(for Remote only)``,
+    ``(Direct Input Sel.)``)."""
+    notes: list[str] = []
+    name = printed
+    if "*" in name:
+        if footnote is None:
+            raise ValueError(f"'{printed}': an asterisk and no footnote on the page")
+        notes.append(footnote)
+        name = name.replace("*", "")
+    for note in re.findall(r"\(([^()]*)\)", name):
+        notes.append(note)
+    name = re.sub(r"\s*\([^()]*\)", "", name)
+    return " ".join(name.split()), tuple(notes)
+
+
+def parse_lx(table: list[list[str]], pages: list[list[str]] | None) -> list[LxRow]:
+    """The rows of a sheet's ``tables`` (``page, table, cells``): the header ``KEY NAME`` and a row for each key, whose custom code, its second byte, data code
+    and complement are two hex digits (a row of dashes is a key with no code). The footnote is the page's line ``*Remote Code only``, which a name with an asterisk needs."""
+    footnote = next((line[1][1:].strip() for line in (pages or []) if len(line) > 1 and line[1].startswith("*") and "only" in line[1]), None)
+    out: list[LxRow] = []
+    started = False
+    for row in table:
+        cells = [c.strip() for c in row[2:]]
+        if cells and cells[0] == "KEY NAME":
+            started = True
+            continue
+        if not started or not cells or not cells[0]:
+            continue
+        codes = cells[1:5]
+        label, notes = lx_name(cells[0], footnote)
+        if all(c in ("-", "") for c in codes):
+            out.append(LxRow(int(row[0]), cells[0], label, notes, None, None, None, None))
+            continue
+        if not all(_LX_HEX.match(c) for c in codes):
+            raise ValueError(f"page {row[0]}: the row '{cells[0]}' has codes {codes}, which are not four hex bytes")
+        out.append(LxRow(int(row[0]), cells[0], label, notes, *(int(c, 16) for c in codes)))
+    if not out:
+        raise ValueError("no rows after the header 'KEY NAME'")
+    return out
+
+
+@dataclass(frozen=True)
+class LongHex:
+    page: int
+    name: str
+    stated: str                     # ``NEC1 Device: 0.106 Function: 94 S=106``
+    device: int
+    subdevice: int
+    function: int
+    pronto: str
+
+
+def parse_long_hex(rows: list[list[str]]) -> list[LongHex]:
+    """The entries of the long hex document's lines (``page, line``): ``INPUT: NEC1 Device: 0.106 Function: 94 S=106`` and the Pronto hex on the lines after it."""
+    out: list[LongHex] = []
+    pending: tuple[int, str, str, int, int, int] | None = None
+    text: list[str] = []
+
+    def close() -> None:
+        if pending is not None:
+            out.append(LongHex(pending[0], pending[1], pending[2], pending[3], pending[4], pending[5], " ".join(text)))
+
+    for row in rows:
+        page, line = int(row[0]), " ".join(row[1].split())
+        if m := _LX_LONG.match(line):
+            close()
+            text = []
+            pending = (page, m.group(1), line[len(m.group(1)) + 2:], int(m.group(2)), int(m.group(3)), int(m.group(4)))
+            if int(m.group(5)) != int(m.group(3)):
+                raise ValueError(f"page {page}: '{line}' says S={m.group(5)} and a subdevice of {m.group(3)}")
+        elif pending is not None and re.fullmatch(r"(?:[0-9A-Fa-f]{4}\s?)+", line):
+            text.append(line)
+    close()
+    return out
+
+
+def build_lx(snapshot: Snapshot, authored: dict[tuple[str, str], str], report: Report) -> list[tuple[str, dict[str, Any]]]:
+    gate: dict[tuple, str | None] = {}
+    out: list[tuple[str, dict[str, Any]]] = []
+    for document in LX_DOCUMENTS:
+        rows = parse_lx(snapshot.sheet_of(document.file, "tables"), snapshot.sheet_of(document.file, "pages") if document.pages else None)
+        entry, sha = snapshot.documents[document.file], snapshot.sha(document.file)
+        prefix = f"{LX_HOST}/{document.file}@{sha} (retrieved {entry.get('retrieved', snapshot.retrieved)}, from the Wayback Machine snapshot {entry['snapshot']})"
+        long_hex: dict[int, LongHex] = {}
+        long_prefix = ""
+        if document.long_hex:
+            for item in parse_long_hex(snapshot.sheet_of(document.long_hex, "pages")):
+                long_hex[item.function] = item
+            long_entry = snapshot.documents[document.long_hex]
+            long_prefix = (f"{LX_HOST}/{document.long_hex}@{snapshot.sha(document.long_hex)} (retrieved {long_entry.get('retrieved', snapshot.retrieved)}, "
+                           f"from the Wayback Machine snapshot {long_entry['snapshot']})")
+            report.count(MAKER, f"{document.long_hex}: entries read", len(long_hex))
+        members: list[tuple[str, dict[str, Any]]] = []
+        for row in rows:
+            report.count(MAKER, f"{document.file}: rows read")
+            if row.custom is None:
+                report.unrepresented[(MAKER, document.file, "a key with no code (the sheet's dashes)")] += 1
+                continue
+            code = (row.custom, row.custom2, row.data)
+            if code not in gate:
+                gate[code] = form_compiles(IMPORT_ROOT, LX_PROTOCOL, "K", {"id": "primary.irp", "type": "irp", "device": row.custom, "subdevice": row.custom2, "function": row.data,
+                                                                         "confidence": TIER, "source": "probe"})
+            if gate[code]:
+                report.unrepresented[(MAKER, document.file, f"does not compile: {gate[code]}")] += 1
+                continue
+            cite = (f"{prefix} page {row.page} table row '{row.printed}' (custom code {row.custom:02X} {row.custom2:02X}, data code {row.data:02X} {row.data2:02X}): "
+                    f"NEC1 device {row.custom} subdevice {row.custom2} function {row.data}")
+            if row.notes:
+                cite += "; the sheet says of it: " + "; ".join(row.notes)
+            doubts: list[str] = []
+            if not row.complement:
+                doubts.append(f"its data code {row.data:02X} and the code beside it {row.data2:02X} are not complements, and NEC1 sends the complement")
+            if document.long_hex:
+                item = long_hex.get(row.data)
+                if item is None:
+                    doubts.append("the long hex document has no entry of this function")
+                else:
+                    said = decode_frame(item.pronto)
+                    where = f"{long_prefix} page {item.page} '{item.name}: {item.stated}'"
+                    if isinstance(said, str):
+                        doubts.append(f"the long hex ({where}) is not a NEC frame: {said}")
+                    elif said.bytes != (row.custom, row.custom2, row.data, row.data ^ 0xFF) or (item.device, item.subdevice, item.function) != (row.custom, row.custom2, row.data):
+                        doubts.append(f"the long hex ({where}) says device {item.device} subdevice {item.subdevice} function {item.function} and decodes to {said.bytes}")
+                    else:
+                        cite += f"; the long hex document says the same ({where}: its Pronto hex, frequency word 0x{said.carrier:04X}, decodes to these four bytes)"
+                        if lx_name(item.name, "")[0] != row.label:
+                            cite += f", under the name '{item.name}'"
+            for d in doubts:
+                note = (MAKER, f"{document.file} page {row.page}", f"'{row.printed}': {d}")
+                if note not in report.notes:
+                    report.notes.append(note)
+            if doubts:
+                cite += "; " + "; ".join(doubts)
+            members.append((row.label, {"id": "primary.irp", "type": "irp", "device": row.custom, "subdevice": row.custom2, "function": row.data,
+                                        "confidence": DOUBTFUL_TIER if doubts else TIER, "source": cite}))
+        if document.long_hex and (extra := sorted(set(long_hex) - {row.data for row in rows if row.data is not None})):
+            for function in extra:
+                report.notes.append((MAKER, document.long_hex, f"'{long_hex[function].name}' (function {function}) is in the long hex document and not in the sheet's table"))
+        name = document.model
+        while (BRAND.casefold(), name.casefold()) in authored:
+            renamed = f"{name} (JVC sheet)"
+            report.notes.append((MAKER, name, f"kept as '{renamed}': the ledger's {authored[(BRAND.casefold(), name.casefold())]} has the name (R15)"))
+            name = renamed
+        keys = {n: {"label": m[0], "forms": [m[1]]} for n, m in zip(key_names([m[0] for m in members]), members)}
+        report.count(MAKER, "files")
+        report.count(MAKER, "keys", len(keys))
+        out.append((f"{IMPORT_ROOT}/{MAKER}/{slug(name)}.json",
+                    {"manufacturer": BRAND, "model": name, "aliases": [], "controls": [f"{BRAND} {document.model}"], "protocol": dict(LX_PROTOCOL), "keys": keys}))
+    return out
+
+
+def build(snapshot: Snapshot, authored: dict[tuple[str, str], str], report: Report) -> list[tuple[str, dict[str, Any]]]:
+    return build_guide(snapshot, authored, report) + build_lx(snapshot, authored, report)
