@@ -129,7 +129,12 @@ SHEETS = {
     )},
     "denon": {"AVR4311CI_AVR4311_IR-Codes.pdf": ["words"],
               "AVR-X2700H_S960H_IR_CODE_V01.doc": ["paragraphs"], "AVR-X3700H_AVC-X3700H_IR_CODE_V01_04062020.doc": ["paragraphs"],
-              "AVR-X4700H_AVC-X4700H_IR_CODE_V01.doc": ["paragraphs"], "AVR-X6700H_AVC-X6700H_IR_CODE_V01.doc": ["paragraphs"], "Denon_Master_IR_Hex.xls": ['Main Zone ID#1', 'Main Zone ID#2', 'Main Zone ID#3', 'Main Zone ID#4', 'Zone 2 ID#1', 'Zone 2 ID#2', 'Zone 2 ID#3', 'Zone 2 ID#4', 'Zone 3 ID#1', 'Zone 3 ID#2', 'Zone 3 ID#3', 'Zone 3 ID#4', 'Zone 4 ID#1', 'Zone 4 ID #2', 'Zone 4 ID#3', 'Zone 4 ID#4', 'Analog Tuner ID#1', 'Analog Tuner ID#2', 'Analog Tuner ID#3', 'Analog Tuner ID#4', 'HD Radio ID#1', 'Net Audio ID#1', 'Net Audio ID#2', 'Net Audio ID#3', 'Net Audio ID#4', 'iPod ID#1', 'iPod ID#2', 'iPod ID#3', 'iPod ID#4', 'XM ID#1', 'XM ID#2', 'XM ID#3', 'XM ID#4', 'Sirius ID#1', 'RCD-N7', 'CD Player', 'DBP-1611UD', 'BD Players', 'S5-BD', 'ASD-51NW', 'M33 CD Receiver', 'DRA', 'Sharp Device 2', 'Sharp device 4', 'Sharp Device 12', 'Denon K 4.1', 'Denon K 4.3', 'Denon K 4.5', 'Denon K 4.7', 'Denon K 7.6', 'Denon K 7.7', 'Denon K 7.8']},
+              "AVR-X4700H_AVC-X4700H_IR_CODE_V01.doc": ["paragraphs"], "AVR-X6700H_AVC-X6700H_IR_CODE_V01.doc": ["paragraphs"],
+              **{name: ["words"] for name in ("avr-2106-ircodes.pdf", "avr-2805-ircodes.pdf", "avr-2807-ircodes.pdf", "avr-2808_ir_code.pdf", "avr-3803-ircodes.pdf", "avr-3808ci-ircodes.pdf",
+                                              "avr-4308ci_ircodes.pdf", "avr-4806-ircodes.pdf", "avr-5805-ircodes.pdf", "avr-5805ci_5805up_ir_codes.pdf", "avr987-ircodes.pdf",
+                                              "417_avr3310_ir_code.pdf", "457_avr3311ci_avr3311_991_ir_code_v01.pdf", "avr-1911_791_ir_code_v01.pdf", "avr-2311ci_avr2311_891_ir_code_v01.pdf",
+                                              "avr-4310_ir_code_v01.pdf", "avr2809_ir_code_v01.pdf", "avr2309_ir_code_v01.pdf", "avr2113_1913_ir_code_v02.pdf", "avr2313_ir_code_v02.pdf",
+                                              "avr3313_ir_code_v02.pdf", "avr4520_ir_code_v02.pdf", "avr3312_ir_code_v01.pdf", "avr2312_ir_code_v01.pdf")}, "Denon_Master_IR_Hex.xls": ['Main Zone ID#1', 'Main Zone ID#2', 'Main Zone ID#3', 'Main Zone ID#4', 'Zone 2 ID#1', 'Zone 2 ID#2', 'Zone 2 ID#3', 'Zone 2 ID#4', 'Zone 3 ID#1', 'Zone 3 ID#2', 'Zone 3 ID#3', 'Zone 3 ID#4', 'Zone 4 ID#1', 'Zone 4 ID #2', 'Zone 4 ID#3', 'Zone 4 ID#4', 'Analog Tuner ID#1', 'Analog Tuner ID#2', 'Analog Tuner ID#3', 'Analog Tuner ID#4', 'HD Radio ID#1', 'Net Audio ID#1', 'Net Audio ID#2', 'Net Audio ID#3', 'Net Audio ID#4', 'iPod ID#1', 'iPod ID#2', 'iPod ID#3', 'iPod ID#4', 'XM ID#1', 'XM ID#2', 'XM ID#3', 'XM ID#4', 'Sirius ID#1', 'RCD-N7', 'CD Player', 'DBP-1611UD', 'BD Players', 'S5-BD', 'ASD-51NW', 'M33 CD Receiver', 'DRA', 'Sharp Device 2', 'Sharp device 4', 'Sharp Device 12', 'Denon K 4.1', 'Denon K 4.3', 'Denon K 4.5', 'Denon K 4.7', 'Denon K 7.6', 'Denon K 7.7', 'Denon K 7.8']},
     "hitachi": {"2003_and_2004_HITACHI_IR.xls": ["Sheet1", "Sheet2"], "2004_IR_Codes-1.xls": ["2004 Codes", "Additional Codes"],
                 **{name: ["cells"] for name in ("2007_Discrete_Codes-DW3.pdf", "2009_Discrete_Codes_L32_and_larger_0211.pdf",
                                                 "2009_RC_Layouts_and_IR_Codes_L19_L26.pdf", "AVC_56_Discrete_Codes_UT_Monitor_PDP_Pronto_Hex.pdf")}},
@@ -417,7 +422,8 @@ def rows_of(path: Path, sheet: str) -> list[list[str]]:
             out = []                # ``page, y, x, word, x, word...``, the words of one line (``y`` within 3.5 points of the line's first word) by ``x``;
                                     # after a page's lines come its ruled tables' rows, ``page, R, y0, y1``, which say which lines a row's cells hold
             for n, page in enumerate(pdf, 1):
-                words = sorted(page.get_text("words"), key=lambda w: (w[1], w[0]))
+                # a page whose rotation is not 0 (Denon's 2012 and 2013 lists are turned 90 degrees) is read as it is shown: the words' places are turned with it
+                words = sorted(((*(pymupdf.Rect(w[:4]) * page.rotation_matrix), w[4]) for w in page.get_text("words")), key=lambda w: (w[1], w[0]))
                 rows: list[list] = []
                 for w in words:
                     if rows and abs(rows[-1][0] - w[1]) <= 3.5:
