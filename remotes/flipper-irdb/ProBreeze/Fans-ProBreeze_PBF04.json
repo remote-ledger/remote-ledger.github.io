@@ -1,0 +1,140 @@
+{
+  "manufacturer": "ProBreeze",
+  "model": "PBF04",
+  "aliases": [],
+  "controls": [
+    "ProBreeze PBF04"
+  ],
+  "protocol": {
+    "carrierHz": 38000,
+    "unitUs": 529,
+    "minSends": 1,
+    "defaultGapUs": 180000,
+    "claims": {
+      "unitUs": {
+        "reason": "the file names no protocol, and D24 wants a unit to check the closing gap against; the shortest duration of its raw data, 529 us, is the largest unit the capture can have, and no duration is computed from it",
+        "source": "flipper-irdb@d126fb1 Fans/ProBreeze/ProBreeze_PBF04.ir: the raw data of its buttons"
+      },
+      "defaultGapUs": {
+        "reason": "Flipper's raw data ends on a mark and records no gap after it; the firmware sends a silence of 180 ms before every raw transmission, so that is the space between one send of the signal and the next",
+        "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/encoder_decoder/infrared.h#L17 (INFRARED_RAW_TX_TIMING_DELAY_US 180000) and https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L23-L27 (the silence it sends first)"
+      }
+    }
+  },
+  "keys": {
+    "KEY_POWER": {
+      "label": "Power",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8955, 4466, 583, 1647, 583, 532, 583, 533, 581, 531, 583, 531, 584, 532, 583, 532, 582, 531, 583, 532, 582, 1646, 583, 1647, 583, 1645, 585, 1646, 583, 1646, 584, 1645, 585, 1647, 583, 1648, 582, 1647, 583, 530, 585, 532, 583, 532, 583, 531, 584, 531, 584, 531, 584, 532, 583, 531, 584, 1646, 583, 1647, 583, 1646, 584, 1645, 585, 1647, 583, 1645, 585, 1646, 583, 1647, 582, 531, 584, 531, 583, 531, 584, 531, 584, 531, 583, 532, 583, 532, 582, 531, 584, 1646, 583, 1646, 584, 1647, 583, 1648, 582, 1648, 582, 1646, 584],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Fans/ProBreeze/ProBreeze_PBF04.ir:7 name 'Power' (added in 191a250 on 2025-08-25; raw, 38000 Hz, duty cycle 0.33, 99 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_OSCILLATION": {
+      "label": "Oscillation",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8952, 4468, 584, 1647, 583, 530, 585, 529, 586, 529, 586, 529, 586, 529, 586, 530, 585, 529, 585, 530, 585, 1645, 585, 1646, 584, 1645, 585, 1645, 585, 1646, 584, 1645, 585, 1645, 585, 1645, 585, 1646, 584, 531, 584, 529, 586, 1644, 586, 529, 586, 530, 585, 529, 586, 529, 586, 530, 585, 1645, 585, 1645, 585, 531, 584, 1647, 584, 1646, 584, 1645, 585, 1646, 584, 1647, 583, 530, 585, 530, 585, 1646, 584, 530, 585, 530, 585, 531, 584, 530, 585, 531, 584, 1645, 586, 1646, 584, 530, 585, 1646, 584, 1647, 583, 1645, 584],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Fans/ProBreeze/ProBreeze_PBF04.ir:13 name 'Oscillation' (added in 191a250 on 2025-08-25; raw, 38000 Hz, duty cycle 0.33, 99 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_SPEED_UP": {
+      "label": "Speed Up",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8961, 4469, 584, 1647, 584, 531, 585, 529, 586, 531, 584, 531, 585, 531, 584, 531, 584, 533, 583, 531, 584, 1647, 585, 1647, 584, 1646, 585, 1647, 584, 1646, 585, 1647, 584, 1647, 584, 1648, 583, 529, 586, 1647, 585, 1648, 583, 532, 583, 532, 583, 532, 583, 531, 584, 531, 584, 1646, 585, 531, 584, 530, 585, 1646, 585, 1647, 584, 1648, 583, 1647, 584, 1645, 586, 531, 584, 1647, 584, 1646, 585, 532, 583, 532, 583, 531, 584, 532, 583, 533, 582, 1647, 584, 530, 585, 531, 584, 1646, 585, 1647, 584, 1646, 585, 1646, 585],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Fans/ProBreeze/ProBreeze_PBF04.ir:19 name 'Speed Up' (added in 191a250 on 2025-08-25; raw, 38000 Hz, duty cycle 0.33, 99 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_SPEED_DOWN": {
+      "label": "Speed Down",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8956, 4467, 584, 1645, 585, 530, 585, 531, 584, 532, 583, 530, 585, 530, 584, 530, 585, 530, 585, 531, 584, 1645, 585, 1645, 585, 1648, 582, 1646, 584, 1647, 583, 1647, 583, 1647, 583, 1646, 584, 530, 585, 531, 584, 531, 584, 1645, 585, 529, 586, 530, 585, 530, 585, 530, 585, 1645, 585, 1647, 583, 1647, 583, 530, 585, 1647, 583, 1646, 584, 1647, 583, 1645, 585, 532, 583, 530, 585, 531, 584, 1648, 583, 529, 586, 529, 586, 530, 585, 532, 583, 1646, 585, 1647, 584, 1647, 583, 531, 584, 1646, 584, 1646, 584, 1647, 584, 13679, 8957, 2238, 584, 95846, 8956, 2238, 584],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Fans/ProBreeze/ProBreeze_PBF04.ir:25 name 'Speed Down' (added in 191a250 on 2025-08-25; raw, 38000 Hz, duty cycle 0.33, 107 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_MODE": {
+      "label": "Mode",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8958, 4470, 583, 1646, 584, 531, 584, 531, 584, 532, 583, 531, 584, 534, 581, 531, 584, 531, 584, 532, 583, 1647, 584, 1648, 583, 1647, 584, 1647, 584, 1647, 585, 1648, 584, 1648, 584, 1647, 584, 1647, 584, 1648, 583, 1649, 583, 531, 584, 531, 585, 531, 584, 530, 585, 531, 584, 530, 585, 531, 584, 531, 584, 1647, 584, 1646, 585, 1647, 584, 1646, 585, 1648, 583, 1648, 583, 1647, 584, 1646, 585, 532, 583, 532, 583, 530, 585, 530, 585, 531, 584, 531, 584, 532, 583, 531, 584, 1648, 583, 1648, 583, 1646, 585, 1648, 583],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Fans/ProBreeze/ProBreeze_PBF04.ir:31 name 'Mode' (added in 191a250 on 2025-08-25; raw, 38000 Hz, duty cycle 0.33, 99 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_TIMER": {
+      "label": "Timer",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8955, 4466, 582, 1645, 585, 531, 584, 530, 585, 532, 583, 531, 583, 531, 583, 532, 583, 531, 584, 532, 583, 1645, 585, 1647, 583, 1646, 584, 1646, 584, 1646, 584, 1647, 583, 1646, 584, 1646, 584, 1646, 584, 532, 583, 1646, 583, 530, 585, 531, 584, 531, 583, 531, 583, 531, 584, 533, 582, 1647, 583, 531, 584, 1646, 584, 1646, 584, 1647, 583, 1647, 584, 1646, 584, 1647, 583, 531, 584, 1646, 584, 534, 581, 532, 583, 531, 584, 533, 582, 531, 584, 530, 585, 1646, 584, 532, 583, 1646, 584, 1646, 584, 1647, 583, 1647, 583],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Fans/ProBreeze/ProBreeze_PBF04.ir:37 name 'Timer' (added in 191a250 on 2025-08-25; raw, 38000 Hz, duty cycle 0.33, 99 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

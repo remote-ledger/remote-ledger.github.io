@@ -1,0 +1,311 @@
+{
+  "manufacturer": "WowWee-RoboSapien",
+  "model": "Roboraptor",
+  "aliases": [],
+  "controls": [
+    "WowWee-RoboSapien Roboraptor"
+  ],
+  "protocol": {
+    "carrierHz": 38000,
+    "unitUs": 779,
+    "minSends": 1,
+    "defaultGapUs": 180000,
+    "claims": {
+      "unitUs": {
+        "reason": "the file names no protocol, and D24 wants a unit to check the closing gap against; the shortest duration of its raw data, 779 us, is the largest unit the capture can have, and no duration is computed from it",
+        "source": "flipper-irdb@d126fb1 Toys/WowWee-RoboSapien/Roboraptor/Roboraptor.ir: the raw data of its buttons"
+      },
+      "defaultGapUs": {
+        "reason": "Flipper's raw data ends on a mark and records no gap after it; the firmware sends a silence of 180 ms before every raw transmission, so that is the space between one send of the signal and the next",
+        "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/encoder_decoder/infrared.h#L17 (INFRARED_RAW_TX_TIMING_DELAY_US 180000) and https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L23-L27 (the silence it sends first)"
+      }
+    }
+  },
+  "keys": {
+    "KEY_BITE": {
+      "label": "Bite",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [6426, 806, 901, 823, 901, 797, 877, 3458, 851, 3416, 852, 3391, 851, 820, 877, 3433, 850, 847, 901, 810, 902, 785, 901, 3420, 851],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Toys/WowWee-RoboSapien/Roboraptor/Roboraptor.ir:4 name 'Bite' (added in c5feecd on 2025-08-08; raw, 38000 Hz, duty cycle 0.33, 25 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_HEAD_CLOCKWISE": {
+      "label": "Head_clockwise",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [6765, 791, 876, 848, 876, 822, 876, 3458, 852, 3417, 852, 807, 877, 835, 877, 3432, 852, 807, 877, 3459, 851, 794, 876, 862, 877],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Toys/WowWee-RoboSapien/Roboraptor/Roboraptor.ir:10 name 'Head_clockwise' (added in c5feecd on 2025-08-08; raw, 38000 Hz, duty cycle 0.33, 25 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_TAIL_LEFT": {
+      "label": "Tail_left",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [6606, 828, 876, 848, 877, 822, 877, 3419, 850, 3419, 850, 848, 877, 836, 876, 3433, 851, 807, 877, 835, 878, 3433, 850, 808, 877],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Toys/WowWee-RoboSapien/Roboraptor/Roboraptor.ir:16 name 'Tail_left' (added in c5feecd on 2025-08-08; raw, 38000 Hz, duty cycle 0.33, 25 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_TAIL_RIGHT": {
+      "label": "Tail_right",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [6530, 824, 877, 848, 877, 821, 878, 3458, 853, 3419, 850, 807, 877, 835, 878, 3433, 852, 807, 877, 835, 878, 3432, 852, 3431, 850],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Toys/WowWee-RoboSapien/Roboraptor/Roboraptor.ir:22 name 'Tail_right' (added in c5feecd on 2025-08-08; raw, 38000 Hz, duty cycle 0.33, 25 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_HEAD_COUNTERCLOCKWISE": {
+      "label": "Head_counterclockwise",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [6714, 803, 877, 806, 879, 861, 878, 3419, 852, 3417, 853, 807, 877, 834, 879, 3432, 853, 846, 878, 834, 879, 808, 878, 3445, 853],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Toys/WowWee-RoboSapien/Roboraptor/Roboraptor.ir:28 name 'Head_counterclockwise' (added in c5feecd on 2025-08-08; raw, 38000 Hz, duty cycle 0.33, 25 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_DEMO_ROAM": {
+      "label": "Demo_roam",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [6508, 807, 877, 847, 878, 822, 877, 3419, 852, 3418, 852, 3431, 853, 820, 878, 3431, 854, 805, 879, 834, 879, 848, 878, 821, 878],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Toys/WowWee-RoboSapien/Roboraptor/Roboraptor.ir:34 name 'Demo_roam' (added in c5feecd on 2025-08-08; raw, 38000 Hz, duty cycle 0.33, 25 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_FORWARD": {
+      "label": "Forward",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [6872, 806, 877, 846, 879, 822, 877, 3418, 854, 3417, 853, 845, 879, 834, 879, 807, 879, 861, 878, 3418, 854, 3417, 852, 806, 879],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Toys/WowWee-RoboSapien/Roboraptor/Roboraptor.ir:40 name 'Forward' (added in c5feecd on 2025-08-08; raw, 38000 Hz, duty cycle 0.33, 25 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_BACK": {
+      "label": "Back",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [6871, 806, 877, 847, 878, 820, 879, 3458, 853, 3416, 854, 804, 881, 835, 878, 847, 879, 821, 878, 3419, 853, 3418, 852, 3430, 853],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Toys/WowWee-RoboSapien/Roboraptor/Roboraptor.ir:46 name 'Back' (added in c5feecd on 2025-08-08; raw, 38000 Hz, duty cycle 0.33, 25 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_TURN_LEFT": {
+      "label": "Turn_left",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [6871, 805, 878, 807, 878, 860, 879, 3418, 852, 3417, 853, 806, 878, 834, 878, 846, 880, 820, 879, 834, 879, 847, 879, 821, 878],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Toys/WowWee-RoboSapien/Roboraptor/Roboraptor.ir:52 name 'Turn_left' (added in c5feecd on 2025-08-08; raw, 38000 Hz, duty cycle 0.33, 25 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_TURN_RIGHT": {
+      "label": "Turn_right",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [6821, 817, 878, 846, 879, 819, 880, 3418, 853, 3417, 853, 845, 880, 833, 880, 805, 881, 3446, 853, 818, 879, 847, 879, 819, 880],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Toys/WowWee-RoboSapien/Roboraptor/Roboraptor.ir:58 name 'Turn_right' (added in c5feecd on 2025-08-08; raw, 38000 Hz, duty cycle 0.33, 25 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_STOP": {
+      "label": "Stop",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [6377, 815, 879, 847, 878, 820, 879, 3418, 853, 3418, 852, 844, 880, 835, 878, 808, 878, 3446, 853, 3404, 853, 3415, 855, 845, 880],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Toys/WowWee-RoboSapien/Roboraptor/Roboraptor.ir:64 name 'Stop' (added in c5feecd on 2025-08-08; raw, 38000 Hz, duty cycle 0.33, 25 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_GUARD_MODE": {
+      "label": "Guard_mode",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [6808, 779, 877, 846, 878, 817, 880, 3416, 878, 3390, 878, 819, 878, 3416, 853, 3414, 854, 844, 878, 832, 879, 807, 877, 860, 878],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Toys/WowWee-RoboSapien/Roboraptor/Roboraptor.ir:70 name 'Guard_mode' (added in c5feecd on 2025-08-08; raw, 38000 Hz, duty cycle 0.33, 25 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_HUNTING_MOOD": {
+      "label": "Hunting_mood",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [6892, 819, 879, 806, 878, 860, 878, 3415, 854, 3416, 853, 805, 877, 3417, 878, 3391, 878, 820, 878, 3418, 852, 830, 880, 819, 879],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Toys/WowWee-RoboSapien/Roboraptor/Roboraptor.ir:76 name 'Hunting_mood' (added in c5feecd on 2025-08-08; raw, 38000 Hz, duty cycle 0.33, 25 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_CAUTIOUS_MOOD": {
+      "label": "Cautious_mood",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [6816, 815, 879, 805, 880, 860, 878, 3417, 853, 3416, 854, 803, 880, 3458, 854, 3417, 852, 804, 879, 832, 880, 3431, 854, 805, 878],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Toys/WowWee-RoboSapien/Roboraptor/Roboraptor.ir:82 name 'Cautious_mood' (added in c5feecd on 2025-08-08; raw, 38000 Hz, duty cycle 0.33, 25 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_PLAYFUL_MOOD": {
+      "label": "Playful_mood",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [6870, 804, 879, 805, 880, 859, 879, 3418, 853, 3415, 855, 804, 880, 3418, 879, 3391, 879, 818, 880, 833, 880, 3430, 855, 3389, 880],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Toys/WowWee-RoboSapien/Roboraptor/Roboraptor.ir:88 name 'Playful_mood' (added in c5feecd on 2025-08-08; raw, 38000 Hz, duty cycle 0.33, 25 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

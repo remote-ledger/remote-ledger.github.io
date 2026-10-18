@@ -1,0 +1,645 @@
+{
+  "manufacturer": "Hitachi",
+  "model": "CLE-1031",
+  "aliases": [],
+  "controls": [
+    "Hitachi CLE-1031"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER": {
+      "label": "Power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 TVs/Hitachi/Hitachi_CLE-1031.ir:7 name 'Power' (added in c5023f0 on 2026-01-13; parsed NEC, address 50 00 00 00, command 12 00 00 00): NEC1 device 80 subdevice 175 function 18: address 0x50, command 0x12: the frame 0x50 0xaf 0x12 0xed"
+        }
+      ]
+    },
+    "KEY_VOL_UP": {
+      "label": "Vol_up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x1A",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 TVs/Hitachi/Hitachi_CLE-1031.ir:13 name 'Vol_up' (added in c5023f0 on 2026-01-13; parsed NEC, address 50 00 00 00, command 1A 00 00 00): NEC1 device 80 subdevice 175 function 26: address 0x50, command 0x1a: the frame 0x50 0xaf 0x1a 0xe5"
+        }
+      ]
+    },
+    "KEY_VOL_DN": {
+      "label": "Vol_dn",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x1E",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 TVs/Hitachi/Hitachi_CLE-1031.ir:19 name 'Vol_dn' (added in c5023f0 on 2026-01-13; parsed NEC, address 50 00 00 00, command 1E 00 00 00): NEC1 device 80 subdevice 175 function 30: address 0x50, command 0x1e: the frame 0x50 0xaf 0x1e 0xe1"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "Mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 TVs/Hitachi/Hitachi_CLE-1031.ir:25 name 'Mute' (added in c5023f0 on 2026-01-13; parsed NEC, address 50 00 00 00, command 10 00 00 00): NEC1 device 80 subdevice 175 function 16: address 0x50, command 0x10: the frame 0x50 0xaf 0x10 0xef"
+        }
+      ]
+    },
+    "KEY_CH_NEXT": {
+      "label": "Ch_next",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x1B",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 TVs/Hitachi/Hitachi_CLE-1031.ir:31 name 'Ch_next' (added in c5023f0 on 2026-01-13; parsed NEC, address 50 00 00 00, command 1B 00 00 00): NEC1 device 80 subdevice 175 function 27: address 0x50, command 0x1b: the frame 0x50 0xaf 0x1b 0xe4"
+        }
+      ]
+    },
+    "KEY_CH_PREV": {
+      "label": "Ch_prev",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x1F",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 TVs/Hitachi/Hitachi_CLE-1031.ir:37 name 'Ch_prev' (added in c5023f0 on 2026-01-13; parsed NEC, address 50 00 00 00, command 1F 00 00 00): NEC1 device 80 subdevice 175 function 31: address 0x50, command 0x1f: the frame 0x50 0xaf 0x1f 0xe0"
+        }
+      ]
+    },
+    "KEY_OK": {
+      "label": "Ok",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 TVs/Hitachi/Hitachi_CLE-1031.ir:43 name 'Ok' (added in c5023f0 on 2026-01-13; parsed NEC, address 50 00 00 00, command 0A 00 00 00): NEC1 device 80 subdevice 175 function 10: address 0x50, command 0x0a: the frame 0x50 0xaf 0x0a 0xf5"
+        }
+      ]
+    },
+    "KEY_UP": {
+      "label": "Up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x19",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 TVs/Hitachi/Hitachi_CLE-1031.ir:49 name 'Up' (added in c5023f0 on 2026-01-13; parsed NEC, address 50 00 00 00, command 19 00 00 00): NEC1 device 80 subdevice 175 function 25: address 0x50, command 0x19: the frame 0x50 0xaf 0x19 0xe6"
+        }
+      ]
+    },
+    "KEY_DOWN": {
+      "label": "Down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x1D",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 TVs/Hitachi/Hitachi_CLE-1031.ir:55 name 'Down' (added in c5023f0 on 2026-01-13; parsed NEC, address 50 00 00 00, command 1D 00 00 00): NEC1 device 80 subdevice 175 function 29: address 0x50, command 0x1d: the frame 0x50 0xaf 0x1d 0xe2"
+        }
+      ]
+    },
+    "KEY_LEFT": {
+      "label": "Left",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x46",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 TVs/Hitachi/Hitachi_CLE-1031.ir:61 name 'Left' (added in c5023f0 on 2026-01-13; parsed NEC, address 50 00 00 00, command 46 00 00 00): NEC1 device 80 subdevice 175 function 70: address 0x50, command 0x46: the frame 0x50 0xaf 0x46 0xb9"
+        }
+      ]
+    },
+    "KEY_RIGHT": {
+      "label": "Right",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x47",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 TVs/Hitachi/Hitachi_CLE-1031.ir:67 name 'Right' (added in c5023f0 on 2026-01-13; parsed NEC, address 50 00 00 00, command 47 00 00 00): NEC1 device 80 subdevice 175 function 71: address 0x50, command 0x47: the frame 0x50 0xaf 0x47 0xb8"
+        }
+      ]
+    },
+    "KEY_MENU": {
+      "label": "Menu",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x49",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 TVs/Hitachi/Hitachi_CLE-1031.ir:73 name 'Menu' (added in c5023f0 on 2026-01-13; parsed NEC, address 50 00 00 00, command 49 00 00 00): NEC1 device 80 subdevice 175 function 73: address 0x50, command 0x49: the frame 0x50 0xaf 0x49 0xb6"
+        }
+      ]
+    },
+    "KEY_BACK": {
+      "label": "Back",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x40",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 TVs/Hitachi/Hitachi_CLE-1031.ir:79 name 'Back' (added in c5023f0 on 2026-01-13; parsed NEC, address 50 00 00 00, command 40 00 00 00): NEC1 device 80 subdevice 175 function 64: address 0x50, command 0x40: the frame 0x50 0xaf 0x40 0xbf"
+        }
+      ]
+    },
+    "KEY_PLAY": {
+      "label": "Play",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x57",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 TVs/Hitachi/Hitachi_CLE-1031.ir:85 name 'Play' (added in c5023f0 on 2026-01-13; parsed NEC, address 50 00 00 00, command 57 00 00 00): NEC1 device 80 subdevice 175 function 87: address 0x50, command 0x57: the frame 0x50 0xaf 0x57 0xa8"
+        }
+      ]
+    },
+    "KEY_PAUSE": {
+      "label": "Pause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x48",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 TVs/Hitachi/Hitachi_CLE-1031.ir:91 name 'Pause' (added in c5023f0 on 2026-01-13; parsed NEC, address 50 00 00 00, command 48 00 00 00): NEC1 device 80 subdevice 175 function 72: address 0x50, command 0x48: the frame 0x50 0xaf 0x48 0xb7"
+        }
+      ]
+    },
+    "KEY_STOP": {
+      "label": "Stop",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x54",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 TVs/Hitachi/Hitachi_CLE-1031.ir:97 name 'Stop' (added in c5023f0 on 2026-01-13; parsed NEC, address 50 00 00 00, command 54 00 00 00): NEC1 device 80 subdevice 175 function 84: address 0x50, command 0x54: the frame 0x50 0xaf 0x54 0xab"
+        }
+      ]
+    },
+    "KEY_NEXT": {
+      "label": "Next",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x56",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 TVs/Hitachi/Hitachi_CLE-1031.ir:103 name 'Next' (added in c5023f0 on 2026-01-13; parsed NEC, address 50 00 00 00, command 56 00 00 00): NEC1 device 80 subdevice 175 function 86: address 0x50, command 0x56: the frame 0x50 0xaf 0x56 0xa9"
+        }
+      ]
+    },
+    "KEY_PREV": {
+      "label": "Prev",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x59",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 TVs/Hitachi/Hitachi_CLE-1031.ir:109 name 'Prev' (added in c5023f0 on 2026-01-13; parsed NEC, address 50 00 00 00, command 59 00 00 00): NEC1 device 80 subdevice 175 function 89: address 0x50, command 0x59: the frame 0x50 0xaf 0x59 0xa6"
+        }
+      ]
+    },
+    "KEY_FF": {
+      "label": "FF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x4E",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 TVs/Hitachi/Hitachi_CLE-1031.ir:115 name 'FF' (added in c5023f0 on 2026-01-13; parsed NEC, address 50 00 00 00, command 4E 00 00 00): NEC1 device 80 subdevice 175 function 78: address 0x50, command 0x4e: the frame 0x50 0xaf 0x4e 0xb1"
+        }
+      ]
+    },
+    "KEY_REW": {
+      "label": "Rew",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x4F",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 TVs/Hitachi/Hitachi_CLE-1031.ir:121 name 'Rew' (added in c5023f0 on 2026-01-13; parsed NEC, address 50 00 00 00, command 4F 00 00 00): NEC1 device 80 subdevice 175 function 79: address 0x50, command 0x4f: the frame 0x50 0xaf 0x4f 0xb0"
+        }
+      ]
+    },
+    "KEY_INPUT": {
+      "label": "Input",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 TVs/Hitachi/Hitachi_CLE-1031.ir:127 name 'Input' (added in c5023f0 on 2026-01-13; parsed NEC, address 50 00 00 00, command 14 00 00 00): NEC1 device 80 subdevice 175 function 20: address 0x50, command 0x14: the frame 0x50 0xaf 0x14 0xeb"
+        }
+      ]
+    },
+    "KEY_EXIT": {
+      "label": "Exit",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x44",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 TVs/Hitachi/Hitachi_CLE-1031.ir:133 name 'Exit' (added in c5023f0 on 2026-01-13; parsed NEC, address 50 00 00 00, command 44 00 00 00): NEC1 device 80 subdevice 175 function 68: address 0x50, command 0x44: the frame 0x50 0xaf 0x44 0xbb"
+        }
+      ]
+    },
+    "KEY_RECORD": {
+      "label": "Record",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x53",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 TVs/Hitachi/Hitachi_CLE-1031.ir:139 name 'Record' (added in c5023f0 on 2026-01-13; parsed NEC, address 50 00 00 00, command 53 00 00 00): NEC1 device 80 subdevice 175 function 83: address 0x50, command 0x53: the frame 0x50 0xaf 0x53 0xac"
+        }
+      ]
+    },
+    "KEY_INFO": {
+      "label": "Info",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 TVs/Hitachi/Hitachi_CLE-1031.ir:145 name 'Info' (added in c5023f0 on 2026-01-13; parsed NEC, address 50 00 00 00, command 16 00 00 00): NEC1 device 80 subdevice 175 function 22: address 0x50, command 0x16: the frame 0x50 0xaf 0x16 0xe9"
+        }
+      ]
+    },
+    "KEY_AUDIO_LANG": {
+      "label": "Audio Lang",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x1C",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 TVs/Hitachi/Hitachi_CLE-1031.ir:151 name 'Audio Lang' (added in c5023f0 on 2026-01-13; parsed NEC, address 50 00 00 00, command 1C 00 00 00): NEC1 device 80 subdevice 175 function 28: address 0x50, command 0x1c: the frame 0x50 0xaf 0x1c 0xe3"
+        }
+      ]
+    },
+    "KEY_TELETEXT": {
+      "label": "Teletext",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 TVs/Hitachi/Hitachi_CLE-1031.ir:157 name 'Teletext' (added in c5023f0 on 2026-01-13; parsed NEC, address 50 00 00 00, command 15 00 00 00): NEC1 device 80 subdevice 175 function 21: address 0x50, command 0x15: the frame 0x50 0xaf 0x15 0xea"
+        }
+      ]
+    },
+    "KEY_1": {
+      "label": "1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 TVs/Hitachi/Hitachi_CLE-1031.ir:163 name '1' (added in c5023f0 on 2026-01-13; parsed NEC, address 50 00 00 00, command 01 00 00 00): NEC1 device 80 subdevice 175 function 1: address 0x50, command 0x01: the frame 0x50 0xaf 0x01 0xfe"
+        }
+      ]
+    },
+    "KEY_2": {
+      "label": "2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 TVs/Hitachi/Hitachi_CLE-1031.ir:169 name '2' (added in c5023f0 on 2026-01-13; parsed NEC, address 50 00 00 00, command 02 00 00 00): NEC1 device 80 subdevice 175 function 2: address 0x50, command 0x02: the frame 0x50 0xaf 0x02 0xfd"
+        }
+      ]
+    },
+    "KEY_3": {
+      "label": "3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 TVs/Hitachi/Hitachi_CLE-1031.ir:175 name '3' (added in c5023f0 on 2026-01-13; parsed NEC, address 50 00 00 00, command 03 00 00 00): NEC1 device 80 subdevice 175 function 3: address 0x50, command 0x03: the frame 0x50 0xaf 0x03 0xfc"
+        }
+      ]
+    },
+    "KEY_4": {
+      "label": "4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 TVs/Hitachi/Hitachi_CLE-1031.ir:181 name '4' (added in c5023f0 on 2026-01-13; parsed NEC, address 50 00 00 00, command 04 00 00 00): NEC1 device 80 subdevice 175 function 4: address 0x50, command 0x04: the frame 0x50 0xaf 0x04 0xfb"
+        }
+      ]
+    },
+    "KEY_5": {
+      "label": "5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 TVs/Hitachi/Hitachi_CLE-1031.ir:187 name '5' (added in c5023f0 on 2026-01-13; parsed NEC, address 50 00 00 00, command 05 00 00 00): NEC1 device 80 subdevice 175 function 5: address 0x50, command 0x05: the frame 0x50 0xaf 0x05 0xfa"
+        }
+      ]
+    },
+    "KEY_6": {
+      "label": "6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 TVs/Hitachi/Hitachi_CLE-1031.ir:193 name '6' (added in c5023f0 on 2026-01-13; parsed NEC, address 50 00 00 00, command 06 00 00 00): NEC1 device 80 subdevice 175 function 6: address 0x50, command 0x06: the frame 0x50 0xaf 0x06 0xf9"
+        }
+      ]
+    },
+    "KEY_7": {
+      "label": "7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 TVs/Hitachi/Hitachi_CLE-1031.ir:199 name '7' (added in c5023f0 on 2026-01-13; parsed NEC, address 50 00 00 00, command 07 00 00 00): NEC1 device 80 subdevice 175 function 7: address 0x50, command 0x07: the frame 0x50 0xaf 0x07 0xf8"
+        }
+      ]
+    },
+    "KEY_8": {
+      "label": "8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 TVs/Hitachi/Hitachi_CLE-1031.ir:205 name '8' (added in c5023f0 on 2026-01-13; parsed NEC, address 50 00 00 00, command 08 00 00 00): NEC1 device 80 subdevice 175 function 8: address 0x50, command 0x08: the frame 0x50 0xaf 0x08 0xf7"
+        }
+      ]
+    },
+    "KEY_9": {
+      "label": "9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 TVs/Hitachi/Hitachi_CLE-1031.ir:211 name '9' (added in c5023f0 on 2026-01-13; parsed NEC, address 50 00 00 00, command 09 00 00 00): NEC1 device 80 subdevice 175 function 9: address 0x50, command 0x09: the frame 0x50 0xaf 0x09 0xf6"
+        }
+      ]
+    },
+    "KEY_0": {
+      "label": "0",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 TVs/Hitachi/Hitachi_CLE-1031.ir:217 name '0' (added in c5023f0 on 2026-01-13; parsed NEC, address 50 00 00 00, command 00 00 00 00): NEC1 device 80 subdevice 175 function 0: address 0x50, command 0x00: the frame 0x50 0xaf 0x00 0xff"
+        }
+      ]
+    },
+    "KEY_SETTINGS": {
+      "label": "Settings",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 TVs/Hitachi/Hitachi_CLE-1031.ir:223 name 'Settings' (added in c5023f0 on 2026-01-13; parsed NEC, address 50 00 00 00, command 0F 00 00 00): NEC1 device 80 subdevice 175 function 15: address 0x50, command 0x0f: the frame 0x50 0xaf 0x0f 0xf0"
+        }
+      ]
+    },
+    "KEY_NETFLIX": {
+      "label": "Netflix",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x58",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 TVs/Hitachi/Hitachi_CLE-1031.ir:229 name 'Netflix' (added in c5023f0 on 2026-01-13; parsed NEC, address 50 00 00 00, command 58 00 00 00): NEC1 device 80 subdevice 175 function 88: address 0x50, command 0x58: the frame 0x50 0xaf 0x58 0xa7"
+        }
+      ]
+    },
+    "KEY_YOUTUBE": {
+      "label": "YouTube",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x55",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 TVs/Hitachi/Hitachi_CLE-1031.ir:235 name 'YouTube' (added in c5023f0 on 2026-01-13; parsed NEC, address 50 00 00 00, command 55 00 00 00): NEC1 device 80 subdevice 175 function 85: address 0x50, command 0x55: the frame 0x50 0xaf 0x55 0xaa"
+        }
+      ]
+    },
+    "KEY_RED": {
+      "label": "Red",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x4A",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 TVs/Hitachi/Hitachi_CLE-1031.ir:241 name 'Red' (added in c5023f0 on 2026-01-13; parsed NEC, address 50 00 00 00, command 4A 00 00 00): NEC1 device 80 subdevice 175 function 74: address 0x50, command 0x4a: the frame 0x50 0xaf 0x4a 0xb5"
+        }
+      ]
+    },
+    "KEY_GREEN": {
+      "label": "Green",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x4B",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 TVs/Hitachi/Hitachi_CLE-1031.ir:247 name 'Green' (added in c5023f0 on 2026-01-13; parsed NEC, address 50 00 00 00, command 4B 00 00 00): NEC1 device 80 subdevice 175 function 75: address 0x50, command 0x4b: the frame 0x50 0xaf 0x4b 0xb4"
+        }
+      ]
+    },
+    "KEY_YELLOW": {
+      "label": "Yellow",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x4C",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 TVs/Hitachi/Hitachi_CLE-1031.ir:253 name 'Yellow' (added in c5023f0 on 2026-01-13; parsed NEC, address 50 00 00 00, command 4C 00 00 00): NEC1 device 80 subdevice 175 function 76: address 0x50, command 0x4c: the frame 0x50 0xaf 0x4c 0xb3"
+        }
+      ]
+    },
+    "KEY_BLUE": {
+      "label": "Blue",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x4D",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 TVs/Hitachi/Hitachi_CLE-1031.ir:259 name 'Blue' (added in c5023f0 on 2026-01-13; parsed NEC, address 50 00 00 00, command 4D 00 00 00): NEC1 device 80 subdevice 175 function 77: address 0x50, command 0x4d: the frame 0x50 0xaf 0x4d 0xb2"
+        }
+      ]
+    },
+    "KEY_EPG": {
+      "label": "EPG",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 TVs/Hitachi/Hitachi_CLE-1031.ir:265 name 'EPG' (added in c5023f0 on 2026-01-13; parsed NEC, address 50 00 00 00, command 0B 00 00 00): NEC1 device 80 subdevice 175 function 11: address 0x50, command 0x0b: the frame 0x50 0xaf 0x0b 0xf4"
+        }
+      ]
+    },
+    "KEY_CH_LIST": {
+      "label": "Ch_list",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x50",
+          "subdevice": "0xAF",
+          "function": "0x18",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 TVs/Hitachi/Hitachi_CLE-1031.ir:271 name 'Ch_list' (added in c5023f0 on 2026-01-13; parsed NEC, address 50 00 00 00, command 18 00 00 00): NEC1 device 80 subdevice 175 function 24: address 0x50, command 0x18: the frame 0x50 0xaf 0x18 0xe7"
+        }
+      ]
+    }
+  }
+}

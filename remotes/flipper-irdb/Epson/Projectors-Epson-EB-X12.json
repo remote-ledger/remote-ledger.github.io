@@ -1,0 +1,235 @@
+{
+  "manufacturer": "Epson",
+  "model": "Epson-EB-X12",
+  "aliases": [],
+  "controls": [
+    "Epson-EB-X12"
+  ],
+  "protocol": {
+    "carrierHz": 38000,
+    "unitUs": 512,
+    "minSends": 1,
+    "defaultGapUs": 180000,
+    "claims": {
+      "unitUs": {
+        "reason": "the file names no protocol, and D24 wants a unit to check the closing gap against; the shortest duration of its raw data, 512 us, is the largest unit the capture can have, and no duration is computed from it",
+        "source": "flipper-irdb@d126fb1 Projectors/Epson/Epson-EB-X12.ir: the raw data of its buttons"
+      },
+      "defaultGapUs": {
+        "reason": "Flipper's raw data ends on a mark and records no gap after it; the firmware sends a silence of 180 ms before every raw transmission, so that is the space between one send of the signal and the next",
+        "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/encoder_decoder/infrared.h#L17 (INFRARED_RAW_TX_TIMING_DELAY_US 180000) and https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L23-L27 (the silence it sends first)"
+      }
+    }
+  },
+  "keys": {
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8900, 4470, 590, 1638, 588, 1640, 590, 538, 586, 540, 590, 538, 588, 538, 588, 540, 590, 1638, 588, 1640, 590, 538, 588, 1640, 590, 538, 588, 1640, 590, 538, 588, 1640, 590, 534, 590, 538, 586, 540, 590, 538, 586, 540, 590, 1638, 588, 538, 588, 540, 590, 1638, 586, 1642, 588, 1638, 592, 1638, 588, 1640, 590, 536, 590, 1640, 590, 1638, 588, 538, 592, 40842, 8902, 4470, 590, 1638, 588, 1640, 590, 538, 588, 540, 590, 538, 588, 538, 592, 536, 590, 1638, 588, 1640, 590, 538, 588, 1640, 590, 538, 588, 1640, 590, 538, 588, 1640, 590, 536, 588, 538, 588, 540, 590, 538, 588, 540, 590, 1638, 588, 538, 592, 536, 590, 1638, 586, 1642, 588, 1638, 592, 1638, 588, 1640, 590, 536, 590, 1640, 590, 1638, 588, 538, 592, 40842, 8902, 4472, 588, 1640, 590, 1638, 588, 540, 590, 538, 588, 538, 592, 536, 590, 538, 588, 1640, 590, 1638, 588, 540, 590, 1638, 588, 540, 590, 1638, 588, 540, 590, 1638, 588, 540, 590, 536, 590, 538, 588, 540, 590, 538, 588, 1640, 590, 538, 588, 538, 592, 1636, 588, 1640, 590, 1638, 588, 1640, 590, 1638, 588, 540, 590, 1638, 588, 1640, 590, 538, 588, 40846, 8930, 4444, 586, 1640, 590, 1638, 588, 540, 590, 538, 588, 540, 590, 536, 588, 538, 588, 1640, 590, 1640, 590, 536, 590, 1638, 588, 540, 590, 1638, 588, 540, 590, 1638, 588, 540, 590, 538, 588, 538, 588, 540, 590, 538, 588, 1640, 590, 538, 588, 538, 592, 1636, 590, 1640, 590, 1638, 588, 1640, 590, 1638, 588, 540, 588, 1638, 588, 1640, 590, 538, 586],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Projectors/Epson/Epson-EB-X12.ir:6 name 'POWER' (added in 65fdd2a on 2025-09-26; raw, 38000 Hz, duty cycle 0.33, 271 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_UP": {
+      "label": "UP",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8900, 4470, 590, 1638, 588, 1640, 590, 538, 588, 540, 590, 536, 590, 538, 588, 540, 590, 1638, 588, 1640, 590, 536, 588, 1640, 590, 536, 588, 1640, 586, 540, 590, 1638, 588, 540, 590, 538, 588, 538, 588, 540, 590, 538, 586, 1642, 590, 1638, 586, 540, 590, 1638, 588, 1640, 590, 1638, 588, 1640, 590, 1638, 586, 540, 590, 536, 590, 1640, 590, 536, 590, 40842, 8904, 4470, 590, 1638, 588, 1640, 590, 538, 588, 538, 586, 540, 590, 538, 588, 538, 592, 1638, 588, 1640, 592, 536, 590, 1638, 588, 540, 590, 1638, 588, 540, 590, 1638, 588, 538, 590, 536, 590, 538, 588, 540, 590, 536, 590, 1638, 592, 1636, 590, 538, 588, 1640, 590, 1638, 588, 1642, 590, 1638, 588, 1640, 590, 538, 588, 540, 590, 1638, 588, 538, 588, 40844, 8904, 4470, 590, 1638, 588, 1640, 590, 538, 588, 538, 590, 536, 590, 538, 588, 540, 590, 1638, 588, 1640, 590, 536, 590, 1640, 590, 536, 590, 1638, 588, 540, 590, 1638, 588, 540, 590, 538, 588, 538, 588, 540, 590, 538, 588, 1640, 590, 1640, 586, 540, 590, 1638, 588, 1640, 590, 1638, 586, 1642, 588, 1640, 588, 540, 590, 536, 590, 1638, 592, 536, 590, 40844, 8902, 4472, 586, 1642, 588, 1640, 592, 536, 590, 538, 588, 540, 590, 536, 588, 538, 588, 1640, 590, 1638, 592, 536, 590, 1638, 588, 540, 590, 1638, 588, 540, 590, 1638, 588, 540, 590, 536, 590, 538, 588, 540, 590, 538, 588, 1640, 590, 1638, 588, 540, 590, 1638, 588, 1640, 590, 1638, 588, 1640, 590, 1638, 588, 540, 590, 536, 588, 1640, 590, 536, 588],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Projectors/Epson/Epson-EB-X12.ir:12 name 'UP' (added in 65fdd2a on 2025-09-26; raw, 38000 Hz, duty cycle 0.33, 271 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_DOWN": {
+      "label": "DOWN",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8900, 4472, 588, 1640, 592, 1636, 590, 538, 588, 540, 590, 538, 588, 538, 590, 536, 590, 1638, 588, 1640, 590, 538, 588, 1640, 590, 538, 586, 1642, 590, 538, 588, 1640, 590, 536, 590, 538, 588, 1640, 590, 538, 588, 540, 590, 1638, 588, 1640, 590, 538, 588, 1640, 590, 1638, 588, 540, 590, 1638, 588, 1640, 590, 538, 588, 538, 590, 1638, 588, 538, 592, 40842, 8902, 4472, 588, 1640, 590, 1638, 588, 540, 590, 536, 590, 538, 588, 540, 590, 538, 588, 1640, 590, 1638, 588, 538, 588, 1640, 590, 538, 588, 1640, 590, 538, 588, 1640, 590, 538, 588, 540, 590, 1638, 588, 538, 590, 536, 590, 1638, 592, 1638, 588, 538, 588, 1640, 588, 1640, 590, 536, 590, 1638, 590, 1638, 588, 538, 592, 536, 588, 1638, 588, 540, 590, 40842, 8904, 4470, 590, 1638, 592, 1638, 588, 538, 588, 540, 590, 538, 588, 540, 590, 538, 588, 1640, 590, 1638, 586, 540, 590, 1638, 588, 538, 590, 1638, 588, 538, 592, 1638, 588, 538, 592, 536, 588, 1638, 592, 536, 590, 538, 588, 1640, 590, 1638, 588, 540, 590, 1638, 588, 1640, 590, 538, 588, 1640, 588, 1640, 590, 536, 588, 538, 586, 1640, 590, 538, 588],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Projectors/Epson/Epson-EB-X12.ir:18 name 'DOWN' (added in 65fdd2a on 2025-09-26; raw, 38000 Hz, duty cycle 0.33, 203 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_LEFT": {
+      "label": "LEFT",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8900, 4472, 588, 1640, 590, 1638, 588, 538, 592, 536, 590, 538, 588, 540, 590, 536, 588, 1640, 586, 1642, 590, 538, 588, 1640, 590, 538, 588, 1640, 590, 536, 590, 1638, 588, 540, 590, 1638, 588, 1640, 590, 538, 586, 538, 592, 1636, 590, 1640, 590, 536, 590, 1638, 588, 540, 590, 538, 588, 1640, 590, 1640, 588, 538, 592, 536, 590, 1642, 584, 540, 590, 40844, 8902, 4470, 590, 1640, 586, 1642, 588, 538, 588, 540, 590, 538, 588, 538, 588, 540, 590, 1638, 586, 1642, 590, 538, 588, 1640, 590, 536, 588, 1640, 590, 536, 588, 1640, 586, 540, 590, 1638, 586, 1642, 588, 538, 588, 540, 590, 1638, 588, 1640, 590, 536, 588, 1640, 590, 536, 590, 538, 588, 1640, 590, 1638, 592, 536, 590, 538, 588, 1640, 590, 538, 588, 40844, 8904, 4470, 590, 1638, 588, 1640, 590, 538, 588, 540, 590, 536, 588, 538, 586, 540, 590, 1638, 588, 1640, 590, 538, 588, 1640, 590, 538, 588, 1640, 590, 536, 588, 1640, 590, 536, 590, 1638, 592, 1636, 590, 538, 588, 540, 590, 1638, 588, 1640, 590, 538, 588, 1640, 590, 538, 588, 540, 590, 1638, 588, 1640, 590, 538, 588, 538, 592, 1636, 588, 538, 586],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Projectors/Epson/Epson-EB-X12.ir:24 name 'LEFT' (added in 65fdd2a on 2025-09-26; raw, 38000 Hz, duty cycle 0.33, 203 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_RIGHT": {
+      "label": "RIGHT",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8900, 4472, 588, 1640, 590, 1638, 586, 540, 590, 538, 588, 538, 586, 540, 590, 538, 588, 1640, 590, 1638, 588, 540, 590, 1638, 588, 540, 588, 1638, 588, 540, 590, 1638, 588, 538, 592, 1636, 588, 538, 586, 540, 590, 538, 588, 1640, 590, 1638, 586, 540, 590, 1638, 586, 540, 590, 1638, 586, 1642, 590, 1638, 588, 540, 590, 536, 592, 1638, 590, 536, 590, 40844, 8900, 4474, 588, 1640, 590, 1638, 588, 540, 590, 538, 588, 538, 592, 536, 590, 538, 588, 1640, 590, 1638, 588, 540, 590, 1638, 588, 540, 590, 1638, 588, 538, 588, 1640, 590, 538, 588, 1640, 590, 538, 588, 540, 590, 536, 590, 1638, 588, 1640, 590, 538, 588, 1642, 588, 538, 588, 1640, 590, 1638, 588, 1640, 590, 536, 590, 538, 588, 1640, 590, 538, 588, 40846, 8900, 4472, 588, 1642, 588, 1640, 586, 540, 590, 538, 588, 538, 588, 540, 590, 538, 588, 1640, 590, 1638, 588, 538, 588, 1640, 590, 538, 586, 1642, 588, 538, 588, 1640, 590, 538, 588, 1640, 590, 538, 588, 538, 592, 536, 590, 1638, 588, 1640, 590, 538, 588, 1640, 590, 538, 588, 1640, 590, 1638, 588, 1640, 590, 538, 588, 540, 590, 1638, 588, 538, 592],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Projectors/Epson/Epson-EB-X12.ir:30 name 'RIGHT' (added in 65fdd2a on 2025-09-26; raw, 38000 Hz, duty cycle 0.33, 203 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_OK": {
+      "label": "OK",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8900, 4472, 590, 1638, 588, 1640, 590, 538, 588, 540, 590, 538, 588, 538, 592, 536, 590, 1638, 588, 1640, 590, 538, 588, 1640, 590, 538, 588, 1640, 590, 538, 588, 1640, 590, 536, 590, 1640, 590, 536, 588, 1640, 592, 536, 590, 538, 588, 540, 590, 536, 590, 1640, 590, 536, 590, 1638, 588, 540, 590, 1640, 586, 1640, 590, 1640, 588, 1640, 590, 538, 588, 40844, 8902, 4472, 588, 1640, 590, 1638, 586, 538, 586, 540, 590, 538, 588, 540, 590, 536, 590, 1640, 590, 1638, 588, 538, 592, 1638, 588, 538, 588, 1640, 590, 538, 588, 1640, 590, 538, 588, 1640, 590, 538, 588, 1640, 590, 538, 588, 540, 590, 536, 588, 538, 586, 1640, 590, 538, 588, 1640, 590, 538, 588, 1640, 590, 1638, 588, 1640, 590, 1638, 592, 536, 590, 40844, 8902, 4470, 590, 1640, 586, 1642, 590, 538, 588, 540, 590, 536, 590, 538, 588, 540, 590, 1638, 588, 1640, 590, 538, 588, 1640, 590, 536, 590, 1638, 588, 540, 590, 1638, 588, 540, 590, 1638, 588, 540, 592, 1636, 588, 538, 592, 536, 590, 538, 586, 540, 590, 1638, 588, 538, 590, 1638, 588, 538, 588, 1640, 590, 1638, 588, 1640, 590, 1638, 588, 540, 590, 40844, 8902, 4470, 590, 1638, 588, 1640, 590, 538, 588, 540, 590, 536, 590, 538, 588, 540, 590, 1638, 588, 1640, 590, 538, 588, 1640, 590, 536, 588, 1640, 590, 536, 588, 1640, 590, 536, 588, 1640, 586, 540, 590, 1638, 588, 540, 590, 538, 588, 538, 588, 540, 590, 1638, 588, 540, 588, 1640, 588, 540, 590, 1638, 588, 1640, 590, 1638, 588, 1640, 590, 538, 588],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Projectors/Epson/Epson-EB-X12.ir:36 name 'OK' (added in 65fdd2a on 2025-09-26; raw, 38000 Hz, duty cycle 0.33, 271 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_SOURCES": {
+      "label": "SOURCES",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8898, 4472, 588, 1640, 590, 1638, 592, 536, 590, 538, 588, 540, 590, 536, 588, 538, 586, 1642, 590, 1638, 588, 540, 590, 1638, 588, 540, 590, 1638, 588, 540, 590, 1638, 588, 538, 586, 540, 590, 538, 588, 1640, 590, 1638, 588, 540, 590, 536, 590, 538, 588, 1640, 590, 1638, 588, 1640, 590, 538, 588, 540, 590, 1638, 588, 1640, 590, 1638, 588, 538, 590, 40842, 8904, 4472, 590, 1638, 588, 1640, 590, 538, 588, 538, 590, 536, 588, 538, 588, 540, 590, 1638, 588, 1640, 590, 536, 590, 1640, 590, 536, 590, 1640, 586, 540, 590, 1638, 586, 540, 590, 536, 588, 538, 588, 1640, 590, 1638, 592, 536, 590, 538, 586, 540, 590, 1638, 588, 1640, 590, 1638, 588, 538, 592, 536, 590, 1638, 588, 1640, 590, 1638, 588, 540, 590, 40844, 8900, 4474, 590, 1638, 588, 1640, 590, 536, 588, 538, 588, 540, 590, 538, 586, 540, 590, 1638, 588, 1640, 590, 538, 588, 1640, 590, 536, 588, 1642, 588, 536, 590, 1638, 592, 536, 590, 538, 588, 540, 590, 1638, 588, 1640, 590, 538, 588, 538, 592, 536, 590, 1638, 592, 1636, 590, 1640, 590, 536, 590, 538, 588, 1640, 590, 1638, 588, 1640, 590, 538, 588],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Projectors/Epson/Epson-EB-X12.ir:42 name 'SOURCES' (added in 65fdd2a on 2025-09-26; raw, 38000 Hz, duty cycle 0.33, 203 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "VOL+",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8952, 4418, 592, 1638, 588, 1640, 590, 536, 588, 538, 588, 540, 590, 536, 590, 538, 588, 1640, 590, 1638, 588, 540, 590, 1638, 588, 540, 590, 1638, 588, 540, 590, 1638, 588, 540, 590, 536, 590, 538, 588, 540, 590, 1638, 588, 1640, 590, 538, 588, 538, 590, 1638, 588, 1640, 590, 1638, 588, 1640, 590, 536, 590, 538, 586, 1640, 590, 1638, 588, 540, 590, 40842, 8902, 4472, 588, 1640, 590, 1638, 586, 540, 590, 536, 590, 538, 588, 540, 590, 538, 588, 1640, 590, 1638, 588, 540, 590, 1638, 588, 538, 592, 1638, 588, 538, 588, 1640, 590, 538, 588, 540, 590, 538, 588, 540, 590, 1638, 588, 1640, 590, 538, 588, 538, 588, 1640, 590, 1640, 590, 1638, 588, 1640, 590, 536, 590, 538, 588, 1640, 590, 1638, 588, 540, 590],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Projectors/Epson/Epson-EB-X12.ir:48 name 'VOL+' (added in 65fdd2a on 2025-09-26; raw, 38000 Hz, duty cycle 0.33, 135 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "VOL-",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8902, 4470, 588, 1638, 588, 1640, 590, 538, 588, 538, 590, 536, 588, 538, 588, 540, 590, 1638, 586, 1640, 590, 538, 588, 1640, 590, 538, 588, 1640, 590, 538, 588, 1640, 590, 538, 588, 1640, 590, 538, 586, 540, 590, 1638, 588, 1640, 588, 536, 590, 538, 588, 1640, 588, 538, 586, 1640, 590, 1638, 592, 536, 590, 538, 588, 1640, 614, 1614, 588, 540, 590, 40844, 8902, 4470, 590, 1638, 588, 1640, 614, 512, 588, 540, 614, 512, 588, 540, 590, 536, 588, 1640, 614, 1614, 588, 538, 592, 1638, 612, 512, 592, 1638, 588, 538, 588, 1642, 588, 538, 588, 1640, 590, 538, 586, 540, 590, 1638, 586, 1640, 590, 538, 586, 540, 590, 1638, 588, 540, 590, 1638, 588, 1640, 590, 538, 588, 538, 592, 1638, 588, 1640, 590, 536, 588, 40844, 8902, 4470, 590, 1640, 590, 1638, 588, 538, 588, 540, 590, 538, 588, 540, 590, 536, 588, 1640, 590, 1638, 588, 538, 590, 1638, 588, 538, 592, 1638, 588, 538, 592, 1638, 588, 538, 588, 1640, 590, 538, 588, 540, 590, 1638, 588, 1640, 590, 538, 588, 540, 590, 1638, 588, 540, 590, 1638, 588, 1640, 590, 538, 588, 538, 588, 1642, 588, 1640, 590, 538, 588],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Projectors/Epson/Epson-EB-X12.ir:54 name 'VOL-' (added in 65fdd2a on 2025-09-26; raw, 38000 Hz, duty cycle 0.33, 203 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_CHA_PLUS": {
+      "label": "CHA+",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8902, 4470, 590, 1638, 588, 1640, 590, 538, 588, 538, 592, 536, 590, 538, 588, 540, 588, 1638, 588, 1640, 590, 538, 588, 1640, 590, 538, 588, 1640, 590, 536, 590, 1640, 590, 536, 590, 538, 588, 1640, 590, 1638, 588, 540, 590, 538, 588, 540, 590, 536, 588, 1640, 590, 1638, 588, 538, 588, 540, 590, 1638, 586, 1642, 590, 1638, 588, 1640, 590, 538, 588, 40846, 8902, 4472, 588, 1640, 590, 1638, 588, 540, 590, 538, 586, 538, 586, 540, 590, 538, 586, 1642, 588, 1638, 588, 540, 588, 1638, 588, 540, 590, 1638, 588, 540, 590, 1638, 588, 540, 592, 534, 588, 1640, 590, 1640, 586, 538, 590, 536, 590, 538, 588, 540, 590, 1638, 588, 1640, 590, 538, 588, 540, 590, 1638, 588, 1640, 590, 1638, 588, 1640, 590, 538, 588, 40846, 8902, 4472, 588, 1642, 588, 1638, 588, 540, 590, 538, 586, 538, 592, 536, 590, 538, 588, 1640, 590, 1638, 588, 540, 590, 1638, 588, 540, 590, 1638, 588, 540, 590, 1638, 588, 538, 592, 536, 590, 1638, 588, 1640, 592, 534, 588, 540, 590, 538, 588, 540, 590, 1638, 588, 1640, 590, 538, 588, 538, 590, 1638, 588, 1640, 590, 1638, 588, 1640, 590, 538, 588],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Projectors/Epson/Epson-EB-X12.ir:60 name 'CHA+' (added in 65fdd2a on 2025-09-26; raw, 38000 Hz, duty cycle 0.33, 203 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_CHA_MINUS": {
+      "label": "CHA-",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8900, 4470, 590, 1638, 588, 1640, 590, 538, 588, 538, 592, 536, 590, 538, 588, 540, 590, 1638, 588, 1640, 590, 536, 590, 1640, 590, 536, 590, 1638, 588, 540, 590, 1638, 588, 540, 590, 1638, 588, 1640, 590, 1638, 588, 542, 588, 536, 588, 538, 586, 540, 590, 1638, 586, 540, 590, 538, 588, 538, 592, 1636, 590, 1640, 590, 1638, 588, 1640, 590, 536, 590, 40844, 8904, 4470, 590, 1638, 588, 1640, 590, 538, 588, 540, 590, 538, 588, 538, 590, 536, 590, 1638, 588, 1640, 588, 538, 586, 1642, 588, 538, 586, 1642, 590, 538, 586, 1640, 590, 538, 586, 1640, 590, 1638, 588, 1640, 590, 538, 592, 536, 590, 538, 588, 538, 586, 1640, 590, 538, 588, 540, 588, 538, 588, 1640, 590, 1638, 588, 1640, 590, 1638, 588, 540, 590, 40844, 8904, 4470, 590, 1638, 588, 1640, 590, 538, 588, 540, 590, 538, 588, 538, 588, 540, 590, 1640, 586, 1640, 590, 538, 588, 1640, 590, 538, 588, 1640, 590, 538, 588, 1640, 590, 538, 588, 1640, 590, 1638, 588, 1640, 590, 538, 588, 538, 592, 536, 588, 538, 586, 1640, 590, 538, 586, 540, 590, 536, 588, 1640, 590, 1638, 588, 1640, 590, 1638, 588, 538, 590],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Projectors/Epson/Epson-EB-X12.ir:66 name 'CHA-' (added in 65fdd2a on 2025-09-26; raw, 38000 Hz, duty cycle 0.33, 203 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

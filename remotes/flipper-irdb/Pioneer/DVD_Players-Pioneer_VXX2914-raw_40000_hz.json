@@ -1,0 +1,767 @@
+{
+  "manufacturer": "Pioneer",
+  "model": "VXX2914 [raw 40000 Hz]",
+  "aliases": [],
+  "controls": [
+    "Pioneer VXX2914 [raw 40000 Hz]"
+  ],
+  "protocol": {
+    "carrierHz": 40000,
+    "unitUs": 500,
+    "minSends": 1,
+    "defaultGapUs": 180000,
+    "claims": {
+      "unitUs": {
+        "reason": "the file names no protocol, and D24 wants a unit to check the closing gap against; the shortest duration of its raw data, 500 us, is the largest unit the capture can have, and no duration is computed from it",
+        "source": "flipper-irdb@d126fb1 DVD_Players/Pioneer/Pioneer_VXX2914.ir: the raw data of its buttons"
+      },
+      "defaultGapUs": {
+        "reason": "Flipper's raw data ends on a mark and records no gap after it; the firmware sends a silence of 180 ms before every raw transmission, so that is the space between one send of the signal and the next",
+        "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/encoder_decoder/infrared.h#L17 (INFRARED_RAW_TX_TIMING_DELAY_US 180000) and https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L23-L27 (the silence it sends first)"
+      }
+    }
+  },
+  "keys": {
+    "KEY_POWER": {
+      "label": "Power",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8500, 4225, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 26000, 8500, 4225, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 DVD_Players/Pioneer/Pioneer_VXX2914.ir:18 name 'Power' (added in 2ed8f7e on 2025-11-11; raw, 40000 Hz, duty cycle 0.33, 135 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_OPEN_CLOSE": {
+      "label": "Open_Close",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8500, 4225, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 26000, 8500, 4225, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 DVD_Players/Pioneer/Pioneer_VXX2914.ir:24 name 'Open_Close' (added in 2ed8f7e on 2025-11-11; raw, 40000 Hz, duty cycle 0.33, 135 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_AUDIO": {
+      "label": "Audio",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8500, 4225, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 26000, 8500, 4225, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 DVD_Players/Pioneer/Pioneer_VXX2914.ir:30 name 'Audio' (added in 2ed8f7e on 2025-11-11; raw, 40000 Hz, duty cycle 0.33, 135 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_SUBTITLE": {
+      "label": "Subtitle",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8500, 4225, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 26000, 8500, 4225, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 DVD_Players/Pioneer/Pioneer_VXX2914.ir:36 name 'Subtitle' (added in 2ed8f7e on 2025-11-11; raw, 40000 Hz, duty cycle 0.33, 135 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_ANGLE": {
+      "label": "Angle",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8500, 4225, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 26000, 8500, 4225, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 DVD_Players/Pioneer/Pioneer_VXX2914.ir:42 name 'Angle' (added in 2ed8f7e on 2025-11-11; raw, 40000 Hz, duty cycle 0.33, 135 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_1": {
+      "label": "1",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8500, 4225, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 26000, 8500, 4225, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 DVD_Players/Pioneer/Pioneer_VXX2914.ir:48 name '1' (added in 2ed8f7e on 2025-11-11; raw, 40000 Hz, duty cycle 0.33, 135 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_2": {
+      "label": "2",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8500, 4225, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 26000, 8500, 4225, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 DVD_Players/Pioneer/Pioneer_VXX2914.ir:54 name '2' (added in 2ed8f7e on 2025-11-11; raw, 40000 Hz, duty cycle 0.33, 135 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_3": {
+      "label": "3",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8500, 4225, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 26000, 8500, 4225, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 DVD_Players/Pioneer/Pioneer_VXX2914.ir:60 name '3' (added in 2ed8f7e on 2025-11-11; raw, 40000 Hz, duty cycle 0.33, 135 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_CLEAR": {
+      "label": "Clear",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8500, 4225, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 26000, 8500, 4225, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 DVD_Players/Pioneer/Pioneer_VXX2914.ir:66 name 'Clear' (added in 2ed8f7e on 2025-11-11; raw, 40000 Hz, duty cycle 0.33, 135 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_4": {
+      "label": "4",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8500, 4225, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 26000, 8500, 4225, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 DVD_Players/Pioneer/Pioneer_VXX2914.ir:72 name '4' (added in 2ed8f7e on 2025-11-11; raw, 40000 Hz, duty cycle 0.33, 135 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_5": {
+      "label": "5",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8500, 4225, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 26000, 8500, 4225, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 DVD_Players/Pioneer/Pioneer_VXX2914.ir:78 name '5' (added in 2ed8f7e on 2025-11-11; raw, 40000 Hz, duty cycle 0.33, 135 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_6": {
+      "label": "6",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8500, 4225, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 26000, 8500, 4225, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 DVD_Players/Pioneer/Pioneer_VXX2914.ir:84 name '6' (added in 2ed8f7e on 2025-11-11; raw, 40000 Hz, duty cycle 0.33, 135 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_ENTER": {
+      "label": "Enter",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8500, 4225, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 26000, 8500, 4225, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 DVD_Players/Pioneer/Pioneer_VXX2914.ir:90 name 'Enter' (added in 2ed8f7e on 2025-11-11; raw, 40000 Hz, duty cycle 0.33, 135 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_7": {
+      "label": "7",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8500, 4225, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 26000, 8500, 4225, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 DVD_Players/Pioneer/Pioneer_VXX2914.ir:96 name '7' (added in 2ed8f7e on 2025-11-11; raw, 40000 Hz, duty cycle 0.33, 135 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_8": {
+      "label": "8",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8500, 4225, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 26000, 8500, 4225, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 DVD_Players/Pioneer/Pioneer_VXX2914.ir:102 name '8' (added in 2ed8f7e on 2025-11-11; raw, 40000 Hz, duty cycle 0.33, 135 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_9": {
+      "label": "9",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8500, 4225, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 26000, 8500, 4225, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 DVD_Players/Pioneer/Pioneer_VXX2914.ir:108 name '9' (added in 2ed8f7e on 2025-11-11; raw, 40000 Hz, duty cycle 0.33, 135 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_0": {
+      "label": "0",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8500, 4225, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 26000, 8500, 4225, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 DVD_Players/Pioneer/Pioneer_VXX2914.ir:114 name '0' (added in 2ed8f7e on 2025-11-11; raw, 40000 Hz, duty cycle 0.33, 135 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_TOP_MENU": {
+      "label": "Top_menu",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8500, 4225, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 26000, 8500, 4225, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 DVD_Players/Pioneer/Pioneer_VXX2914.ir:120 name 'Top_menu' (added in 2ed8f7e on 2025-11-11; raw, 40000 Hz, duty cycle 0.33, 135 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_MENU": {
+      "label": "Menu",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8500, 4225, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 26000, 8500, 4225, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 DVD_Players/Pioneer/Pioneer_VXX2914.ir:126 name 'Menu' (added in 2ed8f7e on 2025-11-11; raw, 40000 Hz, duty cycle 0.33, 135 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_UP": {
+      "label": "Up",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8500, 4225, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 26000, 8500, 4225, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 DVD_Players/Pioneer/Pioneer_VXX2914.ir:132 name 'Up' (added in 2ed8f7e on 2025-11-11; raw, 40000 Hz, duty cycle 0.33, 135 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_LEFT": {
+      "label": "Left",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8500, 4225, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 26000, 8500, 4225, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 DVD_Players/Pioneer/Pioneer_VXX2914.ir:138 name 'Left' (added in 2ed8f7e on 2025-11-11; raw, 40000 Hz, duty cycle 0.33, 135 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_CENTER_ENTER": {
+      "label": "Center_Enter",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8500, 4225, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 26000, 8500, 4225, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 DVD_Players/Pioneer/Pioneer_VXX2914.ir:144 name 'Center_Enter' (added in 2ed8f7e on 2025-11-11; raw, 40000 Hz, duty cycle 0.33, 135 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_RIGHT": {
+      "label": "Right",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8500, 4225, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 26000, 8500, 4225, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 DVD_Players/Pioneer/Pioneer_VXX2914.ir:150 name 'Right' (added in 2ed8f7e on 2025-11-11; raw, 40000 Hz, duty cycle 0.33, 135 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_DOWN": {
+      "label": "Down",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8500, 4225, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 26000, 8500, 4225, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 DVD_Players/Pioneer/Pioneer_VXX2914.ir:156 name 'Down' (added in 2ed8f7e on 2025-11-11; raw, 40000 Hz, duty cycle 0.33, 135 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_HOME_MENU": {
+      "label": "Home_menu",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8500, 4225, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 26000, 8500, 4225, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 DVD_Players/Pioneer/Pioneer_VXX2914.ir:162 name 'Home_menu' (added in 2ed8f7e on 2025-11-11; raw, 40000 Hz, duty cycle 0.33, 135 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_RETURN": {
+      "label": "Return",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8500, 4225, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 26000, 8500, 4225, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 DVD_Players/Pioneer/Pioneer_VXX2914.ir:168 name 'Return' (added in 2ed8f7e on 2025-11-11; raw, 40000 Hz, duty cycle 0.33, 135 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_REWIND": {
+      "label": "Rewind",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8500, 4225, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 26000, 8500, 4225, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 DVD_Players/Pioneer/Pioneer_VXX2914.ir:174 name 'Rewind' (added in 2ed8f7e on 2025-11-11; raw, 40000 Hz, duty cycle 0.33, 135 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_PLAY": {
+      "label": "Play",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8500, 4225, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 DVD_Players/Pioneer/Pioneer_VXX2914.ir:180 name 'Play' (added in 2ed8f7e on 2025-11-11; raw, 40000 Hz, duty cycle 0.33, 67 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_PLAY3": {
+      "label": "Play3",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8500, 4225, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 26000, 8500, 4225, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 DVD_Players/Pioneer/Pioneer_VXX2914.ir:192 name 'Play3' (added in 2ed8f7e on 2025-11-11; raw, 40000 Hz, duty cycle 0.33, 135 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_PLAY4": {
+      "label": "Play4",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8500, 4225, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 DVD_Players/Pioneer/Pioneer_VXX2914.ir:198 name 'Play4' (added in 2ed8f7e on 2025-11-11; raw, 40000 Hz, duty cycle 0.33, 67 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_FORWARD": {
+      "label": "Forward",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8500, 4225, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 26000, 8500, 4225, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 DVD_Players/Pioneer/Pioneer_VXX2914.ir:204 name 'Forward' (added in 2ed8f7e on 2025-11-11; raw, 40000 Hz, duty cycle 0.33, 135 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_BACK": {
+      "label": "Back",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8500, 4225, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 26000, 8500, 4225, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 DVD_Players/Pioneer/Pioneer_VXX2914.ir:210 name 'Back' (added in 2ed8f7e on 2025-11-11; raw, 40000 Hz, duty cycle 0.33, 135 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_PAUSE": {
+      "label": "Pause",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8500, 4225, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 26000, 8500, 4225, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 DVD_Players/Pioneer/Pioneer_VXX2914.ir:216 name 'Pause' (added in 2ed8f7e on 2025-11-11; raw, 40000 Hz, duty cycle 0.33, 135 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_STOP": {
+      "label": "Stop",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8500, 4225, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 26000, 8500, 4225, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 DVD_Players/Pioneer/Pioneer_VXX2914.ir:222 name 'Stop' (added in 2ed8f7e on 2025-11-11; raw, 40000 Hz, duty cycle 0.33, 135 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_NEXT": {
+      "label": "Next",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8500, 4225, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 26000, 8500, 4225, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 DVD_Players/Pioneer/Pioneer_VXX2914.ir:228 name 'Next' (added in 2ed8f7e on 2025-11-11; raw, 40000 Hz, duty cycle 0.33, 135 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_PLAY_MODE": {
+      "label": "Play_mode",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8500, 4225, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 26000, 8500, 4225, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 DVD_Players/Pioneer/Pioneer_VXX2914.ir:234 name 'Play_mode' (added in 2ed8f7e on 2025-11-11; raw, 40000 Hz, duty cycle 0.33, 135 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_SURROUND": {
+      "label": "Surround",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8500, 4225, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 26000, 8500, 4225, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 DVD_Players/Pioneer/Pioneer_VXX2914.ir:240 name 'Surround' (added in 2ed8f7e on 2025-11-11; raw, 40000 Hz, duty cycle 0.33, 135 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_ZOOM": {
+      "label": "Zoom",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8500, 4225, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 26000, 8500, 4225, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 DVD_Players/Pioneer/Pioneer_VXX2914.ir:246 name 'Zoom' (added in 2ed8f7e on 2025-11-11; raw, 40000 Hz, duty cycle 0.33, 135 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_DISPLAY": {
+      "label": "Display",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [8500, 4225, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 26000, 8500, 4225, 500, 1500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 1500, 500, 1500, 500, 1500, 500, 500, 500, 500, 500, 500, 500],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 DVD_Players/Pioneer/Pioneer_VXX2914.ir:252 name 'Display' (added in 2ed8f7e on 2025-11-11; raw, 40000 Hz, duty cycle 0.33, 135 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "manufacturer": "Sony",
+  "model": "CMT-SBT20B [Sony15]",
+  "aliases": [],
+  "controls": [
+    "Sony CMT-SBT20B [Sony15]"
+  ],
+  "protocol": {
+    "name": "Sony15",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_EQ": {
+      "label": "EQ",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x90",
+          "function": "0x4B",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 CD_Players/Sony/Sony_CMT-SBT20B.ir:90 name 'EQ' (added in d1a8eca on 2025-10-22; parsed SIRC15, address 90 00 00 00, command 4B 00 00 00): Sony15 device 144 function 75: address 0x90, command 0x4b"
+        }
+      ]
+    },
+    "KEY_MEGA_BASS": {
+      "label": "Mega Bass",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x90",
+          "function": "0x4D",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 CD_Players/Sony/Sony_CMT-SBT20B.ir:96 name 'Mega Bass' (added in d1a8eca on 2025-10-22; parsed SIRC15, address 90 00 00 00, command 4D 00 00 00): Sony15 device 144 function 77: address 0x90, command 0x4d"
+        }
+      ]
+    }
+  }
+}
