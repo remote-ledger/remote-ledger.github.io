@@ -1,0 +1,41 @@
+{
+  "manufacturer": "Sony",
+  "model": "CMT-EH10 [Sony15]",
+  "aliases": [],
+  "controls": [
+    "Sony CMT-EH10 [Sony15]"
+  ],
+  "protocol": {
+    "name": "Sony15",
+    "carrierHz": 40000,
+    "minSends": 3
+  },
+  "keys": {
+    "KEY_FUNCTION_1": {
+      "label": "Function",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x90",
+          "function": "0x69",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Sony/Sony_CMT-EH10.ir:237 name 'Function' (added in 67a9407 on 2026-03-21; parsed SIRC15, address 90 00 00 00, command 69 00 00 00): Sony15 device 144 function 105: address 0x90, command 0x69"
+        }
+      ]
+    },
+    "KEY_EQ": {
+      "label": "EQ",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x90",
+          "function": "0x63",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Sony/Sony_CMT-EH10.ir:255 name 'EQ' (added in 67a9407 on 2026-03-21; parsed SIRC15, address 90 00 00 00, command 63 00 00 00): Sony15 device 144 function 99: address 0x90, command 0x63"
+        }
+      ]
+    }
+  }
+}

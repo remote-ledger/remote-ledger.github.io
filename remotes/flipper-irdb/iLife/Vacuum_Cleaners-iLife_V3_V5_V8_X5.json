@@ -1,0 +1,178 @@
+{
+  "manufacturer": "iLife",
+  "model": "V3 V5 V8 X5",
+  "aliases": [],
+  "controls": [
+    "iLife V3 V5 V8 X5"
+  ],
+  "protocol": {
+    "carrierHz": 38000,
+    "unitUs": 450,
+    "minSends": 1,
+    "defaultGapUs": 180000,
+    "claims": {
+      "unitUs": {
+        "reason": "the file names no protocol, and D24 wants a unit to check the closing gap against; the shortest duration of its raw data, 450 us, is the largest unit the capture can have, and no duration is computed from it",
+        "source": "flipper-irdb@d126fb1 Vacuum_Cleaners/iLife/iLife_V3_V5_V8_X5.ir: the raw data of its buttons"
+      },
+      "defaultGapUs": {
+        "reason": "Flipper's raw data ends on a mark and records no gap after it; the firmware sends a silence of 180 ms before every raw transmission, so that is the space between one send of the signal and the next",
+        "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/encoder_decoder/infrared.h#L17 (INFRARED_RAW_TX_TIMING_DELAY_US 180000) and https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L23-L27 (the silence it sends first)"
+      }
+    }
+  },
+  "keys": {
+    "KEY_CLEAN": {
+      "label": "Clean",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [4500, 4350, 550, 500, 600, 1600, 550, 500, 600, 1550, 600, 500, 550, 1600, 600, 450, 600, 500, 4500, 4300, 600, 500, 550, 1600, 600, 450, 600, 1600, 550, 500, 600, 1550, 600, 500, 550, 500, 4500, 4350, 550, 500, 600, 1550, 600, 500, 550, 1600, 600, 500, 550, 1600, 600, 450, 600, 500, 4450, 4350, 600, 500, 550, 1600, 550, 500, 600, 1600, 550, 500, 600, 1550, 600, 500, 550, 500, 4500, 4300, 600, 500, 600, 1550, 600, 500, 550, 1600, 600, 500, 550, 1600, 550, 500, 600],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Vacuum_Cleaners/iLife/iLife_V3_V5_V8_X5.ir:6 name 'Clean' (added in 6660ead on 2026-02-04; raw, 38000 Hz, duty cycle 0.33, 89 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_HOME": {
+      "label": "Home",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [4450, 4350, 600, 500, 550, 500, 600, 500, 550, 1600, 600, 450, 600, 500, 600, 1550, 600, 450, 4500, 4350, 550, 500, 600, 500, 550, 500, 600, 1600, 550, 500, 600, 500, 550, 1600, 550, 500, 4500, 4350, 550, 500, 600, 500, 550, 500, 600, 1550, 600, 500, 600, 450, 600, 1600, 550, 500, 4500, 4300, 600, 500, 600, 450, 600, 500, 550, 1600, 600, 500, 550, 500, 600, 1550, 600, 500, 4450, 4350, 600, 500, 550, 500, 600, 500, 550, 1600, 550, 500, 600, 500, 600, 1550, 600],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Vacuum_Cleaners/iLife/iLife_V3_V5_V8_X5.ir:12 name 'Home' (added in 6660ead on 2026-02-04; raw, 38000 Hz, duty cycle 0.33, 89 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_UP": {
+      "label": "Up",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [4500, 4300, 600, 500, 550, 500, 600, 1600, 550, 1600, 550, 500, 600, 1600, 550, 1600, 550, 500, 4500, 4300, 600, 500, 600, 450, 600, 1600, 550, 1600, 600, 450, 600, 1600, 550, 1600, 550, 500, 4500, 4350, 550, 500, 600, 500, 550, 1600, 550, 1600, 600, 500, 550, 1600, 600, 1550, 600, 500, 4450, 4350, 550, 500, 600, 500, 550, 1600, 600, 1550, 600, 500, 550, 1600, 600, 1550, 600, 500, 4450, 4350, 550, 550, 550, 500, 550, 1600, 600, 1550, 600, 500, 600, 1550, 600, 1550, 600],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Vacuum_Cleaners/iLife/iLife_V3_V5_V8_X5.ir:18 name 'Up' (added in 6660ead on 2026-02-04; raw, 38000 Hz, duty cycle 0.33, 89 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_DOWN": {
+      "label": "Down",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [4500, 4350, 550, 1600, 600, 500, 550, 500, 600, 1550, 600, 1600, 550, 500, 600, 450, 600, 500, 4500, 4300, 600, 1550, 600, 500, 550, 500, 600, 1600, 550, 1600, 600, 450, 600, 500, 550, 500, 4500, 4300, 600, 1600, 550, 500, 600, 500, 550, 1600, 600, 1550, 600, 500, 550, 500, 600, 450, 4500, 4350, 550, 1600, 600, 500, 550, 500, 600, 1550, 600, 1600, 550, 500, 600, 500, 550, 500, 4500, 4300, 600, 1600, 550, 500, 600, 500, 550, 1600, 550, 1600, 600, 500, 550, 500, 600],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Vacuum_Cleaners/iLife/iLife_V3_V5_V8_X5.ir:24 name 'Down' (added in 6660ead on 2026-02-04; raw, 38000 Hz, duty cycle 0.33, 89 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_LEFT": {
+      "label": "Left",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [4450, 4350, 600, 500, 550, 1600, 600, 1550, 600, 1550, 600, 500, 550, 1600, 600, 1550, 600, 450, 4500, 4350, 600, 450, 600, 1600, 550, 1600, 600, 1550, 600, 500, 550, 1600, 600, 1550, 600, 450, 4500, 4350, 550, 500, 600, 1600, 550, 1600, 550, 1600, 600, 500, 550, 1600, 550, 1600, 600, 450, 4500, 4350, 550, 500, 600, 1550, 600, 1600, 550, 1600, 550, 500, 600, 1600, 550, 1600, 550, 500, 4500, 4350, 550, 500, 600, 1550, 600, 1600, 550, 1600, 550, 500, 600, 1600, 550, 1600, 550],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Vacuum_Cleaners/iLife/iLife_V3_V5_V8_X5.ir:30 name 'Left' (added in 6660ead on 2026-02-04; raw, 38000 Hz, duty cycle 0.33, 89 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_RIGHT": {
+      "label": "Right",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [4500, 4350, 600, 1550, 600, 500, 550, 500, 600, 500, 550, 1600, 600, 1550, 600, 500, 550, 500, 4500, 4300, 600, 1600, 550, 500, 600, 500, 600, 450, 600, 1600, 550, 1600, 600, 450, 600, 450, 4500, 4350, 600, 1550, 600, 500, 550, 500, 600, 500, 550, 1600, 600, 1550, 600, 500, 600, 450, 4500, 4350, 550, 1600, 550, 500, 600, 500, 600, 450, 600, 1600, 550, 1600, 600, 450, 600],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Vacuum_Cleaners/iLife/iLife_V3_V5_V8_X5.ir:36 name 'Right' (added in 6660ead on 2026-02-04; raw, 38000 Hz, duty cycle 0.33, 71 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_SPIRAL": {
+      "label": "Spiral",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [4500, 4350, 550, 1600, 600, 500, 550, 1600, 600, 1550, 600, 1550, 600, 1600, 550, 1600, 550, 500, 4500, 4300, 600, 1600, 550, 550, 550, 1550, 600, 1600, 550, 1600, 600, 1550, 600, 1550, 600, 500, 4500, 4300, 600, 1550, 600, 500, 550, 1600, 600, 1550, 600, 1600, 550, 1600, 600, 1550, 600, 450, 4500, 4350, 550, 1600, 600, 500, 550, 1600, 550, 1600, 600, 1550, 600, 1600, 550, 1600, 550, 500, 4500, 4300, 600, 1600, 550, 550, 550, 1550, 600, 1600, 550, 1600, 600, 1550, 600, 1550, 600],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Vacuum_Cleaners/iLife/iLife_V3_V5_V8_X5.ir:42 name 'Spiral' (added in 6660ead on 2026-02-04; raw, 38000 Hz, duty cycle 0.33, 89 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_EDGES": {
+      "label": "Edges",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [4500, 4350, 550, 1600, 600, 1550, 600, 500, 600, 1550, 550, 1600, 600, 1600, 550, 500, 600, 450, 4500, 4350, 550, 1600, 600, 1550, 600, 500, 550, 1600, 550, 1600, 600, 1550, 600, 500, 600, 450, 4500, 4350, 550, 1600, 600, 1550, 600, 500, 550, 1600, 600, 1550, 600, 1550, 600, 500, 550, 500, 4500, 4350, 550, 1600, 550, 1600, 600, 500, 550, 1600, 550, 1600, 600, 1550, 600, 500, 550, 500, 4500, 4300, 600, 1600, 550, 1600, 600, 500, 550, 1600, 550, 1600, 600, 1550, 600, 500, 550],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Vacuum_Cleaners/iLife/iLife_V3_V5_V8_X5.ir:48 name 'Edges' (added in 6660ead on 2026-02-04; raw, 38000 Hz, duty cycle 0.33, 89 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

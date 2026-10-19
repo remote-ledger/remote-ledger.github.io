@@ -679,6 +679,16 @@ def cmd_import(args: argparse.Namespace) -> int:
               f"see {official_importer.IMPORT_ROOT}/{official_importer.REPORT}")
         return EXIT_OK
 
+    if args.source == "flipper-irdb":
+        # Flipper-IRDB's CC0 files are pinned as a snapshot with their commits, not as a repository (D353).
+        from .flipper import importer as flipper_importer
+
+        report = flipper_importer.write_import(_repo_root(), Path(args.checkout))
+        imported = sum(n for k, n in report.keys.items() if k.startswith("imported"))
+        print(f"{flipper_importer.IMPORT_ROOT}/: {report.remotes['imported']:,} remotes, {imported:,} keys; "
+              f"see {flipper_importer.IMPORT_ROOT}/{flipper_importer.REPORT}")
+        return EXIT_OK
+
     if args.source == "hifi-remote":
         # Not a git repository: the pin is a snapshot directory (D111).
         report = hifiremote_importer.write_import(_repo_root(), Path(args.checkout))
@@ -854,11 +864,11 @@ def build_parser() -> argparse.ArgumentParser:
     im = sub.add_parser(
         "import", help="import an upstream database under SPEC R19", parents=[common]
     )
-    im.add_argument("source", choices=["lirc", "smartir", "irblaster", "hifi-remote", "jp1", "official"],
+    im.add_argument("source", choices=["lirc", "smartir", "irblaster", "hifi-remote", "jp1", "official", "flipper-irdb"],
                      help="a source meeting SPEC R19's five conditions")
     im.add_argument("checkout", help="a git checkout of the upstream source "
                                      "(for hifi-remote: its snapshot, sources/hifi-remote; for official: "
-                                     "sources/official)")
+                                     "sources/official; for flipper-irdb: sources/flipper-irdb)")
     im.add_argument("--commit", help="refuse unless the checkout is at this commit")
     im.set_defaults(func=cmd_import)
 

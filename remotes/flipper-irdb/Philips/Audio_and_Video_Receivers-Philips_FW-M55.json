@@ -1,0 +1,613 @@
+{
+  "manufacturer": "Philips",
+  "model": "FW-M55",
+  "aliases": [],
+  "controls": [
+    "Philips FW-M55"
+  ],
+  "protocol": {
+    "name": "RC5",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER": {
+      "label": "Power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:9 name 'Power' (added in 4925356 on 2026-03-21; parsed RC5, address 11 00 00 00, command 0C 00 00 00): RC5 device 17 function 12: address 0x11, command 0x0c"
+        }
+      ]
+    },
+    "KEY_VOL_UP": {
+      "label": "Vol_up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:15 name 'Vol_up' (added in 4925356 on 2026-03-21; parsed RC5, address 10 00 00 00, command 10 00 00 00): RC5 device 16 function 16: address 0x10, command 0x10"
+        }
+      ]
+    },
+    "KEY_VOL_DN": {
+      "label": "Vol_dn",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x11",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:21 name 'Vol_dn' (added in 4925356 on 2026-03-21; parsed RC5, address 10 00 00 00, command 11 00 00 00): RC5 device 16 function 17: address 0x10, command 0x11"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "Mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:27 name 'Mute' (added in 4925356 on 2026-03-21; parsed RC5, address 10 00 00 00, command 0D 00 00 00): RC5 device 16 function 13: address 0x10, command 0x0d"
+        }
+      ]
+    },
+    "KEY_CD_1_SLASH_2_SLASH_3": {
+      "label": "CD_1/2/3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x3F",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:33 name 'CD_1/2/3' (added in 4925356 on 2026-03-21; parsed RC5, address 14 00 00 00, command 3F 00 00 00): RC5 device 20 function 63: address 0x14, command 0x3f"
+        }
+      ]
+    },
+    "KEY_AUX": {
+      "label": "Aux",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x15",
+          "function": "0x3F",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:39 name 'Aux' (added in 4925356 on 2026-03-21; parsed RC5, address 15 00 00 00, command 3F 00 00 00): RC5 device 21 function 63: address 0x15, command 0x3f"
+        }
+      ]
+    },
+    "KEY_TUNER": {
+      "label": "Tuner",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "function": "0x3F",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:45 name 'Tuner' (added in 4925356 on 2026-03-21; parsed RC5, address 11 00 00 00, command 3F 00 00 00): RC5 device 17 function 63: address 0x11, command 0x3f"
+        }
+      ]
+    },
+    "KEY_TAPE": {
+      "label": "Tape",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x12",
+          "function": "0x3F",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:51 name 'Tape' (added in 4925356 on 2026-03-21; parsed RC5, address 12 00 00 00, command 3F 00 00 00): RC5 device 18 function 63: address 0x12, command 0x3f"
+        }
+      ]
+    },
+    "KEY_CD_PLAY_SLASH_PAUSE": {
+      "label": "CD_Play/Pause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x35",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:57 name 'CD_Play/Pause' (added in 4925356 on 2026-03-21; parsed RC5, address 14 00 00 00, command 35 00 00 00): RC5 device 20 function 53: address 0x14, command 0x35"
+        }
+      ]
+    },
+    "KEY_CD_STOP": {
+      "label": "CD_Stop",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x36",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:63 name 'CD_Stop' (added in 4925356 on 2026-03-21; parsed RC5, address 14 00 00 00, command 36 00 00 00): RC5 device 20 function 54: address 0x14, command 0x36"
+        }
+      ]
+    },
+    "KEY_CD_NEXT": {
+      "label": "CD_Next",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x20",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:69 name 'CD_Next' (added in 4925356 on 2026-03-21; parsed RC5, address 14 00 00 00, command 20 00 00 00): RC5 device 20 function 32: address 0x14, command 0x20"
+        }
+      ]
+    },
+    "KEY_CD_PREV": {
+      "label": "CD_Prev",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x21",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:75 name 'CD_Prev' (added in 4925356 on 2026-03-21; parsed RC5, address 14 00 00 00, command 21 00 00 00): RC5 device 20 function 33: address 0x14, command 0x21"
+        }
+      ]
+    },
+    "KEY_CD_FF": {
+      "label": "CD_FF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x34",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:81 name 'CD_FF' (added in 4925356 on 2026-03-21; parsed RC5, address 14 00 00 00, command 34 00 00 00): RC5 device 20 function 52: address 0x14, command 0x34"
+        }
+      ]
+    },
+    "KEY_CD_REW": {
+      "label": "CD_REW",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x32",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:87 name 'CD_REW' (added in 4925356 on 2026-03-21; parsed RC5, address 14 00 00 00, command 32 00 00 00): RC5 device 20 function 50: address 0x14, command 0x32"
+        }
+      ]
+    },
+    "KEY_TAPE_PLAY": {
+      "label": "Tape_Play",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x12",
+          "function": "0x35",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:93 name 'Tape_Play' (added in 4925356 on 2026-03-21; parsed RC5, address 12 00 00 00, command 35 00 00 00): RC5 device 18 function 53: address 0x12, command 0x35"
+        }
+      ]
+    },
+    "KEY_TAPE_STOP": {
+      "label": "Tape_Stop",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x12",
+          "function": "0x36",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:99 name 'Tape_Stop' (added in 4925356 on 2026-03-21; parsed RC5, address 12 00 00 00, command 36 00 00 00): RC5 device 18 function 54: address 0x12, command 0x36"
+        }
+      ]
+    },
+    "KEY_TAPE_FORWARD": {
+      "label": "Tape_Forward",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x12",
+          "function": "0x20",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:105 name 'Tape_Forward' (added in 4925356 on 2026-03-21; parsed RC5, address 12 00 00 00, command 20 00 00 00): RC5 device 18 function 32: address 0x12, command 0x20"
+        }
+      ]
+    },
+    "KEY_TAPE_BACKWARD": {
+      "label": "Tape_Backward",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x12",
+          "function": "0x21",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:111 name 'Tape_Backward' (added in 4925356 on 2026-03-21; parsed RC5, address 12 00 00 00, command 21 00 00 00): RC5 device 18 function 33: address 0x12, command 0x21"
+        }
+      ]
+    },
+    "KEY_TAPE_FF": {
+      "label": "Tape_FF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x12",
+          "function": "0x34",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:117 name 'Tape_FF' (added in 4925356 on 2026-03-21; parsed RC5, address 12 00 00 00, command 34 00 00 00): RC5 device 18 function 52: address 0x12, command 0x34"
+        }
+      ]
+    },
+    "KEY_TAPE_REW": {
+      "label": "Tape_REW",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x12",
+          "function": "0x32",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:123 name 'Tape_REW' (added in 4925356 on 2026-03-21; parsed RC5, address 12 00 00 00, command 32 00 00 00): RC5 device 18 function 50: address 0x12, command 0x32"
+        }
+      ]
+    },
+    "KEY_TUNER_NEXT_PRESET": {
+      "label": "Tuner_Next_preset",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "function": "0x20",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:129 name 'Tuner_Next_preset' (added in 4925356 on 2026-03-21; parsed RC5, address 11 00 00 00, command 20 00 00 00): RC5 device 17 function 32: address 0x11, command 0x20"
+        }
+      ]
+    },
+    "KEY_TUNER_PREV_PRESET": {
+      "label": "Tuner_Prev_preset",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "function": "0x21",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:135 name 'Tuner_Prev_preset' (added in 4925356 on 2026-03-21; parsed RC5, address 11 00 00 00, command 21 00 00 00): RC5 device 17 function 33: address 0x11, command 0x21"
+        }
+      ]
+    },
+    "KEY_TUNE_PLUS": {
+      "label": "Tune+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "function": "0x1E",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:141 name 'Tune+' (added in 4925356 on 2026-03-21; parsed RC5, address 11 00 00 00, command 1E 00 00 00): RC5 device 17 function 30: address 0x11, command 0x1e"
+        }
+      ]
+    },
+    "KEY_TUNE_MINUS": {
+      "label": "Tune-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x11",
+          "function": "0x1F",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:147 name 'Tune-' (added in 4925356 on 2026-03-21; parsed RC5, address 11 00 00 00, command 1F 00 00 00): RC5 device 17 function 31: address 0x11, command 0x1f"
+        }
+      ]
+    },
+    "KEY_SLEEP": {
+      "label": "Sleep",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x26",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:153 name 'Sleep' (added in 4925356 on 2026-03-21; parsed RC5, address 10 00 00 00, command 26 00 00 00): RC5 device 16 function 38: address 0x10, command 0x26"
+        }
+      ]
+    },
+    "KEY_PROG": {
+      "label": "Prog",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x24",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:159 name 'Prog' (added in 4925356 on 2026-03-21; parsed RC5, address 14 00 00 00, command 24 00 00 00): RC5 device 20 function 36: address 0x14, command 0x24"
+        }
+      ]
+    },
+    "KEY_DBB": {
+      "label": "DBB",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x46",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:165 name 'DBB' (added in 4925356 on 2026-03-21; parsed RC5X, address 10 00 00 00, command 06 00 00 00): RC5 device 16 function 70: address 0x10, command 0x06: the second start bit is 0, which is command bit 6"
+        }
+      ]
+    },
+    "KEY_DSC": {
+      "label": "DSC",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x4F",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:171 name 'DSC' (added in 4925356 on 2026-03-21; parsed RC5X, address 10 00 00 00, command 0F 00 00 00): RC5 device 16 function 79: address 0x10, command 0x0f: the second start bit is 0, which is command bit 6"
+        }
+      ]
+    },
+    "KEY_ALBUM_PLUS": {
+      "label": "Album+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x70",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:177 name 'Album+' (added in 4925356 on 2026-03-21; parsed RC5X, address 14 00 00 00, command 30 00 00 00): RC5 device 20 function 112: address 0x14, command 0x30: the second start bit is 0, which is command bit 6"
+        }
+      ]
+    },
+    "KEY_ALBUM_MINUS": {
+      "label": "Album-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x71",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:183 name 'Album-' (added in 4925356 on 2026-03-21; parsed RC5X, address 14 00 00 00, command 31 00 00 00): RC5 device 20 function 113: address 0x14, command 0x31: the second start bit is 0, which is command bit 6"
+        }
+      ]
+    },
+    "KEY_TITLE_PLUS": {
+      "label": "Title+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x79",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:189 name 'Title+' (added in 4925356 on 2026-03-21; parsed RC5X, address 14 00 00 00, command 39 00 00 00): RC5 device 20 function 121: address 0x14, command 0x39: the second start bit is 0, which is command bit 6"
+        }
+      ]
+    },
+    "KEY_TITLE_MINUS": {
+      "label": "Title-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x7A",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:195 name 'Title-' (added in 4925356 on 2026-03-21; parsed RC5X, address 14 00 00 00, command 3A 00 00 00): RC5 device 20 function 122: address 0x14, command 0x3a: the second start bit is 0, which is command bit 6"
+        }
+      ]
+    },
+    "KEY_ALBUM_DISPLAY": {
+      "label": "Album_display",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x6F",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:201 name 'Album_display' (added in 4925356 on 2026-03-21; parsed RC5X, address 14 00 00 00, command 2F 00 00 00): RC5 device 20 function 111: address 0x14, command 0x2f: the second start bit is 0, which is command bit 6"
+        }
+      ]
+    },
+    "KEY_TITLE_DISPLAY": {
+      "label": "Title_display",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x6D",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:207 name 'Title_display' (added in 4925356 on 2026-03-21; parsed RC5X, address 14 00 00 00, command 2D 00 00 00): RC5 device 20 function 109: address 0x14, command 0x2d: the second start bit is 0, which is command bit 6"
+        }
+      ]
+    },
+    "KEY_REPEAT": {
+      "label": "Repeat",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x1D",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:213 name 'Repeat' (added in 4925356 on 2026-03-21; parsed RC5, address 14 00 00 00, command 1D 00 00 00): RC5 device 20 function 29: address 0x14, command 0x1d"
+        }
+      ]
+    },
+    "KEY_INCREDIBLESURROUND": {
+      "label": "IncredibleSurround",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x10",
+          "function": "0x40",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:219 name 'IncredibleSurround' (added in 4925356 on 2026-03-21; parsed RC5X, address 10 00 00 00, command 00 00 00 00): RC5 device 16 function 64: address 0x10, command 0x00: the second start bit is 0, which is command bit 6"
+        }
+      ]
+    },
+    "KEY_1": {
+      "label": "1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:225 name '1' (added in 4925356 on 2026-03-21; parsed RC5, address 14 00 00 00, command 01 00 00 00): RC5 device 20 function 1: address 0x14, command 0x01"
+        }
+      ]
+    },
+    "KEY_2": {
+      "label": "2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:231 name '2' (added in 4925356 on 2026-03-21; parsed RC5, address 14 00 00 00, command 02 00 00 00): RC5 device 20 function 2: address 0x14, command 0x02"
+        }
+      ]
+    },
+    "KEY_3": {
+      "label": "3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:237 name '3' (added in 4925356 on 2026-03-21; parsed RC5, address 14 00 00 00, command 03 00 00 00): RC5 device 20 function 3: address 0x14, command 0x03"
+        }
+      ]
+    },
+    "KEY_4": {
+      "label": "4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:243 name '4' (added in 4925356 on 2026-03-21; parsed RC5, address 14 00 00 00, command 04 00 00 00): RC5 device 20 function 4: address 0x14, command 0x04"
+        }
+      ]
+    },
+    "KEY_5": {
+      "label": "5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:249 name '5' (added in 4925356 on 2026-03-21; parsed RC5, address 14 00 00 00, command 05 00 00 00): RC5 device 20 function 5: address 0x14, command 0x05"
+        }
+      ]
+    },
+    "KEY_6": {
+      "label": "6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:255 name '6' (added in 4925356 on 2026-03-21; parsed RC5, address 14 00 00 00, command 06 00 00 00): RC5 device 20 function 6: address 0x14, command 0x06"
+        }
+      ]
+    },
+    "KEY_7": {
+      "label": "7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:261 name '7' (added in 4925356 on 2026-03-21; parsed RC5, address 14 00 00 00, command 07 00 00 00): RC5 device 20 function 7: address 0x14, command 0x07"
+        }
+      ]
+    },
+    "KEY_8": {
+      "label": "8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:267 name '8' (added in 4925356 on 2026-03-21; parsed RC5, address 14 00 00 00, command 08 00 00 00): RC5 device 20 function 8: address 0x14, command 0x08"
+        }
+      ]
+    },
+    "KEY_9": {
+      "label": "9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:273 name '9' (added in 4925356 on 2026-03-21; parsed RC5, address 14 00 00 00, command 09 00 00 00): RC5 device 20 function 9: address 0x14, command 0x09"
+        }
+      ]
+    },
+    "KEY_0": {
+      "label": "0",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x14",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Philips/Philips_FW-M55.ir:279 name '0' (added in 4925356 on 2026-03-21; parsed RC5, address 14 00 00 00, command 00 00 00 00): RC5 device 20 function 0: address 0x14, command 0x00"
+        }
+      ]
+    }
+  }
+}

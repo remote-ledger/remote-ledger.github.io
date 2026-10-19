@@ -1,0 +1,102 @@
+{
+  "manufacturer": "Kaleidescape",
+  "model": "Strato V [raw 38000 Hz]",
+  "aliases": [],
+  "controls": [
+    "Kaleidescape Strato V [raw 38000 Hz]"
+  ],
+  "protocol": {
+    "carrierHz": 38000,
+    "unitUs": 400,
+    "minSends": 1,
+    "defaultGapUs": 180000,
+    "claims": {
+      "unitUs": {
+        "reason": "the file names no protocol, and D24 wants a unit to check the closing gap against; the shortest duration of its raw data, 400 us, is the largest unit the capture can have, and no duration is computed from it",
+        "source": "flipper-irdb@d126fb1 Streaming_Devices/Kaleidescape/Kaleidescape_Strato_V.ir: the raw data of its buttons"
+      },
+      "defaultGapUs": {
+        "reason": "Flipper's raw data ends on a mark and records no gap after it; the firmware sends a silence of 180 ms before every raw transmission, so that is the space between one send of the signal and the next",
+        "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/encoder_decoder/infrared.h#L17 (INFRARED_RAW_TX_TIMING_DELAY_US 180000) and https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L23-L27 (the silence it sends first)"
+      }
+    }
+  },
+  "keys": {
+    "KEY_MENU": {
+      "label": "Menu",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [9077, 4471, 591, 1667, 590, 536, 592, 1620, 637, 536, 592, 536, 592, 537, 591, 1666, 591, 537, 591, 537, 591, 1667, 590, 538, 590, 1665, 592, 1666, 591, 1666, 591, 449, 679, 1666, 591, 536, 592, 1666, 591, 1667, 590, 536, 592, 1665, 592, 537, 591, 537, 591, 536, 592, 1666, 591, 539, 589, 427, 701, 1666, 591, 538, 590, 1666, 591, 1667, 590, 1665, 592, 40418, 9021, 2215, 590],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Streaming_Devices/Kaleidescape/Kaleidescape_Strato_V.ir:10 name 'Menu' (added in 060215c on 2026-02-25; raw, 38000 Hz, duty cycle 0.33, 71 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_UP": {
+      "label": "Up",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [9018, 4472, 589, 1667, 590, 539, 589, 1667, 590, 538, 590, 537, 591, 539, 589, 1666, 591, 538, 590, 538, 590, 1669, 588, 538, 590, 1667, 590, 1664, 593, 1667, 590, 538, 590, 1668, 589, 540, 588, 539, 589, 538, 590, 539, 590, 539, 589, 538, 590, 463, 665, 1667, 590, 1668, 589, 1668, 589, 1667, 590, 1667, 590, 1667, 590, 1667, 590, 1667, 729, 400, 590, 40420, 9020, 2214, 590],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Streaming_Devices/Kaleidescape/Kaleidescape_Strato_V.ir:34 name 'Up' (added in 060215c on 2026-02-25; raw, 38000 Hz, duty cycle 0.33, 71 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_RIGHT": {
+      "label": "Right",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [9021, 4472, 590, 1667, 590, 537, 591, 1667, 590, 540, 588, 539, 589, 538, 590, 1667, 590, 539, 589, 539, 589, 1666, 591, 538, 590, 1667, 589, 1667, 591, 1668, 727, 400, 590, 1667, 590, 1667, 727, 401, 590, 1666, 591, 1668, 589, 539, 589, 538, 590, 1666, 591, 537, 591, 538, 590, 1667, 590, 537, 591, 538, 590, 1668, 589, 1666, 591, 539, 589, 1667, 590, 40419, 9021, 2215, 590],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Streaming_Devices/Kaleidescape/Kaleidescape_Strato_V.ir:52 name 'Right' (added in 060215c on 2026-02-25; raw, 38000 Hz, duty cycle 0.33, 71 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_SELECT": {
+      "label": "Select",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [9023, 4358, 703, 1666, 591, 538, 590, 1544, 713, 539, 589, 538, 590, 539, 589, 1668, 589, 538, 590, 538, 590, 1668, 589, 538, 590, 1667, 590, 1668, 589, 1667, 590, 538, 590, 1668, 589, 1667, 590, 538, 590, 538, 590, 538, 590, 539, 589, 1667, 590, 539, 589, 538, 590, 538, 590, 1667, 590, 1668, 589, 1667, 590, 1667, 590, 539, 589, 1667, 590, 1668, 589],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Streaming_Devices/Kaleidescape/Kaleidescape_Strato_V.ir:88 name 'Select' (added in 060215c on 2026-02-25; raw, 38000 Hz, duty cycle 0.33, 67 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

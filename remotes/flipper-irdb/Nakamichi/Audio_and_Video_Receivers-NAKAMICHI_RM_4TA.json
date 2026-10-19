@@ -1,0 +1,603 @@
+{
+  "manufacturer": "Nakamichi",
+  "model": "RM 4TA",
+  "aliases": [],
+  "controls": [
+    "Nakamichi RM 4TA"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER": {
+      "label": "Power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5C",
+          "subdevice": "0xA3",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Nakamichi/NAKAMICHI_RM_4TA.ir:6 name 'Power' (added in 886a372 on 2025-11-05; parsed NEC, address 5C 00 00 00, command 00 00 00 00): NEC1 device 92 subdevice 163 function 0: address 0x5c, command 0x00: the frame 0x5c 0xa3 0x00 0xff"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "Mute",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5C",
+          "subdevice": "0xA3",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Nakamichi/NAKAMICHI_RM_4TA.ir:12 name 'Mute' (added in 886a372 on 2025-11-05; parsed NEC, address 5C 00 00 00, command 01 00 00 00): NEC1 device 92 subdevice 163 function 1: address 0x5c, command 0x01: the frame 0x5c 0xa3 0x01 0xfe"
+        }
+      ]
+    },
+    "KEY_VOL_DN": {
+      "label": "Vol_dn",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5C",
+          "subdevice": "0xA3",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Nakamichi/NAKAMICHI_RM_4TA.ir:18 name 'Vol_dn' (added in 886a372 on 2025-11-05; parsed NEC, address 5C 00 00 00, command 03 00 00 00): NEC1 device 92 subdevice 163 function 3: address 0x5c, command 0x03: the frame 0x5c 0xa3 0x03 0xfc"
+        }
+      ]
+    },
+    "KEY_VOL_UP": {
+      "label": "Vol_up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5C",
+          "subdevice": "0xA3",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Nakamichi/NAKAMICHI_RM_4TA.ir:24 name 'Vol_up' (added in 886a372 on 2025-11-05; parsed NEC, address 5C 00 00 00, command 02 00 00 00): NEC1 device 92 subdevice 163 function 2: address 0x5c, command 0x02: the frame 0x5c 0xa3 0x02 0xfd"
+        }
+      ]
+    },
+    "KEY_SPEAKERS_A": {
+      "label": "Speakers_A",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5C",
+          "subdevice": "0xA3",
+          "function": "0x40",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Nakamichi/NAKAMICHI_RM_4TA.ir:30 name 'Speakers_A' (added in 886a372 on 2025-11-05; parsed NEC, address 5C 00 00 00, command 40 00 00 00): NEC1 device 92 subdevice 163 function 64: address 0x5c, command 0x40: the frame 0x5c 0xa3 0x40 0xbf"
+        }
+      ]
+    },
+    "KEY_SPEAKERS_B": {
+      "label": "Speakers_B",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5C",
+          "subdevice": "0xA3",
+          "function": "0x41",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Nakamichi/NAKAMICHI_RM_4TA.ir:36 name 'Speakers_B' (added in 886a372 on 2025-11-05; parsed NEC, address 5C 00 00 00, command 41 00 00 00): NEC1 device 92 subdevice 163 function 65: address 0x5c, command 0x41: the frame 0x5c 0xa3 0x41 0xbe"
+        }
+      ]
+    },
+    "KEY_SPEAKERS_AB": {
+      "label": "Speakers_AB",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5C",
+          "subdevice": "0xA3",
+          "function": "0x42",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Nakamichi/NAKAMICHI_RM_4TA.ir:42 name 'Speakers_AB' (added in 886a372 on 2025-11-05; parsed NEC, address 5C 00 00 00, command 42 00 00 00): NEC1 device 92 subdevice 163 function 66: address 0x5c, command 0x42: the frame 0x5c 0xa3 0x42 0xbd"
+        }
+      ]
+    },
+    "KEY_SPEAKERS_OFF": {
+      "label": "Speakers_OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5C",
+          "subdevice": "0xA3",
+          "function": "0x43",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Nakamichi/NAKAMICHI_RM_4TA.ir:48 name 'Speakers_OFF' (added in 886a372 on 2025-11-05; parsed NEC, address 5C 00 00 00, command 43 00 00 00): NEC1 device 92 subdevice 163 function 67: address 0x5c, command 0x43: the frame 0x5c 0xa3 0x43 0xbc"
+        }
+      ]
+    },
+    "KEY_PHONO": {
+      "label": "Phono",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5C",
+          "subdevice": "0xA3",
+          "function": "0x44",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Nakamichi/NAKAMICHI_RM_4TA.ir:54 name 'Phono' (added in 886a372 on 2025-11-05; parsed NEC, address 5C 00 00 00, command 44 00 00 00): NEC1 device 92 subdevice 163 function 68: address 0x5c, command 0x44: the frame 0x5c 0xa3 0x44 0xbb"
+        }
+      ]
+    },
+    "KEY_CD": {
+      "label": "CD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5C",
+          "subdevice": "0xA3",
+          "function": "0x45",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Nakamichi/NAKAMICHI_RM_4TA.ir:60 name 'CD' (added in 886a372 on 2025-11-05; parsed NEC, address 5C 00 00 00, command 45 00 00 00): NEC1 device 92 subdevice 163 function 69: address 0x5c, command 0x45: the frame 0x5c 0xa3 0x45 0xba"
+        }
+      ]
+    },
+    "KEY_TUNER": {
+      "label": "Tuner",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5C",
+          "subdevice": "0xA3",
+          "function": "0x46",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Nakamichi/NAKAMICHI_RM_4TA.ir:66 name 'Tuner' (added in 886a372 on 2025-11-05; parsed NEC, address 5C 00 00 00, command 46 00 00 00): NEC1 device 92 subdevice 163 function 70: address 0x5c, command 0x46: the frame 0x5c 0xa3 0x46 0xb9"
+        }
+      ]
+    },
+    "KEY_VIDEO_1": {
+      "label": "Video_1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5C",
+          "subdevice": "0xA3",
+          "function": "0x47",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Nakamichi/NAKAMICHI_RM_4TA.ir:72 name 'Video_1' (added in 886a372 on 2025-11-05; parsed NEC, address 5C 00 00 00, command 47 00 00 00): NEC1 device 92 subdevice 163 function 71: address 0x5c, command 0x47: the frame 0x5c 0xa3 0x47 0xb8"
+        }
+      ]
+    },
+    "KEY_VIDEO_2": {
+      "label": "Video_2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5C",
+          "subdevice": "0xA3",
+          "function": "0x48",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Nakamichi/NAKAMICHI_RM_4TA.ir:78 name 'Video_2' (added in 886a372 on 2025-11-05; parsed NEC, address 5C 00 00 00, command 48 00 00 00): NEC1 device 92 subdevice 163 function 72: address 0x5c, command 0x48: the frame 0x5c 0xa3 0x48 0xb7"
+        }
+      ]
+    },
+    "KEY_TAPE_1": {
+      "label": "Tape_1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5C",
+          "subdevice": "0xA3",
+          "function": "0x49",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Nakamichi/NAKAMICHI_RM_4TA.ir:84 name 'Tape_1' (added in 886a372 on 2025-11-05; parsed NEC, address 5C 00 00 00, command 49 00 00 00): NEC1 device 92 subdevice 163 function 73: address 0x5c, command 0x49: the frame 0x5c 0xa3 0x49 0xb6"
+        }
+      ]
+    },
+    "KEY_TAPE_2": {
+      "label": "Tape_2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5C",
+          "subdevice": "0xA3",
+          "function": "0x4A",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Nakamichi/NAKAMICHI_RM_4TA.ir:90 name 'Tape_2' (added in 886a372 on 2025-11-05; parsed NEC, address 5C 00 00 00, command 4A 00 00 00): NEC1 device 92 subdevice 163 function 74: address 0x5c, command 0x4a: the frame 0x5c 0xa3 0x4a 0xb5"
+        }
+      ]
+    },
+    "KEY_TAPE_3_VCR": {
+      "label": "Tape_3_VCR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5C",
+          "subdevice": "0xA3",
+          "function": "0x4B",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Nakamichi/NAKAMICHI_RM_4TA.ir:96 name 'Tape_3_VCR' (added in 886a372 on 2025-11-05; parsed NEC, address 5C 00 00 00, command 4B 00 00 00): NEC1 device 92 subdevice 163 function 75: address 0x5c, command 0x4b: the frame 0x5c 0xa3 0x4b 0xb4"
+        }
+      ]
+    },
+    "KEY_AM": {
+      "label": "AM",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5C",
+          "subdevice": "0xA3",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Nakamichi/NAKAMICHI_RM_4TA.ir:102 name 'AM' (added in 886a372 on 2025-11-05; parsed NEC, address 5C 00 00 00, command 06 00 00 00): NEC1 device 92 subdevice 163 function 6: address 0x5c, command 0x06: the frame 0x5c 0xa3 0x06 0xf9"
+        }
+      ]
+    },
+    "KEY_FM": {
+      "label": "FM",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5C",
+          "subdevice": "0xA3",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Nakamichi/NAKAMICHI_RM_4TA.ir:108 name 'FM' (added in 886a372 on 2025-11-05; parsed NEC, address 5C 00 00 00, command 07 00 00 00): NEC1 device 92 subdevice 163 function 7: address 0x5c, command 0x07: the frame 0x5c 0xa3 0x07 0xf8"
+        }
+      ]
+    },
+    "KEY_PRESET_DN": {
+      "label": "Preset_dn",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5C",
+          "subdevice": "0xA3",
+          "function": "0x13",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Nakamichi/NAKAMICHI_RM_4TA.ir:114 name 'Preset_dn' (added in 886a372 on 2025-11-05; parsed NEC, address 5C 00 00 00, command 13 00 00 00): NEC1 device 92 subdevice 163 function 19: address 0x5c, command 0x13: the frame 0x5c 0xa3 0x13 0xec"
+        }
+      ]
+    },
+    "KEY_PRESET_UP": {
+      "label": "Preset_up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5C",
+          "subdevice": "0xA3",
+          "function": "0x12",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Nakamichi/NAKAMICHI_RM_4TA.ir:120 name 'Preset_up' (added in 886a372 on 2025-11-05; parsed NEC, address 5C 00 00 00, command 12 00 00 00): NEC1 device 92 subdevice 163 function 18: address 0x5c, command 0x12: the frame 0x5c 0xa3 0x12 0xed"
+        }
+      ]
+    },
+    "KEY_SEEK_DN": {
+      "label": "Seek_dn",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5C",
+          "subdevice": "0xA3",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Nakamichi/NAKAMICHI_RM_4TA.ir:126 name 'Seek_dn' (added in 886a372 on 2025-11-05; parsed NEC, address 5C 00 00 00, command 05 00 00 00): NEC1 device 92 subdevice 163 function 5: address 0x5c, command 0x05: the frame 0x5c 0xa3 0x05 0xfa"
+        }
+      ]
+    },
+    "KEY_SEEK_UP": {
+      "label": "Seek_up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5C",
+          "subdevice": "0xA3",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Nakamichi/NAKAMICHI_RM_4TA.ir:132 name 'Seek_up' (added in 886a372 on 2025-11-05; parsed NEC, address 5C 00 00 00, command 04 00 00 00): NEC1 device 92 subdevice 163 function 4: address 0x5c, command 0x04: the frame 0x5c 0xa3 0x04 0xfb"
+        }
+      ]
+    },
+    "KEY_CD_RW": {
+      "label": "CD_rw",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x67",
+          "subdevice": "0x98",
+          "function": "0xC1",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Nakamichi/NAKAMICHI_RM_4TA.ir:138 name 'CD_rw' (added in 886a372 on 2025-11-05; parsed NEC, address 67 00 00 00, command C1 00 00 00): NEC1 device 103 subdevice 152 function 193: address 0x67, command 0xc1: the frame 0x67 0x98 0xc1 0x3e"
+        }
+      ]
+    },
+    "KEY_CD_FF": {
+      "label": "CD_ff",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x67",
+          "subdevice": "0x98",
+          "function": "0xC7",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Nakamichi/NAKAMICHI_RM_4TA.ir:144 name 'CD_ff' (added in 886a372 on 2025-11-05; parsed NEC, address 67 00 00 00, command C7 00 00 00): NEC1 device 103 subdevice 152 function 199: address 0x67, command 0xc7: the frame 0x67 0x98 0xc7 0x38"
+        }
+      ]
+    },
+    "KEY_CD_BK": {
+      "label": "CD_bk",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x67",
+          "subdevice": "0x98",
+          "function": "0xC2",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Nakamichi/NAKAMICHI_RM_4TA.ir:150 name 'CD_bk' (added in 886a372 on 2025-11-05; parsed NEC, address 67 00 00 00, command C2 00 00 00): NEC1 device 103 subdevice 152 function 194: address 0x67, command 0xc2: the frame 0x67 0x98 0xc2 0x3d"
+        }
+      ]
+    },
+    "KEY_CD_FW": {
+      "label": "CD_fw",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x67",
+          "subdevice": "0x98",
+          "function": "0xC8",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Nakamichi/NAKAMICHI_RM_4TA.ir:156 name 'CD_fw' (added in 886a372 on 2025-11-05; parsed NEC, address 67 00 00 00, command C8 00 00 00): NEC1 device 103 subdevice 152 function 200: address 0x67, command 0xc8: the frame 0x67 0x98 0xc8 0x37"
+        }
+      ]
+    },
+    "KEY_DISC_SCAN": {
+      "label": "Disc_Scan",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x67",
+          "subdevice": "0x98",
+          "function": "0x93",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Nakamichi/NAKAMICHI_RM_4TA.ir:162 name 'Disc_Scan' (added in 886a372 on 2025-11-05; parsed NEC, address 67 00 00 00, command 93 00 00 00): NEC1 device 103 subdevice 152 function 147: address 0x67, command 0x93: the frame 0x67 0x98 0x93 0x6c"
+        }
+      ]
+    },
+    "KEY_CD_STOP": {
+      "label": "CD_Stop",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x67",
+          "subdevice": "0x98",
+          "function": "0xC5",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Nakamichi/NAKAMICHI_RM_4TA.ir:168 name 'CD_Stop' (added in 886a372 on 2025-11-05; parsed NEC, address 67 00 00 00, command C5 00 00 00): NEC1 device 103 subdevice 152 function 197: address 0x67, command 0xc5: the frame 0x67 0x98 0xc5 0x3a"
+        }
+      ]
+    },
+    "KEY_CD_PAUSE": {
+      "label": "CD_Pause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x67",
+          "subdevice": "0x98",
+          "function": "0xCB",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Nakamichi/NAKAMICHI_RM_4TA.ir:174 name 'CD_Pause' (added in 886a372 on 2025-11-05; parsed NEC, address 67 00 00 00, command CB 00 00 00): NEC1 device 103 subdevice 152 function 203: address 0x67, command 0xcb: the frame 0x67 0x98 0xcb 0x34"
+        }
+      ]
+    },
+    "KEY_CD_PLAY": {
+      "label": "CD_Play",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x67",
+          "subdevice": "0x98",
+          "function": "0xC6",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Nakamichi/NAKAMICHI_RM_4TA.ir:180 name 'CD_Play' (added in 886a372 on 2025-11-05; parsed NEC, address 67 00 00 00, command C6 00 00 00): NEC1 device 103 subdevice 152 function 198: address 0x67, command 0xc6: the frame 0x67 0x98 0xc6 0x39"
+        }
+      ]
+    },
+    "KEY_CD_RANDOM": {
+      "label": "CD_Random",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x67",
+          "subdevice": "0x98",
+          "function": "0xDB",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Nakamichi/NAKAMICHI_RM_4TA.ir:186 name 'CD_Random' (added in 886a372 on 2025-11-05; parsed NEC, address 67 00 00 00, command DB 00 00 00): NEC1 device 103 subdevice 152 function 219: address 0x67, command 0xdb: the frame 0x67 0x98 0xdb 0x24"
+        }
+      ]
+    },
+    "KEY_CD_DISC": {
+      "label": "CD_Disc",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x67",
+          "subdevice": "0x98",
+          "function": "0x8F",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Nakamichi/NAKAMICHI_RM_4TA.ir:192 name 'CD_Disc' (added in 886a372 on 2025-11-05; parsed NEC, address 67 00 00 00, command 8F 00 00 00): NEC1 device 103 subdevice 152 function 143: address 0x67, command 0x8f: the frame 0x67 0x98 0x8f 0x70"
+        }
+      ]
+    },
+    "KEY_TAPE_AZIMUTH_BK": {
+      "label": "Tape_Azimuth_bk",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5C",
+          "subdevice": "0xA3",
+          "function": "0x5A",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Nakamichi/NAKAMICHI_RM_4TA.ir:198 name 'Tape_Azimuth_bk' (added in 886a372 on 2025-11-05; parsed NEC, address 5C 00 00 00, command 5A 00 00 00): NEC1 device 92 subdevice 163 function 90: address 0x5c, command 0x5a: the frame 0x5c 0xa3 0x5a 0xa5"
+        }
+      ]
+    },
+    "KEY_TAPE_AZIMUTH_FW": {
+      "label": "Tape_Azimuth_fw",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5C",
+          "subdevice": "0xA3",
+          "function": "0x59",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Nakamichi/NAKAMICHI_RM_4TA.ir:204 name 'Tape_Azimuth_fw' (added in 886a372 on 2025-11-05; parsed NEC, address 5C 00 00 00, command 59 00 00 00): NEC1 device 92 subdevice 163 function 89: address 0x5c, command 0x59: the frame 0x5c 0xa3 0x59 0xa6"
+        }
+      ]
+    },
+    "KEY_TAPE_RW": {
+      "label": "Tape_rw",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5C",
+          "subdevice": "0xA3",
+          "function": "0x55",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Nakamichi/NAKAMICHI_RM_4TA.ir:210 name 'Tape_rw' (added in 886a372 on 2025-11-05; parsed NEC, address 5C 00 00 00, command 55 00 00 00): NEC1 device 92 subdevice 163 function 85: address 0x5c, command 0x55: the frame 0x5c 0xa3 0x55 0xaa"
+        }
+      ]
+    },
+    "KEY_TAPE_FF": {
+      "label": "Tape_ff",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x67",
+          "subdevice": "0x98",
+          "function": "0xC7",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Nakamichi/NAKAMICHI_RM_4TA.ir:216 name 'Tape_ff' (added in 886a372 on 2025-11-05; parsed NEC, address 67 00 00 00, command C7 00 00 00): NEC1 device 103 subdevice 152 function 199: address 0x67, command 0xc7: the frame 0x67 0x98 0xc7 0x38"
+        }
+      ]
+    },
+    "KEY_TAPE_BK": {
+      "label": "Tape_bk",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x67",
+          "subdevice": "0x98",
+          "function": "0xC2",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Nakamichi/NAKAMICHI_RM_4TA.ir:222 name 'Tape_bk' (added in 886a372 on 2025-11-05; parsed NEC, address 67 00 00 00, command C2 00 00 00): NEC1 device 103 subdevice 152 function 194: address 0x67, command 0xc2: the frame 0x67 0x98 0xc2 0x3d"
+        }
+      ]
+    },
+    "KEY_TAPE_FW": {
+      "label": "Tape_fw",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5C",
+          "subdevice": "0xA3",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Nakamichi/NAKAMICHI_RM_4TA.ir:228 name 'Tape_fw' (added in 886a372 on 2025-11-05; parsed NEC, address 5C 00 00 00, command 15 00 00 00): NEC1 device 92 subdevice 163 function 21: address 0x5c, command 0x15: the frame 0x5c 0xa3 0x15 0xea"
+        }
+      ]
+    },
+    "KEY_TAPE_REC": {
+      "label": "Tape_Rec",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5C",
+          "subdevice": "0xA3",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Nakamichi/NAKAMICHI_RM_4TA.ir:234 name 'Tape_Rec' (added in 886a372 on 2025-11-05; parsed NEC, address 5C 00 00 00, command 14 00 00 00): NEC1 device 92 subdevice 163 function 20: address 0x5c, command 0x14: the frame 0x5c 0xa3 0x14 0xeb"
+        }
+      ]
+    },
+    "KEY_TAPE_CUE": {
+      "label": "Tape_Cue",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5C",
+          "subdevice": "0xA3",
+          "function": "0x56",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Nakamichi/NAKAMICHI_RM_4TA.ir:240 name 'Tape_Cue' (added in 886a372 on 2025-11-05; parsed NEC, address 5C 00 00 00, command 56 00 00 00): NEC1 device 92 subdevice 163 function 86: address 0x5c, command 0x56: the frame 0x5c 0xa3 0x56 0xa9"
+        }
+      ]
+    },
+    "KEY_TAPE_STOP": {
+      "label": "Tape_Stop",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5C",
+          "subdevice": "0xA3",
+          "function": "0x17",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Nakamichi/NAKAMICHI_RM_4TA.ir:246 name 'Tape_Stop' (added in 886a372 on 2025-11-05; parsed NEC, address 5C 00 00 00, command 17 00 00 00): NEC1 device 92 subdevice 163 function 23: address 0x5c, command 0x17: the frame 0x5c 0xa3 0x17 0xe8"
+        }
+      ]
+    },
+    "KEY_TAPE_PAUSE": {
+      "label": "Tape_Pause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5C",
+          "subdevice": "0xA3",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Audio_and_Video_Receivers/Nakamichi/NAKAMICHI_RM_4TA.ir:252 name 'Tape_Pause' (added in 886a372 on 2025-11-05; parsed NEC, address 5C 00 00 00, command 16 00 00 00): NEC1 device 92 subdevice 163 function 22: address 0x5c, command 0x16: the frame 0x5c 0xa3 0x16 0xe9"
+        }
+      ]
+    }
+  }
+}

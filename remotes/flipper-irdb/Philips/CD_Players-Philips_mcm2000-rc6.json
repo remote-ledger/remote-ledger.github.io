@@ -1,0 +1,28 @@
+{
+  "manufacturer": "Philips",
+  "model": "mcm2000 [RC6]",
+  "aliases": [],
+  "controls": [
+    "Philips mcm2000 [RC6]"
+  ],
+  "protocol": {
+    "name": "RC6",
+    "carrierHz": 36000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_USB": {
+      "label": "USB",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x15",
+          "function": "0x8A",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 CD_Players/Philips/Philips_mcm2000.ir:30 name 'USB' (added in 338e218 on 2026-01-05; parsed RC6, address 15 00 00 00, command 8A 00 00 00): RC6 device 21 function 138: address 0x15, command 0x8a, mode 0"
+        }
+      ]
+    }
+  }
+}

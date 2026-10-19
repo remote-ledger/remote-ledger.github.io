@@ -1,0 +1,121 @@
+{
+  "manufacturer": "Mitsubishi",
+  "model": "R30J-HRV",
+  "aliases": [],
+  "controls": [
+    "Mitsubishi R30J-HRV"
+  ],
+  "protocol": {
+    "carrierHz": 38000,
+    "unitUs": 355,
+    "minSends": 1,
+    "defaultGapUs": 180000,
+    "claims": {
+      "unitUs": {
+        "reason": "the file names no protocol, and D24 wants a unit to check the closing gap against; the shortest duration of its raw data, 355 us, is the largest unit the capture can have, and no duration is computed from it",
+        "source": "flipper-irdb@d126fb1 Fans/Mitsubishi/Mitsubishi_R30J-HRV.ir: the raw data of its buttons"
+      },
+      "defaultGapUs": {
+        "reason": "Flipper's raw data ends on a mark and records no gap after it; the firmware sends a silence of 180 ms before every raw transmission, so that is the space between one send of the signal and the next",
+        "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/encoder_decoder/infrared.h#L17 (INFRARED_RAW_TX_TIMING_DELAY_US 180000) and https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L23-L27 (the silence it sends first)"
+      }
+    }
+  },
+  "keys": {
+    "KEY_POWER": {
+      "label": "Power",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [2840, 1420, 355, 1065, 355, 1065, 355, 355, 355, 355, 355, 355, 355, 1065, 355, 355, 355, 355, 355, 1065, 355, 1065, 355, 355, 355, 1065, 355, 355, 355, 355, 355, 1065, 355, 1065, 355, 355, 355, 1065, 355, 1065, 355, 355, 355, 1065, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 1065, 355, 355, 355, 355, 355, 355, 355, 1065, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 1065, 355, 1065, 355, 355, 355, 355, 355, 1065, 355, 355, 355, 355, 355, 355, 355, 1065, 355, 1065, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 1065, 355, 355, 355, 355, 355, 1065, 355],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Fans/Mitsubishi/Mitsubishi_R30J-HRV.ir:7 name 'Power' (added in 5941195 on 2026-03-19; raw, 38000 Hz, duty cycle 0.33, 131 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_SPEED": {
+      "label": "Speed",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [2840, 1420, 355, 1065, 355, 1065, 355, 355, 355, 355, 355, 355, 355, 1065, 355, 355, 355, 355, 355, 1065, 355, 1065, 355, 355, 355, 1065, 355, 355, 355, 355, 355, 1065, 355, 1065, 355, 355, 355, 1065, 355, 1065, 355, 355, 355, 1065, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 1065, 355, 355, 355, 355, 355, 355, 355, 1065, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 1065, 355, 1065, 355, 355, 355, 355, 355, 1065, 355, 355, 355, 355, 355, 355, 355, 1065, 355, 355, 355, 1065, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 1065, 355, 355, 355, 1065, 355],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Fans/Mitsubishi/Mitsubishi_R30J-HRV.ir:13 name 'Speed' (added in 5941195 on 2026-03-19; raw, 38000 Hz, duty cycle 0.33, 131 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_SWING": {
+      "label": "Swing",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [2840, 1420, 355, 1065, 355, 1065, 355, 355, 355, 355, 355, 355, 355, 1065, 355, 355, 355, 355, 355, 1065, 355, 1065, 355, 355, 355, 1065, 355, 355, 355, 355, 355, 1065, 355, 1065, 355, 355, 355, 1065, 355, 1065, 355, 355, 355, 1065, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 1065, 355, 355, 355, 355, 355, 355, 355, 1065, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 1065, 355, 1065, 355, 355, 355, 355, 355, 1065, 355, 355, 355, 355, 355, 355, 355, 1065, 355, 1065, 355, 1065, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 1065, 355, 1065, 355, 355, 355, 1065, 355],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Fans/Mitsubishi/Mitsubishi_R30J-HRV.ir:19 name 'Swing' (added in 5941195 on 2026-03-19; raw, 38000 Hz, duty cycle 0.33, 131 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_OFF_TIMER": {
+      "label": "Off_timer",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [2840, 1420, 355, 1065, 355, 1065, 355, 355, 355, 355, 355, 355, 355, 1065, 355, 355, 355, 355, 355, 1065, 355, 1065, 355, 355, 355, 1065, 355, 355, 355, 355, 355, 1065, 355, 1065, 355, 355, 355, 1065, 355, 1065, 355, 355, 355, 1065, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 1065, 355, 355, 355, 355, 355, 355, 355, 1065, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 1065, 355, 1065, 355, 355, 355, 355, 355, 1065, 355, 355, 355, 355, 355, 355, 355, 1065, 355, 355, 355, 355, 355, 1065, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 1065, 355, 1065, 355],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Fans/Mitsubishi/Mitsubishi_R30J-HRV.ir:25 name 'Off_timer' (added in 5941195 on 2026-03-19; raw, 38000 Hz, duty cycle 0.33, 131 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_ON_TIMER": {
+      "label": "On_timer",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [2840, 1420, 355, 1065, 355, 1065, 355, 355, 355, 355, 355, 355, 355, 1065, 355, 355, 355, 355, 355, 1065, 355, 1065, 355, 355, 355, 1065, 355, 355, 355, 355, 355, 1065, 355, 1065, 355, 355, 355, 1065, 355, 1065, 355, 355, 355, 1065, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 1065, 355, 355, 355, 355, 355, 355, 355, 1065, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 1065, 355, 1065, 355, 355, 355, 355, 355, 1065, 355, 355, 355, 355, 355, 355, 355, 1065, 355, 355, 355, 1065, 355, 355, 355, 1065, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 355, 1065, 355, 355, 355, 355, 355],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Fans/Mitsubishi/Mitsubishi_R30J-HRV.ir:31 name 'On_timer' (added in 5941195 on 2026-03-19; raw, 38000 Hz, duty cycle 0.33, 131 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    }
+  }
+}
