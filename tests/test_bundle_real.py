@@ -105,7 +105,7 @@ def test_the_selected_bundle_is_the_size_of_the_data_and_the_estimate_is_within_
     # the estimate the rule works by is within a few percent of the file it predicts
     # the estimate is a flat 21 bytes a key (D95) and it was 3.7% under the file at the 4% this test once allowed; the 15,995 direct-access keys
     # of DESIGN section 60 carry a label of 34 bytes each and took it to 4.6%, so a few percent was 5%; the 7,008 keys of section 87 (labels of 20 to 40
-    # bytes, and 1,055 signals) took it to 5.006%, so it is 5.5% now; the estimate counts the files' keys and not the 7,969 that D353
+    # bytes, and 1,055 signals) took it to 5.006%, so it is 5.5% now; the estimate counts the files' keys and not the 7,969 that D357
     # adds to thin remotes (21 bytes each, no signal of their own), which took it to 5.62%, so it is 6% now
     assert abs(len(data) - selection.estimated_bytes) / len(data) < 0.06
     assert len(assembled.brands) == len(selection.curated) + len(selection.proxy_added)
@@ -128,7 +128,7 @@ def test_the_selected_bundle_has_every_model_of_the_brands_it_carries_and_no_oth
         maker, rows = collected.pairs[i]
         touches = maker in carried or any(r[0] in carried for r in rows)
         assert touches == (merge.ref_of(record) in kept), record.where
-    # the keys of the files, and the keys the thin remotes are completed with (D353)
+    # the keys of the files, and the keys the thin remotes are completed with (D357)
     assert sum(len(r.keys) for r in records if merge.ref_of(r) in kept) == len(assembled.keys) - assembled.stats["completionKeys"]
 
 
@@ -160,7 +160,7 @@ def test_design_quotes_the_numbers_of_the_real_build(real, selected, selection):
         f"{len(records):,} | {len(kept):,}",                                  # the remote files
         f"{len(records) - collected.folded.folded:,} | {len(assembled.remotes):,}",   # the remotes, D103
         f"| keys of the files | {keys:,} | {keys:,} |",
-        f"| keys, the completion's (D353) included | {len(assembled.keys):,} | {len(assembled.keys):,} |",
+        f"| keys, the completion's (D357) included | {len(assembled.keys):,} | {len(assembled.keys):,} |",
         f"184,872 | {len(assembled.signals):,}",
         f"{len(assembled.excluded):,} brands, {len(left_out):,} remotes, "
         f"{sum(len(r.keys) for r in left_out):,} keys",

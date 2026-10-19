@@ -1,4 +1,4 @@
-"""Completing a thin remote from the remotes that share its address (D353 to D355, SPEC R29).
+"""Completing a thin remote from the remotes that share its address (D357 to D359, SPEC R29).
 
 Three layers, as for the fold (``test_bundle_merge.py``):
 
@@ -7,7 +7,7 @@ Three layers, as for the fold (``test_bundle_merge.py``):
 * the exporter on a small ledger made by the importer itself: the rows of ``remotes``, ``keys``,
   ``remote_refs`` and ``remote_completions``, that nothing but those moved against the same
   ledger built without completing, and ``rl bundle --verify`` on a good bundle and a damaged one;
-* the real ledger: what a completion may never change, and the numbers DESIGN D354 quotes.
+* the real ledger: what a completion may never change, and the numbers DESIGN D358 quotes.
 
 The reference is not the builder: the expectations are worked out here from the rule as the
 design states it.
@@ -582,7 +582,7 @@ def test_a_completion_reads_only_keys_that_a_corroborator_holds_at_the_tier_of_e
 
 
 def test_design_quotes_the_numbers_of_the_completion(real_records, real):
-    """DESIGN D354 states what the rule does to the real ledger; recomputed here from the records,
+    """DESIGN D358 states what the rule does to the real ledger; recomputed here from the records,
     so the text cannot go stale and the owner who widens the rule reads what it would add."""
     collected, done = real
     section = _design_section()
@@ -594,7 +594,7 @@ def test_design_quotes_the_numbers_of_the_completion(real_records, real):
     for fact in (f"{len(thin):,} thin remotes", f"{len(done):,} are completed", f"{keys:,} keys",
                  f"{funnel['corroborators: 0']:,} have no corroborator",
                  f"{funnel['fewer than MIN_SIGNALS signals']:,} have fewer than three signals"):
-        assert fact in section, f"DESIGN D354 no longer says {fact!r}"
+        assert fact in section, f"DESIGN D358 no longer says {fact!r}"
 
 
 def _pct(part: int, whole: int) -> str:
@@ -605,7 +605,7 @@ def test_design_quotes_the_leave_one_out_figures(real_records, real):
     collected, _ = real
     section = _design_section()
     c = family_eval.evaluate(real_records, collected.folded, ORDER)
-    assert c["stubs"] == 357, "the sample of the evaluation moved: the figures of D354 are to be measured again"
+    assert c["stubs"] == 357, "the sample of the evaluation moved: the figures of D358 are to be measured again"
     for fact in (
             f"| stubs cut from remotes held in full | {c['stubs']:,} |",
             f"| completed | {c['completed']:,} ({_pct(c['completed'], c['stubs'])}) |",
@@ -616,10 +616,10 @@ def test_design_quotes_the_leave_one_out_figures(real_records, real):
             f"| canonical keys of the remotes that the stub lacks, found and named right | {c['named right']:,} of "
             f"{c['canonical keys to find']:,} ({_pct(c['named right'], c['canonical keys to find'])}; "
             f"{_pct(c['named right'], c['canonical keys to find in a completed stub'])} of those of the stubs that were completed) |"):
-        assert fact in section, f"DESIGN D354 no longer says {fact!r}"
+        assert fact in section, f"DESIGN D358 no longer says {fact!r}"
 
 
-#: The rows of the table "what each line is worth" in D354: the first column as the text has it, and
+#: The rows of the table "what each line is worth" in D358: the first column as the text has it, and
 #: the constants of ``family`` that one row changes.
 LINES = [
     ("the rule", {}),
@@ -640,7 +640,7 @@ def test_design_quotes_what_each_line_is_worth(real_records, real, monkeypatch, 
     row = (f"| {name} | {_pct(c['completed'], c['stubs'])} | {c['keys added'] / c['completed']:.1f} | "
            f"{_pct(c['in the remote'], c['keys added'])} | {_pct(c['named right'], c['named by the remote'])} | "
            f"{_pct(c['named right'], c['canonical keys to find in a completed stub'])} |")
-    assert row in _design_section(), f"DESIGN D354 no longer says {row!r}"
+    assert row in _design_section(), f"DESIGN D358 no longer says {row!r}"
 
 
 def test_the_two_numbers_d354_gives_for_a_floor_of_two_and_for_the_bounds_of_thin(real_records, real, monkeypatch):
@@ -663,4 +663,4 @@ def test_the_two_numbers_d354_gives_for_a_floor_of_two_and_for_the_bounds_of_thi
 
 def _design_section() -> str:
     text = (ROOT / "DESIGN.md").read_text(encoding="utf-8")
-    return text[text.index("### D354"):text.index("**To widen the rule**: `THIN_BELOW`")]
+    return text[text.index("### D358"):text.index("**To widen the rule**: `THIN_BELOW`")]

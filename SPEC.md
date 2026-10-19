@@ -512,7 +512,7 @@ confidence tier, or a citation.
   remote's tier is the weakest of its files' keys, and a table, `remote_completions`,
   says where the added keys start and how many remotes corroborated them. Every
   number is a constant of one file and the rule's measurement on the real
-  ledger is DESIGN §96 (D353 to D355).
+  ledger is DESIGN §97 (D357 to D359).
 
 **Known limit, named rather than glossed over:** CSS requires a named
 area's cells to form one rectangle, so a single key can't have an L-shaped

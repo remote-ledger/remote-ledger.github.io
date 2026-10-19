@@ -595,7 +595,7 @@ def _search_eval(root: Path, args: argparse.Namespace) -> int:
 
 
 def _family_eval(root: Path, args: argparse.Namespace) -> int:
-    """``rl bundle family-eval``: the completion of D353 on remotes cut down to stubs (D354)."""
+    """``rl bundle family-eval``: the completion of D357 on remotes cut down to stubs (D358)."""
     from .bundle import catalog, corpus
     from .bundle.family_eval import evaluate, report
     from .keys import load_vocabulary
@@ -958,7 +958,7 @@ def build_parser() -> argparse.ArgumentParser:
     be.set_defaults(func=cmd_bundle)
     bf = bu_sub.add_parser(
         "family-eval", parents=[common],
-        help="complete remotes cut down to stubs and score what was added (D354)")
+        help="complete remotes cut down to stubs and score what was added (D358)")
     bf.add_argument("--sample", type=int, default=400, metavar="N", help="remotes to cut down")
     bf.add_argument("--seed", type=int, default=7, help="seed of the sample")
     bf.add_argument("--out", metavar="FILE", help="also write the report here")

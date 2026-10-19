@@ -147,7 +147,7 @@ class Collected:
     @cached_property
     def completions(self) -> dict[int, Completion]:
         """The keys a thin remote is completed with, by the index of the file that carries it
-        (D353). Worked out once, on first use: the bundle needs it and a selection rule does not."""
+        (D357). Worked out once, on first use: the bundle needs it and a selection rule does not."""
         order = {key.id: n for n, key in enumerate(load_vocabulary().keys)}
         return complete(self.records, self.folded, order)
 
@@ -204,7 +204,7 @@ class Assembled:
     brand_aliases: list[tuple] = field(default_factory=list)   # (alias, norm, brand_id) (D101)
     remote_refs: list[tuple] = field(default_factory=list)     # (ref, remote_id, first_n, key_count) (D105)
     #: (remote_id, first_n, key_count, corroborators): the keys at the end of a remote that are not
-    #: from its files but from the remotes that share its address (D353)
+    #: from its files but from the remotes that share its address (D357)
     remote_completions: list[tuple] = field(default_factory=list)
 
 
@@ -319,7 +319,7 @@ def assemble(collected: Collected, chosen: frozenset[str] | None, profile: str,
         done = completions.get(i)
         if done is not None:
             # the added keys follow the files' own, and change neither the tier (the weakest of the
-            # files' keys) nor what a source is credited with (D353)
+            # files' keys) nor what a source is credited with (D357)
             remote_completions.append((rid, own, len(done.keys), done.corroborators))
             record = replace(record, keys=record.keys + done.keys)
         repeat, helper, empty, rule = play(record)
@@ -363,7 +363,7 @@ def assemble(collected: Collected, chosen: frozenset[str] | None, profile: str,
                # the files folded into a sibling's remote, and the remotes that carry some (D103)
                "foldedFragments": len(remote_refs) - len(remotes),
                "mergedRemotes": sum(1 for r in remotes if r[0] - 1 in folded.parts),
-               # the thin remotes completed from the remotes that share their address, and the keys added (D353)
+               # the thin remotes completed from the remotes that share their address, and the keys added (D357)
                "completedRemotes": len(remote_completions),
                "completionKeys": sum(row[2] for row in remote_completions),
                "aliasesListed": len(aliases),

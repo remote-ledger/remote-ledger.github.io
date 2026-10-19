@@ -817,7 +817,7 @@ def test_every_ref_of_the_ledger_maps_to_exactly_one_remote_of_the_bundle(real_r
         for first, count, ref in sorted(runs[remote_id]):
             assert first == at, ref
             at += count
-        assert at == row[6] - added.get(remote_id, 0)           # the keys added by D353 belong to no file
+        assert at == row[6] - added.get(remote_id, 0)           # the keys added by D357 belong to no file
         assert table[row[1]] == (remote_id, 0, runs[remote_id][0][1]) or table[row[1]][:2] == (remote_id, 0)
 
 
@@ -839,7 +839,7 @@ def test_no_key_of_the_ledger_is_lost_or_changed_by_folding(real_records, real):
     first_added = {remote_id: first for remote_id, first, _, _ in assembled.remote_completions}
     for remote_id, keys in by_id.items():
         for n, canon, label, signal_id, confidence in keys:
-            if n >= first_added.get(remote_id, len(keys)):      # a key D353 adds is in no file
+            if n >= first_added.get(remote_id, len(keys)):      # a key D357 adds is in no file
                 continue
             merged[(canon_of.get(canon), blob[signal_id], confidence)] += 1
     assert files == merged and sum(files.values()) == 738_214

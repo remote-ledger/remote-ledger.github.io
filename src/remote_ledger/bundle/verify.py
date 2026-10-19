@@ -12,7 +12,7 @@ It reads the bundle the way an app would and holds it against the tree:
    it (D103), and is that remote (carrier, protocol, play rule, tier, every key's canonical
    id, text, confidence and signal, the folded files' keys after its own); ``remote_refs``
    (D105) is the ref of every file of the profile, each to the remote that carries it and
-   where its keys start; ``remote_completions`` (D353) is the keys added to each thin remote, the
+   where its keys start; ``remote_completions`` (D357) is the keys added to each thin remote, the
    same as the tree gives and each of them untested, named and once; the full profile has every
    file of the tree, and the selected one
    every file of a brand it carries; a deterministic sample of remotes is compiled again,
@@ -143,7 +143,7 @@ def _verify_file(conn: sqlite3.Connection, manifest: dict[str, Any],
                            "were folded (D103, D105); build it again"]
     if not conn.execute("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'remote_completions'").fetchone():
         return problems + ["the bundle has no remote_completions table: it was written before thin remotes "
-                           "were completed (D353); build it again"]
+                           "were completed (D357); build it again"]
     tables = {"brands": "brands", "brandAliases": "brand_aliases", "models": "models",
               "controls": "controls", "remotes": "remotes", "remoteRefs": "remote_refs",
               "remoteCompletions": "remote_completions", "keys": "keys", "signals": "signals", "excludedBrands": "excluded_brands"}
@@ -214,7 +214,7 @@ def _verify_file(conn: sqlite3.Connection, manifest: dict[str, Any],
     added = {remote_id: count for remote_id, count in conn.execute(
         "SELECT remote_id, key_count FROM remote_completions")}
     for remote_id, key_count in conn.execute("SELECT id, key_count FROM remotes"):
-        key_count -= added.get(remote_id, 0)        # the keys added by D353 belong to no file
+        key_count -= added.get(remote_id, 0)        # the keys added by D357 belong to no file
         at = 0
         for first, count, ref in sorted(runs.get(remote_id, [])):
             if first != at or count < 1:
@@ -296,7 +296,7 @@ def _verify_against_tree(conn: sqlite3.Connection, root: Path, manifest: dict[st
             continue
         seen_refs.add(ref)
         # the remote is the file with the files folded into it: their keys follow its own, and then the
-        # keys it is completed with (D353)
+        # keys it is completed with (D357)
         record = folded.remote(records, expected_id - 1)
         done = completions.get(expected_id - 1)
         wanted_keys = record.keys + (done.keys if done is not None else ())
@@ -363,7 +363,7 @@ def _verify_against_tree(conn: sqlite3.Connection, root: Path, manifest: dict[st
                         f"{len(differ):,} differ, such as {differ[0]}")
     file_refs = {ref for ref, *_ in stored_refs}
 
-    # remote_completions (D353): the keys each thin remote is completed with, as the tree gives them
+    # remote_completions (D357): the keys each thin remote is completed with, as the tree gives them
     stored_done = list(conn.execute(
         "SELECT remote_id, first_n, key_count, corroborators FROM remote_completions ORDER BY remote_id"))
     wanted_done = sorted((i + 1, len(folded.remote(records, i).keys), len(done.keys), done.corroborators)
@@ -444,7 +444,7 @@ def _recompile_one(root: Path, ref: str, rid: int, files: list[RemoteRecord],
             return [f"{ref}: cannot be compiled again: {exc}"]
         keys += [(name, compiled[name]["candidates"]["primary"]["prontoHex"],
                   compiled[name]["candidates"]["primary"].get("endingHex")) for name in sorted(compiled)]
-    got = rows.get(rid, [])[:len(keys)]            # the keys added by D353 are in no file
+    got = rows.get(rid, [])[:len(keys)]            # the keys added by D357 are in no file
     if len(keys) != len(got):
         return [f"{ref}: {len(got)} keys in the bundle, {len(keys)} in its compiled artifact"]
     out = []

@@ -1,4 +1,4 @@
-"""``rl bundle family-eval``: what the completion does to a remote it has not seen (D354).
+"""``rl bundle family-eval``: what the completion does to a remote it has not seen (D358).
 
 The rule of :mod:`family` is only as good as the names it gives, and a remote it completes in the
 bundle has no answer to be held against. So the rule is run where there is one, leaving one out:

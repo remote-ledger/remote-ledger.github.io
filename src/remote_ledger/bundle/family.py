@@ -1,4 +1,4 @@
-"""Completing a thin remote from the remotes that share its address (D353, D354).
+"""Completing a thin remote from the remotes that share its address (D357, D358).
 
 A device is linked to the remotes that name it, so a device whose only remote is a stub
 (a handful of keys written to prove a protocol, or one capture of a few buttons) is offered
@@ -151,7 +151,7 @@ class Family:
                         tally: Counter[str] | None = None) -> Completion | None:
         """The completion of a remote with ``keys`` that plays as ``play``, from the remotes of the
         tree but those of ``exclude`` (the remote itself, when it is one of them), or ``None`` when
-        the rule leaves it as it is. ``tally`` counts where a remote falls out (DESIGN D354)."""
+        the rule leaves it as it is. ``tally`` counts where a remote falls out (DESIGN D358)."""
         tally = tally if tally is not None else Counter()
         own = _signals_of(keys)
         if len(own) < MIN_SIGNALS:
