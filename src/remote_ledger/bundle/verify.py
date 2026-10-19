@@ -13,7 +13,9 @@ It reads the bundle the way an app would and holds it against the tree:
    id, text, confidence and signal, the folded files' keys after its own); ``remote_refs``
    (D105) is the ref of every file of the profile, each to the remote that carries it and
    where its keys start; ``remote_completions`` (D357) is the keys added to each thin remote, the
-   same as the tree gives and each of them untested, named and once; the full profile has every
+   same as the tree gives and each of them untested, named and once, and ``completion_evidence``
+   (D360) lists for each the remotes that hold it, each of which really holds that signal, enough
+   of them naming it as it is named; the full profile has every
    file of the tree, and the selected one
    every file of a brand it carries; a deterministic sample of remotes is compiled again,
    from the committed ``build/pronto`` artifact when there is one and from the file when
@@ -29,7 +31,7 @@ from __future__ import annotations
 import hashlib
 import json
 import sqlite3
-from collections import defaultdict
+from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any
 
@@ -40,7 +42,7 @@ from ..parallel import ordered_map
 from ..pronto import encode, encode_ending
 from ..serialize import load
 from . import aliases as brand_aliases
-from . import catalog, corpus, merge, writer
+from . import catalog, corpus, family, merge, writer
 from .build import BUNDLE_FILE, MANIFEST_FILE, NOTICES_FILE
 from .catalog import GRAM, unvarints
 from .corpus import RemoteRecord
@@ -144,9 +146,12 @@ def _verify_file(conn: sqlite3.Connection, manifest: dict[str, Any],
     if not conn.execute("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'remote_completions'").fetchone():
         return problems + ["the bundle has no remote_completions table: it was written before thin remotes "
                            "were completed (D357); build it again"]
+    if not conn.execute("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'completion_evidence'").fetchone():
+        return problems + ["the bundle has no completion_evidence table: it was written before the added keys "
+                           "kept their evidence (D360); build it again"]
     tables = {"brands": "brands", "brandAliases": "brand_aliases", "models": "models",
               "controls": "controls", "remotes": "remotes", "remoteRefs": "remote_refs",
-              "remoteCompletions": "remote_completions", "keys": "keys", "signals": "signals", "excludedBrands": "excluded_brands"}
+              "remoteCompletions": "remote_completions", "completionEvidence": "completion_evidence", "keys": "keys", "signals": "signals", "excludedBrands": "excluded_brands"}
     for name, table in tables.items():
         n = _one(conn, f"SELECT COUNT(*) FROM {table}")
         if str(n) != meta.get(f"count.{name}"):
@@ -188,6 +193,12 @@ def _verify_file(conn: sqlite3.Connection, manifest: dict[str, Any],
         "remote_completions that do not end at the last key of their remote": (
             "SELECT COUNT(*) FROM remote_completions c JOIN remotes r ON r.id = c.remote_id WHERE "
             "c.first_n < 1 OR c.key_count < 1 OR c.first_n + c.key_count != r.key_count"),
+        "completion_evidence of a remote that is not completed": (
+            "SELECT COUNT(*) FROM completion_evidence WHERE remote_id NOT IN (SELECT remote_id FROM remote_completions)"),
+        "completions whose added keys have not one row of evidence each": (
+            "SELECT COUNT(*) FROM remote_completions c WHERE c.key_count != (SELECT COUNT(*) FROM completion_evidence e "
+            "WHERE e.remote_id = c.remote_id AND e.n >= c.first_n AND e.n < c.first_n + c.key_count) OR "
+            "(SELECT COUNT(*) FROM completion_evidence e WHERE e.remote_id = c.remote_id) != c.key_count"),
         "added keys that are not untested or not named": (
             "SELECT COUNT(*) FROM keys k JOIN remote_completions c ON c.remote_id = k.remote_id WHERE "
             "k.n >= c.first_n AND (k.confidence != 3 OR k.canon IS NULL OR k.label IS NOT NULL)"),
@@ -226,6 +237,8 @@ def _verify_file(conn: sqlite3.Connection, manifest: dict[str, Any],
             if at != key_count:
                 problems.append(f"remote_refs: the refs of remote {remote_id} hold {at} keys, it has {key_count}")
 
+    problems += _verify_evidence(conn)
+
     # a brand's models are the rows first_model .. first_model + model_count - 1
     members: dict[int, list[int]] = defaultdict(list)
     for model_id, brand_id in conn.execute("SELECT id, brand_id FROM models ORDER BY id"):
@@ -251,6 +264,68 @@ def _verify_file(conn: sqlite3.Connection, manifest: dict[str, Any],
         if norm != search_norm(alias):
             problems.append(f"the alias {alias!r} has the search key {norm!r}")
     facts["gramLength"] = GRAM
+    return problems
+
+
+def _verify_evidence(conn: sqlite3.Connection) -> list[str]:
+    """The evidence of D360 against the bundle's own keys, with no help from the exporter: every
+    remote it names exists, each remote it says holds an added key has that key's signal at a tier
+    that counts as evidence, the holders are corroborators, and, where the bundle has every
+    corroborator, there are enough of them and enough of them name the key as it is named."""
+    problems: list[str] = []
+    remotes = {r for (r,) in conn.execute("SELECT id FROM remotes")}
+    completions = {rid: (first, count, corroborators, catalog.unvarints(blob))
+                   for rid, first, count, corroborators, blob in conn.execute(
+                       "SELECT remote_id, first_n, key_count, corroborators, family FROM remote_completions")}
+    evidence: dict[tuple[int, int], list[int]] = {
+        (rid, n): catalog.unvarints(blob)
+        for rid, n, blob in conn.execute("SELECT remote_id, n, holders FROM completion_evidence")}
+    needed: set[int] = set()
+    for rid, (first, count, corroborators, members) in completions.items():
+        if members != sorted(set(members)) or not set(members) <= remotes or rid in members or len(members) > corroborators:
+            problems.append(f"remote {rid}: its corroborators are not distinct remotes of the bundle, other than itself, "
+                            f"at most the {corroborators} it states")
+        needed.update(members)
+    for (rid, n), holders in evidence.items():
+        if rid in completions and (holders != sorted(set(holders)) or not set(holders) <= set(completions[rid][3])):
+            problems.append(f"remote {rid} key {n}: its holders are not distinct corroborators of the remote")
+        needed.update(holders)
+    held: dict[int, dict[int, list[tuple[int | None, int]]]] = defaultdict(lambda: defaultdict(list))
+    added: dict[tuple[int, int], tuple[int, int | None]] = {}
+    for rid, n, canon, signal_id, confidence in conn.execute(
+            "SELECT remote_id, n, canon, signal_id, confidence FROM keys"):
+        if rid in needed:
+            held[rid][signal_id].append((canon, confidence))
+        if (rid, n) in evidence:
+            added[(rid, n)] = (signal_id, canon)
+    canon_name = {i: k for i, k in conn.execute("SELECT id, key FROM vocab_keys")}
+    for (rid, n), holders in sorted(evidence.items()):
+        if rid not in completions:
+            continue                           # reported above: evidence of a remote that is not completed
+        if (rid, n) not in added:
+            problems.append(f"remote {rid}: evidence for a key {n} it does not have")
+            continue
+        signal_id, canon = added[(rid, n)]
+        votes: Counter = Counter()
+        for h in holders:
+            tiers = [c for c, conf in held[h].get(signal_id, []) if conf <= family.VOTES_FROM]
+            if not any(conf <= family.VOTES_FROM for _c, conf in held[h].get(signal_id, [])):
+                problems.append(f"remote {rid} key {n}: remote {h} is said to hold its signal and does not (at a tier "
+                                "that counts as evidence)")
+                break
+            votes.update({c for c in tiers if c is not None})          # a remote votes once for a name
+        else:
+            first, count, corroborators, members = completions[rid]
+            if len(members) != corroborators:
+                continue                       # a profile that leaves some corroborators out: the rest is not checkable
+            if len(holders) < max(family.MIN_SUPPORT, family._ceil_share(corroborators, family.SUPPORT)):
+                problems.append(f"remote {rid} key {n} ({canon_name.get(canon)}): held by {len(holders)} of "
+                                f"{corroborators}, too few to be added")
+            top = votes.get(canon, 0)
+            if top < family.MIN_NAME_VOTES or family.NAME_SHARE[1] * top < family.NAME_SHARE[0] * sum(votes.values()) \
+                    or any(c > top for c in votes.values()):
+                problems.append(f"remote {rid} key {n}: {canon_name.get(canon)} is not the name most of its holders "
+                                f"give it ({dict((canon_name.get(c), v) for c, v in votes.items())})")
     return problems
 
 
@@ -364,14 +439,24 @@ def _verify_against_tree(conn: sqlite3.Connection, root: Path, manifest: dict[st
     file_refs = {ref for ref, *_ in stored_refs}
 
     # remote_completions (D357): the keys each thin remote is completed with, as the tree gives them
+    in_bundle = {i for i in range(len(records)) if folded.carrier[i] == i and refs[i] in seen_refs}
     stored_done = list(conn.execute(
-        "SELECT remote_id, first_n, key_count, corroborators FROM remote_completions ORDER BY remote_id"))
-    wanted_done = sorted((i + 1, len(folded.remote(records, i).keys), len(done.keys), done.corroborators)
-                         for i, done in completions.items() if refs[i] in seen_refs)
+        "SELECT remote_id, first_n, key_count, corroborators, family FROM remote_completions ORDER BY remote_id"))
+    wanted_done = sorted((i + 1, len(folded.remote(records, i).keys), len(done.keys), done.corroborators,
+                          catalog.varints([c + 1 for c in done.family if c in in_bundle]))
+                         for i, done in completions.items() if i in in_bundle)
     if stored_done != wanted_done:
         differ = sorted(set(stored_done) ^ set(wanted_done))
         problems.append(f"remote_completions has {len(stored_done):,} rows and the tree gives "
                         f"{len(wanted_done):,}; {len(differ):,} differ, such as {differ[0]}")
+    stored_evidence = list(conn.execute("SELECT remote_id, n, holders FROM completion_evidence ORDER BY remote_id, n"))
+    wanted_evidence = sorted((i + 1, n, catalog.varints([c + 1 for c in holders if c in in_bundle]))
+                             for i, done in completions.items() if i in in_bundle
+                             for n, holders in enumerate(done.holders, start=len(folded.remote(records, i).keys)))
+    if stored_evidence != wanted_evidence:
+        differ = sorted(set(stored_evidence) ^ set(wanted_evidence))
+        problems.append(f"completion_evidence has {len(stored_evidence):,} rows and the tree gives "
+                        f"{len(wanted_evidence):,}; {len(differ):,} differ, such as {differ[0][:2]}")
 
     # the brand aliases: the list that ships, for the brands this bundle carries
     brand_ids = {norm: i for i, norm in conn.execute("SELECT id, norm FROM brands")}

@@ -2051,7 +2051,7 @@ note rather than a live contract.
 
 ## 12. Implementation status
 
-Phases 0-6 are implemented: 4391 tests, `jsonschema` the only runtime
+Phases 0-6 are implemented: 4408 tests, `jsonschema` the only runtime
 dependency. Phase 2 landed its nine SPEC edits *before* its code, per §9 --
 the spec change is what authorises the implementation. (That count is asserted by the suite itself -- see
 `test_documented_test_count_is_current` -- so it cannot drift the way the
@@ -5566,14 +5566,14 @@ Measured on the 64-core development machine (eight workers), `gzip -9` as the co
 
 | | `full` | `selected` |
 |---|---|---|
-| file | 62,619,648 B | 62,619,648 B |
-| `gzip -9` | 15,646,963 B | 15,646,889 B |
+| file | 63,008,768 B | 63,008,768 B |
+| `gzip -9` | 15,770,281 B | 15,770,410 B |
 | brands | 5,496 | 5,496 |
 | models | 283,277 | 283,277 |
 | remote files | 17,420 | 17,420 |
 | remotes, the fragments of D103 folded | 17,063 | 17,063 |
 | keys of the files | 740,223 | 740,223 |
-| keys, the completion's (D357) included | 748,446 | 748,446 |
+| keys, the completion's (D357) included | 748,932 | 748,932 |
 | signals | 185,568 | 185,568 |
 | left out | none | none: 0 brands, 0 remotes, 0 keys |
 | `rl bundle` (read, build, write) | 27 s, 0.89 GB peak | 27 s, 0.89 GB peak |
@@ -7582,7 +7582,7 @@ A `parsed` entry is a protocol, a 4-byte address and a 4-byte command, **least s
 
 ## 97. Completing a thin remote from the remotes that share its address
 
-A device is linked to the remotes that name it (D89), so a device whose only remote is a stub is offered the stub and nothing more, whatever else the ledger holds for the address the stub speaks. The case that showed it: Samsung's UN50NU6900F has one remote, `samsung/BN59-01199F`, written on 2026-09-19 (D18) to prove the NECx2 protocol, with 8 keys (Power, Source, Volume, Mute, Menu, Exit, OK) of the 38 that IRDB's table of the shared Samsung TV address, device 7 subdevice 7, holds. A service that offered it gave a person a remote of 8 keys for a TV whose own remote has 47, while the ledger held the same address with the digits, the arrows, the colours, the playback keys and the rest in 48 other remotes, none of which names that model. This section changes the exporter so that such a remote is **completed** in the bundle. It changes no remote file, no importer and no generated tree (`rl build --check` reports 0 differences); the bundle gains one table, additively, and `rl bundle family-eval` measures the rule where there is an answer to hold it against. SPEC R29 states the requirement. The code is `src/remote_ledger/bundle/family.py` (the rule), `family_eval.py` (the measurement), `catalog.py` (`Collected.completions`, `assemble`), `writer.py` and `verify.py`.
+A device is linked to the remotes that name it (D89), so a device whose only remote is a stub is offered the stub and nothing more, whatever else the ledger holds for the address the stub speaks. The case that showed it: Samsung's UN50NU6900F has one remote, `samsung/BN59-01199F`, written on 2026-09-19 (D18) to prove the NECx2 protocol, with 8 keys (Power, Source, Volume, Mute, Menu, Exit, OK) of the 38 that IRDB's table of the shared Samsung TV address, device 7 subdevice 7, holds. A service that offered it gave a person a remote of 8 keys for a TV whose own remote has 47, while the ledger held the same address with the digits, the arrows, the colours, the playback keys and the rest in 48 other remotes, none of which names that model. This section changes the exporter so that such a remote is **completed** in the bundle. It changes no remote file, no importer and no generated tree (`rl build --check` reports 0 differences); the bundle gains two tables, additively, `rl bundle family-eval` measures the rule where there is an answer to hold it against, and `rl bundle family-explain` prints the evidence for the keys it adds (D360). SPEC R29 states the requirement. The code is `src/remote_ledger/bundle/family.py` (the rule), `family_eval.py` (the measurement), `family_explain.py` (the evidence), `catalog.py` (`Collected.completions`, `assemble`), `writer.py` and `verify.py`.
 
 ### D357 — The rule, and why it is made of signals
 
@@ -7592,13 +7592,13 @@ A device is linked to the remotes that name it (D89), so a device whose only rem
 
 1. A remote is **thin** when it has fewer than 30 keys (`THIN_BELOW`: the smallest quarter of the full bundle's remotes, whose quartiles are 29, 41 and 51 keys), and **completable** when it has at least three distinct signals (`MIN_SIGNALS`) to be recognised by. A remote that is not thin is carried as it is.
 2. Another remote **corroborates** it when it **plays alike** (the carrier and D78's four play fields, `merge.play_of`: a key that is added is played as it was where it was found), shares **three quarters of its signals** (and at least three), and **names the shared keys alike**: of the shared signals that both remotes give a canonical key, at least three quarters the same one, and at least two. The last is what keeps apart two remotes that send one code for two functions.
-3. A remote needs **at least three corroborators**, or it is left as it is: one remote agreeing is a coincidence of two files, three are a family.
+3. A remote needs **at least two corroborators**, or it is left as it is: one remote agreeing is a coincidence of two files. With two, a key is added only when both hold it (two fifths of two, at least two) and name it alike, which is the strictest the rule gets; the owner chose two over three on 2026-10-19 after the figures of D358, and the evidence of D360 is what lets a person see whether two files are two sources.
 4. A signal the remote lacks is **supported** by the corroborators that have it, and is added when **two fifths** of them do (and at least two). That is the family's core and not what one generation of one model has, which is why the keys a Samsung TV remote gets are those most Samsung files have and not every key that all of them together hold. Only a key of the tier plausible or better votes (`VOTES_FROM`): a guess is not evidence.
 5. It is added as **the canonical key most of its supporters call it**, if at least two do and they are at least seven tenths of the supporters that name it at all. **A signal no source agrees a name for is not added**: an unnamed key is one a person cannot read, and the data says nothing on what it is. A canonical key the remote already has is not added again, and each is added once, to its best supported signal.
 6. The most supported keys come first, and the remote grows **only to 60 keys** (`TARGET_KEYS`: only a tenth of the remotes have more, the 90th percentile is 61), so a remote is made as large as the remotes of its family usually are and no larger.
 7. **A remote keeps its test key and its alternative key.** A service asks a person to send one key to try a remote (Power, else Power off, Power on, Volume up, Mute: `merge.TEST_KEY_ORDER`) and offers another when Power is no good (Volume up, else Mute), and the tier of the test key is what the person's answer is about. A key that would come before the one the remote has, in either order, is not added, so the test key, its signal, its tier and the alternative are what they were; a remote with none of them may be given one and can then be tried, by an untested key.
 
-**What the added keys are.** Their tier is **untested**, SPEC section 5's "a reasoned candidate, offered but not yet confirmed either way": nothing here is evidence about the device, and the tier does not rise with the number of corroborators. They follow the remote's own keys (and the folded fragments', D103) in the order of the canonical vocabulary, carry no text of their own (their canonical key names them), and share signals the bundle already had, so no signal row is added. **The remote's tier is the weakest of its files' keys**, not of these (a remote of plausible keys is not made untested by 46 more), and a source is credited with its own keys only (`sources.key_count`). Completion reads the remotes as the ledger has them, never one that another completion has added to, so nothing chains.
+**What the added keys are.** Their tier is **untested**, SPEC section 5's "a reasoned candidate, offered but not yet confirmed either way": nothing here is evidence about the device, and the tier does not rise with the number of corroborators. They follow the remote's own keys (and the folded fragments', D103) in the order of the canonical vocabulary, carry no text of their own (their canonical key names them), and share signals the bundle already had, so no signal row is added. **The remote's tier is the weakest of its files' keys**, not of these (a remote of plausible keys is not made untested by 44 more), and a source is credited with its own keys only (`sources.key_count`). Completion reads the remotes as the ledger has them, never one that another completion has added to, so nothing chains.
 
 **Why the bundle and not the files.** The remote files are what the sources say, and each key of one cites where it was taken from (R18). A completed key has no source to cite but the rule and the remotes it came from, and it changes whenever the ledger gains a remote: written into the files it would be a generated copy of the ledger inside the ledger. It is derived data, and the bundle is where this ledger derives (D103). `rl lookup` and the site show the file; the bundle's remote is the file's keys and then the completion, and `remote_completions` says which is which.
 
@@ -7607,53 +7607,96 @@ CREATE TABLE remote_completions (
   remote_id     INTEGER PRIMARY KEY,
   first_n       INTEGER NOT NULL,
   key_count     INTEGER NOT NULL,
-  corroborators INTEGER NOT NULL
+  corroborators INTEGER NOT NULL,
+  family        BLOB NOT NULL
 ) WITHOUT ROWID;
 ```
 
-One row for each remote that was completed: its keys `first_n` to `first_n + key_count - 1` are the added ones (they are the last of the remote, so `first_n + key_count` is `remotes.key_count`), and `corroborators` is how many remotes corroborated it. **`remote_refs` is unchanged** (D105): its runs cover the keys of the files, and the added keys are the run after them, which `--verify` checks. `meta` has `count.remoteCompletions` and `completionRule`, the manifest's `counts` has `remoteCompletions`, and the table is one of the digests of `dataVersion` (`writer.DIGEST_TABLES`, after `remote_refs`). **What a version-1 reader does** is what it did for D105: nothing, since `meta.schemaVersion` stays 1 by D101's rule (adding a table or a `meta` row does not raise it). It does see more keys on a remote, which is the change.
+One row for each remote that was completed: its keys `first_n` to `first_n + key_count - 1` are the added ones (they are the last of the remote, so `first_n + key_count` is `remotes.key_count`), `corroborators` is how many remotes corroborated it and `family` is which (D360). **`remote_refs` is unchanged** (D105): its runs cover the keys of the files, and the added keys are the run after them, which `--verify` checks. `meta` has `count.remoteCompletions`, `count.completionEvidence` and `completionRule`, the manifest's `counts` has `remoteCompletions` and `completionEvidence`, and both tables are digests of `dataVersion` (`writer.DIGEST_TABLES`, after `remote_refs`). **What a version-1 reader does** is what it did for D105: nothing, since `meta.schemaVersion` stays 1 by D101's rule (adding a table or a `meta` row does not raise it). It does see more keys on a remote, which is the change.
 
 ### D358 — What the rule does to the real ledger, and how it was checked
 
-**The ledger, measured** (`rl bundle`, the tree of this commit): 4,523 thin remotes of the 17,063 (27%). Of them 206 have fewer than three signals, 2,440 have no corroborator (a code nobody else in the ledger sends), 511 have one and 219 two; of the 1,147 with three or more, 843 are completed and 304 have nothing to add, because the family holds nothing that two fifths of it agree on that the remote lacks. **843 are completed, with 8,223 keys** (median 7 a remote, at most 44; by source 502 IR Blaster, 208 JP1, 87 manufacturers' tables, 26 LIRC, 16 Flipper-IRDB, 3 hifi-remote, 1 authored), and the median completed remote goes from 23 keys to 30. The remote the section began with has **8 keys and 48 corroborators and is completed with 44: 52 keys**, the digits, the arrows, the colours, the channel and playback keys, Home, Back, Info, Guide and the inputs. What it still lacks of the physical remote is the Netflix, Hulu and Prime Video keys: they are in 4, 5 and 7 of its 48 corroborators, under the 20 that two fifths is, and the vocabulary has no canonical key for them, so they need the remote's own file.
+**The ledger, measured** (`rl bundle`, the tree of this commit): 4,523 thin remotes of the 17,063 (27%). Of them 206 have fewer than three signals, 2,440 have no corroborator (a code nobody else in the ledger sends) and 511 have one; of the 1,366 with two or more, 921 are completed and 445 have nothing to add, because the family holds nothing that two fifths of it agree on that the remote lacks. **921 are completed, with 8,709 keys** (median 7 a remote, at most 44; by source 541 IR Blaster, 235 JP1, 89 manufacturers' tables, 33 LIRC, 17 Flipper-IRDB, 4 hifi-remote, 1 SmartIR, 1 authored), and the median completed remote goes from 23 keys to 29. The remote the section began with has **8 keys and 48 corroborators and is completed with 44: 52 keys**, the digits, the arrows, the colours, the channel and playback keys, Home, Back, Info, Guide and the inputs. What it still lacks of the physical remote is the Netflix, Hulu and Prime Video keys: they are in 4, 5 and 7 of its 48 corroborators, under the 20 that two fifths is, and the vocabulary has no canonical key for them, so they need the remote's own file.
 
-**What it does to a service's lists** (measured with the backend's own ranking, `catalog/candidates`, on this bundle and on the bundle of the same tree built with no completion): the device models whose best remote has 10 keys or fewer go from 807 to 701, those with 25 or fewer from 6,410 to 5,623, and 2,696 models have a remote with more keys than they had. Of the 843 completed remotes, **726 could be tried and 117 could not; after, 806 can and 37 cannot**: 80 remotes that had no Power, Volume up or Mute key were given one. **For all 726 that could be tried, the test signal, its tier and the alternative are the same**, which is the point of line 7 (`test_no_completion_of_the_real_ledger_touches_a_test_key_a_tier_or_a_name` checks it over every completion, from the records). The tables `brands`, `models`, `controls`, `brand_aliases`, `remote_refs`, `signals`, `ngram`, `sources` and `vocab_*` are **row for row what the same tree gives with no completion** (a test builds both and compares); `remotes` differs in `key_count` of the completed remotes, and `keys` by the added rows.
+**What it does to a service's lists** (measured with the backend's own ranking, `catalog/candidates`, on this bundle and on the bundle of the same tree built with no completion): the device models whose best remote has 10 keys or fewer go from 807 to 695, those with 25 or fewer from 6,410 to 5,521, and 3,068 models have a remote with more keys than they had. Of the 921 completed remotes, **786 could be tried and 135 could not; after, 874 can and 47 cannot**: 88 remotes that had no Power, Volume up or Mute key were given one. **For all 786 that could be tried, the test signal, its tier and the alternative are the same**, which is the point of line 7 (`test_no_completion_of_the_real_ledger_touches_a_test_key_a_tier_or_a_name` checks it over every completion, from the records). The tables `brands`, `models`, `controls`, `brand_aliases`, `remote_refs`, `signals`, `ngram`, `sources` and `vocab_*` are **row for row what the same tree gives with no completion** (a test builds both and compares); `remotes` differs in `key_count` of the completed remotes, and `keys` by the added rows.
 
 **Leave one out** (`rl bundle family-eval`, `bundle/family_eval.py`): a remote the ledger holds in full (40 keys or more, 25 of them named) is cut down to a stub of the first key of each of ten basics (Power, Volume up and down, Mute, OK, Input, Menu, Exit, Channel up and down), at least five of them, taken out of the ledger so that it cannot corroborate itself, and completed as a real thin remote is. 400 remotes by a hash of the seed 7 give 357 stubs:
 
 | | |
 |---|---|
 | stubs cut from remotes held in full | 357 |
-| completed | 190 (53%) |
-| keys added | 3,755, 19.8 a completed stub |
-| added keys the remote has (an upper bound of precision) | 3,420 (91%) |
-| named right, where the remote names them | 2,978 of 3,105 (96%) |
-| canonical keys of the remotes that the stub lacks, found and named right | 2,978 of 11,577 (26%; 49% of those of the stubs that were completed) |
+| completed | 216 (61%) |
+| keys added | 4,159, 19.3 a completed stub |
+| added keys the remote has (an upper bound of precision) | 3,813 (92%) |
+| named right, where the remote names them | 3,337 of 3,487 (96%) |
+| canonical keys of the remotes that the stub lacks, found and named right | 3,337 of 11,577 (29%; 49% of those of the stubs that were completed) |
 
-The 47% that are not completed are mostly the remotes whose address has no family in the ledger, as the funnel above has it for the real thin remotes. **A key added that the remote does not hold is not a wrong key**: a family's table is a superset of one model's remote, which is why the third row is an upper bound and the last a lower bound. What is measured exactly is the name: **right for 96 of every 100 keys the remote names**, and the other 4 are differences between the source files (a signal that two makers call by two functions), which `untested` is there to say.
+The 39% that are not completed are mostly the remotes whose address has no family in the ledger, as the funnel above has it for the real thin remotes. **A key added that the remote does not hold is not a wrong key**: a family's table is a superset of one model's remote, which is why the third row is an upper bound and the last a lower bound. What is measured exactly is the name: **right for 96 of every 100 keys the remote names**, and the other 4 are differences between the source files (a signal that two makers call by two functions), which `untested` is there to say.
 
 **What each line is worth**, the same evaluation with one line changed (`test_design_quotes_what_each_line_is_worth` runs every row):
 
 | | completed | keys a stub | in the remote | named right | recall, completed |
 |---|---|---|---|---|---|
-| the rule | 53% | 19.8 | 91% | 96% | 49% |
-| no share of the corroborators (any two supporters) | 53% | 26.3 | 73% | 95% | 52% |
-| names by six tenths and not seven | 53% | 22.8 | 89% | 93% | 53% |
-| no agreement on names (line 2) | 59% | 15.9 | 89% | 93% | 38% |
-| half of the signals shared and not three quarters | 58% | 18.8 | 91% | 96% | 46% |
-| two corroborators and not three | 61% | 19.3 | 92% | 96% | 49% |
+| the rule | 61% | 19.3 | 92% | 96% | 49% |
+| no share of the corroborators (any two supporters) | 61% | 25.0 | 75% | 95% | 51% |
+| names by six tenths and not seven | 61% | 22.0 | 90% | 93% | 52% |
+| no agreement on names (line 2) | 62% | 15.9 | 89% | 93% | 38% |
+| half of the signals shared and not three quarters | 65% | 18.3 | 92% | 95% | 45% |
+| three corroborators and not two | 53% | 19.8 | 91% | 96% | 49% |
 
-The share of the corroborators (line 4) is what keeps the family's core apart from what one model has: without it over a quarter of the added keys are not in the remote. The agreement on names (line 2) and the share that name a key (line 5) are what keep the names right. Two corroborators and not three is a gain in the evaluation at no cost in quality, and **was not taken**: on the real thin remotes it completes 921 and not 843 (8,709 keys and not 8,223), and the floor of three is the conservative end and one number (D359).
+The share of the corroborators (line 4) is what keeps the family's core apart from what one model has: without it a quarter of the added keys are not in the remote. The agreement on names (line 2) and the share that name a key (line 5) are what keep the names right. **Two corroborators and not three** completes 61% of the stubs and not 53% at the same precision and names, and on the real thin remotes 921 and not 843 (8,709 keys and not 8,223): the first measurement had three, the conservative end, and the owner took two on seeing it (D357, line 3). The floor is one number (D359).
 
-`tests/test_bundle_family.py` has the rule on hand-made records (every line, one at a time), the exporter on a small ledger made by the importer (the rows, the tables that did not move, `--verify` on a good bundle, on eleven damaged ones, on one with no table and on one with a wrong count) and the real ledger (what a completion never changes, and the figures of this section, recomputed). **Size and time**, same machine and SQLite as D95: the bundle 62,455,808 to 62,619,648 bytes (+163,840: the 843 rows and the 8,223 keys, and no signal; gzip 15,582,664 to 15,646,963), `dataVersion` `4af49bd87c7e` (the same for both profiles: every brand is in `selected`, D117), `rl bundle` 36 s for each profile, of which `family.complete` is 7 s, `--verify` 35 s and 33 s, `rl bundle family-eval` 4 s.
+`tests/test_bundle_family.py` has the rule on hand-made records (every line, one at a time), the exporter on a small ledger made by the importer (the rows, the evidence, the tables that did not move, `--verify` on a good bundle, on nineteen damaged ones, on two with a table missing and on one with a wrong count), the report of `family-explain` and the real ledger (what a completion never changes, and the figures of this section, recomputed). **Size and time**, same machine and SQLite as D95: the bundle 62,455,808 to 63,008,768 bytes (+552,960: the 921 rows, the 8,709 keys and the 8,709 rows of evidence, and no signal; gzip 15,582,664 to 15,770,281), `dataVersion` `de0f4cc980ac` (the same for both profiles: every brand is in `selected`, D117), `rl bundle` 36 s for `full` and 41 s for `selected`, of which `family.complete` is 7 s, `--verify` 35 s for each, `rl bundle family-eval` 4 s.
 
 ### D359 — What is not proven, and how to widen the rule
 
-- **That an added key works on the device.** It is untested and says so in the bundle. What is measured is that the name is the one most of the remotes at the address give it; whether a given TV answers to every function of its family's table is the device's (a TV with no PIP has no use for the PIP key). The service that offers the keys does not yet say which are added: the remote endpoint has no per-key tier, so a person sees the 54 keys of the remote as one remote. That is a change in the service (the `remote` answer and the screen), not here.
+- **That an added key works on the device.** It is untested and says so in the bundle. What is measured is that the name is the one most of the remotes at the address give it; whether a given TV answers to every function of its family's table is the device's (a TV with no PIP has no use for the PIP key). The service that offers the keys does not yet say which are added: the remote endpoint has no per-key tier, so a person sees the 52 keys of the remote as one remote, though the bundle now holds what a screen would need to say which are added and why (D360). That is a change in the service (the `remote` answer and the screen), not here.
 - **That the family is the right one when an address is shared.** One signal can be two keys in two device classes (a code a TV and a clone's player send for different functions): the names tell them apart (line 2), and a remote that has none to compare by is never completed. A remote whose few keys all agree with a family of another class would be completed from it; the evaluation measures that as a wrong name and it is the 4%.
-- **The 2,440 thin remotes with no corroborator, and the 511 and 219 with one or two,** are not helped, but for the 219 with two: they need more remotes at their address, which is the importers' work, not this rule's. A floor of two corroborators (`MIN_CORROBORATORS`) completes 921 remotes and not 843 and adds 486 keys (8,709 in all), and in the evaluation 61% of the stubs and not 53% at the same precision and names; it was not taken because two files agreeing may be two copies of one upstream, and three is the conservative end. It is the one number to change.
-- **Keys that are in few of the family.** The Netflix, Hulu and Prime Video keys of 2018 and later Samsung remotes are in three of 47 corroborators and have no canonical key (the vocabulary's `apps` group has `APPS` and `BROWSER`). They need the vocabulary to name them, and the remote's own file, which is what `samsung/BN59-01315A` would be.
-- **A remote of 30 to 40 keys is not completed** though its family may hold ten more: the bound is the one that says what thin is. `THIN_BELOW` at the median, 41, makes 8,632 remotes thin and completes 1,846 with 12,961 keys; at the upper quartile, 51, 12,820 are thin and 2,782 are completed with 16,383 keys. It was not taken for a first rule: the further from 8 keys the less the remote needs it, and the smallest quarter is the one a person complains of. It is one number.
-- **The estimate of D92** counts the files' keys and not the ones added, and its 5% (D95) is 5.6% now; the test that holds it is at 6%.
+- **The 2,440 thin remotes with no corroborator, and the 511 with one,** are not helped: they need more remotes at their address, which is the importers' work, not this rule's.
+- **Two corroborators may be two copies of one upstream** (two files made from one forum thread, or one of them copied from the other). The floor of two takes only the keys both hold and name alike, and the evidence lists the files, so a person can see whether two are one; a floor of three (`MIN_CORROBORATORS`) completes 843 remotes and not 921, with 8,223 keys and not 8,709. It is the one number to change.
+- **Keys that are in few of the family.** The Netflix, Hulu and Prime Video keys of 2018 and later Samsung remotes are in 4, 5 and 7 of its 48 corroborators and have no canonical key (the vocabulary's `apps` group has `APPS` and `BROWSER`). They need the vocabulary to name them, and the remote's own file, which is what `samsung/BN59-01315A` would be.
+- **A remote of 30 to 40 keys is not completed** though its family may hold ten more: the bound is the one that says what thin is. `THIN_BELOW` at the median, 41, makes 8,632 remotes thin and completes 1,991 with 13,649 keys; at the upper quartile, 51, 12,820 are thin and 2,990 are completed with 17,216 keys. It was not taken for a first rule: the further from 8 keys the less the remote needs it, and the smallest quarter is the one a person complains of. It is one number.
+- **The estimate of D92** counts the files' keys and not the ones added, and its 5% (D95) is 6.2% now; the test that holds it is at 6.5%.
 
 **To widen the rule**: `THIN_BELOW` and `TARGET_KEYS` decide which remotes and how far; `MIN_CORROBORATORS`, `SHARED`, `AGREEING`, `SUPPORT` and `NAME_SHARE` decide how much a family has to agree; line 7 is `_outranks` and is the one that keeps the test key. `rl bundle family-eval` measures any of them on the stubs, and `test_design_quotes_the_numbers_of_the_completion` recomputes this section's figures, so a changed rule is re-measured and not guessed.
+
+### D360 — The evidence: where an added key came from, and how a person checks it
+
+**An added key is a claim, and a claim is checked against what it was made from.** Nothing in the file of a thin remote says why the bundle gives it 44 more keys, so the bundle keeps the reasons, and the ledger prints them with each key's code.
+
+```sql
+CREATE TABLE completion_evidence (
+  remote_id INTEGER NOT NULL,
+  n         INTEGER NOT NULL,
+  holders   BLOB NOT NULL,
+  PRIMARY KEY (remote_id, n)
+) WITHOUT ROWID;
+```
+
+One row for each added key (`n` is its `keys.n`; there are as many rows as `remote_completions.key_count` adds up to, 8,709): `holders` is the ids of the corroborating remotes that hold the key's signal, ascending, as varints (D90's coding, `catalog.unvarints`); and `remote_completions.family` is the ids of all the corroborators, in the same coding. The ids are the remotes' own (D89): `remotes.ref` is a remote's name across versions of the ledger, and the holder's row of `keys` with the same `signal_id` is the key as its own file names it, with its canonical key and its tier, so a service shows a key's evidence with two joins. `corroborators` is the count the rule found; `family` and `holders` list those of them that the bundle carries, which is all of them in both profiles since D117. The tables add 0.4 MB.
+
+**A key's code** is its signal, which the bundle holds as Pronto Hex (D91). How the *file* writes it (protocol, device, subdevice, function) is in the file, so the report reads the files: `rl bundle family-explain REF [--supporters N | --all] [--pronto]` prints, for one remote of the ledger, each key it has and each key it is given, each with its code, and under each added key the corroborators that hold it, each with its ref, the name its own file gives the key, its code as that file writes it and its tier; `--pronto` adds the Pronto Hex. It is computed from the tree, which is the rule's only input (D357), so it is the report for a bundle built from that tree. An excerpt for the remote this section began with (`samsung/BN59-01199F`, `--supporters 2`; a test holds it to the real output):
+
+```text
+    4  POWER              NECx2 D=0x07 S=0x07 F=0x02         KEY_POWER (plausible)
+    8  POWER_ON           NECx2 D=0x07 S=0x07 F=0x99         held by 25 of 48; named POWER_ON by 9 of the 9 that give it a canonical name, 16 give it none
+        jp1/Samsung/TV-8811-Samsung_PN50C550_v1.0: KEY_POWER_ON = NECx2 D=0x07 S=0x07 F=0x99 (plausible)
+        jp1/Samsung/TV-SAMSUNG_PS50A557: KEY_POWER_ON = NECx2 D=0x07 S=0x07 F=0x99 (plausible)
+        and 23 more (--all lists them)
+   19  HOME               NECx2 D=0x07 S=0x07 F=0x79         held by 22 of 48; named HOME by 2 of the 2 that give it a canonical name, 20 give it none
+        flipper-irdb/Samsung/TVs-Samsung_AA59-00484A: KEY_CONTENT = NECx2 D=0x07 S=0x07 F=0x79 (plausible)
+        jp1/Samsung/TV-SAMSUNG_AA59-00508A__UE40D5500: KEY_SMART = NECx2 D=0x07 S=0x07 F=0x79 (plausible)
+        and 20 more (--all lists them)
+   20  DIGIT_1            NECx2 D=0x07 S=0x07 F=0x04         held by 48 of 48; named DIGIT_1 by 48 of the 48 that give it a canonical name
+        flipper-irdb/Samsung/TVs-Samsung_AA59-00484A: KEY_1 = NECx2 D=0x07 S=0x07 F=0x04 (plausible)
+        jp1/Samsung/TV-8811-Samsung_PN50C550_v1.0: KEY_1 = NECx2 D=0x07 S=0x07 F=0x04 (plausible)
+        and 46 more (--all lists them)
+```
+
+The report shows what the rule does not hide: a key can be well held and thinly named (Home, F=0x79, is held by 22 of the 48, and only 2 of them give it a canonical name, Home; the other 20 files call it Content or Smart and are not read as Home), and two files can be the same upstream. A person can then open the files and judge.
+
+**`--verify` checks the evidence against the bundle's own keys, not against the exporter**: every remote it names exists and is not the remote itself, the holders are corroborators, each holder has the key's signal at the tier plausible or better (the tier that votes), and, where the bundle has every corroborator, there are enough holders for the rule (two fifths of them, at least two) and the name the key has is the one most of its holders' keys give it (at least two, at least seven tenths of those that name it). The rows are also compared with the tree's. The tests damage a bundle in nineteen ways and ask each to be reported (a holder that does not hold the signal, one that is no corroborator, too few holders, a name its holders do not give, a key with no evidence, evidence for no key, a missing table).
+
+**Versions.** A remote's `ref` is its file's path, and every version of every file is in the ledger's git history; a bundle is named by `dataVersion`, the digest of its rows, which the manifest holds. The commit a bundle was built from is **not** in it: a bundle is a function of the rows (D89, D93) and a commit hash would make two builds of one tree differ, so the pair (`dataVersion`, commit) has to be written down where a bundle is deployed, and the ledger does not record it yet. `family-explain` prints the commit and whether the tree has uncommitted changes. Because the rule is a pure function of the tree, checking out the commit of a deployed bundle and running the command gives that bundle's evidence.
+
+**What is not here.** The Talismote service (`catalog/remote`) does not serve the evidence yet, nor does the app show which keys are added: the data is in the bundle, the change is on the service's side.

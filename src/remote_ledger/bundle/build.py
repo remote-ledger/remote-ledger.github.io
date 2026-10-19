@@ -82,6 +82,7 @@ def build_manifest(bundle: bytes, notices_json: bytes, assembled: catalog.Assemb
             "models": len(assembled.models),
             "remotes": len(assembled.remotes), "remoteRefs": len(assembled.remote_refs),
             "remoteCompletions": len(assembled.remote_completions),
+            "completionEvidence": len(assembled.completion_evidence),
             "keys": len(assembled.keys), "signals": len(assembled.signals),
         },
         "brands": {

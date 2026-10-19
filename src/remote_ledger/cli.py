@@ -474,6 +474,8 @@ def cmd_bundle(args: argparse.Namespace) -> int:
         return _search_eval(root, args)
     if sub == "family-eval":
         return _family_eval(root, args)
+    if sub == "family-explain":
+        return _family_explain(root, args)
 
     if args.verify:
         from .bundle.verify import verify_directory
@@ -611,6 +613,30 @@ def _family_eval(root: Path, args: argparse.Namespace) -> int:
     sys.stdout.write(text)
     if args.out:
         Path(args.out).write_text(text, encoding="utf-8", newline="\n")
+    return EXIT_OK
+
+
+def _family_explain(root: Path, args: argparse.Namespace) -> int:
+    """``rl bundle family-explain REF``: a remote's keys and codes, and the evidence for the keys it is
+    completed with (D360)."""
+    from .bundle import catalog, corpus
+    from .bundle.family_explain import explain
+    from .keys import load_vocabulary
+
+    records, problems = corpus.read_corpus(root)
+    if problems:
+        for message in problems[:20]:
+            print(f"ERROR {message}", file=sys.stderr)
+        return EXIT_ERROR
+    folded = catalog.collect(records).folded
+    order = {key.id: n for n, key in enumerate(load_vocabulary().keys)}
+    try:
+        text = explain(root, records, folded, order, args.ref, supporters=0 if args.all else args.supporters,
+                       pronto=args.pronto)
+    except KeyError as exc:
+        print(f"ERROR {exc.args[0]}", file=sys.stderr)
+        return EXIT_ERROR
+    sys.stdout.write(text)
     return EXIT_OK
 
 
@@ -973,6 +999,15 @@ def build_parser() -> argparse.ArgumentParser:
     bf.add_argument("--seed", type=int, default=7, help="seed of the sample")
     bf.add_argument("--out", metavar="FILE", help="also write the report here")
     bf.set_defaults(func=cmd_bundle)
+    bx = bu_sub.add_parser(
+        "family-explain", parents=[common],
+        help="a remote's keys with their codes and the evidence for the keys it is completed with (D360)")
+    bx.add_argument("ref", metavar="REF", help="a ref of the ledger, such as samsung/BN59-01199F")
+    bx.add_argument("--supporters", type=int, default=5, metavar="N",
+                    help="remotes listed under each added key (default 5)")
+    bx.add_argument("--all", action="store_true", help="list every remote that holds each added key")
+    bx.add_argument("--pronto", action="store_true", help="add the Pronto Hex of each key")
+    bx.set_defaults(func=cmd_bundle)
 
     ky = sub.add_parser(
         "keys", help="the canonical key vocabulary (D83)", parents=[common]
