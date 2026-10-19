@@ -35,21 +35,15 @@ Land it in two PRs, code and then data.
 - [ ] **Survey candidate sources.** Confirm each licence before any code.
       Candidates include Flipper-IRDB's files from after its CC0 cutoff and
       IrScrutinizer / JP1 exports. Record for each one why it does or does
-      not meet R19. **Flipper-IRDB surveyed 2026-10-18** (`Lucaslhm/Flipper-IRDB`, 8,901 `.ir`
-      files, GitHub's licence API says CC0-1.0): the `LICENSE` and the README's "By submitting you
-      agree to license your work under CC0" were added on 2025-08-07 (PR #960), so **only a file
-      added after that is CC0** (the earlier ones have no licence of their own, which is the
-      exclusion of SPEC §4). **85 files were added after it; 3 are earlier files moved (the same
-      blob), so 82 qualify**, with 1,972 signals: NEC 524, raw 391, NECext 336, SIRC15 155, SIRC20 145,
-      RC5 132, Samsung32 110, Kaseikyo 96, SIRC 30, Pioneer 26, RC6 14, RC5X 13 (23 files are raw only:
-      air conditioners, fans). Many of the devices are not in the ledger (Fosi Audio ZD3, Wanbo T6
-      Max, Sony RM-PJ30, Canon LV-X320, Roksan K3...). **Not done: it needs a registered import root of
-      its own, and Talismote's `BundleVectorsTest` pins the set of sources (`authored`, `lirc`,
-      `smartir`, `irblaster`, `hifi-remote`, `jp1`, `official`), so a new source is a change in
-      both repositories: the owner's call.** The importer would read the checkout at a pinned commit,
-      take the files whose first commit is after the cutoff and whose blob is not in the history
-      before it, map NEC, NECext, Samsung32, SIRC, RC5, RC5X, RC6, Kaseikyo and Pioneer to the
-      ledger's protocols and keep the raw signals as raw forms (as SmartIR's).
+      not meet R19. **Flipper-IRDB done 2026-10-18 (DESIGN §96)**: `Lucaslhm/Flipper-IRDB` is CC0 from
+      2025-08-07 (PR #960: the `LICENSE` and the README's "by submitting you agree to license your work
+      under CC0"), so only a file that came after it is read: **90 files** pinned in
+      `sources/flipper-irdb/` (`tools/fetch_flipper.py`; the first survey counted 82 and missed 8
+      moved by a later commit), **102 remote files and 2,009 keys** under `remotes/flipper-irdb/`.
+      Open: **Talismote's pinned set of sources** (`BundleVectorsTest`, `RealBundleTest`) needs its
+      own pull request once this merges; the `Kaseikyo` vendors other than Panasonic, JVC and Denon,
+      `NEC42`, `NEC42ext` and `RCA` are not read (no ledger protocol of that reading); re-run
+      `tools/fetch_flipper.py` when the upstream moves.
 - [ ] **Decide the excluded sources**: IRDB, Global Caché and Remote
       Central (SPEC §4). They are excluded by their licences alone, and the
       owner's decision of 2026-10-08 (D110) is that a table of reference

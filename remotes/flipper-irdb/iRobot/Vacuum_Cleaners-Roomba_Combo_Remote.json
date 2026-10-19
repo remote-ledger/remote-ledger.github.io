@@ -1,0 +1,85 @@
+{
+  "manufacturer": "iRobot",
+  "model": "Roomba Combo Remote",
+  "aliases": [],
+  "controls": [
+    "iRobot Roomba Combo Remote"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_START_SLASH_PAUSE": {
+      "label": "Start/Pause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Vacuum_Cleaners/iRobot/Roomba_Combo_Remote.ir:7 name 'Start/Pause' (added in a00578a on 2026-02-25; parsed NEC, address 00 00 00 00, command 0B 00 00 00): NEC1 device 0 subdevice 255 function 11: address 0x00, command 0x0b: the frame 0x00 0xff 0x0b 0xf4"
+        }
+      ]
+    },
+    "KEY_LEFT": {
+      "label": "Left",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Vacuum_Cleaners/iRobot/Roomba_Combo_Remote.ir:13 name 'Left' (added in a00578a on 2026-02-25; parsed NEC, address 00 00 00 00, command 07 00 00 00): NEC1 device 0 subdevice 255 function 7: address 0x00, command 0x07: the frame 0x00 0xff 0x07 0xf8"
+        }
+      ]
+    },
+    "KEY_RIGHT": {
+      "label": "Right",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Vacuum_Cleaners/iRobot/Roomba_Combo_Remote.ir:19 name 'Right' (added in a00578a on 2026-02-25; parsed NEC, address 00 00 00 00, command 0F 00 00 00): NEC1 device 0 subdevice 255 function 15: address 0x00, command 0x0f: the frame 0x00 0xff 0x0f 0xf0"
+        }
+      ]
+    },
+    "KEY_BACK": {
+      "label": "Back",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Vacuum_Cleaners/iRobot/Roomba_Combo_Remote.ir:25 name 'Back' (added in a00578a on 2026-02-25; parsed NEC, address 00 00 00 00, command 03 00 00 00): NEC1 device 0 subdevice 255 function 3: address 0x00, command 0x03: the frame 0x00 0xff 0x03 0xfc"
+        }
+      ]
+    },
+    "KEY_BACK_TO_DOCK_CHARGING": {
+      "label": "Back_to_dock_charging",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x0E",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Vacuum_Cleaners/iRobot/Roomba_Combo_Remote.ir:31 name 'Back_to_dock_charging' (added in a00578a on 2026-02-25; parsed NEC, address 00 00 00 00, command 0E 00 00 00): NEC1 device 0 subdevice 255 function 14: address 0x00, command 0x0e: the frame 0x00 0xff 0x0e 0xf1"
+        }
+      ]
+    }
+  }
+}

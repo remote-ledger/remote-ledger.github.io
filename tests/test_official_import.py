@@ -2586,7 +2586,7 @@ def test_other_sources_hitachi_remotes_have_the_codes_of_the_tvs_tables_and_the_
         counts[path.stem] = (len(triples), len(triples & held))
         codes[path.stem] = {s["label"]: s["forms"][0]["function"] for s in doc["keys"].values()}
     assert counts == {"2004_TV_additional_codes": (20, 20), "2004_TV_remote": (36, 36), "AVC__2008": (17, 0), "DW3": (22, 22), "HL01322__2003": (48, 48),
-                      "HL01322__2004": (61, 61), "L19_and_L26": (47, 34), "L32_and_larger": (27, 25), "PDP__2008": (24, 22), "UT_Monitor__2008": (5, 5)}
+                      "HL01322__2004": (61, 61), "L19_and_L26": (47, 34), "L32_and_larger": (27, 26), "PDP__2008": (24, 23), "UT_Monitor__2008": (5, 5)}
     squash = lambda text: re.sub(r"[^a-z0-9]", "", text.lower())
     by_label: dict[str, dict[str, str]] = {}
     for name, labelled in codes.items():

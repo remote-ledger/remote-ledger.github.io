@@ -1,0 +1,631 @@
+{
+  "manufacturer": "LG",
+  "model": "DVX7900 [NEC1]",
+  "aliases": [],
+  "controls": [
+    "LG DVX7900 [NEC1]"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38400,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER": {
+      "label": "POWER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0x14",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 VCR/LG/LG DVX7900.ir:7 name 'POWER' (added in cf83856 on 2026-01-02; parsed NEC, address 6E 00 00 00, command 14 00 00 00): NEC1 device 110 subdevice 145 function 20: address 0x6e, command 0x14: the frame 0x6e 0x91 0x14 0xeb"
+        }
+      ]
+    },
+    "KEY_EZ_POWER_OFF": {
+      "label": "ez POWER OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0xB8",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 VCR/LG/LG DVX7900.ir:13 name 'ez POWER OFF' (added in cf83856 on 2026-01-02; parsed NEC, address 6E 00 00 00, command B8 00 00 00): NEC1 device 110 subdevice 145 function 184: address 0x6e, command 0xb8: the frame 0x6e 0x91 0xb8 0x47"
+        }
+      ]
+    },
+    "KEY_EJECT": {
+      "label": "EJECT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 VCR/LG/LG DVX7900.ir:19 name 'EJECT' (added in cf83856 on 2026-01-02; parsed NEC, address 6E 00 00 00, command 00 00 00 00): NEC1 device 110 subdevice 145 function 0: address 0x6e, command 0x00: the frame 0x6e 0x91 0x00 0xff"
+        }
+      ]
+    },
+    "KEY_PLAY": {
+      "label": "PLAY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 VCR/LG/LG DVX7900.ir:25 name 'PLAY' (added in cf83856 on 2026-01-02; parsed NEC, address 6E 00 00 00, command 08 00 00 00): NEC1 device 110 subdevice 145 function 8: address 0x6e, command 0x08: the frame 0x6e 0x91 0x08 0xf7"
+        }
+      ]
+    },
+    "KEY_STOP": {
+      "label": "STOP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 VCR/LG/LG DVX7900.ir:31 name 'STOP' (added in cf83856 on 2026-01-02; parsed NEC, address 6E 00 00 00, command 01 00 00 00): NEC1 device 110 subdevice 145 function 1: address 0x6e, command 0x01: the frame 0x6e 0x91 0x01 0xfe"
+        }
+      ]
+    },
+    "KEY_BACKWARD": {
+      "label": "Backward",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 VCR/LG/LG DVX7900.ir:37 name 'Backward' (added in cf83856 on 2026-01-02; parsed NEC, address 6E 00 00 00, command 02 00 00 00): NEC1 device 110 subdevice 145 function 2: address 0x6e, command 0x02: the frame 0x6e 0x91 0x02 0xfd"
+        }
+      ]
+    },
+    "KEY_FORWARD": {
+      "label": "Forward",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 VCR/LG/LG DVX7900.ir:43 name 'Forward' (added in cf83856 on 2026-01-02; parsed NEC, address 6E 00 00 00, command 03 00 00 00): NEC1 device 110 subdevice 145 function 3: address 0x6e, command 0x03: the frame 0x6e 0x91 0x03 0xfc"
+        }
+      ]
+    },
+    "KEY_LOCK": {
+      "label": "Lock",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0x3F",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 VCR/LG/LG DVX7900.ir:49 name 'Lock' (added in cf83856 on 2026-01-02; parsed NEC, address 6E 00 00 00, command 3F 00 00 00): NEC1 device 110 subdevice 145 function 63: address 0x6e, command 0x3f: the frame 0x6e 0x91 0x3f 0xc0"
+        }
+      ]
+    },
+    "KEY_VCR_VHS": {
+      "label": "Vcr_vhs",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0xF1",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 VCR/LG/LG DVX7900.ir:61 name 'Vcr_vhs' (added in cf83856 on 2026-01-02; parsed NEC, address 6E 00 00 00, command F1 00 00 00): NEC1 device 110 subdevice 145 function 241: address 0x6e, command 0xf1: the frame 0x6e 0x91 0xf1 0x0e"
+        }
+      ]
+    },
+    "KEY_1": {
+      "label": "1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 VCR/LG/LG DVX7900.ir:79 name '1' (added in cf83856 on 2026-01-02; parsed NEC, address 6E 00 00 00, command 05 00 00 00): NEC1 device 110 subdevice 145 function 5: address 0x6e, command 0x05: the frame 0x6e 0x91 0x05 0xfa"
+        }
+      ]
+    },
+    "KEY_2": {
+      "label": "2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 VCR/LG/LG DVX7900.ir:85 name '2' (added in cf83856 on 2026-01-02; parsed NEC, address 6E 00 00 00, command 06 00 00 00): NEC1 device 110 subdevice 145 function 6: address 0x6e, command 0x06: the frame 0x6e 0x91 0x06 0xf9"
+        }
+      ]
+    },
+    "KEY_3": {
+      "label": "3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 VCR/LG/LG DVX7900.ir:91 name '3' (added in cf83856 on 2026-01-02; parsed NEC, address 6E 00 00 00, command 07 00 00 00): NEC1 device 110 subdevice 145 function 7: address 0x6e, command 0x07: the frame 0x6e 0x91 0x07 0xf8"
+        }
+      ]
+    },
+    "KEY_4": {
+      "label": "4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0x0C",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 VCR/LG/LG DVX7900.ir:97 name '4' (added in cf83856 on 2026-01-02; parsed NEC, address 6E 00 00 00, command 0C 00 00 00): NEC1 device 110 subdevice 145 function 12: address 0x6e, command 0x0c: the frame 0x6e 0x91 0x0c 0xf3"
+        }
+      ]
+    },
+    "KEY_5": {
+      "label": "5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0x0D",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 VCR/LG/LG DVX7900.ir:103 name '5' (added in cf83856 on 2026-01-02; parsed NEC, address 6E 00 00 00, command 0D 00 00 00): NEC1 device 110 subdevice 145 function 13: address 0x6e, command 0x0d: the frame 0x6e 0x91 0x0d 0xf2"
+        }
+      ]
+    },
+    "KEY_6": {
+      "label": "6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0x0E",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 VCR/LG/LG DVX7900.ir:109 name '6' (added in cf83856 on 2026-01-02; parsed NEC, address 6E 00 00 00, command 0E 00 00 00): NEC1 device 110 subdevice 145 function 14: address 0x6e, command 0x0e: the frame 0x6e 0x91 0x0e 0xf1"
+        }
+      ]
+    },
+    "KEY_7": {
+      "label": "7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 VCR/LG/LG DVX7900.ir:115 name '7' (added in cf83856 on 2026-01-02; parsed NEC, address 6E 00 00 00, command 0F 00 00 00): NEC1 device 110 subdevice 145 function 15: address 0x6e, command 0x0f: the frame 0x6e 0x91 0x0f 0xf0"
+        }
+      ]
+    },
+    "KEY_8": {
+      "label": "8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0x1C",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 VCR/LG/LG DVX7900.ir:121 name '8' (added in cf83856 on 2026-01-02; parsed NEC, address 6E 00 00 00, command 1C 00 00 00): NEC1 device 110 subdevice 145 function 28: address 0x6e, command 0x1c: the frame 0x6e 0x91 0x1c 0xe3"
+        }
+      ]
+    },
+    "KEY_9": {
+      "label": "9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0x1D",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 VCR/LG/LG DVX7900.ir:127 name '9' (added in cf83856 on 2026-01-02; parsed NEC, address 6E 00 00 00, command 1D 00 00 00): NEC1 device 110 subdevice 145 function 29: address 0x6e, command 0x1d: the frame 0x6e 0x91 0x1d 0xe2"
+        }
+      ]
+    },
+    "KEY_TV_VCR_VHS": {
+      "label": "Tv_vcr_vhs",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0x15",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 VCR/LG/LG DVX7900.ir:133 name 'Tv_vcr_vhs' (added in cf83856 on 2026-01-02; parsed NEC, address 6E 00 00 00, command 15 00 00 00): NEC1 device 110 subdevice 145 function 21: address 0x6e, command 0x15: the frame 0x6e 0x91 0x15 0xea"
+        }
+      ]
+    },
+    "KEY_0": {
+      "label": "0",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 VCR/LG/LG DVX7900.ir:139 name '0' (added in cf83856 on 2026-01-02; parsed NEC, address 6E 00 00 00, command 04 00 00 00): NEC1 device 110 subdevice 145 function 4: address 0x6e, command 0x04: the frame 0x6e 0x91 0x04 0xfb"
+        }
+      ]
+    },
+    "KEY_AV_1": {
+      "label": "Av",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0x56",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 VCR/LG/LG DVX7900.ir:145 name 'Av' (added in cf83856 on 2026-01-02; parsed NEC, address 6E 00 00 00, command 56 00 00 00): NEC1 device 110 subdevice 145 function 86: address 0x6e, command 0x56: the frame 0x6e 0x91 0x56 0xa9"
+        }
+      ]
+    },
+    "KEY_REC_ITR": {
+      "label": "Rec_itr",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0x09",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 VCR/LG/LG DVX7900.ir:151 name 'Rec_itr' (added in cf83856 on 2026-01-02; parsed NEC, address 6E 00 00 00, command 09 00 00 00): NEC1 device 110 subdevice 145 function 9: address 0x6e, command 0x09: the frame 0x6e 0x91 0x09 0xf6"
+        }
+      ]
+    },
+    "KEY_CLK_CNT": {
+      "label": "Clk_cnt",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0x4C",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 VCR/LG/LG DVX7900.ir:169 name 'Clk_cnt' (added in cf83856 on 2026-01-02; parsed NEC, address 6E 00 00 00, command 4C 00 00 00): NEC1 device 110 subdevice 145 function 76: address 0x6e, command 0x4c: the frame 0x6e 0x91 0x4c 0xb3"
+        }
+      ]
+    },
+    "KEY_PR_TRK": {
+      "label": "Pr_trk",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0x82",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 VCR/LG/LG DVX7900.ir:175 name 'Pr_trk' (added in cf83856 on 2026-01-02; parsed NEC, address 6E 00 00 00, command 82 00 00 00): NEC1 device 110 subdevice 145 function 130: address 0x6e, command 0x82: the frame 0x6e 0x91 0x82 0x7d"
+        }
+      ]
+    },
+    "KEY_SETUP": {
+      "label": "Setup",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0x16",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 VCR/LG/LG DVX7900.ir:181 name 'Setup' (added in cf83856 on 2026-01-02; parsed NEC, address 6E 00 00 00, command 16 00 00 00): NEC1 device 110 subdevice 145 function 22: address 0x6e, command 0x16: the frame 0x6e 0x91 0x16 0xe9"
+        }
+      ]
+    },
+    "KEY_UP": {
+      "label": "Up",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0x82",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 VCR/LG/LG DVX7900.ir:187 name 'Up' (added in cf83856 on 2026-01-02; parsed NEC, address 6E 00 00 00, command 82 00 00 00): NEC1 device 110 subdevice 145 function 130: address 0x6e, command 0x82: the frame 0x6e 0x91 0x82 0x7d"
+        }
+      ]
+    },
+    "KEY_LEFT": {
+      "label": "Left",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0x83",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 VCR/LG/LG DVX7900.ir:193 name 'Left' (added in cf83856 on 2026-01-02; parsed NEC, address 6E 00 00 00, command 83 00 00 00): NEC1 device 110 subdevice 145 function 131: address 0x6e, command 0x83: the frame 0x6e 0x91 0x83 0x7c"
+        }
+      ]
+    },
+    "KEY_RIGHT": {
+      "label": "Right",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0x90",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 VCR/LG/LG DVX7900.ir:199 name 'Right' (added in cf83856 on 2026-01-02; parsed NEC, address 6E 00 00 00, command 90 00 00 00): NEC1 device 110 subdevice 145 function 144: address 0x6e, command 0x90: the frame 0x6e 0x91 0x90 0x6f"
+        }
+      ]
+    },
+    "KEY_DOWN": {
+      "label": "Down",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0x89",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 VCR/LG/LG DVX7900.ir:205 name 'Down' (added in cf83856 on 2026-01-02; parsed NEC, address 6E 00 00 00, command 89 00 00 00): NEC1 device 110 subdevice 145 function 137: address 0x6e, command 0x89: the frame 0x6e 0x91 0x89 0x76"
+        }
+      ]
+    },
+    "KEY_PR_PLUS": {
+      "label": "Pr_plus",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0xFB",
+          "function": "0x00",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 VCR/LG/LG DVX7900.ir:223 name 'Pr_plus' (added in cf83856 on 2026-01-02; parsed NEC, address 04 00 00 00, command 00 00 00 00): NEC1 device 4 subdevice 251 function 0: address 0x04, command 0x00: the frame 0x04 0xfb 0x00 0xff"
+        }
+      ]
+    },
+    "KEY_PR_MINUS": {
+      "label": "Pr_minus",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0xFB",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 VCR/LG/LG DVX7900.ir:229 name 'Pr_minus' (added in cf83856 on 2026-01-02; parsed NEC, address 04 00 00 00, command 01 00 00 00): NEC1 device 4 subdevice 251 function 1: address 0x04, command 0x01: the frame 0x04 0xfb 0x01 0xfe"
+        }
+      ]
+    },
+    "KEY_TV_POWER": {
+      "label": "Tv_power",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0xFB",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 VCR/LG/LG DVX7900.ir:235 name 'Tv_power' (added in cf83856 on 2026-01-02; parsed NEC, address 04 00 00 00, command 08 00 00 00): NEC1 device 4 subdevice 251 function 8: address 0x04, command 0x08: the frame 0x04 0xfb 0x08 0xf7"
+        }
+      ]
+    },
+    "KEY_AV_2": {
+      "label": "Av",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0xFB",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 VCR/LG/LG DVX7900.ir:241 name 'Av' (added in cf83856 on 2026-01-02; parsed NEC, address 04 00 00 00, command 0B 00 00 00): NEC1 device 4 subdevice 251 function 11: address 0x04, command 0x0b: the frame 0x04 0xfb 0x0b 0xf4"
+        }
+      ]
+    },
+    "KEY_VOL_PLUS": {
+      "label": "Vol_plus",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0xFB",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 VCR/LG/LG DVX7900.ir:247 name 'Vol_plus' (added in cf83856 on 2026-01-02; parsed NEC, address 04 00 00 00, command 02 00 00 00): NEC1 device 4 subdevice 251 function 2: address 0x04, command 0x02: the frame 0x04 0xfb 0x02 0xfd"
+        }
+      ]
+    },
+    "KEY_VOL_MINUS": {
+      "label": "Vol_minus",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x04",
+          "subdevice": "0xFB",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 VCR/LG/LG DVX7900.ir:253 name 'Vol_minus' (added in cf83856 on 2026-01-02; parsed NEC, address 04 00 00 00, command 03 00 00 00): NEC1 device 4 subdevice 251 function 3: address 0x04, command 0x03: the frame 0x04 0xfb 0x03 0xfc"
+        }
+      ]
+    },
+    "KEY_PAUSE": {
+      "label": "Pause",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0x0B",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 VCR/LG/LG DVX7900.ir:271 name 'Pause' (added in cf83856 on 2026-01-02; parsed NEC, address 6E 00 00 00, command 0B 00 00 00): NEC1 device 110 subdevice 145 function 11: address 0x6e, command 0x0b: the frame 0x6e 0x91 0x0b 0xf4"
+        }
+      ]
+    },
+    "KEY_DISPLAY": {
+      "label": "Display",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0x4C",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 VCR/LG/LG DVX7900.ir:289 name 'Display' (added in cf83856 on 2026-01-02; parsed NEC, address 6E 00 00 00, command 4C 00 00 00): NEC1 device 110 subdevice 145 function 76: address 0x6e, command 0x4c: the frame 0x6e 0x91 0x4c 0xb3"
+        }
+      ]
+    },
+    "KEY_AUDIO": {
+      "label": "Audio",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0xC1",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 VCR/LG/LG DVX7900.ir:295 name 'Audio' (added in cf83856 on 2026-01-02; parsed NEC, address 6E 00 00 00, command C1 00 00 00): NEC1 device 110 subdevice 145 function 193: address 0x6e, command 0xc1: the frame 0x6e 0x91 0xc1 0x3e"
+        }
+      ]
+    },
+    "KEY_SEARCH": {
+      "label": "Search",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0x41",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 VCR/LG/LG DVX7900.ir:325 name 'Search' (added in cf83856 on 2026-01-02; parsed NEC, address 6E 00 00 00, command 41 00 00 00): NEC1 device 110 subdevice 145 function 65: address 0x6e, command 0x41: the frame 0x6e 0x91 0x41 0xbe"
+        }
+      ]
+    },
+    "KEY_CLEAR": {
+      "label": "Clear",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0x1F",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 VCR/LG/LG DVX7900.ir:331 name 'Clear' (added in cf83856 on 2026-01-02; parsed NEC, address 6E 00 00 00, command 1F 00 00 00): NEC1 device 110 subdevice 145 function 31: address 0x6e, command 0x1f: the frame 0x6e 0x91 0x1f 0xe0"
+        }
+      ]
+    },
+    "KEY_REPEAT": {
+      "label": "Repeat",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0xB6",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 VCR/LG/LG DVX7900.ir:337 name 'Repeat' (added in cf83856 on 2026-01-02; parsed NEC, address 6E 00 00 00, command B6 00 00 00): NEC1 device 110 subdevice 145 function 182: address 0x6e, command 0xb6: the frame 0x6e 0x91 0xb6 0x49"
+        }
+      ]
+    },
+    "KEY_AP_LP": {
+      "label": "Ap_lp",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0x48",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 VCR/LG/LG DVX7900.ir:343 name 'Ap_lp' (added in cf83856 on 2026-01-02; parsed NEC, address 6E 00 00 00, command 48 00 00 00): NEC1 device 110 subdevice 145 function 72: address 0x6e, command 0x48: the frame 0x6e 0x91 0x48 0xb7"
+        }
+      ]
+    },
+    "KEY_RANDOM_CM_SKIP": {
+      "label": "Random_cm_skip",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0xDD",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 VCR/LG/LG DVX7900.ir:349 name 'Random_cm_skip' (added in cf83856 on 2026-01-02; parsed NEC, address 6E 00 00 00, command DD 00 00 00): NEC1 device 110 subdevice 145 function 221: address 0x6e, command 0xdd: the frame 0x6e 0x91 0xdd 0x22"
+        }
+      ]
+    },
+    "KEY_SHOWVIEW": {
+      "label": "Showview",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x6E",
+          "subdevice": "0x91",
+          "function": "0x47",
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 VCR/LG/LG DVX7900.ir:355 name 'Showview' (added in cf83856 on 2026-01-02; parsed NEC, address 6E 00 00 00, command 47 00 00 00): NEC1 device 110 subdevice 145 function 71: address 0x6e, command 0x47: the frame 0x6e 0x91 0x47 0xb8"
+        }
+      ]
+    }
+  }
+}

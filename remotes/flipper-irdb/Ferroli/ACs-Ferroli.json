@@ -1,0 +1,178 @@
+{
+  "manufacturer": "Ferroli",
+  "model": "Ferroli",
+  "aliases": [],
+  "controls": [
+    "Ferroli"
+  ],
+  "protocol": {
+    "carrierHz": 38000,
+    "unitUs": 521,
+    "minSends": 1,
+    "defaultGapUs": 180000,
+    "claims": {
+      "unitUs": {
+        "reason": "the file names no protocol, and D24 wants a unit to check the closing gap against; the shortest duration of its raw data, 521 us, is the largest unit the capture can have, and no duration is computed from it",
+        "source": "flipper-irdb@d126fb1 ACs/Ferroli/Ferroli.ir: the raw data of its buttons"
+      },
+      "defaultGapUs": {
+        "reason": "Flipper's raw data ends on a mark and records no gap after it; the firmware sends a silence of 180 ms before every raw transmission, so that is the space between one send of the signal and the next",
+        "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/encoder_decoder/infrared.h#L17 (INFRARED_RAW_TX_TIMING_DELAY_US 180000) and https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L23-L27 (the silence it sends first)"
+      }
+    }
+  },
+  "keys": {
+    "KEY_ON": {
+      "label": "On",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [4391, 4402, 552, 1599, 553, 524, 552, 1600, 552, 1599, 553, 525, 551, 524, 552, 1600, 552, 524, 552, 526, 550, 1600, 552, 524, 552, 524, 552, 1601, 551, 1602, 550, 522, 554, 1603, 549, 524, 552, 1600, 552, 1600, 552, 1599, 553, 1601, 551, 523, 553, 1600, 552, 1601, 551, 1600, 552, 524, 552, 526, 550, 527, 549, 525, 551, 1601, 551, 524, 552, 523, 553, 1600, 552, 1599, 553, 1601, 551, 524, 552, 525, 551, 523, 553, 524, 552, 523, 553, 524, 552, 523, 553, 524, 552, 1600, 552, 1603, 549, 1601, 551, 1600, 552, 1600, 552, 5198, 4390, 4402, 552, 1599, 553, 524, 552, 1600, 552, 1600, 552, 524, 552, 524, 552, 1601, 551, 525, 551, 523, 553, 1600, 552, 525, 551, 524, 552, 1600, 552, 1600, 552, 526, 550, 1601, 551, 525, 551, 1600, 552, 1601, 551, 1604, 548, 1601, 551, 524, 552, 1602, 550, 1600, 552, 1600, 552, 523, 553, 524, 552, 524, 552, 525, 551, 1599, 553, 523, 553, 524, 552, 1601, 551, 1600, 552, 1600, 552, 525, 551, 524, 552, 523, 553, 523, 553, 524, 552, 524, 552, 524, 552, 524, 552, 1600, 552, 1600, 552, 1603, 549, 1599, 553, 1601, 551],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 ACs/Ferroli/Ferroli.ir:6 name 'On' (added in d440423 on 2025-08-18; raw, 38000 Hz, duty cycle 0.33, 199 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_MODE": {
+      "label": "Mode",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [4392, 4402, 553, 1600, 552, 522, 554, 1599, 553, 1597, 555, 523, 553, 523, 553, 1598, 554, 525, 551, 523, 553, 1599, 553, 522, 554, 524, 552, 1599, 553, 1600, 552, 522, 554, 1601, 551, 1598, 554, 524, 552, 1600, 552, 1599, 553, 1600, 552, 1601, 551, 1599, 553, 1599, 553, 523, 553, 1601, 551, 521, 554, 524, 552, 524, 552, 524, 552, 522, 554, 523, 553, 524, 552, 1598, 554, 523, 553, 523, 553, 523, 553, 524, 552, 523, 553, 522, 554, 1601, 551, 524, 552, 1598, 554, 1599, 553, 1600, 552, 1598, 554, 1598, 554, 1599, 553, 5196, 4391, 4401, 553, 1600, 552, 522, 554, 1599, 553, 1599, 553, 523, 552, 523, 553, 1600, 552, 522, 553, 524, 552, 1599, 553, 523, 553, 521, 555, 1599, 553, 1599, 553, 522, 554, 1599, 553, 1601, 551, 523, 553, 1600, 552, 1599, 553, 1599, 553, 1601, 551, 1599, 553, 1599, 553, 522, 554, 1599, 553, 522, 554, 523, 553, 523, 553, 524, 552, 523, 552, 524, 552, 523, 553, 1599, 553, 522, 554, 523, 553, 523, 553, 523, 553, 523, 553, 522, 554, 1600, 552, 522, 554, 1600, 552, 1598, 554, 1599, 553, 1600, 552, 1599, 553, 1600, 552],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 ACs/Ferroli/Ferroli.ir:12 name 'Mode' (added in d440423 on 2025-08-18; raw, 38000 Hz, duty cycle 0.33, 199 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_UP": {
+      "label": "Up",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [4391, 4403, 551, 1600, 552, 524, 552, 1601, 551, 1599, 553, 525, 551, 524, 552, 1601, 551, 522, 554, 525, 551, 1600, 552, 524, 552, 524, 552, 1600, 552, 1601, 551, 524, 552, 1600, 552, 525, 551, 524, 552, 523, 553, 1599, 553, 1601, 551, 1600, 552, 1600, 552, 1600, 552, 1599, 553, 1600, 552, 1601, 551, 525, 551, 523, 553, 524, 552, 523, 553, 524, 552, 1598, 554, 1602, 550, 524, 552, 522, 554, 1600, 552, 523, 553, 525, 551, 523, 553, 524, 552, 523, 553, 1599, 553, 1600, 552, 524, 552, 1600, 552, 1601, 551, 1600, 552, 5196, 4391, 4403, 551, 1600, 552, 524, 552, 1600, 552, 1600, 552, 524, 552, 522, 554, 1600, 552, 524, 552, 525, 551, 1600, 552, 524, 552, 524, 552, 1601, 551, 1602, 550, 524, 552, 1601, 551, 523, 553, 523, 553, 524, 552, 1601, 551, 1598, 554, 1601, 551, 1600, 552, 1601, 551, 1600, 552, 1599, 553, 1603, 549, 522, 554, 523, 553, 524, 552, 524, 552, 523, 553, 1599, 553, 1600, 552, 523, 553, 523, 553, 1599, 553, 524, 552, 524, 552, 523, 553, 523, 553, 523, 553, 1600, 552, 1599, 553, 523, 553, 1599, 553, 1601, 551, 1601, 551],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 ACs/Ferroli/Ferroli.ir:18 name 'Up' (added in d440423 on 2025-08-18; raw, 38000 Hz, duty cycle 0.33, 199 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_OK": {
+      "label": "Ok",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [4391, 4402, 554, 1598, 554, 523, 553, 1599, 553, 1599, 553, 522, 554, 1600, 552, 522, 554, 1597, 555, 522, 554, 1599, 553, 522, 554, 522, 554, 1598, 554, 522, 554, 1600, 552, 521, 555, 1598, 554, 1598, 554, 1598, 554, 1598, 554, 522, 554, 1599, 553, 521, 555, 1599, 553, 521, 555, 523, 553, 522, 554, 523, 553, 1599, 553, 523, 553, 1598, 554, 522, 553, 1599, 553, 521, 555, 1598, 554, 522, 554, 521, 555, 523, 553, 1598, 554, 1598, 554, 522, 554, 1598, 554, 522, 554, 1598, 554, 1601, 551, 1599, 553, 522, 554, 522, 554, 5195, 4392, 4402, 553, 1598, 554, 521, 555, 1599, 553, 1598, 554, 522, 554, 1597, 555, 523, 553, 1599, 553, 521, 555, 1599, 553, 521, 554, 522, 554, 1599, 553, 522, 554, 1598, 554, 522, 554, 1597, 555, 1598, 554, 1598, 554, 1598, 554, 522, 554, 1598, 554, 522, 554, 1597, 555, 522, 554, 522, 554, 522, 554, 522, 554, 1599, 553, 521, 555, 1598, 554, 522, 554, 1599, 553, 522, 554, 1599, 553, 522, 554, 523, 553, 522, 554, 1598, 554, 1598, 554, 521, 555, 1598, 554, 522, 554, 1597, 555, 1597, 555, 1598, 554, 522, 554, 522, 554],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 ACs/Ferroli/Ferroli.ir:24 name 'Ok' (added in d440423 on 2025-08-18; raw, 38000 Hz, duty cycle 0.33, 199 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_DOWN": {
+      "label": "Down",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [4391, 4403, 552, 1597, 555, 524, 552, 1599, 553, 1599, 553, 522, 554, 521, 555, 1599, 553, 521, 555, 523, 553, 1599, 553, 522, 554, 523, 553, 1599, 553, 1599, 553, 524, 552, 1598, 554, 522, 554, 523, 553, 523, 552, 1599, 553, 1597, 555, 1599, 553, 1599, 553, 1598, 554, 1599, 553, 1598, 554, 1600, 552, 523, 553, 521, 555, 523, 553, 522, 554, 522, 554, 523, 553, 1599, 553, 524, 552, 1598, 554, 1599, 553, 522, 554, 521, 555, 523, 553, 1598, 554, 523, 553, 1597, 555, 522, 554, 524, 552, 1598, 554, 1600, 552, 1598, 554, 5194, 4392, 4402, 553, 1599, 553, 522, 554, 1599, 553, 1600, 552, 523, 553, 522, 554, 1627, 525, 523, 553, 522, 554, 1599, 553, 523, 553, 522, 554, 1598, 554, 1599, 553, 523, 553, 1599, 553, 522, 554, 522, 554, 521, 555, 1601, 551, 1599, 553, 1598, 554, 1598, 554, 1599, 553, 1599, 553, 1599, 553, 1599, 553, 521, 555, 523, 553, 523, 553, 522, 554, 522, 554, 523, 553, 1598, 554, 521, 554, 1599, 553, 1598, 554, 522, 554, 522, 554, 523, 553, 1599, 553, 523, 553, 1599, 553, 522, 554, 522, 554, 1599, 553, 1598, 554, 1600, 552],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 ACs/Ferroli/Ferroli.ir:30 name 'Down' (added in d440423 on 2025-08-18; raw, 38000 Hz, duty cycle 0.33, 199 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_FAN": {
+      "label": "Fan",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [4393, 4402, 553, 1599, 553, 524, 552, 1600, 552, 1598, 554, 523, 553, 523, 553, 1598, 554, 524, 552, 525, 551, 1599, 553, 524, 552, 524, 552, 1599, 553, 1599, 553, 523, 553, 1598, 554, 523, 553, 1599, 553, 522, 554, 1600, 552, 1598, 554, 1599, 553, 1598, 554, 1599, 553, 1600, 552, 522, 554, 1600, 552, 522, 554, 523, 553, 523, 553, 522, 554, 524, 552, 522, 554, 1599, 553, 523, 553, 1600, 552, 523, 552, 523, 553, 522, 554, 521, 555, 1598, 554, 522, 554, 1598, 554, 523, 553, 1600, 552, 1597, 555, 1601, 551, 1600, 552, 5195, 4392, 4403, 551, 1598, 554, 522, 554, 1600, 552, 1598, 554, 523, 553, 523, 553, 1600, 552, 521, 554, 523, 553, 1600, 552, 523, 553, 523, 553, 1601, 551, 1600, 552, 522, 554, 1601, 551, 523, 553, 1600, 552, 523, 553, 1599, 553, 1600, 552, 1599, 553, 1597, 555, 1599, 553, 1598, 554, 523, 553, 1599, 553, 522, 554, 523, 553, 522, 554, 523, 553, 522, 554, 522, 554, 1601, 551, 522, 554, 1600, 552, 522, 554, 523, 553, 523, 553, 522, 554, 1599, 553, 522, 554, 1599, 553, 524, 552, 1600, 552, 1599, 553, 1599, 553, 1599, 553],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 ACs/Ferroli/Ferroli.ir:36 name 'Fan' (added in d440423 on 2025-08-18; raw, 38000 Hz, duty cycle 0.33, 199 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_SWING": {
+      "label": "Swing",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [4391, 4401, 554, 1599, 553, 523, 553, 1599, 553, 1598, 554, 524, 552, 525, 551, 1598, 554, 522, 554, 523, 553, 1598, 554, 522, 553, 521, 555, 1599, 553, 1598, 554, 522, 554, 1598, 554, 522, 554, 1599, 553, 1599, 553, 522, 554, 1627, 525, 523, 553, 1600, 552, 1598, 554, 1599, 553, 521, 555, 522, 554, 1599, 553, 524, 551, 1599, 553, 523, 553, 523, 553, 1599, 553, 1599, 553, 1598, 554, 522, 554, 522, 554, 522, 554, 523, 553, 522, 554, 524, 552, 522, 554, 522, 554, 1599, 553, 1599, 553, 1599, 553, 1599, 553, 1599, 553, 5195, 4392, 4403, 552, 1600, 552, 522, 553, 1600, 552, 1601, 551, 523, 553, 523, 553, 1600, 552, 522, 554, 523, 553, 1599, 553, 523, 553, 523, 553, 1599, 553, 1599, 553, 526, 550, 1600, 552, 524, 552, 1599, 553, 1599, 553, 524, 552, 1600, 552, 522, 554, 1601, 551, 1602, 550, 1599, 553, 523, 553, 523, 552, 1599, 553, 524, 552, 1599, 553, 523, 553, 523, 553, 1600, 552, 1599, 553, 1600, 552, 523, 553, 523, 553, 524, 552, 523, 553, 523, 553, 522, 554, 522, 554, 523, 553, 1599, 553, 1599, 553, 1600, 552, 1600, 552, 1599, 553],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 ACs/Ferroli/Ferroli.ir:42 name 'Swing' (added in d440423 on 2025-08-18; raw, 38000 Hz, duty cycle 0.33, 199 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_STAR": {
+      "label": "Star",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [4389, 4403, 551, 1601, 551, 551, 525, 1599, 553, 1601, 551, 523, 553, 523, 553, 1599, 553, 523, 553, 523, 553, 1599, 553, 524, 552, 524, 552, 1600, 552, 1599, 553, 524, 552, 1599, 553, 523, 553, 524, 552, 524, 552, 1599, 553, 1583, 569, 1602, 550, 1600, 552, 1601, 551, 1601, 551, 1599, 553, 1600, 552, 523, 553, 523, 553, 524, 552, 524, 552, 525, 551, 1600, 552, 1601, 551, 523, 553, 1601, 551, 1601, 551, 526, 550, 523, 553, 524, 552, 525, 551, 523, 552, 1601, 551, 525, 551, 524, 552, 1602, 550, 1600, 552, 1599, 553, 5196, 4391, 4403, 551, 1601, 551, 524, 552, 1601, 551, 1601, 551, 523, 553, 523, 553, 1600, 552, 524, 552, 525, 551, 1599, 553, 525, 551, 524, 552, 1601, 551, 1601, 551, 524, 552, 1602, 550, 525, 551, 525, 550, 523, 553, 1600, 552, 1600, 552, 1600, 552, 1600, 552, 1601, 551, 1601, 551, 1600, 552, 1601, 551, 524, 552, 523, 553, 524, 552, 524, 552, 524, 552, 1600, 552, 1600, 552, 523, 553, 1600, 552, 1600, 552, 523, 553, 525, 551, 524, 552, 524, 552, 523, 553, 1601, 551, 522, 554, 525, 551, 1600, 552, 1599, 553, 1601, 551],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 ACs/Ferroli/Ferroli.ir:48 name 'Star' (added in d440423 on 2025-08-18; raw, 38000 Hz, duty cycle 0.33, 199 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

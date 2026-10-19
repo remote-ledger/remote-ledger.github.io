@@ -51,8 +51,8 @@ def by_key(doc):
 
 
 def test_there_is_one_notice_per_source_in_the_order_the_ids_say(doc):
-    assert [s["key"] for s in doc["sources"]] == ["authored", "lirc", "smartir", "irblaster", "hifi-remote", "jp1", "official"]
-    assert [s["id"] for s in doc["sources"]] == [1, 2, 3, 4, 5, 6, 7]
+    assert [s["key"] for s in doc["sources"]] == ["authored", "lirc", "smartir", "irblaster", "hifi-remote", "jp1", "official", "flipper-irdb"]
+    assert [s["id"] for s in doc["sources"]] == [1, 2, 3, 4, 5, 6, 7, 8]
     assert doc["schemaVersion"] == 1 and list(corpus.SOURCES) == [s["key"] for s in doc["sources"]]
 
 
@@ -76,7 +76,7 @@ def test_how_firmly_each_licence_holds_is_said_in_the_repositorys_words(doc):
     sources = by_key(doc)
     assert {k: sources[k]["licenceKind"] for k in sources} == {
         "authored": "none", "lirc": "reading", "smartir": "stated", "irblaster": "inherited",
-        "hifi-remote": "none", "jp1": "none", "official": "none"}
+        "hifi-remote": "none", "jp1": "none", "official": "none", "flipper-irdb": "stated"}
     # IR Blaster: by inheritance and nothing more, verbatim
     notes = " ".join(sources["irblaster"]["licenceNotes"])
     assert "by inheritance and nothing more" in notes
@@ -84,6 +84,18 @@ def test_how_firmly_each_licence_holds_is_said_in_the_repositorys_words(doc):
     assert "it is not a reading of one, as LIRC's is" in notes
     assert "This is a reading of the licence, not a grant." in sources["lirc"]["licenceNotes"]
     assert any("states its licence outright" in n for n in sources["smartir"]["licenceNotes"])
+
+
+def test_the_flipper_irdb_notice_states_cc0_from_its_date_and_carries_the_upstreams_text_and_commit(doc):
+    """DESIGN D353: only the files after the repository's CC0 note are here, and the notice says from when."""
+    notice = by_key(doc)["flipper-irdb"]
+    assert (notice["spdx"], notice["licenceKind"], notice["id"]) == ("CC0-1.0", "stated", 8)
+    assert notice["licenceText"] == (ROOT / "remotes" / "flipper-irdb" / "LICENSE").read_text(encoding="utf-8")
+    assert notice["licenceText"].lstrip().startswith("Creative Commons Legal Code") and "CC0 1.0 Universal" in notice["licenceText"]
+    assert notice["licenceNotes"][0].startswith("CC0-1.0, from 2025-08-07 only:") and "pull request #960" in notice["licenceNotes"][0]
+    assert notice["upstreamUrl"] == "https://github.com/Lucaslhm/Flipper-IRDB"
+    report = (ROOT / "remotes" / "flipper-irdb" / "IMPORT.md").read_text(encoding="utf-8")
+    assert notices._commit(ROOT / "remotes" / "flipper-irdb" / "IMPORT.md") == "d126fb1b6f1e114c52b4a8c19839ea65e3a9c24d" and "@ `d126fb1b6f1e114c52b4a8c19839ea65e3a9c24d`" in report
 
 
 def test_the_hifi_remote_notice_records_no_licence_and_names_where_the_pages_are(doc):

@@ -1,0 +1,197 @@
+{
+  "manufacturer": "Tesla",
+  "model": "RoboStar T80 Pro",
+  "aliases": [],
+  "controls": [
+    "Tesla RoboStar T80 Pro"
+  ],
+  "protocol": {
+    "carrierHz": 38000,
+    "unitUs": 557,
+    "minSends": 1,
+    "defaultGapUs": 180000,
+    "claims": {
+      "unitUs": {
+        "reason": "the file names no protocol, and D24 wants a unit to check the closing gap against; the shortest duration of its raw data, 557 us, is the largest unit the capture can have, and no duration is computed from it",
+        "source": "flipper-irdb@d126fb1 Vacuum_Cleaners/Tesla/RoboStar_T80_Pro.ir: the raw data of its buttons"
+      },
+      "defaultGapUs": {
+        "reason": "Flipper's raw data ends on a mark and records no gap after it; the firmware sends a silence of 180 ms before every raw transmission, so that is the space between one send of the signal and the next",
+        "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/encoder_decoder/infrared.h#L17 (INFRARED_RAW_TX_TIMING_DELAY_US 180000) and https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L23-L27 (the silence it sends first)"
+      }
+    }
+  },
+  "keys": {
+    "KEY_ON_OFF": {
+      "label": "On_Off",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [4484, 4511, 572, 560, 571, 1679, 572, 560, 571, 1679, 572, 559, 572, 1679, 572, 558, 572, 563, 4484, 4513, 571, 559, 572, 1678, 573, 560, 571, 1678, 573, 559, 572, 1680, 570, 559, 571, 562, 4486, 4512, 571, 561, 570, 1679, 572, 561, 570, 1680, 571, 560, 571, 1679, 572, 559, 571, 564, 4484, 4513, 570, 561, 570, 1680, 571, 560, 571, 1680, 571, 560, 571, 1679, 572, 559, 571, 563, 4485, 4511, 572, 559, 572, 1680, 571, 559, 572, 1679, 572, 560, 571, 1679, 572, 559, 571],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Vacuum_Cleaners/Tesla/RoboStar_T80_Pro.ir:6 name 'On_Off' (added in 51579b5 on 2025-09-10; raw, 38000 Hz, duty cycle 0.33, 89 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_HOME": {
+      "label": "Home",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [4482, 4513, 572, 559, 572, 559, 572, 560, 571, 1679, 572, 560, 571, 560, 571, 1679, 571, 562, 4484, 4514, 571, 560, 571, 560, 571, 559, 572, 1679, 572, 559, 572, 560, 571, 1679, 571, 561, 4485, 4515, 570, 559, 572, 560, 571, 559, 572, 1679, 572, 559, 572, 559, 572, 1678, 572, 561, 4485, 4515, 571, 559, 572, 560, 571, 559, 572, 1680, 571, 559, 572, 559, 572, 1679, 571, 563, 4483, 4513, 572, 559, 572, 559, 572, 559, 572, 1679, 572, 559, 572, 559, 572, 1678, 572],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Vacuum_Cleaners/Tesla/RoboStar_T80_Pro.ir:12 name 'Home' (added in 51579b5 on 2025-09-10; raw, 38000 Hz, duty cycle 0.33, 89 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_AUTOCLEAN": {
+      "label": "AutoClean",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [4483, 4515, 570, 1678, 573, 559, 572, 1680, 571, 560, 571, 1680, 571, 559, 572, 1678, 572, 563, 4482, 4514, 571, 1680, 571, 560, 571, 1680, 571, 561, 570, 1681, 570, 561, 570, 1678, 572, 563, 4483, 4514, 571, 1680, 571, 560, 571, 1682, 569, 560, 571, 1679, 572, 561, 570, 1679, 571, 563, 4483, 4514, 571, 1679, 572, 560, 571, 1679, 572, 560, 571, 1679, 572, 560, 571, 1678, 572, 563, 4483, 4514, 571, 1681, 570, 561, 570, 1680, 571, 559, 572, 1680, 571, 560, 571, 1680, 570],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Vacuum_Cleaners/Tesla/RoboStar_T80_Pro.ir:18 name 'AutoClean' (added in 51579b5 on 2025-09-10; raw, 38000 Hz, duty cycle 0.33, 89 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_SPOTCLEAN": {
+      "label": "SpotClean",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [4481, 4513, 572, 1681, 570, 560, 571, 1680, 571, 1679, 572, 1680, 571, 1680, 571, 1679, 571, 563, 4484, 4513, 572, 1680, 571, 560, 571, 1680, 571, 1680, 571, 1680, 571, 1681, 570, 1678, 572, 563, 4484, 4513, 572, 1680, 571, 560, 571, 1679, 572, 1679, 572, 1679, 572, 1680, 571, 1679, 571, 562, 4485, 4513, 572, 1680, 571, 560, 571, 1680, 571, 1679, 572, 1678, 573, 1679, 572, 1678, 572, 563, 4484, 4514, 571, 1681, 570, 559, 572, 1679, 572, 1680, 571, 1680, 571, 1679, 572, 1679, 571],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Vacuum_Cleaners/Tesla/RoboStar_T80_Pro.ir:24 name 'SpotClean' (added in 51579b5 on 2025-09-10; raw, 38000 Hz, duty cycle 0.33, 89 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_TURBOCLEAN": {
+      "label": "TurboClean",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [4485, 4513, 572, 1679, 572, 559, 572, 559, 572, 1681, 570, 1679, 572, 560, 571, 558, 572, 559, 4484, 4511, 573, 1678, 573, 558, 573, 558, 573, 1679, 572, 1680, 571, 560, 571, 558, 572, 557, 4487, 4513, 571, 1679, 572, 559, 572, 559, 572, 1680, 571, 1680, 571, 560, 571, 559, 571],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Vacuum_Cleaners/Tesla/RoboStar_T80_Pro.ir:30 name 'TurboClean' (added in 51579b5 on 2025-09-10; raw, 38000 Hz, duty cycle 0.33, 53 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_EDGECLEAN": {
+      "label": "EdgeClean",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [4482, 4510, 569, 1680, 570, 1682, 568, 562, 569, 1682, 568, 1681, 569, 1680, 570, 561, 569, 566, 4481, 4510, 569, 1681, 569, 1681, 569, 561, 570, 1681, 568, 1682, 568, 1681, 569, 561, 569, 566, 4481, 4509, 570, 1681, 569, 1680, 569, 561, 570, 1680, 569, 1682, 568, 1680, 569, 562, 567, 566, 4481, 4510, 569, 1682, 568, 1680, 569, 562, 568, 1681, 569, 1684, 565, 1680, 569, 562, 568, 565, 4482, 4511, 568, 1681, 568, 1681, 568, 562, 569, 1681, 569, 1681, 569, 1682, 568, 562, 567],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Vacuum_Cleaners/Tesla/RoboStar_T80_Pro.ir:36 name 'EdgeClean' (added in 51579b5 on 2025-09-10; raw, 38000 Hz, duty cycle 0.33, 89 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_LEFT": {
+      "label": "Left",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [4480, 4512, 568, 562, 569, 1683, 567, 1681, 569, 1681, 569, 562, 569, 1681, 569, 1680, 569, 563, 4479, 4512, 568, 562, 568, 1680, 570, 1681, 569, 1682, 568, 563, 568, 1681, 569, 1680, 569, 562, 4480, 4512, 568, 562, 568, 1682, 568, 1681, 569, 1680, 569, 562, 568, 1681, 568, 1680, 569, 560, 4482, 4512, 567, 564, 567, 1681, 569, 1681, 568, 1682, 568, 563, 567, 1683, 566, 1681, 568, 563, 4480, 4511, 568, 562, 569, 1682, 568, 1681, 569, 1682, 568, 563, 568, 1682, 568, 1680, 568],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Vacuum_Cleaners/Tesla/RoboStar_T80_Pro.ir:42 name 'Left' (added in 51579b5 on 2025-09-10; raw, 38000 Hz, duty cycle 0.33, 89 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_RIGHT": {
+      "label": "Right",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [4483, 4509, 572, 1678, 572, 558, 573, 560, 571, 560, 571, 1679, 571, 1678, 572, 560, 570, 559, 4483, 4510, 570, 1679, 571, 560, 571, 559, 572, 558, 573, 1679, 571, 1679, 571, 558, 572, 558, 4484, 4510, 571, 1679, 571, 558, 573, 560, 571, 559, 572, 1678, 572, 1678, 572, 558, 572, 559, 4482, 4509, 572, 1678, 571, 559, 572, 560, 571, 559, 572, 1679, 571, 1678, 572, 559, 571, 558, 4483, 4508, 572, 1679, 571, 560, 571, 559, 572, 558, 572, 1679, 571, 1677, 573, 557, 573],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Vacuum_Cleaners/Tesla/RoboStar_T80_Pro.ir:48 name 'Right' (added in 51579b5 on 2025-09-10; raw, 38000 Hz, duty cycle 0.33, 89 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    },
+    "KEY_FORWARD": {
+      "label": "Forward",
+      "forms": [
+        {
+          "id": "primary.raw",
+          "type": "raw",
+          "repeat": [4481, 4510, 571, 560, 571, 561, 570, 1678, 572, 1679, 571, 560, 571, 1679, 571, 1677, 572, 558, 4484, 4508, 573, 559, 572, 560, 571, 1679, 571, 1677, 573, 558, 573, 1679, 571, 1677, 572],
+          "truncated": true,
+          "confidence": "plausible",
+          "source": "flipper-irdb@d126fb1 Vacuum_Cleaners/Tesla/RoboStar_T80_Pro.ir:54 name 'Forward' (added in 51579b5 on 2025-09-10; raw, 38000 Hz, duty cycle 0.33, 35 durations ending on a mark): the durations as given, a mark first, the closing space the firmware's silence before a raw transmission (180 ms)",
+          "claims": {
+            "truncated": {
+              "reason": "the capture ends on its last mark: Flipper's raw data has no final space, so the signal's closing gap is the protocol block's defaultGapUs and not evidence",
+              "source": "https://github.com/flipperdevices/flipperzero-firmware/blob/3fb1d51727733d2007abc5ec636a89328857803e/lib/infrared/worker/infrared_transmit.c#L15-L36 (the raw data is sent as given, a mark first, and ends with its last duration)"
+            }
+          }
+        }
+      ]
+    }
+  }
+}
