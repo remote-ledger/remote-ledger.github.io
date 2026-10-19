@@ -92,6 +92,28 @@ def cmd_validate(args: argparse.Namespace) -> int:
     return EXIT_ERROR if problems else EXIT_OK
 
 
+def cmd_art_check(args: argparse.Namespace) -> int:
+    """R29: check a picture against the remote it is drawn for, before a layout names it.
+
+    Read-only. The checks are the ones ``validate`` runs on a layout's ``svg``; this runs them on a file
+    that no layout names yet, and says which of the remote's keys the picture does not draw (which is
+    not an error: a remote may have keys with no button, R7).
+    """
+    from .svgart import inspect_art
+    from .validate import load
+
+    keys = set(load(Path(args.remote)).get("keys") or {})
+    report = inspect_art(Path(args.svg).read_text(encoding="utf-8"), keys, where=args.svg)
+    for problem in report.problems:
+        print(f"ERROR {problem}", file=sys.stderr)
+    print(f"{args.svg}: {len(report.keys)} of {len(keys)} keys drawn, {report.inert} inert, "
+          f"{report.size} bytes, {len(report.problems)} problem(s)")
+    absent = sorted(keys - set(report.keys))
+    if absent:
+        print(f"not drawn: {', '.join(absent[:40])}{' ...' if len(absent) > 40 else ''}")
+    return EXIT_ERROR if report.problems else EXIT_OK
+
+
 def cmd_encode(args: argparse.Namespace) -> int:
     proto = protocols.get(args.protocol)
     signal = proto.encode(
@@ -940,6 +962,18 @@ def build_parser() -> argparse.ArgumentParser:
     be.add_argument("--out", metavar="FILE", help="also write the report here")
     be.add_argument("--timing", action="store_true", help="add the time each query took")
     be.set_defaults(func=cmd_bundle)
+
+    ar = sub.add_parser(
+        "art", help="a layout's picture (R29)", parents=[common]
+    )
+    ar_sub = ar.add_subparsers(dest="art_command", required=True)
+    ac = ar_sub.add_parser(
+        "check", parents=[common],
+        help="check an SVG against the keys of the remote it is drawn for (D358)",
+    )
+    ac.add_argument("remote", help="the remote's JSON file")
+    ac.add_argument("svg", help="the picture")
+    ac.set_defaults(func=cmd_art_check)
 
     ky = sub.add_parser(
         "keys", help="the canonical key vocabulary (D83)", parents=[common]

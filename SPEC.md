@@ -384,6 +384,29 @@ confidence tier, or a citation.
   of the format itself, not something the validator separately enforces.
   The validator's only remaining job is confirming every area name refers
   to a real key in `keys`.
+- **R29 — A layout may carry a picture of the remote's face: an SVG whose
+  key groups are the keys.** `svg` names a file, a plain relative path
+  beside the file that holds the layout. It is optional in every direction:
+  a layout without `svg` is a grid (R9), a layout may have both, and a remote
+  with no layouts is complete (R7). Each key is one `<g data-key="KEY_NAME">`,
+  and those groups are the whole statement of where a key is on the picture:
+  a client that shows it finds the group under a tap and sends that key. A
+  button that is on the face but sends nothing known is drawn grey in a
+  `<g class="inert">` and is not a key. The picture is a drawing, not a
+  photograph (**the ledger stores no photograph or scan of any remote**), and
+  what it was drawn from is its `source`, which R8's discipline asks of any
+  claim about a physical remote.
+
+  A picture is **a profile of SVG, not SVG**: a short list of elements and
+  attributes, each value checked, and nothing that can load a file, run code,
+  link away or expand an entity. A file that passes can be shown in a page
+  or drawn by any renderer without a sanitiser in between, and one that does
+  not is refused whole, since a cleaned file is no longer the file that was
+  reviewed. The same rule as R9 applies to names: every `data-key` is a key
+  of the remote, spelled as a CSS identifier (R10), and a key is drawn at
+  most once. What a file states about *where* a button is cannot be checked
+  by a machine and is the author's claim and a reviewer's to confirm. The
+  profile, its limits and the reasons are DESIGN D357-D359.
 - **R22 — What a key means is a vocabulary kept beside the ledger, not a
   field of a remote.** A source spells a key as it likes (`KEY_VOLUMEUP`,
   `VOL+`, `Vol +`), and the ledger keeps the spelling and never rewrites it.

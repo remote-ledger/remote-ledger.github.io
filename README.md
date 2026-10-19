@@ -110,6 +110,13 @@ remote, or a person's own rearrangement) is described separately from the
 code, using CSS's own `grid-template-areas` syntax rather than a bespoke
 coordinate system.
 
+A layout may also carry a **picture** of the remote's face (R29): a small SVG,
+checked against a fixed profile, in which each key is a `<g data-key>` group,
+so the picture doubles as the map from a place on the face to a key. It is
+optional: a layout without one is a grid, and a remote without layouts works
+as before. `rl art check REMOTE.json PICTURE.svg` checks a drawing against the
+remote it is for. The ledger holds no photograph of any remote (DESIGN §97).
+
 What a key *means* is kept apart from how a source spells it. A versioned
 **canonical key vocabulary** (about 150 keys in a dozen groups, each with a
 display name, a standard Material Symbols icon, a glyph, a colour and whether

@@ -585,8 +585,17 @@
     "layout": {
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "areas"
+      "anyOf": [
+        {
+          "required": [
+            "areas"
+          ]
+        },
+        {
+          "required": [
+            "svg"
+          ]
+        }
       ],
       "properties": {
         "original": {
@@ -609,6 +618,12 @@
             "type": "string",
             "minLength": 1
           }
+        },
+        "svg": {
+          "description": "A picture of the remote's face (R29): the path of an SVG file, relative to the folder of the file that holds this layout. Each key is a `<g data-key>` group in it. Optional: a layout without one is a grid, and a remote without layouts is complete (R7).",
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 200
         },
         "printedLabels": {
           "type": "object",

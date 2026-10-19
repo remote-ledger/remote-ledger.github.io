@@ -172,6 +172,15 @@ deliberate skips, each reported with its reason.
       reproducible IrpTransmogrifier render, and `test_registry` warns
       about it on every run.
 
+- [ ] **Pictures of remotes (DESIGN §97) have a format and a validator and no
+      data.** Open: a place for the picture of an *imported* remote (the
+      importers rewrite their trees, so a `layouts` field there would be
+      lost: a top-level tree that mirrors `remotes/` and is merged at load is
+      the likely shape); the site drawing a layout's picture; a record of
+      which keys of a drawn picture nobody has checked against the remote
+      (the pilot's drawn pictures are right for 89% of keys and the
+      uncertain ones are where the rest are); the first real pictures.
+
 ## 5. Backlog (blocked on D18's three-part gate, none scheduled)
 
 - [ ] Protocol `NEC` (`S` = `~D`). It needs an independently cited golden

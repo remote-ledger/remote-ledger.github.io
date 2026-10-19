@@ -22,6 +22,7 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass
+from pathlib import Path
 
 from .errors import ValidationError
 
@@ -112,17 +113,26 @@ def _check_rectangle(grid: Grid, name: str, where: str) -> None:
         )
 
 
-def layout_problems(name: str, layout: dict, keys: set[str], where: str):
-    """Every ledger-specific check for one layout (D14, R8, R10)."""
-    at = f"{where}:{name}"
-    try:
-        grid = parse(layout.get("areas") or [], where=at)
-    except ValidationError as exc:
-        yield str(exc)
-        return
+def layout_problems(name: str, layout: dict, keys: set[str], where: str, base: Path | None = None):
+    """Every ledger-specific check for one layout (D14, R8, R10, R29).
 
-    for area in sorted(grid.names - keys):
-        yield f"{at}: area {area!r} does not name a key in `keys` (R9)"
+    A layout is a grid (``areas``, R9), a picture (``svg``, R29), or both: the grid is what a client
+    without a renderer for pictures can still draw. ``base`` is the folder of the file that holds the
+    layout, which an ``svg`` path is relative to; without it a picture cannot be found and is reported.
+    """
+    at = f"{where}:{name}"
+    if "areas" not in layout and "svg" not in layout:
+        yield f"{at}: a layout has `areas` (a grid), `svg` (a picture) or both; this has neither (R29)"
+    if "areas" in layout:
+        try:
+            grid = parse(layout.get("areas") or [], where=at)
+        except ValidationError as exc:
+            yield str(exc)
+        else:
+            for area in sorted(grid.names - keys):
+                yield f"{at}: area {area!r} does not name a key in `keys` (R9)"
+    if "svg" in layout:
+        yield from _picture_problems(at, layout, keys, base)
 
     # R10: an orphan in a sibling map renders nothing and reports nothing.
     for field in ("printedLabels", "shape"):
@@ -134,7 +144,25 @@ def layout_problems(name: str, layout: dict, keys: set[str], where: str):
             )
 
 
-def layouts_problems(layouts: dict | None, keys: set[str], where: str):
+def _picture_problems(at: str, layout: dict, keys: set[str], base: Path | None):
+    """R29: the picture a layout names, and the citation that must come with it."""
+    from . import svgart
+
+    if not layout.get("source"):
+        yield (f"{at}: a picture needs a `source`: what it was drawn from (R29). A claim that a key is "
+               "here is a transcribable fact, and R8 asks a citation of it")
+    if base is None:
+        yield f"{at}: `svg` cannot be checked without the folder of the file that holds it"
+        return
+    text, why = svgart.read_art(base, layout["svg"])
+    if why:
+        yield f"{at}: {why}"
+        return
+    for message in svgart.art_problems(text, keys, where=f"{at}:{layout['svg']}"):
+        yield message
+
+
+def layouts_problems(layouts: dict | None, keys: set[str], where: str, base: Path | None = None):
     """Check every layout, plus R8's at-most-one-original rule."""
     if not layouts:
         return
@@ -147,4 +175,4 @@ def layouts_problems(layouts: dict | None, keys: set[str], where: str):
             "whichever a renderer picked would be arbitrary (R8)"
         )
     for name in sorted(layouts):
-        yield from layout_problems(name, layouts[name], keys, where)
+        yield from layout_problems(name, layouts[name], keys, where, base)
