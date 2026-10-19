@@ -27,6 +27,7 @@ import tempfile
 from pathlib import Path
 from typing import Any
 
+from . import family
 from .catalog import GRAM, Assembled
 from .corpus import RULES, TIERS
 
@@ -128,6 +129,13 @@ CREATE TABLE remote_refs (
   key_count INTEGER NOT NULL
 ) WITHOUT ROWID;
 
+CREATE TABLE remote_completions (
+  remote_id     INTEGER PRIMARY KEY,
+  first_n       INTEGER NOT NULL,
+  key_count     INTEGER NOT NULL,
+  corroborators INTEGER NOT NULL
+) WITHOUT ROWID;
+
 CREATE TABLE keys (
   remote_id  INTEGER NOT NULL,
   n          INTEGER NOT NULL,
@@ -160,7 +168,7 @@ CREATE TABLE excluded_brands (
 DIGEST_TABLES: tuple[tuple[str, str], ...] = (
     ("sources", "id"), ("vocab_groups", "id"), ("vocab_keys", "id"), ("brands", "id"),
     ("brand_aliases", "norm, brand_id"), ("models", "id"), ("controls", "model_id, remote_id"), ("remotes", "id"),
-    ("remote_refs", "ref"), ("keys", "remote_id, n"), ("signals", "id"), ("ngram", "gram"),
+    ("remote_refs", "ref"), ("remote_completions", "remote_id"), ("keys", "remote_id, n"), ("signals", "id"), ("ngram", "gram"),
     ("excluded_brands", "name"),
 )
 
@@ -177,6 +185,13 @@ MERGE_RULE_TEXT = (
     "MUTE) is folded into a sibling fragment that has one and the same carrier and play rule; "
     "its keys follow the sibling's, and remote_refs maps every ledger ref to the remote that "
     "carries its keys")
+
+
+COMPLETION_RULE_TEXT = (
+    f"a remote with fewer than {family.THIN_BELOW} keys is completed, up to {family.TARGET_KEYS} keys, with the keys "
+    "that at least two fifths of the remotes that corroborate it have: the same carrier and play rule, "
+    "three quarters of its signals and the same names for them; each is named by the canonical key its "
+    "supporters agree on and is untested; remote_completions says where they start")
 
 
 def _hexed(row: tuple) -> list[Any]:
@@ -218,6 +233,7 @@ def _meta(assembled: Assembled, vocabulary_version: int, selection: str) -> dict
         "count.controls": str(len(assembled.controls)),
         "count.remotes": str(len(assembled.remotes)),
         "count.remoteRefs": str(len(assembled.remote_refs)),
+        "count.remoteCompletions": str(len(assembled.remote_completions)),
         "count.keys": str(len(assembled.keys)),
         "count.signals": str(len(assembled.signals)),
         "count.excludedBrands": str(len(assembled.excluded)),
@@ -225,6 +241,7 @@ def _meta(assembled: Assembled, vocabulary_version: int, selection: str) -> dict
     for rule in RULES:
         rows[f"playRule.{rule}"] = PLAY_RULE_TEXT[rule]
     rows["mergeRule"] = MERGE_RULE_TEXT
+    rows["completionRule"] = COMPLETION_RULE_TEXT
     return rows
 
 
@@ -275,6 +292,7 @@ def _insert(conn: sqlite3.Connection, a: Assembled) -> None:
     put("controls", a.controls, 2)
     put("remotes", a.remotes, 13)
     put("remote_refs", a.remote_refs, 4)
+    put("remote_completions", a.remote_completions, 4)
     put("keys", a.keys, 6)
     put("signals", a.signals, 2)
     put("ngram", a.ngram, 2)

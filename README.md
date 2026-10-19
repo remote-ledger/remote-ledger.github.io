@@ -155,6 +155,17 @@ not change, and `remote_refs` still maps every ref of the ledger to the remote
 that carries its keys (357 of the 1,320 fragments of split devices in the full
 bundle; DESIGN.md §26).
 
+**A fuller remote for a device that has only a stub.** A device is offered the
+remotes that name it, and one whose only remote has a handful of keys (the
+ledger's own Samsung UN50NU6900F had eight) is offered that. The exporter
+completes a remote of fewer than 30 keys from the remotes that speak its
+address: those that play alike, share three quarters of its signals and name
+them alike, and then only the keys that two fifths of them have, named as most
+of them name them, untested, and never ahead of the key a person is asked to
+try. 827 of the 4,441 thin remotes are completed, with 7,969 keys; the others
+have no such family in the ledger. The remote files do not change
+(`remote_completions` says where the added keys start; DESIGN.md §96).
+
 ## Try it
 
 ```console

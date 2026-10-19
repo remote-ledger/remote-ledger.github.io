@@ -12,7 +12,9 @@ It reads the bundle the way an app would and holds it against the tree:
    it (D103), and is that remote (carrier, protocol, play rule, tier, every key's canonical
    id, text, confidence and signal, the folded files' keys after its own); ``remote_refs``
    (D105) is the ref of every file of the profile, each to the remote that carries it and
-   where its keys start; the full profile has every file of the tree, and the selected one
+   where its keys start; ``remote_completions`` (D353) is the keys added to each thin remote, the
+   same as the tree gives and each of them untested, named and once; the full profile has every
+   file of the tree, and the selected one
    every file of a brand it carries; a deterministic sample of remotes is compiled again,
    from the committed ``build/pronto`` artifact when there is one and from the file when
    not, and its Pronto strings compared with the blobs;
@@ -139,9 +141,12 @@ def _verify_file(conn: sqlite3.Connection, manifest: dict[str, Any],
     if not conn.execute("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'remote_refs'").fetchone():
         return problems + ["the bundle has no remote_refs table: it was written before the fragments "
                            "were folded (D103, D105); build it again"]
+    if not conn.execute("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'remote_completions'").fetchone():
+        return problems + ["the bundle has no remote_completions table: it was written before thin remotes "
+                           "were completed (D353); build it again"]
     tables = {"brands": "brands", "brandAliases": "brand_aliases", "models": "models",
               "controls": "controls", "remotes": "remotes", "remoteRefs": "remote_refs",
-              "keys": "keys", "signals": "signals", "excludedBrands": "excluded_brands"}
+              "remoteCompletions": "remote_completions", "keys": "keys", "signals": "signals", "excludedBrands": "excluded_brands"}
     for name, table in tables.items():
         n = _one(conn, f"SELECT COUNT(*) FROM {table}")
         if str(n) != meta.get(f"count.{name}"):
@@ -178,6 +183,19 @@ def _verify_file(conn: sqlite3.Connection, manifest: dict[str, Any],
                                                "ON b.norm = a.norm",
         "remote_refs.remote_id": "SELECT COUNT(*) FROM remote_refs WHERE remote_id NOT IN "
                                  "(SELECT id FROM remotes)",
+        "remote_completions.remote_id": "SELECT COUNT(*) FROM remote_completions WHERE remote_id NOT IN "
+                                        "(SELECT id FROM remotes)",
+        "remote_completions that do not end at the last key of their remote": (
+            "SELECT COUNT(*) FROM remote_completions c JOIN remotes r ON r.id = c.remote_id WHERE "
+            "c.first_n < 1 OR c.key_count < 1 OR c.first_n + c.key_count != r.key_count"),
+        "added keys that are not untested or not named": (
+            "SELECT COUNT(*) FROM keys k JOIN remote_completions c ON c.remote_id = k.remote_id WHERE "
+            "k.n >= c.first_n AND (k.confidence != 3 OR k.canon IS NULL OR k.label IS NOT NULL)"),
+        "canonical keys added twice, or added to a remote that has the key": (
+            "SELECT COUNT(*) FROM (SELECT k.remote_id, k.canon FROM keys k JOIN remote_completions c ON "
+            "c.remote_id = k.remote_id WHERE k.canon IS NOT NULL AND k.n >= c.first_n "
+            "GROUP BY k.remote_id, k.canon HAVING COUNT(*) > 1 OR EXISTS (SELECT 1 FROM keys o WHERE "
+            "o.remote_id = k.remote_id AND o.n < c.first_n AND o.canon = k.canon))"),
         "remotes whose own ref is not theirs in remote_refs": (
             "SELECT COUNT(*) FROM remotes r WHERE NOT EXISTS (SELECT 1 FROM remote_refs f WHERE "
             "f.ref = r.ref AND f.remote_id = r.id AND f.first_n = 0)"),
@@ -193,7 +211,10 @@ def _verify_file(conn: sqlite3.Connection, manifest: dict[str, Any],
     for ref, remote_id, first, count in conn.execute(
             "SELECT ref, remote_id, first_n, key_count FROM remote_refs"):
         runs[remote_id].append((first, count, ref))
+    added = {remote_id: count for remote_id, count in conn.execute(
+        "SELECT remote_id, key_count FROM remote_completions")}
     for remote_id, key_count in conn.execute("SELECT id, key_count FROM remotes"):
+        key_count -= added.get(remote_id, 0)        # the keys added by D353 belong to no file
         at = 0
         for first, count, ref in sorted(runs.get(remote_id, [])):
             if first != at or count < 1:
@@ -241,7 +262,9 @@ def _verify_against_tree(conn: sqlite3.Connection, root: Path, manifest: dict[st
     if read_problems:
         return [f"the tree cannot be read: {p}" for p in read_problems[:5]]
     by_ref = {merge.ref_of(r): (i + 1, r) for i, r in enumerate(records)}
-    folded = merge.fold(records)
+    collected = catalog.collect(records)
+    folded = collected.folded
+    completions = collected.completions
     vocab = load_vocabulary()
     canon_key = {i: k for i, k in conn.execute("SELECT id, key FROM vocab_keys")}
     spellings = {k.id: {squash(k.id), squash(k.name)} for k in vocab.keys}
@@ -272,23 +295,26 @@ def _verify_against_tree(conn: sqlite3.Connection, root: Path, manifest: dict[st
                             f"{merge.ref_of(records[folded.carrier[expected_id - 1]])}")
             continue
         seen_refs.add(ref)
-        # the remote is the file with the files folded into it: their keys follow its own
+        # the remote is the file with the files folded into it: their keys follow its own, and then the
+        # keys it is completed with (D353)
         record = folded.remote(records, expected_id - 1)
+        done = completions.get(expected_id - 1)
+        wanted_keys = record.keys + (done.keys if done is not None else ())
         want = corpus.play(record)
         if (repeat, helper, empty, rule) != want:
             problems.append(f"{ref}: plays as {(repeat, helper, empty, rule)}, the tree says {want}")
         if (corpus.sources()[source - 1], tier, protocol, carrier, key_count) != (
-                record.source, record.tier, record.protocol, record.carrier_hz, len(record.keys)):
+                record.source, record.tier, record.protocol, record.carrier_hz, len(wanted_keys)):
             problems.append(f"{ref}: source, tier, protocol, carrier or key count differ from the file")
         if (model is None) != corpus.is_synthetic_model(record.source) or (
                 model is not None and model != record.model):
             problems.append(f"{ref}: model {model!r} is not the file's")
         got = rows.get(rid, [])
-        if len(got) != len(record.keys):
-            problems.append(f"{ref}: {len(got)} keys, the file has {len(record.keys)}")
+        if len(got) != len(wanted_keys):
+            problems.append(f"{ref}: {len(got)} keys, the file has {len(wanted_keys)}")
             continue
         for (n, canon, label, signal_id, confidence), (name, text_label, want_canon, want_conf,
-                                                      blob) in zip(got, record.keys):
+                                                      blob) in zip(got, wanted_keys):
             text = text_label if text_label is not None else name
             stored = text if catalog.label_needed(text, want_canon, spellings) else None
             if (canon_key.get(canon), label, confidence, signals[signal_id]) != (
@@ -303,7 +329,6 @@ def _verify_against_tree(conn: sqlite3.Connection, root: Path, manifest: dict[st
     # completeness: a file is in the bundle when the remote that carries it is
     profile = manifest["profile"]
     included_brands = {norm for (norm,) in conn.execute("SELECT norm FROM brands")}
-    collected = catalog.collect(records)
     refs = [merge.ref_of(r) for r in records]
     present = [refs[folded.carrier[i]] in seen_refs for i in range(len(records))]
     if profile == "full":
@@ -337,6 +362,16 @@ def _verify_against_tree(conn: sqlite3.Connection, root: Path, manifest: dict[st
         problems.append(f"remote_refs has {len(stored_refs):,} rows and the tree gives {len(wanted_refs):,}; "
                         f"{len(differ):,} differ, such as {differ[0]}")
     file_refs = {ref for ref, *_ in stored_refs}
+
+    # remote_completions (D353): the keys each thin remote is completed with, as the tree gives them
+    stored_done = list(conn.execute(
+        "SELECT remote_id, first_n, key_count, corroborators FROM remote_completions ORDER BY remote_id"))
+    wanted_done = sorted((i + 1, len(folded.remote(records, i).keys), len(done.keys), done.corroborators)
+                         for i, done in completions.items() if refs[i] in seen_refs)
+    if stored_done != wanted_done:
+        differ = sorted(set(stored_done) ^ set(wanted_done))
+        problems.append(f"remote_completions has {len(stored_done):,} rows and the tree gives "
+                        f"{len(wanted_done):,}; {len(differ):,} differ, such as {differ[0]}")
 
     # the brand aliases: the list that ships, for the brands this bundle carries
     brand_ids = {norm: i for i, norm in conn.execute("SELECT id, norm FROM brands")}
@@ -409,7 +444,7 @@ def _recompile_one(root: Path, ref: str, rid: int, files: list[RemoteRecord],
             return [f"{ref}: cannot be compiled again: {exc}"]
         keys += [(name, compiled[name]["candidates"]["primary"]["prontoHex"],
                   compiled[name]["candidates"]["primary"].get("endingHex")) for name in sorted(compiled)]
-    got = rows.get(rid, [])
+    got = rows.get(rid, [])[:len(keys)]            # the keys added by D353 are in no file
     if len(keys) != len(got):
         return [f"{ref}: {len(got)} keys in the bundle, {len(keys)} in its compiled artifact"]
     out = []

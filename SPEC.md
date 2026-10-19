@@ -495,6 +495,25 @@ confidence tier, or a citation.
   outside the cache that other brands' traffic empties, and changes no answer
   (DESIGN §25, D106, D107).
 
+- **R29 — A thin remote is completed from the remotes that share its address,
+  and every key added says it is a candidate.** A device is linked to the
+  remotes that name it, so a device whose only remote is a stub is offered the
+  stub though the ledger holds full tables for the address the stub speaks. The
+  bundle exporter completes a remote of fewer than 30 keys from the remotes
+  that **corroborate** it: the same carrier and play rule, three quarters of
+  its signals, and the same canonical key for the signals they share. It adds,
+  up to 60 keys, the signals that two fifths of those remotes (and at least
+  two) hold, each as the canonical key most of its holders call it; a signal
+  nobody agrees a name for is not added. The added keys are **untested**
+  (SPEC section 5's "a reasoned candidate"), follow the remote's own, and
+  **never come before the test key or the alternative key the remote has**, so
+  the key a service asks a person to try, and its tier, are what they were. The
+  remote files are not changed: the completion exists only in the bundle, the
+  remote's tier is the weakest of its files' keys, and a table, `remote_completions`,
+  says where the added keys start and how many remotes corroborated them. Every
+  number is a constant of one file and the rule's measurement on the real
+  ledger is DESIGN §96 (D353 to D355).
+
 **Known limit, named rather than glossed over:** CSS requires a named
 area's cells to form one rectangle, so a single key can't have an L-shaped
 or disconnected footprint, and two elements can never overlap (a button
