@@ -21,13 +21,15 @@ numbered inside one bundle, from 1, in the order the rows are inserted, which is
 from __future__ import annotations
 
 from collections import Counter, defaultdict
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
+from functools import cached_property
 from typing import Iterable
 
 from ..app_api import brand_key
 from ..keys import load_vocabulary, squash
 from .aliases import Alias, rows_for
 from .corpus import RemoteRecord, is_synthetic_model, play, source_ids
+from .family import Completion, complete
 from .merge import Folded, fold, ref_of
 from .textnorm import search_norm
 
@@ -142,6 +144,13 @@ class Collected:
     #: Which file's remote carries each file's keys (D103).
     folded: Folded
 
+    @cached_property
+    def completions(self) -> dict[int, Completion]:
+        """The keys a thin remote is completed with, by the index of the file that carries it
+        (D357). Worked out once, on first use: the bundle needs it and a selection rule does not."""
+        order = {key.id: n for n, key in enumerate(load_vocabulary().keys)}
+        return complete(self.records, self.folded, order)
+
 
 def collect(records: list[RemoteRecord]) -> Collected:
     brands: dict[str, BrandStats] = {}
@@ -194,6 +203,9 @@ class Assembled:
     stats: dict = field(default_factory=dict)
     brand_aliases: list[tuple] = field(default_factory=list)   # (alias, norm, brand_id) (D101)
     remote_refs: list[tuple] = field(default_factory=list)     # (ref, remote_id, first_n, key_count) (D105)
+    #: (remote_id, first_n, key_count, corroborators): the keys at the end of a remote that are not
+    #: from its files but from the remotes that share its address (D357)
+    remote_completions: list[tuple] = field(default_factory=list)
 
 
 def label_needed(text: str, canon: str | None, spellings: dict[str, set[str]]) -> bool:
@@ -292,7 +304,8 @@ def assemble(collected: Collected, chosen: frozenset[str] | None, profile: str,
     signal_id = {blob: n + 1 for n, blob in enumerate(ordered)}
     signals = [(n + 1, blob) for n, blob in enumerate(ordered)]
 
-    remotes, keys, remote_refs = [], [], []
+    remotes, keys, remote_refs, remote_completions = [], [], [], []
+    completions = collected.completions
     source_id = source_ids()
     per_source: dict[str, list[int]] = defaultdict(lambda: [0, 0])
     for i in included:
@@ -302,6 +315,13 @@ def assemble(collected: Collected, chosen: frozenset[str] | None, profile: str,
             continue
         record = folded.remote(records, i)
         rid = i + 1
+        own = len(record.keys)
+        done = completions.get(i)
+        if done is not None:
+            # the added keys follow the files' own, and change neither the tier (the weakest of the
+            # files' keys) nor what a source is credited with (D357)
+            remote_completions.append((rid, own, len(done.keys), done.corroborators))
+            record = replace(record, keys=record.keys + done.keys)
         repeat, helper, empty, rule = play(record)
         maker = collected.pairs[i][0]
         remotes.append((
@@ -312,7 +332,7 @@ def assemble(collected: Collected, chosen: frozenset[str] | None, profile: str,
             record.carrier_hz, repeat, helper, empty, rule,
         ))
         per_source[record.source][0] += 1
-        per_source[record.source][1] += len(record.keys)
+        per_source[record.source][1] += own
         for n, (name, label, canon, conf, blob) in enumerate(record.keys):
             text = label if label is not None else name
             stored = text if label_needed(text, canon, spellings) else None
@@ -338,10 +358,14 @@ def assemble(collected: Collected, chosen: frozenset[str] | None, profile: str,
         profile=profile, sources=sources, vocab_groups=vocab_groups, vocab_keys=vocab_keys,
         brands=brands, models=models, controls=controls, remotes=remotes, keys=keys,
         signals=signals, ngram=ngram, excluded=excluded, remote_refs=remote_refs,
+        remote_completions=sorted(remote_completions),
         stats={"ledgerRemotes": len(records), "ledgerBrands": len(collected.brands),
                # the files folded into a sibling's remote, and the remotes that carry some (D103)
                "foldedFragments": len(remote_refs) - len(remotes),
                "mergedRemotes": sum(1 for r in remotes if r[0] - 1 in folded.parts),
+               # the thin remotes completed from the remotes that share their address, and the keys added (D357)
+               "completedRemotes": len(remote_completions),
+               "completionKeys": sum(row[2] for row in remote_completions),
                "aliasesListed": len(aliases),
                # a brand the list names that the whole ledger does not have, and one it has and
                # this bundle does not carry

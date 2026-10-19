@@ -472,6 +472,8 @@ def cmd_bundle(args: argparse.Namespace) -> int:
         return _matching_vectors(args, suggest=True)
     if sub == "search-eval":
         return _search_eval(root, args)
+    if sub == "family-eval":
+        return _family_eval(root, args)
 
     if args.verify:
         from .bundle.verify import verify_directory
@@ -513,6 +515,10 @@ def cmd_bundle(args: argparse.Namespace) -> int:
     print(
         f"fragments: {stats['foldedFragments']:,} protocol fragments with no test key are folded into "
         f"{stats['mergedRemotes']:,} remotes; remote_refs: {stats['remoteRefs']:,} refs"
+    )
+    print(
+        f"completion: {stats['completedRemotes']:,} thin remotes are completed with "
+        f"{stats['completionKeys']:,} untested keys of the remotes that share their address"
     )
     print(
         f"brand aliases: {stats['brandAliases']:,} of the {stats['aliasesListed']:,} listed; not in "
@@ -582,6 +588,26 @@ def _search_eval(root: Path, args: argparse.Namespace) -> int:
         return EXIT_ERROR
     text = report(directory, queries=Path(args.queries) if args.queries else None,
                   seed=args.seed, per_class=args.per_class, timing=args.timing)
+    sys.stdout.write(text)
+    if args.out:
+        Path(args.out).write_text(text, encoding="utf-8", newline="\n")
+    return EXIT_OK
+
+
+def _family_eval(root: Path, args: argparse.Namespace) -> int:
+    """``rl bundle family-eval``: the completion of D357 on remotes cut down to stubs (D358)."""
+    from .bundle import catalog, corpus
+    from .bundle.family_eval import evaluate, report
+    from .keys import load_vocabulary
+
+    records, problems = corpus.read_corpus(root)
+    if problems:
+        for message in problems[:20]:
+            print(f"ERROR {message}", file=sys.stderr)
+        return EXIT_ERROR
+    folded = catalog.collect(records).folded
+    order = {key.id: n for n, key in enumerate(load_vocabulary().keys)}
+    text = report(evaluate(records, folded, order, sample=args.sample, seed=args.seed))
     sys.stdout.write(text)
     if args.out:
         Path(args.out).write_text(text, encoding="utf-8", newline="\n")
@@ -940,6 +966,13 @@ def build_parser() -> argparse.ArgumentParser:
     be.add_argument("--out", metavar="FILE", help="also write the report here")
     be.add_argument("--timing", action="store_true", help="add the time each query took")
     be.set_defaults(func=cmd_bundle)
+    bf = bu_sub.add_parser(
+        "family-eval", parents=[common],
+        help="complete remotes cut down to stubs and score what was added (D358)")
+    bf.add_argument("--sample", type=int, default=400, metavar="N", help="remotes to cut down")
+    bf.add_argument("--seed", type=int, default=7, help="seed of the sample")
+    bf.add_argument("--out", metavar="FILE", help="also write the report here")
+    bf.set_defaults(func=cmd_bundle)
 
     ky = sub.add_parser(
         "keys", help="the canonical key vocabulary (D83)", parents=[common]

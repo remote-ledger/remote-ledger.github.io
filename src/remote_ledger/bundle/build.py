@@ -81,6 +81,7 @@ def build_manifest(bundle: bytes, notices_json: bytes, assembled: catalog.Assemb
             "brands": len(assembled.brands), "brandAliases": len(assembled.brand_aliases),
             "models": len(assembled.models),
             "remotes": len(assembled.remotes), "remoteRefs": len(assembled.remote_refs),
+            "remoteCompletions": len(assembled.remote_completions),
             "keys": len(assembled.keys), "signals": len(assembled.signals),
         },
         "brands": {
@@ -165,6 +166,8 @@ def build_bundle(root: Path, profile: str = "selected", *, max_bytes: int | None
         "remotes": len(assembled.remotes), "remoteRefs": len(assembled.remote_refs),
         "foldedFragments": assembled.stats["foldedFragments"],
         "mergedRemotes": assembled.stats["mergedRemotes"], "keys": len(assembled.keys),
+        "completedRemotes": assembled.stats["completedRemotes"],
+        "completionKeys": assembled.stats["completionKeys"],
         "signals": len(assembled.signals), "excludedBrands": len(assembled.excluded),
         "unreachableBrands": sum(1 for e in assembled.excluded if e[2] is None),
         "ledgerKeys": sum(len(r.keys) for r in records),

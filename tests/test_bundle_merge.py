@@ -811,12 +811,13 @@ def test_every_ref_of_the_ledger_maps_to_exactly_one_remote_of_the_bundle(real_r
     runs = defaultdict(list)
     for ref, (remote_id, first, count) in table.items():
         runs[remote_id].append((first, count, ref))
+    added = {remote_id: count for remote_id, _, count, _ in assembled.remote_completions}
     for remote_id, row in remotes.items():
         at = 0
         for first, count, ref in sorted(runs[remote_id]):
             assert first == at, ref
             at += count
-        assert at == row[6]
+        assert at == row[6] - added.get(remote_id, 0)           # the keys added by D357 belong to no file
         assert table[row[1]] == (remote_id, 0, runs[remote_id][0][1]) or table[row[1]][:2] == (remote_id, 0)
 
 
@@ -835,8 +836,11 @@ def test_no_key_of_the_ledger_is_lost_or_changed_by_folding(real_records, real):
     for record in real_records:
         for name, label, canon, confidence, words in record.keys:
             files[(canon, words, confidence)] += 1
+    first_added = {remote_id: first for remote_id, first, _, _ in assembled.remote_completions}
     for remote_id, keys in by_id.items():
         for n, canon, label, signal_id, confidence in keys:
+            if n >= first_added.get(remote_id, len(keys)):      # a key D357 adds is in no file
+                continue
             merged[(canon_of.get(canon), blob[signal_id], confidence)] += 1
     assert files == merged and sum(files.values()) == 740_223
     # and per ref: its run of the carrier's keys is the file's keys
@@ -954,7 +958,8 @@ def test_the_selected_bundle_still_carries_the_selection_and_fits(real_selected,
     assert built.stats["bytes"] < real_selected_unfolded.stats["bytes"]
     assert built.stats["remoteRefs"] == real_selected_unfolded.stats["remotes"] == 17_420
     assert built.stats["remotes"] == 17_063 and built.stats["foldedFragments"] == 357
-    assert built.stats["keys"] == real_selected_unfolded.stats["keys"] == 740_223
+    assert built.stats["keys"] - built.stats["completionKeys"] == 740_223
+    assert real_selected_unfolded.stats["keys"] - real_selected_unfolded.stats["completionKeys"] == 740_223
 
 
 def test_design_quotes_the_numbers_of_the_measurement(real_records, real):
