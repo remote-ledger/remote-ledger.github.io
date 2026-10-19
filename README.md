@@ -163,7 +163,7 @@ completes a remote of fewer than 30 keys from the remotes that speak its
 address: those that play alike, share three quarters of its signals and name
 them alike, and then only the keys that two fifths of them have, named as most
 of them name them, untested, and never ahead of the key a person is asked to
-try. 827 of the 4,441 thin remotes are completed, with 7,969 keys; the others
+try. 843 of the 4,523 thin remotes are completed, with 8,223 keys; the others
 have no such family in the ledger. The remote files do not change
 (`remote_completions` says where the added keys start; DESIGN.md §97).
 
