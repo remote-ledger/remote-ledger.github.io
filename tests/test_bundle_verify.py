@@ -63,7 +63,7 @@ def refresh(directory: Path) -> None:
     conn = sqlite3.connect(path, isolation_level=None)
     tables = {"brands": "brands", "brandAliases": "brand_aliases", "models": "models",
               "controls": "controls", "remotes": "remotes", "remoteRefs": "remote_refs",
-              "remoteCompletions": "remote_completions", "keys": "keys",
+              "remoteCompletions": "remote_completions", "completionEvidence": "completion_evidence", "keys": "keys",
               "signals": "signals", "excludedBrands": "excluded_brands"}
     counts = {name: conn.execute(f"SELECT COUNT(*) FROM {table}").fetchone()[0]
               for name, table in tables.items()}
@@ -77,7 +77,7 @@ def refresh(directory: Path) -> None:
     manifest["dataVersion"] = version
     manifest["bundle"].update(bytes=len(data), sha256=hashlib.sha256(data).hexdigest())
     manifest["counts"] = {n: counts[n] for n in ("brands", "brandAliases", "models", "remotes", "remoteRefs",
-                                                 "remoteCompletions", "keys", "signals")}
+                                                 "remoteCompletions", "completionEvidence", "keys", "signals")}
     manifest["brands"] = {"included": counts["brands"], "excluded": counts["excludedBrands"]}
     (directory / bb.MANIFEST_FILE).write_bytes(app_api.compact(manifest))
 

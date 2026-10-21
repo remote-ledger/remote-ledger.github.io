@@ -811,7 +811,7 @@ def test_every_ref_of_the_ledger_maps_to_exactly_one_remote_of_the_bundle(real_r
     runs = defaultdict(list)
     for ref, (remote_id, first, count) in table.items():
         runs[remote_id].append((first, count, ref))
-    added = {remote_id: count for remote_id, _, count, _ in assembled.remote_completions}
+    added = {remote_id: count for remote_id, _, count, _, _ in assembled.remote_completions}
     for remote_id, row in remotes.items():
         at = 0
         for first, count, ref in sorted(runs[remote_id]):
@@ -836,7 +836,7 @@ def test_no_key_of_the_ledger_is_lost_or_changed_by_folding(real_records, real):
     for record in real_records:
         for name, label, canon, confidence, words in record.keys:
             files[(canon, words, confidence)] += 1
-    first_added = {remote_id: first for remote_id, first, _, _ in assembled.remote_completions}
+    first_added = {remote_id: first for remote_id, first, _, _, _ in assembled.remote_completions}
     for remote_id, keys in by_id.items():
         for n, canon, label, signal_id, confidence in keys:
             if n >= first_added.get(remote_id, len(keys)):      # a key D357 adds is in no file

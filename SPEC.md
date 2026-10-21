@@ -510,8 +510,11 @@ confidence tier, or a citation.
   **never come before the test key or the alternative key the remote has**, so
   the key a service asks a person to try, and its tier, are what they were. The
   remote files are not changed: the completion exists only in the bundle, the
-  remote's tier is the weakest of its files' keys, and a table, `remote_completions`,
-  says where the added keys start and how many remotes corroborated them. Every
+  remote's tier is the weakest of its files' keys, and two tables, `remote_completions`
+  and `completion_evidence`, say where the added keys start, which remotes
+  corroborated them and which of those hold each added key, so that a key can be
+  checked against its files (`rl bundle family-explain` prints them with each
+  key's code). Every
   number is a constant of one file and the rule's measurement on the real
   ledger is DESIGN §97 (D357 to D359).
 

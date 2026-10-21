@@ -16,6 +16,7 @@ design states it.
 from __future__ import annotations
 
 import random
+import re
 import shutil
 import sqlite3
 from collections import Counter
@@ -24,9 +25,9 @@ from pathlib import Path
 import pytest
 
 from bundle_corpus import make_corpus
-from remote_ledger import parallel
+from remote_ledger import cli, parallel
 from remote_ledger.bundle import build as bb
-from remote_ledger.bundle import catalog, corpus, family, family_eval, merge, writer
+from remote_ledger.bundle import catalog, corpus, family, family_eval, family_explain, merge, writer
 from remote_ledger.bundle.corpus import RemoteRecord, pronto_blob
 from remote_ledger.bundle.verify import verify_directory
 from remote_ledger.keys import load_vocabulary
@@ -95,6 +96,16 @@ def test_a_thin_remote_gets_the_keys_most_of_its_corroborators_have_in_the_order
     assert {k[4] for k in done[0].keys} == {TWO[4], THREE[4], CHUP[4], CHDOWN[4]}
 
 
+def test_the_evidence_is_the_corroborators_and_for_each_added_key_the_ones_that_hold_it():
+    peers = [OWN + [TWO, THREE, CHUP]] * 3 + [OWN + [TWO, THREE]] * 2 + [OWN + [TWO]] * 2       # files 1 to 7
+    done = complete(with_peers(OWN, peers))
+    assert done[0].family == (1, 2, 3, 4, 5, 6, 7) and done[0].corroborators == 7
+    assert added(done, 0) == ["CHANNEL_UP", "DIGIT_2", "DIGIT_3"]
+    assert done[0].holders == ((1, 2, 3), (1, 2, 3, 4, 5, 6, 7), (1, 2, 3, 4, 5))
+    for holders in done[0].holders:
+        assert list(holders) == sorted(set(holders)) and set(holders) <= set(done[0].family)
+
+
 def test_a_remote_that_is_not_thin_is_left_alone():
     many = [key("DIGIT_9", 100 + n, name=f"K{n}") for n in range(family.THIN_BELOW - len(OWN))]
     under, at = OWN + many[:-1], OWN + many
@@ -115,10 +126,12 @@ def test_two_keys_with_one_signal_count_once():
     assert added(complete(with_peers([POWER, VOLUP, MUTE, twin], [OWN + [TWO]] * 3)), 0) == ["DIGIT_1", "DIGIT_2"]
 
 
-def test_fewer_than_three_corroborators_leave_the_remote_alone():
-    assert family.MIN_CORROBORATORS == 3
-    assert complete(with_peers(OWN, [OWN + [TWO]] * 2)) == {}
-    assert complete(with_peers(OWN, [OWN + [TWO]] * 3)) != {}
+def test_fewer_than_two_corroborators_leave_the_remote_alone():
+    """With two, a key is added only if both hold it (two fifths of two, at least two) and name it alike."""
+    assert family.MIN_CORROBORATORS == 2
+    assert complete(with_peers(OWN, [OWN + [TWO]])) == {}
+    assert added(complete(with_peers(OWN, [OWN + [TWO]] * 2)), 0) == ["DIGIT_2"]
+    assert complete(with_peers(OWN, [OWN + [TWO], OWN + [THREE]])) == {}              # each key is in one of the two
 
 
 @pytest.mark.parametrize("what, other", [
@@ -133,7 +146,8 @@ def test_a_remote_that_plays_otherwise_does_not_corroborate(what, other):
     odd = [rec(n, OWN + [TWO], **other) for n in range(1, 4)]
     assert merge.play_of(records[0]) != merge.play_of(odd[0]), what
     assert complete([records[0]] + odd) == {}
-    assert complete([records[0], *records[1:3], odd[0]]) == {}              # two that play alike are too few
+    assert complete([records[0], records[1], *odd[:2]]) == {}              # one that plays alike is too few
+    assert complete([records[0], *records[1:3], odd[0]]) != {}             # two are enough
 
 
 def test_a_remote_must_share_three_quarters_of_the_signals_and_name_them_alike():
@@ -432,6 +446,27 @@ def test_a_source_is_credited_with_its_own_keys_only(ledger, full, plain):
     assert full.stats["keys"] == plain.stats["keys"] + full.stats["completionKeys"]
 
 
+def test_the_evidence_names_the_corroborators_and_the_holders_of_each_added_key(ledger, full):
+    """Worked out by hand (see the case above): 301 has the four corroborators 302 to 305; CH+ is held
+    by 302, 303 and 304, CH- by 302 and 303, and 2 and 3 by all four."""
+    ids = {ref: rid for rid, ref in rows(full, "SELECT id, ref FROM remotes")}
+    peers = [ids[f"irblaster/FAMCO/{n}-NEC1"] for n in range(302, 306)]
+    rid = ids[THIN]
+    (family_blob,) = rows(full, "SELECT family FROM remote_completions WHERE remote_id = ?", rid)[0]
+    assert catalog.unvarints(family_blob) == peers == sorted(peers)
+    evidence = {n: catalog.unvarints(blob) for n, blob in rows(full, "SELECT n, holders FROM completion_evidence WHERE remote_id = ? ORDER BY n", rid)}
+    assert evidence == {4: peers[:3], 5: peers[:2], 6: peers, 7: peers}                  # CHANNEL_UP, CHANNEL_DOWN, DIGIT_2, DIGIT_3
+    names = {n: c for n, c in rows(full, "SELECT k.n, v.key FROM keys k JOIN vocab_keys v ON v.id = k.canon WHERE k.remote_id = ? AND k.n >= 4", rid)}
+    assert names == {4: "CHANNEL_UP", 5: "CHANNEL_DOWN", 6: "DIGIT_2", 7: "DIGIT_3"}
+    # each holder holds the signal, which is the point of listing it
+    for n, holders in evidence.items():
+        (signal,) = rows(full, "SELECT signal_id FROM keys WHERE remote_id = ? AND n = ?", rid, n)[0]
+        for h in holders:
+            assert rows(full, "SELECT COUNT(*) FROM keys WHERE remote_id = ? AND signal_id = ?", h, signal) == [(1,)], (n, h)
+    # the bundle's evidence for every completion is as many rows as added keys
+    assert rows(full, "SELECT COUNT(*) FROM completion_evidence") == [(full.stats["completionKeys"],)]
+
+
 def test_the_refs_cover_the_files_keys_and_the_completion_is_beyond_them(ledger, full):
     rid, count = rows(full, "SELECT id, key_count FROM remotes WHERE ref = ?", THIN)[0]
     assert rows(full, "SELECT first_n, key_count FROM remote_refs WHERE ref = ?", THIN) == [(0, 4)] and count == 8
@@ -444,10 +479,13 @@ def test_the_meta_and_the_manifest_state_the_rule_and_the_count(ledger, full):
     meta = dict(rows(full, "SELECT key, value FROM meta"))
     assert meta["completionRule"] == writer.COMPLETION_RULE_TEXT and "remote_completions" in meta["completionRule"]
     assert meta["count.remoteCompletions"] == str(full.stats["completedRemotes"]) and meta["schemaVersion"] == "1"
-    assert json.loads(full.files[bb.MANIFEST_FILE])["counts"]["remoteCompletions"] == full.stats["completedRemotes"]
-    assert ("remote_completions", "remote_id") in writer.DIGEST_TABLES
+    assert meta["count.completionEvidence"] == str(full.stats["completionKeys"])
+    counts = json.loads(full.files[bb.MANIFEST_FILE])["counts"]
+    assert counts["remoteCompletions"] == full.stats["completedRemotes"] and counts["completionEvidence"] == full.stats["completionKeys"]
+    assert ("remote_completions", "remote_id") in writer.DIGEST_TABLES and ("completion_evidence", "remote_id, n") in writer.DIGEST_TABLES
     assert [c[1] for c in conn_of(full).execute("PRAGMA table_info(remote_completions)")] == [
-        "remote_id", "first_n", "key_count", "corroborators"]
+        "remote_id", "first_n", "key_count", "corroborators", "family"]
+    assert [c[1] for c in conn_of(full).execute("PRAGMA table_info(completion_evidence)")] == ["remote_id", "n", "holders"]
 
 
 def test_the_data_version_moves_with_the_completion_and_a_build_is_repeatable(ledger, full, plain):
@@ -478,6 +516,10 @@ def damaged(written, tmp_path, *statements, update=True):
     return directory
 
 
+def conn_of_dir(directory: Path) -> sqlite3.Connection:
+    return sqlite3.connect(directory / bb.BUNDLE_FILE)
+
+
 def problems_of(ledger, directory):
     return verify_directory(ledger, directory, aliases=())[0]
 
@@ -488,6 +530,27 @@ def test_a_good_bundle_verifies(ledger, written):
 
 
 RID = "(SELECT id FROM remotes WHERE ref = 'irblaster/FAMCO/301-NEC1')"
+PEER = "(SELECT id FROM remotes WHERE ref = 'irblaster/FAMCO/{n}-NEC1')"
+
+
+def ids_blob(*numbers: int) -> str:
+    """A SQL blob literal of the varints of the ids of the remotes ``irblaster/FAMCO/<n>-NEC1``: the
+    ledger's ids are the files' places in path order, so they are worked out from the tree."""
+    from remote_ledger.bundle import merge as m
+
+    refs = sorted(p.relative_to(LEDGER_ROOT["path"] / "remotes").as_posix()[:-5]
+                  for p in (LEDGER_ROOT["path"] / "remotes").glob("**/*.json"))
+    return "X'" + catalog.varints(sorted(refs.index(f"irblaster/FAMCO/{n}-NEC1") + 1 for n in numbers)).hex() + "'"
+
+
+LEDGER_ROOT: dict[str, Path] = {}
+
+
+@pytest.fixture(autouse=True)
+def _remember_the_ledger(ledger):
+    LEDGER_ROOT["path"] = ledger
+
+
 MUTATIONS = [
     ("an added key that is not untested", f"UPDATE keys SET confidence = 2 WHERE remote_id = {RID} AND n = 4",
      ["added keys that are not untested or not named", "is not the file's"]),
@@ -502,13 +565,14 @@ MUTATIONS = [
      f"UPDATE keys SET canon = (SELECT canon FROM keys WHERE remote_id = {RID} AND n = 0) WHERE remote_id = {RID} AND n = 4",
      ["canonical keys added twice, or added to a remote that has the key"]),
     ("a completion row missing", f"DELETE FROM remote_completions WHERE remote_id = {RID}",
-     ["remote_refs: the refs of remote"]),                 # the keys the refs do not cover are no longer the completion's
+     ["remote_refs: the refs of remote", "completion_evidence of a remote that is not completed"]),
     ("a completion row for a remote that has none",
-     f"INSERT INTO remote_completions VALUES ((SELECT id FROM remotes WHERE ref = 'irblaster/FAMCO/302-NEC1'), 9, 1, 3)",
+     "INSERT INTO remote_completions VALUES ((SELECT id FROM remotes WHERE ref = 'irblaster/FAMCO/302-NEC1'), 9, 1, 3, X'01')",
      ["rows of remote_completions that do not end at the last key of their remote"]),
     ("a completion that starts in the wrong place",
      f"UPDATE remote_completions SET first_n = 3, key_count = 5 WHERE remote_id = {RID}",
-     ["rows of added keys that are not untested or not named", "remote_refs: the refs of remote"]),
+     ["rows of added keys that are not untested or not named", "remote_refs: the refs of remote",
+      "completions whose added keys have not one row of evidence each"]),
     ("a completion that names the wrong number of corroborators",
      f"UPDATE remote_completions SET corroborators = 9 WHERE remote_id = {RID}",
      ["remote_completions has 3 rows and the tree gives 3; 2 differ"]),
@@ -518,12 +582,41 @@ MUTATIONS = [
     ("a key added that the tree does not give",
      f"UPDATE keys SET signal_id = (SELECT id FROM signals WHERE id != (SELECT signal_id FROM keys WHERE remote_id = {RID} "
      f"AND n = 4) ORDER BY id LIMIT 1) WHERE remote_id = {RID} AND n = 4", ["key 4"]),
+    # the evidence
+    ("an added key with no evidence", f"DELETE FROM completion_evidence WHERE remote_id = {RID} AND n = 4",
+     ["completions whose added keys have not one row of evidence each"]),
+    ("evidence for a key that is not added", f"INSERT INTO completion_evidence VALUES ({RID}, 99, X'01')",
+     ["completions whose added keys have not one row of evidence each"]),
+    ("evidence of a remote that is not completed",
+     f"INSERT INTO completion_evidence VALUES ({PEER.format(n=302)}, 9, X'01')",
+     ["completion_evidence of a remote that is not completed"]),
+    ("a holder that does not hold the signal",
+     "UPDATE completion_evidence SET holders = {holders} WHERE remote_id = {rid} AND n = 5",
+     ["is said to hold its signal and does not"]),
+    ("a holder that is not a corroborator",
+     "UPDATE completion_evidence SET holders = {outsider} WHERE remote_id = {rid} AND n = 4",
+     ["its holders are not distinct corroborators of the remote"]),
+    ("too few holders to have been added", "UPDATE completion_evidence SET holders = {one} WHERE remote_id = {rid} AND n = 4",
+     ["too few to be added"]),
+    ("a name its holders do not give",
+     f"UPDATE keys SET canon = (SELECT canon FROM keys WHERE remote_id = {RID} AND n = 6) WHERE remote_id = {RID} AND n = 4; "
+     f"UPDATE keys SET canon = (SELECT id FROM vocab_keys WHERE key = 'CHANNEL_UP') WHERE remote_id = {RID} AND n = 6",
+     ["is not the name most of its holders give it"]),
+    ("the family names a remote twice", "UPDATE remote_completions SET family = {twice} WHERE remote_id = {rid}",
+     ["its corroborators are not distinct remotes"]),
 ]
 
 
 @pytest.mark.parametrize("what, statement, expected", MUTATIONS, ids=[m[0] for m in MUTATIONS])
 def test_a_bundle_damaged_in_one_way_is_refused(ledger, written, tmp_path, what, statement, expected):
-    problems = problems_of(ledger, damaged(written, tmp_path, statement))
+    rid = conn_of_dir(written).execute("SELECT id FROM remotes WHERE ref = 'irblaster/FAMCO/301-NEC1'").fetchone()[0]
+    outsider = conn_of_dir(written).execute("SELECT id FROM remotes WHERE ref = 'lirc/zed/Z-9'").fetchone()[0]
+    holders = ids_blob(302, 303, 305)                       # 305 has no CH-: it does not hold key 5
+    fill = {"rid": rid, "holders": holders, "one": ids_blob(302),
+            "outsider": "X'" + catalog.varints([outsider]).hex() + "'",
+            "twice": "X'" + (catalog.varints([1, 1])).hex() + "'"}
+    statements = [part.format(**fill) if "{" in part else part for part in statement.split("; ")]
+    problems = problems_of(ledger, damaged(written, tmp_path, *statements))
     text = "\n".join(problems)
     assert problems, what
     assert any(e in text for e in expected), (what, problems)
@@ -534,9 +627,86 @@ def test_a_bundle_written_before_the_completion_is_told_to_be_built_again(ledger
     assert any("the bundle has no remote_completions table" in p for p in problems_of(ledger, directory))
 
 
+def test_a_bundle_whose_added_keys_kept_no_evidence_is_told_to_be_built_again(ledger, written, tmp_path):
+    directory = damaged(written, tmp_path, "DROP TABLE completion_evidence", update=False)
+    assert any("the bundle has no completion_evidence table" in p for p in problems_of(ledger, directory))
+
+
 def test_the_counts_of_the_meta_and_of_the_manifest_are_the_tables(ledger, written, tmp_path):
     directory = damaged(written, tmp_path, "UPDATE meta SET value = '99' WHERE key = 'count.remoteCompletions'", update=False)
     assert any("remote_completions has 3 rows, meta count.remoteCompletions says 99" in p for p in problems_of(ledger, directory))
+
+
+# --- rl bundle family-explain ------------------------------------------------------------------
+
+
+@pytest.fixture(scope="module")
+def tree(ledger):
+    records, problems = corpus.read_corpus(ledger)
+    assert problems == []
+    return records, catalog.collect(records).folded
+
+
+def explain(ledger, tree, ref, **kw):
+    records, folded = tree
+    return family_explain.explain(ledger, records, folded, ORDER, ref, **kw)
+
+
+def block(text: str, canon: str) -> str:
+    """The lines of an added key: its own line and the holders listed under it."""
+    lines = text.splitlines()
+    start = next(i for i, line in enumerate(lines) if re.match(rf"\s+\d+  {canon}\s", line))
+    end = next((i for i in range(start + 1, len(lines)) if re.match(r"\s+\d+  \S+\s", lines[i])), len(lines))
+    return "\n".join(lines[start:end])
+
+
+def test_the_report_gives_every_key_with_its_code_and_the_remotes_that_hold_each_added_key(ledger, tree):
+    import re
+
+    text = explain(ledger, tree, THIN, supporters=0)
+    assert text.startswith(THIN + "\n")
+    assert "The remote's own keys: 4 (thin: fewer than 30)" in text
+    assert "Completed with 4 untested keys from 4 corroborating remotes." in text
+    codes = re.findall(r"^\s+\d+  \S+\s+(\S+ D=0x[0-9A-F]{2}(?: S=0x[0-9A-F]{2})? F=0x[0-9A-F]{2})\s", text, re.M)
+    assert len(codes) == 4 + 4, text                                  # the four it has and the four it is given
+    own, given = text.split("The keys added (untested)")
+    assert [k for k in ("POWER", "VOLUME_UP", "MUTE", "DIGIT_1") if re.search(rf"\b{k}\b", own)] == ["POWER", "VOLUME_UP", "MUTE", "DIGIT_1"]
+    # CH+ is held by 302, 303 and 304 and by no other, and every one is listed with the name its file gives the key
+    ch_up = block(given, "CHANNEL_UP")
+    assert "held by 3 of 4" in ch_up
+    for number in (302, 303, 304):
+        assert f"irblaster/FAMCO/{number}-NEC1:" in ch_up
+    assert "irblaster/FAMCO/305-NEC1" not in ch_up and "more (--all lists them)" not in ch_up
+    assert "pronto" not in text and "pronto 0000" in explain(ledger, tree, THIN, pronto=True)
+
+
+def test_the_report_lists_as_many_holders_as_asked_and_says_how_many_it_left_out(ledger, tree):
+    text = explain(ledger, tree, THIN, supporters=1)
+    section = block(text, "DIGIT_2")
+    assert section.count("irblaster/FAMCO/") == 1 and "and 3 more (--all lists them)" in section
+    assert block(explain(ledger, tree, THIN, supporters=0), "DIGIT_2").count("irblaster/FAMCO/") == 4
+
+
+def test_the_report_says_why_a_remote_is_not_completed_or_not_thin(ledger, tree, monkeypatch):
+    # 302 is corroborated by 303 and 304 and nothing it lacks is held by both
+    assert "It is not completed: the remotes that corroborate it hold no key it lacks" in explain(ledger, tree, "irblaster/FAMCO/302-NEC1")
+    # one with too few signals to be recognised by, and one with too few corroborators
+    assert "It is not completed: it has fewer than 3 signals to be recognised by" in explain(ledger, tree, "lirc/acme/TV-1")
+    monkeypatch.setattr(family, "MIN_CORROBORATORS", 5)
+    assert "It is not completed: it has 4 corroborating remotes and 5 are needed" in explain(ledger, tree, THIN)
+    monkeypatch.setattr(family, "MIN_CORROBORATORS", 2)
+    monkeypatch.setattr(family, "THIN_BELOW", 4)
+    assert "It has 4 keys or more, so it is carried as its file has it" in explain(ledger, tree, THIN)
+    with pytest.raises(KeyError):
+        explain(ledger, tree, "irblaster/NOBODY/1-NEC1")
+
+
+def test_the_command_prints_the_report_and_refuses_a_ref_the_ledger_does_not_have(ledger, capsys, monkeypatch):
+    monkeypatch.chdir(ledger)
+    assert cli.main(["bundle", "family-explain", THIN, "--all"]) == 0
+    assert "Completed with 4 untested keys from 4 corroborating remotes." in capsys.readouterr().out
+    assert cli.main(["bundle", "family-explain", "no/such/remote"]) != 0
+    assert "no remote 'no/such/remote' in the ledger" in capsys.readouterr().err
 
 
 # --- the real ledger ---------------------------------------------------------------------------
@@ -567,6 +737,17 @@ def test_no_completion_of_the_real_ledger_touches_a_test_key_a_tier_or_a_name(re
             assert pick(every) == pick(own), remote.where
             if alt(own, pick(own)) is not None:                         # and the alternative it had
                 assert alt(every, pick(every)) == alt(own, pick(own)), remote.where
+
+
+def test_the_report_of_the_samsung_stub_shows_the_codes_a_person_can_check(real_records, real):
+    collected, done = real
+    text = family_explain.explain(ROOT, real_records, collected.folded, ORDER, "samsung/BN59-01199F", supporters=2)
+    assert "NECx2 D=0x07 S=0x07 F=0x02" in text.split("The keys added")[0]                     # its own Power
+    given = text.split("The keys added")[1]
+    for canon, code in (("DIGIT_1", "F=0x04"), ("CHANNEL_UP", "F=0x12"), ("COLOR_RED", "F=0x6C"), ("PLAY", "F=0x47"), ("GUIDE", "F=0x4F")):
+        line = next(line for line in given.splitlines() if re.match(rf"\s+\d+  {canon}\s", line))
+        assert f"NECx2 D=0x07 S=0x07 {code}" in line, line
+    assert "corroborating remotes" in text and "jp1/Samsung/" in given
 
 
 def test_a_completion_reads_only_keys_that_a_corroborator_holds_at_the_tier_of_evidence(real_records, real):
@@ -627,7 +808,7 @@ LINES = [
     ("names by six tenths and not seven", {"NAME_SHARE": (3, 5)}),
     ("no agreement on names (line 2)", {"AGREEING": (0, 1), "MIN_AGREEING": 0}),
     ("half of the signals shared and not three quarters", {"SHARED": (1, 2)}),
-    ("two corroborators and not three", {"MIN_CORROBORATORS": 2}),
+    ("three corroborators and not two", {"MIN_CORROBORATORS": 3}),
 ]
 
 
@@ -643,15 +824,16 @@ def test_design_quotes_what_each_line_is_worth(real_records, real, monkeypatch, 
     assert row in _design_section(), f"DESIGN D358 no longer says {row!r}"
 
 
-def test_the_two_numbers_d354_gives_for_a_floor_of_two_and_for_the_bounds_of_thin(real_records, real, monkeypatch):
+def test_the_numbers_d358_and_d359_give_for_a_floor_of_three_and_for_the_bounds_of_thin(real_records, real, monkeypatch):
     collected, done = real
     section = _design_section()
-    monkeypatch.setattr(family, "MIN_CORROBORATORS", 2)
-    two = family.complete(real_records, collected.folded, ORDER)
+    keys = sum(len(d.keys) for d in done.values())
     monkeypatch.setattr(family, "MIN_CORROBORATORS", 3)
-    assert f"completes {len(two):,} and not {len(done):,} ({sum(len(d.keys) for d in two.values()):,} keys and not " \
-           f"{sum(len(d.keys) for d in done.values()):,})" in section
-    assert f"adds {sum(len(d.keys) for d in two.values()) - sum(len(d.keys) for d in done.values()):,} keys" in section
+    three = family.complete(real_records, collected.folded, ORDER)
+    monkeypatch.setattr(family, "MIN_CORROBORATORS", 2)
+    keys3 = sum(len(d.keys) for d in three.values())
+    assert f"on the real thin remotes {len(done):,} and not {len(three):,} ({keys:,} keys and not {keys3:,})" in section
+    assert f"completes {len(three):,} remotes and not {len(done):,}, with {keys3:,} keys and not {keys:,}" in section
     for bound, thin_text in ((41, "makes {thin:,} remotes thin and completes {n:,} with {k:,} keys"),
                              (51, "{thin:,} are thin and {n:,} are completed with {k:,} keys")):
         monkeypatch.setattr(family, "THIN_BELOW", bound)
@@ -659,6 +841,19 @@ def test_the_two_numbers_d354_gives_for_a_floor_of_two_and_for_the_bounds_of_thi
         wide = family.complete(real_records, collected.folded, ORDER, funnel)
         assert thin_text.format(thin=funnel["thin"], n=len(wide), k=sum(len(d.keys) for d in wide.values())) in section
     monkeypatch.setattr(family, "THIN_BELOW", 30)
+
+
+def test_d360_quotes_the_real_report_and_the_figures_of_the_evidence(real_records, real):
+    collected, done = real
+    text = (ROOT / "DESIGN.md").read_text(encoding="utf-8")
+    section = text[text.index("### D360"):]
+    report = family_explain.explain(ROOT, real_records, collected.folded, ORDER, "samsung/BN59-01199F", supporters=2)
+    lines = {line for line in report.splitlines()}
+    excerpt = section.split("```text\n")[1].split("```")[0].splitlines()
+    assert excerpt and all(line in lines for line in excerpt), [line for line in excerpt if line not in lines]
+    seed = next(i for i, r in enumerate(real_records) if r.where.endswith("samsung/BN59-01199F.json"))
+    assert f"gives it {len(done[seed].keys)} more keys" in section
+    assert f"as `remote_completions.key_count` adds up to, {sum(len(d.keys) for d in done.values()):,})" in section
 
 
 def _design_section() -> str:

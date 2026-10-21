@@ -20,6 +20,7 @@ be changed alone, and the parts are the lines of :func:`complete`:
    and at least :data:`MIN_AGREEING` of them. Two remotes can send one signal for two
    functions (a code shared between a TV and a clone's player); naming is what tells them apart.
 3. A remote needs at least :data:`MIN_CORROBORATORS` corroborators, or it is left as it is.
+   With two, a key is added only when both hold it and name it alike.
 4. A signal the remote lacks is **supported** by the corroborators that have it, and is added
    when two fifths of them do (and at least two): the family's core, not the keys that one
    generation of one model has. Only keys of the tier plausible or better vote: a guess is
@@ -41,7 +42,11 @@ be changed alone, and the parts are the lines of :func:`complete`:
 
 The added keys are **untested**, the tier of "a reasoned candidate, offered but not
 confirmed" (SPEC section 5), and follow the remote's own keys (and the folded fragments',
-D103) in the order of the canonical vocabulary. The remote's tier is the weakest of its own
+D103) in the order of the canonical vocabulary. **Nothing is added without its evidence being
+kept** (D360): the remotes that corroborate the remote, and for each added key the ones that
+hold it, are in the bundle (``remote_completions``, ``completion_evidence``) and ``rl bundle
+family-explain`` prints them with each key's code, so that a person can check a key against the
+files it came from. The remote's tier is the weakest of its own
 keys, not of these. Completion reads the remotes as they are in the ledger, never one that
 another completion has added to, so nothing chains. The remote files are not changed: the
 completion exists only in the bundle, in the table ``remote_completions``.
@@ -71,7 +76,7 @@ MIN_SHARED = 3
 AGREEING = (3, 4)
 MIN_AGREEING = 2
 #: Corroborators a remote needs.
-MIN_CORROBORATORS = 3
+MIN_CORROBORATORS = 2
 #: A signal is added when this share of the corroborators (at least ``MIN_SUPPORT``) have it.
 SUPPORT = (2, 5)
 MIN_SUPPORT = 2
@@ -91,10 +96,18 @@ VOTES_FROM = CONFIDENCE_RANK["plausible"]
 @dataclass(frozen=True)
 class Completion:
     """The keys added to one remote, as the records hold keys: ``(name, label, canonical id,
-    tier, blob)``, in the order of the vocabulary, and how many remotes corroborated them."""
+    tier, blob)``, in the order of the vocabulary, and the evidence for them: ``family``, the
+    remotes that corroborated the remote, and ``holders``, for each added key (in the same order)
+    the ones among them that hold its signal. Both are indexes of the files that carry the remotes,
+    in ascending order."""
 
     keys: tuple[tuple[str, None, str, int, bytes], ...]
-    corroborators: int
+    family: tuple[int, ...]
+    holders: tuple[tuple[int, ...], ...]
+
+    @property
+    def corroborators(self) -> int:
+        return len(self.family)
 
 
 def _ceil_share(count: int, share: tuple[int, int]) -> int:
@@ -180,12 +193,14 @@ class Family:
 
         support: Counter[bytes] = Counter()
         named: dict[bytes, Counter[str]] = defaultdict(Counter)
+        holding: dict[bytes, list[int]] = defaultdict(list)
         for j in corroborators:
             for blob, names in self._voters[j].items():
                 if blob in own:
                     continue
                 support[blob] += 1
                 named[blob].update(names)
+                holding[blob].append(j)
         floor = max(MIN_SUPPORT, _ceil_share(len(corroborators), SUPPORT))
         held = {canon for names in own.values() for canon in names}
         taken = set(held)
@@ -207,7 +222,8 @@ class Family:
         if not added:
             return None
         added.sort(key=lambda item: self.order[item[1]])
-        return Completion(tuple((canon, None, canon, UNTESTED, blob) for blob, canon in added), len(corroborators))
+        return Completion(tuple((canon, None, canon, UNTESTED, blob) for blob, canon in added), tuple(corroborators),
+                          tuple(tuple(holding[blob]) for blob, _ in added))
 
 
 def complete(records: list[RemoteRecord], folded: Folded, order: dict[str, int],

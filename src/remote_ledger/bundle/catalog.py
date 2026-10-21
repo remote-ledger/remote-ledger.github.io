@@ -203,9 +203,13 @@ class Assembled:
     stats: dict = field(default_factory=dict)
     brand_aliases: list[tuple] = field(default_factory=list)   # (alias, norm, brand_id) (D101)
     remote_refs: list[tuple] = field(default_factory=list)     # (ref, remote_id, first_n, key_count) (D105)
-    #: (remote_id, first_n, key_count, corroborators): the keys at the end of a remote that are not
-    #: from its files but from the remotes that share its address (D357)
+    #: (remote_id, first_n, key_count, corroborators, family): the keys at the end of a remote that are
+    #: not from its files but from the remotes that share its address (D357), how many remotes
+    #: corroborated them and which of those are in this bundle, as varints of their ids (D360)
     remote_completions: list[tuple] = field(default_factory=list)
+    #: (remote_id, n, holders): for each added key, the corroborating remotes of this bundle that
+    #: hold its signal, as varints of their ids (D360)
+    completion_evidence: list[tuple] = field(default_factory=list)
 
 
 def label_needed(text: str, canon: str | None, spellings: dict[str, set[str]]) -> bool:
@@ -304,8 +308,9 @@ def assemble(collected: Collected, chosen: frozenset[str] | None, profile: str,
     signal_id = {blob: n + 1 for n, blob in enumerate(ordered)}
     signals = [(n + 1, blob) for n, blob in enumerate(ordered)]
 
-    remotes, keys, remote_refs, remote_completions = [], [], [], []
+    remotes, keys, remote_refs, remote_completions, completion_evidence = [], [], [], [], []
     completions = collected.completions
+    carried = {folded.carrier[i] for i in included}          # the remotes this bundle has (D360)
     source_id = source_ids()
     per_source: dict[str, list[int]] = defaultdict(lambda: [0, 0])
     for i in included:
@@ -320,7 +325,10 @@ def assemble(collected: Collected, chosen: frozenset[str] | None, profile: str,
         if done is not None:
             # the added keys follow the files' own, and change neither the tier (the weakest of the
             # files' keys) nor what a source is credited with (D357)
-            remote_completions.append((rid, own, len(done.keys), done.corroborators))
+            remote_completions.append((rid, own, len(done.keys), done.corroborators,
+                                       varints([c + 1 for c in done.family if c in carried])))
+            for n, holders in enumerate(done.holders, start=own):
+                completion_evidence.append((rid, n, varints([c + 1 for c in holders if c in carried])))
             record = replace(record, keys=record.keys + done.keys)
         repeat, helper, empty, rule = play(record)
         maker = collected.pairs[i][0]
@@ -358,7 +366,7 @@ def assemble(collected: Collected, chosen: frozenset[str] | None, profile: str,
         profile=profile, sources=sources, vocab_groups=vocab_groups, vocab_keys=vocab_keys,
         brands=brands, models=models, controls=controls, remotes=remotes, keys=keys,
         signals=signals, ngram=ngram, excluded=excluded, remote_refs=remote_refs,
-        remote_completions=sorted(remote_completions),
+        remote_completions=sorted(remote_completions), completion_evidence=sorted(completion_evidence),
         stats={"ledgerRemotes": len(records), "ledgerBrands": len(collected.brands),
                # the files folded into a sibling's remote, and the remotes that carry some (D103)
                "foldedFragments": len(remote_refs) - len(remotes),
