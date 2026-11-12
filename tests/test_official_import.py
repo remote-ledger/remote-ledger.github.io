@@ -13,7 +13,7 @@ from pathlib import Path
 import pytest
 
 from remote_ledger.errors import ValidationError
-from remote_ledger.official import anthem, arcam, benq, peerless, cambridge, cary, classe, cyrus, denon, denon_pdf as dp, denon_sheets as ds, emotiva, harman, hegel, hitachi, infocus, jvc, kef, lyngdorf, marantz, nad, oppo, rotel, simaudio, yamaha, harman
+from remote_ledger.official import anthem, arcam, benq, peerless, cambridge, cary, classe, cyrus, denon, denon_pdf as dp, denon_sheets as ds, emotiva, harman, hegel, hitachi, infocus, jvc, kef, lyngdorf, marantz, nad, oppo, optoma, rotel, simaudio, yamaha, harman
 from remote_ledger.official import importer as oi
 from remote_ledger.official.common import MANIFEST, Report, load_snapshot
 from remote_ledger.serialize import load
@@ -27,7 +27,7 @@ SNAPSHOT = ROOT / oi.SNAPSHOT
 
 def test_every_document_and_csv_is_the_one_the_manifest_pins():
     for maker, retrieved in (("marantz", "2026-10-08"), ("anthem", "2026-10-08"), ("oppo", "2026-10-09"), ("kef", "2026-10-13"),
-                             ("jvc", "2026-10-13"), ("arcam", "2026-10-13"), ("cambridge", "2026-10-13"), ("hegel", "2026-10-13"), ("cary", "2026-10-13"), ("infocus", "2026-10-15"), ("lyngdorf", "2026-10-16"), ("emotiva", "2026-10-16"), ("denon", "2026-10-16"), ("hitachi", "2026-10-16"), ("classe", "2026-10-16"), ("cyrus", "2026-10-16"), ("yamaha", "2026-10-16"), ("harman", "2026-10-16"), ("benq", "2026-10-18"), ("peerless", "2026-10-18"), ("nad", "2026-10-14"), ("simaudio", "2026-10-13"), ("rotel", "2026-10-13")):
+                             ("jvc", "2026-10-13"), ("arcam", "2026-10-13"), ("cambridge", "2026-10-13"), ("hegel", "2026-10-13"), ("cary", "2026-10-13"), ("infocus", "2026-10-15"), ("lyngdorf", "2026-10-16"), ("emotiva", "2026-10-16"), ("denon", "2026-10-16"), ("hitachi", "2026-10-16"), ("classe", "2026-10-16"), ("cyrus", "2026-10-16"), ("yamaha", "2026-10-16"), ("optoma", "2026-11-12"), ("harman", "2026-10-16"), ("benq", "2026-10-18"), ("peerless", "2026-10-18"), ("nad", "2026-10-14"), ("simaudio", "2026-10-13"), ("rotel", "2026-10-13")):
         snap = load_snapshot(SNAPSHOT / maker)
         assert snap.maker == maker and snap.retrieved == retrieved
         assert snap.documents and snap.sheets
@@ -465,12 +465,12 @@ def test_the_committed_official_import_keeps_r19():
     or Untested, and a citation that names a document the manifest pins, by hash."""
     assert (ROOT / oi.IMPORT_ROOT / "README.md").is_file() and (ROOT / oi.IMPORT_ROOT / oi.REPORT).is_file()
     hashes, dates, snapshots = {}, {}, {}
-    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "benq", "peerless", "arcam", "cambridge", "hegel", "cary", "infocus", "lyngdorf", "emotiva", "denon", "hitachi", "classe", "cyrus", "yamaha", "harman", "nad", "simaudio", "rotel"):
+    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "benq", "peerless", "arcam", "cambridge", "hegel", "cary", "infocus", "lyngdorf", "emotiva", "denon", "hitachi", "classe", "cyrus", "yamaha", "harman", "nad", "simaudio", "rotel", "optoma"):
         manifest = json.loads((SNAPSHOT / maker / MANIFEST).read_text(encoding="utf-8"))
         for name, entry in manifest["documents"].items():
             hashes[name], dates[name], snapshots[name] = entry["sha256"], entry.get("retrieved", manifest["retrieved"]), entry.get("snapshot")
     shape = re.compile(r"^(?:marantz\.com archive-downloads|anthemav\.com \(storage\.googleapis\.com/sandbox1-anthemav/an\)"
-                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|caryaudio\.com IR Remote Codes|infocus\.com IR code PDFs|lyngdorf\.com IR code PDF|emotiva\.com IR code PDFs|denon\.co\.uk RC code list|denon\.com Master IR Hex|snapav\.com Denon IR code documents|assets\.denon\.com IR code documents|hitachi-america\.us IR code documents|classeaudio\.com IR code documents|cyrusaudio\.com remote code tables|snapav\.com Yamaha IR code PDFs|awe-europe\.com Yamaha control documents|snapav\.com Marantz IR code workbook|jblsynthesis\.com custom installation notes|snapav\.com JVC LX projector code sheets|snapav\.com JVC remote control code tables|snapav\.com BenQ IR code sheet|cdn\.shopify\.com Peerless-AV Neptune IR code sheet|lexicon\.com custom installation notes|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/([^@]+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
+                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|caryaudio\.com IR Remote Codes|infocus\.com IR code PDFs|lyngdorf\.com IR code PDF|emotiva\.com IR code PDFs|denon\.co\.uk RC code list|denon\.com Master IR Hex|snapav\.com Denon IR code documents|assets\.denon\.com IR code documents|hitachi-america\.us IR code documents|classeaudio\.com IR code documents|cyrusaudio\.com remote code tables|snapav\.com Yamaha IR code PDFs|awe-europe\.com Yamaha control documents|audiogeneral\.com Optoma IR code PDFs|optoma\.co\.uk IR code PDFs|snapav\.com Marantz IR code workbook|jblsynthesis\.com custom installation notes|snapav\.com JVC LX projector code sheets|snapav\.com JVC remote control code tables|snapav\.com BenQ IR code sheet|cdn\.shopify\.com Peerless-AV Neptune IR code sheet|lexicon\.com custom installation notes|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/([^@]+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
                        r"(?:, from the Wayback Machine snapshot (\d{14}))?\) (?:sheet '[^']+' row \d+|page \d+ row \d+|sheet (?:Standard|Extended) line \d+ row '|page \d+ '|page \d+ table \d+ row '|page \d+ row '|key \d+ '|row 'RC(?:SHP|KSK)\w+' \(|page \d+ table row ')")
     files = sorted((ROOT / oi.IMPORT_ROOT).rglob("*.json"))
     assert len(files) > 180
@@ -3916,6 +3916,158 @@ def test_the_ledgers_other_yamaha_nec_remotes_have_87_percent_of_the_awe_europe_
     earlier = {frame(s["forms"][0]) for f in yamaha_files().values() for s in f["keys"].values()}
     theirs = yamaha_frames_in_other_sources()
     assert (len(ours), len(ours & theirs), len(ours & (theirs | earlier)), len(ours - theirs - earlier)) == (968, 842, 851, 117)
+
+
+
+# --- Optoma: the discrete IR code tables of its projectors (DESIGN section 101) ------------------------------------------------------------------------
+
+
+def olines(*lines: tuple[int, str]) -> list[list[str]]:
+    """A page's lines as ``tools/official_sheets_to_csv.py`` writes them in mode ``lines`` (``page, y, x, text, x, text...``); a line is ``(y, "x|text x|text ...")``."""
+    return [["1", str(y), *[v for cell in text.split("  ") for v in cell.split("|", 1)]] for y, text in lines]
+
+
+def osheet(layout: str, title: str, file: str = "t.pdf") -> optoma.Sheet:
+    return optoma.Sheet(file, ("M1",), layout, title)
+
+
+NUMBERED = [(70, "170|Optoma TX615 Discrete IR Codes"), (116, "90|Optoma Code: 32CD"), (155, "95|Key  240|Description  428|code  477|OSD off  543|On"),
+            (169, "102|1  124|Power on/off toggle  434|81  481|Power  548|-"), (182, "102|2  124|Laser Pointer  438|-  483|Laser  548|-"),
+            (195, "102|3  124|Remote mouse emulation PAGE UP or UP OSD key  433|C1  481|Page up  548|Up"),
+            (209, "102|4  124|Remote mouse emulation PAGE DOWN or DOWN OSD  415|C2  480|Down arrow  548|Down"), (221, "127|key"),
+            (235, "130|5"), (238, "159|Menu key  444|2E"), (250, "130|6  159|Lamp Mode key  444|0002"), (262, "109|Optoma Code : 32CD")]
+
+
+def test_a_numbered_row_starts_at_the_next_number_its_description_may_wrap_and_its_code_is_the_first_cell_past_the_description():
+    keys, notes = optoma.parse_sheet(olines(*NUMBERED), osheet("numbered", "TX615 Discrete IR Codes"))
+    assert [(k.label, k.device, k.subdevice, k.function, k.written, k.note) for k in keys] == [
+        ("Power on/off toggle", 0x32, 0xCD, 0x81, "81", "printed `Power`"),
+        ("Remote mouse emulation PAGE UP or UP OSD key", 0x32, 0xCD, 0xC1, "C1", "printed `Page up`, with the menu on `Up`"),
+        ("Remote mouse emulation PAGE DOWN or DOWN OSD key", 0x32, 0xCD, 0xC2, "C2", "printed `Down arrow`, with the menu on `Down`"),       # `key` is on a second line
+        ("Menu key", 0x32, 0xCD, 0x2E, "2E", ""), ("Lamp Mode key", 0x32, 0xCD, 0x02, "0002", "")]               # a number alone on its line; the TH7500's `0002` is 02
+    assert notes == ["t.pdf row 2 'Laser Pointer': no code (`-`)"]                                              # a key with no code is a note and not a key
+
+
+def test_a_page_whose_title_is_not_the_sheets_or_that_has_no_customer_code_or_no_key_is_refused():
+    with pytest.raises(ValueError, match="the title of the page does not say"):
+        optoma.parse_sheet(olines(*NUMBERED), osheet("numbered", "TX762 Discrete IR Codes"))
+    with pytest.raises(ValueError, match="no `Optoma Code: 32CD`"):
+        optoma.parse_sheet(olines(*[row for row in NUMBERED if "32CD" not in row[1]]), osheet("numbered", "TX615 Discrete IR Codes"))
+    with pytest.raises(ValueError, match="more than one customer code"):
+        optoma.parse_sheet(olines(*NUMBERED, (270, "90|Optoma Code: 33CC")), osheet("numbered", "TX615 Discrete IR Codes"))
+    with pytest.raises(ValueError, match="no row of a numbered table"):
+        optoma.parse_sheet(olines(*NUMBERED[:3]), osheet("numbered", "TX615 Discrete IR Codes"))
+    assert optoma.key_code("0002") == 2 and optoma.key_code("2E") == 0x2E and optoma.key_code("00") == 0 and optoma.key_code("-") is None and optoma.key_code("0102") is None
+
+
+CODES = [(38, "42|IR Code"), (412, "44|Customer code: 32CD"), (423, "44|Key code  111|Printing-key definition"), (435, "71|81  111|Power on/off"), (446, "70|3E  111|Switch"),
+         (556, "42|EN-76")]
+
+
+def test_the_manuals_page_of_codes_is_a_code_and_a_definition_a_row_and_the_heading_under_which_a_row_stands_is_in_its_citation():
+    page2 = [("2", 41, "70|C7  112|Down arrow"), ("2", 75, "69|N/A  112|Laser"), ("2", 267, "71|96  112|Eco +"), ("2", 306, "43|The IR codes below are for user-defined remote only."),
+             ("2", 317, "71|79  112|Power off (single push)"), ("2", 555, "352|EN-77")]
+    rows = olines(*CODES) + [[p, str(y), *[v for cell in text.split("  ") for v in cell.split("|", 1)]] for p, y, text in page2]
+    keys, notes = optoma.parse_sheet(rows, osheet("codes", "IR Code"))
+    assert [(k.page, k.label, k.function, k.note) for k in keys] == [(1, "Power on/off", 0x81, ""), (1, "Switch", 0x3E, ""), (2, "Down arrow", 0xC7, ""), (2, "Eco +", 0x96, ""),
+                                                                      (2, "Power off (single push)", 0x79, "under 'The IR codes below are for user-defined remote only.'")]
+    assert notes == ["t.pdf page 2 'Laser': no code (`N/A`)"]
+
+
+BYTES = [(96, "117|Optoma GT750 and GT750E Discrete IR Codes"), (200, "102|1  160|On  225|38  254|Format1  305|32  340|CD  380|02  425|FD"), (217, "102|2  225|30"),
+         (333, "102|3  156|16:10  225|31  254|Format1  305|33  340|CD  379|4E  426|B1"), (482, "99|4  136|Source+ (Left)  224|1A  254|Format2  305|32  340|CD  380|10  425|EF"),
+         (565, "99|5"), (581, "99|6  153|HDMI1  225|23  254|Format1  305|32  340|CD  380|16  426|E8"), (600, "99|7  153|VGA  225|13  254|Format1  305|31  340|C1  380|1B  426|E4")]
+
+
+def test_the_gt750s_four_bytes_are_a_customer_code_and_a_key_and_its_check_and_a_row_that_disagrees_with_itself_is_untested_or_not_read():
+    keys, notes = optoma.parse_sheet(olines(*BYTES), osheet("bytes", "GT750 and GT750E Discrete IR Codes"))
+    assert [(k.label, k.device, k.subdevice, k.function, k.note, bool(k.doubt)) for k in keys] == [
+        ("On", 0x32, 0xCD, 0x02, "Format1, MTX repeat 38", False),
+        ("16:10", 0x32, 0xCD, 0x4E, "Format1, MTX repeat 31", True),                    # the first byte is 33 where its complement CD and every other row say 32: read as 32, Untested
+        ("Source+ (Left)", 0x32, 0xCD, 0x10, "Format2, MTX repeat 1A", False)]
+    assert notes == ["t.pdf row 2: no NEC code (['30'])", "t.pdf row 3 '16:10': the customer code is 33 CD, not 32 CD: read as 32 CD and Untested", "t.pdf row 5: no NEC code ([])",
+                     "t.pdf row 6 'HDMI1': the data 16 E8 are not complements", "t.pdf row 7 'VGA': the customer code 31 C1 is not a byte and its complement"]
+
+
+LEGEND = [(84, "153|ThemeScene HD82 Infrared Remote Control Codes"), (154, "270|Byte 1  312|Byte 2  353|Byte 3"), (160, "405|4"),
+          (173, "193|Power On  279|00  321|02  362|00  402|FF"), (299, "212|↑  279|00  321|02  362|10  402|F5"), (327, "212|\x1b  279|00  321|02  362|12  402|F3"),
+          (425, "208|UP  279|00  321|02  362|19  402|E6"), (459, "204|4 ﹕ 3  279|00  321|02  362|22  402|DD"), (369, "203|Menu  279|00  321|02  362|15  402|E0"),
+          (500, "190|Power Off  279|00  321|02  362|03  402|FD"), (520, "100|some words")]
+
+
+def test_the_hd82s_key_byte_is_decimal_or_hexadecimal_as_its_check_byte_says_and_a_row_whose_two_bytes_agree_with_neither_is_not_read():
+    keys, notes = optoma.parse_sheet(olines(*LEGEND), osheet("legend", "ThemeScene HD82 Infrared Remote Control Codes"))
+    assert [(k.label, k.device, k.subdevice, k.function, k.note) for k in keys] == [
+        ("Power On", 0, 2, 0x00, ""), ("↑ (Up arrow)", 0, 2, 0x0A, "the key byte is written in decimal"),              # `10` and `F5`: 0x0A
+        ("(no legend)", 0, 2, 0x0C, "the key byte is written in decimal"), ("UP", 0, 2, 0x19, ""), ("4:3", 0, 2, 0x22, "")]                  # `19` and `E6`: 0x19; the ESC of a key with no legend is nothing
+    assert [n.removeprefix("t.pdf").removeprefix(" ") for n in notes] == [
+        "row 'Menu': the key byte 15 and the check byte E0 are not complements as hexadecimal (EA) or as decimal (F0): not read",
+        "row 'Power Off': the key byte 03 and the check byte FD are not complements as hexadecimal (FC) or as decimal (FC): not read", ": ['some words']"]
+
+
+def optoma_files() -> dict[str, dict]:
+    return {load(p)["model"]: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "optoma").glob("*.json"))}
+
+
+def test_the_optoma_sheets_are_13_files_and_367_keys_and_two_of_them_are_untested():
+    """The EH501, W501 and X501 (one manual page), the GT750 and GT750E, the HD33 and HD3300, the TH7500-NL, the TW1692, TW536, TX615 and TX762, and the ThemeScene HD82. **The HD33 and the TW1692 are
+    `(Optoma table)`: the JP1 upgrades of the same projectors have the names (R15).** **Untested are the GT750's and GT750E's `16:10`**, the one row whose customer code is `33 CD`."""
+    files = optoma_files()
+    assert {n: len(f["keys"]) for n, f in files.items()} == {
+        "EH501": 38, "W501": 38, "X501": 38, "GT750": 24, "GT750E": 24, "HD33 (Optoma table)": 23, "HD3300": 23, "TH7500-NL": 32, "TW1692 (Optoma table)": 26, "TW536": 19, "TX615": 26, "TX762": 26, "HD82": 30}
+    assert sum(len(f["keys"]) for f in files.values()) == 367
+    assert all(f["protocol"] == {"name": "NEC1", "carrierHz": 38000, "minSends": 1} and f["manufacturer"] == "Optoma" for f in files.values())
+    assert files["HD33 (Optoma table)"]["controls"] == ["Optoma HD33"] and files["TW1692 (Optoma table)"]["controls"] == ["Optoma TW1692"]
+    untested = [(n, s["label"]) for n, f in files.items() for s in f["keys"].values() if s["forms"][0]["confidence"] == "untested"]
+    assert untested == [("GT750", "16:10"), ("GT750E", "16:10")]
+    for a, b in (("EH501", "W501"), ("EH501", "X501"), ("GT750", "GT750E"), ("HD33 (Optoma table)", "HD3300")):                 # one document, two or three names
+        assert [(k, s["label"], {x: y for x, y in s["forms"][0].items() if x != "source"}) for k, s in files[a]["keys"].items()] == [
+            (k, s["label"], {x: y for x, y in s["forms"][0].items() if x != "source"}) for k, s in files[b]["keys"].items()]
+
+
+def test_an_optoma_key_is_nec1_with_the_customer_code_bytes_as_sent_and_its_citation_names_the_page_and_the_row():
+    files = optoma_files()
+    on = files["TH7500-NL"]["keys"]["KEY_POWER_ON"]["forms"][0]
+    assert (on["device"], on["subdevice"], on["function"], on["confidence"]) == ("0x32", "0xCD", "0x02", "plausible")                  # `Optoma Code: 32CD`, key code `0002`
+    assert on["source"] == ("audiogeneral.com Optoma IR code PDFs/th7500nl_ir.pdf@8103decf (retrieved 2026-11-12) page 1 row '1 Power On' (code 0002): NEC1 device 50 subdevice 205 function 2")
+    ha = files["HD82"]["keys"]["KEY_UP_ARROW"]["forms"][0]
+    assert (ha["device"], ha["subdevice"], ha["function"]) == ("0x00", "0x02", "0x0A") and "the key byte is written in decimal" in ha["source"] and ha["source"].startswith("optoma.co.uk IR code PDFs/HD82-IRE-en-GB.pdf@8bd3d301 ")
+    single = next(s for s in files["EH501"]["keys"].values() if s["label"] == "Power off (single push)")["forms"][0]
+    assert single["function"] == "0x79" and single["source"].endswith("under 'The IR codes below are for user-defined remote only.'") is False
+    assert "(code 79, under 'The IR codes below are for user-defined remote only.'): NEC1 device 50 subdevice 205 function 121" in single["source"]
+    assert [s["label"] for s in files["EH501"]["keys"].values() if s["label"].startswith("Enter")] == ["Enter (C5)", "Enter (CA)"]         # two keys called Enter, with the code that tells them apart
+
+
+def test_the_optoma_documents_are_eleven_live_files_the_w501_and_the_eh501_are_one_and_none_has_a_notice_word():
+    pytest.importorskip("pymupdf")
+    import pymupdf
+
+    snapshot = load_snapshot(SNAPSHOT / "optoma")
+    assert sorted(snapshot.documents) == sorted([s.file for s in optoma.SHEETS]) and snapshot.retrieved == "2026-11-12"
+    assert snapshot.documents["w501_ir.pdf"]["sha256"] == snapshot.documents["eh501_ir.pdf"]["sha256"]                                 # the same bytes under two names
+    assert snapshot.sheet_of("x501_ir.pdf", "lines") == snapshot.sheet_of("eh501_ir.pdf", "lines")                                       # and the X501's differs by 35 bytes of the file, not by a word
+    notice = re.compile(r"copyright|all rights|reserved|©|\(c\)|confidential|reproduc|trademark|proprietary|property of", re.I)
+    for name in snapshot.documents:
+        assert not notice.search(" ".join(page.get_text() for page in pymupdf.open(str(SNAPSHOT / "optoma" / name)))), name
+
+
+def test_the_optoma_frames_are_mostly_in_the_ledgers_other_optoma_remotes_under_the_same_names():
+    """**95 of the 112 distinct frames are in the Optoma NEC remotes of the IR Blaster database, the JP1 upgrades, LIRC and SmartIR** (at the same device, subdevice and function), 17 are new;
+    and where they meet the names agree (`Power`, `MENU`, `4:3`, `OVERSCAN`)."""
+    def frame(form):
+        return (int(form["device"], 0), int(form.get("subdevice", "0"), 0), int(form["function"], 0))
+    ours = {frame(s["forms"][0]) for f in optoma_files().values() for s in f["keys"].values()}
+    theirs = set()
+    for source in ("irblaster", "jp1", "lirc", "smartir"):
+        for path in sorted((ROOT / "remotes" / source).rglob("*.json")):
+            doc = load(path)
+            if "ptoma" not in (path.relative_to(ROOT).as_posix() + doc.get("manufacturer", "")).replace("OPTOMA", "Optoma") or (doc.get("protocol") or {}).get("name") not in ("NEC1", "NEC2"):
+                continue
+            for spec in doc["keys"].values():
+                for f in spec["forms"]:
+                    if "device" in f and "function" in f and f.get("subdevice") is not None:
+                        theirs.add(frame(f))
+    assert (len(ours), len(ours & theirs)) == (112, 95)
 
 
 # --- Harman: JBL Synthesis and Lexicon -----------------------------------------------------------------------------------------

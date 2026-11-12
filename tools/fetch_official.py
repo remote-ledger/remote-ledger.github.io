@@ -7,7 +7,7 @@ size, SHA-256, the retrieval date (today: do not pass --date) and the server's `
 (and, for a copy from the Wayback Machine, the address and snapshot it was archived from). Run it, then
 ``tools/official_sheets_to_csv.py <maker>`` for the spreadsheets, review the diff, and import.
 
-    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc|benq|peerless|arcam|infocus|lyngdorf|emotiva|denon|hitachi|classe|cyrus|yamaha|harman|cambridge|hegel|cary|nad|simaudio|rotel
+    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc|benq|peerless|arcam|infocus|lyngdorf|emotiva|denon|hitachi|classe|cyrus|yamaha|harman|cambridge|hegel|cary|nad|simaudio|rotel|optoma
 """
 
 from __future__ import annotations
@@ -347,6 +347,13 @@ DOCUMENTS = {
     ],
     # Simaudio's "Table of IR codes" (Technical Notice, Rev. 1.1, December 2002): the RC-5 and RC-6 codes of its Moon preamplifiers,
     # integrated amplifiers, CD and DVD players, three pages with no copyright or rights text, on its own host.
+    # Optoma's discrete IR code tables for projectors (DESIGN section 101): ten PDFs on the Optoma folder of audiogeneral.com (an American distributor's site, which serves each as `<model>_ir.pdf`;
+    # `w501_ir.pdf` is byte for byte the EH501's) and the ThemeScene HD82's on optoma.co.uk. Live files. Not pinned: the TX665UTi, TX785/TW775 and EN-76 sheets the survey
+    # held (no host of Optoma's or a distributor's serves them: archive.org's copy of a manualsonline file, and a distributor's 404), and Optoma's other pages.
+    "optoma": [
+        *[(f"{m}_ir.pdf", f"https://www.audiogeneral.com/Optoma/{m}_ir.pdf", None) for m in ("eh501", "w501", "x501", "gt750e", "hd33", "th7500nl", "tw1692", "tw536", "tx615", "tx762")],
+        ("HD82-IRE-en-GB.pdf", "https://www.optoma.co.uk/uploads/IRRemote/HD82-IRE-en-GB.pdf", None),
+    ],
     "simaudio": [
         ("Simaudio-RC-5-IR-codes-rev1.1.pdf", "https://simaudio.com/wp-content/uploads/2019/11/Simaudio-RC-5-IR-codes-rev1.1.pdf", None),
     ],
