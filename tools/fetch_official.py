@@ -214,6 +214,18 @@ DOCUMENTS = {
         ("WXA-50_WXC-50_Extended_IR_Codes_1.pdf", WB + "20240223031354id_/https://www.snapav.com/wcsstore/ExtendedSitesCatalogAssetStore/attachments/documents/Amplifiers/SupportDocuments/WXA-50_WXC-50_Extended_IR_Codes_1.pdf", None),
         ("WXA-50_WXC-50_Standard_IR_Codes_1.pdf", WB + "20240222115523id_/https://www.snapav.com/wcsstore/ExtendedSitesCatalogAssetStore/attachments/documents/Amplifiers/SupportDocuments/WXA-50_WXC-50_Standard_IR_Codes_1.pdf", None),
         ("XDA-QS5400_XDA-AMP5400_IR_Commands.pdf", WB + "20201023055732id_/https://www.snapav.com/wcsstore/ExtendedSitesCatalogAssetStore/attachments/documents/Amplifiers/SupportDocuments/XDA-QS5400_XDA-AMP5400_IR_Commands.pdf", None),
+        # DESIGN section 100: the control documents of AWE Europe (awe-europe.com, a British distributor of Yamaha's), the Wayback Machine's copies of the
+        # zips of its Yamaha folder, each the snapshot named in its URL: the receivers of 2010 to 2014 (RX-V667 to RX-V3077, RX-A710 to RX-A3040, RX-V375 to RX-V775).
+        # The zips also hold the RS-232 and network (YNC, YNCA) specifications, which are not read; the YNC and YNCA folders of a zip hold the same IR file twice.
+        ("IR_RX-V671-3071_rev1.0_Full.xls", WB + "20160103045550id_/http://www.awe-europe.com/documents/Control%20Docs/Yamaha/Archive/Yamaha%20YNC_YNCA_Spec_UK_Ireland_Docs%202012.zip", "Spec_UK_Ireland/YNCA/ircode/IR_RX-V671-3071_rev1.0_Full.xls"),
+        ("IR_Vx75.xls", WB + "20151207014814id_/http://www.awe-europe.com/documents/Control%20Docs/Yamaha/Spec_UK_Ireland_DEC2013_All.zip", "Spec_UK_Ireland/YNCA/ircode/IR_Vx75.xls"),
+        ("IR_Vx77.xls", WB + "20151207014926id_/http://www.awe-europe.com/documents/Control%20Docs/Yamaha/YNCA_YNC%20Documents%20for%20RX-Vx77_Ax40.zip", "Spec_Europe/YNCA/ircode/IR_Vx77.xls"),
+        ("IR_RX-Ax30_A730_830_STD.pdf", WB + "20151207014814id_/http://www.awe-europe.com/documents/Control%20Docs/Yamaha/Spec_UK_Ireland_DEC2013_All.zip", "IR_RX-Ax30_A730_830_STD.pdf"),
+        ("IR_RX-Ax30_A730_830_EXD.pdf", WB + "20151207014814id_/http://www.awe-europe.com/documents/Control%20Docs/Yamaha/Spec_UK_Ireland_DEC2013_All.zip", "IR_RX-Ax30_A730_830_EXD.pdf"),
+        ("IR_RX-Vx75_375-775_STD.pdf", WB + "20160103050405id_/http://www.awe-europe.com/documents/Control%20Docs/Yamaha/IR_RX-Vx75_375-775.zip", "IR_RX-Vx75_375-775_STD.pdf"),
+        ("IR_RX-Vx75_375-775_EXD.pdf", WB + "20160103050405id_/http://www.awe-europe.com/documents/Control%20Docs/Yamaha/IR_RX-Vx75_375-775.zip", "IR_RX-Vx75_375-775_EXD.pdf"),
+        ("STD_IR_RXV667-3067.pdf", WB + "20160103045540id_/http://www.awe-europe.com/documents/Control%20Docs/Yamaha/Archive/RXV667-3067_FullIR.zip", "STD_IR_RXV667-3067.pdf"),
+        ("EXD_IR_RXV667-3067.pdf", WB + "20160103045540id_/http://www.awe-europe.com/documents/Control%20Docs/Yamaha/Archive/RXV667-3067_FullIR.zip", "EXD_IR_RXV667-3067.pdf"),
     ],
     # The custom installation notes of Harman's JBL Synthesis AV receivers (the SDR-35, SDR-38, SDP-55 and SDP-58: issue E, whose RC-5 rows are the same as issue D's of 2020 for the two models D names, which is not pinned) and Lexicon's MC-10, RV-9 and RV-6
     # (DESIGN section 88): serial control and **the RC-5 code set** (Arcam's platform: the tables are Arcam's layout). The JBL ones are the Wayback Machine's copies of

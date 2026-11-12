@@ -3,6 +3,7 @@ their snapshots, the readers, and the committed tree."""
 
 from __future__ import annotations
 
+import functools
 import hashlib
 import json
 import re
@@ -469,8 +470,8 @@ def test_the_committed_official_import_keeps_r19():
         for name, entry in manifest["documents"].items():
             hashes[name], dates[name], snapshots[name] = entry["sha256"], entry.get("retrieved", manifest["retrieved"]), entry.get("snapshot")
     shape = re.compile(r"^(?:marantz\.com archive-downloads|anthemav\.com \(storage\.googleapis\.com/sandbox1-anthemav/an\)"
-                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|caryaudio\.com IR Remote Codes|infocus\.com IR code PDFs|lyngdorf\.com IR code PDF|emotiva\.com IR code PDFs|denon\.co\.uk RC code list|denon\.com Master IR Hex|snapav\.com Denon IR code documents|assets\.denon\.com IR code documents|hitachi-america\.us IR code documents|classeaudio\.com IR code documents|cyrusaudio\.com remote code tables|snapav\.com Yamaha IR code PDFs|snapav\.com Marantz IR code workbook|jblsynthesis\.com custom installation notes|snapav\.com JVC LX projector code sheets|snapav\.com JVC remote control code tables|snapav\.com BenQ IR code sheet|cdn\.shopify\.com Peerless-AV Neptune IR code sheet|lexicon\.com custom installation notes|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/([^@]+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
-                       r"(?:, from the Wayback Machine snapshot (\d{14}))?\) (?:sheet '[^']+' row \d+|page \d+ row \d+|page \d+ '|page \d+ table \d+ row '|page \d+ row '|key \d+ '|row 'RC(?:SHP|KSK)\w+' \(|page \d+ table row ')")
+                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|caryaudio\.com IR Remote Codes|infocus\.com IR code PDFs|lyngdorf\.com IR code PDF|emotiva\.com IR code PDFs|denon\.co\.uk RC code list|denon\.com Master IR Hex|snapav\.com Denon IR code documents|assets\.denon\.com IR code documents|hitachi-america\.us IR code documents|classeaudio\.com IR code documents|cyrusaudio\.com remote code tables|snapav\.com Yamaha IR code PDFs|awe-europe\.com Yamaha control documents|snapav\.com Marantz IR code workbook|jblsynthesis\.com custom installation notes|snapav\.com JVC LX projector code sheets|snapav\.com JVC remote control code tables|snapav\.com BenQ IR code sheet|cdn\.shopify\.com Peerless-AV Neptune IR code sheet|lexicon\.com custom installation notes|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/([^@]+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
+                       r"(?:, from the Wayback Machine snapshot (\d{14}))?\) (?:sheet '[^']+' row \d+|page \d+ row \d+|sheet (?:Standard|Extended) line \d+ row '|page \d+ '|page \d+ table \d+ row '|page \d+ row '|key \d+ '|row 'RC(?:SHP|KSK)\w+' \(|page \d+ table row ')")
     files = sorted((ROOT / oi.IMPORT_ROOT).rglob("*.json"))
     assert len(files) > 180
     bad = []
@@ -3527,8 +3528,10 @@ def test_a_heading_that_is_not_the_documents_and_a_zone_that_is_none_are_refused
         yamaha.parse([["1", "142", "POWER", "POWER", "ON", "RECEIVER", "MAIN", "7E-7E", "7E-7E80", "YES", "", ""]], YDOC)
 
 
-def yamaha_files() -> dict[str, dict]:
-    return {load(p)["model"]: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "yamaha").glob("*.json"))}
+def yamaha_files(host: str = "snapav.com") -> dict[str, dict]:
+    """The files of §87 (the tables on SnapAV's site) or, with ``host="awe-europe.com"``, §100's (AWE Europe's control documents)."""
+    docs = {load(p)["model"]: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "yamaha").glob("*.json"))}
+    return {name: doc for name, doc in docs.items() if next(iter(doc["keys"].values()))["forms"][0]["source"].startswith(host)}
 
 
 def test_yamahas_six_tables_are_28_files_and_7008_keys_two_code_sets_for_each_of_14_models_and_60_keys_are_the_japan_models():
@@ -3602,13 +3605,317 @@ def test_the_ledgers_other_yamaha_nec_remotes_have_90_percent_of_these_frames_un
     for source in ("irblaster", "jp1", "lirc", "hifi-remote"):
         for path in sorted((ROOT / "remotes" / source).rglob("*.json")):
             doc = load(path)
-            if (doc.get("protocol") or {}).get("name") not in ("NEC1", "NEC1-f16", "NEC2") or "amaha" not in (path.as_posix() + doc.get("manufacturer", "")).replace("YAMAHA", "Yamaha"):
+            if (doc.get("protocol") or {}).get("name") not in ("NEC1", "NEC1-f16", "NEC2") or "amaha" not in (path.relative_to(ROOT).as_posix() + doc.get("manufacturer", "")).replace("YAMAHA", "Yamaha"):
                 continue
             for spec in doc["keys"].values():
                 for f in spec["forms"]:
                     if "device" in f and "function" in f:
                         theirs.add(frame(f, doc["protocol"]["name"]))
     assert (len(ours), len(set(ours) & theirs)) == (1_062, 960)
+
+
+
+# --- Yamaha: the receivers of 2010 to 2014, AWE Europe's control documents (DESIGN section 100) -----------------------------------------------------------
+
+
+def xblocks(*rows, layout: str = "2013") -> list[list[str]]:
+    """A sheet's block CSV as the tool writes it for one model column (``RX-V385``): the title, the heading, then ``row, group, name, name 2, [device,] zone, the codes, a mark``."""
+    if layout == "2011":
+        heading = [["4", "FunctionGroup", "FunctionName", "", "ZONE", "Code(ID1)", "FullCode(ID1)", "Code(ID2)", "FullCode(ID2)", "RX-V385"]]
+    else:
+        heading = [["6", "Function", "", "", "Device", "", "", "", "RX-V385"], ["7", "Group", "Name", "", "Device", "Zone", "FullCode(ID1)", "FullCode(ID2)", ""]]
+    return [["1", "Standard IR codes"]] + heading + [list(r) for r in rows]
+
+
+XDOC = yamaha.Document("t.xls", (("RX-V385", ("RX-V385",)),), layout="blocks", host=yamaha.AWE)
+
+
+def test_a_spreadsheets_rows_are_functions_at_zones_with_the_names_of_their_blocks_and_codes_in_capitals():
+    rows = xblocks(("8", "POWER", "RECEIVER POWER", "ON/OFF", "RECEIVER", "MAIN", "7e81-2ad5", "7E81-2AD4", "YES"), ("9", "POWER", "RECEIVER POWER", "ON/OFF", "RECEIVER", "ZONE2", "7A85-453A", "7A85-453B", "NO"),
+                   ("10", "", "AUTO TUNING", "UP", "TUNER HD-Radio", "", "7E81-BE41", "7E81-BE40", "YES*J"))
+    got = yamaha.parse_blocks(rows, XDOC, "Standard")
+    assert [(r.group, r.name, r.device, r.zone, r.codes, r.marks, r.where) for r in got] == [
+        ("POWER", "RECEIVER POWER ON/OFF", "RECEIVER", "MAIN", ("7E81-2AD5", "7E81-2AD4"), ("YES",), "sheet Standard line 8"),
+        ("POWER", "RECEIVER POWER ON/OFF", "RECEIVER", "ZONE2", ("7A85-453A", "7A85-453B"), ("NO",), "sheet Standard line 9"),
+        ("POWER", "AUTO TUNING UP", "TUNER HD-Radio", "", ("7E81-BE41", "7E81-BE40"), ("YES*J",), "sheet Standard line 10")]    # a group left blank is the one above; a zone may be none
+    assert yamaha.label_of(got[2]) == "AUTO TUNING UP (TUNER HD-Radio)" and got[0].place == "sheet Standard line 8"
+
+
+def test_the_2011_sheet_has_two_code_columns_and_the_full_one_is_read_with_the_short_one_kept_to_be_checked():
+    rows = xblocks(("5", "POWER", "POWER", "ON/OFF", "MAIN", "7E-2A", "7E81-2AD5", "7E-2AD4", "7E81-2AD4", "YES"), ("6", "", "SLEEP", "TOGGLE", "ZONE2", "7A-31", "7A85-31CE", "7A-31CF", "7A85-31CF", "NO"), layout="2011")
+    got = yamaha.parse_blocks(rows, XDOC, "Extended")                                               # the Extended sheet writes ZONE, the Standard Zone: the case is not compared
+    assert [(r.name, r.device, r.zone, r.codes, r.short) for r in got] == [
+        ("POWER ON/OFF", "", "MAIN", ("7E81-2AD5", "7E81-2AD4"), ("7E-2A", "7E-2AD4")), ("SLEEP TOGGLE", "", "ZONE2", ("7A85-31CE", "7A85-31CF"), ("7A-31", "7A-31CF"))]
+    assert yamaha.frame_of("7E-2A") == yamaha.frame_of("7E81-2AD5") == (0x7E, 0x81, 0x2A, 0xD5) and yamaha.frame_of("7A-31CF") == yamaha.frame_of("7A85-31CF")
+
+
+def test_a_spreadsheet_whose_heading_is_not_the_documents_or_whose_row_is_no_function_at_a_zone_is_refused():
+    good = ("8", "POWER", "POWER", "ON", "RECEIVER", "MAIN", "7E81-7E81", "7E81-7E80", "YES")
+    bad = xblocks(good)
+    bad[1][8] = "RX-V485"
+    with pytest.raises(ValueError, match="the heading"):
+        yamaha.parse_blocks(bad, XDOC, "Standard")
+    bad = xblocks(good)
+    bad[2][7] = "Code(ID2)"                                                                         # the column of the second code is not the 2013 sheet's
+    with pytest.raises(ValueError, match="the heading"):
+        yamaha.parse_blocks(bad, XDOC, "Standard")
+    with pytest.raises(ValueError, match="no heading row"):
+        yamaha.parse_blocks([["1", "Standard IR codes"], list(good)], XDOC, "Standard")
+    for broken, why in ((good[:5] + ("ZONE9",) + good[6:], "zone"), (good[:6] + ("7E-7E81", "7E81-7E80", "YES"), "code"), (good[:8] + ("MAYBE",), "mark"), (good[:2] + ("", "") + good[4:], "name")):
+        with pytest.raises(ValueError, match="not a function at a zone"):
+            yamaha.parse_blocks(xblocks(broken), XDOC, "Standard")
+
+
+CDOC = yamaha.Document("c.pdf", (("667", ("RX-V667",)), ("767", ("RX-V767",)), ("1067", ("RX-V1067",))), layout="comments", host=yamaha.AWE)
+
+
+def ycomments(*rows) -> list[list[str]]:
+    """The grid rows of a 2010 table: ``page, y, device, function group, function name, zone, Code(ID1), Code(ID2), comment``, and the names again."""
+    heading = [["1", "142", "Device", "Function Group", "Function name", "ZONE", "Code(ID1)", "Code(ID2)", "Comment", "Function Group", "Function name"]]
+    return heading + [list(r) + [""] * (11 - len(r)) for r in rows]
+
+
+def test_the_comment_of_a_2010_row_says_which_models_it_is_for_by_the_model_numbers_in_it_and_none_is_all_of_them():
+    rows = ycomments(("1", "151", "RECEIVER", "ZONE CONTROL", "PARTY", "-", "7A-34", "7A-34CA", "767, 1067"), ("1", "159", "", "MEMORY", "SCENE 1 (BD/DVD)", "MAIN", "7A-007F", "7A-007E", "BD/DVD(667, 767), 1(1067)"),
+                     ("1", "167", "", "", "", "ZONE2", "7A-017E", "7A-017F", "1(1067)"), ("1", "175", "", "", "", "ZONE3", "7A-027D", "7A-027C", "U"),
+                     ("1", "183", "", "PROGRAM", "ENHANCER", "-", "7A-94", "7A-946A", ""), ("1", "191", "", "", "TUN./CH +", "MAIN", "7F01-611E", "7F01-611F", "TUN./CH +(1067U), TUNING +(1067exceptU)"))
+    got = yamaha.parse_comments(rows, CDOC)
+    assert [(r.group, r.name, r.device, r.zone, r.marks, r.comment) for r in got] == [
+        ("ZONE CONTROL", "PARTY", "RECEIVER", "", ("NO", "YES", "YES"), "767, 1067"),
+        ("MEMORY", "SCENE 1 (BD/DVD)", "RECEIVER", "MAIN", ("YES", "YES", "YES"), "BD/DVD(667, 767), 1(1067)"),         # the numbers in a comment that renames the key are the models'
+        ("MEMORY", "SCENE 1 (BD/DVD)", "RECEIVER", "ZONE2", ("NO", "NO", "YES"), "1(1067)"),                       # a blank name, group and device are the ones above
+        ("MEMORY", "SCENE 1 (BD/DVD)", "RECEIVER", "ZONE3", ("YES", "YES", "YES"), "U"),                           # a region mark names no model: all of them
+        ("PROGRAM", "ENHANCER", "RECEIVER", "", ("YES", "YES", "YES"), ""),
+        ("PROGRAM", "TUN./CH +", "RECEIVER", "MAIN", ("NO", "NO", "YES"), "TUN./CH +(1067U), TUNING +(1067exceptU)")]
+
+
+def test_a_device_in_brackets_under_another_is_added_to_it_and_the_next_device_replaces_both():
+    rows = ycomments(("3", "210", "SIRIUS", "MENU", "ALL CH SRCH", "-", "7F01-0F70", "7F01-0F71", "U"), ("3", "274", "TUNER", "MENU", "SRCH MODE", "-", "7A-AB", "7A-AB55", "U"),
+                     ("3", "282", "(HD-Radio)", "", "SEARCH MODE MANUAL", "-", "7F01-FE", "7F01-FE00", ""), ("3", "290", "", "", "SEARCH MODE PRESET", "-", "7F01-FD", "7F01-FD02", ""),
+                     ("3", "300", "NET", "MENU", "BOOK MARK OFF", "-", "7F01-47", "7F01-4739", ""))
+    assert [r.device for r in yamaha.parse_comments(rows, CDOC)] == ["SIRIUS", "TUNER", "TUNER HD-Radio", "TUNER HD-Radio", "NET"]
+
+
+def test_a_2010_table_whose_heading_is_not_its_own_or_whose_comment_names_a_model_it_has_not_is_refused():
+    row = ("1", "151", "RECEIVER", "ZONE CONTROL", "PARTY", "-", "7A-34", "7A-34CA", "")
+    with pytest.raises(ValueError, match="the heading"):
+        yamaha.parse_comments([ycomments(row)[0][:8] + ["Notes", "x", "y"], list(row) + ["", ""]], CDOC)
+    with pytest.raises(ValueError, match="names models the document does not"):
+        yamaha.parse_comments(ycomments(row[:8] + ("867",)), CDOC)
+    with pytest.raises(ValueError, match="before the heading"):
+        yamaha.parse_comments([list(row) + ["", ""]], CDOC)
+    with pytest.raises(ValueError, match="the zone `ZONE9`"):
+        yamaha.parse_comments(ycomments(row[:5] + ("ZONE9",) + row[6:]), CDOC)
+
+
+def test_the_sheet_tool_turns_the_lines_a_spreadsheet_draws_into_blocks_as_the_pinned_csv_has_them():
+    """The sheets have no merged cell; the file draws a line above the first row of a name's rows and below the last, and the tool writes the block's text on each row it covers."""
+    pytest.importorskip("xlrd")
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location("official_sheets_to_csv", ROOT / "tools" / "official_sheets_to_csv.py")
+    tool = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(tool)
+    snapshot = load_snapshot(SNAPSHOT / "yamaha")
+    for document in ("IR_RX-V671-3071_rev1.0_Full.xls", "IR_Vx75.xls", "IR_Vx77.xls"):
+        for sheet in ("Standard", "Extended"):
+            assert tool.rows_of(SNAPSHOT / "yamaha" / document, f"{sheet}/blocks") == snapshot.sheet_of(document, f"{sheet}/blocks")
+    rows = snapshot.sheet_of("IR_Vx75.xls", "Extended/blocks")
+    assert [r[1:6] for r in rows if r[0] in ("45", "65", "238")] == [
+        ["INPUT", "SUB INPUT", "Rhapsody Napster", "RECEIVER", "MAIN"],                      # a name of two lines in two cells (`Rhapsody`, `Napster`): one name
+        ["VOLUME", "MUTE", "ON (FULL)", "RECEIVER", "MAIN"], ["MENU", "SRCH MODE", "PRESET", "TUNER HD-Radio", "ALL"]]
+    assert [r[1:6] for r in snapshot.sheet_of("IR_Vx75.xls", "Standard/blocks") if r[0] in ("211", "215")] == [
+        ["DISPLAY", "DISPLAY", "TOGGLE", "RECEIVER", "MAIN"], ["DISPLAY", "INFO", "TOGGLE", "RECEIVER", "MAIN"]]          # `RECEIVER` written twice for a block of two functions: once
+
+
+def test_none_of_the_nine_awe_europe_documents_has_a_notice_word_in_its_cells_or_its_text():
+    """D367's licence rule: D290's notice words, and `proprietary`, `trademark` and `property of`, in every cell of every sheet of the three spreadsheets and in the text of every page of the six PDFs."""
+    xlrd, pymupdf = pytest.importorskip("xlrd"), pytest.importorskip("pymupdf")
+    notice = re.compile(r"copyright|all rights|reserved|\u00a9|\(c\)|confidential|reproduc|trademark|proprietary|property of", re.I)
+    snapshot = load_snapshot(SNAPSHOT / "yamaha")
+    documents = sorted(name for name, entry in snapshot.documents.items() if "awe-europe.com" in entry["original"])
+    assert len(documents) == 9 and sum(name.endswith(".xls") for name in documents) == 3
+    for name in documents:
+        path = SNAPSHOT / "yamaha" / name
+        if name.endswith(".xls"):
+            book = xlrd.open_workbook(str(path))
+            words = [str(sheet.cell_value(r, c)) for sheet in book.sheets() for r in range(sheet.nrows) for c in range(sheet.ncols)]
+        else:
+            words = [page.get_text() for page in pymupdf.open(str(path))]
+        assert not [w for w in words if notice.search(w)], name
+        assert snapshot.documents[name]["retrieved"] == "2026-11-12" and snapshot.documents[name]["snapshot"] and snapshot.documents[name]["member"]
+
+
+def yamaha_awe_files() -> dict[str, dict]:
+    return yamaha_files("awe-europe.com")
+
+
+def test_the_awe_europe_tables_are_96_files_and_27176_keys_two_code_sets_for_each_of_48_models_and_162_keys_are_the_japan_models():
+    """The RX-V375 to RX-V775, RX-V667 to RX-V3067, RX-V671 to RX-V3071, RX-V675 to RX-V3075, RX-V677 to RX-V3077 and the RX-A710 to RX-A3040, with the CX-A5000 and the HTR-2866 to HTR-6066 the
+    tables name beside them. **Untested are the 162 keys the table marks `YES*J`** (the Japan model's: 3 in each of 54 files)."""
+    files = yamaha_awe_files()
+    assert len(files) == 96 and sum(len(f["keys"]) for f in files.values()) == 27_176
+    per_model = {"CX-A5000": 421, "HTR-2866": 140, "HTR-3066": 140, "HTR-4066": 147, "HTR-5066": 154, "HTR-6064": 255, "HTR-6066": 226, "RX-A1010": 289, "RX-A1030": 264, "RX-A1040": 265, "RX-A2010": 406,
+                 "RX-A2030": 386, "RX-A2040": 416, "RX-A3010": 425, "RX-A3030": 411, "RX-A3040": 416, "RX-A710": 255, "RX-A730": 228, "RX-A740": 229, "RX-A810": 262, "RX-A830": 238, "RX-A840": 239,
+                 "RX-V1067": 280, "RX-V1071": 289, "RX-V1075": 264, "RX-V1077": 265, "RX-V2067": 397, "RX-V2071": 406, "RX-V2075": 386, "RX-V2077": 416, "RX-V3067": 424, "RX-V3071": 425, "RX-V3075": 411,
+                 "RX-V3077": 416, "RX-V375": 140, "RX-V475": 147, "RX-V500D": 147, "RX-V575": 154, "RX-V667": 211, "RX-V671": 255, "RX-V675": 228, "RX-V677": 229, "RX-V767": 240, "RX-V771": 263,
+                 "RX-V775": 235, "RX-V777": 236, "RX-V867": 250, "RX-V871": 262}
+    assert {n: len(f["keys"]) for n, f in files.items()} == {f"{m} ({i})": k for m, k in per_model.items() for i in ("ID1", "ID2")}
+    assert all(f["protocol"] == {"name": "NEC1-f16", "carrierHz": 38000, "minSends": 1} and f["manufacturer"] == "Yamaha" and f["controls"] == [f"Yamaha {n.split(' (')[0]}"] for n, f in files.items())
+    tiers = Counter(s["forms"][0]["confidence"] for f in files.values() for s in f["keys"].values())
+    assert tiers == {"plausible": 27_014, "untested": 162}
+    untested = Counter(n for n, f in files.items() for s in f["keys"].values() if s["forms"][0]["confidence"] == "untested")
+    assert all("the Japan model's" in s["forms"][0]["source"] for f in files.values() for s in f["keys"].values() if s["forms"][0]["confidence"] == "untested")
+    assert len(untested) == 54 and set(untested.values()) == {3}
+
+
+def test_one_column_of_a_table_for_several_models_is_the_same_keys_under_each_models_name():
+    files = yamaha_awe_files()
+    for group in (("RX-V375", "HTR-2866", "HTR-3066"), ("RX-V475", "RX-V500D", "HTR-4066"), ("RX-V575", "HTR-5066"), ("RX-V675", "RX-A730"), ("RX-V1075", "RX-A1030"), ("RX-V2075", "RX-A2030"),
+                  ("RX-V3075", "RX-A3030"), ("RX-V677", "RX-A740"), ("RX-V1077", "RX-A1040"), ("RX-V2077", "RX-A2040"), ("RX-V3077", "RX-A3040")):
+        for i in ("ID1", "ID2"):
+            assert all(files[f"{m} ({i})"]["keys"] == files[f"{group[0]} ({i})"]["keys"] for m in group), group
+
+
+def test_the_id2_code_of_a_key_is_its_id1_code_with_the_low_bit_of_the_last_byte_flipped_in_every_row_of_the_awe_europe_tables_too():
+    files = yamaha_awe_files()
+    pairs = 0
+    for name, doc in files.items():
+        if not name.endswith("(ID1)"):
+            continue
+        other = files[name.replace("(ID1)", "(ID2)")]["keys"]
+        assert len(doc["keys"]) == len(other)
+        for (key, spec), (key2, spec2) in zip(doc["keys"].items(), other.items()):
+            a, b = spec["forms"][0], spec2["forms"][0]
+            # a label two functions of one table share keeps the code that tells them apart (D333), which is the ID's own: that is the only name that differs
+            assert re.sub(r", [0-9A-F]{2,4}-[0-9A-F]{2,4}\)$", ")", spec["label"]) == re.sub(r", [0-9A-F]{2,4}-[0-9A-F]{2,4}\)$", ")", spec2["label"]), (name, key, key2)
+            assert (a["device"], a["subdevice"]) == (b["device"], b["subdevice"]) and int(a["function"], 0) ^ int(b["function"], 0) == 1, (name, key)
+            pairs += 1
+    assert pairs == 13_588
+
+
+def yamaha_rows_of_awe(snapshot) -> dict[str, list]:
+    out = {}
+    for d in yamaha.DOCUMENTS:
+        if d.layout == "blocks":
+            out[d.file] = [r for s in ("Standard", "Extended") for r in yamaha.parse_blocks(snapshot.sheet_of(d.file, f"{s}/blocks"), d, s)]
+        elif d.layout == "comments":
+            out[d.file] = yamaha.parse_comments(snapshot.sheet_of(d.file, "grid"), d)
+        elif d.host == yamaha.AWE:
+            out[d.file] = yamaha.parse(snapshot.sheet_of(d.file, "grid"), d)
+    return out
+
+
+def test_the_2011_sheets_short_codes_are_its_full_codes_in_every_row_and_the_2010_and_2013_tables_hold_the_rules_the_reader_does_not_assume():
+    snapshot = load_snapshot(SNAPSHOT / "yamaha")
+    rows = yamaha_rows_of_awe(snapshot)
+    sheet = rows["IR_RX-V671-3071_rev1.0_Full.xls"]
+    assert len(sheet) == 559 and all(yamaha.frame_of(r.short[i]) == yamaha.frame_of(r.codes[i]) for r in sheet for i in (0, 1))
+    assert {f: len(r) for f, r in rows.items()} == {"IR_RX-V671-3071_rev1.0_Full.xls": 559, "IR_Vx75.xls": 554, "IR_Vx77.xls": 562, "IR_RX-Vx75_375-775_STD.pdf": 315, "IR_RX-Vx75_375-775_EXD.pdf": 239,
+                                                    "STD_IR_RXV667-3067.pdf": 232, "EXD_IR_RXV667-3067.pdf": 203}
+    for file, rs in rows.items():                                           # ID2 is ID1 with the low bit of its last byte flipped, in all 2,664 rows
+        for r in rs:
+            f1, f2 = yamaha.frame_of(r.codes[0]), yamaha.frame_of(r.codes[1])
+            assert f1[:3] == f2[:3] and f1[3] ^ f2[3] == 1, (file, r.place, r.codes)
+
+
+def test_the_rx_v675_and_the_rx_v775_are_read_from_the_newer_spreadsheet_which_has_every_key_the_older_pdf_has():
+    """The RX-V675 and RX-V775 are in the PDF of the RX-V375 to V775 (February 2013) and in the spreadsheet of the RX-V675 to V3075 (July 2013, the version that adds two keys): the files are the
+    spreadsheet's, and **every key the PDF has for them (226 and 233) is in the spreadsheet with the same label and code**."""
+    snapshot = load_snapshot(SNAPSHOT / "yamaha")
+    rows = yamaha_rows_of_awe(snapshot)
+    docs = {d.file: d for d in yamaha.DOCUMENTS}
+
+    def keys(file: str, model: str, index: int) -> Counter:
+        out: Counter = Counter()
+        for r in rows[file]:
+            for column, (_, models) in enumerate(docs[file].columns):
+                if model in models and yamaha.mark_of(r.marks[column])[0]:
+                    out[(yamaha.label_of(r), yamaha.frame_of(r.codes[index]))] += 1
+        return out
+    for model, expected in (("RX-V675", 226), ("RX-V775", 233)):
+        for i in (0, 1):
+            pdf = keys("IR_RX-Vx75_375-775_STD.pdf", model, i) + keys("IR_RX-Vx75_375-775_EXD.pdf", model, i)
+            xls = keys("IR_Vx75.xls", model, i)
+            assert sum(pdf.values()) == expected and pdf - xls == Counter() and sum(xls.values()) == expected + 2, (model, i)
+    files = yamaha_awe_files()
+    for name in ("RX-V675", "RX-V775"):
+        assert {re.search(r"documents/([^@]+)@", s["forms"][0]["source"])[1] for s in files[f"{name} (ID1)"]["keys"].values()} == {"IR_Vx75.xls"}
+    assert {re.search(r"documents/([^@]+)@", s["forms"][0]["source"])[1] for s in files["HTR-6066 (ID1)"]["keys"].values()} == {"IR_RX-Vx75_375-775_STD.pdf", "IR_RX-Vx75_375-775_EXD.pdf"}
+
+
+def test_the_2013_pdf_of_the_rx_a730_and_a830_is_the_spreadsheets_rows_but_for_two_names_of_the_extended_table():
+    """The one independent reading of a spreadsheet: the PDF of March 2013 (`IR_RX-Ax30_A730_830`, version 0.1 of the table, pinned and not read for files) is the same table as the July spreadsheet for
+    the two models it has. **Of 104, 110, 124 and 128 rows the label, the device, the zone and the code agree in all but 2 of the extended table's for each model**: the PDF writes `Hall in Munich (A)`
+    where the spreadsheet has `A`, and has `Xch Stereo` with no `PROGRAM` before it."""
+    snapshot = load_snapshot(SNAPSHOT / "yamaha")
+
+    def pdf(kind: str) -> dict[str, Counter]:
+        out = {"RX-A730": Counter(), "RX-A830": Counter()}
+        for r in snapshot.sheet_of(f"IR_RX-Ax30_A730_830_{kind}.pdf", "grid")[2:]:
+            group, n1, n2, device, zone, code, a730, a830 = r[2:10]
+            for model, mark in (("RX-A730", a730), ("RX-A830", a830)):
+                if mark.upper().startswith("YES"):
+                    out[model][(" ".join(x for x in (n1, n2) if x), device, zone, code.upper())] += 1
+        return out
+
+    def xls(sheet: str) -> dict[str, Counter]:
+        out = {"RX-A730": Counter(), "RX-A830": Counter()}
+        rows = snapshot.sheet_of("IR_Vx75.xls", f"{sheet}/blocks")
+        for r in rows[next(i for i, r in enumerate(rows) if r[1] == "Function") + 2:]:
+            if any(r[1:]):
+                for model, column in (("RX-A730", 8), ("RX-A830", 10)):
+                    if r[column].upper().startswith("YES"):
+                        out[model][(" ".join(x for x in (r[2], r[3]) if x), r[4], r[5], r[6].upper())] += 1
+        return out
+    got = {}
+    for kind, sheet in (("STD", "Standard"), ("EXD", "Extended")):
+        a, b = pdf(kind), xls(sheet)
+        for model in a:
+            got[(kind, model)] = (sum(a[model].values()), sum(b[model].values()), sum((a[model] - b[model]).values()), sum((b[model] - a[model]).values()))
+    assert got == {("STD", "RX-A730"): (104, 104, 0, 0), ("STD", "RX-A830"): (110, 110, 0, 0), ("EXD", "RX-A730"): (124, 124, 2, 2), ("EXD", "RX-A830"): (128, 128, 2, 2)}
+
+
+def test_a_key_of_the_awe_europe_tables_is_nec1_f16_and_its_citation_names_the_zip_s_snapshot_the_sheet_and_the_line_or_the_page_and_the_comment():
+    files = yamaha_awe_files()
+    on, on2 = files["RX-V675 (ID1)"]["keys"]["KEY_RECEIVER_POWER_ON_SLASH_OFF"]["forms"][0], files["RX-V675 (ID2)"]["keys"]["KEY_RECEIVER_POWER_ON_SLASH_OFF"]["forms"][0]
+    assert (on["device"], on["subdevice"], on["function"]) == ("0x7E", "0x81", "0x2AD5") and on2["function"] == "0x2AD4"                       # `7E81-2AD5` and `7E81-2AD4`
+    assert on["source"] == ("awe-europe.com Yamaha control documents/IR_Vx75.xls@5f16e769 (retrieved 2026-11-12, from the Wayback Machine snapshot 20151207014814) sheet Standard line 8 row "
+                            "'POWER / RECEIVER POWER ON/OFF' (RECEIVER MAIN, Code (ID1) '7E81-2AD5'): NEC1-f16 device 126 subdevice 129 function 10965 (bytes 7E 81 2A D5)")
+    scene = files["RX-V1067 (ID1)"]["keys"]["KEY_SCENE_1_BD_SLASH_DVD"]["forms"][0]
+    assert scene["source"].startswith("awe-europe.com Yamaha control documents/STD_IR_RXV667-3067.pdf@c9e5d6d1 (retrieved 2026-11-12, from the Wayback Machine snapshot 20160103045540) page 1 row 'MEMORY / SCENE 1 (BD/DVD)'")
+    assert scene["source"].endswith("the table's comment on the row is `BD/DVD(667, 767, 867), 1(1067, 2067, 3067)`")
+    assert "KEY_SCENE_1_BD_SLASH_DVD_ZONE2" not in files["RX-V667 (ID1)"]["keys"] and "KEY_SCENE_1_BD_SLASH_DVD_ZONE2" in files["RX-V1067 (ID1)"]["keys"]        # `1(1067, 2067, 3067)`
+    assert [s["label"] for s in files["RX-V671 (ID1)"]["keys"].values() if s["label"].startswith("SEARCH or HOLD or TAG")][:2] == ["SEARCH or HOLD or TAG SEARCH- or HOLD", "SEARCH or HOLD or TAG SEARCH- or HOLD (ZONE2)"]
+
+
+@functools.lru_cache(maxsize=1)
+def yamaha_frames_in_other_sources() -> frozenset:
+    """The frames of the Yamaha NEC remotes of the ledger's four other sources that cite or copy these tables (the IR Blaster database's, the JP1 upgrades', LIRC's and hifi-remote's)."""
+    def frame(form, protocol):
+        d, sub, fn = int(form["device"], 0), int(form.get("subdevice", "0"), 0), int(form["function"], 0)
+        return (d, sub, fn >> 8, fn & 0xFF) if protocol == "NEC1-f16" else (d, sub, fn, fn ^ 0xFF)
+    theirs = set()
+    for source in ("irblaster", "jp1", "lirc", "hifi-remote"):
+        for path in sorted((ROOT / "remotes" / source).rglob("*.json")):
+            doc = load(path)
+            if (doc.get("protocol") or {}).get("name") not in ("NEC1", "NEC1-f16", "NEC2") or "amaha" not in (path.relative_to(ROOT).as_posix() + doc.get("manufacturer", "")).replace("YAMAHA", "Yamaha"):
+                continue
+            for spec in doc["keys"].values():
+                for f in spec["forms"]:
+                    if "device" in f and "function" in f:
+                        theirs.add(frame(f, doc["protocol"]["name"]))
+    return frozenset(theirs)
+
+
+def test_the_ledgers_other_yamaha_nec_remotes_have_87_percent_of_the_awe_europe_frames_and_117_are_new():
+    """**842 of the 968 distinct frames are in the four other sources' Yamaha NEC remotes, 851 in them and §87's files together: 117 are new.**"""
+    def frame(form):
+        return (int(form["device"], 0), int(form["subdevice"], 0), int(form["function"], 0) >> 8, int(form["function"], 0) & 0xFF)
+    ours = {frame(s["forms"][0]) for f in yamaha_awe_files().values() for s in f["keys"].values()}
+    earlier = {frame(s["forms"][0]) for f in yamaha_files().values() for s in f["keys"].values()}
+    theirs = yamaha_frames_in_other_sources()
+    assert (len(ours), len(ours & theirs), len(ours & (theirs | earlier)), len(ours - theirs - earlier)) == (968, 842, 851, 117)
 
 
 # --- Harman: JBL Synthesis and Lexicon -----------------------------------------------------------------------------------------
