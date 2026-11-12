@@ -7,7 +7,7 @@ size, SHA-256, the retrieval date (today: do not pass --date) and the server's `
 (and, for a copy from the Wayback Machine, the address and snapshot it was archived from). Run it, then
 ``tools/official_sheets_to_csv.py <maker>`` for the spreadsheets, review the diff, and import.
 
-    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc|benq|peerless|arcam|infocus|lyngdorf|emotiva|denon|hitachi|classe|cyrus|yamaha|harman|cambridge|hegel|cary|nad|simaudio|rotel|optoma
+    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc|benq|peerless|arcam|infocus|lyngdorf|emotiva|denon|hitachi|classe|cyrus|yamaha|harman|cambridge|hegel|cary|nad|simaudio|rotel|optoma|dune
 """
 
 from __future__ import annotations
@@ -353,6 +353,12 @@ DOCUMENTS = {
     "optoma": [
         *[(f"{m}_ir.pdf", f"https://www.audiogeneral.com/Optoma/{m}_ir.pdf", None) for m in ("eh501", "w501", "x501", "gt750e", "hd33", "th7500nl", "tw1692", "tw536", "tx615", "tx762")],
         ("HD82-IRE-en-GB.pdf", "https://www.optoma.co.uk/uploads/IRRemote/HD82-IRE-en-GB.pdf", None),
+    ],
+    # Dune HD's two pages of IR codes (DESIGN section 102): its support page on the IR codes of its media players and remotes (the codes of the non-ATV players in a `<pre>`
+    # block) and the page of the Google IR codes of its Google-certified remotes (a table with a Pronto code for each key). Live pages of dune-hd.com.
+    "dune": [
+        ("ir.html", "https://dune-hd.com/support/ir/", None),
+        ("dunehd_google_ir_codes.html", "https://dune-hd.com/support/ir/dunehd_google_ir_codes.html", None),
     ],
     "simaudio": [
         ("Simaudio-RC-5-IR-codes-rev1.1.pdf", "https://simaudio.com/wp-content/uploads/2019/11/Simaudio-RC-5-IR-codes-rev1.1.pdf", None),

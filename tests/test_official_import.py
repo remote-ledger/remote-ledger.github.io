@@ -13,7 +13,7 @@ from pathlib import Path
 import pytest
 
 from remote_ledger.errors import ValidationError
-from remote_ledger.official import anthem, arcam, benq, peerless, cambridge, cary, classe, cyrus, denon, denon_pdf as dp, denon_sheets as ds, emotiva, harman, hegel, hitachi, infocus, jvc, kef, lyngdorf, marantz, nad, oppo, optoma, rotel, simaudio, yamaha, harman
+from remote_ledger.official import anthem, arcam, benq, peerless, cambridge, cary, classe, cyrus, denon, denon_pdf as dp, denon_sheets as ds, dune, emotiva, harman, hegel, hitachi, infocus, jvc, kef, lyngdorf, marantz, nad, oppo, optoma, rotel, simaudio, yamaha, harman
 from remote_ledger.official import importer as oi
 from remote_ledger.official.common import MANIFEST, Report, load_snapshot
 from remote_ledger.serialize import load
@@ -27,7 +27,7 @@ SNAPSHOT = ROOT / oi.SNAPSHOT
 
 def test_every_document_and_csv_is_the_one_the_manifest_pins():
     for maker, retrieved in (("marantz", "2026-10-08"), ("anthem", "2026-10-08"), ("oppo", "2026-10-09"), ("kef", "2026-10-13"),
-                             ("jvc", "2026-10-13"), ("arcam", "2026-10-13"), ("cambridge", "2026-10-13"), ("hegel", "2026-10-13"), ("cary", "2026-10-13"), ("infocus", "2026-10-15"), ("lyngdorf", "2026-10-16"), ("emotiva", "2026-10-16"), ("denon", "2026-10-16"), ("hitachi", "2026-10-16"), ("classe", "2026-10-16"), ("cyrus", "2026-10-16"), ("yamaha", "2026-10-16"), ("optoma", "2026-11-12"), ("harman", "2026-10-16"), ("benq", "2026-10-18"), ("peerless", "2026-10-18"), ("nad", "2026-10-14"), ("simaudio", "2026-10-13"), ("rotel", "2026-10-13")):
+                             ("jvc", "2026-10-13"), ("arcam", "2026-10-13"), ("cambridge", "2026-10-13"), ("hegel", "2026-10-13"), ("cary", "2026-10-13"), ("infocus", "2026-10-15"), ("lyngdorf", "2026-10-16"), ("emotiva", "2026-10-16"), ("denon", "2026-10-16"), ("hitachi", "2026-10-16"), ("classe", "2026-10-16"), ("cyrus", "2026-10-16"), ("yamaha", "2026-10-16"), ("optoma", "2026-11-12"), ("dune", "2026-11-12"), ("harman", "2026-10-16"), ("benq", "2026-10-18"), ("peerless", "2026-10-18"), ("nad", "2026-10-14"), ("simaudio", "2026-10-13"), ("rotel", "2026-10-13")):
         snap = load_snapshot(SNAPSHOT / maker)
         assert snap.maker == maker and snap.retrieved == retrieved
         assert snap.documents and snap.sheets
@@ -465,13 +465,13 @@ def test_the_committed_official_import_keeps_r19():
     or Untested, and a citation that names a document the manifest pins, by hash."""
     assert (ROOT / oi.IMPORT_ROOT / "README.md").is_file() and (ROOT / oi.IMPORT_ROOT / oi.REPORT).is_file()
     hashes, dates, snapshots = {}, {}, {}
-    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "benq", "peerless", "arcam", "cambridge", "hegel", "cary", "infocus", "lyngdorf", "emotiva", "denon", "hitachi", "classe", "cyrus", "yamaha", "harman", "nad", "simaudio", "rotel", "optoma"):
+    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "benq", "peerless", "arcam", "cambridge", "hegel", "cary", "infocus", "lyngdorf", "emotiva", "denon", "hitachi", "classe", "cyrus", "yamaha", "harman", "nad", "simaudio", "rotel", "optoma", "dune"):
         manifest = json.loads((SNAPSHOT / maker / MANIFEST).read_text(encoding="utf-8"))
         for name, entry in manifest["documents"].items():
             hashes[name], dates[name], snapshots[name] = entry["sha256"], entry.get("retrieved", manifest["retrieved"]), entry.get("snapshot")
     shape = re.compile(r"^(?:marantz\.com archive-downloads|anthemav\.com \(storage\.googleapis\.com/sandbox1-anthemav/an\)"
-                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|caryaudio\.com IR Remote Codes|infocus\.com IR code PDFs|lyngdorf\.com IR code PDF|emotiva\.com IR code PDFs|denon\.co\.uk RC code list|denon\.com Master IR Hex|snapav\.com Denon IR code documents|assets\.denon\.com IR code documents|hitachi-america\.us IR code documents|classeaudio\.com IR code documents|cyrusaudio\.com remote code tables|snapav\.com Yamaha IR code PDFs|awe-europe\.com Yamaha control documents|audiogeneral\.com Optoma IR code PDFs|optoma\.co\.uk IR code PDFs|snapav\.com Marantz IR code workbook|jblsynthesis\.com custom installation notes|snapav\.com JVC LX projector code sheets|snapav\.com JVC remote control code tables|snapav\.com BenQ IR code sheet|cdn\.shopify\.com Peerless-AV Neptune IR code sheet|lexicon\.com custom installation notes|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/([^@]+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
-                       r"(?:, from the Wayback Machine snapshot (\d{14}))?\) (?:sheet '[^']+' row \d+|page \d+ row \d+|sheet (?:Standard|Extended) line \d+ row '|page \d+ '|page \d+ table \d+ row '|page \d+ row '|key \d+ '|row 'RC(?:SHP|KSK)\w+' \(|page \d+ table row ')")
+                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|caryaudio\.com IR Remote Codes|infocus\.com IR code PDFs|lyngdorf\.com IR code PDF|emotiva\.com IR code PDFs|denon\.co\.uk RC code list|denon\.com Master IR Hex|snapav\.com Denon IR code documents|assets\.denon\.com IR code documents|hitachi-america\.us IR code documents|classeaudio\.com IR code documents|cyrusaudio\.com remote code tables|snapav\.com Yamaha IR code PDFs|awe-europe\.com Yamaha control documents|audiogeneral\.com Optoma IR code PDFs|dune-hd\.com IR code pages|optoma\.co\.uk IR code PDFs|snapav\.com Marantz IR code workbook|jblsynthesis\.com custom installation notes|snapav\.com JVC LX projector code sheets|snapav\.com JVC remote control code tables|snapav\.com BenQ IR code sheet|cdn\.shopify\.com Peerless-AV Neptune IR code sheet|lexicon\.com custom installation notes|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/([^@]+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
+                       r"(?:, from the Wayback Machine snapshot (\d{14}))?\) (?:sheet '[^']+' row \d+|page \d+ row \d+|sheet (?:Standard|Extended) line \d+ row '|(?:line|row) \d+ '|page \d+ '|page \d+ table \d+ row '|page \d+ row '|key \d+ '|row 'RC(?:SHP|KSK)\w+' \(|page \d+ table row ')")
     files = sorted((ROOT / oi.IMPORT_ROOT).rglob("*.json"))
     assert len(files) > 180
     bad = []
@@ -4068,6 +4068,123 @@ def test_the_optoma_frames_are_mostly_in_the_ledgers_other_optoma_remotes_under_
                     if "device" in f and "function" in f and f.get("subdevice") is not None:
                         theirs.add(frame(f))
     assert (len(ours), len(ours & theirs)) == (112, 95)
+
+
+
+# --- Dune HD's IR codes (DESIGN section 102) -------------------------------------------------------------------------------------------------------------
+
+
+def dpre(*lines: str) -> list[list[str]]:
+    """The lines of a page's ``<pre>`` blocks as the sheet tool writes them: a row is a line."""
+    return [[line] for line in lines]
+
+
+def test_a_dune_key_is_a_label_and_the_customer_code_00_bf_a_data_byte_and_its_complement_and_a_note_that_says_which_remotes_have_it():
+    notes: list[str] = []
+    rows = dune.parse_ir(dpre("    POWER                    00 BF 43 BC", "    PLAY                     00 BF 48 B7        * RCU models with discrete PLAY and PAUSE buttons",
+                              '    PLAY/PAUSE               00 BF 48 B7        * RCU models with combined "PLAY/PAUSE" button', "    BAD                      00 BF 43 BD", "    OTHER                    01 BE 43 BC",
+                              "- Put the unit into hardware standby (full power-off) mode.", "    P, O, W, E, R, 1, ENTER"), notes)
+    assert [(r.label, r.device, r.subdevice, r.function, r.written, r.note, r.where) for r in rows] == [
+        ("POWER", 0, 0xBF, 0x43, "00 BF 43 BC", "", "line 1"), ("PLAY", 0, 0xBF, 0x48, "00 BF 48 B7", "RCU models with discrete PLAY and PAUSE buttons", "line 2"),
+        ("PLAY/PAUSE", 0, 0xBF, 0x48, "00 BF 48 B7", 'RCU models with combined "PLAY/PAUSE" button', "line 3")]
+    assert notes == ["ir.html line 4 'BAD': `00 BF 43 BD` is not the customer code 00 BF and a data byte and its complement",       # a key whose bytes are not what the page says is not read
+                     "ir.html line 5 'OTHER': `01 BE 43 BC` is not the customer code 00 BF and a data byte and its complement",
+                     "ir.html line 6: - Put the unit into hardware standby (full power-off) mode.", "ir.html line 7: P, O, W, E, R, 1, ENTER"]    # and a line that is not a key is a note
+    with pytest.raises(ValueError, match="no key read"):
+        dune.parse_ir(dpre("some words"), [])
+
+
+POWER_PRONTO = ("0000 006D 0022 0000 015D 00A7 0018 0012 0018 0012 0018 0012 0018 003D 0018 0012 0018 0012 0018 0012 0018 003D 0018 003D 001A 003B 001A 003D 0018 0012 0018 003D 0018 003D "
+                "001A 003B 001A 0011 001A 003D 0018 0011 001A 0011 001A 0011 001A 0011 001A 003B 001A 0011 001A 0011 001A 0011 0018 003D 001A 003D 0018 003D 001A 003B 001A 0011 0018 003D "
+                "001A 003D 0018 06C3")
+
+
+def test_the_google_pages_nec_code_is_the_frame_as_a_32_bit_number_and_its_pronto_code_is_decoded_to_the_same_four_bytes():
+    assert dune.pronto_bytes(POWER_PRONTO) == (0x6D, [0x88, 0x77, 0x21, 0xDE])                                       # `DE217788` as sent: 88 77 21 DE
+    assert dune.pronto_bytes("0000 006D 0022") == "not a Pronto code of one burst of 34 pairs" and dune.pronto_bytes("zz") == "not hexadecimal"
+    heading = ["1", "Key", "NEC IR code", "Pronto HEX code"]
+    notes: list[str] = []
+    rows = dune.parse_google([heading, ["1", "POWER", "DE217788", POWER_PRONTO], ["1", "WRONG", "DE217789", POWER_PRONTO], ["1", "SHORT", "DE2177", "0000"],
+                              ["1", "OTHERCODE", "DF207788", POWER_PRONTO]], notes)
+    assert [(r.label, r.device, r.subdevice, r.function, r.written, bool(r.doubt)) for r in rows] == [("POWER", 0x88, 0x77, 0x21, "DE217788", False), ("OTHERCODE", 0x88, 0x77, 0x20, "DF207788", True)]
+    assert "the page's Pronto code does not give the NEC code (carrier 006D, bytes 88 77 21 DE)" in rows[1].doubt            # the Pronto says another frame: Untested
+    assert notes == ["dunehd_google_ir_codes.html row 3 'WRONG': `DE217789` (89 77 21 DE as sent) has a byte pair that is not a byte and its complement",
+                     "dunehd_google_ir_codes.html row 4 'SHORT': `DE2177` is not a 32-bit NEC code"]
+    with pytest.raises(ValueError, match="the heading"):
+        dune.parse_google([["1", "Key", "Code", "Pronto"]], [])
+
+
+def dune_files() -> dict[str, dict]:
+    return {load(p)["model"]: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "dune").glob("*.json"))}
+
+
+def test_the_dune_pages_are_three_files_and_157_keys_the_codes_of_the_tv_boxes_remotes_under_two_customer_codes_and_the_google_remotes():
+    files = dune_files()
+    assert {n: len(f["keys"]) for n, f in files.items()} == {"IR codes (00 BF)": 67, "IR codes (CF CF)": 53, "Google IR codes": 37}
+    assert all(f["protocol"] == {"name": "NEC1", "carrierHz": 38000, "minSends": 1} and f["manufacturer"] == "Dune HD" for f in files.values())
+    assert Counter(s["forms"][0]["confidence"] for f in files.values() for s in f["keys"].values()) == {"plausible": 157}
+    old, new, google = files["IR codes (00 BF)"], files["IR codes (CF CF)"], files["Google IR codes"]
+    assert old["controls"][:3] == ["Dune HD Duo 4K", "Dune HD TV-102", "Dune HD TV-101"] and len(old["controls"]) == 18 and new["controls"] == ["Dune HD IR Remote", "Dune HD Slim IR Remote", "Dune HD Simple IR Remote"]
+    assert google["controls"] == ["Dune HD BOXY", "Dune HD Homatics Box 4K Plus"]
+    power, power2, gpower = (f["keys"]["KEY_POWER"]["forms"][0] for f in (old, new, google))
+    assert [(p["device"], p["subdevice"], p["function"]) for p in (power, power2, gpower)] == [("0x00", "0xBF", "0x43"), ("0xCF", "0xCF", "0x43"), ("0x88", "0x77", "0x21")]
+    assert power["source"] == "dune-hd.com IR code pages/ir.html@2f450872 (retrieved 2026-11-12) line 4 'POWER' (code 00 BF 43 BC): NEC1 device 0 subdevice 191 function 67"
+    assert power2["source"].endswith("NEC1 device 207 subdevice 207 function 67; the page says the latest remotes use `CF CF` instead of `00 BF` for these codes")
+    assert gpower["source"] == "dune-hd.com IR code pages/dunehd_google_ir_codes.html@07bd77c9 (retrieved 2026-11-12) row 2 'POWER' (code DE217788): NEC1 device 136 subdevice 119 function 33"
+
+
+def test_the_cf_cf_file_has_the_keys_that_are_not_discontinued_and_no_discrete_command_and_the_00_bf_file_all_of_them():
+    files = dune_files()
+    old, new = files["IR codes (00 BF)"]["keys"], files["IR codes (CF CF)"]["keys"]
+    assert "KEY_DISCRETE_MINUS_POWER_MINUS_ON" in old and "KEY_DISCRETE_MINUS_POWER_MINUS_ON" not in new and old["KEY_DISCRETE_MINUS_POWER_MINUS_ON"]["forms"][0]["function"] == "0x5F"
+    gone = [s["label"] for s in old.values() if s["label"] not in {x["label"] for x in new.values()}]
+    assert gone == ["PLAY/PAUSE (48)", "PLAY/PAUSE (1E)", "ANGLE/ROTATE", "REPEAT", "SHUFFLE/PIP", "URL/2nd audio", "REC (60)", "DUNE", "URL", "REC (55)", "PLAY/PAUSE (56)",
+                    "TOP MENU/DUNE", "KEYBRD", "DISCRETE-POWER-ON", "DISCRETE-POWER-OFF"]                 # 14 keys and the combined button, which is `PLAY/PAUSE` where it has no other
+    assert [s["label"] for s in new.values() if s["label"] not in {x["label"] for x in old.values()}] == ["PLAY/PAUSE"]
+    assert all("discontinued" not in s["forms"][0]["source"].split("`* ")[-1] for s in new.values() if "`* " in s["forms"][0]["source"])
+    # a label two keys share keeps the data byte that tells them apart (`REC` of two legacy remotes, `PLAY/PAUSE` of three), and a code that two keys share is explained by their notes
+    assert sorted(s["label"] for s in old.values() if re.match(r"^(REC|PLAY/PAUSE) \(", s["label"])) == ["PLAY/PAUSE (1E)", "PLAY/PAUSE (48)", "PLAY/PAUSE (56)", "REC (55)", "REC (60)"]
+    assert old["KEY_PLAY"]["forms"][0]["function"] == old["KEY_PLAY_SLASH_PAUSE_48"]["forms"][0]["function"] == "0x48"
+
+
+def test_the_sheet_tool_writes_the_lines_of_a_pre_block_as_the_pinned_csv_has_them_and_no_dune_page_has_a_notice_word():
+    import importlib.util
+    import html
+
+    spec = importlib.util.spec_from_file_location("official_sheets_to_csv", ROOT / "tools" / "official_sheets_to_csv.py")
+    tool = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(tool)
+    snapshot = load_snapshot(SNAPSHOT / "dune")
+    assert sorted(snapshot.documents) == ["dunehd_google_ir_codes.html", "ir.html"] and snapshot.retrieved == "2026-11-12"
+    assert tool.rows_of(SNAPSHOT / "dune" / "ir.html", "pre") == snapshot.sheet_of("ir.html", "pre") and snapshot.sheet_of("ir.html", "pre")[0] == ["    EJECT                    00 BF 10 EF"]
+    assert tool.rows_of(SNAPSHOT / "dune" / "dunehd_google_ir_codes.html", "tables") == snapshot.sheet_of("dunehd_google_ir_codes.html", "tables")
+    notice = re.compile(r"copyright|all rights|reserved|©|\(c\)|confidential|reproduc|trademark|proprietary|property of", re.I)
+    for name in snapshot.documents:
+        assert not notice.search(html.unescape((SNAPSHOT / "dune" / name).read_text(encoding="utf-8", errors="replace"))), name
+
+
+def test_the_google_pages_pronto_code_gives_its_nec_code_in_all_37_rows_and_the_00_bf_pages_complements_hold_in_all_67():
+    snapshot = load_snapshot(SNAPSHOT / "dune")
+    google = dune.parse_google(snapshot.sheet_of("dunehd_google_ir_codes.html", "tables"), [])
+    assert len(google) == 37 and not [r.label for r in google if r.doubt]
+    assert {(r.device, r.subdevice) for r in google} == {(0x88, 0x77)} and [r.label for r in google][:3] == ["POWER", "BOOKMARK", "SETUP"]
+    notes: list[str] = []
+    ir = dune.parse_ir(snapshot.sheet_of("ir.html", "pre"), notes)
+    assert len(ir) == 67 and len(notes) == 9 and all(int(n.split()[2].rstrip(":")) >= 68 for n in notes)         # the nine lines of the page's instructions after the table
+
+
+def test_dunes_00_bf_codes_are_mostly_in_the_ledgers_other_dune_remotes_and_the_cf_cf_and_google_codes_are_new():
+    """**59 of the 150 distinct frames are in the IR Blaster database's and the JP1 upgrades' Dune remotes**: those are the `00 BF` ones (the `CF CF` and Google frames are not there)."""
+    def frame(form):
+        return (int(form["device"], 0), int(form.get("subdevice", "0"), 0), int(form["function"], 0))
+    ours = {frame(s["forms"][0]) for f in dune_files().values() for s in f["keys"].values()}
+    theirs = set()
+    for path in sorted((ROOT / "remotes" / "irblaster" / "DUNE_HD").glob("*.json")) + sorted((ROOT / "remotes" / "jp1" / "Dune").glob("*.json")):
+        for spec in load(path)["keys"].values():
+            for f in spec["forms"]:
+                if "device" in f and "function" in f:
+                    theirs.add(frame(f))
+    assert (len(ours), len(ours & theirs), len({d for d, _, _ in ours & theirs})) == (150, 59, 1)
 
 
 # --- Harman: JBL Synthesis and Lexicon -----------------------------------------------------------------------------------------

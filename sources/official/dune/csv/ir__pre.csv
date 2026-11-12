@@ -1,0 +1,76 @@
+    EJECT                    00 BF 10 EF
+    MUTE                     00 BF 46 B9
+    MODE                     00 BF 45 BA
+    POWER                    00 BF 43 BC
+    A                        00 BF 40 BF
+    B                        00 BF 1F E0
+    C                        00 BF 00 FF
+    D                        00 BF 41 BE
+    1                        00 BF 0B F4
+    2                        00 BF 0C F3
+    3                        00 BF 0D F2
+    4                        00 BF 0E F1
+    5                        00 BF 0F F0
+    6                        00 BF 01 FE
+    7                        00 BF 11 EE
+    8                        00 BF 12 ED
+    9                        00 BF 13 EC
+    0                        00 BF 0A F5
+    CLEAR                    00 BF 05 FA
+    SELECT                   00 BF 42 BD
+    V+                       00 BF 52 AD
+    V-                       00 BF 53 AC
+    P+                       00 BF 4B B4
+    P-                       00 BF 4C B3
+    SEARCH                   00 BF 06 F9
+    ZOOM                     00 BF 02 FD
+    SETUP                    00 BF 4E B1
+    UP                       00 BF 15 EA
+    DOWN                     00 BF 16 E9
+    LEFT                     00 BF 17 E8
+    RIGHT                    00 BF 18 E7
+    ENTER                    00 BF 14 EB
+    RETURN                   00 BF 04 FB
+    INFO                     00 BF 50 AF
+    POP UP MENU              00 BF 07 F8
+    TOP MENU                 00 BF 51 AE
+    PLAY                     00 BF 48 B7        * RCU models with discrete PLAY and PAUSE buttons
+    PAUSE                    00 BF 1E E1        * RCU models with discrete PLAY and PAUSE buttons
+"    PLAY/PAUSE               00 BF 48 B7        * RCU models with combined ""PLAY/PAUSE"" button"
+    PREV                     00 BF 49 B6
+    NEXT                     00 BF 1D E2
+    STOP                     00 BF 19 E6
+    SLOW                     00 BF 1A E5
+    REW                      00 BF 1C E3
+    FWD                      00 BF 1B E4
+    SUBTITLE                 00 BF 54 AB
+    AUDIO                    00 BF 44 BB
+"    PLAY/PAUSE               00 BF 1E E1        * Just one legacy RCU revision shipped with some TV-102 batches, discontinued"
+"    ANGLE/ROTATE             00 BF 4D B2        * legacy only, discontinued"
+"    REPEAT                   00 BF 4F B0        * legacy big v1 only, discontinued"
+"    SHUFFLE/PIP              00 BF 47 B8        * legacy big v1 only, discontinued"
+"    URL/2nd audio            00 BF 03 FC        * legacy big v1 only, discontinued"
+"    REC                      00 BF 60 9F        * legacy big v2 only, discontinued"
+"    DUNE                     00 BF 61 9E        * legacy big v2 only, discontinued"
+"    URL                      00 BF 62 9D        * legacy big v2 only, discontinued"
+"    REC                      00 BF 55 AA        * legacy small only, discontinued"
+"    PLAY/PAUSE               00 BF 56 A9        * legacy small only, discontinued"
+"    TOP MENU/DUNE            00 BF 57 A8        * legacy small only, discontinued"
+"    KEYBRD                   00 BF 03 FC        * RCU models with KEYRBD button -- just one RCU model, discontinued"
+    MOUSE                    00 BF 4F B0        * RCU models with MOUSE button
+    RECENT / FAV1            00 BF 61 9E        * RCU models with RECENT / FAV1 button
+    FAVORITES / FAV2         00 BF 74 8B        * RCU models with FAVORITES / FAV2 button
+    TV                       00 BF 63 9C        * RCU models with TV button
+    MOVIES                   00 BF 47 B8        * RCU models with MOVIES button
+    MUSIC                    00 BF 58 A7        * RCU models with MUSIC button
+    DISCRETE-POWER-ON       00 BF 5F A0
+    DISCRETE-POWER-OFF      00 BF 5E A1
+- Put the unit into hardware standby (full power-off) mode.
+- Carefully direct the RC onto the IR eye.
+- Carefully press the following sequence of RC buttons:
+"    P, O, W, E, R, 1, ENTER"
+"- The unit should LED-blink once. If the unit does not blink, try again"
+"  several times. If it does not work, it means the unit has an old version"
+  of the MCU firmware and auto-power-on mode is not supported by the unit.
+"- To disable auto-power-on: the same, but press:"
+"    P, O, W, E, R, 0, ENTER"
