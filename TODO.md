@@ -17,7 +17,7 @@ sources have been imported under SPEC R19:
 - **Manufacturers' own IR tables**: Marantz's AV receiver charts, Anthem's IR
   hex sheet, Oppo's remote code workbooks, KEF's IR code sheets, JVC's
   projector guide, LX-NZ3 and LX-UH1 sheets and 2018 and LEO3 code tables, BenQ's LK952 code list, Peerless-AV's Neptune TV code sheet, Arcam's custom installation notes, two of Cambridge Audio's lists
-  of NEC codes, Hegel's RC-5 tables, Cary Audio's DMS table, InFocus's projector IR code PDFs, Lyngdorf's NEC code table, Emotiva's Pronto hex PDFs, Denon's AVR-4311 remote code list, master IR hex spreadsheet, X-series remote code lists of 2013 to 2020 and 24 per-model remote code lists of 2003 to 2012, Hitachi America's TV remote IR codes, Classé's IR code lists and HEX PDFs, Cyrus Audio's RC-5 tables, Yamaha's standard and extended IR code tables, JBL Synthesis's and Lexicon's RC-5 code sets, NAD's T-series IR tables and Crestron IR files, Simaudio's table of IR codes and Rotel's IR hex code PDFs, 940 files, 88,794
+  of NEC codes, Hegel's RC-5 tables, Cary Audio's DMS table and its ten other one-page sheets (§99), InFocus's projector IR code PDFs, Lyngdorf's NEC code table, Emotiva's Pronto hex PDFs, Denon's AVR-4311 remote code list, master IR hex spreadsheet, X-series remote code lists of 2013 to 2020 and 24 per-model remote code lists of 2003 to 2012, Hitachi America's TV remote IR codes, Classé's IR code lists and HEX PDFs, Cyrus Audio's RC-5 tables, Yamaha's standard and extended IR code tables, JBL Synthesis's and Lexicon's RC-5 code sets, NAD's T-series IR tables and Crestron IR files, Simaudio's table of IR codes and Rotel's IR hex code PDFs, 940 files, 88,794
   keys (DESIGN §29, §31, §58, §60, §62, §63, §64, §65, §66, §68, §69, §71, §72, §73, §74, §75, §76, §77, §78, §79, §80, §81, §82, §83, §84, §85, §86, §87, §88, §89, §90, §91, §92, §93, §94, §95; Linn's RC-5 table moved to the private repository, §70).
 
 SPEC v0.11 makes growing coverage from every source whose licence permits
@@ -100,8 +100,7 @@ Land it in two PRs, code and then data.
       table and not prose. Kaleidescape's PDF says "All rights reserved": a source
       of that kind goes to the private repository (D130).
 - [ ] **Leads of 2026-11-12 (a survey by an agent: each is to be fetched and its text searched for the notice words before it is read)**, no notice found in the text layer
-      of any of these: **Cary Audio's ten one-sheet RC-5 PDFs** for the CD303, CD303/200 and /300, CD306 and /200, DVD 6, DVD 7, CPA-1/CPA-2/SLP-03, Cinema 11a (two sheets) and DAC-200ts, on
-      `caryaudio.com/wp-content/uploads/2013/06/` (the same layout as the DMS table of §71); **Yamaha's Standard and Extended tables for the RX-V375 to V775 and RX-V667 to V3067**
+      of any of these: (Cary Audio's ten one-sheet RC-5 PDFs, the first of them, were read in §99: 13 files, 415 keys); **Yamaha's Standard and Extended tables for the RX-V375 to V775 and RX-V667 to V3067**
       (four PDFs in two zips, the Wayback Machine's copies of `awe-europe.com`'s control documents: the reading pattern of §87); **Optoma's discrete IR code PDFs** (about 11 documents
       for the EH501/W501/X501, TH7500-NL, TX785/TW775, TX665UTi, TW536, TX762, TW1692, TX615, HD33, GT750E and HD82: NEC, `32CD`, one key-code byte); **Hisense's prosumer TV
       RS-232/IR protocol** (v3.6 of 2017, five models, 64 keys with NEC 04FB, data, complement and a Pronto string, `assets.hisense-usa.com`); **Shinybow's matrix switchers**

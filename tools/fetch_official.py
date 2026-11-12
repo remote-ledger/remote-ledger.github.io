@@ -342,6 +342,13 @@ DOCUMENTS = {
     # of 38 keys with two system codes, no copyright or rights text, on its own host.
     "cary": [
         ("DMS-IR-Remote-Codes.pdf", "https://www.caryaudio.com/wp-content/uploads/2018/11/DMS-IR-Remote-Codes.pdf", None),
+        # ten more one-sheet tables of the same site (section 99), "All codes - to Philips RC-5 standard", dated 2004 to 2007: the CD303, CD303/200, CD303/300, CD306 and CD306/200 CD
+        # players, the DVD 6 and DVD 7, the CPA 1 / CPA 2 / SLP-03 preamplifiers, the Cinema 11a's main zone and second zone handsets (two pages) and the DAC-200ts (2015 folder)
+        *[(name, "https://caryaudio.com/wp-content/uploads/" + folder + "/" + name, None)
+          for folder, name in (("2013/06", "CD303_IR.pdf"), ("2013/06", "CD303200_IR.pdf"), ("2013/06", "CD303.300_IRCodes.pdf"), ("2013/06", "CD306_IR.pdf"),
+                               ("2013/06", "CD306200_IR.pdf"), ("2013/06", "DVD6_IRCodes.pdf"), ("2013/06", "DVD7_IRCodes.pdf"),
+                               ("2013/06", "CPA-1-CPA-2-SLP-03-IR-Remote-Codes2.pdf"), ("2013/06", "Cinema-11a-Zone-1-2-IR-Remote-Codes-2.pdf"),
+                               ("2015/03", "DAC-200ts-IR-Remote-Codes.pdf"))],
     ],
     # NAD's "IR Commands by Model" pages for its T-series receivers and processors, 3 pages each, no copyright or rights text: the members
     # of two zips of control documents on its site (the zips also hold RS-232 command lists and a test program, which are not read). The
