@@ -113,6 +113,7 @@ SHEETS = {
         {name: ["Standard/blocks", "Extended/blocks"] for name in ("IR_RX-V671-3071_rev1.0_Full.xls", "IR_Vx75.xls", "IR_Vx77.xls")},
     "optoma": {name: ["lines"] for name in ("eh501_ir.pdf", "w501_ir.pdf", "x501_ir.pdf", "gt750e_ir.pdf", "hd33_ir.pdf", "th7500nl_ir.pdf", "tw1692_ir.pdf", "tw536_ir.pdf", "tx615_ir.pdf", "tx762_ir.pdf",
                                               "HD82-IRE-en-GB.pdf")},
+    "dune": {"ir.html": ["pre"], "dunehd_google_ir_codes.html": ["tables"]},
     "classe": {name: ["cells"] for name in (
         "CAP-2100_IR_codes.pdf", "CDP-100_IR_codes_v1-20.pdf", "CDP-102_202_300_500_and_CDT-300_IR_codes_v1-19.pdf", "CP-500_IR_codes.pdf", "CP-700_IR_codes.pdf",
         "SSP-300_600_IR_codes_v1-20.pdf", "CLASSE_Delta_1_2_Amplifier_IR_Commands.pdf", "CLASSE_SSP-800_IR_codes_v1-24.pdf")} |
@@ -351,6 +352,10 @@ def rows_of(path: Path, sheet: str) -> list[list[str]]:
         return doc_paragraphs(path)
     if path.suffix.lower() == ".ir":
         return ir_records(path.read_bytes())
+    if path.suffix.lower() == ".html" and sheet == "pre":       # the lines of the ``<pre>`` blocks of a page (Dune HD's table of codes, D374): a row is one line, as written
+        import html as _html
+        return [[line.rstrip()] for block in re.findall(r"<pre[^>]*>(.*?)</pre>", path.read_text(encoding="utf-8", errors="replace"), flags=re.S)
+                for line in _html.unescape(re.sub(r"<[^>]+>", "", block)).splitlines() if line.strip()]
     if path.suffix.lower() == ".html":
         parser = _Table(every=sheet == "tables", links=sheet == "tables")
         parser.feed(path.read_text(encoding="utf-8"))
