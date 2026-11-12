@@ -13,7 +13,7 @@ the page, the table's number on it and the cells of one table row, so a table's 
 text and how it ended, ``cell`` (the mark that ends a table's cell, and a table's row: an empty ``cell`` is an empty cell or a row's end) or
 ``para``, in the document's order.
 
-    python3 tools/official_sheets_to_csv.py marantz|anthem|oppo|kef|jvc|benq|peerless|arcam|cambridge|hegel|cary|nad|simaudio|rotel
+    python3 tools/official_sheets_to_csv.py marantz|anthem|oppo|kef|jvc|benq|peerless|arcam|cambridge|hegel|cary|nad|simaudio|rotel|optoma
 """
 
 from __future__ import annotations
@@ -111,6 +111,8 @@ SHEETS = {
         "IR_RX-Vx75_375-775_STD.pdf", "IR_RX-Vx75_375-775_EXD.pdf", "STD_IR_RXV667-3067.pdf", "EXD_IR_RXV667-3067.pdf",
         "IR_RX-Ax30_A730_830_STD.pdf", "IR_RX-Ax30_A730_830_EXD.pdf")} |
         {name: ["Standard/blocks", "Extended/blocks"] for name in ("IR_RX-V671-3071_rev1.0_Full.xls", "IR_Vx75.xls", "IR_Vx77.xls")},
+    "optoma": {name: ["lines"] for name in ("eh501_ir.pdf", "w501_ir.pdf", "x501_ir.pdf", "gt750e_ir.pdf", "hd33_ir.pdf", "th7500nl_ir.pdf", "tw1692_ir.pdf", "tw536_ir.pdf", "tx615_ir.pdf", "tx762_ir.pdf",
+                                              "HD82-IRE-en-GB.pdf")},
     "classe": {name: ["cells"] for name in (
         "CAP-2100_IR_codes.pdf", "CDP-100_IR_codes_v1-20.pdf", "CDP-102_202_300_500_and_CDT-300_IR_codes_v1-19.pdf", "CP-500_IR_codes.pdf", "CP-700_IR_codes.pdf",
         "SSP-300_600_IR_codes_v1-20.pdf", "CLASSE_Delta_1_2_Amplifier_IR_Commands.pdf", "CLASSE_SSP-800_IR_codes_v1-24.pdf")} |
