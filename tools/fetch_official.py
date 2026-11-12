@@ -7,7 +7,7 @@ size, SHA-256, the retrieval date (today: do not pass --date) and the server's `
 (and, for a copy from the Wayback Machine, the address and snapshot it was archived from). Run it, then
 ``tools/official_sheets_to_csv.py <maker>`` for the spreadsheets, review the diff, and import.
 
-    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc|benq|peerless|arcam|infocus|lyngdorf|emotiva|denon|hitachi|classe|cyrus|yamaha|harman|cambridge|hegel|cary|nad|simaudio|rotel|optoma|dune
+    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc|benq|peerless|arcam|infocus|lyngdorf|emotiva|denon|hitachi|classe|cyrus|yamaha|harman|cambridge|hegel|cary|nad|simaudio|rotel|optoma|dune|hisense
 """
 
 from __future__ import annotations
@@ -359,6 +359,11 @@ DOCUMENTS = {
     "dune": [
         ("ir.html", "https://dune-hd.com/support/ir/", None),
         ("dunehd_google_ir_codes.html", "https://dune-hd.com/support/ir/dunehd_google_ir_codes.html", None),
+    ],
+    # Hisense USA's "RS-232/IR Protocol for Hisense Prosumer TV", version 3.6 of 17 April 2017 (DESIGN section 103): 18 pages, the discrete IR codes of five models on pages 4 to 9 (NEC, custom
+    # code 04 FB, with a Pronto code for each key) and the serial protocol after them (not read). The live file of assets.hisense-usa.com.
+    "hisense": [
+        ("Hisense-RS-232-and-IR-Protocol-English_2.pdf", "https://assets.hisense-usa.com/assets/ProductDownloads/18/5342defe83/Hisense-RS-232-and-IR-Protocol-English_2.pdf", None),
     ],
     "simaudio": [
         ("Simaudio-RC-5-IR-codes-rev1.1.pdf", "https://simaudio.com/wp-content/uploads/2019/11/Simaudio-RC-5-IR-codes-rev1.1.pdf", None),

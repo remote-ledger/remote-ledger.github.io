@@ -71,13 +71,14 @@ def parse_ir(rows: list[list[str]], notes: list[str]) -> list[Row]:
 
 
 def pronto_bytes(pronto: str) -> tuple[int, list[int]] | str:
-    """The carrier word and the four bytes (as sent) of a Pronto code of an NEC frame: a leader of about 9 ms and 4.5 ms and 32 bits, a space of about three marks being a one."""
+    """The carrier word and the four bytes (as sent) of a Pronto code of an NEC frame: a leader of about 9 ms and 4.5 ms and 32 bits, a space of about three marks being a one;
+    the repeat sequence (none, as on Dune HD's page, or NEC's two pairs, as on Hisense's) is not read."""
     try:
         words = [int(w, 16) for w in pronto.split()]
     except ValueError:
         return "not hexadecimal"
-    if len(words) < 6 or words[0] != 0 or words[2] != 0x22 or words[3] != 0:
-        return "not a Pronto code of one burst of 34 pairs"
+    if len(words) < 6 or words[0] != 0 or words[2] != 0x22 or words[3] not in (0, 2):
+        return "not a Pronto code with a once-sequence of 34 pairs and no repeat or the 2 pairs of NEC's"
     pairs = list(zip(words[4::2], words[5::2]))[:34]
     if len(pairs) != 34 or not (0x140 <= pairs[0][0] <= 0x170 and 0x90 <= pairs[0][1] <= 0xB0):
         return "no NEC leader and 33 pairs after it"

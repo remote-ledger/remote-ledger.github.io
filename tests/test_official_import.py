@@ -13,7 +13,7 @@ from pathlib import Path
 import pytest
 
 from remote_ledger.errors import ValidationError
-from remote_ledger.official import anthem, arcam, benq, peerless, cambridge, cary, classe, cyrus, denon, denon_pdf as dp, denon_sheets as ds, dune, emotiva, harman, hegel, hitachi, infocus, jvc, kef, lyngdorf, marantz, nad, oppo, optoma, rotel, simaudio, yamaha, harman
+from remote_ledger.official import anthem, arcam, benq, peerless, cambridge, cary, classe, cyrus, denon, denon_pdf as dp, denon_sheets as ds, dune, emotiva, harman, hegel, hisense, hitachi, infocus, jvc, kef, lyngdorf, marantz, nad, oppo, optoma, rotel, simaudio, yamaha, harman
 from remote_ledger.official import importer as oi
 from remote_ledger.official.common import MANIFEST, Report, load_snapshot
 from remote_ledger.serialize import load
@@ -27,7 +27,7 @@ SNAPSHOT = ROOT / oi.SNAPSHOT
 
 def test_every_document_and_csv_is_the_one_the_manifest_pins():
     for maker, retrieved in (("marantz", "2026-10-08"), ("anthem", "2026-10-08"), ("oppo", "2026-10-09"), ("kef", "2026-10-13"),
-                             ("jvc", "2026-10-13"), ("arcam", "2026-10-13"), ("cambridge", "2026-10-13"), ("hegel", "2026-10-13"), ("cary", "2026-10-13"), ("infocus", "2026-10-15"), ("lyngdorf", "2026-10-16"), ("emotiva", "2026-10-16"), ("denon", "2026-10-16"), ("hitachi", "2026-10-16"), ("classe", "2026-10-16"), ("cyrus", "2026-10-16"), ("yamaha", "2026-10-16"), ("optoma", "2026-11-12"), ("dune", "2026-11-12"), ("harman", "2026-10-16"), ("benq", "2026-10-18"), ("peerless", "2026-10-18"), ("nad", "2026-10-14"), ("simaudio", "2026-10-13"), ("rotel", "2026-10-13")):
+                             ("jvc", "2026-10-13"), ("arcam", "2026-10-13"), ("cambridge", "2026-10-13"), ("hegel", "2026-10-13"), ("cary", "2026-10-13"), ("infocus", "2026-10-15"), ("lyngdorf", "2026-10-16"), ("emotiva", "2026-10-16"), ("denon", "2026-10-16"), ("hitachi", "2026-10-16"), ("classe", "2026-10-16"), ("cyrus", "2026-10-16"), ("yamaha", "2026-10-16"), ("optoma", "2026-11-12"), ("dune", "2026-11-12"), ("hisense", "2026-11-12"), ("harman", "2026-10-16"), ("benq", "2026-10-18"), ("peerless", "2026-10-18"), ("nad", "2026-10-14"), ("simaudio", "2026-10-13"), ("rotel", "2026-10-13")):
         snap = load_snapshot(SNAPSHOT / maker)
         assert snap.maker == maker and snap.retrieved == retrieved
         assert snap.documents and snap.sheets
@@ -465,12 +465,12 @@ def test_the_committed_official_import_keeps_r19():
     or Untested, and a citation that names a document the manifest pins, by hash."""
     assert (ROOT / oi.IMPORT_ROOT / "README.md").is_file() and (ROOT / oi.IMPORT_ROOT / oi.REPORT).is_file()
     hashes, dates, snapshots = {}, {}, {}
-    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "benq", "peerless", "arcam", "cambridge", "hegel", "cary", "infocus", "lyngdorf", "emotiva", "denon", "hitachi", "classe", "cyrus", "yamaha", "harman", "nad", "simaudio", "rotel", "optoma", "dune"):
+    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "benq", "peerless", "arcam", "cambridge", "hegel", "cary", "infocus", "lyngdorf", "emotiva", "denon", "hitachi", "classe", "cyrus", "yamaha", "harman", "nad", "simaudio", "rotel", "optoma", "dune", "hisense"):
         manifest = json.loads((SNAPSHOT / maker / MANIFEST).read_text(encoding="utf-8"))
         for name, entry in manifest["documents"].items():
             hashes[name], dates[name], snapshots[name] = entry["sha256"], entry.get("retrieved", manifest["retrieved"]), entry.get("snapshot")
     shape = re.compile(r"^(?:marantz\.com archive-downloads|anthemav\.com \(storage\.googleapis\.com/sandbox1-anthemav/an\)"
-                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|caryaudio\.com IR Remote Codes|infocus\.com IR code PDFs|lyngdorf\.com IR code PDF|emotiva\.com IR code PDFs|denon\.co\.uk RC code list|denon\.com Master IR Hex|snapav\.com Denon IR code documents|assets\.denon\.com IR code documents|hitachi-america\.us IR code documents|classeaudio\.com IR code documents|cyrusaudio\.com remote code tables|snapav\.com Yamaha IR code PDFs|awe-europe\.com Yamaha control documents|audiogeneral\.com Optoma IR code PDFs|dune-hd\.com IR code pages|optoma\.co\.uk IR code PDFs|snapav\.com Marantz IR code workbook|jblsynthesis\.com custom installation notes|snapav\.com JVC LX projector code sheets|snapav\.com JVC remote control code tables|snapav\.com BenQ IR code sheet|cdn\.shopify\.com Peerless-AV Neptune IR code sheet|lexicon\.com custom installation notes|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/([^@]+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
+                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|caryaudio\.com IR Remote Codes|infocus\.com IR code PDFs|lyngdorf\.com IR code PDF|emotiva\.com IR code PDFs|denon\.co\.uk RC code list|denon\.com Master IR Hex|snapav\.com Denon IR code documents|assets\.denon\.com IR code documents|hitachi-america\.us IR code documents|classeaudio\.com IR code documents|cyrusaudio\.com remote code tables|snapav\.com Yamaha IR code PDFs|awe-europe\.com Yamaha control documents|audiogeneral\.com Optoma IR code PDFs|dune-hd\.com IR code pages|assets\.hisense-usa\.com RS-232 and IR protocol PDF|optoma\.co\.uk IR code PDFs|snapav\.com Marantz IR code workbook|jblsynthesis\.com custom installation notes|snapav\.com JVC LX projector code sheets|snapav\.com JVC remote control code tables|snapav\.com BenQ IR code sheet|cdn\.shopify\.com Peerless-AV Neptune IR code sheet|lexicon\.com custom installation notes|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/([^@]+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
                        r"(?:, from the Wayback Machine snapshot (\d{14}))?\) (?:sheet '[^']+' row \d+|page \d+ row \d+|sheet (?:Standard|Extended) line \d+ row '|(?:line|row) \d+ '|page \d+ '|page \d+ table \d+ row '|page \d+ row '|key \d+ '|row 'RC(?:SHP|KSK)\w+' \(|page \d+ table row ')")
     files = sorted((ROOT / oi.IMPORT_ROOT).rglob("*.json"))
     assert len(files) > 180
@@ -4101,7 +4101,7 @@ POWER_PRONTO = ("0000 006D 0022 0000 015D 00A7 0018 0012 0018 0012 0018 0012 001
 
 def test_the_google_pages_nec_code_is_the_frame_as_a_32_bit_number_and_its_pronto_code_is_decoded_to_the_same_four_bytes():
     assert dune.pronto_bytes(POWER_PRONTO) == (0x6D, [0x88, 0x77, 0x21, 0xDE])                                       # `DE217788` as sent: 88 77 21 DE
-    assert dune.pronto_bytes("0000 006D 0022") == "not a Pronto code of one burst of 34 pairs" and dune.pronto_bytes("zz") == "not hexadecimal"
+    assert dune.pronto_bytes("0000 006D 0022") == "not a Pronto code with a once-sequence of 34 pairs and no repeat or the 2 pairs of NEC's" and dune.pronto_bytes("zz") == "not hexadecimal"
     heading = ["1", "Key", "NEC IR code", "Pronto HEX code"]
     notes: list[str] = []
     rows = dune.parse_google([heading, ["1", "POWER", "DE217788", POWER_PRONTO], ["1", "WRONG", "DE217789", POWER_PRONTO], ["1", "SHORT", "DE2177", "0000"],
@@ -4185,6 +4185,108 @@ def test_dunes_00_bf_codes_are_mostly_in_the_ledgers_other_dune_remotes_and_the_
                 if "device" in f and "function" in f:
                     theirs.add(frame(f))
     assert (len(ours), len(ours & theirs), len({d for d, _, _ in ours & theirs})) == (150, 59, 1)
+
+
+
+# --- Hisense: the discrete IR codes of its Prosumer TVs (DESIGN section 103) -----------------------------------------------------------------------------
+
+HPRONTO = ("0000 006C 0022 0002 015B 00AD 0016 0016 0016 0016 0016 0041 0016 0016 0016 0016 0016 0016 0016 0016 0016 0016 0016 0041 0016 0041 0016 0016 0016 0041 0016 0041 0016 0041 "
+           "0016 0041 0016 0041 0016 0016 0016 0016 0016 0016 0016 0016 0016 0041 0016 0041 0016 0041 0016 0016 0016 0041 0016 0041 0016 0041 0016 0041 0016 0016 0016 0016 0016 0016 "
+           "0016 0041 0016 05F7 015B 0057 0016 0E6C")                                                       # POWER (toggle): 04 FB 70 8F, with NEC's repeat of two pairs
+
+
+def hrows(*rows: tuple) -> list[list[str]]:
+    """The rows of the tables of pages 4 to 9 as the sheet tool writes them: ``page, table, function, low, high, data, complement, complete hex, Pronto``."""
+    return [["4", "1", "DISCRETE CODES", "", "", "", "", "", ""], ["4", "1", *hisense.HEADING]] + [["4", "1", *r] for r in rows]
+
+
+def test_the_hisense_title_says_its_version_and_five_models_by_two_names_each():
+    page = [["1", "RS-232/IR Protocol for"], ["1", "Hisense® Prosumer TV"], ["1", "Version 3.6"], ["1", "17 April 2017"], ["1", "Models"], ["1", "55F1600 | LTDN55K2205BWUS"],
+            ["1", "55U1600 | HU55K324UBWG"], ["1", "65U1600 | LTDN65K550GUBWUS"], ["1", "75U1600 | LTDN75K700GUBWUS"], ["1", "86U1600 | LTDN86XT910MUBWUS"], ["1", "Questions?  Give us a call"]]
+    assert hisense.parse_models(page) == [("55F1600", "LTDN55K2205BWUS"), ("55U1600", "HU55K324UBWG"), ("65U1600", "LTDN65K550GUBWUS"), ("75U1600", "LTDN75K700GUBWUS"), ("86U1600", "LTDN86XT910MUBWUS")]
+    with pytest.raises(ValueError, match="does not say `Version 3.6`"):
+        hisense.parse_models([r for r in page if r[1] != "Version 3.6"])
+    with pytest.raises(ValueError, match="no `Models`"):
+        hisense.parse_models([r for r in page if r[1] != "Models"])
+    with pytest.raises(ValueError, match="4 models, not 5"):
+        hisense.parse_models(page[:9] + page[10:])
+
+
+def test_a_hisense_row_is_a_customer_code_and_a_data_byte_with_their_complements_and_a_pronto_code_that_must_say_the_same():
+    notes: list[str] = []
+    rows = hisense.parse_table(hrows(("POWER (toggle)", "04", "FB", "70", "8F", "04FB 708F", HPRONTO), ("Digit “0”", "04", "FB", "70", "8F", "04FB 708F", HPRONTO),
+                                     ("BADDATA", "04", "FB", "70", "8E", "04FB 708E", HPRONTO), ("BADCUSTOM", "04", "FA", "70", "8F", "04FA 708F", HPRONTO), ("NOTHEX", "04", "FB", "7G", "8F", "", ""),
+                                     ("OTHERPRONTO", "04", "FB", "71", "8E", "04FB 718E", HPRONTO), ("OTHERHEX", "04", "FB", "70", "8F", "04FB 7000", HPRONTO)), notes)
+    assert [(r.function, r.low, r.high, r.data, r.complement, bool(r.doubt)) for r in rows] == [
+        ("POWER (toggle)", 4, 0xFB, 0x70, 0x8F, False), ('Digit "0"', 4, 0xFB, 0x70, 0x8F, False), ("OTHERPRONTO", 4, 0xFB, 0x71, 0x8E, True), ("OTHERHEX", 4, 0xFB, 0x70, 0x8F, True)]
+    assert "the table's Pronto code gives carrier 006C, bytes 04 FB 70 8F" in rows[2].doubt and "the table's complete code `04FB 7000` is not `04FB 708F`" in rows[3].doubt
+    assert notes == ["page 4 'BADDATA': `04 FB 70 8E` has a byte pair that is not a byte and its complement", "page 4 'BADCUSTOM': `04 FA 70 8F` has a byte pair that is not a byte and its complement",
+                     "page 4 'NOTHEX': `04 FB 7G 8F` are not four bytes"]
+    bad = hrows(("POWER", "04", "FB", "70", "8F", "04FB 708F", HPRONTO))
+    bad[1][3] = "LOW"
+    with pytest.raises(ValueError, match="the heading"):
+        hisense.parse_table(bad, [])
+    with pytest.raises(ValueError, match="a row of 3 cells"):
+        hisense.parse_table(hrows(("POWER", "04", "FB")), [])
+    with pytest.raises(ValueError, match="no key read"):
+        hisense.parse_table(hrows(), [])
+
+
+def hisense_files() -> dict[str, dict]:
+    return {load(p)["model"]: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "hisense").glob("*.json"))}
+
+
+def test_the_hisense_table_is_five_files_of_the_same_64_keys_all_plausible_since_each_pronto_code_says_what_its_row_does():
+    files = hisense_files()
+    assert sorted(files) == ["55F1600", "55U1600 (Hisense table)", "65U1600", "75U1600", "86U1600"]               # the JP1 upgrade of the 55U1600 has the name (R15)
+    assert all(len(f["keys"]) == 64 and f["protocol"] == {"name": "NEC1", "carrierHz": 38400, "minSends": 1} and f["manufacturer"] == "Hisense" for f in files.values())
+    assert Counter(s["forms"][0]["confidence"] for f in files.values() for s in f["keys"].values()) == {"plausible": 320}
+    assert files["55F1600"]["controls"] == ["Hisense 55F1600", "Hisense LTDN55K2205BWUS"] and files["55U1600 (Hisense table)"]["controls"] == ["Hisense 55U1600", "Hisense HU55K324UBWG"]
+    assert all(f["keys"] == files["55F1600"]["keys"] for f in files.values())
+    keys = files["55F1600"]["keys"]
+    power = keys["KEY_POWER_TOGGLE"]["forms"][0]
+    assert (power["device"], power["subdevice"], power["function"]) == ("0x04", "0xFB", "0x70")
+    assert power["source"] == ("assets.hisense-usa.com RS-232 and IR protocol PDF/Hisense-RS-232-and-IR-Protocol-English_2.pdf@f0790e8f (retrieved 2026-11-12) page 4 row 'POWER (toggle)' "
+                               "(code 04 FB 70 8F): NEC1 device 4 subdevice 251 function 112")
+    assert [s["forms"][0]["function"] for s in keys.values()][:4] == ["0x70", "0x71", "0x72", "0x73"] and keys["KEY_GUIDE_TOGGLE"]["forms"][0]["function"] == "0xAE"
+    assert keys["KEY_ASPECT_RATIO_NOMAL_4_3"]["label"] == "ASPECT RATIO: NOMAL 4:3"                                 # the table's own spelling
+    assert sorted(int(s["forms"][0]["function"], 0) for s in keys.values()) == list(range(0x70, 0x70 + 64)) or len({s["forms"][0]["function"] for s in keys.values()}) == 64
+
+
+def test_the_sheet_tool_reads_pages_and_tables_of_a_range_as_the_pinned_csv_has_them_and_the_hisense_pdf_has_no_notice_word():
+    pytest.importorskip("pymupdf")
+    import importlib.util
+    import pymupdf
+
+    spec = importlib.util.spec_from_file_location("official_sheets_to_csv", ROOT / "tools" / "official_sheets_to_csv.py")
+    tool = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(tool)
+    snapshot = load_snapshot(SNAPSHOT / "hisense")
+    path = SNAPSHOT / "hisense" / hisense.FILE
+    assert snapshot.retrieved == "2026-11-12" and list(snapshot.documents) == [hisense.FILE]
+    assert tool.rows_of(path, "pages 1-1") == snapshot.sheet_of(hisense.FILE, "pages 1-1") and tool.rows_of(path, "tables 4-9") == snapshot.sheet_of(hisense.FILE, "tables 4-9")
+    assert {r[0] for r in snapshot.sheet_of(hisense.FILE, "tables 4-9")} == {"4", "5", "6", "7", "8", "9"} and len(tool.rows_of(path, "tables")) > len(snapshot.sheet_of(hisense.FILE, "tables 4-9"))
+    notice = re.compile(r"copyright|all rights|reserved|©|\(c\)|confidential|reproduc|trademark|proprietary|property of", re.I)
+    assert not notice.search(" ".join(page.get_text() for page in pymupdf.open(str(path))))
+    models = hisense.parse_models(snapshot.sheet_of(hisense.FILE, "pages 1-1"))
+    rows = hisense.parse_table(snapshot.sheet_of(hisense.FILE, "tables 4-9"), [])
+    assert len(models) == 5 and len(rows) == 64 and not [r.function for r in rows if r.doubt] and {r.page for r in rows} == {4, 5, 6, 7, 8, 9}
+
+
+def test_all_64_hisense_frames_are_in_the_ledgers_other_hisense_remotes_so_these_files_add_the_models_and_the_table_and_no_signal():
+    def frame(form):
+        return (int(form["device"], 0), int(form["subdevice"], 0), int(form["function"], 0))
+    ours = {frame(s["forms"][0]) for s in hisense_files()["55F1600"]["keys"].values()}
+    theirs = set()
+    for source in ("jp1", "smartir", "irblaster", "lirc"):
+        for path in sorted((ROOT / "remotes" / source).rglob("*.json")):
+            if "isense" not in path.relative_to(ROOT).as_posix().replace("HISENSE", "Hisense").replace("HiSense", "Hisense"):
+                continue
+            for spec in load(path)["keys"].values():
+                for f in spec["forms"]:
+                    if "device" in f and "function" in f and f.get("subdevice") is not None:
+                        theirs.add(frame(f))
+    assert (len(ours), len(ours & theirs)) == (64, 64)
 
 
 # --- Harman: JBL Synthesis and Lexicon -----------------------------------------------------------------------------------------

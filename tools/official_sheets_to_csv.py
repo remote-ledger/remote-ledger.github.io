@@ -114,6 +114,7 @@ SHEETS = {
     "optoma": {name: ["lines"] for name in ("eh501_ir.pdf", "w501_ir.pdf", "x501_ir.pdf", "gt750e_ir.pdf", "hd33_ir.pdf", "th7500nl_ir.pdf", "tw1692_ir.pdf", "tw536_ir.pdf", "tx615_ir.pdf", "tx762_ir.pdf",
                                               "HD82-IRE-en-GB.pdf")},
     "dune": {"ir.html": ["pre"], "dunehd_google_ir_codes.html": ["tables"]},
+    "hisense": {"Hisense-RS-232-and-IR-Protocol-English_2.pdf": ["pages 1-1", "tables 4-9"]},
     "classe": {name: ["cells"] for name in (
         "CAP-2100_IR_codes.pdf", "CDP-100_IR_codes_v1-20.pdf", "CDP-102_202_300_500_and_CDT-300_IR_codes_v1-19.pdf", "CP-500_IR_codes.pdf", "CP-700_IR_codes.pdf",
         "SSP-300_600_IR_codes_v1-20.pdf", "CLASSE_Delta_1_2_Amplifier_IR_Commands.pdf", "CLASSE_SSP-800_IR_codes_v1-24.pdf")} |
@@ -363,9 +364,10 @@ def rows_of(path: Path, sheet: str) -> list[list[str]]:
     if path.suffix.lower() == ".pdf":
         import pymupdf
         pdf = pymupdf.open(str(path))
-        if sheet == "tables":       # every table the library finds on every page: page, table number and the cells as text
+        if sheet == "tables" or sheet.startswith("tables "):       # every table the library finds on every page (``tables 4-9``: on those pages): page, table number and the cells as text
+            first, last = (1, len(pdf)) if sheet == "tables" else map(int, sheet.removeprefix("tables ").split("-"))
             return [[str(n), str(i)] + [" ".join((cell or "").split()) for cell in row]
-                    for n, page in enumerate(pdf, 1) for i, table in enumerate(page.find_tables().tables, 1)
+                    for n, page in enumerate(pdf, 1) if first <= n <= last for i, table in enumerate(page.find_tables().tables, 1)
                     for row in table.extract()]
         if sheet == "flow":         # every page in reading order (D259): a line of text is ``page, text, y, line``, a table row
             out = []                # ``page, row, table, y, cells`` (a cell a merged cell covers is ``<merged>``), sorted by ``y``;
@@ -486,8 +488,9 @@ def rows_of(path: Path, sheet: str) -> list[list[str]]:
                                 banded.append(text_of(band))
                         out.append([str(n), str(round(small[1]))] + cells + banded)
             return out
-        if sheet == "pages":        # every page: a row is the page number and one line of its text
-            return [[str(n), line.strip()] for n, page in enumerate(pdf, 1) for line in page.get_text("text").splitlines()
+        if sheet == "pages" or sheet.startswith("pages "):        # every page (``pages 1-1``: those pages): a row is the page number and one line of its text
+            first, last = (1, len(pdf)) if sheet == "pages" else map(int, sheet.removeprefix("pages ").split("-"))
+            return [[str(n), line.strip()] for n, page in enumerate(pdf, 1) if first <= n <= last for line in page.get_text("text").splitlines()
                     if line.strip()]
         return [[line.strip()] for line in pdf[int(sheet.removeprefix("page ")) - 1].get_text("text").splitlines() if line.strip()]
     if path.suffix.lower() == ".xls" and sheet.endswith("/blocks"):
