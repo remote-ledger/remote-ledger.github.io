@@ -919,6 +919,7 @@ def build_docs(snapshot: Snapshot, authored: dict[tuple[str, str], str], report:
 
 
 def build(snapshot: Snapshot, authored: dict[tuple[str, str], str], report: Report) -> list[tuple[str, dict[str, Any]]]:
-    from . import denon_pdf
+    from . import denon_pdf, denon_sheets
 
-    return build_pdf(snapshot, authored, report) + build_master(snapshot, authored, report) + build_docs(snapshot, authored, report) + denon_pdf.build_pdfs(snapshot, authored, report)
+    return (build_pdf(snapshot, authored, report) + build_master(snapshot, authored, report) + build_docs(snapshot, authored, report) + denon_pdf.build_pdfs(snapshot, authored, report)
+            + denon_sheets.build_sheets(snapshot, authored, report))

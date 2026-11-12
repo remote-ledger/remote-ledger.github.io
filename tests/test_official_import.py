@@ -12,7 +12,7 @@ from pathlib import Path
 import pytest
 
 from remote_ledger.errors import ValidationError
-from remote_ledger.official import anthem, arcam, benq, peerless, cambridge, cary, classe, cyrus, denon, denon_pdf as dp, emotiva, harman, hegel, hitachi, infocus, jvc, kef, lyngdorf, marantz, nad, oppo, rotel, simaudio, yamaha, harman
+from remote_ledger.official import anthem, arcam, benq, peerless, cambridge, cary, classe, cyrus, denon, denon_pdf as dp, denon_sheets as ds, emotiva, harman, hegel, hitachi, infocus, jvc, kef, lyngdorf, marantz, nad, oppo, rotel, simaudio, yamaha, harman
 from remote_ledger.official import importer as oi
 from remote_ledger.official.common import MANIFEST, Report, load_snapshot
 from remote_ledger.serialize import load
@@ -3725,8 +3725,13 @@ def test_the_generic_denon_pdf_readers_read_the_avr_4311_list_as_the_fixed_reade
 
 
 def denon_pdf_files() -> dict[str, dict]:
-    """The files of §94's lists: those whose keys cite a PDF of ``assets.denon.com IR code documents`` (§95's two Word lists are there too)."""
-    return denon_files_of(r"assets\.denon\.com IR code documents/[^@]+\.pdf@")
+    """The files of §94's lists: those whose keys cite a PDF of ``assets.denon.com IR code documents`` (§95's two Word lists are there too, and §98's sheets are not)."""
+    return denon_files_of(r"assets\.denon\.com IR code documents/(?!(?:" + "|".join(re.escape(d.file) for d in ds.SHEETS) + r")@)[^@]+\.pdf@")
+
+
+def denon_sheet_files() -> dict[str, dict]:
+    """The files of §98's sheets: those whose keys cite one of ``ds.SHEETS``."""
+    return denon_files_of(r"assets\.denon\.com IR code documents/(?:" + "|".join(re.escape(d.file) for d in ds.SHEETS) + r")@")
 
 
 def test_the_24_denon_pdf_lists_are_72_files_a_sharp_and_a_kaseikyo_file_for_each_model_and_their_untested_keys_are_the_parity_the_number_or_the_two_names():
@@ -3829,7 +3834,7 @@ def test_other_sources_denon_remotes_hold_181_of_the_196_sharp_codes_and_724_of_
             form = spec["forms"][0]
             code = (int(form["device"], 16), int(form.get("subdevice", "0x00"), 16) if protocol == "Denon-K" else 0, int(form["function"], 16))
             target[protocol].setdefault(code, set()).add(squash(spec["label"]))
-    for protocol, (total, held, named) in {"Denon": (196, 181, 173), "Denon-K": (791, 724, 590)}.items():       # (715 and 572 before §95's lists, which hold 9 of the 76 Kaseikyo codes then new)
+    for protocol, (total, held, named) in {"Denon": (196, 181, 173), "Denon-K": (791, 724, 591)}.items():       # (715 and 572 before §95's lists, which hold 9 of the 76 Kaseikyo codes then new; 590 named alike before §98's sheets, which name one of them so)
         both = [c for c in mine[protocol] if c in others[protocol]]
         assert (len(mine[protocol]), len(both), sum(bool(mine[protocol][c] & others[protocol][c]) for c in both)) == (total, held, named)
 
@@ -3951,3 +3956,218 @@ def test_denons_x1000_and_x2500h_lists_are_four_products_in_eight_files_and_the_
         entry = manifest["documents"][name]
         assert entry["url"] == url and entry["retrieved"] == "2026-10-18" and "snapshot" not in entry and (SNAPSHOT / "denon" / name).read_bytes()[:4] == b"\xd0\xcf\x11\xe0"
     assert [d.file for d in denon.DOC_DOCUMENTS[-2:]] == ["avrx1000_e300_ir_code_v01.doc", "avr-x2500h_s940h_ir_code_v01-02072018.doc"]
+
+
+# --- Denon's short sheets: zones 2 and 3, the CD changers, the Hi-Fi pair, the Blu-ray and DVD players, the S-series (D361 to D363) -----------------------------------------------
+
+
+def sheet_bits(genre1: int, genre2: int, data: int, ident: int = 0, parity: int | None = None, genre2_bits: int | None = None) -> str:
+    """The 48 bits of a Kaseikyo frame of Denon, first bit first: the vendor, the parity nibble 0, GENRE1, GENRE2, ten data bits, two ID bits and the parity byte."""
+    def bits(v: int, n: int) -> str:
+        return "".join(str(v >> i & 1) for i in range(n))
+
+    p = ds.parity_of(genre1, genre2, data, ident) if parity is None else parity
+    return denon.VENDOR + "0000" + bits(genre1, 4) + bits(genre2 if genre2_bits is None else genre2_bits, 4) + bits(data, 10) + bits(ident, 2) + bits(p, 8)
+
+
+def test_a_denon_sheet_kaseikyo_row_is_48_bits_and_its_parity_byte_checks_genre2_so_a_header_that_differs_from_the_bits_is_read_where_the_parity_supports_it():
+    models = frozenset({"AVR-1508 Zone 2"})
+    row = ds.kaseikyo_row("row 1", 1, "ZONE POWER ON", "ZONE POWER ON", sheet_bits(4, 4, 6), models, "ZONE2", 4)
+    assert (row.device, row.subdevice, row.function, row.doubt, row.table, row.names) == (4, 4, 6, "", "K4-4", [("ZONE POWER ON", models)])
+    assert row.how.startswith("bits 1 to 48 " + sheet_bits(4, 4, 6) + "): Denon-K device 4 subdevice 4 function 6")
+    # the bits say GENRE2 5 and the header and the parity byte 4: the nine zone 2 sheets of 2007
+    row = ds.kaseikyo_row("row 1", 1, "ZONE POWER ON", "ZONE POWER ON", sheet_bits(4, 4, 6, genre2_bits=5), models, "ZONE2", 4)
+    assert row.subdevice == 4 and row.doubt == "the row's bits say GENRE2 5, the sheet's header and the parity byte say 4: read as the header, which the parity byte supports"
+    # the parity byte is another table's, so GENRE2 is whatever the bits say and the key is doubted; and the header may say another than the bits where the parity agrees with the bits
+    row = ds.kaseikyo_row("row 1", 1, "X", "X", sheet_bits(4, 4, 6, parity=0xFF), models, "ZONE2", 4)
+    assert row.subdevice == 4 and "the parity byte 0xff is not that of GENRE1 4, GENRE2 4 and the data 0x6" in row.doubt
+    row = ds.kaseikyo_row("row 1", 1, "X", "X", sheet_bits(4, 6, 6), models, "ZONE3", 4)
+    assert row.subdevice == 6 and row.doubt == "the sheet's header says GENRE2 4 and the row's bits 6"
+    # the ID bits go above the ten data bits (a function is data + 1024 * ID) and are in the parity
+    row = ds.kaseikyo_row("row 1", 1, "X", "X", sheet_bits(5, 8, 0x31, ident=2), models, "", None)
+    assert (row.device, row.subdevice, row.function, row.doubt) == (5, 8, 0x31 + 2 * 1024, "")
+    with pytest.raises(ValueError, match="vendor bits"):
+        ds.kaseikyo_row("row 1", 1, "X", "X", "1" + sheet_bits(4, 4, 6)[1:], models, "", None)
+    with pytest.raises(ValueError, match="vendor parity"):
+        ds.kaseikyo_row("row 1", 1, "X", "X", sheet_bits(4, 4, 6)[:16] + "1000" + sheet_bits(4, 4, 6)[20:], models, "", None)
+    assert ds.parity_of(5, 8, 0x31, 0) == 0x4B and ds.parity_of(4, 4, 6) == 0x24                       # the S-32's SLEEP row says 4BH, the AVR-1508's zone 2 sheet's first row 0x24
+
+
+def test_a_denon_sheet_sharp_row_is_its_address_extension_and_data_first_bit_first_and_the_cd_changers_row_labels_are_the_values_of_their_data():
+    models = frozenset({"DCM-390"})
+    row = ds.sharp_row("C51", 1, "POWER ON", "POWER ON", "00010", "10", "110011", models, 51)
+    assert (row.device, row.function, row.number, row.table, row.names) == (8, 51 + 64, 51, "00010 10", [("POWER ON", models)])
+    assert row.how == "genre CD, system address 00010, extension bits 10, data 110011): Denon device 8 function 115, each field first bit first, the extension bits above the data"
+    assert ds.sharp_row("K1", 2, "POWER", "POWER", "01000", "01", "000010", models, None).function == 16 + 128                 # no genre of the table's for 01000/01: said nothing of it
+    assert "genre" not in ds.sharp_row("K1", 2, "POWER", "POWER", "01000", "01", "000010", models, None).how
+
+
+@pytest.fixture(scope="module")
+def sheet_snapshot():
+    return load_snapshot(SNAPSHOT / "denon")
+
+
+def test_the_eleven_zone_sheets_are_33_rows_of_48_bits_each_and_the_nine_zone_2_sheets_say_genre2_5_where_their_header_and_parity_say_4(sheet_snapshot):
+    zone = [d for d in ds.SHEETS if d.layout == "zone"]
+    assert [d.file for d in zone] == [f"avr-{m}_zone2-ircodes.pdf" for m in ("588", "688", "788", "888", "988", "1508", "1708", "1908", "2308ci", "2808ci")] + ["avr-2808ci_zone3-ircodes.pdf"]
+    table = None
+    for document in zone:
+        rows, notes = ds.sheet_rows(sheet_snapshot.sheet_of(document.file, "words"), document)
+        assert len(rows) == 33 and notes == [] and all(r.kind == "kaseikyo" and r.device == 4 and r.names for r in rows), document.file
+        assert [r.function for r in rows[:3]] == [6, 7, 704] and [r.names[0][0] for r in rows[:3]] == ["ZONE POWER ON", "ZONE POWER OFF", "PHONO"]
+        if document.group == "ZONE2":
+            assert {r.subdevice for r in rows} == {4} and all(r.doubt.startswith("the row's bits say GENRE2 5, the sheet's header and the parity byte say 4") for r in rows)
+        else:
+            assert {r.subdevice for r in rows} == {6} and [r.doubt for r in rows] == [""] * 33 and all("ZONE3" == r.group for r in rows)
+        # the nine sheets of 2007/5/30 are one table: only the title's model differs
+        key = [(r.function, r.names[0][0]) for r in rows]
+        if document.group == "ZONE2":
+            table = table or key
+            assert key == table
+    # a sheet that is not the one its file name says, a header that is not Denon's or a row that is not 48 bits is refused or reported
+    document = zone[5]
+    sheet = sheet_snapshot.sheet_of(document.file, "words")
+    with pytest.raises(ValueError, match="is not the sheet of ZONE2 of the AVR-1508"):
+        ds.zone_rows([[c.replace("AVR-1508", "AVR-1708") for c in r] for r in sheet], document, [])
+    short = [list(r) for r in sheet]
+    at = next(i for i, r in enumerate(short) if len(r) > 100 and r[1] != "R")
+    short[at] = short[at][:2] + short[at][4:]                                                                 # a row of 47 bit columns
+    notes: list[str] = []
+    with pytest.raises(ValueError, match="32 rows of 48 bits"):
+        ds.zone_rows(short, document, notes)
+    assert notes and "47 bit columns, not 48" in notes[0]
+
+
+SHEET_FILES = {
+    "AVR-1508_Zone_2__Kaseikyo": ("Denon-K", 33, 33), "AVR-1708_Zone_2__Kaseikyo": ("Denon-K", 33, 33), "AVR-1908_Zone_2__Kaseikyo": ("Denon-K", 33, 33),
+    "AVR-2308CI_Zone_2__Kaseikyo": ("Denon-K", 33, 33), "AVR-2808CI_Zone_2__Kaseikyo": ("Denon-K", 33, 33), "AVR-2808CI_Zone_3__Kaseikyo": ("Denon-K", 33, 0),
+    "AVR-588_Zone_2__Kaseikyo": ("Denon-K", 33, 33), "AVR-688_Zone_2__Kaseikyo": ("Denon-K", 33, 33), "AVR-788_Zone_2__Kaseikyo": ("Denon-K", 33, 33),
+    "AVR-888_Zone_2__Kaseikyo": ("Denon-K", 33, 33), "AVR-988_Zone_2__Kaseikyo": ("Denon-K", 33, 33),
+    "DCD-1650RE": ("Denon", 23, 0), "DCD-1650RE__Kaseikyo": ("Denon-K", 4, 0), "DCD-2020AE": ("Denon", 23, 0), "DCD-2020AE__Kaseikyo": ("Denon-K", 4, 0),
+    "DCM-27": ("Denon", 33, 1), "DCM-290": ("Denon", 33, 1), "DCM-390": ("Denon", 33, 1),
+    "DVD-2500BTCI": ("Denon", 42, 4), "DVD-2500BTCI__Kaseikyo": ("Denon-K", 47, 0), "DVD-3800BDCI": ("Denon", 42, 4), "DVD-3800BDCI__Kaseikyo": ("Denon-K", 47, 0),
+    "PMA-2000RE": ("Denon", 5, 0), "PMA-2020AE": ("Denon", 5, 0), "S-32__Kaseikyo": ("Denon-K", 22, 0), "S-52__Kaseikyo": ("Denon-K", 24, 0),
+    "S-81": ("Denon", 41, 0), "S-81__Kaseikyo": ("Denon-K", 11, 0)}
+
+
+def test_the_denon_sheets_are_28_files_and_802_keys_and_the_untested_ones_are_the_zone_2_sheets_a_row_label_that_is_not_its_data_and_two_names_for_one_code():
+    files = denon_sheet_files()
+    assert {n: (f["protocol"]["name"], len(f["keys"]), sum(s["forms"][0]["confidence"] == "untested" for s in f["keys"].values())) for n, f in files.items()} == SHEET_FILES
+    assert sum(v[1] for v in SHEET_FILES.values()) == 802 and sum(v[2] for v in SHEET_FILES.values()) == 341
+    why = Counter()
+    for name, f in files.items():
+        for s in f["keys"].values():
+            form = s["forms"][0]
+            if form["confidence"] == "untested":
+                why[("zone 2 genre2" if "the sheet's header and the parity byte say 4" in form["source"] else "label is not the data" if "the row's identifier gives the number 64" in form["source"]
+                     else "two names" if "the document gives this code to" in form["source"] else form["source"])] += 1
+    assert why == Counter({"zone 2 genre2": 330, "label is not the data": 3, "two names": 8})
+    # the amplifiers' files have the amplifier's keys and the players' files the players': one remote, RC-1179, for four products
+    assert {s["label"] for s in files["PMA-2000RE"]["keys"].values()} == {"POWER", "VOLUME UP", "INPUT SEL. UP", "MUTING", "VOLUME DOWN"}       # INPUT SEL. DOWN is the one row not read
+    assert files["PMA-2000RE"]["keys"] == files["PMA-2020AE"]["keys"] and files["DCD-1650RE"]["keys"] == files["DCD-2020AE"]["keys"]
+    assert "PALY/PAUSE" in {s["label"] for s in files["DCD-1650RE"]["keys"].values()}                           # a name the document misspells, as printed
+    # a Zone 2 file names its receiver in its controls and the zone in its own name
+    zone = files["AVR-1508_Zone_2__Kaseikyo"]
+    assert (zone["model"], zone["controls"], zone["aliases"]) == ("AVR-1508 Zone 2 (Kaseikyo)", ["Denon AVR-1508 Zone 2", "Denon AVR-1508"], [])
+    key = zone["keys"]["KEY_ZONE_POWER_ON"]["forms"][0]
+    assert (key["device"], key["subdevice"], key["function"], key["confidence"]) == ("0x04", "0x04", "0x06", "untested")
+    assert key["source"].startswith("assets.denon.com IR code documents/avr-1508_zone2-ircodes.pdf@") and " (retrieved 2026-11-12) page 1 table row 'row 1' ('ZONE POWER ON', bits 1 to 48 " in key["source"]
+
+
+def sheet_rows_of(file: str):
+    document = next(d for d in ds.SHEETS if d.file == file)
+    return ds.sheet_rows(load_snapshot(SNAPSHOT / "denon").sheet_of(file, "words"), document)
+
+
+def test_the_cd_changers_the_hi_fi_remote_and_the_s_81_give_the_same_codes_for_the_same_keys_and_the_one_row_the_text_layer_loses_is_reported():
+    def code(file: str, ident: str):
+        rows, _ = sheet_rows_of(file)
+        row = next(r for r in rows if r.ident == ident and r.kind == "sharp")
+        return row.device, row.function
+
+    # CD POWER ON: the RC-1033's C51 and the RC-1179's K2; OPEN/CLOSE: the RC-1033's C16 and the S-81's EJECT; STOP: the RC-1179's K27 and the S-81's KEY 11
+    assert code("dcm-390_290_27-ircodes.pdf", "C51") == code("dcd1650re_2020ae_pma2000re_2020ae_ir_code_v01.pdf", "K2") == (8, 115)
+    assert code("dcm-390_290_27-ircodes.pdf", "C16") == code("s-81-ircodes_v01.pdf", "KEY 1") == (8, 80)
+    assert code("dcd1650re_2020ae_pma2000re_2020ae_ir_code_v01.pdf", "K27") == code("s-81-ircodes_v01.pdf", "KEY 11") == (8, 94)
+    rows, notes = sheet_rows_of("dcd1650re_2020ae_pma2000re_2020ae_ir_code_v01.pdf")
+    assert [(r.kind, r.page) for r in rows].count(("sharp", 2)) == 28 and [(r.kind, r.page) for r in rows].count(("kaseikyo", 3)) == 4
+    assert len(notes) == 1 and "the row K34 ('INPUT SEL. DOWN" in notes[0] and "has 14 bit columns, not 15" in notes[0]
+    assert all(sheet_rows_of(d.file)[1] == [] for d in ds.SHEETS if d.layout in ("dcm", "dvd", "bytes", "s81"))
+
+
+def test_the_s_series_rows_say_their_genres_data_code_and_parity_in_hexadecimal_and_the_s_81_writes_three_columns_most_significant_bit_first():
+    rows, _ = sheet_rows_of("s-32-ircodes_v01.pdf")
+    sleep = next(r for r in rows if r.names and r.names[0][0] == "SLEEP")
+    assert (sleep.device, sleep.subdevice, sleep.function, sleep.doubt, sleep.ident) == (5, 8, 0x31, "", "KEY 1")                 # SYSTEM (5H), CLIENT (8H), (031H), 4BH
+    assert sum(1 for r in rows if r.doubt) == 0 and len(rows) == 22
+    rows, _ = sheet_rows_of("s-81-ircodes_v01.pdf")
+    eject = next(r for r in rows if r.ident == "KEY 1" and r.kind == "sharp")
+    assert (eject.device, eject.function, eject.number, eject.table) == (8, 80, 16, "00010 10")
+    assert "the table's columns C13,C12 01, C11-C6 010000 and C5-C1 01000" in eject.how                    # written 01 010000 01000: the extension bits C13 then C12, the data and the address
+    receiver = next(r for r in rows if r.ident == "KEY 2" and r.kind == "sharp")
+    assert (receiver.device, receiver.function, receiver.how.startswith("genre RCVR, ")) == (12, 80, True)  # 00110 10 is the receiver genre: RCVR
+    kaseikyo = [r for r in rows if r.kind == "kaseikyo"]
+    assert len(kaseikyo) == 12 and {(r.device, r.subdevice) for r in kaseikyo} == {(2, 3), (5, 1)}          # PLAYER and PORTABLE PLAYER, SYSTEM and SYSTEM
+    # the ID of a Blu-ray row is the key's number and the data in three hexadecimal digits, and a row that says otherwise is doubted
+    rows, _ = sheet_rows_of("dvd-3800bdci_dvd-2500btci_ircodes.pdf")
+    main = [r for r in rows if r.kind == "kaseikyo"]
+    assert len(main) == 47 and [r.doubt for r in main] == [""] * 47 and (main[0].ident, main[0].function, main[0].names[0][0]) == ("ID 1001", 1, "0")
+
+
+def test_other_sources_denon_remotes_hold_93_of_97_sharp_codes_and_82_of_87_kaseikyo_ones_of_the_sheets_and_none_of_the_66_zone_codes():
+    """The independent check (D362): the sheets' codes against every other Denon remote of the ledger, and whether a code is under a name that agrees."""
+    mine_files = set(SHEET_FILES)
+    held: dict[tuple, list[str]] = {}
+    mine: dict[tuple, list[tuple[str, str]]] = {}
+    for path in sorted((ROOT / "remotes").glob("*/*/*.json")):
+        doc = load(path)
+        protocol = doc["protocol"].get("name")
+        if protocol not in ("Denon", "Denon-K"):
+            continue
+        ours = "official" in path.parts and "denon" in path.parts and path.stem in mine_files
+        for spec in doc["keys"].values():
+            for f in spec["forms"]:
+                if f["type"] != "irp":
+                    continue
+                code = (protocol, int(f["device"], 0), int(f.get("subdevice", "0x0"), 0) if protocol == "Denon-K" else 0, int(f["function"], 0))
+                (mine.setdefault(code, []) if ours else held.setdefault(code, [])).append((path.stem, spec.get("label", "")) if ours else spec.get("label", ""))
+    squash = lambda text: re.sub(r"[^a-z0-9]", "", text.lower())
+    count: dict[tuple, list[int]] = {}
+    for code, items in mine.items():
+        key = (code[0], "zone" if any("Zone" in stem for stem, _ in items) else "other")
+        c = count.setdefault(key, [0, 0, 0])
+        c[0] += 1
+        if code in held:
+            c[1] += 1
+            c[2] += any(squash(a) in squash(b) or squash(b) in squash(a) for _, a in items for b in held[code])
+    assert count == {("Denon", "other"): [97, 93, 91], ("Denon-K", "other"): [87, 82, 72], ("Denon-K", "zone"): [66, 0, 0]}
+
+
+def test_the_denon_sheets_are_17_pinned_live_files_of_denons_host_with_a_words_csv_each_and_none_has_a_notice_word_in_its_text():
+    manifest = json.loads((SNAPSHOT / "denon" / MANIFEST).read_text(encoding="utf-8"))
+    notice = re.compile(r"copyright|©|\(c\)|all rights|reserved|confidential|reproduc", re.I)
+    assert len(ds.SHEETS) == 17
+    for document in ds.SHEETS:
+        entry = manifest["documents"][document.file]
+        assert re.fullmatch(r"https://assets\.denon\.com/documentmaster/(us|uk)/[\w.\-]+\.pdf", entry["url"]) and entry["url"].endswith("/" + document.file)
+        assert entry["retrieved"] == "2026-11-12" and "snapshot" not in entry and (SNAPSHOT / "denon" / document.file).read_bytes()[:5] == b"%PDF-"
+        csv_name = document.file[:-4] + "__words.csv"
+        assert [n for n, s in manifest["sheets"].items() if s["document"] == document.file] == [csv_name]
+        # D110: a table of reference codes with no notice in it is public; a document with one is the private repository's
+        text = " ".join(" ".join(row[3::2]) for row in load_snapshot(SNAPSHOT / "denon").sheet_of(document.file, "words") if row[1] != "R")
+        # the only hits of the words are the two `(c)` of the Blu-ray player's key name `COLOR(C)` (its colour keys A to D, on its two pages), not a notice
+        assert not notice.search(text.replace("COLOR(C)", "COLOR C")), document.file
+    assert [m[0] for m in notice.finditer(" ".join(" ".join(r[3::2]) for r in load_snapshot(SNAPSHOT / "denon").sheet_of("dvd-3800bdci_dvd-2500btci_ircodes.pdf", "words") if r[1] != "R"))] == ["(C)", "(C)"]
+
+
+def test_every_denon_sheet_key_cites_its_document_by_host_file_hash_and_date_and_its_row_and_the_ledger_reads_it_back_to_the_same_code():
+    shape = re.compile(r"^assets\.denon\.com IR code documents/(?P<file>[\w.\-]+\.pdf)@[0-9a-f]{8} \(retrieved 2026-11-12\) page (?P<page>\d) table row '[^']+' \('.*'(, .+)?\): Denon(-K)? device \d+ ")
+    manifest = json.loads((SNAPSHOT / "denon" / MANIFEST).read_text(encoding="utf-8"))
+    n = 0
+    for name, f in denon_sheet_files().items():
+        for s in f["keys"].values():
+            m = shape.match(s["forms"][0]["source"])
+            assert m, s["forms"][0]["source"]
+            assert manifest["documents"][m["file"]]["sha256"].startswith(re.search(r"@([0-9a-f]{8}) ", s["forms"][0]["source"])[1])
+            n += 1
+    assert n == 802

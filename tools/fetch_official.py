@@ -262,6 +262,13 @@ DOCUMENTS = {
         # redirects its mixed-case path to the lower-case one, which is the address pinned)
         ("avrx1000_e300_ir_code_v01.doc", "https://assets.denon.com/documentmaster/uk/avrx1000_e300_ir_code_v01.doc", None),
         ("avr-x2500h_s940h_ir_code_v01-02072018.doc", "https://assets.denon.com/documentmaster/us/avr-x2500h_s940h_ir_code_v01-02072018.doc", None),
+        # the one-page and short sheets of the same host that carry no notice (section 98): the zone 2 and zone 3 sheets of eleven receivers of 2007 and 2008, the CD changers
+        # DCM-390/290/27, the Blu-ray and DVD players DVD-3800BDCI and DVD-2500BTCI, the three S-series systems of 2008 and the PMA/DCD pair's remote RC-1179 of 2012
+        *[(name, "https://assets.denon.com/documentmaster/" + folder + "/" + name, None)
+          for folder, name in (("uk", "dcd1650re_2020ae_pma2000re_2020ae_ir_code_v01.pdf"), ("us", "dcm-390_290_27-ircodes.pdf"), ("us", "dvd-3800bdci_dvd-2500btci_ircodes.pdf"),
+                               ("us", "s-32-ircodes_v01.pdf"), ("us", "s-52-ircodes_v01.pdf"), ("us", "s-81-ircodes_v01.pdf"),
+                               *[("us", f"avr-{m}_zone2-ircodes.pdf") for m in ("588", "688", "788", "888", "988", "1508", "1708", "1908", "2308ci", "2808ci")],
+                               ("us", "avr-2808ci_zone3-ircodes.pdf"))],
     ],
     # Hitachi America's remote IR code documents for its televisions (DESIGN section 82): its site no longer serves them, so the Wayback Machine's copies
     # (the two RS-232 specifications and the Roll-and-Click page, which has names and no codes, are not IR code tables and are not pinned).
