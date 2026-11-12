@@ -107,7 +107,10 @@ SHEETS = {
     "yamaha": {name: ["grid"] for name in (
         "Extended_IR_Codes_RX-V685RX-A780-RX-A3080CX-A5200_6.pdf", "Standard_IR_Codes_RX-V685RX-A780-RX-A3080CX-A5200_4.pdf",
         "RX-V385_RX-V485_RX-V585_IR_Codes_2.pdf", "WXA-50_WXC-50_Extended_IR_Codes_1.pdf", "WXA-50_WXC-50_Standard_IR_Codes_1.pdf",
-        "XDA-QS5400_XDA-AMP5400_IR_Commands.pdf")},
+        "XDA-QS5400_XDA-AMP5400_IR_Commands.pdf",
+        "IR_RX-Vx75_375-775_STD.pdf", "IR_RX-Vx75_375-775_EXD.pdf", "STD_IR_RXV667-3067.pdf", "EXD_IR_RXV667-3067.pdf",
+        "IR_RX-Ax30_A730_830_STD.pdf", "IR_RX-Ax30_A730_830_EXD.pdf")} |
+        {name: ["Standard/blocks", "Extended/blocks"] for name in ("IR_RX-V671-3071_rev1.0_Full.xls", "IR_Vx75.xls", "IR_Vx77.xls")},
     "classe": {name: ["cells"] for name in (
         "CAP-2100_IR_codes.pdf", "CDP-100_IR_codes_v1-20.pdf", "CDP-102_202_300_500_and_CDT-300_IR_codes_v1-19.pdf", "CP-500_IR_codes.pdf", "CP-700_IR_codes.pdf",
         "SSP-300_600_IR_codes_v1-20.pdf", "CLASSE_Delta_1_2_Amplifier_IR_Commands.pdf", "CLASSE_SSP-800_IR_codes_v1-24.pdf")} |
@@ -480,6 +483,27 @@ def rows_of(path: Path, sheet: str) -> list[list[str]]:
             return [[str(n), line.strip()] for n, page in enumerate(pdf, 1) for line in page.get_text("text").splitlines()
                     if line.strip()]
         return [[line.strip()] for line in pdf[int(sheet.removeprefix("page ")) - 1].get_text("text").splitlines() if line.strip()]
+    if path.suffix.lower() == ".xls" and sheet.endswith("/blocks"):
+        # a sheet whose names and devices are written once for the rows they cover, with no merged cell (Yamaha's, D368): the file draws a line above the first row
+        # of each such block and below its last, so **a block is the rows from a cell with a line above it to the next cell with a line below it**, and the text
+        # of a block is the text of its cells, in order, one space between them (a name set in two lines, ``ON`` and ``(FULL)``; a line the cell above has too is left out). The first five columns (group, names,
+        # device, zone) are given as the block's text on every row it covers; the rest as written. A row is ``the row's number in the sheet, then a cell for each column``.
+        import xlrd
+        book = xlrd.open_workbook(str(path), formatting_info=True)
+        ws = book.sheet_by_name(sheet.removesuffix("/blocks"))
+        shown: dict[tuple[int, int], str] = {}
+        for column in range(min(5, ws.ncols)):
+            start, lines = 0, []
+            for r in range(ws.nrows + 1):
+                if r == ws.nrows or (r > start and (book.xf_list[ws.cell_xf_index(r, column)].border.top_line_style
+                                                    or book.xf_list[ws.cell_xf_index(r - 1, column)].border.bottom_line_style)):
+                    block = " ".join(lines)
+                    for covered in range(start, r):
+                        shown[(covered, column)] = block
+                    start, lines = r, []
+                if r < ws.nrows and text(ws.cell_value(r, column)) and (not lines or lines[-1] != text(ws.cell_value(r, column))):
+                    lines.append(text(ws.cell_value(r, column)))     # the same line twice running (a device written for each of the functions a block of it covers) is one
+        return [[str(r + 1)] + [shown[(r, c)] if (r, c) in shown else text(ws.cell_value(r, c)) for c in range(ws.ncols)] for r in range(ws.nrows)]
     if path.suffix.lower() == ".xls":
         import xlrd
         ws = xlrd.open_workbook(str(path)).sheet_by_name(sheet)

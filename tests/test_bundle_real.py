@@ -56,8 +56,8 @@ def test_the_dedupe_numbers_the_design_quotes(real):
             distinct.setdefault(record.source, set()).add(key[4])
     assert (keys["irblaster"], len(distinct["irblaster"])) == (412_775, 58_344)
     assert (keys["lirc"], keys["smartir"], keys["authored"]) == (112_789, 914, 128)
-    assert sum(keys.values()) == 741_440 and len(records) == 17_461
-    assert len(set().union(*distinct.values())) == 185_648
+    assert sum(keys.values()) == 768_616 and len(records) == 17_557
+    assert len(set().union(*distinct.values())) == 185_786
     # the IR Blaster signals as blobs, with their two-byte counts: 8.8 MB of binary words
     assert sum(len(b) for b in distinct["irblaster"]) == 8_889_348
 
@@ -107,8 +107,9 @@ def test_the_selected_bundle_is_the_size_of_the_data_and_the_estimate_is_within_
     # of DESIGN section 60 carry a label of 34 bytes each and took it to 4.6%, so a few percent was 5%; the 7,008 keys of section 87 (labels of 20 to 40
     # bytes, and 1,055 signals) took it to 5.006%, so it is 5.5% now; the estimate counts the files' keys and not the 7,969 that D357
     # adds to thin remotes (21 bytes each, no signal of their own), which took it to 5.62%, so it was 6%; the 8,709 keys of the floor of two
-    # corroborators and their 8,709 rows of evidence (D360) took it to 6.25%, so it is 6.5% now
-    assert abs(len(data) - selection.estimated_bytes) / len(data) < 0.065
+    # corroborators and their 8,709 rows of evidence (D360) took it to 6.25%, so it was 6.5%; the 27,176 keys of section 100 (labels of 20 to 50 bytes and the
+    # fat remotes of one family: 96 remotes of 140 to 425 keys) took it to 6.73%, so it is 7% now
+    assert abs(len(data) - selection.estimated_bytes) / len(data) < 0.07
     assert len(assembled.brands) == len(selection.curated) + len(selection.proxy_added)
     assert len(assembled.brands) + len(assembled.excluded) == len(real[1].brands)
 
@@ -162,7 +163,7 @@ def test_design_quotes_the_numbers_of_the_real_build(real, selected, selection):
         f"{len(records) - collected.folded.folded:,} | {len(assembled.remotes):,}",   # the remotes, D103
         f"| keys of the files | {keys:,} | {keys:,} |",
         f"| keys, the completion's (D357) included | {len(assembled.keys):,} | {len(assembled.keys):,} |",
-        f"185,648 | {len(assembled.signals):,}",
+        f"185,786 | {len(assembled.signals):,}",
         f"{len(assembled.excluded):,} brands, {len(left_out):,} remotes, "
         f"{sum(len(r.keys) for r in left_out):,} keys",
         f"{len(selection.curated)} brands of the list and {len(selection.proxy_added):,} by the proxy",
