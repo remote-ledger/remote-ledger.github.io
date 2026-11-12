@@ -469,7 +469,7 @@ def test_the_committed_official_import_keeps_r19():
         for name, entry in manifest["documents"].items():
             hashes[name], dates[name], snapshots[name] = entry["sha256"], entry.get("retrieved", manifest["retrieved"]), entry.get("snapshot")
     shape = re.compile(r"^(?:marantz\.com archive-downloads|anthemav\.com \(storage\.googleapis\.com/sandbox1-anthemav/an\)"
-                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|infocus\.com IR code PDFs|lyngdorf\.com IR code PDF|emotiva\.com IR code PDFs|denon\.co\.uk RC code list|denon\.com Master IR Hex|snapav\.com Denon IR code documents|assets\.denon\.com IR code documents|hitachi-america\.us IR code documents|classeaudio\.com IR code documents|cyrusaudio\.com remote code tables|snapav\.com Yamaha IR code PDFs|snapav\.com Marantz IR code workbook|jblsynthesis\.com custom installation notes|snapav\.com JVC LX projector code sheets|snapav\.com JVC remote control code tables|snapav\.com BenQ IR code sheet|cdn\.shopify\.com Peerless-AV Neptune IR code sheet|lexicon\.com custom installation notes|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/([^@]+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
+                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|caryaudio\.com IR Remote Codes|infocus\.com IR code PDFs|lyngdorf\.com IR code PDF|emotiva\.com IR code PDFs|denon\.co\.uk RC code list|denon\.com Master IR Hex|snapav\.com Denon IR code documents|assets\.denon\.com IR code documents|hitachi-america\.us IR code documents|classeaudio\.com IR code documents|cyrusaudio\.com remote code tables|snapav\.com Yamaha IR code PDFs|snapav\.com Marantz IR code workbook|jblsynthesis\.com custom installation notes|snapav\.com JVC LX projector code sheets|snapav\.com JVC remote control code tables|snapav\.com BenQ IR code sheet|cdn\.shopify\.com Peerless-AV Neptune IR code sheet|lexicon\.com custom installation notes|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/([^@]+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
                        r"(?:, from the Wayback Machine snapshot (\d{14}))?\) (?:sheet '[^']+' row \d+|page \d+ row \d+|page \d+ '|page \d+ table \d+ row '|page \d+ row '|key \d+ '|row 'RC(?:SHP|KSK)\w+' \(|page \d+ table row ')")
     files = sorted((ROOT / oi.IMPORT_ROOT).rglob("*.json"))
     assert len(files) > 180
@@ -1642,7 +1642,13 @@ def test_a_cary_label_is_the_key_printing_unless_it_is_a_sign_beside_a_word():
 
 
 def cary_files() -> dict[str, dict]:
-    return {load(p)["model"]: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "cary").glob("*.json"))}
+    """The two files of the DMS table (§71)."""
+    return {load(p)["model"]: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "cary").glob("DMS*.json"))}
+
+
+def cary_sheet_files() -> dict[str, dict]:
+    """The thirteen files of the sheets of §99, by model."""
+    return {load(p)["model"]: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "cary").glob("*.json")) if not p.name.startswith("DMS")}
 
 
 def test_the_two_cary_files_are_the_two_system_codes_of_one_table_of_38_keys():
@@ -1663,7 +1669,7 @@ def test_the_two_cary_files_are_the_two_system_codes_of_one_table_of_38_keys():
     assert "the table's system code B" in b["KEY_POWER"]["forms"][0]["source"] and "RC5 system 9 command 12" in b["KEY_POWER"]["forms"][0]["source"]
     report = (ROOT / oi.IMPORT_ROOT / oi.REPORT).read_text(encoding="utf-8")
     figure = lambda what: int(re.search(rf"\| cary: {what} \| ([\d,]+) \|", report)[1].replace(",", ""))      # noqa: E731
-    assert [figure(w) for w in ("rows read", "files", "keys")] == [38, 2, 76]
+    assert [figure(w) for w in ("rows read", "files", "keys")] == [38, 15, 491]       # the two files of the DMS and the thirteen of §99's sheets (415 keys)
 
 
 def test_other_sources_hold_most_of_the_cary_codes_and_agree_on_three_names():
@@ -1699,6 +1705,150 @@ def test_other_sources_hold_most_of_the_cary_codes_and_agree_on_three_names():
             or ({vocabulary.resolve(x) for x in ours[k]} - {None}) & ({vocabulary.resolve(x) for x in seen[k]} - {None})]
     assert (len(ours), len(held), len([k for k in held if k[0] == 16]), len([k for k in held if k[0] == 9])) == (76, 67, 38, 29)
     assert sorted(same) == [(16, 0x0C), (16, 0x10), (16, 0x11)]
+
+
+# --- Cary Audio's other sheets (section 99) ---------------------------------------------------------------------------
+
+
+def cary_words(*lines: tuple[int, str]) -> list[list[str]]:
+    """A page's words as ``tools/official_sheets_to_csv.py`` writes them (``page, y, x, word, x, word...``); a line is ``(y, "x word x word ...")``."""
+    return [["1", str(y), *text.split()] for y, text in lines]
+
+
+CARY_HEAD = [(27, "213 CARY 248 CD303/200 309 IR 325 Remote 368 Codes"), (41, "268 September 312 28, 326 2005"), (68, "88 All 102 codes 126 - 132 to 143 Philips 171 RC-5 194 standard"),
+             (96, "80 Key 99 Printing 229 Function 331 System 381 Command 491 Notes")]
+CARY_SHEET = cary.Sheet("CD303200_IR.pdf", 1, ("CD303/200",), ("CARYCD303200IRREMOTECODES",))
+
+
+def test_a_cary_code_is_hexadecimal_with_0x_or_an_h_and_a_bare_number_is_decimal():
+    """The DVD sheets write system ``23`` and commands ``1`` to ``36``: read as hexadecimal, system 23 would be 35, which RC-5 has not (5 bits)."""
+    assert [cary._number(w) for w in ("23", "10", "0x2D", "0x04", "0EH", "00", "0C", "H", "zz", "0x100", "1234")] == [23, 10, 45, 4, 14, 0, None, None, None, None, None]
+    assert cary._number("13", h_after=True) == 0x13 and cary._number("17H", h_after=True) == 0x17 and cary._number("0C", h_after=True) == 12 and cary._number("0C") is None
+
+
+def test_a_cary_sheet_is_a_title_a_header_and_rows_that_end_in_a_system_code_and_a_command():
+    rows = cary_words(*CARY_HEAD,
+                      (114, "97 OPEN/CLOSE 200 TRAY 228 OPEN 259 / 266 CLOSE 340 00 392 0EH"),
+                      (127, "136 PLAY 236 PLAY 339 00 392 17H 434 H"),                         # the text layer sets the H of 17H apart
+                      (140, "136 STOP 236 STOP 339 00 392 13 434 H"),                          # ... and sometimes the only H the code has
+                      (153, "123 MUTE 236 MUTE 340 0x04 392 0x1D"),
+                      (166, "157 7 201 NUMBER 246 KEY 269 PAD 292 7 340 23 399 10"),          # a bare number is decimal
+                      (179, "100 LIFT 200 NAVIGATION 340 23 399 20"), (190, "230 LIFT"),       # a function that wraps
+                      (260, "88 AMPLIFIER 150 USE 175 ONLY"),
+                      (273, "123 VOLUME 236 VOLUME 245 UP 340 00 392 10H"),
+                      (290, "88 some 120 words 150 here"),
+                      (300, "123 MUTE 236 MUTE 340 00 392 0C"))                               # 0C with no H and no 0x is neither
+    title, parsed, notes = cary.parse_sheet(rows, CARY_SHEET)
+    assert title == "CARY CD303/200 IR Remote Codes September 28, 2005 All codes - to Philips RC-5 standard"
+    assert [(r.printing, r.function, r.system, r.command, r.written, r.section) for r in parsed] == [
+        ("OPEN/CLOSE", "TRAY OPEN / CLOSE", 0, 14, "00 0EH", ""), ("PLAY", "PLAY", 0, 23, "00 17H", ""), ("STOP", "STOP", 0, 19, "00 13H", ""),
+        ("MUTE", "MUTE", 4, 29, "0x04 0x1D", ""), ("7", "NUMBER KEY PAD 7", 23, 10, "23 10", ""), ("LIFT", "NAVIGATION LIFT", 23, 20, "23 20", ""),
+        ("VOLUME", "VOLUME UP", 0, 16, "00 10H", "AMPLIFIER USE ONLY")]
+    assert notes == ["page 1, the line at y 260 is the heading 'AMPLIFIER USE ONLY': the rows under it carry it in their citations",
+                     "page 1, the line at y 290 ('some words here') is not a row of a printing, a function, a system code and a command",
+                     "page 1, the line at y 300 ('MUTE MUTE 00 0C') is not a row of a printing, a function, a system code and a command"]
+    for bad, why in ((cary_words(*CARY_HEAD[:3]), "no header"), (cary_words((27, "213 CARY 248 CD306 309 IR"), CARY_HEAD[3]), "does not say"),
+                     (cary_words(*CARY_HEAD, (114, "236 PLAY 340 00 392 17H")), "no key printing")):
+        with pytest.raises(ValueError, match=why):
+            cary.parse_sheet(bad, CARY_SHEET)
+
+
+def test_a_cary_label_is_the_function_where_two_rows_have_one_printing_and_the_heading_where_they_have_the_function_too():
+    row = lambda printing, function, section="": cary.SheetRow(0, printing, function, 4, 1, "0x04 0x01", section)      # noqa: E731
+    assert cary.sheet_labels([row("POWER", "POWER ON / OFF"), row("POWER", "CD PLAYER POWER ON/OFF", "CD PLAYER USE ONLY"), row("- VOLUME", "VOLUME DOWN")]) == [
+        "POWER ON / OFF", "CD PLAYER POWER ON/OFF", "VOLUME DOWN"]
+    assert cary.sheet_labels([row("MUTE", "MUTE"), row("MUTE", "MUTE", "AMPLIFIER USE ONLY"), row("1", "NUMBER KEY PAD 1")]) == ["MUTE", "MUTE (AMPLIFIER)", "1"]
+
+
+CARY_SHEET_FILES = {"CD303": 26, "CD303/200": 30, "CD303/300": 41, "CD306": 32, "CD306/200": 32, "CPA 1": 24, "CPA 2": 24, "SLP-03": 24, "Cinema 11a": 51,
+                    "Cinema 11a (Zone 2)": 22, "DAC-200ts": 35, "DVD 6": 37, "DVD 7": 37}
+
+
+def test_the_cary_sheets_are_13_files_and_415_keys_with_four_untested_where_a_code_has_two_names():
+    files = cary_sheet_files()
+    assert {m: len(f["keys"]) for m, f in files.items()} == CARY_SHEET_FILES and sum(CARY_SHEET_FILES.values()) == 415
+    for model, doc in files.items():
+        assert doc["manufacturer"] == "Cary Audio" and doc["controls"] == [f"Cary Audio {model}"] and doc["protocol"] == {"name": "RC5", "carrierHz": 36000, "minSends": 1}
+    systems = {m: sorted({s["forms"][0]["device"] for s in f["keys"].values()}) for m, f in files.items()}
+    assert systems == {"CD303": ["0x00"], "CD303/200": ["0x00", "0x08"], "CD303/300": ["0x04"], "CD306": ["0x00"], "CD306/200": ["0x00", "0x08"], "CPA 1": ["0x04"],
+                       "CPA 2": ["0x04"], "SLP-03": ["0x04"], "Cinema 11a": ["0x13"], "Cinema 11a (Zone 2)": ["0x12"], "DAC-200ts": ["0x04"], "DVD 6": ["0x17"], "DVD 7": ["0x17"]}
+    tiers = Counter(s["forms"][0]["confidence"] for f in files.values() for s in f["keys"].values())
+    assert tiers == {"plausible": 411, "untested": 4}
+    assert sorted((m, k) for m, f in files.items() for k, s in f["keys"].items() if s["forms"][0]["confidence"] == "untested") == [
+        ("CD303/300", "KEY_PAUSE"), ("CD303/300", "KEY_PLAY"), ("Cinema 11a", "KEY_HDMI_1"), ("Cinema 11a", "KEY_TEXT_DISPLAY")]
+    # the sheet gives 0x2A to PAUSE and to PLAY; the CPA's sheet, which lists the same CD player rows, gives PAUSE 0x35 and PLAY 0x2A
+    assert files["CD303/300"]["keys"]["KEY_PAUSE"]["forms"][0]["function"] == files["CD303/300"]["keys"]["KEY_PLAY"]["forms"][0]["function"] == "0x2A"
+    assert "the sheet gives this code to 'PAUSE' and 'PLAY'" in files["CD303/300"]["keys"]["KEY_PAUSE"]["forms"][0]["source"]
+    assert files["CPA 1"]["keys"]["KEY_PAUSE"]["forms"][0]["function"] == "0x35" and files["CPA 1"]["keys"]["KEY_PLAY"]["forms"][0]["function"] == "0x2A"
+    # a bare number is decimal (23 is 0x17), the H and 0x are hexadecimal, the stray H of 17H changes nothing
+    dvd = files["DVD 6"]["keys"]
+    assert (dvd["KEY_POWER"]["forms"][0]["function"], dvd["KEY_VOLUME_UP"]["forms"][0]["function"], dvd["KEY_OPEN_SLASH_CLOSE"]["forms"][0]["function"]) == ("0x00", "0x24", "0x01")
+    assert "system 23, command 36" in dvd["KEY_VOLUME_UP"]["forms"][0]["source"] and "RC5 system 23 command 36" in dvd["KEY_VOLUME_UP"]["forms"][0]["source"]
+    assert files["CD303/200"]["keys"]["KEY_PLAY"]["forms"][0]["function"] == "0x17" and "command 17H" in files["CD303/200"]["keys"]["KEY_PLAY"]["forms"][0]["source"]
+    # the DVD 6 and the DVD 7 are the same table; the CPA sheet is one table for three files, and says why the second and third are named
+    assert [(k, s["forms"][0]["function"]) for k, s in files["DVD 6"]["keys"].items()] == [(k, s["forms"][0]["function"]) for k, s in files["DVD 7"]["keys"].items()]
+    cpa = [{k: (s["label"], s["forms"][0]["device"], s["forms"][0]["function"]) for k, s in files[m]["keys"].items()} for m in ("CPA 1", "CPA 2", "SLP-03")]
+    assert cpa[0] == cpa[1] == cpa[2] and "the file's name the CPA-2 as well" in files["SLP-03"]["keys"]["KEY_MUTE"]["forms"][0]["source"]
+    assert "the file's name" not in files["CPA 1"]["keys"]["KEY_MUTE"]["forms"][0]["source"]
+    # a heading scopes the rows under it: the label and the citation say so where one label would be two keys
+    amp = files["CD303/300"]["keys"]["KEY_MUTE_AMPLIFIER"]
+    assert amp["label"] == "MUTE (AMPLIFIER)" and "under the heading 'AMPLIFIER USE ONLY'" in amp["forms"][0]["source"] and files["CD303/300"]["keys"]["KEY_MUTE"]["label"] == "MUTE"
+    assert files["CPA 1"]["keys"]["KEY_CD_PLAYER_POWER_ON_SLASH_OFF"]["forms"][0]["function"] == "0x0C"
+
+
+def test_the_cinema_11a_sheet_is_what_the_jp1_upgrade_of_the_same_product_holds_in_all_73_codes():
+    """The independent check (D364): the JP1 remote of the Cinema 11a (RC-5, systems 18 and 19) holds **all 51 codes of the main zone handset and all 22 of the second zone's** (the
+    sheet's keys, 73, are its 73), with a label that names the same function in 22 and in 4: the JP1 names the keys by what they do (``RADIO TUNING UP`` for ``TUNER SEEK RIGHT``)."""
+    from remote_ledger.keys import load_vocabulary
+
+    vocabulary = load_vocabulary()
+    jp1 = load(ROOT / "remotes" / "jp1" / "Cary" / "Audio-Cary_Audio_Design_Cinema_11a.json")
+    assert jp1["protocol"]["name"] == "RC5" and len(jp1["keys"]) == 73
+    held: dict[tuple[int, int], list[str]] = {}
+    for key, spec in jp1["keys"].items():
+        for form in spec["forms"]:
+            held.setdefault((int(form["device"], 0), int(form["function"], 0)), []).append(spec.get("label", key))
+    squash = lambda t: re.sub(r"[^a-z0-9]", "", t.lower())      # noqa: E731
+    files = cary_sheet_files()
+    for model, system, agree in (("Cinema 11a", 0x13, 22), ("Cinema 11a (Zone 2)", 0x12, 4)):
+        codes = {(int(s["forms"][0]["device"], 0), int(s["forms"][0]["function"], 0)): s["label"] for s in files[model]["keys"].values()}
+        assert all(c in held for c in codes) and {d for d, _ in codes} == {system}
+        same = [c for c, label in codes.items() if any(squash(label) == squash(other) or ({vocabulary.resolve(label)} - {None}) & ({vocabulary.resolve(other)} - {None}) for other in held[c])]
+        assert len(same) == agree
+    assert len(files["Cinema 11a"]["keys"]) + len(files["Cinema 11a (Zone 2)"]["keys"]) == 73
+
+
+def test_the_cary_sheets_are_ten_pinned_live_files_of_carys_host_with_a_words_csv_each_and_none_has_a_notice_word():
+    manifest = json.loads((SNAPSHOT / "cary" / MANIFEST).read_text(encoding="utf-8"))
+    notice = re.compile(r"copyright|©|\(c\)|all rights|reserved|confidential|reproduc|proprietary|trademark|property of", re.I)
+    documents = sorted({s.file for s in cary.SHEETS})
+    assert len(cary.SHEETS) == 11 and len(documents) == 10
+    snapshot = load_snapshot(SNAPSHOT / "cary")
+    for name in documents:
+        entry = manifest["documents"][name]
+        assert re.fullmatch(r"https://caryaudio\.com/wp-content/uploads/(2013/06|2015/03)/[\w.\-]+\.pdf", entry["url"]) and entry["url"].endswith("/" + name)
+        assert entry["retrieved"] == "2026-11-12" and (SNAPSHOT / "cary" / name).read_bytes()[:5] == b"%PDF-"
+        assert [n for n, s in manifest["sheets"].items() if s["document"] == name] == [name[:-4] + "__words.csv"]
+        # D110: a table of reference codes with no notice in it is public; a document with one is the private repository's
+        assert not notice.search(" ".join(" ".join(row[3::2]) for row in snapshot.sheet_of(name, "words") if row[1] != "R")), name
+    assert "retrieved" not in manifest["documents"]["DMS-IR-Remote-Codes.pdf"] and manifest["retrieved"] == "2026-10-13"
+
+
+def test_every_cary_sheet_key_cites_its_document_by_host_file_hash_and_date_and_its_row_and_the_ledger_reads_it_back_to_the_same_code():
+    shape = re.compile(r"^caryaudio\.com IR Remote Codes/(?P<file>[\w.\-]+\.pdf)@(?P<hash>[0-9a-f]{8}) \(retrieved 2026-11-12\) page (?P<page>\d) table row '[^']+' "
+                       r"\(function '[^']*', system (?P<system>\w+), command (?P<command>\w+)(, the sheet dated (?:[A-Z][a-z]+,? \d+, \d{4}|\d+/\d+/\d{4}))?(, under the heading '[A-Z ]+')?\): "
+                       r"RC5 system (?P<s>\d+) command (?P<c>\d+)(; .+)?$")
+    manifest = json.loads((SNAPSHOT / "cary" / MANIFEST).read_text(encoding="utf-8"))
+    n = 0
+    for doc in cary_sheet_files().values():
+        for spec in doc["keys"].values():
+            form = spec["forms"][0]
+            m = shape.match(form["source"])
+            assert m, form["source"]
+            assert manifest["documents"][m["file"]]["sha256"].startswith(m["hash"])
+            assert (int(form["device"], 0), int(form["function"], 0)) == (int(m["s"]), int(m["c"]))
+            n += 1
+    assert n == 415
 
 
 # --- NAD ---------------------------------------------------------------------------------------------------------

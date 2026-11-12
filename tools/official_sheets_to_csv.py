@@ -148,7 +148,9 @@ SHEETS = {
         "Hegel_Rost_IR_Codes.pdf", "Hegel_H190_IR_Codes.pdf", "Hegel_H360_IR_Codes.pdf", "Hegel_H590_IR_Codes.pdf", "Hegel_H90_IR_Codes.pdf",
         "Hegel_HD12_IR_Codes.pdf", "Hegel_HD25_IR_Codes.pdf", "Hegel_HD30_IR_Codes.pdf", "Hegel_Mohican_IR_Codes.pdf",
         "Hegel_H390_H590_IR_codes_v1.pdf", "Hegel_H95_H120_H190_IR_codes_v2.pdf", "Hegel_P20_P30_IR_codes_v2.pdf")},
-    "cary": {"DMS-IR-Remote-Codes.pdf": ["tables"]},
+    "cary": {"DMS-IR-Remote-Codes.pdf": ["tables"],
+             **{name: ["words"] for name in ("CD303_IR.pdf", "CD303200_IR.pdf", "CD303.300_IRCodes.pdf", "CD306_IR.pdf", "CD306200_IR.pdf", "DVD6_IRCodes.pdf", "DVD7_IRCodes.pdf",
+                                             "CPA-1-CPA-2-SLP-03-IR-Remote-Codes2.pdf", "Cinema-11a-Zone-1-2-IR-Remote-Codes-2.pdf", "DAC-200ts-IR-Remote-Codes.pdf")}},
     "nad": {**{name: ["records"] for name in (
         "crestron_cd1.ir", "crestron_cd2.ir", "crestron_cd3.ir", "crestron_cd4.ir", "crestron_cd5.ir", "crestron_dvd1.ir", "crestron_dvd2.ir",
         "crestron_receiver1.ir", "crestron_receiver2_1.ir", "crestron_receiver2_2.ir", "crestron_receiver3.ir", "crestron_receiver4.ir",
