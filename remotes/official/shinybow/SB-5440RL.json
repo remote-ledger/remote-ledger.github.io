@@ -1,0 +1,85 @@
+{
+  "manufacturer": "Shinybow",
+  "model": "SB-5440RL",
+  "aliases": [],
+  "controls": [
+    "Shinybow SB-5440RL"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER_TOGGLE": {
+      "label": "POWER TOGGLE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x0A",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/SB-5440RL.txt@0be467f5 (retrieved 2026-11-12) line 4 'POWER TOGGLE': NEC1 device 0 subdevice 255 function 10 (bytes 00 FF 0A F5); held against the maker's PDF IR-5440RL.pdf@ca36e140 (retrieved 2026-11-12)"
+        }
+      ]
+    },
+    "KEY_INPUT_1": {
+      "label": "INPUT 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/SB-5440RL.txt@0be467f5 (retrieved 2026-11-12) line 6 'INPUT 1': NEC1 device 0 subdevice 255 function 1 (bytes 00 FF 01 FE); held against the maker's PDF IR-5440RL.pdf@ca36e140 (retrieved 2026-11-12)"
+        }
+      ]
+    },
+    "KEY_INPUT_2": {
+      "label": "INPUT 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/SB-5440RL.txt@0be467f5 (retrieved 2026-11-12) line 8 'INPUT 2': NEC1 device 0 subdevice 255 function 2 (bytes 00 FF 02 FD); held against the maker's PDF IR-5440RL.pdf@ca36e140 (retrieved 2026-11-12)"
+        }
+      ]
+    },
+    "KEY_INPUT_3": {
+      "label": "INPUT 3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/SB-5440RL.txt@0be467f5 (retrieved 2026-11-12) line 10 'INPUT 3': NEC1 device 0 subdevice 255 function 3 (bytes 00 FF 03 FC); held against the maker's PDF IR-5440RL.pdf@ca36e140 (retrieved 2026-11-12)"
+        }
+      ]
+    },
+    "KEY_INPUT_4": {
+      "label": "INPUT 4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x00",
+          "subdevice": "0xFF",
+          "function": "0x0C",
+          "confidence": "untested",
+          "source": "shinybowusa.com IR code files/SB-5440RL.txt@0be467f5 (retrieved 2026-11-12) line 12 'INPUT 4': NEC1 device 0 subdevice 255 function 12 (bytes 00 FF 0C F3); held against the maker's PDF IR-5440RL.pdf@ca36e140 (retrieved 2026-11-12); the PDF IR-5440RL.pdf does not have `0CF3`"
+        }
+      ]
+    }
+  }
+}
