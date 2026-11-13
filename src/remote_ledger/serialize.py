@@ -176,7 +176,7 @@ SOURCE_KEY_ORDER: dict[str, tuple[str, ...]] = {
         "verifiedBy", "derivedFrom", "expandedFrom", "source", "claims",
     ),
     "variant": ("label", "confidence", "source", "override"),
-    "layout": ("original", "label", "source", "areas", "printedLabels", "shape"),
+    "layout": ("original", "label", "source", "areas", "svg", "printedLabels", "shape"),
 }
 
 
