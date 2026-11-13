@@ -15,6 +15,10 @@ RX-V375 to RX-V775 (the same layout as D332's) and of the RX-V667 to RX-V3067 (a
 of four is the two bytes as written (``7F01`` is ``7F 01``, ``2AD4`` is ``2A D4``), the four bytes sent in the order written. **A key is the ledger's ``NEC1-f16``**: NEC1's frame
 whose fourth byte is a field of its own (a ``function`` of ``F:E`` sixteen bits), the device the first byte and the subdevice the second. **The ID2 code of a row is its ID1 code
 with the low bit of its last byte flipped, in every one of the 1,316 rows**: the ID is a setting of the receiver and its remote that tells two of them apart.
+
+**DESIGN section 105 adds the BD-S477 and BD-S677 Blu-ray players** from the three one-page PDFs of the same zips of AWE Europe (``BD-S477_IR_code_list.pdf``, ``BD-S677_IR_code_list.pdf``
+and ``BD-S477_S677_RC_code_list.pdf``): a custom code written once (``7C``), then a row for each function with its ``data code 0`` and ``data code 1`` for each ID (the list of the
+BD-S477 and the BD-S677 of China has ID1 only), read by the words' places. **The remotes' key layout (the third PDF) is held against the two lists**: a key it has under another code is Untested.
 """
 
 from __future__ import annotations
@@ -350,6 +354,252 @@ class Entry:
     note: str
 
 
+@dataclass(frozen=True)
+class BDDocument:
+    file: str
+    models: tuple[str, ...]              # the models a file is made for (the same table for each: the list's title names them)
+    ids: tuple[str, ...]                 # the ID of each pair of data-code columns, left to right (the line ``custom code: 7C ID1 ID2`` says which)
+
+
+BD_DOCUMENTS: tuple[BDDocument, ...] = (
+    BDDocument("BD-S477_IR_code_list.pdf", ("BD-S477", "BD-S677 China"), ("ID1",)),          # ``BD-S477 & BD-S677 for China IR code comparison``, ``BD-S477 has only ID1``
+    BDDocument("BD-S677_IR_code_list.pdf", ("BD-S677",), ("ID1", "ID2")),                    # ``BD-S677 (Except for China) IR code comparison``
+)
+BD_RC = "BD-S477_S677_RC_code_list.pdf"                                                      # the key layout of the three remotes: five columns of codes
+BD_RC_COLUMNS = (("BD-S677", "ID1", "USA"), ("BD-S677", "ID2", "USA"), ("BD-S677", "ID1", "other destinations"), ("BD-S677", "ID2", "other destinations"),
+                 ("BD-S477", "ID1", "BD-S477 and BD-S677 China"))
+BD_RC_HEADINGS = ("For USA only", "Except USA and China", "BD-S477 all desti / BD-S677 China")
+_HEX2 = re.compile(r"^[0-9A-F]{2}$")
+
+
+@dataclass(frozen=True)
+class BDRow:
+    number: int
+    name: str
+    group: str                           # ``standard`` or ``Extended IR Code`` (the list's own heading before the extended codes)
+    codes: tuple[tuple[int, int] | None, ...]   # the (data code 0, data code 1) of each column, left to right (``None`` where the row has none: only the key layout's rows)
+    remark: str
+
+
+def _lines(rows: list[list[str]]) -> list[tuple[int, list[tuple[float, str]]]]:
+    """A sheet's ``words`` rows (``page, y, x, word, x, word...``) as the lines of words they are, the ruled tables' own rows (``page, R, y0, y1``) left out."""
+    out = []
+    for r in rows:
+        if len(r) < 4 or r[1] == "R":
+            continue
+        out.append((int(r[1]), [(float(r[i]), r[i + 1]) for i in range(2, len(r) - 1, 2)]))
+    return out
+
+
+def _columns(line: list[tuple[float, str]], ids: tuple[str, ...], document: str) -> list[float]:
+    """The places of the ``ID1`` and ``ID2`` words of the line that has the custom code: the columns of data codes are the words 40 points about each."""
+    labels = [(x, w) for x, w in line if re.fullmatch(r"ID\d", w)]
+    if tuple(w for _, w in labels) != ids:
+        raise ValueError(f"{document}: the line of the custom code has the IDs {[w for _, w in labels]}, not {list(ids)}")
+    return [x for x, _ in labels]
+
+
+def _split_row(line: list[tuple[float, str]], columns: list[float], document: str) -> tuple[int, str, tuple[tuple[int, int] | None, ...], str]:
+    """A row's number, name, pairs of data codes and remark. A word that is a hex pair within 40 points of a column's place is a code (the left word of a column's pair is its data code 0, the right
+    one its data code 1); a word before the columns is the number and the name; a word after them the remark. A column with one code and not two, or a code that is not a hex pair, is refused."""
+    if not line[0][1].isdigit():
+        raise ValueError(f"{document}: the line `{' '.join(w for _, w in line)}` does not begin with a row number")
+    number = int(line[0][1])
+    left = min(columns) - 40
+    name = tidy(" ".join(w for x, w in line[1:] if x < left))
+    remark = tidy(" ".join(w for x, w in line[1:] if x >= left and not any(abs(x - c) < 40 for c in columns)))
+    pairs: list[tuple[int, int] | None] = []
+    for c in columns:
+        words = [(x, w) for x, w in line[1:] if abs(x - c) < 40]
+        if not words:
+            pairs.append(None)
+            continue
+        if len(words) != 2 or not all(_HEX2.match(w) for _, w in words):
+            raise ValueError(f"{document}: row {number} `{name}` has `{[w for _, w in words]}` where a column has two hex digit pairs")
+        (x0, d0), (x1, d1) = sorted(words)
+        pairs.append((int(d0, 16), int(d1, 16)))
+    if not name:
+        raise ValueError(f"{document}: row {number} has no name")
+    return number, name, tuple(pairs), remark
+
+
+def parse_bd(rows: list[list[str]], document: BDDocument) -> tuple[int, list[BDRow]]:
+    """A BD list's custom code and its rows. The page's first line says ``IR code comparison``, the line ``custom code: 7C ID1 ID2`` the custom code (a byte and, as Yamaha writes it, its complement)
+    and the columns, the line ``YAMAHA Name data code 0 data code 1 ...`` begins the table; a row is a number, a name and a pair of data codes in each column that has one; a line ``Extended IR Code``
+    begins the extended codes; the numbers run from 1 without a gap. A row with data codes in no column, or one that is none of these, is refused."""
+    lines = _lines(rows)
+    if not lines or "comparison" not in {w for _, w in lines[0][1]}:
+        raise ValueError(f"{document.file}: the first line is not that of an IR code comparison")
+    at = next((i for i, (_, line) in enumerate(lines) if [w for _, w in line[:2]] == ["custom", "code:"]), None)
+    if at is None:
+        raise ValueError(f"{document.file}: no line gives the custom code")
+    custom_line = lines[at][1]
+    if len(custom_line) < 3 or not _HEX2.match(custom_line[2][1]):
+        raise ValueError(f"{document.file}: the custom code `{[w for _, w in custom_line[:3]]}` is not a hex pair")
+    custom = int(custom_line[2][1], 16)
+    columns = _columns(custom_line, document.ids, document.file)
+    head = next((i for i, (_, line) in enumerate(lines) if i > at and [w for _, w in line[:2]] == ["YAMAHA", "Name"]), None)
+    if head is None:
+        raise ValueError(f"{document.file}: no heading `YAMAHA Name` of the table")
+    group = "standard"
+    out: list[BDRow] = []
+    for _, line in lines[head + 1:]:
+        words = [w for _, w in line]
+        if words == ["Extended", "IR", "Code"]:
+            group = "Extended IR Code"
+            continue
+        if not words[0].isdigit():
+            continue                                          # the footer (``BD-S477 ID1``)
+        number, name, pairs, remark = _split_row(line, columns, document.file)
+        if number != len(out) + 1:
+            raise ValueError(f"{document.file}: row {number} follows row {len(out)}")
+        if None in pairs:
+            raise ValueError(f"{document.file}: row {number} `{name}` has no data codes in one of its {len(columns)} ID columns")
+        out.append(BDRow(number, name, group, pairs, remark))
+    if not out:
+        raise ValueError(f"{document.file}: no rows")
+    return custom, out
+
+
+def parse_rc(rows: list[list[str]]) -> list[BDRow]:
+    """The key layout of the three remotes (``BD-S677/S477 RC code comparison``): the lists' rows again, in **five columns of codes** under three headings (``For USA only``: ID1 and ID2;
+    ``Except USA and China``: ID1 and ID2; ``BD-S477 all desti / BD-S677 China``: ID1), a row having a pair of data codes only in the columns of the remotes that have the key (``VUDU``: the
+    USA's two; ``SETUP``: not the BD-S477's). A row's ``codes`` are the five columns' pairs, ``None`` where the column has none. The custom code must be the lists' ``7C``."""
+    lines = _lines(rows)
+    if not lines or "RC" not in {w for _, w in lines[0][1]}:
+        raise ValueError(f"{BD_RC}: the first line is not that of an RC code comparison")
+    at = next((i for i, (_, line) in enumerate(lines) if [w for _, w in line[:2]] == ["custom", "code:"]), None)
+    if at is None:
+        raise ValueError(f"{BD_RC}: no line gives the custom code")
+    custom_line = lines[at][1]
+    if len(custom_line) < 3 or custom_line[2][1] != "7C":
+        raise ValueError(f"{BD_RC}: the custom code is `{[w for _, w in custom_line[:3]]}`, not 7C")
+    columns = _columns(custom_line, ("ID1", "ID2", "ID1", "ID2", "ID1"), BD_RC)
+    words = iter(w for _, line in lines[:at] for _, w in line)       # the three headings, as words, in order, above the columns
+    if not all(any(w == e for w in words) for e in " ".join(BD_RC_HEADINGS).split()):
+        raise ValueError(f"{BD_RC}: the headings {list(BD_RC_HEADINGS)} are not above the five columns")
+    head = next((i for i, (_, line) in enumerate(lines) if i > at and [w for _, w in line[:2]] == ["YAMAHA", "Name"]), None)
+    if head is None:
+        raise ValueError(f"{BD_RC}: no heading `YAMAHA Name` of the table")
+    out: list[BDRow] = []
+    for _, line in lines[head + 1:]:
+        if not line[0][1].isdigit():
+            continue
+        number = int(line[0][1])
+        if number != len(out) + 1:
+            raise ValueError(f"{BD_RC}: row {number} follows row {len(out)}")
+        name = tidy(" ".join(w for x, w in line[1:] if x < min(columns) - 40))
+        cells: list[tuple[int, int] | None] = []
+        for c in columns:
+            cell = sorted((x, w) for x, w in line[1:] if abs(x - c) < 40)
+            if not cell:
+                cells.append(None)
+            elif len(cell) == 2 and all(_HEX2.match(w) for _, w in cell):
+                cells.append((int(cell[0][1], 16), int(cell[1][1], 16)))
+            else:
+                raise ValueError(f"{BD_RC}: row {number} `{name}` has `{[w for _, w in cell]}` where a column has two hex digit pairs")
+        if not name or not any(cells):
+            raise ValueError(f"{BD_RC}: row {number} has no name or no code")
+        out.append(BDRow(number, name, "standard", tuple(cells), ""))
+    if not out:
+        raise ValueError(f"{BD_RC}: no rows")
+    return out
+
+
+def _norm(text: str) -> str:
+    """A name without its case and spaces (``SEARCH+`` and ``SEARCH-`` stay two names: the lists have both)."""
+    return re.sub(r"\s+", "", text.casefold())
+
+
+def build_bd(snapshot: Snapshot, authored: dict[tuple[str, str], str], report: Report) -> list[tuple[str, dict[str, Any]]]:
+    """The files of the BD-S477 and BD-S677 lists (DESIGN section 105): a file for each model and ID of a list, a key for each of its rows. **Each key is held against the key layout of the remotes**
+    (the third PDF): a key it has as a row of the remote's own keys must have the same two data codes in the columns of the remotes that have it, and a key it does not have is an extended code (the
+    layout is of the keys on the remotes). A key whose codes the layout gives otherwise is Untested, and so is a key whose ID1 codes are not a byte and its complement or whose ID2 code is not its ID1
+    code with the low bit of the last byte flipped (the rule of all of the 1,316 rows of the receivers' tables), and a code two names share."""
+    rc = parse_rc(snapshot.sheet_of(BD_RC, "words"))
+    report.count(MAKER, f"{BD_RC}: rows read", len(rc))
+    rc_sha = snapshot.sha(BD_RC)
+    rc_by_name: dict[str, BDRow] = {}
+    for r in rc:
+        rc_by_name.setdefault(_norm(r.name), r)
+    layout = {("BD-S677", "ID1"): (0, 2), ("BD-S677", "ID2"): (1, 3), ("BD-S477", "ID1"): (4,)}
+    gate: dict[tuple, str | None] = {}
+    out: list[tuple[str, dict[str, Any]]] = []
+    for document in BD_DOCUMENTS:
+        custom, rows = parse_bd(snapshot.sheet_of(document.file, "words"), document)
+        report.count(MAKER, f"{document.file}: rows read", len(rows))
+        sha = snapshot.sha(document.file)
+        entry = snapshot.documents[document.file]
+        c0, c1 = custom, custom ^ 0xFF
+        for index, id_name in enumerate(document.ids):
+            columns = layout[(document.models[0].split()[0], id_name)]
+            by_code: dict[tuple[int, int], list[str]] = {}
+            for r in rows:
+                by_code.setdefault(r.codes[index], []).append(r.name)
+            members: list[tuple[str, dict[str, Any]]] = []
+            for r in rows:
+                d0, d1 = r.codes[index]
+                function = d0 << 8 | d1
+                doubts: list[str] = []
+                if id_name == "ID1" and d1 != d0 ^ 0xFF:
+                    doubts.append(f"the data code 1 `{d1:02X}` is not the complement of the data code 0 `{d0:02X}`, which every ID1 row of the receivers' tables is")
+                if id_name == "ID2":
+                    first = r.codes[0]
+                    if first[0] != d0 or first[1] ^ 1 != d1:
+                        doubts.append(f"the ID2 code is not the ID1 code `{first[0]:02X} {first[1]:02X}` with the low bit of its last byte flipped, which every ID2 row of the receivers' tables is")
+                cite_more = ""
+                row_rc = rc_by_name.get(_norm(r.name))
+                if row_rc is None:
+                    row_rc = next((x for x in rc if any(x.codes[col] and x.codes[col][0] == d0 for col in columns)), None)
+                    if row_rc is not None:
+                        cite_more += f"; the key layout names it `{row_rc.name}` (its row {row_rc.number})"
+                if row_rc is None:
+                    cite_more += "; the remotes' key layout has no key for it (an extended code)" if r.group == "Extended IR Code" else "; the remotes' key layout has no row for it"
+                else:
+                    seen = [(col, row_rc.codes[col]) for col in columns if row_rc.codes[col]]
+                    for col, pair in seen:
+                        if pair != (d0, d1):
+                            doubts.append(f"the key layout's row {row_rc.number} gives `{pair[0]:02X} {pair[1]:02X}` in its {BD_RC_COLUMNS[col][1]} column of the remote for {BD_RC_COLUMNS[col][2]}")
+                    if seen:
+                        where = " and ".join(sorted({BD_RC_COLUMNS[col][2] for col, _ in seen}))
+                        cite_more += f"; the key layout ({BD_RC}@{rc_sha}) has it as row {row_rc.number}, in the {id_name} column of the remote for {where}"
+                    else:
+                        cite_more += f"; the key layout's row {row_rc.number} has no code in the remote's {id_name} columns"
+                if len(by_code[(d0, d1)]) > 1:
+                    doubts.append("the list gives this code to " + " and ".join(f"'{n}'" for n in by_code[(d0, d1)]) + ", and a code is one function")
+                if (c0, c1, function) not in gate:
+                    gate[(c0, c1, function)] = form_compiles(IMPORT_ROOT, PROTOCOL, "K", {"id": "primary.irp", "type": "irp", "device": c0, "subdevice": c1, "function": function,
+                                                                                          "confidence": TIER, "source": "probe"})
+                if gate[(c0, c1, function)]:
+                    report.unrepresented[(MAKER, document.file, f"does not compile: {gate[(c0, c1, function)]}")] += 1
+                    continue
+                cite = (f"{AWE}/{document.file}@{sha} (retrieved {entry.get('retrieved', snapshot.retrieved)}, from the Wayback Machine snapshot {entry['snapshot']}) "
+                        f"page 1 row '{r.number} {r.name}' (custom code {custom:02X}, data code 0 {d0:02X}, data code 1 {d1:02X}, {id_name}"
+                        f"{', under the heading `Extended IR Code`' if r.group == 'Extended IR Code' else ''}): "
+                        f"NEC1-f16 device {c0} subdevice {c1} function {function} (bytes {c0:02X} {c1:02X} {d0:02X} {d1:02X})")
+                if r.remark:
+                    cite += f"; the list's remark on the row is `{r.remark}`"
+                cite += cite_more
+                if doubts:
+                    cite += "; " + "; ".join(doubts)
+                members.append((r.name, {"id": "primary.irp", "type": "irp", "device": c0, "subdevice": c1, "function": function,
+                                         "confidence": DOUBTFUL_TIER if doubts else TIER, "source": cite}))
+            if not members:
+                continue
+            for model in document.models:
+                final = f"{model} ({id_name})"
+                while (BRAND.casefold(), final.casefold()) in authored:
+                    renamed = f"{final} (Yamaha table)"
+                    report.notes.append((MAKER, final, f"kept as '{renamed}': the ledger's {authored[(BRAND.casefold(), final.casefold())]} has the name (R15)"))
+                    final = renamed
+                keys = {n: {"label": m[0], "forms": [m[1]]} for n, m in zip(key_names([m[0] for m in members]), members)}
+                report.count(MAKER, "files")
+                report.count(MAKER, "keys", len(keys))
+                out.append((f"{IMPORT_ROOT}/{MAKER}/{slug(final)}.json",
+                            {"manufacturer": BRAND, "model": final, "aliases": [], "controls": [f"{BRAND} {model}"], "protocol": dict(PROTOCOL), "keys": keys}))
+    return out
+
+
 def build(snapshot: Snapshot, authored: dict[tuple[str, str], str], report: Report) -> list[tuple[str, dict[str, Any]]]:
     gate: dict[tuple, str | None] = {}
     entries: dict[tuple[str, str], list[Entry]] = {}              # (model, id) -> the entries of every document that names the model
@@ -447,4 +697,5 @@ def build(snapshot: Snapshot, authored: dict[tuple[str, str], str], report: Repo
         report.count(MAKER, "keys", len(keys))
         out.append((f"{IMPORT_ROOT}/{MAKER}/{slug(final)}.json",
                     {"manufacturer": BRAND, "model": final, "aliases": [], "controls": [f"{BRAND} {model}"], "protocol": dict(PROTOCOL), "keys": keys}))
+    out.extend(build_bd(snapshot, authored, report))
     return out

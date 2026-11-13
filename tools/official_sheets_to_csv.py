@@ -110,7 +110,9 @@ SHEETS = {
         "XDA-QS5400_XDA-AMP5400_IR_Commands.pdf",
         "IR_RX-Vx75_375-775_STD.pdf", "IR_RX-Vx75_375-775_EXD.pdf", "STD_IR_RXV667-3067.pdf", "EXD_IR_RXV667-3067.pdf",
         "IR_RX-Ax30_A730_830_STD.pdf", "IR_RX-Ax30_A730_830_EXD.pdf")} |
-        {name: ["Standard/blocks", "Extended/blocks"] for name in ("IR_RX-V671-3071_rev1.0_Full.xls", "IR_Vx75.xls", "IR_Vx77.xls")},
+        {name: ["Standard/blocks", "Extended/blocks"] for name in ("IR_RX-V671-3071_rev1.0_Full.xls", "IR_Vx75.xls", "IR_Vx77.xls")} |
+        # the BD-S477 and BD-S677 players' lists (D383): a row is a line of words with the x of each, which says the column a code is in
+        {name: ["words"] for name in ("BD-S477_IR_code_list.pdf", "BD-S677_IR_code_list.pdf", "BD-S477_S677_RC_code_list.pdf")},
     "optoma": {name: ["lines"] for name in ("eh501_ir.pdf", "w501_ir.pdf", "x501_ir.pdf", "gt750e_ir.pdf", "hd33_ir.pdf", "th7500nl_ir.pdf", "tw1692_ir.pdf", "tw536_ir.pdf", "tx615_ir.pdf", "tx762_ir.pdf",
                                               "HD82-IRE-en-GB.pdf")},
     "dune": {"ir.html": ["pre"], "dunehd_google_ir_codes.html": ["tables"]},

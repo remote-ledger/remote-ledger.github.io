@@ -3528,10 +3528,11 @@ def test_a_heading_that_is_not_the_documents_and_a_zone_that_is_none_are_refused
         yamaha.parse([["1", "142", "POWER", "POWER", "ON", "RECEIVER", "MAIN", "7E-7E", "7E-7E80", "YES", "", ""]], YDOC)
 
 
-def yamaha_files(host: str = "snapav.com") -> dict[str, dict]:
-    """The files of §87 (the tables on SnapAV's site) or, with ``host="awe-europe.com"``, §100's (AWE Europe's control documents)."""
+def yamaha_files(host: str = "snapav.com", bd: bool = False) -> dict[str, dict]:
+    """The files of §87 (the tables on SnapAV's site) or, with ``host="awe-europe.com"``, §100's (AWE Europe's control documents) or, with ``bd=True`` as well, §105's (the BD players' lists)."""
     docs = {load(p)["model"]: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "yamaha").glob("*.json"))}
-    return {name: doc for name, doc in docs.items() if next(iter(doc["keys"].values()))["forms"][0]["source"].startswith(host)}
+    return {name: doc for name, doc in docs.items()
+            if next(iter(doc["keys"].values()))["forms"][0]["source"].startswith(host) and name.startswith("BD-S") == bd}
 
 
 def test_yamahas_six_tables_are_28_files_and_7008_keys_two_code_sets_for_each_of_14_models_and_60_keys_are_the_japan_models():
@@ -3733,7 +3734,7 @@ def test_none_of_the_nine_awe_europe_documents_has_a_notice_word_in_its_cells_or
     xlrd, pymupdf = pytest.importorskip("xlrd"), pytest.importorskip("pymupdf")
     notice = re.compile(r"copyright|all rights|reserved|\u00a9|\(c\)|confidential|reproduc|trademark|proprietary|property of", re.I)
     snapshot = load_snapshot(SNAPSHOT / "yamaha")
-    documents = sorted(name for name, entry in snapshot.documents.items() if "awe-europe.com" in entry["original"])
+    documents = sorted(name for name, entry in snapshot.documents.items() if "awe-europe.com" in entry["original"] and not name.startswith("BD-S"))
     assert len(documents) == 9 and sum(name.endswith(".xls") for name in documents) == 3
     for name in documents:
         path = SNAPSHOT / "yamaha" / name
@@ -5173,3 +5174,230 @@ def test_the_shinybow_frames_of_the_jp1_upgrade_of_the_sb_5470_are_all_in_these_
     theirs = {frame(f) for spec in load(ROOT / "remotes" / "jp1" / "Shinybow" / "Audio_Video_Selectors-Shinybow_SB-5470.json")["keys"].values() for f in spec["forms"]}
     ours = {frame(s["forms"][0]) for f in shinybow_files().values() if f["protocol"]["name"] == "NEC1" for s in f["keys"].values()}
     assert len(theirs) == 9 and theirs <= ours
+
+
+# --- Yamaha's BD-S477 and BD-S677 Blu-ray players (DESIGN section 105: D383 to D385) ---
+
+BD_COLUMNS = {"ID1": (208, 258, 231), "ID2": (308, 357, 330)}
+
+
+def bd_line(y: int, number: int | str, name: str, *codes: str, remark: str = "") -> list[str]:
+    """A ``words`` row: the number at x 65, the name's words from x 106, the codes at the columns of the IDs (a pair for each), the remark at x 389."""
+    cells = [(65, str(number))] + [(106 + 40 * i, w) for i, w in enumerate(name.split())]
+    ids = iter(sorted(BD_COLUMNS.values()))
+    for pair in (codes[i:i + 2] for i in range(0, len(codes), 2)):
+        left, right, _ = next(ids)
+        cells += [(left, pair[0])] + ([(right, pair[1])] if len(pair) > 1 else [])               # a lone code is a column with one word
+    if remark:
+        cells += [(389 + 30 * i, w) for i, w in enumerate(remark.split())]
+    return ["1", str(y)] + [v for x, w in cells for v in (str(x), w)]
+
+
+def bd_sheet(ids: tuple[str, ...] = ("ID1", "ID2"), *rows: list[str], custom: str = "7C") -> list[list[str]]:
+    out = [["1", "29", "56", "BD-S677(Except", "145", "for", "163", "China)", "208", "IR", "222", "code", "251", "comparison"], ["1", "53", "510", "Rev.2"],
+           ["1", "87", "73", "custom", "105", "code:", "130", custom] + [v for i in ids for v in (str(BD_COLUMNS[i][2]), i)],
+           ["1", "98", "98", "YAMAHA", "139", "Name", "190", "data", "210", "code", "232", "0", "351", "remark"]]
+    return out + list(rows) + [["1", "R", "692", "703"], ["1", "800", "74", "BD-S677", "200", "ID1", "230", "ID2"]]
+
+
+BD_DOC = yamaha.BDDocument("t.pdf", ("BD-S677",), ("ID1", "ID2"))
+
+
+def test_a_bd_list_is_a_custom_code_two_id_columns_and_rows_of_a_name_and_two_data_codes_with_the_extended_codes_after_their_heading():
+    rows = bd_sheet(("ID1", "ID2"),
+                    bd_line(109, 1, "Standby/On", "80", "7F", "80", "7E"), bd_line(120, 2, "GREEN / PROGRAM", "EA", "15", "EA", "14"),
+                    bd_line(131, 3, "VUDU", "FC", "03", "FC", "02", remark="Only for USA"), ["1", "142", "73", "Extended", "115", "IR", "126", "Code"],
+                    bd_line(153, 4, "POWER ON", "F6", "09", "F6", "08"))
+    custom, got = yamaha.parse_bd(rows, BD_DOC)
+    assert custom == 0x7C
+    assert [(r.number, r.name, r.group, r.codes, r.remark) for r in got] == [
+        (1, "Standby/On", "standard", ((0x80, 0x7F), (0x80, 0x7E)), ""), (2, "GREEN / PROGRAM", "standard", ((0xEA, 0x15), (0xEA, 0x14)), ""),
+        (3, "VUDU", "standard", ((0xFC, 0x03), (0xFC, 0x02)), "Only for USA"), (4, "POWER ON", "Extended IR Code", ((0xF6, 0x09), (0xF6, 0x08)), "")]
+    one = yamaha.parse_bd(bd_sheet(("ID1",), bd_line(109, 1, "PLAY", "82", "7D")), yamaha.BDDocument("t.pdf", ("BD-S477",), ("ID1",)))[1]
+    assert one[0].codes == ((0x82, 0x7D),)                                                  # a list with one ID has one pair of columns
+
+
+def test_a_bd_list_that_is_not_the_one_the_reader_knows_is_refused_with_the_line_that_is_wrong():
+    good = [bd_line(109, 1, "Standby/On", "80", "7F", "80", "7E"), bd_line(120, 2, "OPEN/CLOSE", "81", "7E", "81", "7F")]
+    for bad, why in (
+            (bd_sheet(("ID1", "ID2"), *good)[1:], "the first line is not that of an IR code comparison"),
+            ([r for r in bd_sheet(("ID1", "ID2"), *good) if r[3:5] != ["custom", "105"]], "no line gives the custom code"),
+            (bd_sheet(("ID1",), *good), "has the IDs"),
+            (bd_sheet(("ID1", "ID2"), *good, custom="7Z"), "is not a hex pair"),
+            (bd_sheet(("ID1", "ID2"), good[0], bd_line(131, 3, "STOP", "85", "7A", "85", "7B")), "row 3 follows row 1"),
+            (bd_sheet(("ID1", "ID2"), good[0], bd_line(120, 2, "OPEN/CLOSE", "81", "7E", "81")), "has `['81']` where a column has two hex digit pairs"),
+            (bd_sheet(("ID1", "ID2"), good[0], bd_line(120, 2, "OPEN/CLOSE", "81", "7E")), "has no data codes in one of its 2 ID columns"),
+            (bd_sheet(("ID1", "ID2"), good[0], bd_line(120, 2, "OPEN/CLOSE", "81", "7E", "81", "G1")), "where a column has two hex digit pairs"),
+            (bd_sheet(("ID1", "ID2")), "no rows")):
+        with pytest.raises(ValueError, match=re.escape(why)):
+            yamaha.parse_bd(bad, BD_DOC)
+    with pytest.raises(ValueError, match="no heading `YAMAHA Name`"):
+        yamaha.parse_bd([r for r in bd_sheet(("ID1", "ID2"), *good) if r[2:4] != ["98", "YAMAHA"][:0] and r[3:4] != ["YAMAHA"]], BD_DOC)
+
+
+RC_COLUMNS = (115, 188, 260, 332, 417)
+
+
+def rc_sheet(*rows: list[str], custom: str = "7C", headings: bool = True) -> list[list[str]]:
+    head = [["1", "22", "3", "BD-S677/S477", "60", "RC", "74", "code", "95", "comparison"]]
+    if headings:
+        head.append(["1", "57", "152", "For", "165", "USA", "181", "only", "283", "Except", "307", "USA", "323", "and", "336", "China", "397", "BD-S477", "426", "all", "436", "desti", "453", "/", "457", "BD-S677", "486", "China"])
+    head += [["1", "74", "15", "custom", "39", "code:", "57", custom, "132", "ID1", "205", "ID2", "277", "ID1", "349", "ID2", "446", "ID1"],
+             ["1", "82", "33", "YAMAHA", "63", "Name", "101", "data", "116", "code"]]
+    return head + list(rows)
+
+
+def rc_line(y: int, number: int, name: str, *cells: tuple[str, str] | None) -> list[str]:
+    out = ["1", str(y), "9", str(number), "35", name]
+    for x, cell in zip(RC_COLUMNS, cells):
+        if cell:
+            out += [str(x), cell[0], str(x + 36), cell[1]]
+    return out
+
+
+def test_the_bd_key_layout_has_five_columns_of_codes_under_three_headings_and_a_row_only_in_the_columns_of_the_remotes_that_have_the_key():
+    rows = rc_sheet(rc_line(90, 1, "Standby/On", ("80", "7F"), ("80", "7E"), ("80", "7F"), ("80", "7E"), ("80", "7F")),
+                    rc_line(98, 2, "VUDU", ("FC", "03"), ("FC", "02")), ["1", "R", "392", "408"])
+    got = yamaha.parse_rc(rows)
+    assert [(r.number, r.name, r.codes) for r in got] == [
+        (1, "Standby/On", ((0x80, 0x7F), (0x80, 0x7E), (0x80, 0x7F), (0x80, 0x7E), (0x80, 0x7F))), (2, "VUDU", ((0xFC, 0x03), (0xFC, 0x02), None, None, None))]
+    one = [rc_line(90, 1, "Standby/On", ("80", "7F"), ("80", "7E"), ("80", "7F"), ("80", "7E"), ("80", "7F"))]
+    for bad, why in ((rc_sheet(*one, custom="7A"), "the custom code is"), (rc_sheet(*one, headings=False), "are not above the five columns"),
+                     (rc_sheet(rc_line(90, 1, "X", ("80", "7F")), rc_line(98, 3, "Y", ("81", "7E"))), "row 3 follows row 1"),
+                     (rc_sheet(["1", "90", "9", "1", "35", "X", "115", "80"]), "where a column has two hex digit pairs"),
+                     (rc_sheet(), "no rows"), (rc_sheet(["1", "90", "9", "1", "35", "X"]), "no name or no code"),
+                     (rc_sheet(*one)[:1] + [r for r in rc_sheet(*one) if r[3:4] != ["custom"]][1:], "no line gives the custom code")):
+        with pytest.raises(ValueError, match=re.escape(why)):
+            yamaha.parse_rc(bad)
+
+
+def bd_files() -> dict[str, dict]:
+    return yamaha_files("awe-europe.com", bd=True)
+
+
+def test_yamahas_bd_lists_are_four_files_of_228_keys_in_nec1_f16_with_custom_7c_and_all_plausible():
+    """BD-S477 (ID1), BD-S677 China (ID1) (the BD-S477's table: the title says `BD-S477 & BD-S677 for China`), BD-S677 (ID1) and BD-S677 (ID2)."""
+    files = bd_files()
+    assert {n: len(f["keys"]) for n, f in files.items()} == {"BD-S477 (ID1)": 56, "BD-S677 China (ID1)": 56, "BD-S677 (ID1)": 58, "BD-S677 (ID2)": 58}
+    assert all(f["protocol"] == {"name": "NEC1-f16", "carrierHz": 38000, "minSends": 1} and f["manufacturer"] == "Yamaha" and f["controls"] == [f"Yamaha {n.split(' (')[0]}"] for n, f in files.items())
+    assert Counter(s["forms"][0]["confidence"] for f in files.values() for s in f["keys"].values()) == {"plausible": 228}
+    assert all((int(s["forms"][0]["device"], 0), int(s["forms"][0]["subdevice"], 0)) == (0x7C, 0x83) for f in files.values() for s in f["keys"].values())
+    s477, china, id1, id2 = files["BD-S477 (ID1)"], files["BD-S677 China (ID1)"], files["BD-S677 (ID1)"], files["BD-S677 (ID2)"]
+    forms = lambda f: [(s["label"], int(s["forms"][0]["function"], 0)) for s in f["keys"].values()]
+    assert forms(s477) == forms(china)                                                       # the one table of the title
+    assert forms(id1)[0] == ("Standby/On", 0x807F) and forms(id2)[0] == ("Standby/On", 0x807E) and forms(id1)[-1] == ("EXIT", 0xF00F) and forms(id2)[-1] == ("EXIT", 0xF00E)
+    assert [(a[0], a[1], b[1]) for a, b in zip(forms(id1), forms(id2)) if a[1] ^ 1 != b[1]] == []     # the ID2 code is the ID1 code with the low bit of the last byte flipped, in every row
+    assert all(d1 == d0 ^ 0xFF for d0, d1 in ((fn >> 8, fn & 0xFF) for _, fn in forms(id1) + forms(s477)))        # and the ID1 data code 1 is the complement of data code 0
+    assert {n for n, _ in forms(id1)} - {n for n, _ in forms(s477)} == {"YOUTUBE", "VUDU"} and {n for n, _ in forms(s477)} - {n for n, _ in forms(id1)} == set()
+
+
+def test_a_bd_key_cites_its_list_and_the_key_layout_row_and_the_remarks_say_who_has_youtube_and_vudu():
+    files = bd_files()
+    vudu = files["BD-S677 (ID2)"]["keys"]["KEY_VUDU"]["forms"][0]["source"]
+    assert vudu == ("awe-europe.com Yamaha control documents/BD-S677_IR_code_list.pdf@2c8a80c4 (retrieved 2026-11-13, from the Wayback Machine snapshot 20151207014858) "
+                    "page 1 row '48 VUDU' (custom code 7C, data code 0 FC, data code 1 02, ID2): NEC1-f16 device 124 subdevice 131 function 64514 (bytes 7C 83 FC 02); "
+                    "the list's remark on the row is `Only for USA`; the key layout (BD-S477_S677_RC_code_list.pdf@ffaaa32a) has it as row 48, in the ID2 column of the remote for USA")
+    youtube = files["BD-S677 (ID1)"]["keys"]["KEY_YOUTUBE"]["forms"][0]["source"]
+    assert "the list's remark on the row is `Except for China`" in youtube and "ID1 column of the remote for USA and other destinations" in youtube
+    power = files["BD-S677 (ID1)"]["keys"]["KEY_POWER_ON"]["forms"][0]["source"]
+    assert "under the heading `Extended IR Code`" in power and power.endswith("the remotes' key layout has no key for it (an extended code)")
+    ab = files["BD-S677 (ID1)"]["keys"]["KEY_A_SLASH_B"]["forms"][0]["source"]
+    assert "the key layout names it `REPEAT A/B` (its row 20)" in ab
+    layout = lambda f: sum("key layout (BD-S477_S677_RC_code_list.pdf@ffaaa32a) has it" in s["forms"][0]["source"] for s in f["keys"].values())
+    assert (layout(files["BD-S477 (ID1)"]), layout(files["BD-S677 (ID1)"]), layout(files["BD-S677 (ID2)"])) == (41, 48, 48)
+
+
+class BDTampered:
+    """A snapshot whose one sheet is edited: the key layout's row 6 (`SEARCH-`) says other codes, or the list's ID2 code of a row is not the ID1 code flipped."""
+    def __init__(self, snapshot, document, edit):
+        self.snapshot, self.document, self.edit = snapshot, document, edit
+
+    def sheet_of(self, document, sheet):
+        rows = self.snapshot.sheet_of(document, sheet)
+        return self.edit(rows) if document == self.document else rows
+
+    def __getattr__(self, name):
+        return getattr(self.snapshot, name)
+
+
+def bd_built(snapshot) -> dict[str, dict]:
+    return {doc["model"]: doc for _, doc in yamaha.build_bd(snapshot, {}, Report())}
+
+
+def bd_set(rows: list[list[str]], name: str, old: str, new: str, nth: int = 0) -> list[list[str]]:
+    """The sheet with the `nth` word `old` of the row that has the word `name` written `new`."""
+    out = []
+    for r in rows:
+        if r[1] != "R" and name in r[3::2]:
+            r = list(r)
+            r[[i for i in range(3, len(r), 2) if r[i] == old][nth]] = new
+        out.append(r)
+    return out
+
+
+def test_a_bd_key_the_layout_gives_other_codes_or_whose_id2_is_not_its_id1_flipped_or_whose_code_two_names_share_is_untested():
+    snapshot = load_snapshot(SNAPSHOT / "yamaha")
+    built = bd_built(BDTampered(snapshot, yamaha.BD_RC, lambda rows: bd_set(rows, "SEARCH-", "79", "77")))              # the USA's ID1 column of row 6
+    assert {(m, s["label"]) for m, d in built.items() for s in d["keys"].values() if s["forms"][0]["confidence"] == "untested"} == {("BD-S677 (ID1)", "SEARCH-")}
+    assert ("the key layout's row 6 gives `86 77` in its ID1 column of the remote for USA"
+            in built["BD-S677 (ID1)"]["keys"]["KEY_SEARCH_MINUS"]["forms"][0]["source"])
+    built = bd_built(BDTampered(snapshot, "BD-S677_IR_code_list.pdf", lambda rows: bd_set(rows, "PLAY", "7C", "7D")))   # the ID2 data code 1 of PLAY is the ID1's, not flipped
+    play = built["BD-S677 (ID2)"]["keys"]["KEY_PLAY"]["forms"][0]
+    assert play["confidence"] == "untested" and "the ID2 code is not the ID1 code `82 7D` with the low bit of its last byte flipped" in play["source"]
+    assert built["BD-S677 (ID1)"]["keys"]["KEY_PLAY"]["forms"][0]["confidence"] == "plausible"
+    built = bd_built(BDTampered(snapshot, "BD-S477_IR_code_list.pdf", lambda rows: bd_set(bd_set(rows, "PAUSE", "83", "82"), "PAUSE", "7C", "7D")))   # PAUSE written with PLAY's code
+    pause = built["BD-S477 (ID1)"]["keys"]["KEY_PAUSE"]["forms"][0]
+    assert pause["confidence"] == "untested" and "the list gives this code to 'PLAY' and 'PAUSE', and a code is one function" in pause["source"]
+    built = bd_built(BDTampered(snapshot, "BD-S477_IR_code_list.pdf", lambda rows: bd_set(rows, "PLAY", "7D", "7E")))    # an ID1 data code 1 that is not the complement
+    assert "is not the complement of the data code 0 `82`" in built["BD-S477 (ID1)"]["keys"]["KEY_PLAY"]["forms"][0]["source"]
+
+
+def bd_pdf_rows(path, ids: int) -> list[tuple[str, int, tuple[int, ...]]]:
+    """A list's rows as the PDF's own text flow gives them (a line for a number, one for the name, two for each ID's data codes): independent of the words' places the reader uses."""
+    import pymupdf
+    lines = [l.strip() for page in pymupdf.open(str(path)) for l in page.get_text().replace("　", " ").splitlines() if l.strip()]
+    i, expect, out = lines.index("remark") + 1, 1, []
+    while expect:
+        while i < len(lines) and lines[i] != str(expect):
+            i += 1
+        if i >= len(lines):
+            break
+        name, codes = lines[i + 1], lines[i + 2:i + 2 + 2 * ids]
+        out.append((name, expect, tuple(int(c, 16) for c in codes)))
+        i += 2 + 2 * ids
+        expect += 1
+    return out
+
+
+def test_every_bd_key_is_the_row_of_the_pdfs_own_text_flow_with_its_two_data_codes():
+    pytest.importorskip("pymupdf")
+    files = bd_files()
+    for pdf, ids, names in (("BD-S477_IR_code_list.pdf", 1, ("BD-S477 (ID1)", "BD-S677 China (ID1)")), ("BD-S677_IR_code_list.pdf", 2, ("BD-S677 (ID1)", "BD-S677 (ID2)"))):
+        rows = bd_pdf_rows(SNAPSHOT / "yamaha" / pdf, ids)
+        assert [r[1] for r in rows] == list(range(1, len(rows) + 1)) and len(rows) == (56 if ids == 1 else 58)
+        for column, name in enumerate(names if ids == 2 else names[:1]):
+            keys = [(s["label"], int(s["forms"][0]["function"], 0)) for s in files[name]["keys"].values()]
+            assert keys == [(n, codes[2 * column] << 8 | codes[2 * column + 1]) for n, _, codes in rows], name
+        if ids == 1:
+            assert [(s["label"], int(s["forms"][0]["function"], 0)) for s in files[names[1]]["keys"].values()] == [(n, c[0] << 8 | c[1]) for n, _, c in rows]
+
+
+def test_the_three_bd_pdfs_are_pinned_from_the_wayback_zip_with_a_words_csv_each_the_sheet_tool_writes_and_none_has_a_notice_word():
+    pymupdf = pytest.importorskip("pymupdf")
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location("official_sheets_to_csv", ROOT / "tools" / "official_sheets_to_csv.py")
+    tool = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(tool)
+    snapshot = load_snapshot(SNAPSHOT / "yamaha")
+    notice = re.compile(r"copyright|all rights|reserved|©|\(c\)|confidential|reproduc|trademark|proprietary|property of|licen[cs]e|permission", re.I)
+    names = ["BD-S477_IR_code_list.pdf", "BD-S477_S677_RC_code_list.pdf", "BD-S677_IR_code_list.pdf"]
+    assert sorted(n for n in snapshot.documents if n.startswith("BD-S")) == names
+    for name in names:
+        entry = snapshot.documents[name]
+        assert entry["retrieved"] == "2026-11-13" and entry["snapshot"] == "20151207014858" and entry["member"] == f"BD-S677_S477_YNC_Spec/{name}"
+        assert entry["url"].endswith("/http://www.awe-europe.com/documents/Control%20Docs/Yamaha/BD-S677_S477_YNC_Spec.zip") and entry["bytes"] > 10_000
+        assert (SNAPSHOT / "yamaha" / name).read_bytes()[:5] == b"%PDF-"
+        assert not notice.search(" ".join(page.get_text() for page in pymupdf.open(str(SNAPSHOT / "yamaha" / name)))), name
+        assert tool.rows_of(SNAPSHOT / "yamaha" / name, "words") == snapshot.sheet_of(name, "words")
+    assert snapshot.documents[names[0]]["lastModified"] == "Wed, 27 May 2015 12:26:08 GMT"

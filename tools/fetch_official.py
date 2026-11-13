@@ -226,6 +226,11 @@ DOCUMENTS = {
         ("IR_RX-Vx75_375-775_EXD.pdf", WB + "20160103050405id_/http://www.awe-europe.com/documents/Control%20Docs/Yamaha/IR_RX-Vx75_375-775.zip", "IR_RX-Vx75_375-775_EXD.pdf"),
         ("STD_IR_RXV667-3067.pdf", WB + "20160103045540id_/http://www.awe-europe.com/documents/Control%20Docs/Yamaha/Archive/RXV667-3067_FullIR.zip", "STD_IR_RXV667-3067.pdf"),
         ("EXD_IR_RXV667-3067.pdf", WB + "20160103045540id_/http://www.awe-europe.com/documents/Control%20Docs/Yamaha/Archive/RXV667-3067_FullIR.zip", "EXD_IR_RXV667-3067.pdf"),
+        # DESIGN section 105: the zip of the BD-S477 and BD-S677 Blu-ray players (three one-page PDFs of IR codes; the zip also holds the Ethernet and RS-232 specifications and
+        # their command lists, which are not read), the Wayback Machine's copy of the snapshot named in the URL.
+        ("BD-S477_IR_code_list.pdf", WB + "20151207014858id_/http://www.awe-europe.com/documents/Control%20Docs/Yamaha/BD-S677_S477_YNC_Spec.zip", "BD-S677_S477_YNC_Spec/BD-S477_IR_code_list.pdf"),
+        ("BD-S677_IR_code_list.pdf", WB + "20151207014858id_/http://www.awe-europe.com/documents/Control%20Docs/Yamaha/BD-S677_S477_YNC_Spec.zip", "BD-S677_S477_YNC_Spec/BD-S677_IR_code_list.pdf"),
+        ("BD-S477_S677_RC_code_list.pdf", WB + "20151207014858id_/http://www.awe-europe.com/documents/Control%20Docs/Yamaha/BD-S677_S477_YNC_Spec.zip", "BD-S677_S477_YNC_Spec/BD-S477_S677_RC_code_list.pdf"),
     ],
     # The custom installation notes of Harman's JBL Synthesis AV receivers (the SDR-35, SDR-38, SDP-55 and SDP-58: issue E, whose RC-5 rows are the same as issue D's of 2020 for the two models D names, which is not pinned) and Lexicon's MC-10, RV-9 and RV-6
     # (DESIGN section 88): serial control and **the RC-5 code set** (Arcam's platform: the tables are Arcam's layout). The JBL ones are the Wayback Machine's copies of
