@@ -44,9 +44,9 @@ files and 6,772 keys under `remotes/hifi-remote/`, which are a table of
 reference codes and so carry no licence (DESIGN.md §27); and the JP1 device
 upgrades of hifi-remote.com's forum, 2,938 files and 116,042 keys under
 `remotes/jp1/`, likewise (DESIGN.md §28); and the manufacturers' own IR code
-tables, Marantz's, Anthem's, Oppo's, KEF's, JVC's, BenQ's, Peerless-AV's, Arcam's, Cambridge Audio's, Hegel's, Cary Audio's, InFocus's, Lyngdorf's, Emotiva's, Denon's, Hitachi America's, Classé's, Cyrus Audio's, Yamaha's, JBL Synthesis's and Lexicon's, NAD's, Simaudio's, Rotel's, Optoma's, Dune HD's, Hisense's, Shinybow's and Yamaha's BD players', 1,150 files and 119,266 keys under
-`remotes/official/`, likewise (DESIGN.md §29, §31, §58, §60, §62, §63, §64, §65, §66, §68, §69, §71, §72, §73, §74, §75, §76, §77, §78, §79, §80, §81, §82, §83, §84, §85, §86, §87, §88, §89, §90, §91, §92, §93, §94, §95, §98, §99, §100, §101, §102, §103, §104, §105; Linn's, §67, is in the private repository, §70); and Flipper-IRDB's files from after its CC0 licence of 2025-08-07, 102 files and 2,009 keys under
-`remotes/flipper-irdb/`, republished under CC0-1.0 (DESIGN.md §96; the files from before the licence are not here). That makes 17,630 remote files with
+tables, Marantz's, Anthem's, Oppo's, KEF's, JVC's, BenQ's, Peerless-AV's, Arcam's, Cambridge Audio's, Hegel's, Cary Audio's, InFocus's, Lyngdorf's, Emotiva's, Denon's, Hitachi America's, Classé's, Cyrus Audio's, Yamaha's, JBL Synthesis's and Lexicon's, NAD's, Simaudio's, Rotel's, Optoma's, Dune HD's, Hisense's, Shinybow's, Yamaha's BD players' and Binary's matrix switchers', 1,154 files and 119,616 keys under
+`remotes/official/`, likewise (DESIGN.md §29, §31, §58, §60, §62, §63, §64, §65, §66, §68, §69, §71, §72, §73, §74, §75, §76, §77, §78, §79, §80, §81, §82, §83, §84, §85, §86, §87, §88, §89, §90, §91, §92, §93, §94, §95, §98, §99, §100, §101, §102, §103, §104, §105, §106; Linn's, §67, is in the private repository, §70); and Flipper-IRDB's files from after its CC0 licence of 2025-08-07, 102 files and 2,009 keys under
+`remotes/flipper-irdb/`, republished under CC0-1.0 (DESIGN.md §96; the files from before the licence are not here). That makes 17,634 remote files with
 the five authored ones. Data whose licence is unclear is not here: it is kept in
 a private repository in the same layout, which the tools read through
 `--extra-root` (DESIGN.md §30). The IR Blaster database stores each code as a hexcode, and for

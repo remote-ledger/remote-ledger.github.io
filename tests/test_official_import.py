@@ -13,7 +13,7 @@ from pathlib import Path
 import pytest
 
 from remote_ledger.errors import ValidationError
-from remote_ledger.official import anthem, arcam, benq, peerless, cambridge, cary, classe, cyrus, denon, denon_pdf as dp, denon_sheets as ds, dune, emotiva, harman, hegel, hisense, hitachi, infocus, jvc, kef, lyngdorf, marantz, nad, oppo, optoma, rotel, shinybow, simaudio, yamaha, harman
+from remote_ledger.official import anthem, arcam, benq, binary, peerless, cambridge, cary, classe, cyrus, denon, denon_pdf as dp, denon_sheets as ds, dune, emotiva, harman, hegel, hisense, hitachi, infocus, jvc, kef, lyngdorf, marantz, nad, oppo, optoma, rotel, shinybow, simaudio, yamaha, harman
 from remote_ledger.official import importer as oi
 from remote_ledger.official.common import MANIFEST, Report, load_snapshot
 from remote_ledger.serialize import load
@@ -465,12 +465,12 @@ def test_the_committed_official_import_keeps_r19():
     or Untested, and a citation that names a document the manifest pins, by hash."""
     assert (ROOT / oi.IMPORT_ROOT / "README.md").is_file() and (ROOT / oi.IMPORT_ROOT / oi.REPORT).is_file()
     hashes, dates, snapshots = {}, {}, {}
-    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "benq", "peerless", "arcam", "cambridge", "hegel", "cary", "infocus", "lyngdorf", "emotiva", "denon", "hitachi", "classe", "cyrus", "yamaha", "harman", "nad", "simaudio", "rotel", "optoma", "dune", "hisense", "shinybow"):
+    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "benq", "peerless", "arcam", "cambridge", "hegel", "cary", "infocus", "lyngdorf", "emotiva", "denon", "hitachi", "classe", "cyrus", "yamaha", "harman", "nad", "simaudio", "rotel", "optoma", "dune", "hisense", "shinybow", "binary"):
         manifest = json.loads((SNAPSHOT / maker / MANIFEST).read_text(encoding="utf-8"))
         for name, entry in manifest["documents"].items():
             hashes[name], dates[name], snapshots[name] = entry["sha256"], entry.get("retrieved", manifest["retrieved"]), entry.get("snapshot")
     shape = re.compile(r"^(?:marantz\.com archive-downloads|anthemav\.com \(storage\.googleapis\.com/sandbox1-anthemav/an\)"
-                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|caryaudio\.com IR Remote Codes|infocus\.com IR code PDFs|lyngdorf\.com IR code PDF|emotiva\.com IR code PDFs|denon\.co\.uk RC code list|denon\.com Master IR Hex|snapav\.com Denon IR code documents|assets\.denon\.com IR code documents|hitachi-america\.us IR code documents|classeaudio\.com IR code documents|cyrusaudio\.com remote code tables|snapav\.com Yamaha IR code PDFs|awe-europe\.com Yamaha control documents|audiogeneral\.com Optoma IR code PDFs|dune-hd\.com IR code pages|assets\.hisense-usa\.com RS-232 and IR protocol PDF|shinybowusa\.com IR code files|optoma\.co\.uk IR code PDFs|snapav\.com Marantz IR code workbook|jblsynthesis\.com custom installation notes|snapav\.com JVC LX projector code sheets|snapav\.com JVC remote control code tables|snapav\.com BenQ IR code sheet|cdn\.shopify\.com Peerless-AV Neptune IR code sheet|lexicon\.com custom installation notes|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/([^@]+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
+                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|caryaudio\.com IR Remote Codes|infocus\.com IR code PDFs|lyngdorf\.com IR code PDF|emotiva\.com IR code PDFs|denon\.co\.uk RC code list|denon\.com Master IR Hex|snapav\.com Denon IR code documents|assets\.denon\.com IR code documents|hitachi-america\.us IR code documents|classeaudio\.com IR code documents|cyrusaudio\.com remote code tables|snapav\.com Yamaha IR code PDFs|awe-europe\.com Yamaha control documents|audiogeneral\.com Optoma IR code PDFs|dune-hd\.com IR code pages|assets\.hisense-usa\.com RS-232 and IR protocol PDF|shinybowusa\.com IR code files|snapav\.com Binary IR code documents|optoma\.co\.uk IR code PDFs|snapav\.com Marantz IR code workbook|jblsynthesis\.com custom installation notes|snapav\.com JVC LX projector code sheets|snapav\.com JVC remote control code tables|snapav\.com BenQ IR code sheet|cdn\.shopify\.com Peerless-AV Neptune IR code sheet|lexicon\.com custom installation notes|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/([^@]+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
                        r"(?:, from the Wayback Machine snapshot (\d{14}))?\) (?:sheet '[^']+' row \d+|page \d+ row \d+|sheet (?:Standard|Extended) line \d+ row '|(?:line|row) \d+ '|page \d+ '|page \d+ table \d+ row '|page \d+ row '|key \d+ '|row 'RC(?:SHP|KSK)\w+' \(|page \d+ table row ')")
     files = sorted((ROOT / oi.IMPORT_ROOT).rglob("*.json"))
     assert len(files) > 180
@@ -5401,3 +5401,216 @@ def test_the_three_bd_pdfs_are_pinned_from_the_wayback_zip_with_a_words_csv_each
         assert not notice.search(" ".join(page.get_text() for page in pymupdf.open(str(SNAPSHOT / "yamaha" / name)))), name
         assert tool.rows_of(SNAPSHOT / "yamaha" / name, "words") == snapshot.sheet_of(name, "words")
     assert snapshot.documents[names[0]]["lastModified"] == "Wed, 27 May 2015 12:26:08 GMT"
+
+
+def bin_pronto(*b: int, word: str = "006D", once: bool = True, repeat: tuple[tuple[str, str], ...] = (("0155", "0055"), ("0015", "0E47"))) -> str:
+    """The Pronto code of an NEC frame in the three forms of Binary's documents: ``once`` (34 pairs once and a repeat: the B-660's), or the 34 pairs and the repeat as one repeat sequence
+    (the B-500's, ``006f`` and lower case, and the B-200's captured ones with a repeat leader or two after the stop bit)."""
+    pairs = [("0155", "00AA")] + [("0015", "0040" if byte >> i & 1 else "0015") for byte in b for i in range(8)] + [("0015", "05ED")]
+    head = ["0000", word, "0022" if once else "0000", f"{len(repeat) if once else 34 + len(repeat):04X}"]
+    return " ".join(head + [w for pair in pairs + list(repeat) for w in pair])
+
+
+def bin_rows(*records: tuple[str, str, str, str]) -> list[list[str]]:
+    """The B-660 PDF's lines as the sheet tool's ``pages`` mode gives them: the heading, then an output, an action, the standard code and the Pronto code in two lines."""
+    lines = ["Output", "Action", "Standard Code", "Expanded Code"]
+    for output, action, std, pronto in records:
+        words = pronto.split()
+        lines += [output, action, std, " ".join(words[:20]), " ".join(words[20:])]
+    return [["1", line] for line in lines]
+
+
+def test_a_binary_pronto_code_gives_its_frame_in_the_three_forms_the_documents_write_and_a_broken_one_gives_none():
+    assert binary.decode(bin_pronto(0x00, 0xFF, 0x09, 0xF6)) == (0x6D, [0x00, 0xFF, 0x09, 0xF6], "once 34, repeat 2")
+    assert binary.decode(bin_pronto(0x12, 0xED, 0x0F, 0xF0, word="006f", once=False, repeat=())) == (0x6F, [0x12, 0xED, 0x0F, 0xF0], "a repeat sequence of 34 pairs")
+    assert binary.decode(bin_pronto(0x34, 0xCB, 0x4E, 0xB1, once=False)) == (0x6D, [0x34, 0xCB, 0x4E, 0xB1], "a repeat sequence of 36 pairs")
+    assert binary.decode(bin_pronto(0x34, 0xCB, 0x4E, 0xB1, once=False, repeat=(("0155", "0056"), ("0015", "0E43"), ("0155", "0056"), ("0015", "04D4"))))[2] == "a repeat sequence of 38 pairs"
+    good = bin_pronto(0x00, 0xFF, 0x09, 0xF6)
+    for broken in (good.replace("0155 00AA", "0055 00AA", 1),                                    # no leader
+                   good.replace("0015 0040", "0015 0030", 1),                                    # a space that is neither a zero's nor a one's
+                   good.replace("0015 0015", "0050 0015", 1),                                    # a mark that is not a bit's
+                   good.replace("0015 05ED", "0050 05ED"),                                       # no stop bit
+                   good.replace("0155 0055", "0155 0155"),                                       # a pair after the frame that is not a repeat
+                   good.replace("0022", "0023", 1),                                              # the sequences do not hold the pairs written
+                   good[:-5], "0000 006D 0022 0002 xyz", "0100 006D 0022 0002 " + good[20:]):
+        assert isinstance(binary.decode(broken), str), broken
+
+
+def test_the_b_660_pdf_is_a_heading_and_records_of_an_output_an_action_a_standard_code_and_a_pronto_code_and_anything_else_is_refused():
+    one, two = bin_pronto(0x00, 0xFF, 0x09, 0xF6), bin_pronto(0x00, 0xFF, 0x46, 0xB9)
+    rows = binary.parse_b660(bin_rows(("Output 1", "Source 1", "0x00 0x09", one), ("Output 2", "CEC ON", "0x00 0x46", two)), "doc.pdf")
+    assert [(r.where, r.label, r.standard, r.output, r.action) for r in rows] == [
+        ("page 1 row 'Output 1 Source 1'", "Output 1 Source 1", (0, 9), 1, "Source 1"), ("page 1 row 'Output 2 CEC ON'", "Output 2 CEC ON", (0, 0x46), 2, "CEC ON")]
+    assert rows[0].pronto == one                                                                 # the two lines of the code are one code
+    with pytest.raises(ValueError, match="not the table's"):
+        binary.parse_b660([["1", "Output"], ["1", "Source"]], "doc.pdf")
+    with pytest.raises(ValueError, match="not an output, an action, a standard code and a Pronto code"):
+        binary.parse_b660(bin_rows(("Output 1", "Source 1", "0x00 9", one)), "doc.pdf")
+    with pytest.raises(ValueError, match="not an output, an action"):
+        binary.parse_b660(bin_rows(("Input 1", "Source 1", "0x00 0x09", one)), "doc.pdf")
+    with pytest.raises(ValueError, match="no record"):
+        binary.parse_b660(bin_rows(), "doc.pdf")
+
+
+def test_the_b_200_and_b_500_sheets_are_read_by_their_headings_and_a_code_with_no_name_or_a_grid_with_a_hole_is_refused():
+    code = bin_pronto(0x34, 0xCB, 0x0B, 0xF4, once=False)
+    b200 = [[""] * 4, ["*SNAP AV B-200-AVMATRIX-6x4 IR Commands", "", "", ""], ["", "OUTPUT", "CCF HEX COMMAND  ", " ACTION  "],
+            ["", "Output 1", code + " ", " Output 1 select Input1  "], ["", "", code, "Output 1  select Input2"], ["", "", "", ""], ["", "System Power", code, " Unit Power"],
+            ["", "", "", ""], ["", "REV", "Changes By", "Notes:"], ["", "1.0", "VF", "Initial Release Version 1.0"]]
+    assert [(r.where, r.label) for r in binary.parse_b200(b200)] == [("sheet 'RS232 Commands' row 4", "Output 1 select Input1"), ("sheet 'RS232 Commands' row 5", "Output 1 select Input2"), ("sheet 'RS232 Commands' row 7", "Unit Power")]
+    with pytest.raises(ValueError, match="not the B-200's"):
+        binary.parse_b200([[""] * 4, ["something else", "", "", ""]])
+    with pytest.raises(ValueError, match="heading `OUTPUT, CCF HEX COMMAND, ACTION` is not once"):
+        binary.parse_b200(b200[:2] + b200[3:])
+    with pytest.raises(ValueError, match="not an action and a Pronto code"):
+        binary.parse_b200(b200[:3] + [["", "Output 1", code, ""]])
+    grid = [["Switch Command", "", "", "", "CCF"]] + [["Output", str(o), "Input", str(i), bin_pronto(0x12, 0xED, (o - 1) * 16 + i - 1, 0, word="006f", once=False)]
+                                                      for o in range(1, 17) for i in range(1, 17)]
+    rows = binary.parse_b500_switching(grid)
+    assert len(rows) == 256 and (rows[17].where, rows[17].label, rows[17].expected) == (f"sheet '{binary.B500_SWITCHING}' row 19", "Output 2 Input 2", 17)
+    with pytest.raises(ValueError, match="not the 16 outputs and 16 inputs once each"):
+        binary.parse_b500_switching(grid[:-1])
+    with pytest.raises(ValueError, match="not an output, an input and a Pronto code"):
+        binary.parse_b500_switching(grid[:5] + [["Output", "x", "Input", "1", code]] + grid[6:])
+    remote = [["Remote Button Codes", ""], ["Remote Key", "CCF"], ["Power off", code], ["", ""], ["Number Key 1", code]]
+    assert [(r.where, r.label) for r in binary.parse_b500_remote(remote)] == [(f"sheet '{binary.B500_REMOTE}' row 3", "Power off"), (f"sheet '{binary.B500_REMOTE}' row 5", "Number Key 1")]
+    with pytest.raises(ValueError, match="not a key and a Pronto code"):
+        binary.parse_b500_remote(remote[:2] + [["", code]])
+    with pytest.raises(ValueError, match="no key read"):
+        binary.parse_b500_remote(remote[:2])
+
+
+def test_a_binary_key_that_breaks_a_check_of_its_document_is_untested_and_the_citation_says_which():
+    def key(label: str, b: list[int], **kw) -> binary.Key:
+        return binary.Key(binary.Row("row 1", label, "", **kw), b, 0x6D, "once 34, repeat 2")
+
+    keys = [key("Output 1 Source 1", [0, 0xFF, 0x09, 0xF6], standard=(0, 9), output=1, action="Source 1"),            # what the standard code says
+            key("Output 1 Source 2", [0, 0xFF, 0x1D, 0xE2], standard=(0, 0x1F), output=1, action="Source 2"),         # the standard code says another data byte
+            key("Output 2 Source 1", [0, 0xFF, 0x17, 0xE8], standard=(0, 0x17), output=2, action="Source 1"),         # the other document has another code
+            key("Output 3 Source 1", [0, 0xFF, 0x5E, 0xA1], standard=(0, 0x5E), output=3, action="Source 1"),         # the other document has no output 3
+            key("Output 1 Input 1", [0x12, 0xED, 0x00, 0xFF], output=1, expected=0), key("Output 1 Input 2", [0x12, 0xED, 0x01, 0xFE], output=1, expected=1),
+            key("Output 1 Input 3", [0x12, 0xED, 0x09, 0xF6], output=1, expected=2),                                    # not the grid's data byte
+            key("Output 1 Input 4", [0x13, 0xEC, 0x03, 0xFC], output=1, expected=3),                                    # not the grid's device
+            key("Power on", [0, 0xFF, 0x2A, 0xD5]), key("Standby", [0, 0xFF, 0x2A, 0xD5])]                              # two names, one code
+    binary._hold(keys, "doc", {(1, "Source 1"): [0, 0xFF, 0x09, 0xF6], (1, "Source 2"): [0, 0xFF, 0x1D, 0xE2], (2, "Source 1"): [0, 0xFF, 0x18, 0xE7]})
+    assert [k.doubts for k in keys[:4]] == [
+        [], ["the row's standard code 0x00 0x1f is not the Pronto code's device byte and data byte (0x00 0x1d)"],
+        ["the other B-660-MTRX document has a different code for the same output and action"], []]
+    assert [bool(k.doubts) for k in keys[4:8]] == [False, False, True, True]
+    assert "data byte 0x02 for Output 1 Input 3, the Pronto code has 0x12 and 0x09" in keys[6].doubts[0] and "device 0x12" in keys[7].doubts[0]
+    assert keys[8].doubts == keys[9].doubts == ["the document gives this code to 'Power on' and 'Standby'"]
+
+
+def binary_files() -> dict[str, dict]:
+    return {load(p)["model"]: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "binary").glob("*.json"))}
+
+
+def test_binary_is_four_files_of_350_keys_all_plausible_since_every_check_of_every_document_holds():
+    files = binary_files()
+    assert sorted(files) == ["B-200-AVMATRIX-6x4", "B-500-MTRX-230", "B-660-MTRX-4x2", "B-660-MTRX-4x4"]
+    assert {m: len(f["keys"]) for m, f in files.items()} == {"B-200-AVMATRIX-6x4": 25, "B-500-MTRX-230": 277, "B-660-MTRX-4x2": 16, "B-660-MTRX-4x4": 32}
+    assert all(f["manufacturer"] == "Binary" and f["controls"] == [f"Binary {m}"] and f["protocol"] == {"name": "NEC1", "carrierHz": 38000, "minSends": 1} for m, f in files.items())
+    assert Counter(s["forms"][0]["confidence"] for f in files.values() for s in f["keys"].values()) == {"plausible": 350}
+    devices = {m: Counter((s["forms"][0]["device"], s["forms"][0]["subdevice"]) for s in f["keys"].values()) for m, f in files.items()}
+    assert devices == {"B-200-AVMATRIX-6x4": {("0x34", "0xCB"): 25}, "B-500-MTRX-230": {("0x12", "0xED"): 256, ("0x00", "0xFF"): 21},
+                       "B-660-MTRX-4x2": {("0x00", "0xFF"): 16}, "B-660-MTRX-4x4": {("0x00", "0xFF"): 32}}
+    for f in files.values():                                           # a frame is a key of one name in a file, and a form is what its citation says
+        assert len({(s["forms"][0]["device"], s["forms"][0]["function"]) for s in f["keys"].values()}) == len(f["keys"])
+        for spec in f["keys"].values():
+            form = spec["forms"][0]
+            b = [int(x, 16) for x in re.search(r"\(bytes ((?:[0-9A-F]{2} ?){4});", form["source"])[1].split()]
+            assert (int(form["device"], 0), int(form["subdevice"], 0), int(form["function"], 0)) == tuple(b[:3]) and b[2] ^ b[3] == 0xFF and b[0] ^ b[1] == 0xFF
+
+
+def test_binary_keys_are_named_as_the_documents_name_them_and_a_citation_says_the_row_the_shape_and_a_carrier_word_that_is_not_38_khz():
+    files = binary_files()
+    assert files["B-660-MTRX-4x4"]["keys"]["KEY_OUTPUT_3_CEC_OFF"]["label"] == "Output 3 CEC OFF"
+    assert files["B-660-MTRX-4x4"]["keys"]["KEY_OUTPUT_3_CEC_OFF"]["forms"][0]["source"] == (
+        "snapav.com Binary IR code documents/B-660-MTRX-4x4_Pronto_IR_HEX_Codes.pdf@9c1ef93c (retrieved 2026-11-13, from the Wayback Machine snapshot 20230207121624) page 1 row 'Output 3 CEC OFF': "
+        "NEC1 device 0 subdevice 255 function 85 (bytes 00 FF 55 AA; Pronto code of once 34, repeat 2)")
+    assert files["B-200-AVMATRIX-6x4"]["keys"]["KEY_UNIT_POWER"]["forms"][0]["source"] == (
+        "snapav.com Binary IR code documents/B-200-AVMATRIX-6x4-IR_CCF_Hex_Codes.xls@03c1677e (retrieved 2026-11-13, from the Wayback Machine snapshot 20250825064658) sheet 'RS232 Commands' row 32: "
+        "NEC1 device 52 subdevice 203 function 18 (bytes 34 CB 12 ED; Pronto code of a repeat sequence of 36 pairs)")
+    b500 = files["B-500-MTRX-230"]["keys"]
+    assert b500["KEY_OUTPUT_16_INPUT_16"]["forms"][0]["function"] == "0xFF" and b500["KEY_OUTPUT_2_INPUT_1"]["forms"][0]["function"] == "0x10"
+    assert b500["KEY_POWER_ON"]["forms"][0]["source"] == (
+        "snapav.com Binary IR code documents/B-500-MTRX-230_IR-Protocol.xlsx@8630f6d5 (retrieved 2026-11-13, from the Wayback Machine snapshot 20230320001301) sheet 'Remote Button Codes' row 5: "
+        "NEC1 device 0 subdevice 255 function 23 (bytes 00 FF 17 E8; Pronto code of a repeat sequence of 34 pairs); the sheet's carrier word is 006F, the key is NEC1's 38 kHz")
+    assert [b500[n]["label"] for n in b500][256:] == ["Power off", "Power on"] + [f"Number Key {n}" for n in range(1, 10)] + [
+        "OUTPUT", "INPUT", "OUTPUT off", "ALL", "10+", "ENTER", "STATUS", "LEARN", "DEFAULT", "CLEAR"]
+    assert all("carrier word" not in s["forms"][0]["source"] for f in ("B-200-AVMATRIX-6x4", "B-660-MTRX-4x2", "B-660-MTRX-4x4") for s in files[f]["keys"].values())   # 006D: 38 kHz
+
+
+def bin_frame(words: list[str]) -> list[int]:
+    """The four bytes of a frame from the times alone, independently of the reader: a bit is a one when its space is longer than twice its mark."""
+    w = [int(x, 16) for x in words]
+    pairs = list(zip(w[4::2], w[5::2]))
+    bits = [1 if space > 2 * mark else 0 for mark, space in pairs[1:33]]
+    return [sum(b << i for i, b in enumerate(bits[j * 8:(j + 1) * 8])) for j in range(4)]
+
+
+def test_every_binary_key_is_what_the_pinned_documents_say_recomputed_from_their_own_text_and_the_b_660_4x4_has_the_4x2s_codes_for_outputs_1_and_2():
+    files, snapshot = binary_files(), load_snapshot(SNAPSHOT / "binary")
+    seen = {}
+    for pdf, model in binary.B660.items():                       # the standard codes and the times, from the lines of the PDF
+        lines = [r[1].strip() for r in snapshot.sheet_of(pdf, "pages")][4:]
+        std = [i for i, line in enumerate(lines) if re.fullmatch(r"0x[0-9A-F]{2} 0x[0-9A-F]{2}", line)]
+        assert len(std) == len(files[model]["keys"]) == (16 if "4x2" in model else 32)
+        got = {}
+        for n, i in enumerate(std):
+            end = std[n + 1] - 2 if n + 1 < len(std) else len(lines)
+            code = " ".join(lines[i + 1:end]).split()
+            device, data = (int(x, 16) for x in lines[i].replace("0x", "").split())
+            assert bin_frame(code) == [device, device ^ 0xFF, data, data ^ 0xFF], (pdf, lines[i - 2:i + 1])       # the times say the standard code
+            got[f"{lines[i - 2]} {lines[i - 1]}"] = (device, data)
+        assert {s["label"]: (int(s["forms"][0]["device"], 0), int(s["forms"][0]["function"], 0)) for s in files[model]["keys"].values()} == got
+        seen[model] = got
+    assert all(seen["B-660-MTRX-4x4"][k] == v for k, v in seen["B-660-MTRX-4x2"].items())                   # the 4x2's 16 are the 4x4's first two outputs
+    by_label = {s["label"]: s["forms"][0] for s in files["B-500-MTRX-230"]["keys"].values()}
+    for sheet, count in ((binary.B500_SWITCHING, 256), (binary.B500_REMOTE, 21)):
+        rows = [r for r in snapshot.sheet_of(binary.B500, sheet) if any("0000 " in c for c in r)]
+        assert len(rows) == count
+        for r in rows:
+            code = next(c for c in r if c.startswith("0000 ")).split()
+            label = f"Output {r[1]} Input {r[3]}" if sheet == binary.B500_SWITCHING else r[0]
+            form = by_label[label]
+            assert [int(form[k], 0) for k in ("device", "subdevice", "function")] == bin_frame(code)[:3]
+            if sheet == binary.B500_SWITCHING:
+                assert bin_frame(code)[:3] == [0x12, 0xED, (int(r[1]) - 1) * 16 + int(r[3]) - 1]                # the grid
+    b200 = [r for r in snapshot.sheet_of(binary.B200, binary.B200_SHEET) if any(c.startswith("0000 ") for c in r)]
+    assert len(b200) == len(files["B-200-AVMATRIX-6x4"]["keys"]) == 25
+    for r in b200:
+        form = next(s for s in files["B-200-AVMATRIX-6x4"]["keys"].values() if s["label"] == " ".join(r[3].split()))["forms"][0]
+        assert [int(form[k], 0) for k in ("device", "subdevice", "function")] == bin_frame(r[2].split())[:3]
+
+
+def test_the_binary_snapshot_is_four_documents_from_snapav_by_the_wayback_machine_whose_rows_are_the_pinned_csv_and_none_has_a_notice_word():
+    pymupdf = pytest.importorskip("pymupdf")
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location("official_sheets_to_csv", ROOT / "tools" / "official_sheets_to_csv.py")
+    tool = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(tool)
+    snapshot = load_snapshot(SNAPSHOT / "binary")
+    assert snapshot.retrieved == "2026-11-13" and sorted(snapshot.documents) == [
+        "B-200-AVMATRIX-6x4-IR_CCF_Hex_Codes.xls", "B-500-MTRX-230_IR-Protocol.xlsx", "B-660-MTRX-4x2_Pronto_IR_HEX_Codes.pdf", "B-660-MTRX-4x4_Pronto_IR_HEX_Codes.pdf"]
+    folder = "https://www.snapav.com/wcsstore/ExtendedSitesCatalogAssetStore/attachments/documents/MediaDistribution/ProtocolsAndDrivers/"
+    assert {n: (e["snapshot"], e["original"].removeprefix(folder)) for n, e in snapshot.documents.items()} == {
+        "B-200-AVMATRIX-6x4-IR_CCF_Hex_Codes.xls": ("20250825064658", "B-200-AVMATRIX-6x4-IR%20CCF%20Hex%20Codes.xls"),
+        "B-500-MTRX-230_IR-Protocol.xlsx": ("20230320001301", "B-500-MTRX-230_IR-Protocol.xls"),            # a workbook the server names .xls; the archive answers id_ 404, so its URL is if_
+        "B-660-MTRX-4x2_Pronto_IR_HEX_Codes.pdf": ("20230205211537", "B-660-MTRX-4x2_Pronto_IR_HEX_Codes.pdf"),
+        "B-660-MTRX-4x4_Pronto_IR_HEX_Codes.pdf": ("20230207121624", "B-660-MTRX-4x4_Pronto_IR_HEX_Codes.pdf")}
+    assert "if_/" in snapshot.documents["B-500-MTRX-230_IR-Protocol.xlsx"]["url"] and all("id_/" in e["url"] for n, e in snapshot.documents.items() if "B-500" not in n)
+    notice = re.compile(r"copyright|all rights|reserved|©|\(c\)|confidential|reproduc|trademark|proprietary|property of|licen[cs]e|permission", re.I)
+    for name in snapshot.documents:
+        path = SNAPSHOT / "binary" / name
+        if name.endswith(".pdf"):
+            assert not notice.search(" ".join(page.get_text() for page in pymupdf.open(str(path)))), name
+            assert tool.rows_of(path, "pages") == snapshot.sheet_of(name, "pages")
+    sheets = {B: [n for n, e in snapshot.sheets.items() if e["document"] == B] for B in (binary.B200, binary.B500)}
+    assert [len(v) for v in sheets.values()] == [1, 2]
+    openpyxl, xlrd = pytest.importorskip("openpyxl"), pytest.importorskip("xlrd")
+    cells = [str(c.value) for s in xlrd.open_workbook(str(SNAPSHOT / "binary" / binary.B200)).sheets() for r in range(s.nrows) for c in s.row(r)]
+    cells += [str(c) for s in openpyxl.load_workbook(SNAPSHOT / "binary" / binary.B500).worksheets for row in s.iter_rows(values_only=True) for c in row if c is not None]
+    assert not notice.search(" ".join(cells))
+    assert tool.rows_of(SNAPSHOT / "binary" / binary.B500, binary.B500_REMOTE) == snapshot.sheet_of(binary.B500, binary.B500_REMOTE)
