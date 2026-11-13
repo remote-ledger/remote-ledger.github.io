@@ -15,11 +15,11 @@ from typing import Any
 from ..fmt import format_document
 from ..import_common import authored_names as _authored_names
 from ..serialize import dumps
-from . import anthem, arcam, benq, binary, cambridge, cary, classe, cyrus, denon, dune, emotiva, harman, hegel, hisense, hitachi, infocus, jvc, kef, lyngdorf, marantz, nad, oppo, optoma, peerless, rotel, shinybow, simaudio, yamaha
+from . import anthem, arcam, awe, benq, binary, cambridge, cary, classe, cyrus, denon, dune, emotiva, harman, hegel, hisense, hitachi, infocus, jvc, kef, lyngdorf, marantz, nad, oppo, optoma, peerless, rotel, shinybow, simaudio, yamaha
 from .common import IMPORT_ROOT, MANIFEST, REPORT, SNAPSHOT, Report, load_snapshot
 
 #: maker -> its reader. A maker is imported when its directory is in the snapshot.
-MAKERS = {"anthem": anthem, "arcam": arcam, "benq": benq, "binary": binary, "cambridge": cambridge, "cary": cary, "classe": classe, "cyrus": cyrus, "denon": denon, "dune": dune, "emotiva": emotiva, "harman": harman, "hegel": hegel, "hisense": hisense, "hitachi": hitachi, "infocus": infocus, "jvc": jvc, "kef": kef, "lyngdorf": lyngdorf, "marantz": marantz, "nad": nad, "oppo": oppo, "optoma": optoma, "peerless": peerless, "rotel": rotel, "shinybow": shinybow, "simaudio": simaudio, "yamaha": yamaha}
+MAKERS = {"anthem": anthem, "arcam": arcam, "awe": awe, "benq": benq, "binary": binary, "cambridge": cambridge, "cary": cary, "classe": classe, "cyrus": cyrus, "denon": denon, "dune": dune, "emotiva": emotiva, "harman": harman, "hegel": hegel, "hisense": hisense, "hitachi": hitachi, "infocus": infocus, "jvc": jvc, "kef": kef, "lyngdorf": lyngdorf, "marantz": marantz, "nad": nad, "oppo": oppo, "optoma": optoma, "peerless": peerless, "rotel": rotel, "shinybow": shinybow, "simaudio": simaudio, "yamaha": yamaha}
 
 
 def import_tree(root: Path, snapshot: Path, authored: dict[tuple[str, str], str]):

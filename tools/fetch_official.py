@@ -7,7 +7,7 @@ size, SHA-256, the retrieval date (today: do not pass --date) and the server's `
 (and, for a copy from the Wayback Machine, the address and snapshot it was archived from). Run it, then
 ``tools/official_sheets_to_csv.py <maker>`` for the spreadsheets, review the diff, and import.
 
-    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc|benq|peerless|arcam|infocus|lyngdorf|emotiva|denon|hitachi|classe|cyrus|yamaha|harman|cambridge|hegel|cary|nad|simaudio|rotel|optoma|dune|hisense|shinybow
+    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc|benq|peerless|arcam|infocus|lyngdorf|emotiva|denon|hitachi|classe|cyrus|yamaha|harman|cambridge|hegel|cary|nad|simaudio|rotel|optoma|dune|hisense|shinybow|binary|awe
 """
 
 from __future__ import annotations
@@ -93,6 +93,14 @@ DOCUMENTS = {
         ("B-500-MTRX-230_IR-Protocol.xlsx", WB + "20230320001301if_/https://www.snapav.com/wcsstore/ExtendedSitesCatalogAssetStore/attachments/documents/MediaDistribution/ProtocolsAndDrivers/B-500-MTRX-230_IR-Protocol.xls", None),
         ("B-660-MTRX-4x2_Pronto_IR_HEX_Codes.pdf", WB + "20230205211537id_/https://www.snapav.com/wcsstore/ExtendedSitesCatalogAssetStore/attachments/documents/MediaDistribution/ProtocolsAndDrivers/B-660-MTRX-4x2_Pronto_IR_HEX_Codes.pdf", None),
         ("B-660-MTRX-4x4_Pronto_IR_HEX_Codes.pdf", WB + "20230207121624id_/https://www.snapav.com/wcsstore/ExtendedSitesCatalogAssetStore/attachments/documents/MediaDistribution/ProtocolsAndDrivers/B-660-MTRX-4x4_Pronto_IR_HEX_Codes.pdf", None),
+    ],
+    # AWE Europe's control documents of display makers (DESIGN section 107): AWE, a British distributor, kept the makers' discrete IR code sheets in its `documents/` folder (the folder section 100
+    # and 105 read Yamaha's from), the Wayback Machine's copies, each the snapshot named in its URL. The Philips sheet is also at `documents/discrete_ir_codes.xls` (snapshot 20101120073504, the same bytes)
+    "awe": [
+        ("Philips_discrete_ir_codes.xls", WB + "20151109020031id_/http://www.awe-europe.com/documents/Control%20Docs/Philips/discrete_ir_codes.xls", None),
+        ("Samsung_Discrete_IR_Commands_tested.doc", WB + "20150718235716id_/http://www.awe-europe.com/documents/Control%20Docs/Samsung/Samsung_Discrete_IR_Commands_tested.doc", None),
+        ("RC_IR-codes_Europe_full.pdf", WB + "20101120081326id_/http://awe-europe.com/documents/RC%20IR-codes%20(Europe)%20full.pdf", None),
+        ("Panasonic_plasma_Discrete-remote-control-code.pdf", WB + "20150703204910id_/http://www.awe-europe.com/documents/Control%20Docs/Panasonic/Panasonic%20plasma%20Discrete-remote-control-code.pdf", None),
     ],
     # BenQ's LK952 code list (DESIGN section 91): the IR, RS-232 and DDC codes of the projector, on the same folder of SnapAV's site; the Wayback Machine's copy
     "benq": [
