@@ -13,7 +13,7 @@ from pathlib import Path
 import pytest
 
 from remote_ledger.errors import ValidationError
-from remote_ledger.official import anthem, arcam, benq, binary, peerless, cambridge, cary, classe, cyrus, denon, denon_pdf as dp, denon_sheets as ds, dune, emotiva, harman, hegel, hisense, hitachi, infocus, jvc, kef, lyngdorf, marantz, nad, oppo, optoma, rotel, shinybow, simaudio, yamaha, harman
+from remote_ledger.official import anthem, arcam, awe, benq, binary, peerless, cambridge, cary, classe, cyrus, denon, denon_pdf as dp, denon_sheets as ds, dune, emotiva, harman, hegel, hisense, hitachi, infocus, jvc, kef, lyngdorf, marantz, nad, oppo, optoma, rotel, shinybow, simaudio, yamaha, harman
 from remote_ledger.official import importer as oi
 from remote_ledger.official.common import MANIFEST, Report, load_snapshot
 from remote_ledger.serialize import load
@@ -465,12 +465,12 @@ def test_the_committed_official_import_keeps_r19():
     or Untested, and a citation that names a document the manifest pins, by hash."""
     assert (ROOT / oi.IMPORT_ROOT / "README.md").is_file() and (ROOT / oi.IMPORT_ROOT / oi.REPORT).is_file()
     hashes, dates, snapshots = {}, {}, {}
-    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "benq", "peerless", "arcam", "cambridge", "hegel", "cary", "infocus", "lyngdorf", "emotiva", "denon", "hitachi", "classe", "cyrus", "yamaha", "harman", "nad", "simaudio", "rotel", "optoma", "dune", "hisense", "shinybow", "binary"):
+    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "benq", "peerless", "arcam", "cambridge", "hegel", "cary", "infocus", "lyngdorf", "emotiva", "denon", "hitachi", "classe", "cyrus", "yamaha", "harman", "nad", "simaudio", "rotel", "optoma", "dune", "hisense", "shinybow", "binary", "awe"):
         manifest = json.loads((SNAPSHOT / maker / MANIFEST).read_text(encoding="utf-8"))
         for name, entry in manifest["documents"].items():
             hashes[name], dates[name], snapshots[name] = entry["sha256"], entry.get("retrieved", manifest["retrieved"]), entry.get("snapshot")
     shape = re.compile(r"^(?:marantz\.com archive-downloads|anthemav\.com \(storage\.googleapis\.com/sandbox1-anthemav/an\)"
-                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|caryaudio\.com IR Remote Codes|infocus\.com IR code PDFs|lyngdorf\.com IR code PDF|emotiva\.com IR code PDFs|denon\.co\.uk RC code list|denon\.com Master IR Hex|snapav\.com Denon IR code documents|assets\.denon\.com IR code documents|hitachi-america\.us IR code documents|classeaudio\.com IR code documents|cyrusaudio\.com remote code tables|snapav\.com Yamaha IR code PDFs|awe-europe\.com Yamaha control documents|audiogeneral\.com Optoma IR code PDFs|dune-hd\.com IR code pages|assets\.hisense-usa\.com RS-232 and IR protocol PDF|shinybowusa\.com IR code files|snapav\.com Binary IR code documents|optoma\.co\.uk IR code PDFs|snapav\.com Marantz IR code workbook|jblsynthesis\.com custom installation notes|snapav\.com JVC LX projector code sheets|snapav\.com JVC remote control code tables|snapav\.com BenQ IR code sheet|cdn\.shopify\.com Peerless-AV Neptune IR code sheet|lexicon\.com custom installation notes|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/([^@]+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
+                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|caryaudio\.com IR Remote Codes|infocus\.com IR code PDFs|lyngdorf\.com IR code PDF|emotiva\.com IR code PDFs|denon\.co\.uk RC code list|denon\.com Master IR Hex|snapav\.com Denon IR code documents|assets\.denon\.com IR code documents|hitachi-america\.us IR code documents|classeaudio\.com IR code documents|cyrusaudio\.com remote code tables|snapav\.com Yamaha IR code PDFs|awe-europe\.com Yamaha control documents|audiogeneral\.com Optoma IR code PDFs|dune-hd\.com IR code pages|assets\.hisense-usa\.com RS-232 and IR protocol PDF|shinybowusa\.com IR code files|snapav\.com Binary IR code documents|awe-europe\.com control documents|optoma\.co\.uk IR code PDFs|snapav\.com Marantz IR code workbook|jblsynthesis\.com custom installation notes|snapav\.com JVC LX projector code sheets|snapav\.com JVC remote control code tables|snapav\.com BenQ IR code sheet|cdn\.shopify\.com Peerless-AV Neptune IR code sheet|lexicon\.com custom installation notes|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/([^@]+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
                        r"(?:, from the Wayback Machine snapshot (\d{14}))?\) (?:sheet '[^']+' row \d+|page \d+ row \d+|sheet (?:Standard|Extended) line \d+ row '|(?:line|row) \d+ '|page \d+ '|page \d+ table \d+ row '|page \d+ row '|key \d+ '|row 'RC(?:SHP|KSK)\w+' \(|page \d+ table row ')")
     files = sorted((ROOT / oi.IMPORT_ROOT).rglob("*.json"))
     assert len(files) > 180
@@ -5614,3 +5614,285 @@ def test_the_binary_snapshot_is_four_documents_from_snapav_by_the_wayback_machin
     cells += [str(c) for s in openpyxl.load_workbook(SNAPSHOT / "binary" / binary.B500).worksheets for row in s.iter_rows(values_only=True) for c in row if c is not None]
     assert not notice.search(" ".join(cells))
     assert tool.rows_of(SNAPSHOT / "binary" / binary.B500, binary.B500_REMOTE) == snapshot.sheet_of(binary.B500, binary.B500_REMOTE)
+
+
+# --- AWE Europe's display-maker sheets (DESIGN section 107) --------------------------------------------------------------------------------------------------------------------
+
+
+def awe_rc5(system: int, command: int, toggle: int = 0, word: str = "0073", unit: int = 0x20) -> str:
+    """The learned RC-5 timings of a frame, built here: fourteen biphase bits (a one is a space and a mark), the frame's first half-bit, a space, left out and its last space in the gap."""
+    bits = [1, 0 if command > 63 else 1, toggle] + [system >> i & 1 for i in (4, 3, 2, 1, 0)] + [command >> i & 1 for i in (5, 4, 3, 2, 1, 0)]
+    runs: list[list[int]] = []
+    for level in [lv for b in bits for lv in ((0, 1) if b else (1, 0))][1:]:
+        if runs and runs[-1][0] == level:
+            runs[-1][1] += 1
+        else:
+            runs.append([level, 1])
+    if runs[-1][0] == 0:
+        runs.pop()
+    numbers = [n * unit for _, n in runs] + [0x0CBF]
+    return " ".join(["0000", word, "0000", f"{len(numbers) // 2:04X}"] + [f"{n:04X}" for n in numbers])
+
+
+def awe_frame(leader: tuple[str, str], one: str, zero: str, bits: list[int], gap: str, word: str, mark: str) -> str:
+    pairs = [leader] + [(mark, one if b else zero) for b in bits] + [(mark, gap)]
+    return " ".join(["0000", word, "0000", f"{len(pairs):04X}"] + [w for pair in pairs for w in pair])
+
+
+def awe_bits(*bytes_: int) -> list[int]:
+    return [b >> i & 1 for b in bytes_ for i in range(8)]
+
+
+def test_an_awe_pronto_code_gives_its_frame_in_each_protocols_form_and_a_broken_one_gives_none():
+    assert awe.rc5("5000 0000 0000 0001 0003 007B") == (3, 123, None, "Pronto's short RC-5 form", None)
+    for system, command in ((0, 63), (3, 4), (3, 56), (3, 123), (31, 127), (0, 0), (5, 64)):
+        for toggle in (0, 1):
+            assert awe.rc5(awe_rc5(system, command, toggle)) == (system, command, toggle, "learned RC-5 timings", 0x73), (system, command, toggle)
+    for broken in ("5000 0000 0000 0001 0020 0004", "5000 0000 0000 0001 0003 0080", "5000 0073 0000 0001 0003 0004", "5000 0000 0000 0001 0003", "zzzz",
+                   awe_rc5(3, 4).replace("0000 0073", "0001 0073", 1), awe_rc5(3, 4).rsplit(" ", 2)[0], awe_rc5(3, 4, unit=0x60), awe_rc5(3, 4).replace("0040", "0030", 1)):
+        assert isinstance(awe.rc5(broken), str), broken
+    leader = ("00AC", "00AC")
+    nec = awe_frame(leader, "0040", "0015", awe_bits(7, 7, 0x99, 0x66), "0719", "006D", "0015")
+    assert awe.necx2(nec) == (0x6D, [7, 7, 0x99, 0x66], "an NECx2 frame (a 4.5 ms leader, 32 bits)")
+    assert awe.necx2(awe_frame(("00AB", "00AB"), "003F", "0015", awe_bits(7, 7, 0x99, 0x66), "0719", "006C", "0015"))[1] == [7, 7, 0x99, 0x66]
+    for broken in (awe_frame(leader, "0040", "0015", awe_bits(7, 7, 0x99, 0x67), "0719", "006D", "0015"),                    # the fourth byte is not the complement
+                   awe_frame(("0155", "00AA"), "0040", "0015", awe_bits(7, 7, 0x99, 0x66), "0719", "006D", "0015"),         # an NEC leader of 9 ms
+                   nec.rsplit(" ", 2)[0].replace("0022", "0021"), " ".join(nec.split()[:60]).replace("0022", "001E")):
+        assert isinstance(awe.necx2(broken), str), broken
+    pan = awe_frame(("0080", "003F"), "0030", "0010", awe_bits(2, 32, 0x80, 0, 0x3E, 0x80 ^ 0x3E), "0A98", "0071", "0010")
+    assert awe.kaseikyo(pan) == (0x71, [2, 32, 0x80, 0, 0x3E, 0xBE], "a 48-bit frame (a 3.5 ms leader)")
+    for broken in (awe_frame(("0080", "003F"), "0030", "0010", awe_bits(2, 32, 0x80, 0, 0x3E, 0xBF), "0A98", "0071", "0010"),         # a check byte that is not the exclusive or
+                   awe_frame(("0080", "003F"), "0030", "0010", awe_bits(3, 32, 0x80, 0, 0x3E, 0xBE), "0A98", "0071", "0010"),         # not Panasonic's two first bytes
+                   awe_frame(leader, "0030", "0010", awe_bits(2, 32, 0x80, 0, 0x3E, 0xBE), "0A98", "0071", "0010"),                     # a leader of 4.5 ms
+                   " ".join(pan.split()[:50])):
+        assert isinstance(awe.kaseikyo(broken), str), broken
+
+
+def awe_sharp_rows(*rows: tuple[str, str, str, str, str, str, str]) -> list[list[str]]:
+    head = [["KeyName", "Function", "Control Code", "", "", "", "Remarks"], ["", "", "SYSTEM", "DATA", "DEFINE", "EXT", ""], ["", "", "C1-C5", "C6-C11", "C12-C13", "C14-C15", ""]]
+    return [["1", "1", *r] for r in head + [list(r) for r in rows]]
+
+
+def test_the_four_awe_readers_take_a_document_as_its_rows_and_refuse_what_is_not_one():
+    # Philips: a sheet of `name:` and a code, with blank rows
+    code = "5000 0000 0000 0001 0003 0004"
+    rows = awe.parse_philips([["", ""], ["Power On:", code], ["", ""], ["AV 1 :", code]])
+    assert [(r.where, r.label) for r in rows] == [("sheet 'Sheet1' row 2", "Power On"), ("sheet 'Sheet1' row 4", "AV 1")]
+    for broken in ([["Power On", code]], [["Power On:", ""]], [["", code]], [["Power On:", code, "x"]], [["", ""]]):
+        with pytest.raises(ValueError):
+            awe.parse_philips(broken)
+    # Samsung: a title, then a name and a code, a paragraph may hold several (a name with no colon, as `HDMI1 0000 ...`)
+    samsung = [[awe.SAMSUNG_TITLE, "para"], ["POWER ON:", "para"], ["0000 006D 0000 0022 00AC", "para"], ["00AC 0016 0040", "para"], ["HDMI1 0000 006D 0000 0022 00AB 00AB Component 1: 0000 006D 0000 0022", "para"], ["", "cell"]]
+    got = awe.parse_samsung(samsung)
+    assert [(r.where, r.label) for r in got] == [("key 1 'POWER ON'", "POWER ON"), ("key 2 'HDMI1'", "HDMI1"), ("key 3 'Component 1'", "Component 1")]
+    assert got[0].pronto == "0000 006D 0000 0022 00AC 00AC 0016 0040" and got[2].pronto == "0000 006D 0000 0022"
+    for broken in (samsung[1:], [samsung[0], ["0000 006D 0000 0022", "para"]], [samsung[0], ["POWER ON:", "para"]], [samsung[0]]):
+        with pytest.raises(ValueError):
+            awe.parse_samsung(broken)
+    # the Europe LCD-TV table: the control code is C1 to C15, first bit first
+    sharp = awe_sharp_rows(("POWER", "turn the power", "10000", "011010", "00", "10", "toggle"), ("Colour RED", "", "10000", "000100", "10", "10", ""), ("", "", "", "", "", "", ""),
+                           ("MENU", "menu", "10001", "011000", "11", "10", ""))
+    got = awe.parse_sharp(sharp)
+    assert [(r.where, r.label, r.fields, r.remark) for r in got] == [("page 1 table 1 row 'POWER'", "POWER", (1, 22), "toggle"), ("page 1 table 1 row 'Colour RED'", "Colour RED", (1, 72), ""),
+                                                                    ("page 1 table 1 row 'MENU'", "MENU", (17, 198), "")]
+    for broken in (sharp[:2], awe_sharp_rows(("POWER", "", "1000", "011010", "00", "10", "")), awe_sharp_rows(("POWER", "", "10000", "011010", "00", "01", "")),
+                   awe_sharp_rows(("POWER", "", "10000", "011012", "00", "10", "")), awe_sharp_rows(("", "", "10000", "011010", "00", "10", "")), awe_sharp_rows()):
+        with pytest.raises(ValueError):
+            awe.parse_sharp(broken)
+    # Panasonic: the words of a page by place: a code is the lines of the right column from its `0000 xxxx 0000` line, the name the left column's words on its height (a short name shares a
+    # line with a line of the code, and the first page's names end with `(Discrete)`)
+    def line(page: int, y: int, *cells: tuple[int, str]) -> list[str]:
+        return [str(page), str(y)] + [v for x, w in cells for v in (str(x), w)]
+
+    body = [line(1, 27, (84, "Panasonic"), (158, "Plasma")), line(1, 70, (159, "0000"), (173, "0071"), (188, "0000"), (203, "0032")), line(1, 79, (100, "POWER"), (130, "ON"), (159, "0010"), (173, "0010")),
+            line(1, 88, (100, "(Discrete)"), (159, "0010")), line(1, 140, (159, "0000"), (173, "0071"), (188, "0000"), (203, "0032")), line(1, 150, (90, "VIDEO"), (120, "1"), (159, "0010")),
+            line(2, 70, (197, "0000"), (215, "0070"), (232, "0000"), (250, "0032")), line(2, 93, (86, "OK")), line(2, 120, (197, "0010")),
+            line(2, 200, (197, "0000"), (215, "0070"), (232, "0000"), (250, "0032")), line(2, 210, (80, "FORWARD"), (197, "0010")), line(2, 220, (96, "SEARCH")), ["2", "R", "10", "50"]]
+    got = awe.parse_panasonic(body)
+    assert [(r.where, r.label, r.model, r.pronto.split()[:4]) for r in got] == [
+        ("page 1 row 'POWER ON'", "POWER ON", "discrete", ["0000", "0071", "0000", "0032"]), ("page 1 row 'VIDEO 1'", "VIDEO 1", "discrete", ["0000", "0071", "0000", "0032"]),
+        ("page 2 row 'OK'", "OK", "remote", ["0000", "0070", "0000", "0032"]), ("page 2 row 'FORWARD SEARCH'", "FORWARD SEARCH", "remote", ["0000", "0070", "0000", "0032"])]
+    assert got[0].pronto.split()[-2:] == ["0010", "0010"]
+    for broken in (body[2:], [r for r in body if r[1] != "93"], [line(1, 79, (159, "0010"))], []):
+        with pytest.raises(ValueError):
+            awe.parse_panasonic(broken)
+
+
+def test_an_awe_key_that_breaks_a_check_of_its_document_is_untested_and_the_citation_says_which():
+    def key(doc_label: str, fields: tuple[int, ...], model: str = "") -> awe.Key:
+        return awe.Key(awe.Row("row 1", doc_label, model=model), fields, "a shape", None)
+
+    philips = [key("Power On", (0, 63)), key("AV1", (3, 4)), key("AV2", (0, 57)), key("AV3", (3, 56)), key("HDMI 1", (3, 57)), key("AV4", (3, 57)), key("VGA", (3, 123))]
+    awe._hold(awe.SPECS[0][0], philips)
+    assert [bool(k.doubts) for k in philips] == [False, False, True, False, True, True, False]
+    assert philips[2].doubts == ["the only input of the sheet that is on RC-5 system 0 (the other 5 are on system 3)"]
+    assert philips[4].doubts == philips[5].doubts == ["the document gives this code to 'AV4' and 'HDMI 1'"]
+    samsung = [key("POWER ON", (7, 7, 0x99)), key("HDMI3", (7, 7, 0xC2)), key("S-Video 3", (7, 7, 0xC2)), key("Video 4", (8, 7, 0x84))]
+    awe._hold(awe.SPECS[1][0], samsung)
+    assert [bool(k.doubts) for k in samsung] == [False, True, True, True]
+    assert samsung[3].doubts == ["device 8 subdevice 7, not the TV address 7 and 7 of the other codes of the list"]
+    panasonic = [key("MUTE", (0x80, 0, 0x32), "remote"), key("OK", (0x80, 0, 0x32), "remote"), key("STOP", (0x80, 0, 0x32), "discrete"), key("PLAY", (0xB0, 0, 0x0A), "remote")]
+    awe._hold(awe.SPECS[3][0], panasonic)                  # a code two names of one file share; the same code in another file of the document is not that
+    assert [bool(k.doubts) for k in panasonic] == [True, True, False, False]
+
+
+def awe_files() -> dict[str, dict]:
+    return {p.stem: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "awe").glob("*.json"))}
+
+
+def test_awe_is_five_files_of_154_keys_and_the_ten_untested_are_the_codes_two_names_share_and_one_input_on_another_system():
+    files = awe_files()
+    assert sorted(files) == ["Panasonic_Plasma_TV_discrete_codes", "Panasonic_Plasma_TV_remote_codes__2007", "Philips_Discrete_IR_codes", "Samsung_Discrete_IR_commands", "Sharp_LCD-TV_for_Europe"]
+    assert {n: (f["manufacturer"], f["protocol"]["name"], len(f["keys"])) for n, f in files.items()} == {
+        "Panasonic_Plasma_TV_discrete_codes": ("Panasonic", "Panasonic", 12), "Panasonic_Plasma_TV_remote_codes__2007": ("Panasonic", "Panasonic", 46),
+        "Philips_Discrete_IR_codes": ("Philips", "RC5", 11), "Samsung_Discrete_IR_commands": ("Samsung", "NECx2", 13), "Sharp_LCD-TV_for_Europe": ("Sharp", "Sharp", 72)}
+    assert all(f["controls"] == [f"{f['manufacturer']} {f['model']}"] for f in files.values())
+    tiers = {n: sorted(k for k, s in f["keys"].items() if s["forms"][0]["confidence"] == "untested") for n, f in files.items()}
+    assert tiers == {"Panasonic_Plasma_TV_discrete_codes": [], "Panasonic_Plasma_TV_remote_codes__2007": [], "Sharp_LCD-TV_for_Europe": [],
+                     "Philips_Discrete_IR_codes": ["KEY_AV2", "KEY_AV4", "KEY_FRONT_INPUT", "KEY_HDMI_1", "KEY_HDMI_2", "KEY_SIDE_INPUT", "KEY_VGA"],
+                     "Samsung_Discrete_IR_commands": ["KEY_HDMI3", "KEY_S_MINUS_VIDEO_3"]}
+    for f in files.values():                                           # a form has what its citation says, and a code is one key of a file but for the two names that share it
+        shared = Counter((s["forms"][0].get("device"), s["forms"][0].get("subdevice"), s["forms"][0]["function"]) for s in f["keys"].values())
+        for spec in f["keys"].values():
+            form = spec["forms"][0]
+            again = shared[(form.get("device"), form.get("subdevice"), form["function"])]
+            assert (again > 1) == bool(re.search(r"the document gives this code to", form["source"])), spec["label"]
+
+
+def test_awe_keys_are_named_as_the_documents_name_them_and_a_citation_says_the_row_the_shape_and_a_carrier_word_that_is_not_the_protocols():
+    files = awe_files()
+    assert files["Philips_Discrete_IR_codes"]["keys"]["KEY_AV3"]["forms"][0]["source"] == (
+        "awe-europe.com control documents/Philips_discrete_ir_codes.xls@4fc2fd5b (retrieved 2026-11-13, from the Wayback Machine snapshot 20151109020031) sheet 'Sheet1' row 10: "
+        "RC5 system 3 command 56 (learned RC-5 timings; Pronto carrier word 0073)")
+    assert files["Samsung_Discrete_IR_commands"]["keys"]["KEY_POWER_ON"]["forms"][0]["source"].endswith(
+        "key 1 'POWER ON': NECx2 device 7 subdevice 7 function 153 (an NECx2 frame (a 4.5 ms leader, 32 bits); Pronto carrier word 006D)")
+    sharp = files["Sharp_LCD-TV_for_Europe"]["keys"]
+    assert (sharp["KEY_POWER"]["forms"][0]["device"], sharp["KEY_POWER"]["forms"][0]["function"]) == ("0x01", "0x16")     # Sharp D1 F22 is the Power of IrpTransmogrifier's teaser file (protocols/sharp.py)
+    assert sharp["KEY_POWER"]["forms"][0]["source"].endswith("page 1 table 1 row 'POWER': Sharp device 1 function 22 (a table of bits (the system, data and define bits, first bit first)); the table's remark: 'toggle'")
+    assert sharp["KEY_PICTURE_MENU"]["forms"][0]["source"].endswith("the table's remark: 'GD7E'") and sharp["KEY_EXT_MINUS_7_INPUT_7"]["forms"][0]["function"] == "0x95"
+    assert not any("Not implemented" in s["label"] for s in sharp.values()) and len({s["label"] for s in sharp.values()}) == 72
+    panasonic = files["Panasonic_Plasma_TV_remote_codes__2007"]["keys"]
+    assert panasonic["KEY_MUTE"]["forms"][0]["source"] == (
+        "awe-europe.com control documents/Panasonic_plasma_Discrete-remote-control-code.pdf@" + panasonic["KEY_MUTE"]["forms"][0]["source"].split("@")[1][:8] +
+        " (retrieved 2026-11-13, from the Wayback Machine snapshot 20150703204910) page 3 row 'MUTE': Panasonic device 128 subdevice 0 function 50 (a 48-bit frame (a 3.5 ms leader); "
+        "Pronto carrier word 0071); the sheet's carrier word is 0071 (36.7 kHz), the key is the protocol's 37 kHz")
+    assert [panasonic[f"KEY_{n}"]["forms"][0]["function"] for n in (1, 2, 3, 4, 5, 6, 7, 8, 9, 0)] == [f"0x{0x10 + i:02X}" for i in range(10)]     # the digits are sequential
+    assert files["Panasonic_Plasma_TV_discrete_codes"]["keys"]["KEY_POWER_ON"]["forms"][0]["function"] == "0x3E" and files["Panasonic_Plasma_TV_discrete_codes"]["keys"]["KEY_POWER_OFF"]["forms"][0]["function"] == "0x3F"
+
+
+def awe_levels(words: list[str]) -> list[int]:
+    """A learned RC-5 code's half-bits sampled at the centre of each slot, from the times alone (the frame's first half-bit, a space, is the slot before the first mark)."""
+    w = [int(x, 16) for x in words]
+    unit = min(w[4:-1])
+    edges, t = [], unit
+    for i, d in enumerate(w[4:-1]):
+        edges.append((t, t + d, 1 - i % 2))
+        t += d
+    return [next((lv for a, b, lv in edges if a <= (slot + 0.5) * unit < b), 0) for slot in range(28)]
+
+
+def test_every_awe_key_is_what_the_pinned_documents_say_recomputed_from_their_own_text_and_the_philips_rc5_forms_agree():
+    files, snapshot = awe_files(), load_snapshot(SNAPSHOT / "awe")
+    got = lambda f: {s["label"]: tuple(int(s["forms"][0][k], 0) for k in ("device", "subdevice", "function") if k in s["forms"][0]) for s in files[f]["keys"].values()}      # noqa: E731
+    # Philips: the short form's two numbers, and the learned timings' bits by sampling (two forms of the same RC-5 frame)
+    expected = {}
+    for name, code in snapshot.sheet_of(awe.PHILIPS, "Sheet1"):
+        if not name:
+            continue
+        w = code.split()
+        if w[0] == "5000":
+            expected[name[:-1]] = (int(w[4], 16), int(w[5], 16))
+        else:
+            slots = awe_levels(w)
+            bits = [slots[i + 1] for i in range(0, 28, 2)]
+            assert all(slots[i] != slots[i + 1] for i in range(0, 28, 2)) and bits[0] == 1
+            expected[name[:-1]] = (int("".join(map(str, bits[3:8])), 2), int("".join(map(str, bits[8:14])), 2) + (0 if bits[1] else 64))
+    assert got("Philips_Discrete_IR_codes") == expected and len(expected) == 11
+    assert expected["VGA"] == expected["HDMI 2"] == (3, 123) and expected["Front Input"] == expected["Side Input"] and expected["AV4"] == expected["HDMI 1"] == (3, 57)       # two forms, one code
+    # Samsung: every code whose pairs are 34, by the times (a space more than twice its mark is a one)
+    parts = re.split(r"\b0000 (?=006[CD] )", " ".join(r[0] for r in snapshot.sheet_of(awe.SAMSUNG, "paragraphs")[1:]))
+    names, bodies = [parts[0].rstrip(": ")], []
+    for part in parts[1:]:
+        tokens = part.split()
+        n = next((i for i, t in enumerate(tokens) if not re.fullmatch(r"[0-9A-F]{4}", t)), len(tokens))
+        bodies.append([0] + [int(t, 16) for t in tokens[:n]])
+        names.append(" ".join(tokens[n:]).rstrip(": "))
+    assert names.pop() == "" and len(names) == len(bodies) == 14
+    samsung = {}
+    for name, w in zip(names, bodies):
+        pairs = list(zip(w[4::2], w[5::2]))
+        if len(pairs) == 34:
+            b = [sum((1 if sp > 2 * mk else 0) << i for i, (mk, sp) in enumerate(pairs[1 + 8 * j:9 + 8 * j])) for j in range(4)]
+            samsung[name] = (b[0], b[1], b[2])
+            assert b[2] ^ b[3] == 0xFF
+    assert got("Samsung_Discrete_IR_commands") == samsung and len(samsung) == 13 and "POWER OFF" not in samsung
+    # Sharp: the bits of each row
+    rows = [r[2:] for r in snapshot.sheet_of(awe.SHARP, "tables") if re.fullmatch(r"[01]{5}", r[4])]
+    assert len(rows) == 80 and {r[5] for r in rows} == {"10"}
+    sharp = {}
+    for r in rows:
+        if "Not implemented" in r[0]:
+            continue
+        device = sum(int(c) << i for i, c in enumerate(r[2]))
+        function = sum(int(c) << i for i, c in enumerate(r[3] + r[4]))
+        sharp[" ".join(r[0].split())] = (device, function)
+    assert got("Sharp_LCD-TV_for_Europe") == sharp and len(sharp) == 72
+    # Panasonic: the codes of a page in the order of their place, and the names of the left column in the same order
+    expected = {"discrete": {}, "remote": {}}
+    for page in range(1, 7):
+        lines = sorted((float(r[1]), r[2:]) for r in snapshot.sheet_of(awe.PANASONIC, "words") if r[0] == str(page) and r[1] != "R")
+        right = [w for _, cells in lines for x, w in zip(cells[0::2], cells[1::2]) if int(x) >= 150 and re.fullmatch(r"[0-9A-F]{4}", w)]
+        codes = [right[i:i + 104] for i in range(len(right) - 3) if right[i] == "0000" and right[i + 2] == "0000" and right[i + 3] == "0032"]        # each starts `0000 xxxx 0000 0032`
+        first = min(y for y, cells in lines if cells[1::2][:1] == ["0000"] and int(cells[0]) >= 150)
+        left = [(y, " ".join(w for x, w in zip(cells[0::2], cells[1::2]) if int(x) < 150)) for y, cells in lines if y > first - 20 and any(int(x) < 150 for x in cells[0::2])]
+        groups: list[list[str]] = []
+        last = -99.0
+        for y, text in left:
+            if y - last > 15:
+                groups.append([])
+            groups[-1].append(text)
+            last = y
+        names = [" ".join(" ".join(g).replace("(Discrete)", "").split()) for g in groups]
+        names = [n for n in names if n]
+        assert len(names) == len(codes), (page, names)
+        for name, code in zip(names, codes):
+            w = [int(x, 16) for x in code]
+            if len(w) != 4 + 2 * 50:
+                continue
+            pairs = list(zip(w[4::2], w[5::2]))
+            b = [sum((1 if sp > 0x20 else 0) << i for i, (mk, sp) in enumerate(pairs[1 + 8 * j:9 + 8 * j])) for j in range(6)]
+            assert b[:2] == [2, 32] and b[5] == b[2] ^ b[3] ^ b[4]
+            expected["discrete" if page == 1 else "remote"][name] = (b[2], b[3], b[4])
+    assert got("Panasonic_Plasma_TV_discrete_codes") == expected["discrete"] and len(expected["discrete"]) == 12
+    assert got("Panasonic_Plasma_TV_remote_codes__2007") == expected["remote"] and len(expected["remote"]) == 46
+
+
+def test_the_awe_snapshot_is_four_documents_from_awe_europe_by_the_wayback_machine_whose_rows_are_the_pinned_csv_and_none_has_a_notice_word():
+    pymupdf = pytest.importorskip("pymupdf")
+    xlrd = pytest.importorskip("xlrd")
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location("official_sheets_to_csv", ROOT / "tools" / "official_sheets_to_csv.py")
+    tool = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(tool)
+    snapshot = load_snapshot(SNAPSHOT / "awe")
+    assert snapshot.retrieved == "2026-11-13" and sorted(snapshot.documents) == [awe.PANASONIC, awe.PHILIPS, awe.SHARP, awe.SAMSUNG]
+    folder = "http://www.awe-europe.com/documents/Control%20Docs/"
+    assert {n: (e["snapshot"], e["original"].removeprefix(folder).removeprefix("http://awe-europe.com/documents/")) for n, e in snapshot.documents.items()} == {
+        awe.PHILIPS: ("20151109020031", "Philips/discrete_ir_codes.xls"), awe.SAMSUNG: ("20150718235716", "Samsung/Samsung_Discrete_IR_Commands_tested.doc"),
+        awe.SHARP: ("20101120081326", "RC%20IR-codes%20(Europe)%20full.pdf"), awe.PANASONIC: ("20150703204910", "Panasonic/Panasonic%20plasma%20Discrete-remote-control-code.pdf")}
+    assert all("id_/" in e["url"] and e["url"].startswith("https://web.archive.org/web/") for e in snapshot.documents.values())
+    notice = re.compile(r"copyright|all rights?|reserved|©|\(c\)|confidential|reproduc|trademark|proprietary|property of|licen[cs]e|permission|internal use", re.I)
+    text = {}
+    for name in snapshot.documents:
+        path = SNAPSHOT / "awe" / name
+        if name.endswith(".pdf"):
+            text[name] = " ".join(page.get_text() for page in pymupdf.open(str(path)))
+        elif name.endswith(".xls"):
+            text[name] = " ".join(str(c.value) for s in xlrd.open_workbook(str(path)).sheets() for r in range(s.nrows) for c in s.row(r))
+        else:
+            text[name] = " ".join(" ".join(r) for r in tool.doc_paragraphs(path))
+        assert not notice.search(text[name]), name
+    for name, sheet in ((awe.PHILIPS, "Sheet1"), (awe.SAMSUNG, "paragraphs"), (awe.SHARP, "tables"), (awe.PANASONIC, "words")):
+        assert tool.rows_of(SNAPSHOT / "awe" / name, sheet) == snapshot.sheet_of(name, sheet)
+    assert "PSTC" in text[awe.PANASONIC] and "GD7E" in text[awe.SHARP] and "TruD" in text[awe.SHARP]
