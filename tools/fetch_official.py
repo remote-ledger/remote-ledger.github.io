@@ -295,6 +295,11 @@ DOCUMENTS = {
         # redirects its mixed-case path to the lower-case one, which is the address pinned)
         ("avrx1000_e300_ir_code_v01.doc", "https://assets.denon.com/documentmaster/uk/avrx1000_e300_ir_code_v01.doc", None),
         ("avr-x2500h_s940h_ir_code_v01-02072018.doc", "https://assets.denon.com/documentmaster/us/avr-x2500h_s940h_ir_code_v01-02072018.doc", None),
+        # the AVR-X4000's list of 2013 (DESIGN section 108): a live file of the same host (`uk/`); AWE Europe's copy (Wayback snapshot 20160304171014, `Control Docs/denon/`, 1,588,224 bytes: the file
+        # of its `avrx4000all.zip`) has the same 13,983 paragraphs and is not pinned twice
+        ("avrx4000_ir_code_v01.doc", "https://assets.denon.com/documentmaster/uk/avrx4000_ir_code_v01.doc", None),
+        # the DVD-1800BD, DBP-1610 and DBP-2010 / 2010CI sheet of 2009: not on Denon's host any more, so AWE Europe's copy of the Wayback Machine (the folder of section 100 and 105)
+        ("DVD1800BD_DBP1610I_DBP2010_2010CI_IR_CODE_V01.pdf", WB + "20101120132649id_/http://awe-europe.com/documents/DVD1800BD_DBP1610I_DBP2010_2010CI_IR_CODE_V01.pdf", None),
         # the one-page and short sheets of the same host that carry no notice (section 98): the zone 2 and zone 3 sheets of eleven receivers of 2007 and 2008, the CD changers
         # DCM-390/290/27, the Blu-ray and DVD players DVD-3800BDCI and DVD-2500BTCI, the three S-series systems of 2008 and the PMA/DCD pair's remote RC-1179 of 2012
         *[(name, "https://assets.denon.com/documentmaster/" + folder + "/" + name, None)

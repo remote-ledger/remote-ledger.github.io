@@ -786,7 +786,7 @@ def test_design_quotes_the_leave_one_out_figures(real_records, real):
     collected, _ = real
     section = _design_section()
     c = family_eval.evaluate(real_records, collected.folded, ORDER)
-    assert c["stubs"] == 353, "the sample of the evaluation moved: the figures of D358 are to be measured again"
+    assert c["stubs"] == 349, "the sample of the evaluation moved: the figures of D358 are to be measured again"
     for fact in (
             f"| stubs cut from remotes held in full | {c['stubs']:,} |",
             f"| completed | {c['completed']:,} ({_pct(c['completed'], c['stubs'])}) |",

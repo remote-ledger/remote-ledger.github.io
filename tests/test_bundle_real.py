@@ -56,7 +56,7 @@ def test_the_dedupe_numbers_the_design_quotes(real):
             distinct.setdefault(record.source, set()).add(key[4])
     assert (keys["irblaster"], len(distinct["irblaster"])) == (412_775, 58_344)
     assert (keys["lirc"], keys["smartir"], keys["authored"]) == (112_789, 914, 128)
-    assert sum(keys.values()) == 771_199 and len(records) == 17_639
+    assert sum(keys.values()) == 772_186 and len(records) == 17_649
     assert len(set().union(*distinct.values())) == 187_090
     # the IR Blaster signals as blobs, with their two-byte counts: 8.8 MB of binary words
     assert sum(len(b) for b in distinct["irblaster"]) == 8_889_348
