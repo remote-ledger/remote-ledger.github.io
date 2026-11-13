@@ -25,7 +25,7 @@ import zipfile
 from datetime import date
 from pathlib import Path
 
-WAYBACK = re.compile(r"^https://web\.archive\.org/web/(?P<snapshot>\d{14})id_/(?P<original>https?://.+)$")
+WAYBACK = re.compile(r"^https://web\.archive\.org/web/(?P<snapshot>\d{14})(?:id_|if_)/(?P<original>https?://.+)$")      # ``if_``: a capture the archive answers 404 to as ``id_`` (D386)
 USER_AGENT = "remote-ledger snapshot (+https://github.com/remote-ledger)"
 WB = "https://web.archive.org/web/"
 NAD = "https://cdn.shopify.com/s/files/1/0784/9751/3722/files/"
@@ -85,6 +85,14 @@ DOCUMENTS = {
     # Peerless-AV's IR code sheet for its Neptune outdoor TVs (DESIGN section 93): a live file on a Shopify CDN (the sheet's own title names the Neptune Partial Sun and Full Sun TVs)
     "peerless": [
         ("Remote_Control_Codes_2025_Final.pdf", "https://cdn.shopify.com/s/files/1/0508/3732/3934/files/Remote_Control_Codes_2025_Final.pdf", None),
+    ],
+    # Binary's (SnapAV's own brand) IR codes of its matrix switchers (DESIGN section 106): the protocols-and-drivers folder of the media distribution products on SnapAV's site, the Wayback Machine's copies, each
+    # the snapshot named in its URL. The B-500's sheet is an Office Open XML workbook named `.xls`, and the archive answers `id_` for it with 404, so its address is the `if_` form (the raw file, as the manifest shows)
+    "binary": [
+        ("B-200-AVMATRIX-6x4-IR_CCF_Hex_Codes.xls", WB + "20250825064658id_/https://www.snapav.com/wcsstore/ExtendedSitesCatalogAssetStore/attachments/documents/MediaDistribution/ProtocolsAndDrivers/B-200-AVMATRIX-6x4-IR%20CCF%20Hex%20Codes.xls", None),
+        ("B-500-MTRX-230_IR-Protocol.xlsx", WB + "20230320001301if_/https://www.snapav.com/wcsstore/ExtendedSitesCatalogAssetStore/attachments/documents/MediaDistribution/ProtocolsAndDrivers/B-500-MTRX-230_IR-Protocol.xls", None),
+        ("B-660-MTRX-4x2_Pronto_IR_HEX_Codes.pdf", WB + "20230205211537id_/https://www.snapav.com/wcsstore/ExtendedSitesCatalogAssetStore/attachments/documents/MediaDistribution/ProtocolsAndDrivers/B-660-MTRX-4x2_Pronto_IR_HEX_Codes.pdf", None),
+        ("B-660-MTRX-4x4_Pronto_IR_HEX_Codes.pdf", WB + "20230207121624id_/https://www.snapav.com/wcsstore/ExtendedSitesCatalogAssetStore/attachments/documents/MediaDistribution/ProtocolsAndDrivers/B-660-MTRX-4x4_Pronto_IR_HEX_Codes.pdf", None),
     ],
     # BenQ's LK952 code list (DESIGN section 91): the IR, RS-232 and DDC codes of the projector, on the same folder of SnapAV's site; the Wayback Machine's copy
     "benq": [
@@ -582,6 +590,8 @@ def main(argv: list[str] | None = None) -> int:
             data = zipfile.ZipFile(__import__("io").BytesIO(data)).read(member)
         if name.endswith((".xls", ".doc")) and not data.startswith(b"\xd0\xcf\x11\xe0"):
             raise SystemExit(f"{name}: {url} did not answer with a spreadsheet or a Word document ({data[:40]!r}); nothing was pinned")
+        if name.endswith(".xlsx") and not data.startswith(b"PK\x03\x04"):
+            raise SystemExit(f"{name}: {url} did not answer with a workbook ({data[:40]!r}); nothing was pinned")
         if name.endswith(".html") and b"<html" not in data[:2000].lower() and b"<!doctype" not in data[:200].lower():
             raise SystemExit(f"{name}: {url} did not answer with a web page ({data[:40]!r}); nothing was pinned")
         if name.endswith(".ir") and not data.startswith(b"\x04\xf0IR"):

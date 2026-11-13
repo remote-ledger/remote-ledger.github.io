@@ -13,7 +13,7 @@ the page, the table's number on it and the cells of one table row, so a table's 
 text and how it ended, ``cell`` (the mark that ends a table's cell, and a table's row: an empty ``cell`` is an empty cell or a row's end) or
 ``para``, in the document's order.
 
-    python3 tools/official_sheets_to_csv.py marantz|anthem|oppo|kef|jvc|benq|peerless|arcam|cambridge|hegel|cary|nad|simaudio|rotel|optoma|dune|hisense|shinybow
+    python3 tools/official_sheets_to_csv.py marantz|anthem|oppo|kef|jvc|benq|peerless|arcam|cambridge|hegel|cary|nad|simaudio|rotel|optoma|dune|hisense|shinybow|binary
 """
 
 from __future__ import annotations
@@ -45,6 +45,9 @@ SHEETS = {
     "jvc": {"DILA_Remote_Code_Emulation_Long_Hex.pdf": ["pages"], "RCU Code of LX-NZ3_20191114.pdf": ["tables", "pages"], "LX-UH1 Remote Control Codes.pdf": ["tables"],
             "LX-NZ3 long hex commands.pdf": ["pages"], "Firmware 3.1 IR Control.pdf": ["tables", "lines"], "LEO3_Remote_Control_Codes_Table_ver_1-0.pdf": ["tables", "lines"]},
     "benq": {"BenQ_LK952_IR_Codes.pdf": ["tables"]},
+    # the B-200's sheet is named `RS232 Commands` and holds its IR commands; the B-660's PDFs are read as lines (their tables are not found as such)
+    "binary": {"B-200-AVMATRIX-6x4-IR_CCF_Hex_Codes.xls": ["RS232 Commands"], "B-500-MTRX-230_IR-Protocol.xlsx": ["Single Command Switching codes", "Remote Button Codes"],
+               "B-660-MTRX-4x2_Pronto_IR_HEX_Codes.pdf": ["pages"], "B-660-MTRX-4x4_Pronto_IR_HEX_Codes.pdf": ["pages"]},
     "peerless": {"Remote_Control_Codes_2025_Final.pdf": ["tables"]},
     "arcam": {
         "AVR380-450-750_RS232_SH256E_2.pdf": ["tables"],
