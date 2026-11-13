@@ -612,6 +612,7 @@ DOC_DOCUMENTS: tuple[DocDocument, ...] = (
     DocDocument("AVR-X6700H_AVC-X6700H_IR_CODE_V01.doc", ("AVR-X6700H", "AVC-X6700H")),
     DocDocument("avrx1000_e300_ir_code_v01.doc", ("AVR-X1000", "AVR-E300")),                      # §95: live files of Denon's own host
     DocDocument("avr-x2500h_s940h_ir_code_v01-02072018.doc", ("AVR-X2500H", "AVR-S940H")),
+    DocDocument("avrx4000_ir_code_v01.doc", ("AVR-X4000",)),                                      # §108: a live file of Denon's own host
 )
 _DOC_ADDRESS = re.compile(r"SYSTEM ADDRESS ?\(C1[~\u301c]C5\) : ([01]{5}) , EXTENSION BIT ?\(C12,C13\) : ([01]{2})")
 _DOC_MARK = re.compile(r"\s*\u203b+\s*([^\u203b]*?)\s+only\b|\s*\(([^()]*?)\s+only\)", re.I)
@@ -630,6 +631,9 @@ def marks_of(text: str, models: tuple[str, ...]) -> tuple[str, frozenset[str]]:
         nonlocal kept
         what = found.group(1) if found.group(1) is not None else found.group(2)
         regions: list[str] = []
+        if re.fullmatch(r"(?:" + "|".join(REGIONS) + r")(?:\s*&\s*(?:" + "|".join(REGIONS) + r"))+", what.strip()):      # ``Spotify (NA & EU only)`` (§108): regions only
+            regions = re.split(r"\s*&\s*", what.strip())
+            what = ""
         listed = _DOC_REGIONS.search(what)
         if listed:                                            # ``AVR(NA/CHI/JP)``: the family, and its regions
             regions += listed.group(1).split("/")
@@ -655,6 +659,8 @@ def marks_of(text: str, models: tuple[str, ...]) -> tuple[str, frozenset[str]]:
     rest = _DOC_VARIANT.sub(variant, text)
     rest = _DOC_MARK.sub(one, rest)
     label = re.sub(r"\(\s+", "(", re.sub(r"\s+\)", ")", " ".join(rest.split())))
+    if not kept:                                              # a mark of models that are none of the document's would drop the key from every file without a word (§108: ``NA & EU only``)
+        raise ValueError(f"the name {text!r} has a mark that names none of {', '.join(models)}")
     return label, frozenset(kept)
 
 

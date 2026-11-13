@@ -22,6 +22,7 @@ from dataclasses import dataclass
 from .denon import VENDOR, DocRow, nf, value
 from .denon_pdf import PDF_HOST, page_lines
 
+AWE_HOST = "awe-europe.com control documents"
 _ONE = re.compile(r"^[01]$")
 _BYTE = re.compile(r"^[01]{8}$")
 KASEIKYO_VENDOR_BITS = VENDOR            # 0x54 0x32 as 16 bits, first bit first
@@ -42,6 +43,7 @@ class SheetDocument:
     aliases: tuple[tuple[str, tuple[str, ...]], ...] = ()
     title: str = ""                                # the model the title names, as a zone sheet's check (``AVR-1508``)
     group: str = ""                                # a zone sheet's zone, as the file says
+    host: str = ""                                 # where the pinned copy is from when it is not Denon's own host (§108: AWE Europe's folder, a Wayback Machine copy)
 
 
 SHEETS: tuple[SheetDocument, ...] = (
@@ -51,6 +53,7 @@ SHEETS: tuple[SheetDocument, ...] = (
     SheetDocument("dcm-390_290_27-ircodes.pdf", "dcm", ("DCM-390", "DCM-290", "DCM-27")),
     SheetDocument("dcd1650re_2020ae_pma2000re_2020ae_ir_code_v01.pdf", "rc1179", ("PMA-2000RE", "PMA-2020AE", "DCD-1650RE", "DCD-2020AE")),
     SheetDocument("dvd-3800bdci_dvd-2500btci_ircodes.pdf", "dvd", ("DVD-3800BDCI", "DVD-2500BTCI")),
+    SheetDocument("DVD1800BD_DBP1610I_DBP2010_2010CI_IR_CODE_V01.pdf", "dvd", ("DVD-1800BD", "DBP-1610", "DBP-2010", "DBP-2010CI"), host=AWE_HOST),     # §108
     SheetDocument("s-32-ircodes_v01.pdf", "bytes", ("S-32",)),
     SheetDocument("s-52-ircodes_v01.pdf", "bytes", ("S-52",)),
     SheetDocument("s-81-ircodes_v01.pdf", "s81", ("S-81",)),
@@ -373,6 +376,7 @@ def build_sheets(snapshot, authored, report):
         for note in notes:
             report.notes.append((MAKER, document.file, f"not read: {note}"))
         entry, sha = snapshot.documents[document.file], snapshot.sha(document.file)
-        where = f"{PDF_HOST}/{document.file}@{sha} (retrieved {entry.get('retrieved', snapshot.retrieved)})"
+        how = f", from the Wayback Machine snapshot {entry['snapshot']}" if "snapshot" in entry else ""
+        where = f"{document.host or PDF_HOST}/{document.file}@{sha} (retrieved {entry.get('retrieved', snapshot.retrieved)}{how})"
         out += emit_rows(document.file, where, rows, document.models, authored, report, gate, {m: a for m, a in document.aliases})
     return out
