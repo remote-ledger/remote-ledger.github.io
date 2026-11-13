@@ -105,6 +105,9 @@ DOCUMENTS = {
     # BenQ's LK952 code list (DESIGN section 91): the IR, RS-232 and DDC codes of the projector, on the same folder of SnapAV's site; the Wayback Machine's copy
     "benq": [
         ("BenQ_LK952_IR_Codes.pdf", WB + "20230207112239id_/https://www.snapav.com/wcsstore/ExtendedSitesCatalogAssetStore/attachments/documents/ProjectionScreens/ProtocolsAndDrivers/BenQ_LK952_IR_Codes.pdf", None),
+        # the HT5550's code list (DESIGN section 109): the same appendix as a PDF of six pages of pictures, **a live file of the same site** (9,459,527 bytes; the Wayback Machine's
+        # copy of 22 February 2024 is cut at 1,048,576 bytes and has no page tree; its second capture, 18 July 2024, is the whole file)
+        ("HT5550_IR_Codes.pdf", "https://www.snapav.com/wcsstore/ExtendedSitesCatalogAssetStore/attachments/documents/ProjectionScreens/SupportDocuments/HT5550_IR_Codes.pdf", None),
     ],
     # Arcam's custom installation notes: for each product family a PDF of the serial control commands and the RC-5
     # remote codes (a table of system and command codes in decimal and hex). They are on Arcam's own host, arcam.co.uk.
