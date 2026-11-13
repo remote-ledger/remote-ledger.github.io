@@ -44,7 +44,8 @@ SHEETS = {
     "anthem": {"AVM-MRXx40-IR-hex-20251202185749500.xlsx": ["MRX x10-x40 remote layout", "MRX x10-x40 IR hex codes"]},
     "jvc": {"DILA_Remote_Code_Emulation_Long_Hex.pdf": ["pages"], "RCU Code of LX-NZ3_20191114.pdf": ["tables", "pages"], "LX-UH1 Remote Control Codes.pdf": ["tables"],
             "LX-NZ3 long hex commands.pdf": ["pages"], "Firmware 3.1 IR Control.pdf": ["tables", "lines"], "LEO3_Remote_Control_Codes_Table_ver_1-0.pdf": ["tables", "lines"]},
-    "benq": {"BenQ_LK952_IR_Codes.pdf": ["tables"]},
+    # the HT5550's appendix is six pages of pictures with no text at all (DESIGN section 109): written down by eye, the table's rows as the LK952's `tables` CSV has them
+    "benq": {"BenQ_LK952_IR_Codes.pdf": ["tables"], "HT5550_IR_Codes.pdf": ["transcribed"]},
     # the B-200's sheet is named `RS232 Commands` and holds its IR commands; the B-660's PDFs are read as lines (their tables are not found as such)
     "binary": {"B-200-AVMATRIX-6x4-IR_CCF_Hex_Codes.xls": ["RS232 Commands"], "B-500-MTRX-230_IR-Protocol.xlsx": ["Single Command Switching codes", "Remote Button Codes"],
                "B-660-MTRX-4x2_Pronto_IR_HEX_Codes.pdf": ["pages"], "B-660-MTRX-4x4_Pronto_IR_HEX_Codes.pdf": ["pages"]},

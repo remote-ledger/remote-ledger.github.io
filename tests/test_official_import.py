@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import functools
 import hashlib
+import csv
 import json
 import re
 from collections import Counter
@@ -3222,7 +3223,7 @@ def test_a_benq_sheet_row_is_a_number_a_function_a_code_and_whether_the_model_su
 
 
 def test_the_benq_lk952_file_is_the_34_codes_the_model_supports_and_the_96_it_does_not_are_reported():
-    (doc,) = [load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "benq").glob("*.json"))]
+    doc = load(ROOT / oi.IMPORT_ROOT / "benq" / "LK952.json")
     assert doc["manufacturer"] == "BenQ" and doc["model"] == "LK952" and doc["protocol"] == {"name": "NEC1", "carrierHz": 38000, "minSends": 1} and len(doc["keys"]) == 34
     assert all(s["forms"][0]["confidence"] == "plausible" and (s["forms"][0]["device"], s["forms"][0]["subdevice"]) == ("0x00", "0x30") for s in doc["keys"].values())
     by_label = {s["label"]: s["forms"][0] for s in doc["keys"].values()}
@@ -3233,7 +3234,7 @@ def test_the_benq_lk952_file_is_the_34_codes_the_model_supports_and_the_96_it_do
     assert on.startswith("snapav.com BenQ IR code sheet/BenQ_LK952_IR_Codes.pdf@3187b13b (retrieved 2026-10-18, from the Wayback Machine snapshot 20230207112239) page 4 table row 'No. 67 Power On' (code Ox4F, Support Yes)")
     assert "with a letter O, read as 0x4F" in on and "Will show unsupported logo" in by_label["Freeze"]["source"]
     report = (ROOT / oi.IMPORT_ROOT / oi.REPORT).read_text(encoding="utf-8")
-    assert "| benq: rows read | 130 |" in report and "the sheet says the model does not support the code (Support: No)" in report
+    assert "| benq: rows read | 272 |" in report and "the sheet says the model does not support the code (Support: No)" in report      # 130 of the LK952 and 142 of the HT5550 (D395)
     # 21 of the 34 codes are in other sources' BenQ remotes under the same custom code, with the same names for the power, source, menu and 3D keys
     held: dict[int, set[str]] = {}
     for path in (ROOT / "remotes").rglob("*.json"):
@@ -3249,6 +3250,86 @@ def test_the_benq_lk952_file_is_the_34_codes_the_model_supports_and_the_96_it_do
     mine = {int(f["function"], 16): l for l, f in by_label.items()}
     assert sum(1 for f in mine if f in held) == 21 and len(mine) == 34
     assert "POWER OFF" in held[0x4E] and "POWERON" in held[0x4F] and "FREEZE" in " ".join(held[0x03]) and "3D" in held[0x8D]
+
+
+# --- BenQ's HT5550 code list, a table of six pictures written down by eye (D395 to D397) ------------------------------------------
+
+HT5550 = "HT5550_IR_Codes.pdf"
+#: the 25 rows the sheet says the HT5550 supports, as a second reading of the page images: (row number, function, code)
+HT5550_SUPPORTED = [
+    (4, "Source", 0x04), (7, "Eco Blank", 0x07), (11, "Up", 0x0B), (12, "Down", 0x0C), (13, "Left", 0x0D), (14, "Right", 0x0E), (15, "Menu", 0x0F), (16, "Mode", 0x10),
+    (17, "Contrast", 0x11), (21, "Enter/OK", 0x15), (22, "Brightness", 0x16), (43, "Smart Eco Light Mode", 0x30), (62, "Power Off", 0x4E), (63, "Power On", 0x4F), (71, "GAMMA", 0x5E),
+    (72, "COLOR TEMP", 0x5F), (92, "IRIS", 0x7C), (94, "SHARP", 0x7E), (100, "Back", 0x85), (121, "3D Menu", 0x9C), (122, "3D Sync Invert", 0x9D), (136, "Cinema Master", 0xBE),
+    (137, "Color Manage.", 0x5B), (138, "keystone", 0x2A), (139, "HDR", 0x3C)]
+
+
+def benq_csv(name: str) -> list[list[str]]:
+    with (ROOT / "sources" / "official" / "benq" / "csv" / name).open(encoding="utf-8", newline="") as handle:
+        return list(csv.reader(handle))
+
+
+def test_the_benq_ht5550_transcription_agrees_with_the_lk952_text_table_in_126_codes():
+    """The HT5550's PDF has no text layer, so its table is written by eye; the LK952's PDF has the same appendix as text (130 rows, four of them the LK952's own, the numbering
+    shifted by three or four after row 42), and **every code the two share has the same function name but ten (the two models label a key differently)**."""
+    ht = benq.parse(benq_csv("HT5550_IR_Codes__transcribed.csv"))
+    lk = benq.parse(benq_csv("BenQ_LK952_IR_Codes__tables.csv"))
+    assert (len(ht), len(lk)) == (142, 130) and [r.number for r in ht] == list(range(1, 143))
+    assert len({r.code for r in ht}) == 142 and len({r.code for r in lk}) == 130            # no code twice in either table
+    by_ht, by_lk = {r.code: r for r in ht}, {r.code: r for r in lk}
+    both = sorted(set(by_ht) & set(by_lk))
+    assert len(both) == 126 and sorted(set(by_lk) - set(by_ht)) == [0x2C, 0x2E, 0x2F, 0x3A]
+    assert len(set(by_ht) - set(by_lk)) == 16 and {c for c in by_ht if c >= 0xA0} == set(range(0xA0, 0xAB)) | {0xBE}
+    differ = {c: (by_lk[c].function, by_ht[c].function) for c in both if by_lk[c].function.casefold() != by_ht[c].function.casefold()}
+    assert differ == {0x0F: ("Menu/Exit", "Menu"), 0x10: ("Mode THX", "Mode"), 0x2B: ("INFO", "Information"), 0x41: ("RGB-PC1", "Computer 1"), 0x45: ("RGB-PC2", "Computer 2"),
+                      0x46: ("Network Display", "Network"), 0x52: ("CVBS-1", "Video"), 0x8D: ("3D (settings)", "3D setting"), 0x97: ("Mic. Vol +", "Mic.Vol +"),
+                      0x98: ("Mic. Vol -", "Mic.Vol -")}
+    # the first 42 rows are the same rows in both tables (number, code), and the HT5550's table is the LK952's with rows 43 to 46 dropped and seven added
+    assert all((a.number, a.code) == (b.number, b.code) for a, b in zip(ht[:42], lk[:42]))
+    assert [(r.number, r.function, r.code) for r in ht if r.supported] == HT5550_SUPPORTED
+    assert sum(1 for r in ht if r.supported) == 25 and sum(1 for r in lk if r.supported) == 34
+
+
+def test_the_benq_ht5550_file_is_the_25_codes_the_model_supports_read_by_eye_from_a_live_file():
+    doc = load(ROOT / oi.IMPORT_ROOT / "benq" / "HT5550.json")
+    assert doc["manufacturer"] == "BenQ" and doc["model"] == "HT5550" and doc["controls"] == ["BenQ HT5550"] and doc["protocol"] == {"name": "NEC1", "carrierHz": 38000, "minSends": 1}
+    forms = [s["forms"][0] for s in doc["keys"].values()]
+    assert len(forms) == 25 and all(f["confidence"] == "plausible" and (f["device"], f["subdevice"]) == ("0x00", "0x30") for f in forms)
+    assert sorted(int(f["function"], 16) for f in forms) == sorted(c for _, _, c in HT5550_SUPPORTED)
+    by_label = {s["label"]: s["forms"][0] for s in doc["keys"].values()}
+    assert by_label["Power On"]["function"] == "0x4F" and by_label["Power Off"]["function"] == "0x4E" and by_label["HDR"]["function"] == "0x3C"
+    assert "Power" not in by_label and "Freeze" not in by_label and "Wireless" not in by_label                  # `Support: No`
+    on = by_label["Power On"]["source"]
+    assert on.startswith("snapav.com BenQ IR code sheet/HT5550_IR_Codes.pdf@085666ea (retrieved 2026-11-13) page 4 table row 'No. 63 Power On', read by eye from the page's picture (code Ox4F, Support Yes)")
+    assert "Wayback" not in on and "with a letter O, read as 0x4F" in on and "Turns on the projector." in on
+    assert "Open/Close \"Color Management\" Menu" in by_label["Color Manage."]["source"] and "page 6 table row 'No. 137 Color Manage.'" in by_label["Color Manage."]["source"]
+    # the pinned file is the whole PDF (the Wayback Machine's copy of 22 February 2024 is cut at 1,048,576 bytes), and its CSV is the work that is kept as it is
+    manifest = json.loads((ROOT / "sources" / "official" / "benq" / "MANIFEST.json").read_text(encoding="utf-8"))
+    entry = manifest["documents"][HT5550]
+    assert entry["bytes"] == 9_459_527 and entry["bytes"] > 1_048_576 and "snapshot" not in entry and entry["retrieved"] == "2026-11-13"
+    assert entry["url"].startswith("https://www.snapav.com/") and manifest["sheets"]["HT5550_IR_Codes__transcribed.csv"]["transcribed"].startswith("by eye")
+    assert (ROOT / "sources" / "official" / "benq" / HT5550).stat().st_size == entry["bytes"]
+    # the sheet's own format cells are in the transcription: 38 KHz, NEC Format, custom code 0x0030
+    cells = {r[7]: r[8] for r in benq_csv("HT5550_IR_Codes__transcribed.csv")[1:] if r[7]}
+    assert cells == {"Frequency": "38 KHz", "Protocol": "NEC Format", "Custom Code": "0x0030"}
+    # 12 of the 25 codes are the LK952's keys (same device, subdevice and function) and 13 are not
+    lk = {s["forms"][0]["function"] for s in load(ROOT / oi.IMPORT_ROOT / "benq" / "LK952.json")["keys"].values()}
+    assert len({f["function"] for f in forms} & lk) == 12 and len({f["function"] for f in forms} - lk) == 13
+
+
+def test_a_benq_table_with_a_wrong_row_count_is_refused():
+    with pytest.raises(ValueError, match="143 rows, not the table's 142"):
+        class Snap:
+            documents = {HT5550: {"retrieved": "2026-11-13"}}
+            retrieved = "2026-11-13"
+
+            def sha(self, document):
+                return "0" * 64
+
+            def sheet_of(self, document, sheet):
+                rows = benq_csv("HT5550_IR_Codes__transcribed.csv")
+                return rows + [["6", "1", "143", "Extra", "", "0xFF", "No", "", ""]]
+
+        benq.build_document(benq.DOCUMENTS[1], Snap(), {}, Report())
 
 
 
