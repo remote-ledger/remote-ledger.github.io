@@ -13,7 +13,7 @@ the page, the table's number on it and the cells of one table row, so a table's 
 text and how it ended, ``cell`` (the mark that ends a table's cell, and a table's row: an empty ``cell`` is an empty cell or a row's end) or
 ``para``, in the document's order.
 
-    python3 tools/official_sheets_to_csv.py marantz|anthem|oppo|kef|jvc|benq|peerless|arcam|cambridge|hegel|cary|nad|simaudio|rotel
+    python3 tools/official_sheets_to_csv.py marantz|anthem|oppo|kef|jvc|benq|peerless|arcam|cambridge|hegel|cary|nad|simaudio|rotel|optoma|dune|hisense|shinybow|binary|awe
 """
 
 from __future__ import annotations
@@ -44,7 +44,14 @@ SHEETS = {
     "anthem": {"AVM-MRXx40-IR-hex-20251202185749500.xlsx": ["MRX x10-x40 remote layout", "MRX x10-x40 IR hex codes"]},
     "jvc": {"DILA_Remote_Code_Emulation_Long_Hex.pdf": ["pages"], "RCU Code of LX-NZ3_20191114.pdf": ["tables", "pages"], "LX-UH1 Remote Control Codes.pdf": ["tables"],
             "LX-NZ3 long hex commands.pdf": ["pages"], "Firmware 3.1 IR Control.pdf": ["tables", "lines"], "LEO3_Remote_Control_Codes_Table_ver_1-0.pdf": ["tables", "lines"]},
-    "benq": {"BenQ_LK952_IR_Codes.pdf": ["tables"]},
+    # the HT5550's appendix is six pages of pictures with no text at all (DESIGN section 109): written down by eye, the table's rows as the LK952's `tables` CSV has them
+    "benq": {"BenQ_LK952_IR_Codes.pdf": ["tables"], "HT5550_IR_Codes.pdf": ["transcribed"]},
+    # the B-200's sheet is named `RS232 Commands` and holds its IR commands; the B-660's PDFs are read as lines (their tables are not found as such)
+    "binary": {"B-200-AVMATRIX-6x4-IR_CCF_Hex_Codes.xls": ["RS232 Commands"], "B-500-MTRX-230_IR-Protocol.xlsx": ["Single Command Switching codes", "Remote Button Codes"],
+               "B-660-MTRX-4x2_Pronto_IR_HEX_Codes.pdf": ["pages"], "B-660-MTRX-4x4_Pronto_IR_HEX_Codes.pdf": ["pages"]},
+    # AWE Europe's display-maker sheets (DESIGN section 107): Philips's sheet, Samsung's Word list (paragraphs), the Europe LCD-TV table (a ruled table) and Panasonic's Pronto pages (words, with their places)
+    "awe": {"Philips_discrete_ir_codes.xls": ["Sheet1"], "Samsung_Discrete_IR_Commands_tested.doc": ["paragraphs"], "RC_IR-codes_Europe_full.pdf": ["tables"],
+            "Panasonic_plasma_Discrete-remote-control-code.pdf": ["words"]},
     "peerless": {"Remote_Control_Codes_2025_Final.pdf": ["tables"]},
     "arcam": {
         "AVR380-450-750_RS232_SH256E_2.pdf": ["tables"],
@@ -107,7 +114,19 @@ SHEETS = {
     "yamaha": {name: ["grid"] for name in (
         "Extended_IR_Codes_RX-V685RX-A780-RX-A3080CX-A5200_6.pdf", "Standard_IR_Codes_RX-V685RX-A780-RX-A3080CX-A5200_4.pdf",
         "RX-V385_RX-V485_RX-V585_IR_Codes_2.pdf", "WXA-50_WXC-50_Extended_IR_Codes_1.pdf", "WXA-50_WXC-50_Standard_IR_Codes_1.pdf",
-        "XDA-QS5400_XDA-AMP5400_IR_Commands.pdf")},
+        "XDA-QS5400_XDA-AMP5400_IR_Commands.pdf",
+        "IR_RX-Vx75_375-775_STD.pdf", "IR_RX-Vx75_375-775_EXD.pdf", "STD_IR_RXV667-3067.pdf", "EXD_IR_RXV667-3067.pdf",
+        "IR_RX-Ax30_A730_830_STD.pdf", "IR_RX-Ax30_A730_830_EXD.pdf")} |
+        {name: ["Standard/blocks", "Extended/blocks"] for name in ("IR_RX-V671-3071_rev1.0_Full.xls", "IR_Vx75.xls", "IR_Vx77.xls")} |
+        # the BD-S477 and BD-S677 players' lists (D383): a row is a line of words with the x of each, which says the column a code is in
+        {name: ["words"] for name in ("BD-S477_IR_code_list.pdf", "BD-S677_IR_code_list.pdf", "BD-S477_S677_RC_code_list.pdf")},
+    "optoma": {name: ["lines"] for name in ("eh501_ir.pdf", "w501_ir.pdf", "x501_ir.pdf", "gt750e_ir.pdf", "hd33_ir.pdf", "th7500nl_ir.pdf", "tw1692_ir.pdf", "tw536_ir.pdf", "tx615_ir.pdf", "tx762_ir.pdf",
+                                              "HD82-IRE-en-GB.pdf")},
+    "dune": {"ir.html": ["pre"], "dunehd_google_ir_codes.html": ["tables"]},
+    "hisense": {"Hisense-RS-232-and-IR-Protocol-English_2.pdf": ["pages 1-1", "tables 4-9"]},
+    # Shinybow (D380): the text files of Pronto codes, one row a line, and the PDFs whose text layer holds the model's custom and data codes, one row a line of a page (the lists are fetch_official.py's)
+    "shinybow": {**{f"SB-{m}.txt": ["text"] for m in ("3691", "3879", "4106", "4140", "4140LCM", "4144", "4148", "4148LCM", "4184", "4184LCM", "5430", "5440BNC", "5440RCA", "5440RL", "5440SV", "5450", "5470", "5470M", "5526", "5544BNC", "5544LCM", "5548BNC", "5548LCM", "5560", "5564LCM", "5582", "5588LCM", "5604", "5642LCM", "5644", "5645LCM", "5648K", "5648LCM", "5654", "5658", "5658K", "5669K", "5684K", "5684LCM", "5688CAK", "5688CK", "5688K", "5688Kp", "5688LCM", "8180LCM", "8188LCM", "8802LCM", "8804LCM")},
+                 **{f"IR-{m}.pdf": ["pages"] for m in ("3691", "3879", "4106", "4140", "4140LCM", "4148", "4148LCM", "4184", "4184LCM", "5440BNC", "5440RL", "5440SV", "5450", "5470M", "5544BNC", "5544LCM", "5548BNC", "5548LCM", "5560", "5564LCM", "5582", "5588LCM", "5604", "5642LCM", "5645LCM", "5648LCM", "5654", "5658K", "5669K", "5684K", "5684LCM", "5688CAK", "5688CK", "5688K", "5688Kp", "5688LCM", "8180LCM", "8188LCM", "8802LCM", "8804LCM")}},
     "classe": {name: ["cells"] for name in (
         "CAP-2100_IR_codes.pdf", "CDP-100_IR_codes_v1-20.pdf", "CDP-102_202_300_500_and_CDT-300_IR_codes_v1-19.pdf", "CP-500_IR_codes.pdf", "CP-700_IR_codes.pdf",
         "SSP-300_600_IR_codes_v1-20.pdf", "CLASSE_Delta_1_2_Amplifier_IR_Commands.pdf", "CLASSE_SSP-800_IR_codes_v1-24.pdf")} |
@@ -130,12 +149,16 @@ SHEETS = {
     "denon": {"AVR4311CI_AVR4311_IR-Codes.pdf": ["words"],
               "AVR-X2700H_S960H_IR_CODE_V01.doc": ["paragraphs"], "AVR-X3700H_AVC-X3700H_IR_CODE_V01_04062020.doc": ["paragraphs"],
               "AVR-X4700H_AVC-X4700H_IR_CODE_V01.doc": ["paragraphs"], "AVR-X6700H_AVC-X6700H_IR_CODE_V01.doc": ["paragraphs"],
-              "avrx1000_e300_ir_code_v01.doc": ["paragraphs"], "avr-x2500h_s940h_ir_code_v01-02072018.doc": ["paragraphs"],
+              "avrx1000_e300_ir_code_v01.doc": ["paragraphs"], "avr-x2500h_s940h_ir_code_v01-02072018.doc": ["paragraphs"], "avrx4000_ir_code_v01.doc": ["paragraphs"],
+              "DVD1800BD_DBP1610I_DBP2010_2010CI_IR_CODE_V01.pdf": ["words"],
               **{name: ["words"] for name in ("avr-2106-ircodes.pdf", "avr-2805-ircodes.pdf", "avr-2807-ircodes.pdf", "avr-2808_ir_code.pdf", "avr-3803-ircodes.pdf", "avr-3808ci-ircodes.pdf",
                                               "avr-4308ci_ircodes.pdf", "avr-4806-ircodes.pdf", "avr-5805-ircodes.pdf", "avr-5805ci_5805up_ir_codes.pdf", "avr987-ircodes.pdf",
                                               "417_avr3310_ir_code.pdf", "457_avr3311ci_avr3311_991_ir_code_v01.pdf", "avr-1911_791_ir_code_v01.pdf", "avr-2311ci_avr2311_891_ir_code_v01.pdf",
                                               "avr-4310_ir_code_v01.pdf", "avr2809_ir_code_v01.pdf", "avr2309_ir_code_v01.pdf", "avr2113_1913_ir_code_v02.pdf", "avr2313_ir_code_v02.pdf",
-                                              "avr3313_ir_code_v02.pdf", "avr4520_ir_code_v02.pdf", "avr3312_ir_code_v01.pdf", "avr2312_ir_code_v01.pdf")}, "Denon_Master_IR_Hex.xls": ['Main Zone ID#1', 'Main Zone ID#2', 'Main Zone ID#3', 'Main Zone ID#4', 'Zone 2 ID#1', 'Zone 2 ID#2', 'Zone 2 ID#3', 'Zone 2 ID#4', 'Zone 3 ID#1', 'Zone 3 ID#2', 'Zone 3 ID#3', 'Zone 3 ID#4', 'Zone 4 ID#1', 'Zone 4 ID #2', 'Zone 4 ID#3', 'Zone 4 ID#4', 'Analog Tuner ID#1', 'Analog Tuner ID#2', 'Analog Tuner ID#3', 'Analog Tuner ID#4', 'HD Radio ID#1', 'Net Audio ID#1', 'Net Audio ID#2', 'Net Audio ID#3', 'Net Audio ID#4', 'iPod ID#1', 'iPod ID#2', 'iPod ID#3', 'iPod ID#4', 'XM ID#1', 'XM ID#2', 'XM ID#3', 'XM ID#4', 'Sirius ID#1', 'RCD-N7', 'CD Player', 'DBP-1611UD', 'BD Players', 'S5-BD', 'ASD-51NW', 'M33 CD Receiver', 'DRA', 'Sharp Device 2', 'Sharp device 4', 'Sharp Device 12', 'Denon K 4.1', 'Denon K 4.3', 'Denon K 4.5', 'Denon K 4.7', 'Denon K 7.6', 'Denon K 7.7', 'Denon K 7.8']},
+                                              "avr3313_ir_code_v02.pdf", "avr4520_ir_code_v02.pdf", "avr3312_ir_code_v01.pdf", "avr2312_ir_code_v01.pdf",
+                                              "dcd1650re_2020ae_pma2000re_2020ae_ir_code_v01.pdf", "dcm-390_290_27-ircodes.pdf", "dvd-3800bdci_dvd-2500btci_ircodes.pdf",
+                                              "s-32-ircodes_v01.pdf", "s-52-ircodes_v01.pdf", "s-81-ircodes_v01.pdf", "avr-2808ci_zone3-ircodes.pdf",
+                                              *[f"avr-{m}_zone2-ircodes.pdf" for m in ("588", "688", "788", "888", "988", "1508", "1708", "1908", "2308ci", "2808ci")])}, "Denon_Master_IR_Hex.xls": ['Main Zone ID#1', 'Main Zone ID#2', 'Main Zone ID#3', 'Main Zone ID#4', 'Zone 2 ID#1', 'Zone 2 ID#2', 'Zone 2 ID#3', 'Zone 2 ID#4', 'Zone 3 ID#1', 'Zone 3 ID#2', 'Zone 3 ID#3', 'Zone 3 ID#4', 'Zone 4 ID#1', 'Zone 4 ID #2', 'Zone 4 ID#3', 'Zone 4 ID#4', 'Analog Tuner ID#1', 'Analog Tuner ID#2', 'Analog Tuner ID#3', 'Analog Tuner ID#4', 'HD Radio ID#1', 'Net Audio ID#1', 'Net Audio ID#2', 'Net Audio ID#3', 'Net Audio ID#4', 'iPod ID#1', 'iPod ID#2', 'iPod ID#3', 'iPod ID#4', 'XM ID#1', 'XM ID#2', 'XM ID#3', 'XM ID#4', 'Sirius ID#1', 'RCD-N7', 'CD Player', 'DBP-1611UD', 'BD Players', 'S5-BD', 'ASD-51NW', 'M33 CD Receiver', 'DRA', 'Sharp Device 2', 'Sharp device 4', 'Sharp Device 12', 'Denon K 4.1', 'Denon K 4.3', 'Denon K 4.5', 'Denon K 4.7', 'Denon K 7.6', 'Denon K 7.7', 'Denon K 7.8']},
     "hitachi": {"2003_and_2004_HITACHI_IR.xls": ["Sheet1", "Sheet2"], "2004_IR_Codes-1.xls": ["2004 Codes", "Additional Codes"],
                 **{name: ["cells"] for name in ("2007_Discrete_Codes-DW3.pdf", "2009_Discrete_Codes_L32_and_larger_0211.pdf",
                                                 "2009_RC_Layouts_and_IR_Codes_L19_L26.pdf", "AVC_56_Discrete_Codes_UT_Monitor_PDP_Pronto_Hex.pdf")}},
@@ -145,7 +168,9 @@ SHEETS = {
         "Hegel_Rost_IR_Codes.pdf", "Hegel_H190_IR_Codes.pdf", "Hegel_H360_IR_Codes.pdf", "Hegel_H590_IR_Codes.pdf", "Hegel_H90_IR_Codes.pdf",
         "Hegel_HD12_IR_Codes.pdf", "Hegel_HD25_IR_Codes.pdf", "Hegel_HD30_IR_Codes.pdf", "Hegel_Mohican_IR_Codes.pdf",
         "Hegel_H390_H590_IR_codes_v1.pdf", "Hegel_H95_H120_H190_IR_codes_v2.pdf", "Hegel_P20_P30_IR_codes_v2.pdf")},
-    "cary": {"DMS-IR-Remote-Codes.pdf": ["tables"]},
+    "cary": {"DMS-IR-Remote-Codes.pdf": ["tables"],
+             **{name: ["words"] for name in ("CD303_IR.pdf", "CD303200_IR.pdf", "CD303.300_IRCodes.pdf", "CD306_IR.pdf", "CD306200_IR.pdf", "DVD6_IRCodes.pdf", "DVD7_IRCodes.pdf",
+                                             "CPA-1-CPA-2-SLP-03-IR-Remote-Codes2.pdf", "Cinema-11a-Zone-1-2-IR-Remote-Codes-2.pdf", "DAC-200ts-IR-Remote-Codes.pdf")}},
     "nad": {**{name: ["records"] for name in (
         "crestron_cd1.ir", "crestron_cd2.ir", "crestron_cd3.ir", "crestron_cd4.ir", "crestron_cd5.ir", "crestron_dvd1.ir", "crestron_dvd2.ir",
         "crestron_receiver1.ir", "crestron_receiver2_1.ir", "crestron_receiver2_2.ir", "crestron_receiver3.ir", "crestron_receiver4.ir",
@@ -341,6 +366,12 @@ def rows_of(path: Path, sheet: str) -> list[list[str]]:
         return doc_paragraphs(path)
     if path.suffix.lower() == ".ir":
         return ir_records(path.read_bytes())
+    if path.suffix.lower() == ".txt":     # a plain text file (Shinybow's lists of Pronto codes, D380): a row is a line that is not empty, as written
+        return [[line.rstrip()] for line in path.read_text(encoding="ascii").splitlines() if line.strip()]
+    if path.suffix.lower() == ".html" and sheet == "pre":       # the lines of the ``<pre>`` blocks of a page (Dune HD's table of codes, D374): a row is one line, as written
+        import html as _html
+        return [[line.rstrip()] for block in re.findall(r"<pre[^>]*>(.*?)</pre>", path.read_text(encoding="utf-8", errors="replace"), flags=re.S)
+                for line in _html.unescape(re.sub(r"<[^>]+>", "", block)).splitlines() if line.strip()]
     if path.suffix.lower() == ".html":
         parser = _Table(every=sheet == "tables", links=sheet == "tables")
         parser.feed(path.read_text(encoding="utf-8"))
@@ -348,9 +379,10 @@ def rows_of(path: Path, sheet: str) -> list[list[str]]:
     if path.suffix.lower() == ".pdf":
         import pymupdf
         pdf = pymupdf.open(str(path))
-        if sheet == "tables":       # every table the library finds on every page: page, table number and the cells as text
+        if sheet == "tables" or sheet.startswith("tables "):       # every table the library finds on every page (``tables 4-9``: on those pages): page, table number and the cells as text
+            first, last = (1, len(pdf)) if sheet == "tables" else map(int, sheet.removeprefix("tables ").split("-"))
             return [[str(n), str(i)] + [" ".join((cell or "").split()) for cell in row]
-                    for n, page in enumerate(pdf, 1) for i, table in enumerate(page.find_tables().tables, 1)
+                    for n, page in enumerate(pdf, 1) if first <= n <= last for i, table in enumerate(page.find_tables().tables, 1)
                     for row in table.extract()]
         if sheet == "flow":         # every page in reading order (D259): a line of text is ``page, text, y, line``, a table row
             out = []                # ``page, row, table, y, cells`` (a cell a merged cell covers is ``<merged>``), sorted by ``y``;
@@ -471,10 +503,32 @@ def rows_of(path: Path, sheet: str) -> list[list[str]]:
                                 banded.append(text_of(band))
                         out.append([str(n), str(round(small[1]))] + cells + banded)
             return out
-        if sheet == "pages":        # every page: a row is the page number and one line of its text
-            return [[str(n), line.strip()] for n, page in enumerate(pdf, 1) for line in page.get_text("text").splitlines()
+        if sheet == "pages" or sheet.startswith("pages "):        # every page (``pages 1-1``: those pages): a row is the page number and one line of its text
+            first, last = (1, len(pdf)) if sheet == "pages" else map(int, sheet.removeprefix("pages ").split("-"))
+            return [[str(n), line.strip()] for n, page in enumerate(pdf, 1) if first <= n <= last for line in page.get_text("text").splitlines()
                     if line.strip()]
         return [[line.strip()] for line in pdf[int(sheet.removeprefix("page ")) - 1].get_text("text").splitlines() if line.strip()]
+    if path.suffix.lower() == ".xls" and sheet.endswith("/blocks"):
+        # a sheet whose names and devices are written once for the rows they cover, with no merged cell (Yamaha's, D368): the file draws a line above the first row
+        # of each such block and below its last, so **a block is the rows from a cell with a line above it to the next cell with a line below it**, and the text
+        # of a block is the text of its cells, in order, one space between them (a name set in two lines, ``ON`` and ``(FULL)``; a line the cell above has too is left out). The first five columns (group, names,
+        # device, zone) are given as the block's text on every row it covers; the rest as written. A row is ``the row's number in the sheet, then a cell for each column``.
+        import xlrd
+        book = xlrd.open_workbook(str(path), formatting_info=True)
+        ws = book.sheet_by_name(sheet.removesuffix("/blocks"))
+        shown: dict[tuple[int, int], str] = {}
+        for column in range(min(5, ws.ncols)):
+            start, lines = 0, []
+            for r in range(ws.nrows + 1):
+                if r == ws.nrows or (r > start and (book.xf_list[ws.cell_xf_index(r, column)].border.top_line_style
+                                                    or book.xf_list[ws.cell_xf_index(r - 1, column)].border.bottom_line_style)):
+                    block = " ".join(lines)
+                    for covered in range(start, r):
+                        shown[(covered, column)] = block
+                    start, lines = r, []
+                if r < ws.nrows and text(ws.cell_value(r, column)) and (not lines or lines[-1] != text(ws.cell_value(r, column))):
+                    lines.append(text(ws.cell_value(r, column)))     # the same line twice running (a device written for each of the functions a block of it covers) is one
+        return [[str(r + 1)] + [shown[(r, c)] if (r, c) in shown else text(ws.cell_value(r, c)) for c in range(ws.ncols)] for r in range(ws.nrows)]
     if path.suffix.lower() == ".xls":
         import xlrd
         ws = xlrd.open_workbook(str(path)).sheet_by_name(sheet)

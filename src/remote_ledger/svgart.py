@@ -1,4 +1,4 @@
-"""A layout's picture: a flat SVG whose key groups are the tappable keys (R29, D357-D359).
+"""A layout's picture: a flat SVG whose key groups are the tappable keys (R30, D398-D400).
 
 A layout may carry a drawing of the remote's face, written as a small SVG. Each key is one
 ``<g data-key="KEY_NAME">`` group, so the drawing is also the map from a place on the face to a key:
@@ -202,7 +202,7 @@ def _is_grey(value: str) -> bool:
 
 
 def inspect_art(text: str, keys: set[str] | None = None, *, where: str = "svg") -> ArtReport:
-    """Parse a picture and list everything the profile says about it (D358).
+    """Parse a picture and list everything the profile says about it (D399).
 
     ``keys`` is the remote's key names; None skips the check that every ``data-key`` names one (a
     caller that has no remote to hand, such as a unit test of the profile alone).
@@ -302,7 +302,7 @@ def inspect_art(text: str, keys: set[str] | None = None, *, where: str = "svg") 
                     problems.append(f"{where}: the key {key!r} is drawn twice")
                 keys_seen.append(key)
                 if keys is not None and key not in keys:
-                    problems.append(f"{where}: `data-key` {key!r} does not name a key in `keys` (R29)")
+                    problems.append(f"{where}: `data-key` {key!r} does not name a key in `keys` (R30)")
         if inert_here:
             if name != "g":
                 problems.append(f"{at} is `inert`; only a <g> can be")
@@ -340,7 +340,7 @@ def inspect_art(text: str, keys: set[str] | None = None, *, where: str = "svg") 
         if inert_here and name == "g":
             for shape in _shapes(el, here_fill):
                 if not _is_grey(shape[1]):
-                    problems.append(f"{where}: an inert button is filled {shape[1]!r}; draw inert buttons grey (D358)")
+                    problems.append(f"{where}: an inert button is filled {shape[1]!r}; draw inert buttons grey (D399)")
                     break
         if key is not None and name == "g" and not in_key and not in_defs and not inert_here:
             if not any(f != "none" for _, f in _shapes(el, here_fill)):
@@ -374,7 +374,7 @@ REF = re.compile(r"^(?:[A-Za-z0-9][A-Za-z0-9._ +()\[\]-]*/)*[A-Za-z0-9][A-Za-z0-
 
 
 def ref_problem(ref: str) -> str | None:
-    """Why a layout's ``svg`` reference is not acceptable, or None (D359)."""
+    """Why a layout's ``svg`` reference is not acceptable, or None (D400)."""
     if not isinstance(ref, str) or not ref:
         return "`svg` is empty"
     if ref.startswith("/") or "\\" in ref or ref.startswith("~"):

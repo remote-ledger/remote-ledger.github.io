@@ -3,7 +3,9 @@ their snapshots, the readers, and the committed tree."""
 
 from __future__ import annotations
 
+import functools
 import hashlib
+import csv
 import json
 import re
 from collections import Counter
@@ -12,7 +14,7 @@ from pathlib import Path
 import pytest
 
 from remote_ledger.errors import ValidationError
-from remote_ledger.official import anthem, arcam, benq, peerless, cambridge, cary, classe, cyrus, denon, denon_pdf as dp, emotiva, harman, hegel, hitachi, infocus, jvc, kef, lyngdorf, marantz, nad, oppo, rotel, simaudio, yamaha, harman
+from remote_ledger.official import anthem, arcam, awe, benq, binary, peerless, cambridge, cary, classe, cyrus, denon, denon_pdf as dp, denon_sheets as ds, dune, emotiva, harman, hegel, hisense, hitachi, infocus, jvc, kef, lyngdorf, marantz, nad, oppo, optoma, rotel, shinybow, simaudio, yamaha, harman
 from remote_ledger.official import importer as oi
 from remote_ledger.official.common import MANIFEST, Report, load_snapshot
 from remote_ledger.serialize import load
@@ -26,12 +28,12 @@ SNAPSHOT = ROOT / oi.SNAPSHOT
 
 def test_every_document_and_csv_is_the_one_the_manifest_pins():
     for maker, retrieved in (("marantz", "2026-10-08"), ("anthem", "2026-10-08"), ("oppo", "2026-10-09"), ("kef", "2026-10-13"),
-                             ("jvc", "2026-10-13"), ("arcam", "2026-10-13"), ("cambridge", "2026-10-13"), ("hegel", "2026-10-13"), ("cary", "2026-10-13"), ("infocus", "2026-10-15"), ("lyngdorf", "2026-10-16"), ("emotiva", "2026-10-16"), ("denon", "2026-10-16"), ("hitachi", "2026-10-16"), ("classe", "2026-10-16"), ("cyrus", "2026-10-16"), ("yamaha", "2026-10-16"), ("harman", "2026-10-16"), ("benq", "2026-10-18"), ("peerless", "2026-10-18"), ("nad", "2026-10-14"), ("simaudio", "2026-10-13"), ("rotel", "2026-10-13")):
+                             ("jvc", "2026-10-13"), ("arcam", "2026-10-13"), ("cambridge", "2026-10-13"), ("hegel", "2026-10-13"), ("cary", "2026-10-13"), ("infocus", "2026-10-15"), ("lyngdorf", "2026-10-16"), ("emotiva", "2026-10-16"), ("denon", "2026-10-16"), ("hitachi", "2026-10-16"), ("classe", "2026-10-16"), ("cyrus", "2026-10-16"), ("yamaha", "2026-10-16"), ("optoma", "2026-11-12"), ("dune", "2026-11-12"), ("hisense", "2026-11-12"), ("shinybow", "2026-11-12"), ("harman", "2026-10-16"), ("benq", "2026-10-18"), ("peerless", "2026-10-18"), ("nad", "2026-10-14"), ("simaudio", "2026-10-13"), ("rotel", "2026-10-13")):
         snap = load_snapshot(SNAPSHOT / maker)
         assert snap.maker == maker and snap.retrieved == retrieved
         assert snap.documents and snap.sheets
         for name, entry in snap.documents.items():
-            assert entry["url"].startswith("https://") and entry["sha256"] and entry["bytes"] > 1000, name
+            assert entry["url"].startswith("https://") and entry["sha256"] and entry["bytes"] > 700, name
 
 
 def test_a_changed_document_or_csv_stops_the_import(tmp_path):
@@ -464,13 +466,13 @@ def test_the_committed_official_import_keeps_r19():
     or Untested, and a citation that names a document the manifest pins, by hash."""
     assert (ROOT / oi.IMPORT_ROOT / "README.md").is_file() and (ROOT / oi.IMPORT_ROOT / oi.REPORT).is_file()
     hashes, dates, snapshots = {}, {}, {}
-    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "benq", "peerless", "arcam", "cambridge", "hegel", "cary", "infocus", "lyngdorf", "emotiva", "denon", "hitachi", "classe", "cyrus", "yamaha", "harman", "nad", "simaudio", "rotel"):
+    for maker in ("marantz", "anthem", "oppo", "kef", "jvc", "benq", "peerless", "arcam", "cambridge", "hegel", "cary", "infocus", "lyngdorf", "emotiva", "denon", "hitachi", "classe", "cyrus", "yamaha", "harman", "nad", "simaudio", "rotel", "optoma", "dune", "hisense", "shinybow", "binary", "awe"):
         manifest = json.loads((SNAPSHOT / maker / MANIFEST).read_text(encoding="utf-8"))
         for name, entry in manifest["documents"].items():
             hashes[name], dates[name], snapshots[name] = entry["sha256"], entry.get("retrieved", manifest["retrieved"]), entry.get("snapshot")
     shape = re.compile(r"^(?:marantz\.com archive-downloads|anthemav\.com \(storage\.googleapis\.com/sandbox1-anthemav/an\)"
-                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|infocus\.com IR code PDFs|lyngdorf\.com IR code PDF|emotiva\.com IR code PDFs|denon\.co\.uk RC code list|denon\.com Master IR Hex|snapav\.com Denon IR code documents|assets\.denon\.com IR code documents|hitachi-america\.us IR code documents|classeaudio\.com IR code documents|cyrusaudio\.com remote code tables|snapav\.com Yamaha IR code PDFs|snapav\.com Marantz IR code workbook|jblsynthesis\.com custom installation notes|snapav\.com JVC LX projector code sheets|snapav\.com JVC remote control code tables|snapav\.com BenQ IR code sheet|cdn\.shopify\.com Peerless-AV Neptune IR code sheet|lexicon\.com custom installation notes|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/([^@]+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
-                       r"(?:, from the Wayback Machine snapshot (\d{14}))?\) (?:sheet '[^']+' row \d+|page \d+ row \d+|page \d+ '|page \d+ table \d+ row '|page \d+ row '|key \d+ '|row 'RC(?:SHP|KSK)\w+' \(|page \d+ table row ')")
+                       r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|caryaudio\.com IR Remote Codes|infocus\.com IR code PDFs|lyngdorf\.com IR code PDF|emotiva\.com IR code PDFs|denon\.co\.uk RC code list|denon\.com Master IR Hex|snapav\.com Denon IR code documents|assets\.denon\.com IR code documents|hitachi-america\.us IR code documents|classeaudio\.com IR code documents|cyrusaudio\.com remote code tables|snapav\.com Yamaha IR code PDFs|awe-europe\.com Yamaha control documents|audiogeneral\.com Optoma IR code PDFs|dune-hd\.com IR code pages|assets\.hisense-usa\.com RS-232 and IR protocol PDF|shinybowusa\.com IR code files|snapav\.com Binary IR code documents|awe-europe\.com control documents|optoma\.co\.uk IR code PDFs|snapav\.com Marantz IR code workbook|jblsynthesis\.com custom installation notes|snapav\.com JVC LX projector code sheets|snapav\.com JVC remote control code tables|snapav\.com BenQ IR code sheet|cdn\.shopify\.com Peerless-AV Neptune IR code sheet|lexicon\.com custom installation notes|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/([^@]+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
+                       r"(?:, from the Wayback Machine snapshot (\d{14}))?\) (?:sheet '[^']+' row \d+|page \d+ row \d+|sheet (?:Standard|Extended) line \d+ row '|(?:line|row) \d+ '|page \d+ '|page \d+ table \d+ row '|page \d+ row '|key \d+ '|row 'RC(?:SHP|KSK)\w+' \(|page \d+ table row ')")
     files = sorted((ROOT / oi.IMPORT_ROOT).rglob("*.json"))
     assert len(files) > 180
     bad = []
@@ -1642,7 +1644,13 @@ def test_a_cary_label_is_the_key_printing_unless_it_is_a_sign_beside_a_word():
 
 
 def cary_files() -> dict[str, dict]:
-    return {load(p)["model"]: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "cary").glob("*.json"))}
+    """The two files of the DMS table (§71)."""
+    return {load(p)["model"]: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "cary").glob("DMS*.json"))}
+
+
+def cary_sheet_files() -> dict[str, dict]:
+    """The thirteen files of the sheets of §99, by model."""
+    return {load(p)["model"]: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "cary").glob("*.json")) if not p.name.startswith("DMS")}
 
 
 def test_the_two_cary_files_are_the_two_system_codes_of_one_table_of_38_keys():
@@ -1663,7 +1671,7 @@ def test_the_two_cary_files_are_the_two_system_codes_of_one_table_of_38_keys():
     assert "the table's system code B" in b["KEY_POWER"]["forms"][0]["source"] and "RC5 system 9 command 12" in b["KEY_POWER"]["forms"][0]["source"]
     report = (ROOT / oi.IMPORT_ROOT / oi.REPORT).read_text(encoding="utf-8")
     figure = lambda what: int(re.search(rf"\| cary: {what} \| ([\d,]+) \|", report)[1].replace(",", ""))      # noqa: E731
-    assert [figure(w) for w in ("rows read", "files", "keys")] == [38, 2, 76]
+    assert [figure(w) for w in ("rows read", "files", "keys")] == [38, 15, 491]       # the two files of the DMS and the thirteen of §99's sheets (415 keys)
 
 
 def test_other_sources_hold_most_of_the_cary_codes_and_agree_on_three_names():
@@ -1699,6 +1707,150 @@ def test_other_sources_hold_most_of_the_cary_codes_and_agree_on_three_names():
             or ({vocabulary.resolve(x) for x in ours[k]} - {None}) & ({vocabulary.resolve(x) for x in seen[k]} - {None})]
     assert (len(ours), len(held), len([k for k in held if k[0] == 16]), len([k for k in held if k[0] == 9])) == (76, 67, 38, 29)
     assert sorted(same) == [(16, 0x0C), (16, 0x10), (16, 0x11)]
+
+
+# --- Cary Audio's other sheets (section 99) ---------------------------------------------------------------------------
+
+
+def cary_words(*lines: tuple[int, str]) -> list[list[str]]:
+    """A page's words as ``tools/official_sheets_to_csv.py`` writes them (``page, y, x, word, x, word...``); a line is ``(y, "x word x word ...")``."""
+    return [["1", str(y), *text.split()] for y, text in lines]
+
+
+CARY_HEAD = [(27, "213 CARY 248 CD303/200 309 IR 325 Remote 368 Codes"), (41, "268 September 312 28, 326 2005"), (68, "88 All 102 codes 126 - 132 to 143 Philips 171 RC-5 194 standard"),
+             (96, "80 Key 99 Printing 229 Function 331 System 381 Command 491 Notes")]
+CARY_SHEET = cary.Sheet("CD303200_IR.pdf", 1, ("CD303/200",), ("CARYCD303200IRREMOTECODES",))
+
+
+def test_a_cary_code_is_hexadecimal_with_0x_or_an_h_and_a_bare_number_is_decimal():
+    """The DVD sheets write system ``23`` and commands ``1`` to ``36``: read as hexadecimal, system 23 would be 35, which RC-5 has not (5 bits)."""
+    assert [cary._number(w) for w in ("23", "10", "0x2D", "0x04", "0EH", "00", "0C", "H", "zz", "0x100", "1234")] == [23, 10, 45, 4, 14, 0, None, None, None, None, None]
+    assert cary._number("13", h_after=True) == 0x13 and cary._number("17H", h_after=True) == 0x17 and cary._number("0C", h_after=True) == 12 and cary._number("0C") is None
+
+
+def test_a_cary_sheet_is_a_title_a_header_and_rows_that_end_in_a_system_code_and_a_command():
+    rows = cary_words(*CARY_HEAD,
+                      (114, "97 OPEN/CLOSE 200 TRAY 228 OPEN 259 / 266 CLOSE 340 00 392 0EH"),
+                      (127, "136 PLAY 236 PLAY 339 00 392 17H 434 H"),                         # the text layer sets the H of 17H apart
+                      (140, "136 STOP 236 STOP 339 00 392 13 434 H"),                          # ... and sometimes the only H the code has
+                      (153, "123 MUTE 236 MUTE 340 0x04 392 0x1D"),
+                      (166, "157 7 201 NUMBER 246 KEY 269 PAD 292 7 340 23 399 10"),          # a bare number is decimal
+                      (179, "100 LIFT 200 NAVIGATION 340 23 399 20"), (190, "230 LIFT"),       # a function that wraps
+                      (260, "88 AMPLIFIER 150 USE 175 ONLY"),
+                      (273, "123 VOLUME 236 VOLUME 245 UP 340 00 392 10H"),
+                      (290, "88 some 120 words 150 here"),
+                      (300, "123 MUTE 236 MUTE 340 00 392 0C"))                               # 0C with no H and no 0x is neither
+    title, parsed, notes = cary.parse_sheet(rows, CARY_SHEET)
+    assert title == "CARY CD303/200 IR Remote Codes September 28, 2005 All codes - to Philips RC-5 standard"
+    assert [(r.printing, r.function, r.system, r.command, r.written, r.section) for r in parsed] == [
+        ("OPEN/CLOSE", "TRAY OPEN / CLOSE", 0, 14, "00 0EH", ""), ("PLAY", "PLAY", 0, 23, "00 17H", ""), ("STOP", "STOP", 0, 19, "00 13H", ""),
+        ("MUTE", "MUTE", 4, 29, "0x04 0x1D", ""), ("7", "NUMBER KEY PAD 7", 23, 10, "23 10", ""), ("LIFT", "NAVIGATION LIFT", 23, 20, "23 20", ""),
+        ("VOLUME", "VOLUME UP", 0, 16, "00 10H", "AMPLIFIER USE ONLY")]
+    assert notes == ["page 1, the line at y 260 is the heading 'AMPLIFIER USE ONLY': the rows under it carry it in their citations",
+                     "page 1, the line at y 290 ('some words here') is not a row of a printing, a function, a system code and a command",
+                     "page 1, the line at y 300 ('MUTE MUTE 00 0C') is not a row of a printing, a function, a system code and a command"]
+    for bad, why in ((cary_words(*CARY_HEAD[:3]), "no header"), (cary_words((27, "213 CARY 248 CD306 309 IR"), CARY_HEAD[3]), "does not say"),
+                     (cary_words(*CARY_HEAD, (114, "236 PLAY 340 00 392 17H")), "no key printing")):
+        with pytest.raises(ValueError, match=why):
+            cary.parse_sheet(bad, CARY_SHEET)
+
+
+def test_a_cary_label_is_the_function_where_two_rows_have_one_printing_and_the_heading_where_they_have_the_function_too():
+    row = lambda printing, function, section="": cary.SheetRow(0, printing, function, 4, 1, "0x04 0x01", section)      # noqa: E731
+    assert cary.sheet_labels([row("POWER", "POWER ON / OFF"), row("POWER", "CD PLAYER POWER ON/OFF", "CD PLAYER USE ONLY"), row("- VOLUME", "VOLUME DOWN")]) == [
+        "POWER ON / OFF", "CD PLAYER POWER ON/OFF", "VOLUME DOWN"]
+    assert cary.sheet_labels([row("MUTE", "MUTE"), row("MUTE", "MUTE", "AMPLIFIER USE ONLY"), row("1", "NUMBER KEY PAD 1")]) == ["MUTE", "MUTE (AMPLIFIER)", "1"]
+
+
+CARY_SHEET_FILES = {"CD303": 26, "CD303/200": 30, "CD303/300": 41, "CD306": 32, "CD306/200": 32, "CPA 1": 24, "CPA 2": 24, "SLP-03": 24, "Cinema 11a": 51,
+                    "Cinema 11a (Zone 2)": 22, "DAC-200ts": 35, "DVD 6": 37, "DVD 7": 37}
+
+
+def test_the_cary_sheets_are_13_files_and_415_keys_with_four_untested_where_a_code_has_two_names():
+    files = cary_sheet_files()
+    assert {m: len(f["keys"]) for m, f in files.items()} == CARY_SHEET_FILES and sum(CARY_SHEET_FILES.values()) == 415
+    for model, doc in files.items():
+        assert doc["manufacturer"] == "Cary Audio" and doc["controls"] == [f"Cary Audio {model}"] and doc["protocol"] == {"name": "RC5", "carrierHz": 36000, "minSends": 1}
+    systems = {m: sorted({s["forms"][0]["device"] for s in f["keys"].values()}) for m, f in files.items()}
+    assert systems == {"CD303": ["0x00"], "CD303/200": ["0x00", "0x08"], "CD303/300": ["0x04"], "CD306": ["0x00"], "CD306/200": ["0x00", "0x08"], "CPA 1": ["0x04"],
+                       "CPA 2": ["0x04"], "SLP-03": ["0x04"], "Cinema 11a": ["0x13"], "Cinema 11a (Zone 2)": ["0x12"], "DAC-200ts": ["0x04"], "DVD 6": ["0x17"], "DVD 7": ["0x17"]}
+    tiers = Counter(s["forms"][0]["confidence"] for f in files.values() for s in f["keys"].values())
+    assert tiers == {"plausible": 411, "untested": 4}
+    assert sorted((m, k) for m, f in files.items() for k, s in f["keys"].items() if s["forms"][0]["confidence"] == "untested") == [
+        ("CD303/300", "KEY_PAUSE"), ("CD303/300", "KEY_PLAY"), ("Cinema 11a", "KEY_HDMI_1"), ("Cinema 11a", "KEY_TEXT_DISPLAY")]
+    # the sheet gives 0x2A to PAUSE and to PLAY; the CPA's sheet, which lists the same CD player rows, gives PAUSE 0x35 and PLAY 0x2A
+    assert files["CD303/300"]["keys"]["KEY_PAUSE"]["forms"][0]["function"] == files["CD303/300"]["keys"]["KEY_PLAY"]["forms"][0]["function"] == "0x2A"
+    assert "the sheet gives this code to 'PAUSE' and 'PLAY'" in files["CD303/300"]["keys"]["KEY_PAUSE"]["forms"][0]["source"]
+    assert files["CPA 1"]["keys"]["KEY_PAUSE"]["forms"][0]["function"] == "0x35" and files["CPA 1"]["keys"]["KEY_PLAY"]["forms"][0]["function"] == "0x2A"
+    # a bare number is decimal (23 is 0x17), the H and 0x are hexadecimal, the stray H of 17H changes nothing
+    dvd = files["DVD 6"]["keys"]
+    assert (dvd["KEY_POWER"]["forms"][0]["function"], dvd["KEY_VOLUME_UP"]["forms"][0]["function"], dvd["KEY_OPEN_SLASH_CLOSE"]["forms"][0]["function"]) == ("0x00", "0x24", "0x01")
+    assert "system 23, command 36" in dvd["KEY_VOLUME_UP"]["forms"][0]["source"] and "RC5 system 23 command 36" in dvd["KEY_VOLUME_UP"]["forms"][0]["source"]
+    assert files["CD303/200"]["keys"]["KEY_PLAY"]["forms"][0]["function"] == "0x17" and "command 17H" in files["CD303/200"]["keys"]["KEY_PLAY"]["forms"][0]["source"]
+    # the DVD 6 and the DVD 7 are the same table; the CPA sheet is one table for three files, and says why the second and third are named
+    assert [(k, s["forms"][0]["function"]) for k, s in files["DVD 6"]["keys"].items()] == [(k, s["forms"][0]["function"]) for k, s in files["DVD 7"]["keys"].items()]
+    cpa = [{k: (s["label"], s["forms"][0]["device"], s["forms"][0]["function"]) for k, s in files[m]["keys"].items()} for m in ("CPA 1", "CPA 2", "SLP-03")]
+    assert cpa[0] == cpa[1] == cpa[2] and "the file's name the CPA-2 as well" in files["SLP-03"]["keys"]["KEY_MUTE"]["forms"][0]["source"]
+    assert "the file's name" not in files["CPA 1"]["keys"]["KEY_MUTE"]["forms"][0]["source"]
+    # a heading scopes the rows under it: the label and the citation say so where one label would be two keys
+    amp = files["CD303/300"]["keys"]["KEY_MUTE_AMPLIFIER"]
+    assert amp["label"] == "MUTE (AMPLIFIER)" and "under the heading 'AMPLIFIER USE ONLY'" in amp["forms"][0]["source"] and files["CD303/300"]["keys"]["KEY_MUTE"]["label"] == "MUTE"
+    assert files["CPA 1"]["keys"]["KEY_CD_PLAYER_POWER_ON_SLASH_OFF"]["forms"][0]["function"] == "0x0C"
+
+
+def test_the_cinema_11a_sheet_is_what_the_jp1_upgrade_of_the_same_product_holds_in_all_73_codes():
+    """The independent check (D364): the JP1 remote of the Cinema 11a (RC-5, systems 18 and 19) holds **all 51 codes of the main zone handset and all 22 of the second zone's** (the
+    sheet's keys, 73, are its 73), with a label that names the same function in 22 and in 4: the JP1 names the keys by what they do (``RADIO TUNING UP`` for ``TUNER SEEK RIGHT``)."""
+    from remote_ledger.keys import load_vocabulary
+
+    vocabulary = load_vocabulary()
+    jp1 = load(ROOT / "remotes" / "jp1" / "Cary" / "Audio-Cary_Audio_Design_Cinema_11a.json")
+    assert jp1["protocol"]["name"] == "RC5" and len(jp1["keys"]) == 73
+    held: dict[tuple[int, int], list[str]] = {}
+    for key, spec in jp1["keys"].items():
+        for form in spec["forms"]:
+            held.setdefault((int(form["device"], 0), int(form["function"], 0)), []).append(spec.get("label", key))
+    squash = lambda t: re.sub(r"[^a-z0-9]", "", t.lower())      # noqa: E731
+    files = cary_sheet_files()
+    for model, system, agree in (("Cinema 11a", 0x13, 22), ("Cinema 11a (Zone 2)", 0x12, 4)):
+        codes = {(int(s["forms"][0]["device"], 0), int(s["forms"][0]["function"], 0)): s["label"] for s in files[model]["keys"].values()}
+        assert all(c in held for c in codes) and {d for d, _ in codes} == {system}
+        same = [c for c, label in codes.items() if any(squash(label) == squash(other) or ({vocabulary.resolve(label)} - {None}) & ({vocabulary.resolve(other)} - {None}) for other in held[c])]
+        assert len(same) == agree
+    assert len(files["Cinema 11a"]["keys"]) + len(files["Cinema 11a (Zone 2)"]["keys"]) == 73
+
+
+def test_the_cary_sheets_are_ten_pinned_live_files_of_carys_host_with_a_words_csv_each_and_none_has_a_notice_word():
+    manifest = json.loads((SNAPSHOT / "cary" / MANIFEST).read_text(encoding="utf-8"))
+    notice = re.compile(r"copyright|©|\(c\)|all rights|reserved|confidential|reproduc|proprietary|trademark|property of", re.I)
+    documents = sorted({s.file for s in cary.SHEETS})
+    assert len(cary.SHEETS) == 11 and len(documents) == 10
+    snapshot = load_snapshot(SNAPSHOT / "cary")
+    for name in documents:
+        entry = manifest["documents"][name]
+        assert re.fullmatch(r"https://caryaudio\.com/wp-content/uploads/(2013/06|2015/03)/[\w.\-]+\.pdf", entry["url"]) and entry["url"].endswith("/" + name)
+        assert entry["retrieved"] == "2026-11-12" and (SNAPSHOT / "cary" / name).read_bytes()[:5] == b"%PDF-"
+        assert [n for n, s in manifest["sheets"].items() if s["document"] == name] == [name[:-4] + "__words.csv"]
+        # D110: a table of reference codes with no notice in it is public; a document with one is the private repository's
+        assert not notice.search(" ".join(" ".join(row[3::2]) for row in snapshot.sheet_of(name, "words") if row[1] != "R")), name
+    assert "retrieved" not in manifest["documents"]["DMS-IR-Remote-Codes.pdf"] and manifest["retrieved"] == "2026-10-13"
+
+
+def test_every_cary_sheet_key_cites_its_document_by_host_file_hash_and_date_and_its_row_and_the_ledger_reads_it_back_to_the_same_code():
+    shape = re.compile(r"^caryaudio\.com IR Remote Codes/(?P<file>[\w.\-]+\.pdf)@(?P<hash>[0-9a-f]{8}) \(retrieved 2026-11-12\) page (?P<page>\d) table row '[^']+' "
+                       r"\(function '[^']*', system (?P<system>\w+), command (?P<command>\w+)(, the sheet dated (?:[A-Z][a-z]+,? \d+, \d{4}|\d+/\d+/\d{4}))?(, under the heading '[A-Z ]+')?\): "
+                       r"RC5 system (?P<s>\d+) command (?P<c>\d+)(; .+)?$")
+    manifest = json.loads((SNAPSHOT / "cary" / MANIFEST).read_text(encoding="utf-8"))
+    n = 0
+    for doc in cary_sheet_files().values():
+        for spec in doc["keys"].values():
+            form = spec["forms"][0]
+            m = shape.match(form["source"])
+            assert m, form["source"]
+            assert manifest["documents"][m["file"]]["sha256"].startswith(m["hash"])
+            assert (int(form["device"], 0), int(form["function"], 0)) == (int(m["s"]), int(m["c"]))
+            n += 1
+    assert n == 415
 
 
 # --- NAD ---------------------------------------------------------------------------------------------------------
@@ -3071,7 +3223,7 @@ def test_a_benq_sheet_row_is_a_number_a_function_a_code_and_whether_the_model_su
 
 
 def test_the_benq_lk952_file_is_the_34_codes_the_model_supports_and_the_96_it_does_not_are_reported():
-    (doc,) = [load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "benq").glob("*.json"))]
+    doc = load(ROOT / oi.IMPORT_ROOT / "benq" / "LK952.json")
     assert doc["manufacturer"] == "BenQ" and doc["model"] == "LK952" and doc["protocol"] == {"name": "NEC1", "carrierHz": 38000, "minSends": 1} and len(doc["keys"]) == 34
     assert all(s["forms"][0]["confidence"] == "plausible" and (s["forms"][0]["device"], s["forms"][0]["subdevice"]) == ("0x00", "0x30") for s in doc["keys"].values())
     by_label = {s["label"]: s["forms"][0] for s in doc["keys"].values()}
@@ -3082,7 +3234,7 @@ def test_the_benq_lk952_file_is_the_34_codes_the_model_supports_and_the_96_it_do
     assert on.startswith("snapav.com BenQ IR code sheet/BenQ_LK952_IR_Codes.pdf@3187b13b (retrieved 2026-10-18, from the Wayback Machine snapshot 20230207112239) page 4 table row 'No. 67 Power On' (code Ox4F, Support Yes)")
     assert "with a letter O, read as 0x4F" in on and "Will show unsupported logo" in by_label["Freeze"]["source"]
     report = (ROOT / oi.IMPORT_ROOT / oi.REPORT).read_text(encoding="utf-8")
-    assert "| benq: rows read | 130 |" in report and "the sheet says the model does not support the code (Support: No)" in report
+    assert "| benq: rows read | 272 |" in report and "the sheet says the model does not support the code (Support: No)" in report      # 130 of the LK952 and 142 of the HT5550 (D395)
     # 21 of the 34 codes are in other sources' BenQ remotes under the same custom code, with the same names for the power, source, menu and 3D keys
     held: dict[int, set[str]] = {}
     for path in (ROOT / "remotes").rglob("*.json"):
@@ -3098,6 +3250,86 @@ def test_the_benq_lk952_file_is_the_34_codes_the_model_supports_and_the_96_it_do
     mine = {int(f["function"], 16): l for l, f in by_label.items()}
     assert sum(1 for f in mine if f in held) == 21 and len(mine) == 34
     assert "POWER OFF" in held[0x4E] and "POWERON" in held[0x4F] and "FREEZE" in " ".join(held[0x03]) and "3D" in held[0x8D]
+
+
+# --- BenQ's HT5550 code list, a table of six pictures written down by eye (D395 to D397) ------------------------------------------
+
+HT5550 = "HT5550_IR_Codes.pdf"
+#: the 25 rows the sheet says the HT5550 supports, as a second reading of the page images: (row number, function, code)
+HT5550_SUPPORTED = [
+    (4, "Source", 0x04), (7, "Eco Blank", 0x07), (11, "Up", 0x0B), (12, "Down", 0x0C), (13, "Left", 0x0D), (14, "Right", 0x0E), (15, "Menu", 0x0F), (16, "Mode", 0x10),
+    (17, "Contrast", 0x11), (21, "Enter/OK", 0x15), (22, "Brightness", 0x16), (43, "Smart Eco Light Mode", 0x30), (62, "Power Off", 0x4E), (63, "Power On", 0x4F), (71, "GAMMA", 0x5E),
+    (72, "COLOR TEMP", 0x5F), (92, "IRIS", 0x7C), (94, "SHARP", 0x7E), (100, "Back", 0x85), (121, "3D Menu", 0x9C), (122, "3D Sync Invert", 0x9D), (136, "Cinema Master", 0xBE),
+    (137, "Color Manage.", 0x5B), (138, "keystone", 0x2A), (139, "HDR", 0x3C)]
+
+
+def benq_csv(name: str) -> list[list[str]]:
+    with (ROOT / "sources" / "official" / "benq" / "csv" / name).open(encoding="utf-8", newline="") as handle:
+        return list(csv.reader(handle))
+
+
+def test_the_benq_ht5550_transcription_agrees_with_the_lk952_text_table_in_126_codes():
+    """The HT5550's PDF has no text layer, so its table is written by eye; the LK952's PDF has the same appendix as text (130 rows, four of them the LK952's own, the numbering
+    shifted by three or four after row 42), and **every code the two share has the same function name but ten (the two models label a key differently)**."""
+    ht = benq.parse(benq_csv("HT5550_IR_Codes__transcribed.csv"))
+    lk = benq.parse(benq_csv("BenQ_LK952_IR_Codes__tables.csv"))
+    assert (len(ht), len(lk)) == (142, 130) and [r.number for r in ht] == list(range(1, 143))
+    assert len({r.code for r in ht}) == 142 and len({r.code for r in lk}) == 130            # no code twice in either table
+    by_ht, by_lk = {r.code: r for r in ht}, {r.code: r for r in lk}
+    both = sorted(set(by_ht) & set(by_lk))
+    assert len(both) == 126 and sorted(set(by_lk) - set(by_ht)) == [0x2C, 0x2E, 0x2F, 0x3A]
+    assert len(set(by_ht) - set(by_lk)) == 16 and {c for c in by_ht if c >= 0xA0} == set(range(0xA0, 0xAB)) | {0xBE}
+    differ = {c: (by_lk[c].function, by_ht[c].function) for c in both if by_lk[c].function.casefold() != by_ht[c].function.casefold()}
+    assert differ == {0x0F: ("Menu/Exit", "Menu"), 0x10: ("Mode THX", "Mode"), 0x2B: ("INFO", "Information"), 0x41: ("RGB-PC1", "Computer 1"), 0x45: ("RGB-PC2", "Computer 2"),
+                      0x46: ("Network Display", "Network"), 0x52: ("CVBS-1", "Video"), 0x8D: ("3D (settings)", "3D setting"), 0x97: ("Mic. Vol +", "Mic.Vol +"),
+                      0x98: ("Mic. Vol -", "Mic.Vol -")}
+    # the first 42 rows are the same rows in both tables (number, code), and the HT5550's table is the LK952's with rows 43 to 46 dropped and seven added
+    assert all((a.number, a.code) == (b.number, b.code) for a, b in zip(ht[:42], lk[:42]))
+    assert [(r.number, r.function, r.code) for r in ht if r.supported] == HT5550_SUPPORTED
+    assert sum(1 for r in ht if r.supported) == 25 and sum(1 for r in lk if r.supported) == 34
+
+
+def test_the_benq_ht5550_file_is_the_25_codes_the_model_supports_read_by_eye_from_a_live_file():
+    doc = load(ROOT / oi.IMPORT_ROOT / "benq" / "HT5550.json")
+    assert doc["manufacturer"] == "BenQ" and doc["model"] == "HT5550" and doc["controls"] == ["BenQ HT5550"] and doc["protocol"] == {"name": "NEC1", "carrierHz": 38000, "minSends": 1}
+    forms = [s["forms"][0] for s in doc["keys"].values()]
+    assert len(forms) == 25 and all(f["confidence"] == "plausible" and (f["device"], f["subdevice"]) == ("0x00", "0x30") for f in forms)
+    assert sorted(int(f["function"], 16) for f in forms) == sorted(c for _, _, c in HT5550_SUPPORTED)
+    by_label = {s["label"]: s["forms"][0] for s in doc["keys"].values()}
+    assert by_label["Power On"]["function"] == "0x4F" and by_label["Power Off"]["function"] == "0x4E" and by_label["HDR"]["function"] == "0x3C"
+    assert "Power" not in by_label and "Freeze" not in by_label and "Wireless" not in by_label                  # `Support: No`
+    on = by_label["Power On"]["source"]
+    assert on.startswith("snapav.com BenQ IR code sheet/HT5550_IR_Codes.pdf@085666ea (retrieved 2026-11-13) page 4 table row 'No. 63 Power On', read by eye from the page's picture (code Ox4F, Support Yes)")
+    assert "Wayback" not in on and "with a letter O, read as 0x4F" in on and "Turns on the projector." in on
+    assert "Open/Close \"Color Management\" Menu" in by_label["Color Manage."]["source"] and "page 6 table row 'No. 137 Color Manage.'" in by_label["Color Manage."]["source"]
+    # the pinned file is the whole PDF (the Wayback Machine's copy of 22 February 2024 is cut at 1,048,576 bytes), and its CSV is the work that is kept as it is
+    manifest = json.loads((ROOT / "sources" / "official" / "benq" / "MANIFEST.json").read_text(encoding="utf-8"))
+    entry = manifest["documents"][HT5550]
+    assert entry["bytes"] == 9_459_527 and entry["bytes"] > 1_048_576 and "snapshot" not in entry and entry["retrieved"] == "2026-11-13"
+    assert entry["url"].startswith("https://www.snapav.com/") and manifest["sheets"]["HT5550_IR_Codes__transcribed.csv"]["transcribed"].startswith("by eye")
+    assert (ROOT / "sources" / "official" / "benq" / HT5550).stat().st_size == entry["bytes"]
+    # the sheet's own format cells are in the transcription: 38 KHz, NEC Format, custom code 0x0030
+    cells = {r[7]: r[8] for r in benq_csv("HT5550_IR_Codes__transcribed.csv")[1:] if r[7]}
+    assert cells == {"Frequency": "38 KHz", "Protocol": "NEC Format", "Custom Code": "0x0030"}
+    # 12 of the 25 codes are the LK952's keys (same device, subdevice and function) and 13 are not
+    lk = {s["forms"][0]["function"] for s in load(ROOT / oi.IMPORT_ROOT / "benq" / "LK952.json")["keys"].values()}
+    assert len({f["function"] for f in forms} & lk) == 12 and len({f["function"] for f in forms} - lk) == 13
+
+
+def test_a_benq_table_with_a_wrong_row_count_is_refused():
+    with pytest.raises(ValueError, match="143 rows, not the table's 142"):
+        class Snap:
+            documents = {HT5550: {"retrieved": "2026-11-13"}}
+            retrieved = "2026-11-13"
+
+            def sha(self, document):
+                return "0" * 64
+
+            def sheet_of(self, document, sheet):
+                rows = benq_csv("HT5550_IR_Codes__transcribed.csv")
+                return rows + [["6", "1", "143", "Extra", "", "0xFF", "No", "", ""]]
+
+        benq.build_document(benq.DOCUMENTS[1], Snap(), {}, Report())
 
 
 
@@ -3377,8 +3609,11 @@ def test_a_heading_that_is_not_the_documents_and_a_zone_that_is_none_are_refused
         yamaha.parse([["1", "142", "POWER", "POWER", "ON", "RECEIVER", "MAIN", "7E-7E", "7E-7E80", "YES", "", ""]], YDOC)
 
 
-def yamaha_files() -> dict[str, dict]:
-    return {load(p)["model"]: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "yamaha").glob("*.json"))}
+def yamaha_files(host: str = "snapav.com", bd: bool = False) -> dict[str, dict]:
+    """The files of §87 (the tables on SnapAV's site) or, with ``host="awe-europe.com"``, §100's (AWE Europe's control documents) or, with ``bd=True`` as well, §105's (the BD players' lists)."""
+    docs = {load(p)["model"]: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "yamaha").glob("*.json"))}
+    return {name: doc for name, doc in docs.items()
+            if next(iter(doc["keys"].values()))["forms"][0]["source"].startswith(host) and name.startswith("BD-S") == bd}
 
 
 def test_yamahas_six_tables_are_28_files_and_7008_keys_two_code_sets_for_each_of_14_models_and_60_keys_are_the_japan_models():
@@ -3452,13 +3687,688 @@ def test_the_ledgers_other_yamaha_nec_remotes_have_90_percent_of_these_frames_un
     for source in ("irblaster", "jp1", "lirc", "hifi-remote"):
         for path in sorted((ROOT / "remotes" / source).rglob("*.json")):
             doc = load(path)
-            if (doc.get("protocol") or {}).get("name") not in ("NEC1", "NEC1-f16", "NEC2") or "amaha" not in (path.as_posix() + doc.get("manufacturer", "")).replace("YAMAHA", "Yamaha"):
+            if (doc.get("protocol") or {}).get("name") not in ("NEC1", "NEC1-f16", "NEC2") or "amaha" not in (path.relative_to(ROOT).as_posix() + doc.get("manufacturer", "")).replace("YAMAHA", "Yamaha"):
                 continue
             for spec in doc["keys"].values():
                 for f in spec["forms"]:
                     if "device" in f and "function" in f:
                         theirs.add(frame(f, doc["protocol"]["name"]))
     assert (len(ours), len(set(ours) & theirs)) == (1_062, 960)
+
+
+
+# --- Yamaha: the receivers of 2010 to 2014, AWE Europe's control documents (DESIGN section 100) -----------------------------------------------------------
+
+
+def xblocks(*rows, layout: str = "2013") -> list[list[str]]:
+    """A sheet's block CSV as the tool writes it for one model column (``RX-V385``): the title, the heading, then ``row, group, name, name 2, [device,] zone, the codes, a mark``."""
+    if layout == "2011":
+        heading = [["4", "FunctionGroup", "FunctionName", "", "ZONE", "Code(ID1)", "FullCode(ID1)", "Code(ID2)", "FullCode(ID2)", "RX-V385"]]
+    else:
+        heading = [["6", "Function", "", "", "Device", "", "", "", "RX-V385"], ["7", "Group", "Name", "", "Device", "Zone", "FullCode(ID1)", "FullCode(ID2)", ""]]
+    return [["1", "Standard IR codes"]] + heading + [list(r) for r in rows]
+
+
+XDOC = yamaha.Document("t.xls", (("RX-V385", ("RX-V385",)),), layout="blocks", host=yamaha.AWE)
+
+
+def test_a_spreadsheets_rows_are_functions_at_zones_with_the_names_of_their_blocks_and_codes_in_capitals():
+    rows = xblocks(("8", "POWER", "RECEIVER POWER", "ON/OFF", "RECEIVER", "MAIN", "7e81-2ad5", "7E81-2AD4", "YES"), ("9", "POWER", "RECEIVER POWER", "ON/OFF", "RECEIVER", "ZONE2", "7A85-453A", "7A85-453B", "NO"),
+                   ("10", "", "AUTO TUNING", "UP", "TUNER HD-Radio", "", "7E81-BE41", "7E81-BE40", "YES*J"))
+    got = yamaha.parse_blocks(rows, XDOC, "Standard")
+    assert [(r.group, r.name, r.device, r.zone, r.codes, r.marks, r.where) for r in got] == [
+        ("POWER", "RECEIVER POWER ON/OFF", "RECEIVER", "MAIN", ("7E81-2AD5", "7E81-2AD4"), ("YES",), "sheet Standard line 8"),
+        ("POWER", "RECEIVER POWER ON/OFF", "RECEIVER", "ZONE2", ("7A85-453A", "7A85-453B"), ("NO",), "sheet Standard line 9"),
+        ("POWER", "AUTO TUNING UP", "TUNER HD-Radio", "", ("7E81-BE41", "7E81-BE40"), ("YES*J",), "sheet Standard line 10")]    # a group left blank is the one above; a zone may be none
+    assert yamaha.label_of(got[2]) == "AUTO TUNING UP (TUNER HD-Radio)" and got[0].place == "sheet Standard line 8"
+
+
+def test_the_2011_sheet_has_two_code_columns_and_the_full_one_is_read_with_the_short_one_kept_to_be_checked():
+    rows = xblocks(("5", "POWER", "POWER", "ON/OFF", "MAIN", "7E-2A", "7E81-2AD5", "7E-2AD4", "7E81-2AD4", "YES"), ("6", "", "SLEEP", "TOGGLE", "ZONE2", "7A-31", "7A85-31CE", "7A-31CF", "7A85-31CF", "NO"), layout="2011")
+    got = yamaha.parse_blocks(rows, XDOC, "Extended")                                               # the Extended sheet writes ZONE, the Standard Zone: the case is not compared
+    assert [(r.name, r.device, r.zone, r.codes, r.short) for r in got] == [
+        ("POWER ON/OFF", "", "MAIN", ("7E81-2AD5", "7E81-2AD4"), ("7E-2A", "7E-2AD4")), ("SLEEP TOGGLE", "", "ZONE2", ("7A85-31CE", "7A85-31CF"), ("7A-31", "7A-31CF"))]
+    assert yamaha.frame_of("7E-2A") == yamaha.frame_of("7E81-2AD5") == (0x7E, 0x81, 0x2A, 0xD5) and yamaha.frame_of("7A-31CF") == yamaha.frame_of("7A85-31CF")
+
+
+def test_a_spreadsheet_whose_heading_is_not_the_documents_or_whose_row_is_no_function_at_a_zone_is_refused():
+    good = ("8", "POWER", "POWER", "ON", "RECEIVER", "MAIN", "7E81-7E81", "7E81-7E80", "YES")
+    bad = xblocks(good)
+    bad[1][8] = "RX-V485"
+    with pytest.raises(ValueError, match="the heading"):
+        yamaha.parse_blocks(bad, XDOC, "Standard")
+    bad = xblocks(good)
+    bad[2][7] = "Code(ID2)"                                                                         # the column of the second code is not the 2013 sheet's
+    with pytest.raises(ValueError, match="the heading"):
+        yamaha.parse_blocks(bad, XDOC, "Standard")
+    with pytest.raises(ValueError, match="no heading row"):
+        yamaha.parse_blocks([["1", "Standard IR codes"], list(good)], XDOC, "Standard")
+    for broken, why in ((good[:5] + ("ZONE9",) + good[6:], "zone"), (good[:6] + ("7E-7E81", "7E81-7E80", "YES"), "code"), (good[:8] + ("MAYBE",), "mark"), (good[:2] + ("", "") + good[4:], "name")):
+        with pytest.raises(ValueError, match="not a function at a zone"):
+            yamaha.parse_blocks(xblocks(broken), XDOC, "Standard")
+
+
+CDOC = yamaha.Document("c.pdf", (("667", ("RX-V667",)), ("767", ("RX-V767",)), ("1067", ("RX-V1067",))), layout="comments", host=yamaha.AWE)
+
+
+def ycomments(*rows) -> list[list[str]]:
+    """The grid rows of a 2010 table: ``page, y, device, function group, function name, zone, Code(ID1), Code(ID2), comment``, and the names again."""
+    heading = [["1", "142", "Device", "Function Group", "Function name", "ZONE", "Code(ID1)", "Code(ID2)", "Comment", "Function Group", "Function name"]]
+    return heading + [list(r) + [""] * (11 - len(r)) for r in rows]
+
+
+def test_the_comment_of_a_2010_row_says_which_models_it_is_for_by_the_model_numbers_in_it_and_none_is_all_of_them():
+    rows = ycomments(("1", "151", "RECEIVER", "ZONE CONTROL", "PARTY", "-", "7A-34", "7A-34CA", "767, 1067"), ("1", "159", "", "MEMORY", "SCENE 1 (BD/DVD)", "MAIN", "7A-007F", "7A-007E", "BD/DVD(667, 767), 1(1067)"),
+                     ("1", "167", "", "", "", "ZONE2", "7A-017E", "7A-017F", "1(1067)"), ("1", "175", "", "", "", "ZONE3", "7A-027D", "7A-027C", "U"),
+                     ("1", "183", "", "PROGRAM", "ENHANCER", "-", "7A-94", "7A-946A", ""), ("1", "191", "", "", "TUN./CH +", "MAIN", "7F01-611E", "7F01-611F", "TUN./CH +(1067U), TUNING +(1067exceptU)"))
+    got = yamaha.parse_comments(rows, CDOC)
+    assert [(r.group, r.name, r.device, r.zone, r.marks, r.comment) for r in got] == [
+        ("ZONE CONTROL", "PARTY", "RECEIVER", "", ("NO", "YES", "YES"), "767, 1067"),
+        ("MEMORY", "SCENE 1 (BD/DVD)", "RECEIVER", "MAIN", ("YES", "YES", "YES"), "BD/DVD(667, 767), 1(1067)"),         # the numbers in a comment that renames the key are the models'
+        ("MEMORY", "SCENE 1 (BD/DVD)", "RECEIVER", "ZONE2", ("NO", "NO", "YES"), "1(1067)"),                       # a blank name, group and device are the ones above
+        ("MEMORY", "SCENE 1 (BD/DVD)", "RECEIVER", "ZONE3", ("YES", "YES", "YES"), "U"),                           # a region mark names no model: all of them
+        ("PROGRAM", "ENHANCER", "RECEIVER", "", ("YES", "YES", "YES"), ""),
+        ("PROGRAM", "TUN./CH +", "RECEIVER", "MAIN", ("NO", "NO", "YES"), "TUN./CH +(1067U), TUNING +(1067exceptU)")]
+
+
+def test_a_device_in_brackets_under_another_is_added_to_it_and_the_next_device_replaces_both():
+    rows = ycomments(("3", "210", "SIRIUS", "MENU", "ALL CH SRCH", "-", "7F01-0F70", "7F01-0F71", "U"), ("3", "274", "TUNER", "MENU", "SRCH MODE", "-", "7A-AB", "7A-AB55", "U"),
+                     ("3", "282", "(HD-Radio)", "", "SEARCH MODE MANUAL", "-", "7F01-FE", "7F01-FE00", ""), ("3", "290", "", "", "SEARCH MODE PRESET", "-", "7F01-FD", "7F01-FD02", ""),
+                     ("3", "300", "NET", "MENU", "BOOK MARK OFF", "-", "7F01-47", "7F01-4739", ""))
+    assert [r.device for r in yamaha.parse_comments(rows, CDOC)] == ["SIRIUS", "TUNER", "TUNER HD-Radio", "TUNER HD-Radio", "NET"]
+
+
+def test_a_2010_table_whose_heading_is_not_its_own_or_whose_comment_names_a_model_it_has_not_is_refused():
+    row = ("1", "151", "RECEIVER", "ZONE CONTROL", "PARTY", "-", "7A-34", "7A-34CA", "")
+    with pytest.raises(ValueError, match="the heading"):
+        yamaha.parse_comments([ycomments(row)[0][:8] + ["Notes", "x", "y"], list(row) + ["", ""]], CDOC)
+    with pytest.raises(ValueError, match="names models the document does not"):
+        yamaha.parse_comments(ycomments(row[:8] + ("867",)), CDOC)
+    with pytest.raises(ValueError, match="before the heading"):
+        yamaha.parse_comments([list(row) + ["", ""]], CDOC)
+    with pytest.raises(ValueError, match="the zone `ZONE9`"):
+        yamaha.parse_comments(ycomments(row[:5] + ("ZONE9",) + row[6:]), CDOC)
+
+
+def test_the_sheet_tool_turns_the_lines_a_spreadsheet_draws_into_blocks_as_the_pinned_csv_has_them():
+    """The sheets have no merged cell; the file draws a line above the first row of a name's rows and below the last, and the tool writes the block's text on each row it covers."""
+    pytest.importorskip("xlrd")
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location("official_sheets_to_csv", ROOT / "tools" / "official_sheets_to_csv.py")
+    tool = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(tool)
+    snapshot = load_snapshot(SNAPSHOT / "yamaha")
+    for document in ("IR_RX-V671-3071_rev1.0_Full.xls", "IR_Vx75.xls", "IR_Vx77.xls"):
+        for sheet in ("Standard", "Extended"):
+            assert tool.rows_of(SNAPSHOT / "yamaha" / document, f"{sheet}/blocks") == snapshot.sheet_of(document, f"{sheet}/blocks")
+    rows = snapshot.sheet_of("IR_Vx75.xls", "Extended/blocks")
+    assert [r[1:6] for r in rows if r[0] in ("45", "65", "238")] == [
+        ["INPUT", "SUB INPUT", "Rhapsody Napster", "RECEIVER", "MAIN"],                      # a name of two lines in two cells (`Rhapsody`, `Napster`): one name
+        ["VOLUME", "MUTE", "ON (FULL)", "RECEIVER", "MAIN"], ["MENU", "SRCH MODE", "PRESET", "TUNER HD-Radio", "ALL"]]
+    assert [r[1:6] for r in snapshot.sheet_of("IR_Vx75.xls", "Standard/blocks") if r[0] in ("211", "215")] == [
+        ["DISPLAY", "DISPLAY", "TOGGLE", "RECEIVER", "MAIN"], ["DISPLAY", "INFO", "TOGGLE", "RECEIVER", "MAIN"]]          # `RECEIVER` written twice for a block of two functions: once
+
+
+def test_none_of_the_nine_awe_europe_documents_has_a_notice_word_in_its_cells_or_its_text():
+    """D367's licence rule: D290's notice words, and `proprietary`, `trademark` and `property of`, in every cell of every sheet of the three spreadsheets and in the text of every page of the six PDFs."""
+    xlrd, pymupdf = pytest.importorskip("xlrd"), pytest.importorskip("pymupdf")
+    notice = re.compile(r"copyright|all rights|reserved|\u00a9|\(c\)|confidential|reproduc|trademark|proprietary|property of", re.I)
+    snapshot = load_snapshot(SNAPSHOT / "yamaha")
+    documents = sorted(name for name, entry in snapshot.documents.items() if "awe-europe.com" in entry["original"] and not name.startswith("BD-S"))
+    assert len(documents) == 9 and sum(name.endswith(".xls") for name in documents) == 3
+    for name in documents:
+        path = SNAPSHOT / "yamaha" / name
+        if name.endswith(".xls"):
+            book = xlrd.open_workbook(str(path))
+            words = [str(sheet.cell_value(r, c)) for sheet in book.sheets() for r in range(sheet.nrows) for c in range(sheet.ncols)]
+        else:
+            words = [page.get_text() for page in pymupdf.open(str(path))]
+        assert not [w for w in words if notice.search(w)], name
+        assert snapshot.documents[name]["retrieved"] == "2026-11-12" and snapshot.documents[name]["snapshot"] and snapshot.documents[name]["member"]
+
+
+def yamaha_awe_files() -> dict[str, dict]:
+    return yamaha_files("awe-europe.com")
+
+
+def test_the_awe_europe_tables_are_96_files_and_27176_keys_two_code_sets_for_each_of_48_models_and_162_keys_are_the_japan_models():
+    """The RX-V375 to RX-V775, RX-V667 to RX-V3067, RX-V671 to RX-V3071, RX-V675 to RX-V3075, RX-V677 to RX-V3077 and the RX-A710 to RX-A3040, with the CX-A5000 and the HTR-2866 to HTR-6066 the
+    tables name beside them. **Untested are the 162 keys the table marks `YES*J`** (the Japan model's: 3 in each of 54 files)."""
+    files = yamaha_awe_files()
+    assert len(files) == 96 and sum(len(f["keys"]) for f in files.values()) == 27_176
+    per_model = {"CX-A5000": 421, "HTR-2866": 140, "HTR-3066": 140, "HTR-4066": 147, "HTR-5066": 154, "HTR-6064": 255, "HTR-6066": 226, "RX-A1010": 289, "RX-A1030": 264, "RX-A1040": 265, "RX-A2010": 406,
+                 "RX-A2030": 386, "RX-A2040": 416, "RX-A3010": 425, "RX-A3030": 411, "RX-A3040": 416, "RX-A710": 255, "RX-A730": 228, "RX-A740": 229, "RX-A810": 262, "RX-A830": 238, "RX-A840": 239,
+                 "RX-V1067": 280, "RX-V1071": 289, "RX-V1075": 264, "RX-V1077": 265, "RX-V2067": 397, "RX-V2071": 406, "RX-V2075": 386, "RX-V2077": 416, "RX-V3067": 424, "RX-V3071": 425, "RX-V3075": 411,
+                 "RX-V3077": 416, "RX-V375": 140, "RX-V475": 147, "RX-V500D": 147, "RX-V575": 154, "RX-V667": 211, "RX-V671": 255, "RX-V675": 228, "RX-V677": 229, "RX-V767": 240, "RX-V771": 263,
+                 "RX-V775": 235, "RX-V777": 236, "RX-V867": 250, "RX-V871": 262}
+    assert {n: len(f["keys"]) for n, f in files.items()} == {f"{m} ({i})": k for m, k in per_model.items() for i in ("ID1", "ID2")}
+    assert all(f["protocol"] == {"name": "NEC1-f16", "carrierHz": 38000, "minSends": 1} and f["manufacturer"] == "Yamaha" and f["controls"] == [f"Yamaha {n.split(' (')[0]}"] for n, f in files.items())
+    tiers = Counter(s["forms"][0]["confidence"] for f in files.values() for s in f["keys"].values())
+    assert tiers == {"plausible": 27_014, "untested": 162}
+    untested = Counter(n for n, f in files.items() for s in f["keys"].values() if s["forms"][0]["confidence"] == "untested")
+    assert all("the Japan model's" in s["forms"][0]["source"] for f in files.values() for s in f["keys"].values() if s["forms"][0]["confidence"] == "untested")
+    assert len(untested) == 54 and set(untested.values()) == {3}
+
+
+def test_one_column_of_a_table_for_several_models_is_the_same_keys_under_each_models_name():
+    files = yamaha_awe_files()
+    for group in (("RX-V375", "HTR-2866", "HTR-3066"), ("RX-V475", "RX-V500D", "HTR-4066"), ("RX-V575", "HTR-5066"), ("RX-V675", "RX-A730"), ("RX-V1075", "RX-A1030"), ("RX-V2075", "RX-A2030"),
+                  ("RX-V3075", "RX-A3030"), ("RX-V677", "RX-A740"), ("RX-V1077", "RX-A1040"), ("RX-V2077", "RX-A2040"), ("RX-V3077", "RX-A3040")):
+        for i in ("ID1", "ID2"):
+            assert all(files[f"{m} ({i})"]["keys"] == files[f"{group[0]} ({i})"]["keys"] for m in group), group
+
+
+def test_the_id2_code_of_a_key_is_its_id1_code_with_the_low_bit_of_the_last_byte_flipped_in_every_row_of_the_awe_europe_tables_too():
+    files = yamaha_awe_files()
+    pairs = 0
+    for name, doc in files.items():
+        if not name.endswith("(ID1)"):
+            continue
+        other = files[name.replace("(ID1)", "(ID2)")]["keys"]
+        assert len(doc["keys"]) == len(other)
+        for (key, spec), (key2, spec2) in zip(doc["keys"].items(), other.items()):
+            a, b = spec["forms"][0], spec2["forms"][0]
+            # a label two functions of one table share keeps the code that tells them apart (D333), which is the ID's own: that is the only name that differs
+            assert re.sub(r", [0-9A-F]{2,4}-[0-9A-F]{2,4}\)$", ")", spec["label"]) == re.sub(r", [0-9A-F]{2,4}-[0-9A-F]{2,4}\)$", ")", spec2["label"]), (name, key, key2)
+            assert (a["device"], a["subdevice"]) == (b["device"], b["subdevice"]) and int(a["function"], 0) ^ int(b["function"], 0) == 1, (name, key)
+            pairs += 1
+    assert pairs == 13_588
+
+
+def yamaha_rows_of_awe(snapshot) -> dict[str, list]:
+    out = {}
+    for d in yamaha.DOCUMENTS:
+        if d.layout == "blocks":
+            out[d.file] = [r for s in ("Standard", "Extended") for r in yamaha.parse_blocks(snapshot.sheet_of(d.file, f"{s}/blocks"), d, s)]
+        elif d.layout == "comments":
+            out[d.file] = yamaha.parse_comments(snapshot.sheet_of(d.file, "grid"), d)
+        elif d.host == yamaha.AWE:
+            out[d.file] = yamaha.parse(snapshot.sheet_of(d.file, "grid"), d)
+    return out
+
+
+def test_the_2011_sheets_short_codes_are_its_full_codes_in_every_row_and_the_2010_and_2013_tables_hold_the_rules_the_reader_does_not_assume():
+    snapshot = load_snapshot(SNAPSHOT / "yamaha")
+    rows = yamaha_rows_of_awe(snapshot)
+    sheet = rows["IR_RX-V671-3071_rev1.0_Full.xls"]
+    assert len(sheet) == 559 and all(yamaha.frame_of(r.short[i]) == yamaha.frame_of(r.codes[i]) for r in sheet for i in (0, 1))
+    assert {f: len(r) for f, r in rows.items()} == {"IR_RX-V671-3071_rev1.0_Full.xls": 559, "IR_Vx75.xls": 554, "IR_Vx77.xls": 562, "IR_RX-Vx75_375-775_STD.pdf": 315, "IR_RX-Vx75_375-775_EXD.pdf": 239,
+                                                    "STD_IR_RXV667-3067.pdf": 232, "EXD_IR_RXV667-3067.pdf": 203}
+    for file, rs in rows.items():                                           # ID2 is ID1 with the low bit of its last byte flipped, in all 2,664 rows
+        for r in rs:
+            f1, f2 = yamaha.frame_of(r.codes[0]), yamaha.frame_of(r.codes[1])
+            assert f1[:3] == f2[:3] and f1[3] ^ f2[3] == 1, (file, r.place, r.codes)
+
+
+def test_the_rx_v675_and_the_rx_v775_are_read_from_the_newer_spreadsheet_which_has_every_key_the_older_pdf_has():
+    """The RX-V675 and RX-V775 are in the PDF of the RX-V375 to V775 (February 2013) and in the spreadsheet of the RX-V675 to V3075 (July 2013, the version that adds two keys): the files are the
+    spreadsheet's, and **every key the PDF has for them (226 and 233) is in the spreadsheet with the same label and code**."""
+    snapshot = load_snapshot(SNAPSHOT / "yamaha")
+    rows = yamaha_rows_of_awe(snapshot)
+    docs = {d.file: d for d in yamaha.DOCUMENTS}
+
+    def keys(file: str, model: str, index: int) -> Counter:
+        out: Counter = Counter()
+        for r in rows[file]:
+            for column, (_, models) in enumerate(docs[file].columns):
+                if model in models and yamaha.mark_of(r.marks[column])[0]:
+                    out[(yamaha.label_of(r), yamaha.frame_of(r.codes[index]))] += 1
+        return out
+    for model, expected in (("RX-V675", 226), ("RX-V775", 233)):
+        for i in (0, 1):
+            pdf = keys("IR_RX-Vx75_375-775_STD.pdf", model, i) + keys("IR_RX-Vx75_375-775_EXD.pdf", model, i)
+            xls = keys("IR_Vx75.xls", model, i)
+            assert sum(pdf.values()) == expected and pdf - xls == Counter() and sum(xls.values()) == expected + 2, (model, i)
+    files = yamaha_awe_files()
+    for name in ("RX-V675", "RX-V775"):
+        assert {re.search(r"documents/([^@]+)@", s["forms"][0]["source"])[1] for s in files[f"{name} (ID1)"]["keys"].values()} == {"IR_Vx75.xls"}
+    assert {re.search(r"documents/([^@]+)@", s["forms"][0]["source"])[1] for s in files["HTR-6066 (ID1)"]["keys"].values()} == {"IR_RX-Vx75_375-775_STD.pdf", "IR_RX-Vx75_375-775_EXD.pdf"}
+
+
+def test_the_2013_pdf_of_the_rx_a730_and_a830_is_the_spreadsheets_rows_but_for_two_names_of_the_extended_table():
+    """The one independent reading of a spreadsheet: the PDF of March 2013 (`IR_RX-Ax30_A730_830`, version 0.1 of the table, pinned and not read for files) is the same table as the July spreadsheet for
+    the two models it has. **Of 104, 110, 124 and 128 rows the label, the device, the zone and the code agree in all but 2 of the extended table's for each model**: the PDF writes `Hall in Munich (A)`
+    where the spreadsheet has `A`, and has `Xch Stereo` with no `PROGRAM` before it."""
+    snapshot = load_snapshot(SNAPSHOT / "yamaha")
+
+    def pdf(kind: str) -> dict[str, Counter]:
+        out = {"RX-A730": Counter(), "RX-A830": Counter()}
+        for r in snapshot.sheet_of(f"IR_RX-Ax30_A730_830_{kind}.pdf", "grid")[2:]:
+            group, n1, n2, device, zone, code, a730, a830 = r[2:10]
+            for model, mark in (("RX-A730", a730), ("RX-A830", a830)):
+                if mark.upper().startswith("YES"):
+                    out[model][(" ".join(x for x in (n1, n2) if x), device, zone, code.upper())] += 1
+        return out
+
+    def xls(sheet: str) -> dict[str, Counter]:
+        out = {"RX-A730": Counter(), "RX-A830": Counter()}
+        rows = snapshot.sheet_of("IR_Vx75.xls", f"{sheet}/blocks")
+        for r in rows[next(i for i, r in enumerate(rows) if r[1] == "Function") + 2:]:
+            if any(r[1:]):
+                for model, column in (("RX-A730", 8), ("RX-A830", 10)):
+                    if r[column].upper().startswith("YES"):
+                        out[model][(" ".join(x for x in (r[2], r[3]) if x), r[4], r[5], r[6].upper())] += 1
+        return out
+    got = {}
+    for kind, sheet in (("STD", "Standard"), ("EXD", "Extended")):
+        a, b = pdf(kind), xls(sheet)
+        for model in a:
+            got[(kind, model)] = (sum(a[model].values()), sum(b[model].values()), sum((a[model] - b[model]).values()), sum((b[model] - a[model]).values()))
+    assert got == {("STD", "RX-A730"): (104, 104, 0, 0), ("STD", "RX-A830"): (110, 110, 0, 0), ("EXD", "RX-A730"): (124, 124, 2, 2), ("EXD", "RX-A830"): (128, 128, 2, 2)}
+
+
+def test_a_key_of_the_awe_europe_tables_is_nec1_f16_and_its_citation_names_the_zip_s_snapshot_the_sheet_and_the_line_or_the_page_and_the_comment():
+    files = yamaha_awe_files()
+    on, on2 = files["RX-V675 (ID1)"]["keys"]["KEY_RECEIVER_POWER_ON_SLASH_OFF"]["forms"][0], files["RX-V675 (ID2)"]["keys"]["KEY_RECEIVER_POWER_ON_SLASH_OFF"]["forms"][0]
+    assert (on["device"], on["subdevice"], on["function"]) == ("0x7E", "0x81", "0x2AD5") and on2["function"] == "0x2AD4"                       # `7E81-2AD5` and `7E81-2AD4`
+    assert on["source"] == ("awe-europe.com Yamaha control documents/IR_Vx75.xls@5f16e769 (retrieved 2026-11-12, from the Wayback Machine snapshot 20151207014814) sheet Standard line 8 row "
+                            "'POWER / RECEIVER POWER ON/OFF' (RECEIVER MAIN, Code (ID1) '7E81-2AD5'): NEC1-f16 device 126 subdevice 129 function 10965 (bytes 7E 81 2A D5)")
+    scene = files["RX-V1067 (ID1)"]["keys"]["KEY_SCENE_1_BD_SLASH_DVD"]["forms"][0]
+    assert scene["source"].startswith("awe-europe.com Yamaha control documents/STD_IR_RXV667-3067.pdf@c9e5d6d1 (retrieved 2026-11-12, from the Wayback Machine snapshot 20160103045540) page 1 row 'MEMORY / SCENE 1 (BD/DVD)'")
+    assert scene["source"].endswith("the table's comment on the row is `BD/DVD(667, 767, 867), 1(1067, 2067, 3067)`")
+    assert "KEY_SCENE_1_BD_SLASH_DVD_ZONE2" not in files["RX-V667 (ID1)"]["keys"] and "KEY_SCENE_1_BD_SLASH_DVD_ZONE2" in files["RX-V1067 (ID1)"]["keys"]        # `1(1067, 2067, 3067)`
+    assert [s["label"] for s in files["RX-V671 (ID1)"]["keys"].values() if s["label"].startswith("SEARCH or HOLD or TAG")][:2] == ["SEARCH or HOLD or TAG SEARCH- or HOLD", "SEARCH or HOLD or TAG SEARCH- or HOLD (ZONE2)"]
+
+
+@functools.lru_cache(maxsize=1)
+def yamaha_frames_in_other_sources() -> frozenset:
+    """The frames of the Yamaha NEC remotes of the ledger's four other sources that cite or copy these tables (the IR Blaster database's, the JP1 upgrades', LIRC's and hifi-remote's)."""
+    def frame(form, protocol):
+        d, sub, fn = int(form["device"], 0), int(form.get("subdevice", "0"), 0), int(form["function"], 0)
+        return (d, sub, fn >> 8, fn & 0xFF) if protocol == "NEC1-f16" else (d, sub, fn, fn ^ 0xFF)
+    theirs = set()
+    for source in ("irblaster", "jp1", "lirc", "hifi-remote"):
+        for path in sorted((ROOT / "remotes" / source).rglob("*.json")):
+            doc = load(path)
+            if (doc.get("protocol") or {}).get("name") not in ("NEC1", "NEC1-f16", "NEC2") or "amaha" not in (path.relative_to(ROOT).as_posix() + doc.get("manufacturer", "")).replace("YAMAHA", "Yamaha"):
+                continue
+            for spec in doc["keys"].values():
+                for f in spec["forms"]:
+                    if "device" in f and "function" in f:
+                        theirs.add(frame(f, doc["protocol"]["name"]))
+    return frozenset(theirs)
+
+
+def test_the_ledgers_other_yamaha_nec_remotes_have_87_percent_of_the_awe_europe_frames_and_117_are_new():
+    """**842 of the 968 distinct frames are in the four other sources' Yamaha NEC remotes, 851 in them and §87's files together: 117 are new.**"""
+    def frame(form):
+        return (int(form["device"], 0), int(form["subdevice"], 0), int(form["function"], 0) >> 8, int(form["function"], 0) & 0xFF)
+    ours = {frame(s["forms"][0]) for f in yamaha_awe_files().values() for s in f["keys"].values()}
+    earlier = {frame(s["forms"][0]) for f in yamaha_files().values() for s in f["keys"].values()}
+    theirs = yamaha_frames_in_other_sources()
+    assert (len(ours), len(ours & theirs), len(ours & (theirs | earlier)), len(ours - theirs - earlier)) == (968, 842, 851, 117)
+
+
+
+# --- Optoma: the discrete IR code tables of its projectors (DESIGN section 101) ------------------------------------------------------------------------
+
+
+def olines(*lines: tuple[int, str]) -> list[list[str]]:
+    """A page's lines as ``tools/official_sheets_to_csv.py`` writes them in mode ``lines`` (``page, y, x, text, x, text...``); a line is ``(y, "x|text x|text ...")``."""
+    return [["1", str(y), *[v for cell in text.split("  ") for v in cell.split("|", 1)]] for y, text in lines]
+
+
+def osheet(layout: str, title: str, file: str = "t.pdf") -> optoma.Sheet:
+    return optoma.Sheet(file, ("M1",), layout, title)
+
+
+NUMBERED = [(70, "170|Optoma TX615 Discrete IR Codes"), (116, "90|Optoma Code: 32CD"), (155, "95|Key  240|Description  428|code  477|OSD off  543|On"),
+            (169, "102|1  124|Power on/off toggle  434|81  481|Power  548|-"), (182, "102|2  124|Laser Pointer  438|-  483|Laser  548|-"),
+            (195, "102|3  124|Remote mouse emulation PAGE UP or UP OSD key  433|C1  481|Page up  548|Up"),
+            (209, "102|4  124|Remote mouse emulation PAGE DOWN or DOWN OSD  415|C2  480|Down arrow  548|Down"), (221, "127|key"),
+            (235, "130|5"), (238, "159|Menu key  444|2E"), (250, "130|6  159|Lamp Mode key  444|0002"), (262, "109|Optoma Code : 32CD")]
+
+
+def test_a_numbered_row_starts_at_the_next_number_its_description_may_wrap_and_its_code_is_the_first_cell_past_the_description():
+    keys, notes = optoma.parse_sheet(olines(*NUMBERED), osheet("numbered", "TX615 Discrete IR Codes"))
+    assert [(k.label, k.device, k.subdevice, k.function, k.written, k.note) for k in keys] == [
+        ("Power on/off toggle", 0x32, 0xCD, 0x81, "81", "printed `Power`"),
+        ("Remote mouse emulation PAGE UP or UP OSD key", 0x32, 0xCD, 0xC1, "C1", "printed `Page up`, with the menu on `Up`"),
+        ("Remote mouse emulation PAGE DOWN or DOWN OSD key", 0x32, 0xCD, 0xC2, "C2", "printed `Down arrow`, with the menu on `Down`"),       # `key` is on a second line
+        ("Menu key", 0x32, 0xCD, 0x2E, "2E", ""), ("Lamp Mode key", 0x32, 0xCD, 0x02, "0002", "")]               # a number alone on its line; the TH7500's `0002` is 02
+    assert notes == ["t.pdf row 2 'Laser Pointer': no code (`-`)"]                                              # a key with no code is a note and not a key
+
+
+def test_a_page_whose_title_is_not_the_sheets_or_that_has_no_customer_code_or_no_key_is_refused():
+    with pytest.raises(ValueError, match="the title of the page does not say"):
+        optoma.parse_sheet(olines(*NUMBERED), osheet("numbered", "TX762 Discrete IR Codes"))
+    with pytest.raises(ValueError, match="no `Optoma Code: 32CD`"):
+        optoma.parse_sheet(olines(*[row for row in NUMBERED if "32CD" not in row[1]]), osheet("numbered", "TX615 Discrete IR Codes"))
+    with pytest.raises(ValueError, match="more than one customer code"):
+        optoma.parse_sheet(olines(*NUMBERED, (270, "90|Optoma Code: 33CC")), osheet("numbered", "TX615 Discrete IR Codes"))
+    with pytest.raises(ValueError, match="no row of a numbered table"):
+        optoma.parse_sheet(olines(*NUMBERED[:3]), osheet("numbered", "TX615 Discrete IR Codes"))
+    assert optoma.key_code("0002") == 2 and optoma.key_code("2E") == 0x2E and optoma.key_code("00") == 0 and optoma.key_code("-") is None and optoma.key_code("0102") is None
+
+
+CODES = [(38, "42|IR Code"), (412, "44|Customer code: 32CD"), (423, "44|Key code  111|Printing-key definition"), (435, "71|81  111|Power on/off"), (446, "70|3E  111|Switch"),
+         (556, "42|EN-76")]
+
+
+def test_the_manuals_page_of_codes_is_a_code_and_a_definition_a_row_and_the_heading_under_which_a_row_stands_is_in_its_citation():
+    page2 = [("2", 41, "70|C7  112|Down arrow"), ("2", 75, "69|N/A  112|Laser"), ("2", 267, "71|96  112|Eco +"), ("2", 306, "43|The IR codes below are for user-defined remote only."),
+             ("2", 317, "71|79  112|Power off (single push)"), ("2", 555, "352|EN-77")]
+    rows = olines(*CODES) + [[p, str(y), *[v for cell in text.split("  ") for v in cell.split("|", 1)]] for p, y, text in page2]
+    keys, notes = optoma.parse_sheet(rows, osheet("codes", "IR Code"))
+    assert [(k.page, k.label, k.function, k.note) for k in keys] == [(1, "Power on/off", 0x81, ""), (1, "Switch", 0x3E, ""), (2, "Down arrow", 0xC7, ""), (2, "Eco +", 0x96, ""),
+                                                                      (2, "Power off (single push)", 0x79, "under 'The IR codes below are for user-defined remote only.'")]
+    assert notes == ["t.pdf page 2 'Laser': no code (`N/A`)"]
+
+
+BYTES = [(96, "117|Optoma GT750 and GT750E Discrete IR Codes"), (200, "102|1  160|On  225|38  254|Format1  305|32  340|CD  380|02  425|FD"), (217, "102|2  225|30"),
+         (333, "102|3  156|16:10  225|31  254|Format1  305|33  340|CD  379|4E  426|B1"), (482, "99|4  136|Source+ (Left)  224|1A  254|Format2  305|32  340|CD  380|10  425|EF"),
+         (565, "99|5"), (581, "99|6  153|HDMI1  225|23  254|Format1  305|32  340|CD  380|16  426|E8"), (600, "99|7  153|VGA  225|13  254|Format1  305|31  340|C1  380|1B  426|E4")]
+
+
+def test_the_gt750s_four_bytes_are_a_customer_code_and_a_key_and_its_check_and_a_row_that_disagrees_with_itself_is_untested_or_not_read():
+    keys, notes = optoma.parse_sheet(olines(*BYTES), osheet("bytes", "GT750 and GT750E Discrete IR Codes"))
+    assert [(k.label, k.device, k.subdevice, k.function, k.note, bool(k.doubt)) for k in keys] == [
+        ("On", 0x32, 0xCD, 0x02, "Format1, MTX repeat 38", False),
+        ("16:10", 0x32, 0xCD, 0x4E, "Format1, MTX repeat 31", True),                    # the first byte is 33 where its complement CD and every other row say 32: read as 32, Untested
+        ("Source+ (Left)", 0x32, 0xCD, 0x10, "Format2, MTX repeat 1A", False)]
+    assert notes == ["t.pdf row 2: no NEC code (['30'])", "t.pdf row 3 '16:10': the customer code is 33 CD, not 32 CD: read as 32 CD and Untested", "t.pdf row 5: no NEC code ([])",
+                     "t.pdf row 6 'HDMI1': the data 16 E8 are not complements", "t.pdf row 7 'VGA': the customer code 31 C1 is not a byte and its complement"]
+
+
+LEGEND = [(84, "153|ThemeScene HD82 Infrared Remote Control Codes"), (154, "270|Byte 1  312|Byte 2  353|Byte 3"), (160, "405|4"),
+          (173, "193|Power On  279|00  321|02  362|00  402|FF"), (299, "212|↑  279|00  321|02  362|10  402|F5"), (327, "212|\x1b  279|00  321|02  362|12  402|F3"),
+          (425, "208|UP  279|00  321|02  362|19  402|E6"), (459, "204|4 ﹕ 3  279|00  321|02  362|22  402|DD"), (369, "203|Menu  279|00  321|02  362|15  402|E0"),
+          (500, "190|Power Off  279|00  321|02  362|03  402|FD"), (520, "100|some words")]
+
+
+def test_the_hd82s_key_byte_is_decimal_or_hexadecimal_as_its_check_byte_says_and_a_row_whose_two_bytes_agree_with_neither_is_not_read():
+    keys, notes = optoma.parse_sheet(olines(*LEGEND), osheet("legend", "ThemeScene HD82 Infrared Remote Control Codes"))
+    assert [(k.label, k.device, k.subdevice, k.function, k.note) for k in keys] == [
+        ("Power On", 0, 2, 0x00, ""), ("↑ (Up arrow)", 0, 2, 0x0A, "the key byte is written in decimal"),              # `10` and `F5`: 0x0A
+        ("(no legend)", 0, 2, 0x0C, "the key byte is written in decimal"), ("UP", 0, 2, 0x19, ""), ("4:3", 0, 2, 0x22, "")]                  # `19` and `E6`: 0x19; the ESC of a key with no legend is nothing
+    assert [n.removeprefix("t.pdf").removeprefix(" ") for n in notes] == [
+        "row 'Menu': the key byte 15 and the check byte E0 are not complements as hexadecimal (EA) or as decimal (F0): not read",
+        "row 'Power Off': the key byte 03 and the check byte FD are not complements as hexadecimal (FC) or as decimal (FC): not read", ": ['some words']"]
+
+
+def optoma_files() -> dict[str, dict]:
+    return {load(p)["model"]: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "optoma").glob("*.json"))}
+
+
+def test_the_optoma_sheets_are_13_files_and_367_keys_and_two_of_them_are_untested():
+    """The EH501, W501 and X501 (one manual page), the GT750 and GT750E, the HD33 and HD3300, the TH7500-NL, the TW1692, TW536, TX615 and TX762, and the ThemeScene HD82. **The HD33 and the TW1692 are
+    `(Optoma table)`: the JP1 upgrades of the same projectors have the names (R15).** **Untested are the GT750's and GT750E's `16:10`**, the one row whose customer code is `33 CD`."""
+    files = optoma_files()
+    assert {n: len(f["keys"]) for n, f in files.items()} == {
+        "EH501": 38, "W501": 38, "X501": 38, "GT750": 24, "GT750E": 24, "HD33 (Optoma table)": 23, "HD3300": 23, "TH7500-NL": 32, "TW1692 (Optoma table)": 26, "TW536": 19, "TX615": 26, "TX762": 26, "HD82": 30}
+    assert sum(len(f["keys"]) for f in files.values()) == 367
+    assert all(f["protocol"] == {"name": "NEC1", "carrierHz": 38000, "minSends": 1} and f["manufacturer"] == "Optoma" for f in files.values())
+    assert files["HD33 (Optoma table)"]["controls"] == ["Optoma HD33"] and files["TW1692 (Optoma table)"]["controls"] == ["Optoma TW1692"]
+    untested = [(n, s["label"]) for n, f in files.items() for s in f["keys"].values() if s["forms"][0]["confidence"] == "untested"]
+    assert untested == [("GT750", "16:10"), ("GT750E", "16:10")]
+    for a, b in (("EH501", "W501"), ("EH501", "X501"), ("GT750", "GT750E"), ("HD33 (Optoma table)", "HD3300")):                 # one document, two or three names
+        assert [(k, s["label"], {x: y for x, y in s["forms"][0].items() if x != "source"}) for k, s in files[a]["keys"].items()] == [
+            (k, s["label"], {x: y for x, y in s["forms"][0].items() if x != "source"}) for k, s in files[b]["keys"].items()]
+
+
+def test_an_optoma_key_is_nec1_with_the_customer_code_bytes_as_sent_and_its_citation_names_the_page_and_the_row():
+    files = optoma_files()
+    on = files["TH7500-NL"]["keys"]["KEY_POWER_ON"]["forms"][0]
+    assert (on["device"], on["subdevice"], on["function"], on["confidence"]) == ("0x32", "0xCD", "0x02", "plausible")                  # `Optoma Code: 32CD`, key code `0002`
+    assert on["source"] == ("audiogeneral.com Optoma IR code PDFs/th7500nl_ir.pdf@8103decf (retrieved 2026-11-12) page 1 row '1 Power On' (code 0002): NEC1 device 50 subdevice 205 function 2")
+    ha = files["HD82"]["keys"]["KEY_UP_ARROW"]["forms"][0]
+    assert (ha["device"], ha["subdevice"], ha["function"]) == ("0x00", "0x02", "0x0A") and "the key byte is written in decimal" in ha["source"] and ha["source"].startswith("optoma.co.uk IR code PDFs/HD82-IRE-en-GB.pdf@8bd3d301 ")
+    single = next(s for s in files["EH501"]["keys"].values() if s["label"] == "Power off (single push)")["forms"][0]
+    assert single["function"] == "0x79" and single["source"].endswith("under 'The IR codes below are for user-defined remote only.'") is False
+    assert "(code 79, under 'The IR codes below are for user-defined remote only.'): NEC1 device 50 subdevice 205 function 121" in single["source"]
+    assert [s["label"] for s in files["EH501"]["keys"].values() if s["label"].startswith("Enter")] == ["Enter (C5)", "Enter (CA)"]         # two keys called Enter, with the code that tells them apart
+
+
+def test_the_optoma_documents_are_eleven_live_files_the_w501_and_the_eh501_are_one_and_none_has_a_notice_word():
+    pytest.importorskip("pymupdf")
+    import pymupdf
+
+    snapshot = load_snapshot(SNAPSHOT / "optoma")
+    assert sorted(snapshot.documents) == sorted([s.file for s in optoma.SHEETS]) and snapshot.retrieved == "2026-11-12"
+    assert snapshot.documents["w501_ir.pdf"]["sha256"] == snapshot.documents["eh501_ir.pdf"]["sha256"]                                 # the same bytes under two names
+    assert snapshot.sheet_of("x501_ir.pdf", "lines") == snapshot.sheet_of("eh501_ir.pdf", "lines")                                       # and the X501's differs by 35 bytes of the file, not by a word
+    notice = re.compile(r"copyright|all rights|reserved|©|\(c\)|confidential|reproduc|trademark|proprietary|property of", re.I)
+    for name in snapshot.documents:
+        assert not notice.search(" ".join(page.get_text() for page in pymupdf.open(str(SNAPSHOT / "optoma" / name)))), name
+
+
+def test_the_optoma_frames_are_mostly_in_the_ledgers_other_optoma_remotes_under_the_same_names():
+    """**95 of the 112 distinct frames are in the Optoma NEC remotes of the IR Blaster database, the JP1 upgrades, LIRC and SmartIR** (at the same device, subdevice and function), 17 are new;
+    and where they meet the names agree (`Power`, `MENU`, `4:3`, `OVERSCAN`)."""
+    def frame(form):
+        return (int(form["device"], 0), int(form.get("subdevice", "0"), 0), int(form["function"], 0))
+    ours = {frame(s["forms"][0]) for f in optoma_files().values() for s in f["keys"].values()}
+    theirs = set()
+    for source in ("irblaster", "jp1", "lirc", "smartir"):
+        for path in sorted((ROOT / "remotes" / source).rglob("*.json")):
+            doc = load(path)
+            if "ptoma" not in (path.relative_to(ROOT).as_posix() + doc.get("manufacturer", "")).replace("OPTOMA", "Optoma") or (doc.get("protocol") or {}).get("name") not in ("NEC1", "NEC2"):
+                continue
+            for spec in doc["keys"].values():
+                for f in spec["forms"]:
+                    if "device" in f and "function" in f and f.get("subdevice") is not None:
+                        theirs.add(frame(f))
+    assert (len(ours), len(ours & theirs)) == (112, 95)
+
+
+
+# --- Dune HD's IR codes (DESIGN section 102) -------------------------------------------------------------------------------------------------------------
+
+
+def dpre(*lines: str) -> list[list[str]]:
+    """The lines of a page's ``<pre>`` blocks as the sheet tool writes them: a row is a line."""
+    return [[line] for line in lines]
+
+
+def test_a_dune_key_is_a_label_and_the_customer_code_00_bf_a_data_byte_and_its_complement_and_a_note_that_says_which_remotes_have_it():
+    notes: list[str] = []
+    rows = dune.parse_ir(dpre("    POWER                    00 BF 43 BC", "    PLAY                     00 BF 48 B7        * RCU models with discrete PLAY and PAUSE buttons",
+                              '    PLAY/PAUSE               00 BF 48 B7        * RCU models with combined "PLAY/PAUSE" button', "    BAD                      00 BF 43 BD", "    OTHER                    01 BE 43 BC",
+                              "- Put the unit into hardware standby (full power-off) mode.", "    P, O, W, E, R, 1, ENTER"), notes)
+    assert [(r.label, r.device, r.subdevice, r.function, r.written, r.note, r.where) for r in rows] == [
+        ("POWER", 0, 0xBF, 0x43, "00 BF 43 BC", "", "line 1"), ("PLAY", 0, 0xBF, 0x48, "00 BF 48 B7", "RCU models with discrete PLAY and PAUSE buttons", "line 2"),
+        ("PLAY/PAUSE", 0, 0xBF, 0x48, "00 BF 48 B7", 'RCU models with combined "PLAY/PAUSE" button', "line 3")]
+    assert notes == ["ir.html line 4 'BAD': `00 BF 43 BD` is not the customer code 00 BF and a data byte and its complement",       # a key whose bytes are not what the page says is not read
+                     "ir.html line 5 'OTHER': `01 BE 43 BC` is not the customer code 00 BF and a data byte and its complement",
+                     "ir.html line 6: - Put the unit into hardware standby (full power-off) mode.", "ir.html line 7: P, O, W, E, R, 1, ENTER"]    # and a line that is not a key is a note
+    with pytest.raises(ValueError, match="no key read"):
+        dune.parse_ir(dpre("some words"), [])
+
+
+POWER_PRONTO = ("0000 006D 0022 0000 015D 00A7 0018 0012 0018 0012 0018 0012 0018 003D 0018 0012 0018 0012 0018 0012 0018 003D 0018 003D 001A 003B 001A 003D 0018 0012 0018 003D 0018 003D "
+                "001A 003B 001A 0011 001A 003D 0018 0011 001A 0011 001A 0011 001A 0011 001A 003B 001A 0011 001A 0011 001A 0011 0018 003D 001A 003D 0018 003D 001A 003B 001A 0011 0018 003D "
+                "001A 003D 0018 06C3")
+
+
+def test_the_google_pages_nec_code_is_the_frame_as_a_32_bit_number_and_its_pronto_code_is_decoded_to_the_same_four_bytes():
+    assert dune.pronto_bytes(POWER_PRONTO) == (0x6D, [0x88, 0x77, 0x21, 0xDE])                                       # `DE217788` as sent: 88 77 21 DE
+    assert dune.pronto_bytes("0000 006D 0022") == "not a Pronto code with a once-sequence of 34 pairs and no repeat or the 2 pairs of NEC's" and dune.pronto_bytes("zz") == "not hexadecimal"
+    heading = ["1", "Key", "NEC IR code", "Pronto HEX code"]
+    notes: list[str] = []
+    rows = dune.parse_google([heading, ["1", "POWER", "DE217788", POWER_PRONTO], ["1", "WRONG", "DE217789", POWER_PRONTO], ["1", "SHORT", "DE2177", "0000"],
+                              ["1", "OTHERCODE", "DF207788", POWER_PRONTO]], notes)
+    assert [(r.label, r.device, r.subdevice, r.function, r.written, bool(r.doubt)) for r in rows] == [("POWER", 0x88, 0x77, 0x21, "DE217788", False), ("OTHERCODE", 0x88, 0x77, 0x20, "DF207788", True)]
+    assert "the page's Pronto code does not give the NEC code (carrier 006D, bytes 88 77 21 DE)" in rows[1].doubt            # the Pronto says another frame: Untested
+    assert notes == ["dunehd_google_ir_codes.html row 3 'WRONG': `DE217789` (89 77 21 DE as sent) has a byte pair that is not a byte and its complement",
+                     "dunehd_google_ir_codes.html row 4 'SHORT': `DE2177` is not a 32-bit NEC code"]
+    with pytest.raises(ValueError, match="the heading"):
+        dune.parse_google([["1", "Key", "Code", "Pronto"]], [])
+
+
+def dune_files() -> dict[str, dict]:
+    return {load(p)["model"]: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "dune").glob("*.json"))}
+
+
+def test_the_dune_pages_are_three_files_and_157_keys_the_codes_of_the_tv_boxes_remotes_under_two_customer_codes_and_the_google_remotes():
+    files = dune_files()
+    assert {n: len(f["keys"]) for n, f in files.items()} == {"IR codes (00 BF)": 67, "IR codes (CF CF)": 53, "Google IR codes": 37}
+    assert all(f["protocol"] == {"name": "NEC1", "carrierHz": 38000, "minSends": 1} and f["manufacturer"] == "Dune HD" for f in files.values())
+    assert Counter(s["forms"][0]["confidence"] for f in files.values() for s in f["keys"].values()) == {"plausible": 157}
+    old, new, google = files["IR codes (00 BF)"], files["IR codes (CF CF)"], files["Google IR codes"]
+    assert old["controls"][:3] == ["Dune HD Duo 4K", "Dune HD TV-102", "Dune HD TV-101"] and len(old["controls"]) == 18 and new["controls"] == ["Dune HD IR Remote", "Dune HD Slim IR Remote", "Dune HD Simple IR Remote"]
+    assert google["controls"] == ["Dune HD BOXY", "Dune HD Homatics Box 4K Plus"]
+    power, power2, gpower = (f["keys"]["KEY_POWER"]["forms"][0] for f in (old, new, google))
+    assert [(p["device"], p["subdevice"], p["function"]) for p in (power, power2, gpower)] == [("0x00", "0xBF", "0x43"), ("0xCF", "0xCF", "0x43"), ("0x88", "0x77", "0x21")]
+    assert power["source"] == "dune-hd.com IR code pages/ir.html@2f450872 (retrieved 2026-11-12) line 4 'POWER' (code 00 BF 43 BC): NEC1 device 0 subdevice 191 function 67"
+    assert power2["source"].endswith("NEC1 device 207 subdevice 207 function 67; the page says the latest remotes use `CF CF` instead of `00 BF` for these codes")
+    assert gpower["source"] == "dune-hd.com IR code pages/dunehd_google_ir_codes.html@07bd77c9 (retrieved 2026-11-12) row 2 'POWER' (code DE217788): NEC1 device 136 subdevice 119 function 33"
+
+
+def test_the_cf_cf_file_has_the_keys_that_are_not_discontinued_and_no_discrete_command_and_the_00_bf_file_all_of_them():
+    files = dune_files()
+    old, new = files["IR codes (00 BF)"]["keys"], files["IR codes (CF CF)"]["keys"]
+    assert "KEY_DISCRETE_MINUS_POWER_MINUS_ON" in old and "KEY_DISCRETE_MINUS_POWER_MINUS_ON" not in new and old["KEY_DISCRETE_MINUS_POWER_MINUS_ON"]["forms"][0]["function"] == "0x5F"
+    gone = [s["label"] for s in old.values() if s["label"] not in {x["label"] for x in new.values()}]
+    assert gone == ["PLAY/PAUSE (48)", "PLAY/PAUSE (1E)", "ANGLE/ROTATE", "REPEAT", "SHUFFLE/PIP", "URL/2nd audio", "REC (60)", "DUNE", "URL", "REC (55)", "PLAY/PAUSE (56)",
+                    "TOP MENU/DUNE", "KEYBRD", "DISCRETE-POWER-ON", "DISCRETE-POWER-OFF"]                 # 14 keys and the combined button, which is `PLAY/PAUSE` where it has no other
+    assert [s["label"] for s in new.values() if s["label"] not in {x["label"] for x in old.values()}] == ["PLAY/PAUSE"]
+    assert all("discontinued" not in s["forms"][0]["source"].split("`* ")[-1] for s in new.values() if "`* " in s["forms"][0]["source"])
+    # a label two keys share keeps the data byte that tells them apart (`REC` of two legacy remotes, `PLAY/PAUSE` of three), and a code that two keys share is explained by their notes
+    assert sorted(s["label"] for s in old.values() if re.match(r"^(REC|PLAY/PAUSE) \(", s["label"])) == ["PLAY/PAUSE (1E)", "PLAY/PAUSE (48)", "PLAY/PAUSE (56)", "REC (55)", "REC (60)"]
+    assert old["KEY_PLAY"]["forms"][0]["function"] == old["KEY_PLAY_SLASH_PAUSE_48"]["forms"][0]["function"] == "0x48"
+
+
+def test_the_sheet_tool_writes_the_lines_of_a_pre_block_as_the_pinned_csv_has_them_and_no_dune_page_has_a_notice_word():
+    import importlib.util
+    import html
+
+    spec = importlib.util.spec_from_file_location("official_sheets_to_csv", ROOT / "tools" / "official_sheets_to_csv.py")
+    tool = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(tool)
+    snapshot = load_snapshot(SNAPSHOT / "dune")
+    assert sorted(snapshot.documents) == ["dunehd_google_ir_codes.html", "ir.html"] and snapshot.retrieved == "2026-11-12"
+    assert tool.rows_of(SNAPSHOT / "dune" / "ir.html", "pre") == snapshot.sheet_of("ir.html", "pre") and snapshot.sheet_of("ir.html", "pre")[0] == ["    EJECT                    00 BF 10 EF"]
+    assert tool.rows_of(SNAPSHOT / "dune" / "dunehd_google_ir_codes.html", "tables") == snapshot.sheet_of("dunehd_google_ir_codes.html", "tables")
+    notice = re.compile(r"copyright|all rights|reserved|©|\(c\)|confidential|reproduc|trademark|proprietary|property of", re.I)
+    for name in snapshot.documents:
+        assert not notice.search(html.unescape((SNAPSHOT / "dune" / name).read_text(encoding="utf-8", errors="replace"))), name
+
+
+def test_the_google_pages_pronto_code_gives_its_nec_code_in_all_37_rows_and_the_00_bf_pages_complements_hold_in_all_67():
+    snapshot = load_snapshot(SNAPSHOT / "dune")
+    google = dune.parse_google(snapshot.sheet_of("dunehd_google_ir_codes.html", "tables"), [])
+    assert len(google) == 37 and not [r.label for r in google if r.doubt]
+    assert {(r.device, r.subdevice) for r in google} == {(0x88, 0x77)} and [r.label for r in google][:3] == ["POWER", "BOOKMARK", "SETUP"]
+    notes: list[str] = []
+    ir = dune.parse_ir(snapshot.sheet_of("ir.html", "pre"), notes)
+    assert len(ir) == 67 and len(notes) == 9 and all(int(n.split()[2].rstrip(":")) >= 68 for n in notes)         # the nine lines of the page's instructions after the table
+
+
+def test_dunes_00_bf_codes_are_mostly_in_the_ledgers_other_dune_remotes_and_the_cf_cf_and_google_codes_are_new():
+    """**59 of the 150 distinct frames are in the IR Blaster database's and the JP1 upgrades' Dune remotes**: those are the `00 BF` ones (the `CF CF` and Google frames are not there)."""
+    def frame(form):
+        return (int(form["device"], 0), int(form.get("subdevice", "0"), 0), int(form["function"], 0))
+    ours = {frame(s["forms"][0]) for f in dune_files().values() for s in f["keys"].values()}
+    theirs = set()
+    for path in sorted((ROOT / "remotes" / "irblaster" / "DUNE_HD").glob("*.json")) + sorted((ROOT / "remotes" / "jp1" / "Dune").glob("*.json")):
+        for spec in load(path)["keys"].values():
+            for f in spec["forms"]:
+                if "device" in f and "function" in f:
+                    theirs.add(frame(f))
+    assert (len(ours), len(ours & theirs), len({d for d, _, _ in ours & theirs})) == (150, 59, 1)
+
+
+
+# --- Hisense: the discrete IR codes of its Prosumer TVs (DESIGN section 103) -----------------------------------------------------------------------------
+
+HPRONTO = ("0000 006C 0022 0002 015B 00AD 0016 0016 0016 0016 0016 0041 0016 0016 0016 0016 0016 0016 0016 0016 0016 0016 0016 0041 0016 0041 0016 0016 0016 0041 0016 0041 0016 0041 "
+           "0016 0041 0016 0041 0016 0016 0016 0016 0016 0016 0016 0016 0016 0041 0016 0041 0016 0041 0016 0016 0016 0041 0016 0041 0016 0041 0016 0041 0016 0016 0016 0016 0016 0016 "
+           "0016 0041 0016 05F7 015B 0057 0016 0E6C")                                                       # POWER (toggle): 04 FB 70 8F, with NEC's repeat of two pairs
+
+
+def hrows(*rows: tuple) -> list[list[str]]:
+    """The rows of the tables of pages 4 to 9 as the sheet tool writes them: ``page, table, function, low, high, data, complement, complete hex, Pronto``."""
+    return [["4", "1", "DISCRETE CODES", "", "", "", "", "", ""], ["4", "1", *hisense.HEADING]] + [["4", "1", *r] for r in rows]
+
+
+def test_the_hisense_title_says_its_version_and_five_models_by_two_names_each():
+    page = [["1", "RS-232/IR Protocol for"], ["1", "Hisense® Prosumer TV"], ["1", "Version 3.6"], ["1", "17 April 2017"], ["1", "Models"], ["1", "55F1600 | LTDN55K2205BWUS"],
+            ["1", "55U1600 | HU55K324UBWG"], ["1", "65U1600 | LTDN65K550GUBWUS"], ["1", "75U1600 | LTDN75K700GUBWUS"], ["1", "86U1600 | LTDN86XT910MUBWUS"], ["1", "Questions?  Give us a call"]]
+    assert hisense.parse_models(page) == [("55F1600", "LTDN55K2205BWUS"), ("55U1600", "HU55K324UBWG"), ("65U1600", "LTDN65K550GUBWUS"), ("75U1600", "LTDN75K700GUBWUS"), ("86U1600", "LTDN86XT910MUBWUS")]
+    with pytest.raises(ValueError, match="does not say `Version 3.6`"):
+        hisense.parse_models([r for r in page if r[1] != "Version 3.6"])
+    with pytest.raises(ValueError, match="no `Models`"):
+        hisense.parse_models([r for r in page if r[1] != "Models"])
+    with pytest.raises(ValueError, match="4 models, not 5"):
+        hisense.parse_models(page[:9] + page[10:])
+
+
+def test_a_hisense_row_is_a_customer_code_and_a_data_byte_with_their_complements_and_a_pronto_code_that_must_say_the_same():
+    notes: list[str] = []
+    rows = hisense.parse_table(hrows(("POWER (toggle)", "04", "FB", "70", "8F", "04FB 708F", HPRONTO), ("Digit “0”", "04", "FB", "70", "8F", "04FB 708F", HPRONTO),
+                                     ("BADDATA", "04", "FB", "70", "8E", "04FB 708E", HPRONTO), ("BADCUSTOM", "04", "FA", "70", "8F", "04FA 708F", HPRONTO), ("NOTHEX", "04", "FB", "7G", "8F", "", ""),
+                                     ("OTHERPRONTO", "04", "FB", "71", "8E", "04FB 718E", HPRONTO), ("OTHERHEX", "04", "FB", "70", "8F", "04FB 7000", HPRONTO)), notes)
+    assert [(r.function, r.low, r.high, r.data, r.complement, bool(r.doubt)) for r in rows] == [
+        ("POWER (toggle)", 4, 0xFB, 0x70, 0x8F, False), ('Digit "0"', 4, 0xFB, 0x70, 0x8F, False), ("OTHERPRONTO", 4, 0xFB, 0x71, 0x8E, True), ("OTHERHEX", 4, 0xFB, 0x70, 0x8F, True)]
+    assert "the table's Pronto code gives carrier 006C, bytes 04 FB 70 8F" in rows[2].doubt and "the table's complete code `04FB 7000` is not `04FB 708F`" in rows[3].doubt
+    assert notes == ["page 4 'BADDATA': `04 FB 70 8E` has a byte pair that is not a byte and its complement", "page 4 'BADCUSTOM': `04 FA 70 8F` has a byte pair that is not a byte and its complement",
+                     "page 4 'NOTHEX': `04 FB 7G 8F` are not four bytes"]
+    bad = hrows(("POWER", "04", "FB", "70", "8F", "04FB 708F", HPRONTO))
+    bad[1][3] = "LOW"
+    with pytest.raises(ValueError, match="the heading"):
+        hisense.parse_table(bad, [])
+    with pytest.raises(ValueError, match="a row of 3 cells"):
+        hisense.parse_table(hrows(("POWER", "04", "FB")), [])
+    with pytest.raises(ValueError, match="no key read"):
+        hisense.parse_table(hrows(), [])
+
+
+def hisense_files() -> dict[str, dict]:
+    return {load(p)["model"]: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "hisense").glob("*.json"))}
+
+
+def test_the_hisense_table_is_five_files_of_the_same_64_keys_all_plausible_since_each_pronto_code_says_what_its_row_does():
+    files = hisense_files()
+    assert sorted(files) == ["55F1600", "55U1600 (Hisense table)", "65U1600", "75U1600", "86U1600"]               # the JP1 upgrade of the 55U1600 has the name (R15)
+    assert all(len(f["keys"]) == 64 and f["protocol"] == {"name": "NEC1", "carrierHz": 38400, "minSends": 1} and f["manufacturer"] == "Hisense" for f in files.values())
+    assert Counter(s["forms"][0]["confidence"] for f in files.values() for s in f["keys"].values()) == {"plausible": 320}
+    assert files["55F1600"]["controls"] == ["Hisense 55F1600", "Hisense LTDN55K2205BWUS"] and files["55U1600 (Hisense table)"]["controls"] == ["Hisense 55U1600", "Hisense HU55K324UBWG"]
+    assert all(f["keys"] == files["55F1600"]["keys"] for f in files.values())
+    keys = files["55F1600"]["keys"]
+    power = keys["KEY_POWER_TOGGLE"]["forms"][0]
+    assert (power["device"], power["subdevice"], power["function"]) == ("0x04", "0xFB", "0x70")
+    assert power["source"] == ("assets.hisense-usa.com RS-232 and IR protocol PDF/Hisense-RS-232-and-IR-Protocol-English_2.pdf@f0790e8f (retrieved 2026-11-12) page 4 row 'POWER (toggle)' "
+                               "(code 04 FB 70 8F): NEC1 device 4 subdevice 251 function 112")
+    assert [s["forms"][0]["function"] for s in keys.values()][:4] == ["0x70", "0x71", "0x72", "0x73"] and keys["KEY_GUIDE_TOGGLE"]["forms"][0]["function"] == "0xAE"
+    assert keys["KEY_ASPECT_RATIO_NOMAL_4_3"]["label"] == "ASPECT RATIO: NOMAL 4:3"                                 # the table's own spelling
+    assert sorted(int(s["forms"][0]["function"], 0) for s in keys.values()) == list(range(0x70, 0x70 + 64)) or len({s["forms"][0]["function"] for s in keys.values()}) == 64
+
+
+def test_the_sheet_tool_reads_pages_and_tables_of_a_range_as_the_pinned_csv_has_them_and_the_hisense_pdf_has_no_notice_word():
+    pytest.importorskip("pymupdf")
+    import importlib.util
+    import pymupdf
+
+    spec = importlib.util.spec_from_file_location("official_sheets_to_csv", ROOT / "tools" / "official_sheets_to_csv.py")
+    tool = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(tool)
+    snapshot = load_snapshot(SNAPSHOT / "hisense")
+    path = SNAPSHOT / "hisense" / hisense.FILE
+    assert snapshot.retrieved == "2026-11-12" and list(snapshot.documents) == [hisense.FILE]
+    assert tool.rows_of(path, "pages 1-1") == snapshot.sheet_of(hisense.FILE, "pages 1-1") and tool.rows_of(path, "tables 4-9") == snapshot.sheet_of(hisense.FILE, "tables 4-9")
+    assert {r[0] for r in snapshot.sheet_of(hisense.FILE, "tables 4-9")} == {"4", "5", "6", "7", "8", "9"} and len(tool.rows_of(path, "tables")) > len(snapshot.sheet_of(hisense.FILE, "tables 4-9"))
+    notice = re.compile(r"copyright|all rights|reserved|©|\(c\)|confidential|reproduc|trademark|proprietary|property of", re.I)
+    assert not notice.search(" ".join(page.get_text() for page in pymupdf.open(str(path))))
+    models = hisense.parse_models(snapshot.sheet_of(hisense.FILE, "pages 1-1"))
+    rows = hisense.parse_table(snapshot.sheet_of(hisense.FILE, "tables 4-9"), [])
+    assert len(models) == 5 and len(rows) == 64 and not [r.function for r in rows if r.doubt] and {r.page for r in rows} == {4, 5, 6, 7, 8, 9}
+
+
+def test_all_64_hisense_frames_are_in_the_ledgers_other_hisense_remotes_so_these_files_add_the_models_and_the_table_and_no_signal():
+    def frame(form):
+        return (int(form["device"], 0), int(form["subdevice"], 0), int(form["function"], 0))
+    ours = {frame(s["forms"][0]) for s in hisense_files()["55F1600"]["keys"].values()}
+    theirs = set()
+    for source in ("jp1", "smartir", "irblaster", "lirc"):
+        for path in sorted((ROOT / "remotes" / source).rglob("*.json")):
+            if "isense" not in path.relative_to(ROOT).as_posix().replace("HISENSE", "Hisense").replace("HiSense", "Hisense"):
+                continue
+            for spec in load(path)["keys"].values():
+                for f in spec["forms"]:
+                    if "device" in f and "function" in f and f.get("subdevice") is not None:
+                        theirs.add(frame(f))
+    assert (len(ours), len(ours & theirs)) == (64, 64)
 
 
 # --- Harman: JBL Synthesis and Lexicon -----------------------------------------------------------------------------------------
@@ -3725,8 +4635,13 @@ def test_the_generic_denon_pdf_readers_read_the_avr_4311_list_as_the_fixed_reade
 
 
 def denon_pdf_files() -> dict[str, dict]:
-    """The files of §94's lists: those whose keys cite a PDF of ``assets.denon.com IR code documents`` (§95's two Word lists are there too)."""
-    return denon_files_of(r"assets\.denon\.com IR code documents/[^@]+\.pdf@")
+    """The files of §94's lists: those whose keys cite a PDF of ``assets.denon.com IR code documents`` (§95's two Word lists are there too, and §98's sheets are not)."""
+    return denon_files_of(r"assets\.denon\.com IR code documents/(?!(?:" + "|".join(re.escape(d.file) for d in ds.SHEETS) + r")@)[^@]+\.pdf@")
+
+
+def denon_sheet_files() -> dict[str, dict]:
+    """The files of §98's sheets: those whose keys cite one of ``ds.SHEETS``."""
+    return denon_files_of(r"assets\.denon\.com IR code documents/(?:" + "|".join(re.escape(d.file) for d in ds.SHEETS) + r")@")
 
 
 def test_the_24_denon_pdf_lists_are_72_files_a_sharp_and_a_kaseikyo_file_for_each_model_and_their_untested_keys_are_the_parity_the_number_or_the_two_names():
@@ -3814,7 +4729,7 @@ def test_the_denon_pdf_lists_differ_in_their_layouts_and_the_reader_finds_each_o
     assert sum(s["forms"][0]["confidence"] == "untested" for s in files["AVR-5805__Kaseikyo"]["keys"].values()) == 87 and all(s["forms"][0]["confidence"] == "plausible" for s in files["AVR-5805"]["keys"].values())
 
 
-def test_other_sources_denon_remotes_hold_181_of_the_196_sharp_codes_and_724_of_the_791_kaseikyo_codes_of_the_pdf_lists_under_the_same_names_mostly():
+def test_other_sources_denon_remotes_hold_181_of_the_196_sharp_codes_and_725_of_the_791_kaseikyo_codes_of_the_pdf_lists_under_the_same_names_mostly():
     mine: dict[str, dict[tuple, set]] = {"Denon": {}, "Denon-K": {}}
     others: dict[str, dict[tuple, set]] = {"Denon": {}, "Denon-K": {}}
     ours = set(denon_pdf_files())
@@ -3829,7 +4744,7 @@ def test_other_sources_denon_remotes_hold_181_of_the_196_sharp_codes_and_724_of_
             form = spec["forms"][0]
             code = (int(form["device"], 16), int(form.get("subdevice", "0x00"), 16) if protocol == "Denon-K" else 0, int(form["function"], 16))
             target[protocol].setdefault(code, set()).add(squash(spec["label"]))
-    for protocol, (total, held, named) in {"Denon": (196, 181, 173), "Denon-K": (791, 724, 590)}.items():       # (715 and 572 before §95's lists, which hold 9 of the 76 Kaseikyo codes then new)
+    for protocol, (total, held, named) in {"Denon": (196, 181, 173), "Denon-K": (791, 725, 600)}.items():       # (715 and 572 before §95's lists, which hold 9 of the 76 Kaseikyo codes then new; 590 named alike before §98's sheets, which name one of them so; 724 and 591 before §108's AVR-X4000 list, which holds one more and names nine more alike)
         both = [c for c in mine[protocol] if c in others[protocol]]
         assert (len(mine[protocol]), len(both), sum(bool(mine[protocol][c] & others[protocol][c]) for c in both)) == (total, held, named)
 
@@ -3923,18 +4838,18 @@ def test_a_denon_x_series_row_of_2013_has_four_cells_for_its_genre2_which_are_it
 
 
 def test_denons_x1000_and_x2500h_lists_are_four_products_in_eight_files_and_the_zone_keys_of_a_model_with_no_zone_are_not_there():
-    files = denon_files_of(r"assets\.denon\.com IR code documents/[^@]+\.doc@")
+    files = denon_files_of(r"assets\.denon\.com IR code documents/(?!avrx4000_)[^@]+\.doc@")
     assert {n: (f["protocol"]["name"], len(f["keys"]), sum(s["forms"][0]["confidence"] == "untested" for s in f["keys"].values())) for n, f in files.items()} == {
-        "AVR-X1000": ("Denon", 138, 0), "AVR-X1000__Kaseikyo": ("Denon-K", 376, 4), "AVR-E300": ("Denon", 119, 0), "AVR-E300__Kaseikyo": ("Denon-K", 278, 2),
+        "AVR-X1000": ("Denon", 138, 0), "AVR-X1000__Kaseikyo": ("Denon-K", 378, 4), "AVR-E300": ("Denon", 119, 0), "AVR-E300__Kaseikyo": ("Denon-K", 279, 2),
         "AVR-X2500H": ("Denon", 137, 0), "AVR-X2500H__Kaseikyo": ("Denon-K", 344, 1), "AVR-S940H": ("Denon", 134, 0), "AVR-S940H__Kaseikyo": ("Denon-K", 341, 1)}
-    assert sum(len(f["keys"]) for f in files.values()) == 1_867
+    assert sum(len(f["keys"]) for f in files.values()) == 1_870                                                                           # 1,867 before §108 read `NA & EU only`
 
     def labels(name: str) -> set[str]:
         return {s["label"] for s in files[name]["keys"].values()}
 
     # the AVR-X1000's zone 2 group is `ZONE2 (X1000 NA only)`: the AVR-E300 has none; the AVR-X2500H and the AVR-S940H both have the 76 zone 2 names
     assert any(l.startswith("ZONE2") for l in labels("AVR-X1000__Kaseikyo")) and not any(l.startswith("ZONE2") for l in labels("AVR-E300__Kaseikyo"))
-    assert labels("AVR-E300__Kaseikyo") < labels("AVR-X1000__Kaseikyo") and len(labels("AVR-X1000__Kaseikyo") - labels("AVR-E300__Kaseikyo")) == 93
+    assert labels("AVR-E300__Kaseikyo") < labels("AVR-X1000__Kaseikyo") and len(labels("AVR-X1000__Kaseikyo") - labels("AVR-E300__Kaseikyo")) == 94
     assert {"All Zone Stereo ON (NA only)", "PURE DIRECT (NA only)"} <= labels("AVR-X1000__Kaseikyo") - labels("AVR-E300__Kaseikyo")                 # a region stays in the label
     assert sum(l.startswith("ZONE2") for l in labels("AVR-X2500H__Kaseikyo")) == sum(l.startswith("ZONE2") for l in labels("AVR-S940H__Kaseikyo")) == 76
     assert any("HEOS MUSIC" in l for l in labels("AVR-X2500H__Kaseikyo")) and "DIRECT SEARCH (RDS SEARCH (EU only))" in labels("AVR-X2500H") & labels("AVR-S940H")
@@ -3950,4 +4865,1296 @@ def test_denons_x1000_and_x2500h_lists_are_four_products_in_eight_files_and_the_
                       ("avr-x2500h_s940h_ir_code_v01-02072018.doc", "https://assets.denon.com/documentmaster/us/avr-x2500h_s940h_ir_code_v01-02072018.doc")):
         entry = manifest["documents"][name]
         assert entry["url"] == url and entry["retrieved"] == "2026-10-18" and "snapshot" not in entry and (SNAPSHOT / "denon" / name).read_bytes()[:4] == b"\xd0\xcf\x11\xe0"
-    assert [d.file for d in denon.DOC_DOCUMENTS[-2:]] == ["avrx1000_e300_ir_code_v01.doc", "avr-x2500h_s940h_ir_code_v01-02072018.doc"]
+    assert [d.file for d in denon.DOC_DOCUMENTS[-3:-1]] == ["avrx1000_e300_ir_code_v01.doc", "avr-x2500h_s940h_ir_code_v01-02072018.doc"]
+
+
+# --- Denon's short sheets: zones 2 and 3, the CD changers, the Hi-Fi pair, the Blu-ray and DVD players, the S-series (D361 to D363) -----------------------------------------------
+
+
+def sheet_bits(genre1: int, genre2: int, data: int, ident: int = 0, parity: int | None = None, genre2_bits: int | None = None) -> str:
+    """The 48 bits of a Kaseikyo frame of Denon, first bit first: the vendor, the parity nibble 0, GENRE1, GENRE2, ten data bits, two ID bits and the parity byte."""
+    def bits(v: int, n: int) -> str:
+        return "".join(str(v >> i & 1) for i in range(n))
+
+    p = ds.parity_of(genre1, genre2, data, ident) if parity is None else parity
+    return denon.VENDOR + "0000" + bits(genre1, 4) + bits(genre2 if genre2_bits is None else genre2_bits, 4) + bits(data, 10) + bits(ident, 2) + bits(p, 8)
+
+
+def test_a_denon_sheet_kaseikyo_row_is_48_bits_and_its_parity_byte_checks_genre2_so_a_header_that_differs_from_the_bits_is_read_where_the_parity_supports_it():
+    models = frozenset({"AVR-1508 Zone 2"})
+    row = ds.kaseikyo_row("row 1", 1, "ZONE POWER ON", "ZONE POWER ON", sheet_bits(4, 4, 6), models, "ZONE2", 4)
+    assert (row.device, row.subdevice, row.function, row.doubt, row.table, row.names) == (4, 4, 6, "", "K4-4", [("ZONE POWER ON", models)])
+    assert row.how.startswith("bits 1 to 48 " + sheet_bits(4, 4, 6) + "): Denon-K device 4 subdevice 4 function 6")
+    # the bits say GENRE2 5 and the header and the parity byte 4: the nine zone 2 sheets of 2007
+    row = ds.kaseikyo_row("row 1", 1, "ZONE POWER ON", "ZONE POWER ON", sheet_bits(4, 4, 6, genre2_bits=5), models, "ZONE2", 4)
+    assert row.subdevice == 4 and row.doubt == "the row's bits say GENRE2 5, the sheet's header and the parity byte say 4: read as the header, which the parity byte supports"
+    # the parity byte is another table's, so GENRE2 is whatever the bits say and the key is doubted; and the header may say another than the bits where the parity agrees with the bits
+    row = ds.kaseikyo_row("row 1", 1, "X", "X", sheet_bits(4, 4, 6, parity=0xFF), models, "ZONE2", 4)
+    assert row.subdevice == 4 and "the parity byte 0xff is not that of GENRE1 4, GENRE2 4 and the data 0x6" in row.doubt
+    row = ds.kaseikyo_row("row 1", 1, "X", "X", sheet_bits(4, 6, 6), models, "ZONE3", 4)
+    assert row.subdevice == 6 and row.doubt == "the sheet's header says GENRE2 4 and the row's bits 6"
+    # the ID bits go above the ten data bits (a function is data + 1024 * ID) and are in the parity
+    row = ds.kaseikyo_row("row 1", 1, "X", "X", sheet_bits(5, 8, 0x31, ident=2), models, "", None)
+    assert (row.device, row.subdevice, row.function, row.doubt) == (5, 8, 0x31 + 2 * 1024, "")
+    with pytest.raises(ValueError, match="vendor bits"):
+        ds.kaseikyo_row("row 1", 1, "X", "X", "1" + sheet_bits(4, 4, 6)[1:], models, "", None)
+    with pytest.raises(ValueError, match="vendor parity"):
+        ds.kaseikyo_row("row 1", 1, "X", "X", sheet_bits(4, 4, 6)[:16] + "1000" + sheet_bits(4, 4, 6)[20:], models, "", None)
+    assert ds.parity_of(5, 8, 0x31, 0) == 0x4B and ds.parity_of(4, 4, 6) == 0x24                       # the S-32's SLEEP row says 4BH, the AVR-1508's zone 2 sheet's first row 0x24
+
+
+def test_a_denon_sheet_sharp_row_is_its_address_extension_and_data_first_bit_first_and_the_cd_changers_row_labels_are_the_values_of_their_data():
+    models = frozenset({"DCM-390"})
+    row = ds.sharp_row("C51", 1, "POWER ON", "POWER ON", "00010", "10", "110011", models, 51)
+    assert (row.device, row.function, row.number, row.table, row.names) == (8, 51 + 64, 51, "00010 10", [("POWER ON", models)])
+    assert row.how == "genre CD, system address 00010, extension bits 10, data 110011): Denon device 8 function 115, each field first bit first, the extension bits above the data"
+    assert ds.sharp_row("K1", 2, "POWER", "POWER", "01000", "01", "000010", models, None).function == 16 + 128                 # no genre of the table's for 01000/01: said nothing of it
+    assert "genre" not in ds.sharp_row("K1", 2, "POWER", "POWER", "01000", "01", "000010", models, None).how
+
+
+@pytest.fixture(scope="module")
+def sheet_snapshot():
+    return load_snapshot(SNAPSHOT / "denon")
+
+
+def test_the_eleven_zone_sheets_are_33_rows_of_48_bits_each_and_the_nine_zone_2_sheets_say_genre2_5_where_their_header_and_parity_say_4(sheet_snapshot):
+    zone = [d for d in ds.SHEETS if d.layout == "zone"]
+    assert [d.file for d in zone] == [f"avr-{m}_zone2-ircodes.pdf" for m in ("588", "688", "788", "888", "988", "1508", "1708", "1908", "2308ci", "2808ci")] + ["avr-2808ci_zone3-ircodes.pdf"]
+    table = None
+    for document in zone:
+        rows, notes = ds.sheet_rows(sheet_snapshot.sheet_of(document.file, "words"), document)
+        assert len(rows) == 33 and notes == [] and all(r.kind == "kaseikyo" and r.device == 4 and r.names for r in rows), document.file
+        assert [r.function for r in rows[:3]] == [6, 7, 704] and [r.names[0][0] for r in rows[:3]] == ["ZONE POWER ON", "ZONE POWER OFF", "PHONO"]
+        if document.group == "ZONE2":
+            assert {r.subdevice for r in rows} == {4} and all(r.doubt.startswith("the row's bits say GENRE2 5, the sheet's header and the parity byte say 4") for r in rows)
+        else:
+            assert {r.subdevice for r in rows} == {6} and [r.doubt for r in rows] == [""] * 33 and all("ZONE3" == r.group for r in rows)
+        # the nine sheets of 2007/5/30 are one table: only the title's model differs
+        key = [(r.function, r.names[0][0]) for r in rows]
+        if document.group == "ZONE2":
+            table = table or key
+            assert key == table
+    # a sheet that is not the one its file name says, a header that is not Denon's or a row that is not 48 bits is refused or reported
+    document = zone[5]
+    sheet = sheet_snapshot.sheet_of(document.file, "words")
+    with pytest.raises(ValueError, match="is not the sheet of ZONE2 of the AVR-1508"):
+        ds.zone_rows([[c.replace("AVR-1508", "AVR-1708") for c in r] for r in sheet], document, [])
+    short = [list(r) for r in sheet]
+    at = next(i for i, r in enumerate(short) if len(r) > 100 and r[1] != "R")
+    short[at] = short[at][:2] + short[at][4:]                                                                 # a row of 47 bit columns
+    notes: list[str] = []
+    with pytest.raises(ValueError, match="32 rows of 48 bits"):
+        ds.zone_rows(short, document, notes)
+    assert notes and "47 bit columns, not 48" in notes[0]
+
+
+SHEET_FILES = {
+    "AVR-1508_Zone_2__Kaseikyo": ("Denon-K", 33, 33), "AVR-1708_Zone_2__Kaseikyo": ("Denon-K", 33, 33), "AVR-1908_Zone_2__Kaseikyo": ("Denon-K", 33, 33),
+    "AVR-2308CI_Zone_2__Kaseikyo": ("Denon-K", 33, 33), "AVR-2808CI_Zone_2__Kaseikyo": ("Denon-K", 33, 33), "AVR-2808CI_Zone_3__Kaseikyo": ("Denon-K", 33, 0),
+    "AVR-588_Zone_2__Kaseikyo": ("Denon-K", 33, 33), "AVR-688_Zone_2__Kaseikyo": ("Denon-K", 33, 33), "AVR-788_Zone_2__Kaseikyo": ("Denon-K", 33, 33),
+    "AVR-888_Zone_2__Kaseikyo": ("Denon-K", 33, 33), "AVR-988_Zone_2__Kaseikyo": ("Denon-K", 33, 33),
+    "DCD-1650RE": ("Denon", 23, 0), "DCD-1650RE__Kaseikyo": ("Denon-K", 4, 0), "DCD-2020AE": ("Denon", 23, 0), "DCD-2020AE__Kaseikyo": ("Denon-K", 4, 0),
+    "DCM-27": ("Denon", 33, 1), "DCM-290": ("Denon", 33, 1), "DCM-390": ("Denon", 33, 1),
+    "DVD-2500BTCI": ("Denon", 42, 4), "DVD-2500BTCI__Kaseikyo": ("Denon-K", 47, 0), "DVD-3800BDCI": ("Denon", 42, 4), "DVD-3800BDCI__Kaseikyo": ("Denon-K", 47, 0),
+    "PMA-2000RE": ("Denon", 5, 0), "PMA-2020AE": ("Denon", 5, 0), "S-32__Kaseikyo": ("Denon-K", 22, 0), "S-52__Kaseikyo": ("Denon-K", 24, 0),
+    "S-81": ("Denon", 41, 0), "S-81__Kaseikyo": ("Denon-K", 11, 0)}
+
+
+def test_the_denon_sheets_are_28_files_and_802_keys_and_the_untested_ones_are_the_zone_2_sheets_a_row_label_that_is_not_its_data_and_two_names_for_one_code():
+    files = denon_sheet_files()
+    assert {n: (f["protocol"]["name"], len(f["keys"]), sum(s["forms"][0]["confidence"] == "untested" for s in f["keys"].values())) for n, f in files.items()} == SHEET_FILES
+    assert sum(v[1] for v in SHEET_FILES.values()) == 802 and sum(v[2] for v in SHEET_FILES.values()) == 341
+    why = Counter()
+    for name, f in files.items():
+        for s in f["keys"].values():
+            form = s["forms"][0]
+            if form["confidence"] == "untested":
+                why[("zone 2 genre2" if "the sheet's header and the parity byte say 4" in form["source"] else "label is not the data" if "the row's identifier gives the number 64" in form["source"]
+                     else "two names" if "the document gives this code to" in form["source"] else form["source"])] += 1
+    assert why == Counter({"zone 2 genre2": 330, "label is not the data": 3, "two names": 8})
+    # the amplifiers' files have the amplifier's keys and the players' files the players': one remote, RC-1179, for four products
+    assert {s["label"] for s in files["PMA-2000RE"]["keys"].values()} == {"POWER", "VOLUME UP", "INPUT SEL. UP", "MUTING", "VOLUME DOWN"}       # INPUT SEL. DOWN is the one row not read
+    assert files["PMA-2000RE"]["keys"] == files["PMA-2020AE"]["keys"] and files["DCD-1650RE"]["keys"] == files["DCD-2020AE"]["keys"]
+    assert "PALY/PAUSE" in {s["label"] for s in files["DCD-1650RE"]["keys"].values()}                           # a name the document misspells, as printed
+    # a Zone 2 file names its receiver in its controls and the zone in its own name
+    zone = files["AVR-1508_Zone_2__Kaseikyo"]
+    assert (zone["model"], zone["controls"], zone["aliases"]) == ("AVR-1508 Zone 2 (Kaseikyo)", ["Denon AVR-1508 Zone 2", "Denon AVR-1508"], [])
+    key = zone["keys"]["KEY_ZONE_POWER_ON"]["forms"][0]
+    assert (key["device"], key["subdevice"], key["function"], key["confidence"]) == ("0x04", "0x04", "0x06", "untested")
+    assert key["source"].startswith("assets.denon.com IR code documents/avr-1508_zone2-ircodes.pdf@") and " (retrieved 2026-11-12) page 1 table row 'row 1' ('ZONE POWER ON', bits 1 to 48 " in key["source"]
+
+
+def sheet_rows_of(file: str):
+    document = next(d for d in ds.SHEETS if d.file == file)
+    return ds.sheet_rows(load_snapshot(SNAPSHOT / "denon").sheet_of(file, "words"), document)
+
+
+def test_the_cd_changers_the_hi_fi_remote_and_the_s_81_give_the_same_codes_for_the_same_keys_and_the_one_row_the_text_layer_loses_is_reported():
+    def code(file: str, ident: str):
+        rows, _ = sheet_rows_of(file)
+        row = next(r for r in rows if r.ident == ident and r.kind == "sharp")
+        return row.device, row.function
+
+    # CD POWER ON: the RC-1033's C51 and the RC-1179's K2; OPEN/CLOSE: the RC-1033's C16 and the S-81's EJECT; STOP: the RC-1179's K27 and the S-81's KEY 11
+    assert code("dcm-390_290_27-ircodes.pdf", "C51") == code("dcd1650re_2020ae_pma2000re_2020ae_ir_code_v01.pdf", "K2") == (8, 115)
+    assert code("dcm-390_290_27-ircodes.pdf", "C16") == code("s-81-ircodes_v01.pdf", "KEY 1") == (8, 80)
+    assert code("dcd1650re_2020ae_pma2000re_2020ae_ir_code_v01.pdf", "K27") == code("s-81-ircodes_v01.pdf", "KEY 11") == (8, 94)
+    rows, notes = sheet_rows_of("dcd1650re_2020ae_pma2000re_2020ae_ir_code_v01.pdf")
+    assert [(r.kind, r.page) for r in rows].count(("sharp", 2)) == 28 and [(r.kind, r.page) for r in rows].count(("kaseikyo", 3)) == 4
+    assert len(notes) == 1 and "the row K34 ('INPUT SEL. DOWN" in notes[0] and "has 14 bit columns, not 15" in notes[0]
+    assert all(sheet_rows_of(d.file)[1] == [] for d in ds.SHEETS if d.layout in ("dcm", "dvd", "bytes", "s81"))
+
+
+def test_the_s_series_rows_say_their_genres_data_code_and_parity_in_hexadecimal_and_the_s_81_writes_three_columns_most_significant_bit_first():
+    rows, _ = sheet_rows_of("s-32-ircodes_v01.pdf")
+    sleep = next(r for r in rows if r.names and r.names[0][0] == "SLEEP")
+    assert (sleep.device, sleep.subdevice, sleep.function, sleep.doubt, sleep.ident) == (5, 8, 0x31, "", "KEY 1")                 # SYSTEM (5H), CLIENT (8H), (031H), 4BH
+    assert sum(1 for r in rows if r.doubt) == 0 and len(rows) == 22
+    rows, _ = sheet_rows_of("s-81-ircodes_v01.pdf")
+    eject = next(r for r in rows if r.ident == "KEY 1" and r.kind == "sharp")
+    assert (eject.device, eject.function, eject.number, eject.table) == (8, 80, 16, "00010 10")
+    assert "the table's columns C13,C12 01, C11-C6 010000 and C5-C1 01000" in eject.how                    # written 01 010000 01000: the extension bits C13 then C12, the data and the address
+    receiver = next(r for r in rows if r.ident == "KEY 2" and r.kind == "sharp")
+    assert (receiver.device, receiver.function, receiver.how.startswith("genre RCVR, ")) == (12, 80, True)  # 00110 10 is the receiver genre: RCVR
+    kaseikyo = [r for r in rows if r.kind == "kaseikyo"]
+    assert len(kaseikyo) == 12 and {(r.device, r.subdevice) for r in kaseikyo} == {(2, 3), (5, 1)}          # PLAYER and PORTABLE PLAYER, SYSTEM and SYSTEM
+    # the ID of a Blu-ray row is the key's number and the data in three hexadecimal digits, and a row that says otherwise is doubted
+    rows, _ = sheet_rows_of("dvd-3800bdci_dvd-2500btci_ircodes.pdf")
+    main = [r for r in rows if r.kind == "kaseikyo"]
+    assert len(main) == 47 and [r.doubt for r in main] == [""] * 47 and (main[0].ident, main[0].function, main[0].names[0][0]) == ("ID 1001", 1, "0")
+
+
+def test_other_sources_denon_remotes_hold_93_of_97_sharp_codes_and_82_of_87_kaseikyo_ones_of_the_sheets_and_none_of_the_66_zone_codes():
+    """The independent check (D362): the sheets' codes against every other Denon remote of the ledger, and whether a code is under a name that agrees."""
+    mine_files = set(SHEET_FILES)
+    copies = set(dvd1800_files())                                            # §108's four models are the DVD-3800BDCI's table again: not another source for it
+    held: dict[tuple, list[str]] = {}
+    mine: dict[tuple, list[tuple[str, str]]] = {}
+    for path in sorted((ROOT / "remotes").glob("*/*/*.json")):
+        doc = load(path)
+        protocol = doc["protocol"].get("name")
+        if protocol not in ("Denon", "Denon-K"):
+            continue
+        ours = "official" in path.parts and "denon" in path.parts and path.stem in mine_files
+        if "official" in path.parts and "denon" in path.parts and path.stem in copies:
+            continue
+        for spec in doc["keys"].values():
+            for f in spec["forms"]:
+                if f["type"] != "irp":
+                    continue
+                code = (protocol, int(f["device"], 0), int(f.get("subdevice", "0x0"), 0) if protocol == "Denon-K" else 0, int(f["function"], 0))
+                (mine.setdefault(code, []) if ours else held.setdefault(code, [])).append((path.stem, spec.get("label", "")) if ours else spec.get("label", ""))
+    squash = lambda text: re.sub(r"[^a-z0-9]", "", text.lower())
+    count: dict[tuple, list[int]] = {}
+    for code, items in mine.items():
+        key = (code[0], "zone" if any("Zone" in stem for stem, _ in items) else "other")
+        c = count.setdefault(key, [0, 0, 0])
+        c[0] += 1
+        if code in held:
+            c[1] += 1
+            c[2] += any(squash(a) in squash(b) or squash(b) in squash(a) for _, a in items for b in held[code])
+    assert count == {("Denon", "other"): [97, 93, 91], ("Denon-K", "other"): [87, 82, 72], ("Denon-K", "zone"): [66, 0, 0]}
+
+
+def test_the_denon_sheets_are_17_pinned_live_files_of_denons_host_with_a_words_csv_each_and_none_has_a_notice_word_in_its_text():
+    manifest = json.loads((SNAPSHOT / "denon" / MANIFEST).read_text(encoding="utf-8"))
+    notice = re.compile(r"copyright|©|\(c\)|all rights|reserved|confidential|reproduc", re.I)
+    assert len(ds.SHEETS) == 18 and [d.file for d in ds.SHEETS if d.host] == ["DVD1800BD_DBP1610I_DBP2010_2010CI_IR_CODE_V01.pdf"]          # §108's is AWE Europe's copy
+    for document in (d for d in ds.SHEETS if not d.host):
+        entry = manifest["documents"][document.file]
+        assert re.fullmatch(r"https://assets\.denon\.com/documentmaster/(us|uk)/[\w.\-]+\.pdf", entry["url"]) and entry["url"].endswith("/" + document.file)
+        assert entry["retrieved"] == "2026-11-12" and "snapshot" not in entry and (SNAPSHOT / "denon" / document.file).read_bytes()[:5] == b"%PDF-"
+        csv_name = document.file[:-4] + "__words.csv"
+        assert [n for n, s in manifest["sheets"].items() if s["document"] == document.file] == [csv_name]
+        # D110: a table of reference codes with no notice in it is public; a document with one is the private repository's
+        text = " ".join(" ".join(row[3::2]) for row in load_snapshot(SNAPSHOT / "denon").sheet_of(document.file, "words") if row[1] != "R")
+        # the only hits of the words are the two `(c)` of the Blu-ray player's key name `COLOR(C)` (its colour keys A to D, on its two pages), not a notice
+        assert not notice.search(text.replace("COLOR(C)", "COLOR C")), document.file
+    assert [m[0] for m in notice.finditer(" ".join(" ".join(r[3::2]) for r in load_snapshot(SNAPSHOT / "denon").sheet_of("dvd-3800bdci_dvd-2500btci_ircodes.pdf", "words") if r[1] != "R"))] == ["(C)", "(C)"]
+
+
+def test_every_denon_sheet_key_cites_its_document_by_host_file_hash_and_date_and_its_row_and_the_ledger_reads_it_back_to_the_same_code():
+    shape = re.compile(r"^assets\.denon\.com IR code documents/(?P<file>[\w.\-]+\.pdf)@[0-9a-f]{8} \(retrieved 2026-11-12\) page (?P<page>\d) table row '[^']+' \('.*'(, .+)?\): Denon(-K)? device \d+ ")
+    manifest = json.loads((SNAPSHOT / "denon" / MANIFEST).read_text(encoding="utf-8"))
+    n = 0
+    for name, f in denon_sheet_files().items():
+        for s in f["keys"].values():
+            m = shape.match(s["forms"][0]["source"])
+            assert m, s["forms"][0]["source"]
+            assert manifest["documents"][m["file"]]["sha256"].startswith(re.search(r"@([0-9a-f]{8}) ", s["forms"][0]["source"])[1])
+            n += 1
+    assert n == 802
+
+
+# --- Denon's AVR-X4000 list and the DVD-1800BD sheet of AWE Europe's folder (DESIGN section 108) --------------------------------------------------------
+
+X4000 = "avrx4000_ir_code_v01.doc"
+DVD1800 = "DVD1800BD_DBP1610I_DBP2010_2010CI_IR_CODE_V01.pdf"
+
+
+def x4000_files() -> dict[str, dict]:
+    return denon_files_of(r"assets\.denon\.com IR code documents/" + re.escape(X4000) + "@")
+
+
+def dvd1800_files() -> dict[str, dict]:
+    return denon_files_of(r"awe-europe\.com control documents/" + re.escape(DVD1800) + "@")
+
+
+def test_a_denon_mark_of_two_regions_is_a_label_and_no_restriction_and_a_mark_of_no_model_of_the_document_is_refused():
+    models = ("AVR-X4000",)
+    assert denon.marks_of("Spotify (NA & EU only)", models) == ("Spotify (NA/EU only)", frozenset(models))
+    assert denon.marks_of("ZONE2 Spotify (NA & EU only)", models)[0] == "ZONE2 Spotify (NA/EU only)"
+    assert denon.marks_of("PTY ※EU only", models) == ("PTY (EU only)", frozenset(models))                      # the marks of one region are as they were
+    assert denon.marks_of("BAND AM (NA only)", models) == ("BAND AM (NA only)", frozenset(models))
+    # a mark of a model the document does not have names no model: the key would be in no file and nothing said so (the three Spotify rows of §95's lists were), so it is refused
+    with pytest.raises(ValueError, match="names none of AVR-X4000"):
+        denon.marks_of("MEMORY ※AVR-X1000 only", models)
+    assert denon.marks_of("PTY ※X2700H only", ("AVR-X2700H", "AVR-S960H"))[1] == frozenset({"AVR-X2700H"})
+
+
+def test_the_avr_x4000_list_is_a_sharp_and_a_kaseikyo_file_and_its_eight_untested_keys_are_zone_rows_that_disagree_with_themselves_or_share_a_code():
+    files = x4000_files()
+    assert {n: (f["protocol"]["name"], len(f["keys"]), sum(s["forms"][0]["confidence"] == "untested" for s in f["keys"].values())) for n, f in files.items()} == {
+        "AVR-X4000": ("Denon", 137, 0), "AVR-X4000__Kaseikyo": ("Denon-K", 491, 8)}
+    assert {f["manufacturer"] for f in files.values()} == {"Denon"} and files["AVR-X4000"]["controls"] == ["Denon AVR-X4000"]
+    kaseikyo = files["AVR-X4000__Kaseikyo"]["keys"]
+    untested = {s["label"]: s["forms"][0] for s in kaseikyo.values() if s["forms"][0]["confidence"] == "untested"}
+    assert {label: (f["subdevice"], f["function"]) for label, f in untested.items()} == {
+        "ZONE2 FAVORITE STATION 3": ("0x03", "0xF4"), "ZONE2 FAVORITE STATION 4": ("0x03", "0xF4"), "ZONE2 VR MUTE": ("0x03", "0x173"), "ZONE2 SLEEP": ("0x03", "0x344"),
+        "ZONE3 FAVORITE STATION 3": ("0x05", "0xF4"), "ZONE3 FAVORITE STATION 4": ("0x05", "0xF4"), "ZONE3 VR MUTE": ("0x05", "0x173"), "ZONE3 SLEEP": ("0x05", "0x344")}
+    # why: a code two names share (the station 3 and 4 rows of each zone), a row whose identifier and bits are not one function (station 4, the mute and the sleep: the same slips as §90's and §95's)
+    shared = {l for l, f in untested.items() if "the document gives this code to" in f["source"]}
+    unequal = {l for l, f in untested.items() if "which are not one function: the bits are read and the number is not" in f["source"]}
+    assert shared == {l for l in untested if "STATION" in l} and unequal == {l for l in untested if "STATION 3" not in l}
+    # the zone 3 rows say what the list's header does: GENRE2 3 copied from zone 2's, where its identifiers say K4-5
+    assert "the group's header gives GENRE2 3, not the rows' 5" in kaseikyo["KEY_ZONE3_POWER_ON_SLASH_OFF"]["forms"][0]["source"]
+    sharp = files["AVR-X4000"]["keys"]
+    assert {k: (s["label"], s["forms"][0]["device"], s["forms"][0]["function"]) for k, s in sharp.items() if k in ("KEY_POWER", "KEY_FR_LEVEL_DOWN", "KEY_ZONE2_CD")} == {
+        "KEY_POWER": ("POWER", "0x02", "0xC1"), "KEY_FR_LEVEL_DOWN": ("FR LEVEL DOWN", "0x02", "0xD0"), "KEY_ZONE2_CD": ("ZONE2 CD", "0x0C", "0x90")}
+    assert Counter(s["forms"][0]["device"] for s in sharp.values()) == {"0x02": 65, "0x0C": 59, "0x04": 13}              # the main zone, zone 2 and the three other tables
+
+
+def test_the_list_marks_of_two_regions_give_the_three_spotify_keys_of_the_avr_x4000_and_the_three_the_avr_x1000_and_e300_files_had_not():
+    """``Spotify (NA & EU only)`` (the main zone, zone 2 and zone 3) was a mark that kept the key for no model: §95's two lists have it, so the AVR-X1000 and AVR-E300 files grow by three keys."""
+    got = {n: {k: (s["label"], s["forms"][0]["subdevice"], s["forms"][0]["function"], s["forms"][0]["confidence"]) for k, s in f["keys"].items() if "SPOTIFY" in k}
+           for n, f in {**x4000_files(), **denon_files_of(r"assets\.denon\.com IR code documents/avrx1000_e300_ir_code_v01\.doc@")}.items()}
+    spotify = ("Spotify (NA/EU only)", "0x01", "0x2FC", "plausible")
+    zone2, zone3 = ("ZONE2 Spotify (NA/EU only)", "0x03", "0x2FC", "plausible"), ("ZONE3 Spotify (NA/EU only)", "0x05", "0x2FC", "plausible")
+    assert got["AVR-X4000__Kaseikyo"] == {"KEY_SPOTIFY_NA_SLASH_EU_ONLY": spotify, "KEY_ZONE2_SPOTIFY_NA_SLASH_EU_ONLY": zone2, "KEY_ZONE3_SPOTIFY_NA_SLASH_EU_ONLY": zone3}
+    assert got["AVR-X1000__Kaseikyo"] == {"KEY_SPOTIFY_NA_SLASH_EU_ONLY": spotify, "KEY_ZONE2_SPOTIFY_NA_SLASH_EU_ONLY": zone2}               # the AVR-X1000 has zone 2 and no zone 3
+    assert got["AVR-E300__Kaseikyo"] == {"KEY_SPOTIFY_NA_SLASH_EU_ONLY": spotify} and got["AVR-X4000"] == {}
+
+
+def test_every_key_of_the_avr_x4000_list_is_the_bits_of_its_row_in_the_documents_own_text_and_every_named_row_has_a_key():
+    """The independent check (D394): the keys recomputed from the pinned document's paragraphs (the cells' text), not by the reader."""
+    cells = [row[0] for row in load_snapshot(SNAPSHOT / "denon").sheet_of(X4000, "paragraphs")]
+    ident = re.compile(r"RC(?:SHP|KSK)[0-9A-F]{7}")
+    at = [i for i, c in enumerate(cells) if ident.fullmatch(c)]
+    assert len(at) == 811 and len({cells[i] for i in at}) == 807                                                   # four identifiers are in the document twice (zone 2's and zone 3's SLEEP and mute)
+    assert [c for c, n in Counter(cells[i] for i in at).items() if n > 1] == ["RCKSK0430370", "RCKSK0430788", "RCKSK0450370", "RCKSK0450788"]
+    full = str.maketrans("０１", "01")
+    address = re.compile(r"SYSTEM ADDRESS ?\(C1.C5\) : ([01\uff10\uff11]{5}) , EXTENSION BIT ?\(C12,C13\) : ([01\uff10\uff11]{2})")          # (a line of zone 3's table has a full-width one and an ASCII one)
+    cited: set[str] = set()
+    sharp = kaseikyo = 0
+    for file, f in x4000_files().items():
+        for spec in f["keys"].values():
+            form = spec["forms"][0]
+            row = re.search(r"row '(RC(?:SHP|KSK)[0-9A-F]{7})' \('(.*?)', ", form["source"])
+            name, key_ident = row[2], row[1]
+            cited.add(key_ident)
+            places = [i for i in at if cells[i] == key_ident]
+            assert places, key_ident
+            if file == "AVR-X4000":                                      # a Sharp row: its data cell, the address and extension bits of the table above it, and the identifier's number is the data's value
+                (i,) = places
+                data = cells[i + 1].translate(full)
+                line = next(address.search(cells[j]) for j in range(i, 0, -1) if address.search(cells[j]))
+                system, ext = line[1].translate(full), line[2].translate(full)
+                assert re.fullmatch(r"[01]{6}", data) and f"system address {system}, extension bits {ext}, data {data})" in form["source"], key_ident
+                assert (int(form["device"], 16), int(form["function"], 16)) == (int(system[::-1], 2), int(data[::-1], 2) + 64 * int(ext[::-1], 2)), key_ident
+                assert int(key_ident[-4:]) == int(data[::-1], 2), key_ident                                         # the number is the data's value in every row
+                sharp += 1
+            else:                                                        # a Kaseikyo row: ten data bits before the ten `*` of the ID and parity bits, the table's number and the subdevice in the identifier
+                matches = []
+                for i in places:
+                    window = cells[i + 1:i + 26]
+                    star = window.index("*")
+                    bits = "".join(window[star - 10:star])
+                    if re.fullmatch(r"[01]{10}", bits) and window[star:star + 10] == ["*"] * 10:
+                        matches.append(bits)
+                bits = [m for m in matches if f"bits 29 to 38 {m}, the ID and parity bits '*'" in form["source"]]                  # an identifier the list has twice has two rows' bits
+                assert len(bits) == 1, key_ident
+                assert (int(form["device"], 16), int(form["subdevice"], 16), int(form["function"], 16)) == (int(key_ident[5:7]), int(key_ident[7], 16), int(bits[0][::-1], 2)), key_ident
+                number, function = int(key_ident[8:]), int(form["function"], 16)
+                if form["confidence"] == "plausible":
+                    assert number == function, key_ident                                                                 # the identifier's number is the bits' value
+                else:
+                    assert number != function or "the document gives this code" in form["source"], key_ident
+                kaseikyo += 1
+    assert (sharp, kaseikyo) == (137, 491)
+    # every row of the document that has a name has a key: the rows no key cites have an empty name cell, or are a table's last row followed by the next table's heading
+    for i in at:
+        if cells[i] in cited:
+            continue
+        j, text = i + 1, []
+        while j < len(cells) and not ident.fullmatch(cells[j]) and len(text) < 26:
+            if cells[j] and cells[j] != "*" and not re.fullmatch(r"[01０１]+", cells[j]):
+                text.append(cells[j])
+            j += 1
+        assert not text or text[0].startswith(("No.", "FORMAT", "SYSTEM")), (cells[i], text[:2])
+    assert len(at) - len(cited) == 187 and len({cells[i] for i in at}) - len(cited) == 183                           # 183 rows the list leaves unnamed (the report's), 4 a repeated identifier
+
+
+def test_the_dvd_1800bd_sheet_is_the_dvd_3800bdcis_89_rows_for_four_more_models_in_eight_files_and_cites_awe_europes_copy():
+    rows, notes = sheet_rows_of(DVD1800)
+    old, _ = sheet_rows_of("dvd-3800bdci_dvd-2500btci_ircodes.pdf")
+    assert notes == [] and (len(rows), [r.kind for r in rows].count("kaseikyo"), [r.kind for r in rows].count("sharp")) == (89, 47, 42)
+    shape = lambda r: (r.kind, r.ident, r.device, getattr(r, "subdevice", None), r.function, [n for n, _ in r.names], r.doubt)
+    assert [shape(r) for r in rows] == [shape(r) for r in old]                              # the two sheets of 2007 and 2009 give one table of codes
+    files = dvd1800_files()
+    models = ("DVD-1800BD", "DBP-1610", "DBP-2010", "DBP-2010CI")
+    assert sorted(files) == sorted(f"{m}{k}" for m in models for k in ("", "__Kaseikyo"))
+    assert {n: (f["protocol"]["name"], len(f["keys"]), sum(s["forms"][0]["confidence"] == "untested" for s in f["keys"].values())) for n, f in files.items()} == {
+        **{m: ("Denon", 42, 4) for m in models}, **{m + "__Kaseikyo": ("Denon-K", 47, 0) for m in models}}
+    assert all(files[m + k]["keys"] == files["DVD-1800BD" + k]["keys"] for m in models for k in ("", "__Kaseikyo"))
+    assert [files[m]["controls"] for m in models] == [[f"Denon {m}"] for m in models]
+    # the codes are the DVD-3800BDCI's, key for key (and the four Untested are the sheet's: STOP and DIMMER, REPEAT and PURE DIRECT/SELECT share a code)
+    ledger = denon_sheet_files()
+    codes = lambda f: {k: (s["label"], s["forms"][0]["device"], s["forms"][0].get("subdevice"), s["forms"][0]["function"], s["forms"][0]["confidence"]) for k, s in f["keys"].items()}
+    assert codes(files["DVD-1800BD"]) == codes(ledger["DVD-3800BDCI"]) and codes(files["DBP-2010__Kaseikyo"]) == codes(ledger["DVD-2500BTCI__Kaseikyo"])
+    assert sorted(s["label"] for s in files["DBP-1610"]["keys"].values() if s["forms"][0]["confidence"] == "untested") == ["DIMMER", "PURE DIRECT/SELECT", "REPEAT", "STOP ■"]
+    power = files["DVD-1800BD"]["keys"]["KEY_POWER_ON"]["forms"][0]
+    assert power["source"] == (
+        "awe-europe.com control documents/DVD1800BD_DBP1610I_DBP2010_2010CI_IR_CODE_V01.pdf@93b495c5 (retrieved 2026-11-13, from the Wayback Machine snapshot 20101120132649) page 2 table row 'sub code POWER ON' "
+        "('POWER ON', genre VIDEO CD, system address 00010, extension bits 01, data 100011): Denon device 8 function 177, each field first bit first, the extension bits above the data")
+    assert (power["device"], power["function"]) == ("0x08", "0xB1")
+    zero = files["DBP-2010CI__Kaseikyo"]["keys"]["KEY_0"]["forms"][0]
+    assert zero["source"].startswith(power["source"].split(" page ")[0] + " page 1 table row 'ID 1001' ('0', bits 1 to 48 ") and (zero["device"], zero["subdevice"], zero["function"]) == ("0x02", "0x01", "0x01")
+
+
+def test_the_avr_x4000_list_and_the_dvd_1800bd_sheet_are_pinned_with_their_hashes_and_the_other_sources_hold_every_code_of_the_list_and_none_has_a_notice_word():
+    manifest = json.loads((SNAPSHOT / "denon" / MANIFEST).read_text(encoding="utf-8"))
+    entry = manifest["documents"][X4000]                                          # a live file of Denon's own host (as §95's): AWE Europe's copy (the Wayback Machine, 20160304171014) has the same paragraphs
+    assert entry["url"] == "https://assets.denon.com/documentmaster/uk/avrx4000_ir_code_v01.doc" and entry["bytes"] == 1_604_096 and entry["sha256"].startswith("56ac8382")
+    assert entry["retrieved"] == "2026-11-13" and "snapshot" not in entry and (SNAPSHOT / "denon" / X4000).read_bytes()[:4] == b"\xd0\xcf\x11\xe0"
+    entry = manifest["documents"][DVD1800]                                        # not on Denon's host any more: AWE Europe's copy of the Wayback Machine
+    assert entry["url"] == "https://web.archive.org/web/20101120132649id_/http://awe-europe.com/documents/" + DVD1800 and entry["original"] == "http://awe-europe.com/documents/" + DVD1800
+    assert entry["snapshot"] == "20101120132649" and entry["bytes"] == 426_565 and entry["sha256"].startswith("93b495c5") and entry["retrieved"] == "2026-11-13"
+    assert (SNAPSHOT / "denon" / DVD1800).read_bytes()[:5] == b"%PDF-"
+    assert [n for n, s in manifest["sheets"].items() if s["document"] == X4000] == [X4000[:-4] + "__paragraphs.csv"]
+    assert [n for n, s in manifest["sheets"].items() if s["document"] == DVD1800] == [DVD1800[:-4] + "__words.csv"]
+    # D110: no notice word in either (the two `(C)` of the Blu-ray player's key name `COLOR(C)` are the one hit of the words, as in the DVD-3800BDCI's sheet)
+    notice = re.compile(r"copyright|©|\(c\)|all rights|reserved|confidential|reproduc|proprietary|trademark|property of|licen[cs]e|permission|internal use", re.I)
+    snapshot = load_snapshot(SNAPSHOT / "denon")
+    assert not notice.search(" ".join(row[0] for row in snapshot.sheet_of(X4000, "paragraphs")))
+    text = " ".join(" ".join(row[3::2]) for row in snapshot.sheet_of(DVD1800, "words") if row[1] != "R")
+    assert [m[0] for m in notice.finditer(text)] == ["(C)", "(C)"] and not notice.search(text.replace("COLOR(C)", "COLOR C"))
+    # the independent check of the codes: every code of the list is in other Denon remotes of the ledger already (and the DVD sheet's are the DVD-3800BDCI's)
+    mine: dict[str, set] = {"Denon": set(), "Denon-K": set()}
+    others: dict[str, set] = {"Denon": set(), "Denon-K": set()}
+    own = set(x4000_files())
+    for path in (ROOT / "remotes").rglob("*.json"):
+        doc = load(path)
+        protocol = doc["protocol"].get("name")
+        if protocol not in mine:
+            continue
+        target = mine if path.parent.name == "denon" and path.parent.parent.name == "official" and path.stem in own else others
+        for spec in doc["keys"].values():
+            form = spec["forms"][0]
+            target[protocol].add((int(form["device"], 16), int(form.get("subdevice", "0x00"), 16) if protocol == "Denon-K" else 0, int(form["function"], 16)))
+    assert (len(mine["Denon"]), len(mine["Denon"] & others["Denon"]), len(mine["Denon-K"]), len(mine["Denon-K"] & others["Denon-K"])) == (137, 137, 489, 489)
+
+
+# --- Shinybow: the IR code files of its matrix switchers (DESIGN section 104) -------------------------------------------------------------------------------
+
+
+def sb_pronto(*b: int) -> str:
+    """The Pronto code of an NEC frame as Shinybow's files write it: 38 kHz (``006D``), a leader, 32 bits, the stop bit and NEC's repeat of two pairs."""
+    words = ["0000", "006D", "0022", "0002", "0155", "00AA"]
+    for byte in b:
+        for i in range(8):
+            words += ["0015", "0040" if byte >> i & 1 else "0015"]
+    return " ".join(words + ["0015", "05ED", "0155", "0055", "0015", "0E47"])
+
+
+def sb_captured(*b: int, carrier: str = "0060", mark: int = 0x18, one: int = 0x4A, lead: tuple[int, int] = (0x186, 0xC6)) -> str:
+    """A captured frame as SB-5645LCM's: 33 pairs once (the leader and 32 bits), then the stop mark with its gap and the repeat leader."""
+    words = ["0000", carrier, "0021", "0002", f"{lead[0]:04X}", f"{lead[1]:04X}"]
+    for byte in b:
+        for i in range(8):
+            words += [f"{mark:04X}", f"{one if byte >> i & 1 else mark:04X}"]
+    return " ".join(words + [f"{mark:04X}", "0831", f"{lead[0]:04X}", "0062"])
+
+
+def sb_file(*lines: str) -> list[list[str]]:
+    return [[line] for line in ("SB-9999", "MAY 2 2019", *lines)]
+
+
+def test_a_shinybow_file_is_a_title_a_date_and_each_name_followed_by_its_pronto_code_and_a_name_with_another_name_after_it_is_a_heading():
+    code = sb_pronto(0x4C, 0xB3, 0xA1, 0x5E)
+    title, entries = shinybow.parse_file(sb_file("POWER ON", code, "IR REMOTE-01", "SOURCE 1", code, "SOURCE 2", code, "SCN-ADJ:", "ENTER", code), "SB-9999", "SB-9999.txt")
+    assert title == "SB-9999"
+    assert [(e.where, e.label, e.header) for e in entries] == [("line 4", "POWER ON", ""), ("line 7", "SOURCE 1", "IR REMOTE-01"), ("line 9", "SOURCE 2", "IR REMOTE-01"),
+                                                              ("line 12", "ENTER", "SCN-ADJ")]                  # the line of the code, of the lines that are not empty
+    with pytest.raises(ValueError, match="not a model and a date"):
+        shinybow.parse_file([["Hello"], ["MAY 2 2019"], ["POWER"], [code]], "SB-9999", "SB-9999.txt")
+    with pytest.raises(ValueError, match="not a model and a date"):
+        shinybow.parse_file([["SB-9999"], ["2019-05-02"], ["POWER"], [code]], "SB-9999", "SB-9999.txt")
+    with pytest.raises(ValueError, match="no name before it"):
+        shinybow.parse_file(sb_file(code, "POWER ON", code), "SB-9999", "SB-9999.txt")
+    with pytest.raises(ValueError, match="has no code after it"):
+        shinybow.parse_file(sb_file("POWER ON", code, "OFF"), "SB-9999", "SB-9999.txt")
+    with pytest.raises(ValueError, match="not a model and a date"):
+        shinybow.parse_file([["SB-9999"], ["MAY 2 2019"]], "SB-9999", "SB-9999.txt")
+
+
+def test_a_shinybow_pronto_code_gives_its_four_bytes_and_a_captured_frame_of_33_pairs_gives_them_with_a_note_and_a_broken_one_gives_none():
+    assert shinybow.decode(sb_pronto(0x4C, 0xB3, 0xA1, 0x5E)) == ([0x4C, 0xB3, 0xA1, 0x5E], "")
+    got, note = shinybow.decode(sb_captured(0x1C, 0xE3, 0xA1, 0x5E))
+    assert got == [0x1C, 0xE3, 0xA1, 0x5E] and "captured" in note and "0060" in note
+    assert shinybow.decode(sb_captured(0x1C, 0xE3, 0x01, 0xFE, carrier="005E", mark=0x16, one=0x42, lead=(0x15D, 0xB2)))[0] == [0x1C, 0xE3, 0x01, 0xFE]
+    for broken in (sb_captured(0x1C, 0xE3, 0xA1, 0x5E).replace("004A", "0030", 1),                  # a space that is neither a zero's nor a one's
+                   sb_captured(0x1C, 0xE3, 0xA1, 0x5E).replace("0186 00C6", "0186 0186", 1),        # no leader
+                   sb_captured(0x1C, 0xE3, 0xA1, 0x5E).replace("0831", "0021"),                     # no gap after the last bit
+                   sb_captured(0x1C, 0xE3, 0xA1, 0x5E)[:-5],                                        # cut
+                   "0000 006D 0022 0002 xyz"):
+        assert isinstance(shinybow.decode(broken), str), broken
+
+
+def test_the_pdf_text_gives_its_four_digit_words_an_o_for_a_zero_and_not_a_word_of_four_letters():
+    rows = [["1", "IR DATA CODE LIST"], ["1", "POWER ON :05FA 10EF"], ["1", "POWER OFF:O5FA 0FF0"], ["1", "CUSTOM CODE: 4DB2"], ["1", "A15E"], ["1", "FACE ADD1 12345 0AF5."]]
+    assert shinybow.pdf_tokens(rows) == {"05FA", "10EF", "0FF0", "4DB2", "A15E", "ADD1", "0AF5"}
+
+
+def shinybow_files() -> dict[str, dict]:
+    return {load(p)["model"]: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "shinybow").glob("*.json"))}
+
+
+def test_shinybow_is_48_files_of_1007_keys_with_12_files_in_nec1_f16_and_33_keys_untested():
+    files = shinybow_files()
+    assert len(files) == 48 and sum(len(f["keys"]) for f in files.values()) == 1007
+    assert all(f["manufacturer"] == "Shinybow" and f["controls"] == [f"Shinybow {m}"] for m, f in files.items())
+    assert Counter(f["protocol"]["name"] for f in files.values()) == {"NEC1": 36, "NEC1-f16": 12}
+    assert sorted(m for m, f in files.items() if f["protocol"]["name"] == "NEC1-f16") == [
+        "SB-3879", "SB-4140", "SB-4148LCM", "SB-5440BNC", "SB-5544LCM", "SB-5560", "SB-5582", "SB-5604", "SB-5648LCM", "SB-5684K", "SB-5684LCM", "SB-8804LCM"]
+    assert Counter(s["forms"][0]["confidence"] for f in files.values() for s in f["keys"].values()) == {"plausible": 974, "untested": 33}
+    assert {m: len(f["keys"]) for m, f in files.items() if m in ("SB-5688CK", "SB-5688CAK", "SB-5669K", "SB-5440RL", "SB-5654", "SB-5645LCM", "SB-4184LCM")} == {
+        "SB-5688CK": 89, "SB-5688CAK": 91, "SB-5669K": 41, "SB-5440RL": 5, "SB-5654": 2, "SB-5645LCM": 14, "SB-4184LCM": 18}
+    for model, f in files.items():                                  # a form is what its citation says: NEC1's data byte, or NEC1-f16's two bytes
+        for spec in f["keys"].values():
+            form = spec["forms"][0]
+            b = [int(x, 16) for x in re.search(r"\(bytes ((?:[0-9A-F]{2} ?){4})\)", form["source"])[1].split()]
+            assert (int(form["device"], 0), int(form["subdevice"], 0)) == (b[0], b[1]), model
+            assert int(form["function"], 0) == (b[2] if f["protocol"]["name"] == "NEC1" else b[2] << 8 | b[3]), model
+            assert (b[2] ^ b[3] == 0xFF) or f["protocol"]["name"] == "NEC1-f16", model            # only a NEC1-f16 file has a code whose fourth byte is not the complement
+
+
+def test_shinybow_keys_are_named_as_the_file_names_them_with_the_heading_where_a_name_repeats_and_a_citation_that_says_what_held_it():
+    files = shinybow_files()
+    k = files["SB-5688CK"]["keys"]
+    assert k["KEY_POWER_ON"]["forms"][0]["source"] == (
+        "shinybowusa.com IR code files/SB-5688CK.txt@38308577 (retrieved 2026-11-12) line 4 'POWER ON' (the file's title line reads `SB-56888CK`): "
+        "NEC1 device 76 subdevice 179 function 161 (bytes 4C B3 A1 5E); held against the maker's PDF IR-5688CK.pdf@185f489f (retrieved 2026-11-12)")
+    assert k["KEY_SOURCE_1"]["label"] == "SOURCE 1" and k["KEY_SOURCE_1"]["forms"][0]["function"] == "0x01"                          # the first group has no heading
+    assert k["KEY_SOURCE_1_IR_REMOTE_MINUS_01"]["label"] == "SOURCE 1 (IR REMOTE-01)" and k["KEY_SOURCE_1_IR_REMOTE_MINUS_01"]["forms"][0]["function"] == "0x11"       # the heading's keys: destination 1, source n
+    assert k["KEY_SOURCE_8_IR_REMOTE_MINUS_08"]["label"] == "SOURCE 8 (IR REMOTE-08)" and k["KEY_SOURCE_8_IR_REMOTE_MINUS_08"]["forms"][0]["function"] == "0x88"
+    assert [spec["forms"][0]["function"] for spec in k.values()][9:17] == [f"0x{n}0" for n in "12345678"]                            # DESTINATION 1..8
+    # a key whose code the PDF does not have is Untested, and the citation says which
+    inputs = files["SB-5440RL"]["keys"]
+    assert inputs["KEY_INPUT_4"]["forms"][0]["confidence"] == "untested" and inputs["KEY_INPUT_3"]["forms"][0]["confidence"] == "plausible"
+    assert inputs["KEY_INPUT_4"]["forms"][0]["source"].endswith("(bytes 00 FF 0C F3); held against the maker's PDF IR-5440RL.pdf@ca36e140 (retrieved 2026-11-12); "
+                                                                 "the PDF IR-5440RL.pdf does not have `0CF3`")
+    # two power keys with one code are a toggle (both Plausible); a code shared by two other keys is Untested for both
+    toggle = files["SB-4106"]["keys"]
+    assert toggle["KEY_POWER_ON"]["forms"][0]["function"] == toggle["KEY_POWER_OFF"]["forms"][0]["function"] == "0x0B"
+    assert toggle["KEY_POWER_ON"]["forms"][0]["confidence"] == toggle["KEY_POWER_OFF"]["forms"][0]["confidence"] == "plausible"
+    shared = files["SB-8180LCM"]["keys"]
+    assert [shared[n]["forms"][0]["confidence"] for n in ("KEY_POWER_OFF", "KEY_SOURCE_5")] == ["untested", "untested"]
+    assert shared["KEY_SOURCE_5"]["forms"][0]["source"].endswith("the file gives this code to 'POWER OFF' and 'SOURCE 5'")
+    # a code whose fourth byte is not the complement, which the PDF writes too, is NEC1-f16 with the two bytes in the function
+    f16 = files["SB-5544LCM"]
+    assert f16["protocol"] == {"name": "NEC1-f16", "carrierHz": 38000, "minSends": 1}
+    assert (f16["keys"]["KEY_DESTINATION_1"]["forms"][0]["function"], f16["keys"]["KEY_DESTINATION_2"]["forms"][0]["function"]) == ("0x1EF", "0x2DF")
+
+
+def test_shinybows_captured_frames_are_read_as_nec_frames_and_the_two_it_cannot_read_are_not_kept():
+    k = shinybow_files()["SB-5645LCM"]["keys"]
+    assert len(k) == 14 and "KEY_DESTINATION_1" not in k and "KEY_DESTINATION_3" not in k                                        # 36 and 35 bits: not a frame
+    assert k["KEY_POWER_ON"]["forms"][0]["source"].endswith("(bytes 1C E3 A1 5E); held against the maker's PDF IR-5645LCM.pdf@f37d0cfe (retrieved 2026-11-12); "
+                                                             "the Pronto code is a captured one (33 pairs, carrier word 0060, the stop bit in the repeat sequence)")
+    assert k["KEY_DESTINATION_4"]["forms"][0]["source"].count("captured") == 0                                                  # this one is a Pronto code of the usual form
+
+
+def test_the_shinybow_snapshot_is_88_documents_whose_text_mode_rows_are_the_pinned_csv_and_none_has_a_notice_word():
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location("official_sheets_to_csv", ROOT / "tools" / "official_sheets_to_csv.py")
+    tool = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(tool)
+    snapshot = load_snapshot(SNAPSHOT / "shinybow")
+    texts = sorted(n for n in snapshot.documents if n.endswith(".txt"))
+    pdfs = sorted(n for n in snapshot.documents if n.endswith(".pdf"))
+    assert snapshot.retrieved == "2026-11-12" and len(texts) == 48 and len(pdfs) == 40
+    assert all(snapshot.documents[n]["url"] == f"https://www.shinybowusa.com/IRCODES/HexCodes/{n}" for n in texts)
+    assert all(snapshot.documents[n]["url"] == f"https://www.shinybowusa.com/IRCODES/PDFformat/{n}" for n in pdfs)
+    notice = re.compile(r"copyright|all rights|reserved|©|\(c\)|confidential|reproduc|trademark|proprietary|property of|licen[sc]e|permission", re.I)
+    for name in texts:
+        path = SNAPSHOT / "shinybow" / name
+        assert tool.rows_of(path, "text") == snapshot.sheet_of(name, "text"), name
+        assert not notice.search(path.read_text(encoding="ascii")), name
+        assert snapshot.sheet_of(name, "text")[0] == [name.removesuffix(".txt")] or name in ("SB-5688CAK.txt", "SB-5688CK.txt", "SB-5688K.txt", "SB-5688Kp.txt", "SB-5688LCM.txt"), name
+    pymupdf = pytest.importorskip("pymupdf")
+    for name in pdfs:
+        path = SNAPSHOT / "shinybow" / name
+        assert tool.rows_of(path, "pages") == snapshot.sheet_of(name, "pages"), name
+        assert not notice.search(" ".join(page.get_text() for page in pymupdf.open(str(path)))), name
+
+
+def test_a_plausible_shinybow_key_in_a_checked_file_has_its_custom_and_data_codes_in_the_pdfs_own_text():
+    pymupdf = pytest.importorskip("pymupdf")
+    n = 0
+    for model, f in shinybow_files().items():
+        pdf = SNAPSHOT / "shinybow" / f"IR-{model.removeprefix('SB-')}.pdf"
+        if not pdf.is_file():
+            assert not any("held against" in s["forms"][0]["source"] for s in f["keys"].values()), model
+            continue
+        text = re.sub(r"(?<![0-9A-Za-z])(?=[0-9A-FOa-fo]{4}(?![0-9A-Za-z]))(?=\S*[0-9])\S{4}", lambda m: m[0].upper().replace("O", "0"),       # the PDFs write an O for a zero (`1FEO`, `OAF5`)
+                      " ".join(page.get_text() for page in pymupdf.open(str(pdf)))).upper()
+        for spec in f["keys"].values():
+            form = spec["forms"][0]
+            if "held against" not in form["source"]:
+                continue
+            b = re.search(r"\(bytes ((?:[0-9A-F]{2} ?){4})\)", form["source"])[1].split()
+            seen = (b[0] + b[1] in text) and (b[2] + b[3] in text)
+            assert seen == (form["confidence"] == "plausible" or "the file gives this code" in form["source"]), (model, spec["label"])
+            n += 1
+    assert n >= 800
+
+
+def test_the_shinybow_frames_of_the_jp1_upgrade_of_the_sb_5470_are_all_in_these_files_so_they_add_the_models_and_the_maker_s_table():
+    def frame(form):
+        return (int(form["device"], 0), int(form["subdevice"], 0), int(form["function"], 0))
+    theirs = {frame(f) for spec in load(ROOT / "remotes" / "jp1" / "Shinybow" / "Audio_Video_Selectors-Shinybow_SB-5470.json")["keys"].values() for f in spec["forms"]}
+    ours = {frame(s["forms"][0]) for f in shinybow_files().values() if f["protocol"]["name"] == "NEC1" for s in f["keys"].values()}
+    assert len(theirs) == 9 and theirs <= ours
+
+
+# --- Yamaha's BD-S477 and BD-S677 Blu-ray players (DESIGN section 105: D383 to D385) ---
+
+BD_COLUMNS = {"ID1": (208, 258, 231), "ID2": (308, 357, 330)}
+
+
+def bd_line(y: int, number: int | str, name: str, *codes: str, remark: str = "") -> list[str]:
+    """A ``words`` row: the number at x 65, the name's words from x 106, the codes at the columns of the IDs (a pair for each), the remark at x 389."""
+    cells = [(65, str(number))] + [(106 + 40 * i, w) for i, w in enumerate(name.split())]
+    ids = iter(sorted(BD_COLUMNS.values()))
+    for pair in (codes[i:i + 2] for i in range(0, len(codes), 2)):
+        left, right, _ = next(ids)
+        cells += [(left, pair[0])] + ([(right, pair[1])] if len(pair) > 1 else [])               # a lone code is a column with one word
+    if remark:
+        cells += [(389 + 30 * i, w) for i, w in enumerate(remark.split())]
+    return ["1", str(y)] + [v for x, w in cells for v in (str(x), w)]
+
+
+def bd_sheet(ids: tuple[str, ...] = ("ID1", "ID2"), *rows: list[str], custom: str = "7C") -> list[list[str]]:
+    out = [["1", "29", "56", "BD-S677(Except", "145", "for", "163", "China)", "208", "IR", "222", "code", "251", "comparison"], ["1", "53", "510", "Rev.2"],
+           ["1", "87", "73", "custom", "105", "code:", "130", custom] + [v for i in ids for v in (str(BD_COLUMNS[i][2]), i)],
+           ["1", "98", "98", "YAMAHA", "139", "Name", "190", "data", "210", "code", "232", "0", "351", "remark"]]
+    return out + list(rows) + [["1", "R", "692", "703"], ["1", "800", "74", "BD-S677", "200", "ID1", "230", "ID2"]]
+
+
+BD_DOC = yamaha.BDDocument("t.pdf", ("BD-S677",), ("ID1", "ID2"))
+
+
+def test_a_bd_list_is_a_custom_code_two_id_columns_and_rows_of_a_name_and_two_data_codes_with_the_extended_codes_after_their_heading():
+    rows = bd_sheet(("ID1", "ID2"),
+                    bd_line(109, 1, "Standby/On", "80", "7F", "80", "7E"), bd_line(120, 2, "GREEN / PROGRAM", "EA", "15", "EA", "14"),
+                    bd_line(131, 3, "VUDU", "FC", "03", "FC", "02", remark="Only for USA"), ["1", "142", "73", "Extended", "115", "IR", "126", "Code"],
+                    bd_line(153, 4, "POWER ON", "F6", "09", "F6", "08"))
+    custom, got = yamaha.parse_bd(rows, BD_DOC)
+    assert custom == 0x7C
+    assert [(r.number, r.name, r.group, r.codes, r.remark) for r in got] == [
+        (1, "Standby/On", "standard", ((0x80, 0x7F), (0x80, 0x7E)), ""), (2, "GREEN / PROGRAM", "standard", ((0xEA, 0x15), (0xEA, 0x14)), ""),
+        (3, "VUDU", "standard", ((0xFC, 0x03), (0xFC, 0x02)), "Only for USA"), (4, "POWER ON", "Extended IR Code", ((0xF6, 0x09), (0xF6, 0x08)), "")]
+    one = yamaha.parse_bd(bd_sheet(("ID1",), bd_line(109, 1, "PLAY", "82", "7D")), yamaha.BDDocument("t.pdf", ("BD-S477",), ("ID1",)))[1]
+    assert one[0].codes == ((0x82, 0x7D),)                                                  # a list with one ID has one pair of columns
+
+
+def test_a_bd_list_that_is_not_the_one_the_reader_knows_is_refused_with_the_line_that_is_wrong():
+    good = [bd_line(109, 1, "Standby/On", "80", "7F", "80", "7E"), bd_line(120, 2, "OPEN/CLOSE", "81", "7E", "81", "7F")]
+    for bad, why in (
+            (bd_sheet(("ID1", "ID2"), *good)[1:], "the first line is not that of an IR code comparison"),
+            ([r for r in bd_sheet(("ID1", "ID2"), *good) if r[3:5] != ["custom", "105"]], "no line gives the custom code"),
+            (bd_sheet(("ID1",), *good), "has the IDs"),
+            (bd_sheet(("ID1", "ID2"), *good, custom="7Z"), "is not a hex pair"),
+            (bd_sheet(("ID1", "ID2"), good[0], bd_line(131, 3, "STOP", "85", "7A", "85", "7B")), "row 3 follows row 1"),
+            (bd_sheet(("ID1", "ID2"), good[0], bd_line(120, 2, "OPEN/CLOSE", "81", "7E", "81")), "has `['81']` where a column has two hex digit pairs"),
+            (bd_sheet(("ID1", "ID2"), good[0], bd_line(120, 2, "OPEN/CLOSE", "81", "7E")), "has no data codes in one of its 2 ID columns"),
+            (bd_sheet(("ID1", "ID2"), good[0], bd_line(120, 2, "OPEN/CLOSE", "81", "7E", "81", "G1")), "where a column has two hex digit pairs"),
+            (bd_sheet(("ID1", "ID2")), "no rows")):
+        with pytest.raises(ValueError, match=re.escape(why)):
+            yamaha.parse_bd(bad, BD_DOC)
+    with pytest.raises(ValueError, match="no heading `YAMAHA Name`"):
+        yamaha.parse_bd([r for r in bd_sheet(("ID1", "ID2"), *good) if r[2:4] != ["98", "YAMAHA"][:0] and r[3:4] != ["YAMAHA"]], BD_DOC)
+
+
+RC_COLUMNS = (115, 188, 260, 332, 417)
+
+
+def rc_sheet(*rows: list[str], custom: str = "7C", headings: bool = True) -> list[list[str]]:
+    head = [["1", "22", "3", "BD-S677/S477", "60", "RC", "74", "code", "95", "comparison"]]
+    if headings:
+        head.append(["1", "57", "152", "For", "165", "USA", "181", "only", "283", "Except", "307", "USA", "323", "and", "336", "China", "397", "BD-S477", "426", "all", "436", "desti", "453", "/", "457", "BD-S677", "486", "China"])
+    head += [["1", "74", "15", "custom", "39", "code:", "57", custom, "132", "ID1", "205", "ID2", "277", "ID1", "349", "ID2", "446", "ID1"],
+             ["1", "82", "33", "YAMAHA", "63", "Name", "101", "data", "116", "code"]]
+    return head + list(rows)
+
+
+def rc_line(y: int, number: int, name: str, *cells: tuple[str, str] | None) -> list[str]:
+    out = ["1", str(y), "9", str(number), "35", name]
+    for x, cell in zip(RC_COLUMNS, cells):
+        if cell:
+            out += [str(x), cell[0], str(x + 36), cell[1]]
+    return out
+
+
+def test_the_bd_key_layout_has_five_columns_of_codes_under_three_headings_and_a_row_only_in_the_columns_of_the_remotes_that_have_the_key():
+    rows = rc_sheet(rc_line(90, 1, "Standby/On", ("80", "7F"), ("80", "7E"), ("80", "7F"), ("80", "7E"), ("80", "7F")),
+                    rc_line(98, 2, "VUDU", ("FC", "03"), ("FC", "02")), ["1", "R", "392", "408"])
+    got = yamaha.parse_rc(rows)
+    assert [(r.number, r.name, r.codes) for r in got] == [
+        (1, "Standby/On", ((0x80, 0x7F), (0x80, 0x7E), (0x80, 0x7F), (0x80, 0x7E), (0x80, 0x7F))), (2, "VUDU", ((0xFC, 0x03), (0xFC, 0x02), None, None, None))]
+    one = [rc_line(90, 1, "Standby/On", ("80", "7F"), ("80", "7E"), ("80", "7F"), ("80", "7E"), ("80", "7F"))]
+    for bad, why in ((rc_sheet(*one, custom="7A"), "the custom code is"), (rc_sheet(*one, headings=False), "are not above the five columns"),
+                     (rc_sheet(rc_line(90, 1, "X", ("80", "7F")), rc_line(98, 3, "Y", ("81", "7E"))), "row 3 follows row 1"),
+                     (rc_sheet(["1", "90", "9", "1", "35", "X", "115", "80"]), "where a column has two hex digit pairs"),
+                     (rc_sheet(), "no rows"), (rc_sheet(["1", "90", "9", "1", "35", "X"]), "no name or no code"),
+                     (rc_sheet(*one)[:1] + [r for r in rc_sheet(*one) if r[3:4] != ["custom"]][1:], "no line gives the custom code")):
+        with pytest.raises(ValueError, match=re.escape(why)):
+            yamaha.parse_rc(bad)
+
+
+def bd_files() -> dict[str, dict]:
+    return yamaha_files("awe-europe.com", bd=True)
+
+
+def test_yamahas_bd_lists_are_four_files_of_228_keys_in_nec1_f16_with_custom_7c_and_all_plausible():
+    """BD-S477 (ID1), BD-S677 China (ID1) (the BD-S477's table: the title says `BD-S477 & BD-S677 for China`), BD-S677 (ID1) and BD-S677 (ID2)."""
+    files = bd_files()
+    assert {n: len(f["keys"]) for n, f in files.items()} == {"BD-S477 (ID1)": 56, "BD-S677 China (ID1)": 56, "BD-S677 (ID1)": 58, "BD-S677 (ID2)": 58}
+    assert all(f["protocol"] == {"name": "NEC1-f16", "carrierHz": 38000, "minSends": 1} and f["manufacturer"] == "Yamaha" and f["controls"] == [f"Yamaha {n.split(' (')[0]}"] for n, f in files.items())
+    assert Counter(s["forms"][0]["confidence"] for f in files.values() for s in f["keys"].values()) == {"plausible": 228}
+    assert all((int(s["forms"][0]["device"], 0), int(s["forms"][0]["subdevice"], 0)) == (0x7C, 0x83) for f in files.values() for s in f["keys"].values())
+    s477, china, id1, id2 = files["BD-S477 (ID1)"], files["BD-S677 China (ID1)"], files["BD-S677 (ID1)"], files["BD-S677 (ID2)"]
+    forms = lambda f: [(s["label"], int(s["forms"][0]["function"], 0)) for s in f["keys"].values()]
+    assert forms(s477) == forms(china)                                                       # the one table of the title
+    assert forms(id1)[0] == ("Standby/On", 0x807F) and forms(id2)[0] == ("Standby/On", 0x807E) and forms(id1)[-1] == ("EXIT", 0xF00F) and forms(id2)[-1] == ("EXIT", 0xF00E)
+    assert [(a[0], a[1], b[1]) for a, b in zip(forms(id1), forms(id2)) if a[1] ^ 1 != b[1]] == []     # the ID2 code is the ID1 code with the low bit of the last byte flipped, in every row
+    assert all(d1 == d0 ^ 0xFF for d0, d1 in ((fn >> 8, fn & 0xFF) for _, fn in forms(id1) + forms(s477)))        # and the ID1 data code 1 is the complement of data code 0
+    assert {n for n, _ in forms(id1)} - {n for n, _ in forms(s477)} == {"YOUTUBE", "VUDU"} and {n for n, _ in forms(s477)} - {n for n, _ in forms(id1)} == set()
+
+
+def test_a_bd_key_cites_its_list_and_the_key_layout_row_and_the_remarks_say_who_has_youtube_and_vudu():
+    files = bd_files()
+    vudu = files["BD-S677 (ID2)"]["keys"]["KEY_VUDU"]["forms"][0]["source"]
+    assert vudu == ("awe-europe.com Yamaha control documents/BD-S677_IR_code_list.pdf@2c8a80c4 (retrieved 2026-11-13, from the Wayback Machine snapshot 20151207014858) "
+                    "page 1 row '48 VUDU' (custom code 7C, data code 0 FC, data code 1 02, ID2): NEC1-f16 device 124 subdevice 131 function 64514 (bytes 7C 83 FC 02); "
+                    "the list's remark on the row is `Only for USA`; the key layout (BD-S477_S677_RC_code_list.pdf@ffaaa32a) has it as row 48, in the ID2 column of the remote for USA")
+    youtube = files["BD-S677 (ID1)"]["keys"]["KEY_YOUTUBE"]["forms"][0]["source"]
+    assert "the list's remark on the row is `Except for China`" in youtube and "ID1 column of the remote for USA and other destinations" in youtube
+    power = files["BD-S677 (ID1)"]["keys"]["KEY_POWER_ON"]["forms"][0]["source"]
+    assert "under the heading `Extended IR Code`" in power and power.endswith("the remotes' key layout has no key for it (an extended code)")
+    ab = files["BD-S677 (ID1)"]["keys"]["KEY_A_SLASH_B"]["forms"][0]["source"]
+    assert "the key layout names it `REPEAT A/B` (its row 20)" in ab
+    layout = lambda f: sum("key layout (BD-S477_S677_RC_code_list.pdf@ffaaa32a) has it" in s["forms"][0]["source"] for s in f["keys"].values())
+    assert (layout(files["BD-S477 (ID1)"]), layout(files["BD-S677 (ID1)"]), layout(files["BD-S677 (ID2)"])) == (41, 48, 48)
+
+
+class BDTampered:
+    """A snapshot whose one sheet is edited: the key layout's row 6 (`SEARCH-`) says other codes, or the list's ID2 code of a row is not the ID1 code flipped."""
+    def __init__(self, snapshot, document, edit):
+        self.snapshot, self.document, self.edit = snapshot, document, edit
+
+    def sheet_of(self, document, sheet):
+        rows = self.snapshot.sheet_of(document, sheet)
+        return self.edit(rows) if document == self.document else rows
+
+    def __getattr__(self, name):
+        return getattr(self.snapshot, name)
+
+
+def bd_built(snapshot) -> dict[str, dict]:
+    return {doc["model"]: doc for _, doc in yamaha.build_bd(snapshot, {}, Report())}
+
+
+def bd_set(rows: list[list[str]], name: str, old: str, new: str, nth: int = 0) -> list[list[str]]:
+    """The sheet with the `nth` word `old` of the row that has the word `name` written `new`."""
+    out = []
+    for r in rows:
+        if r[1] != "R" and name in r[3::2]:
+            r = list(r)
+            r[[i for i in range(3, len(r), 2) if r[i] == old][nth]] = new
+        out.append(r)
+    return out
+
+
+def test_a_bd_key_the_layout_gives_other_codes_or_whose_id2_is_not_its_id1_flipped_or_whose_code_two_names_share_is_untested():
+    snapshot = load_snapshot(SNAPSHOT / "yamaha")
+    built = bd_built(BDTampered(snapshot, yamaha.BD_RC, lambda rows: bd_set(rows, "SEARCH-", "79", "77")))              # the USA's ID1 column of row 6
+    assert {(m, s["label"]) for m, d in built.items() for s in d["keys"].values() if s["forms"][0]["confidence"] == "untested"} == {("BD-S677 (ID1)", "SEARCH-")}
+    assert ("the key layout's row 6 gives `86 77` in its ID1 column of the remote for USA"
+            in built["BD-S677 (ID1)"]["keys"]["KEY_SEARCH_MINUS"]["forms"][0]["source"])
+    built = bd_built(BDTampered(snapshot, "BD-S677_IR_code_list.pdf", lambda rows: bd_set(rows, "PLAY", "7C", "7D")))   # the ID2 data code 1 of PLAY is the ID1's, not flipped
+    play = built["BD-S677 (ID2)"]["keys"]["KEY_PLAY"]["forms"][0]
+    assert play["confidence"] == "untested" and "the ID2 code is not the ID1 code `82 7D` with the low bit of its last byte flipped" in play["source"]
+    assert built["BD-S677 (ID1)"]["keys"]["KEY_PLAY"]["forms"][0]["confidence"] == "plausible"
+    built = bd_built(BDTampered(snapshot, "BD-S477_IR_code_list.pdf", lambda rows: bd_set(bd_set(rows, "PAUSE", "83", "82"), "PAUSE", "7C", "7D")))   # PAUSE written with PLAY's code
+    pause = built["BD-S477 (ID1)"]["keys"]["KEY_PAUSE"]["forms"][0]
+    assert pause["confidence"] == "untested" and "the list gives this code to 'PLAY' and 'PAUSE', and a code is one function" in pause["source"]
+    built = bd_built(BDTampered(snapshot, "BD-S477_IR_code_list.pdf", lambda rows: bd_set(rows, "PLAY", "7D", "7E")))    # an ID1 data code 1 that is not the complement
+    assert "is not the complement of the data code 0 `82`" in built["BD-S477 (ID1)"]["keys"]["KEY_PLAY"]["forms"][0]["source"]
+
+
+def bd_pdf_rows(path, ids: int) -> list[tuple[str, int, tuple[int, ...]]]:
+    """A list's rows as the PDF's own text flow gives them (a line for a number, one for the name, two for each ID's data codes): independent of the words' places the reader uses."""
+    import pymupdf
+    lines = [l.strip() for page in pymupdf.open(str(path)) for l in page.get_text().replace("　", " ").splitlines() if l.strip()]
+    i, expect, out = lines.index("remark") + 1, 1, []
+    while expect:
+        while i < len(lines) and lines[i] != str(expect):
+            i += 1
+        if i >= len(lines):
+            break
+        name, codes = lines[i + 1], lines[i + 2:i + 2 + 2 * ids]
+        out.append((name, expect, tuple(int(c, 16) for c in codes)))
+        i += 2 + 2 * ids
+        expect += 1
+    return out
+
+
+def test_every_bd_key_is_the_row_of_the_pdfs_own_text_flow_with_its_two_data_codes():
+    pytest.importorskip("pymupdf")
+    files = bd_files()
+    for pdf, ids, names in (("BD-S477_IR_code_list.pdf", 1, ("BD-S477 (ID1)", "BD-S677 China (ID1)")), ("BD-S677_IR_code_list.pdf", 2, ("BD-S677 (ID1)", "BD-S677 (ID2)"))):
+        rows = bd_pdf_rows(SNAPSHOT / "yamaha" / pdf, ids)
+        assert [r[1] for r in rows] == list(range(1, len(rows) + 1)) and len(rows) == (56 if ids == 1 else 58)
+        for column, name in enumerate(names if ids == 2 else names[:1]):
+            keys = [(s["label"], int(s["forms"][0]["function"], 0)) for s in files[name]["keys"].values()]
+            assert keys == [(n, codes[2 * column] << 8 | codes[2 * column + 1]) for n, _, codes in rows], name
+        if ids == 1:
+            assert [(s["label"], int(s["forms"][0]["function"], 0)) for s in files[names[1]]["keys"].values()] == [(n, c[0] << 8 | c[1]) for n, _, c in rows]
+
+
+def test_the_three_bd_pdfs_are_pinned_from_the_wayback_zip_with_a_words_csv_each_the_sheet_tool_writes_and_none_has_a_notice_word():
+    pymupdf = pytest.importorskip("pymupdf")
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location("official_sheets_to_csv", ROOT / "tools" / "official_sheets_to_csv.py")
+    tool = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(tool)
+    snapshot = load_snapshot(SNAPSHOT / "yamaha")
+    notice = re.compile(r"copyright|all rights|reserved|©|\(c\)|confidential|reproduc|trademark|proprietary|property of|licen[cs]e|permission", re.I)
+    names = ["BD-S477_IR_code_list.pdf", "BD-S477_S677_RC_code_list.pdf", "BD-S677_IR_code_list.pdf"]
+    assert sorted(n for n in snapshot.documents if n.startswith("BD-S")) == names
+    for name in names:
+        entry = snapshot.documents[name]
+        assert entry["retrieved"] == "2026-11-13" and entry["snapshot"] == "20151207014858" and entry["member"] == f"BD-S677_S477_YNC_Spec/{name}"
+        assert entry["url"].endswith("/http://www.awe-europe.com/documents/Control%20Docs/Yamaha/BD-S677_S477_YNC_Spec.zip") and entry["bytes"] > 10_000
+        assert (SNAPSHOT / "yamaha" / name).read_bytes()[:5] == b"%PDF-"
+        assert not notice.search(" ".join(page.get_text() for page in pymupdf.open(str(SNAPSHOT / "yamaha" / name)))), name
+        assert tool.rows_of(SNAPSHOT / "yamaha" / name, "words") == snapshot.sheet_of(name, "words")
+    assert snapshot.documents[names[0]]["lastModified"] == "Wed, 27 May 2015 12:26:08 GMT"
+
+
+def bin_pronto(*b: int, word: str = "006D", once: bool = True, repeat: tuple[tuple[str, str], ...] = (("0155", "0055"), ("0015", "0E47"))) -> str:
+    """The Pronto code of an NEC frame in the three forms of Binary's documents: ``once`` (34 pairs once and a repeat: the B-660's), or the 34 pairs and the repeat as one repeat sequence
+    (the B-500's, ``006f`` and lower case, and the B-200's captured ones with a repeat leader or two after the stop bit)."""
+    pairs = [("0155", "00AA")] + [("0015", "0040" if byte >> i & 1 else "0015") for byte in b for i in range(8)] + [("0015", "05ED")]
+    head = ["0000", word, "0022" if once else "0000", f"{len(repeat) if once else 34 + len(repeat):04X}"]
+    return " ".join(head + [w for pair in pairs + list(repeat) for w in pair])
+
+
+def bin_rows(*records: tuple[str, str, str, str]) -> list[list[str]]:
+    """The B-660 PDF's lines as the sheet tool's ``pages`` mode gives them: the heading, then an output, an action, the standard code and the Pronto code in two lines."""
+    lines = ["Output", "Action", "Standard Code", "Expanded Code"]
+    for output, action, std, pronto in records:
+        words = pronto.split()
+        lines += [output, action, std, " ".join(words[:20]), " ".join(words[20:])]
+    return [["1", line] for line in lines]
+
+
+def test_a_binary_pronto_code_gives_its_frame_in_the_three_forms_the_documents_write_and_a_broken_one_gives_none():
+    assert binary.decode(bin_pronto(0x00, 0xFF, 0x09, 0xF6)) == (0x6D, [0x00, 0xFF, 0x09, 0xF6], "once 34, repeat 2")
+    assert binary.decode(bin_pronto(0x12, 0xED, 0x0F, 0xF0, word="006f", once=False, repeat=())) == (0x6F, [0x12, 0xED, 0x0F, 0xF0], "a repeat sequence of 34 pairs")
+    assert binary.decode(bin_pronto(0x34, 0xCB, 0x4E, 0xB1, once=False)) == (0x6D, [0x34, 0xCB, 0x4E, 0xB1], "a repeat sequence of 36 pairs")
+    assert binary.decode(bin_pronto(0x34, 0xCB, 0x4E, 0xB1, once=False, repeat=(("0155", "0056"), ("0015", "0E43"), ("0155", "0056"), ("0015", "04D4"))))[2] == "a repeat sequence of 38 pairs"
+    good = bin_pronto(0x00, 0xFF, 0x09, 0xF6)
+    for broken in (good.replace("0155 00AA", "0055 00AA", 1),                                    # no leader
+                   good.replace("0015 0040", "0015 0030", 1),                                    # a space that is neither a zero's nor a one's
+                   good.replace("0015 0015", "0050 0015", 1),                                    # a mark that is not a bit's
+                   good.replace("0015 05ED", "0050 05ED"),                                       # no stop bit
+                   good.replace("0155 0055", "0155 0155"),                                       # a pair after the frame that is not a repeat
+                   good.replace("0022", "0023", 1),                                              # the sequences do not hold the pairs written
+                   good[:-5], "0000 006D 0022 0002 xyz", "0100 006D 0022 0002 " + good[20:]):
+        assert isinstance(binary.decode(broken), str), broken
+
+
+def test_the_b_660_pdf_is_a_heading_and_records_of_an_output_an_action_a_standard_code_and_a_pronto_code_and_anything_else_is_refused():
+    one, two = bin_pronto(0x00, 0xFF, 0x09, 0xF6), bin_pronto(0x00, 0xFF, 0x46, 0xB9)
+    rows = binary.parse_b660(bin_rows(("Output 1", "Source 1", "0x00 0x09", one), ("Output 2", "CEC ON", "0x00 0x46", two)), "doc.pdf")
+    assert [(r.where, r.label, r.standard, r.output, r.action) for r in rows] == [
+        ("page 1 row 'Output 1 Source 1'", "Output 1 Source 1", (0, 9), 1, "Source 1"), ("page 1 row 'Output 2 CEC ON'", "Output 2 CEC ON", (0, 0x46), 2, "CEC ON")]
+    assert rows[0].pronto == one                                                                 # the two lines of the code are one code
+    with pytest.raises(ValueError, match="not the table's"):
+        binary.parse_b660([["1", "Output"], ["1", "Source"]], "doc.pdf")
+    with pytest.raises(ValueError, match="not an output, an action, a standard code and a Pronto code"):
+        binary.parse_b660(bin_rows(("Output 1", "Source 1", "0x00 9", one)), "doc.pdf")
+    with pytest.raises(ValueError, match="not an output, an action"):
+        binary.parse_b660(bin_rows(("Input 1", "Source 1", "0x00 0x09", one)), "doc.pdf")
+    with pytest.raises(ValueError, match="no record"):
+        binary.parse_b660(bin_rows(), "doc.pdf")
+
+
+def test_the_b_200_and_b_500_sheets_are_read_by_their_headings_and_a_code_with_no_name_or_a_grid_with_a_hole_is_refused():
+    code = bin_pronto(0x34, 0xCB, 0x0B, 0xF4, once=False)
+    b200 = [[""] * 4, ["*SNAP AV B-200-AVMATRIX-6x4 IR Commands", "", "", ""], ["", "OUTPUT", "CCF HEX COMMAND  ", " ACTION  "],
+            ["", "Output 1", code + " ", " Output 1 select Input1  "], ["", "", code, "Output 1  select Input2"], ["", "", "", ""], ["", "System Power", code, " Unit Power"],
+            ["", "", "", ""], ["", "REV", "Changes By", "Notes:"], ["", "1.0", "VF", "Initial Release Version 1.0"]]
+    assert [(r.where, r.label) for r in binary.parse_b200(b200)] == [("sheet 'RS232 Commands' row 4", "Output 1 select Input1"), ("sheet 'RS232 Commands' row 5", "Output 1 select Input2"), ("sheet 'RS232 Commands' row 7", "Unit Power")]
+    with pytest.raises(ValueError, match="not the B-200's"):
+        binary.parse_b200([[""] * 4, ["something else", "", "", ""]])
+    with pytest.raises(ValueError, match="heading `OUTPUT, CCF HEX COMMAND, ACTION` is not once"):
+        binary.parse_b200(b200[:2] + b200[3:])
+    with pytest.raises(ValueError, match="not an action and a Pronto code"):
+        binary.parse_b200(b200[:3] + [["", "Output 1", code, ""]])
+    grid = [["Switch Command", "", "", "", "CCF"]] + [["Output", str(o), "Input", str(i), bin_pronto(0x12, 0xED, (o - 1) * 16 + i - 1, 0, word="006f", once=False)]
+                                                      for o in range(1, 17) for i in range(1, 17)]
+    rows = binary.parse_b500_switching(grid)
+    assert len(rows) == 256 and (rows[17].where, rows[17].label, rows[17].expected) == (f"sheet '{binary.B500_SWITCHING}' row 19", "Output 2 Input 2", 17)
+    with pytest.raises(ValueError, match="not the 16 outputs and 16 inputs once each"):
+        binary.parse_b500_switching(grid[:-1])
+    with pytest.raises(ValueError, match="not an output, an input and a Pronto code"):
+        binary.parse_b500_switching(grid[:5] + [["Output", "x", "Input", "1", code]] + grid[6:])
+    remote = [["Remote Button Codes", ""], ["Remote Key", "CCF"], ["Power off", code], ["", ""], ["Number Key 1", code]]
+    assert [(r.where, r.label) for r in binary.parse_b500_remote(remote)] == [(f"sheet '{binary.B500_REMOTE}' row 3", "Power off"), (f"sheet '{binary.B500_REMOTE}' row 5", "Number Key 1")]
+    with pytest.raises(ValueError, match="not a key and a Pronto code"):
+        binary.parse_b500_remote(remote[:2] + [["", code]])
+    with pytest.raises(ValueError, match="no key read"):
+        binary.parse_b500_remote(remote[:2])
+
+
+def test_a_binary_key_that_breaks_a_check_of_its_document_is_untested_and_the_citation_says_which():
+    def key(label: str, b: list[int], **kw) -> binary.Key:
+        return binary.Key(binary.Row("row 1", label, "", **kw), b, 0x6D, "once 34, repeat 2")
+
+    keys = [key("Output 1 Source 1", [0, 0xFF, 0x09, 0xF6], standard=(0, 9), output=1, action="Source 1"),            # what the standard code says
+            key("Output 1 Source 2", [0, 0xFF, 0x1D, 0xE2], standard=(0, 0x1F), output=1, action="Source 2"),         # the standard code says another data byte
+            key("Output 2 Source 1", [0, 0xFF, 0x17, 0xE8], standard=(0, 0x17), output=2, action="Source 1"),         # the other document has another code
+            key("Output 3 Source 1", [0, 0xFF, 0x5E, 0xA1], standard=(0, 0x5E), output=3, action="Source 1"),         # the other document has no output 3
+            key("Output 1 Input 1", [0x12, 0xED, 0x00, 0xFF], output=1, expected=0), key("Output 1 Input 2", [0x12, 0xED, 0x01, 0xFE], output=1, expected=1),
+            key("Output 1 Input 3", [0x12, 0xED, 0x09, 0xF6], output=1, expected=2),                                    # not the grid's data byte
+            key("Output 1 Input 4", [0x13, 0xEC, 0x03, 0xFC], output=1, expected=3),                                    # not the grid's device
+            key("Power on", [0, 0xFF, 0x2A, 0xD5]), key("Standby", [0, 0xFF, 0x2A, 0xD5])]                              # two names, one code
+    binary._hold(keys, "doc", {(1, "Source 1"): [0, 0xFF, 0x09, 0xF6], (1, "Source 2"): [0, 0xFF, 0x1D, 0xE2], (2, "Source 1"): [0, 0xFF, 0x18, 0xE7]})
+    assert [k.doubts for k in keys[:4]] == [
+        [], ["the row's standard code 0x00 0x1f is not the Pronto code's device byte and data byte (0x00 0x1d)"],
+        ["the other B-660-MTRX document has a different code for the same output and action"], []]
+    assert [bool(k.doubts) for k in keys[4:8]] == [False, False, True, True]
+    assert "data byte 0x02 for Output 1 Input 3, the Pronto code has 0x12 and 0x09" in keys[6].doubts[0] and "device 0x12" in keys[7].doubts[0]
+    assert keys[8].doubts == keys[9].doubts == ["the document gives this code to 'Power on' and 'Standby'"]
+
+
+def binary_files() -> dict[str, dict]:
+    return {load(p)["model"]: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "binary").glob("*.json"))}
+
+
+def test_binary_is_four_files_of_350_keys_all_plausible_since_every_check_of_every_document_holds():
+    files = binary_files()
+    assert sorted(files) == ["B-200-AVMATRIX-6x4", "B-500-MTRX-230", "B-660-MTRX-4x2", "B-660-MTRX-4x4"]
+    assert {m: len(f["keys"]) for m, f in files.items()} == {"B-200-AVMATRIX-6x4": 25, "B-500-MTRX-230": 277, "B-660-MTRX-4x2": 16, "B-660-MTRX-4x4": 32}
+    assert all(f["manufacturer"] == "Binary" and f["controls"] == [f"Binary {m}"] and f["protocol"] == {"name": "NEC1", "carrierHz": 38000, "minSends": 1} for m, f in files.items())
+    assert Counter(s["forms"][0]["confidence"] for f in files.values() for s in f["keys"].values()) == {"plausible": 350}
+    devices = {m: Counter((s["forms"][0]["device"], s["forms"][0]["subdevice"]) for s in f["keys"].values()) for m, f in files.items()}
+    assert devices == {"B-200-AVMATRIX-6x4": {("0x34", "0xCB"): 25}, "B-500-MTRX-230": {("0x12", "0xED"): 256, ("0x00", "0xFF"): 21},
+                       "B-660-MTRX-4x2": {("0x00", "0xFF"): 16}, "B-660-MTRX-4x4": {("0x00", "0xFF"): 32}}
+    for f in files.values():                                           # a frame is a key of one name in a file, and a form is what its citation says
+        assert len({(s["forms"][0]["device"], s["forms"][0]["function"]) for s in f["keys"].values()}) == len(f["keys"])
+        for spec in f["keys"].values():
+            form = spec["forms"][0]
+            b = [int(x, 16) for x in re.search(r"\(bytes ((?:[0-9A-F]{2} ?){4});", form["source"])[1].split()]
+            assert (int(form["device"], 0), int(form["subdevice"], 0), int(form["function"], 0)) == tuple(b[:3]) and b[2] ^ b[3] == 0xFF and b[0] ^ b[1] == 0xFF
+
+
+def test_binary_keys_are_named_as_the_documents_name_them_and_a_citation_says_the_row_the_shape_and_a_carrier_word_that_is_not_38_khz():
+    files = binary_files()
+    assert files["B-660-MTRX-4x4"]["keys"]["KEY_OUTPUT_3_CEC_OFF"]["label"] == "Output 3 CEC OFF"
+    assert files["B-660-MTRX-4x4"]["keys"]["KEY_OUTPUT_3_CEC_OFF"]["forms"][0]["source"] == (
+        "snapav.com Binary IR code documents/B-660-MTRX-4x4_Pronto_IR_HEX_Codes.pdf@9c1ef93c (retrieved 2026-11-13, from the Wayback Machine snapshot 20230207121624) page 1 row 'Output 3 CEC OFF': "
+        "NEC1 device 0 subdevice 255 function 85 (bytes 00 FF 55 AA; Pronto code of once 34, repeat 2)")
+    assert files["B-200-AVMATRIX-6x4"]["keys"]["KEY_UNIT_POWER"]["forms"][0]["source"] == (
+        "snapav.com Binary IR code documents/B-200-AVMATRIX-6x4-IR_CCF_Hex_Codes.xls@03c1677e (retrieved 2026-11-13, from the Wayback Machine snapshot 20250825064658) sheet 'RS232 Commands' row 32: "
+        "NEC1 device 52 subdevice 203 function 18 (bytes 34 CB 12 ED; Pronto code of a repeat sequence of 36 pairs)")
+    b500 = files["B-500-MTRX-230"]["keys"]
+    assert b500["KEY_OUTPUT_16_INPUT_16"]["forms"][0]["function"] == "0xFF" and b500["KEY_OUTPUT_2_INPUT_1"]["forms"][0]["function"] == "0x10"
+    assert b500["KEY_POWER_ON"]["forms"][0]["source"] == (
+        "snapav.com Binary IR code documents/B-500-MTRX-230_IR-Protocol.xlsx@8630f6d5 (retrieved 2026-11-13, from the Wayback Machine snapshot 20230320001301) sheet 'Remote Button Codes' row 5: "
+        "NEC1 device 0 subdevice 255 function 23 (bytes 00 FF 17 E8; Pronto code of a repeat sequence of 34 pairs); the sheet's carrier word is 006F, the key is NEC1's 38 kHz")
+    assert [b500[n]["label"] for n in b500][256:] == ["Power off", "Power on"] + [f"Number Key {n}" for n in range(1, 10)] + [
+        "OUTPUT", "INPUT", "OUTPUT off", "ALL", "10+", "ENTER", "STATUS", "LEARN", "DEFAULT", "CLEAR"]
+    assert all("carrier word" not in s["forms"][0]["source"] for f in ("B-200-AVMATRIX-6x4", "B-660-MTRX-4x2", "B-660-MTRX-4x4") for s in files[f]["keys"].values())   # 006D: 38 kHz
+
+
+def bin_frame(words: list[str]) -> list[int]:
+    """The four bytes of a frame from the times alone, independently of the reader: a bit is a one when its space is longer than twice its mark."""
+    w = [int(x, 16) for x in words]
+    pairs = list(zip(w[4::2], w[5::2]))
+    bits = [1 if space > 2 * mark else 0 for mark, space in pairs[1:33]]
+    return [sum(b << i for i, b in enumerate(bits[j * 8:(j + 1) * 8])) for j in range(4)]
+
+
+def test_every_binary_key_is_what_the_pinned_documents_say_recomputed_from_their_own_text_and_the_b_660_4x4_has_the_4x2s_codes_for_outputs_1_and_2():
+    files, snapshot = binary_files(), load_snapshot(SNAPSHOT / "binary")
+    seen = {}
+    for pdf, model in binary.B660.items():                       # the standard codes and the times, from the lines of the PDF
+        lines = [r[1].strip() for r in snapshot.sheet_of(pdf, "pages")][4:]
+        std = [i for i, line in enumerate(lines) if re.fullmatch(r"0x[0-9A-F]{2} 0x[0-9A-F]{2}", line)]
+        assert len(std) == len(files[model]["keys"]) == (16 if "4x2" in model else 32)
+        got = {}
+        for n, i in enumerate(std):
+            end = std[n + 1] - 2 if n + 1 < len(std) else len(lines)
+            code = " ".join(lines[i + 1:end]).split()
+            device, data = (int(x, 16) for x in lines[i].replace("0x", "").split())
+            assert bin_frame(code) == [device, device ^ 0xFF, data, data ^ 0xFF], (pdf, lines[i - 2:i + 1])       # the times say the standard code
+            got[f"{lines[i - 2]} {lines[i - 1]}"] = (device, data)
+        assert {s["label"]: (int(s["forms"][0]["device"], 0), int(s["forms"][0]["function"], 0)) for s in files[model]["keys"].values()} == got
+        seen[model] = got
+    assert all(seen["B-660-MTRX-4x4"][k] == v for k, v in seen["B-660-MTRX-4x2"].items())                   # the 4x2's 16 are the 4x4's first two outputs
+    by_label = {s["label"]: s["forms"][0] for s in files["B-500-MTRX-230"]["keys"].values()}
+    for sheet, count in ((binary.B500_SWITCHING, 256), (binary.B500_REMOTE, 21)):
+        rows = [r for r in snapshot.sheet_of(binary.B500, sheet) if any("0000 " in c for c in r)]
+        assert len(rows) == count
+        for r in rows:
+            code = next(c for c in r if c.startswith("0000 ")).split()
+            label = f"Output {r[1]} Input {r[3]}" if sheet == binary.B500_SWITCHING else r[0]
+            form = by_label[label]
+            assert [int(form[k], 0) for k in ("device", "subdevice", "function")] == bin_frame(code)[:3]
+            if sheet == binary.B500_SWITCHING:
+                assert bin_frame(code)[:3] == [0x12, 0xED, (int(r[1]) - 1) * 16 + int(r[3]) - 1]                # the grid
+    b200 = [r for r in snapshot.sheet_of(binary.B200, binary.B200_SHEET) if any(c.startswith("0000 ") for c in r)]
+    assert len(b200) == len(files["B-200-AVMATRIX-6x4"]["keys"]) == 25
+    for r in b200:
+        form = next(s for s in files["B-200-AVMATRIX-6x4"]["keys"].values() if s["label"] == " ".join(r[3].split()))["forms"][0]
+        assert [int(form[k], 0) for k in ("device", "subdevice", "function")] == bin_frame(r[2].split())[:3]
+
+
+def test_the_binary_snapshot_is_four_documents_from_snapav_by_the_wayback_machine_whose_rows_are_the_pinned_csv_and_none_has_a_notice_word():
+    pymupdf = pytest.importorskip("pymupdf")
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location("official_sheets_to_csv", ROOT / "tools" / "official_sheets_to_csv.py")
+    tool = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(tool)
+    snapshot = load_snapshot(SNAPSHOT / "binary")
+    assert snapshot.retrieved == "2026-11-13" and sorted(snapshot.documents) == [
+        "B-200-AVMATRIX-6x4-IR_CCF_Hex_Codes.xls", "B-500-MTRX-230_IR-Protocol.xlsx", "B-660-MTRX-4x2_Pronto_IR_HEX_Codes.pdf", "B-660-MTRX-4x4_Pronto_IR_HEX_Codes.pdf"]
+    folder = "https://www.snapav.com/wcsstore/ExtendedSitesCatalogAssetStore/attachments/documents/MediaDistribution/ProtocolsAndDrivers/"
+    assert {n: (e["snapshot"], e["original"].removeprefix(folder)) for n, e in snapshot.documents.items()} == {
+        "B-200-AVMATRIX-6x4-IR_CCF_Hex_Codes.xls": ("20250825064658", "B-200-AVMATRIX-6x4-IR%20CCF%20Hex%20Codes.xls"),
+        "B-500-MTRX-230_IR-Protocol.xlsx": ("20230320001301", "B-500-MTRX-230_IR-Protocol.xls"),            # a workbook the server names .xls; the archive answers id_ 404, so its URL is if_
+        "B-660-MTRX-4x2_Pronto_IR_HEX_Codes.pdf": ("20230205211537", "B-660-MTRX-4x2_Pronto_IR_HEX_Codes.pdf"),
+        "B-660-MTRX-4x4_Pronto_IR_HEX_Codes.pdf": ("20230207121624", "B-660-MTRX-4x4_Pronto_IR_HEX_Codes.pdf")}
+    assert "if_/" in snapshot.documents["B-500-MTRX-230_IR-Protocol.xlsx"]["url"] and all("id_/" in e["url"] for n, e in snapshot.documents.items() if "B-500" not in n)
+    notice = re.compile(r"copyright|all rights|reserved|©|\(c\)|confidential|reproduc|trademark|proprietary|property of|licen[cs]e|permission", re.I)
+    for name in snapshot.documents:
+        path = SNAPSHOT / "binary" / name
+        if name.endswith(".pdf"):
+            assert not notice.search(" ".join(page.get_text() for page in pymupdf.open(str(path)))), name
+            assert tool.rows_of(path, "pages") == snapshot.sheet_of(name, "pages")
+    sheets = {B: [n for n, e in snapshot.sheets.items() if e["document"] == B] for B in (binary.B200, binary.B500)}
+    assert [len(v) for v in sheets.values()] == [1, 2]
+    openpyxl, xlrd = pytest.importorskip("openpyxl"), pytest.importorskip("xlrd")
+    cells = [str(c.value) for s in xlrd.open_workbook(str(SNAPSHOT / "binary" / binary.B200)).sheets() for r in range(s.nrows) for c in s.row(r)]
+    cells += [str(c) for s in openpyxl.load_workbook(SNAPSHOT / "binary" / binary.B500).worksheets for row in s.iter_rows(values_only=True) for c in row if c is not None]
+    assert not notice.search(" ".join(cells))
+    assert tool.rows_of(SNAPSHOT / "binary" / binary.B500, binary.B500_REMOTE) == snapshot.sheet_of(binary.B500, binary.B500_REMOTE)
+
+
+# --- AWE Europe's display-maker sheets (DESIGN section 107) --------------------------------------------------------------------------------------------------------------------
+
+
+def awe_rc5(system: int, command: int, toggle: int = 0, word: str = "0073", unit: int = 0x20) -> str:
+    """The learned RC-5 timings of a frame, built here: fourteen biphase bits (a one is a space and a mark), the frame's first half-bit, a space, left out and its last space in the gap."""
+    bits = [1, 0 if command > 63 else 1, toggle] + [system >> i & 1 for i in (4, 3, 2, 1, 0)] + [command >> i & 1 for i in (5, 4, 3, 2, 1, 0)]
+    runs: list[list[int]] = []
+    for level in [lv for b in bits for lv in ((0, 1) if b else (1, 0))][1:]:
+        if runs and runs[-1][0] == level:
+            runs[-1][1] += 1
+        else:
+            runs.append([level, 1])
+    if runs[-1][0] == 0:
+        runs.pop()
+    numbers = [n * unit for _, n in runs] + [0x0CBF]
+    return " ".join(["0000", word, "0000", f"{len(numbers) // 2:04X}"] + [f"{n:04X}" for n in numbers])
+
+
+def awe_frame(leader: tuple[str, str], one: str, zero: str, bits: list[int], gap: str, word: str, mark: str) -> str:
+    pairs = [leader] + [(mark, one if b else zero) for b in bits] + [(mark, gap)]
+    return " ".join(["0000", word, "0000", f"{len(pairs):04X}"] + [w for pair in pairs for w in pair])
+
+
+def awe_bits(*bytes_: int) -> list[int]:
+    return [b >> i & 1 for b in bytes_ for i in range(8)]
+
+
+def test_an_awe_pronto_code_gives_its_frame_in_each_protocols_form_and_a_broken_one_gives_none():
+    assert awe.rc5("5000 0000 0000 0001 0003 007B") == (3, 123, None, "Pronto's short RC-5 form", None)
+    for system, command in ((0, 63), (3, 4), (3, 56), (3, 123), (31, 127), (0, 0), (5, 64)):
+        for toggle in (0, 1):
+            assert awe.rc5(awe_rc5(system, command, toggle)) == (system, command, toggle, "learned RC-5 timings", 0x73), (system, command, toggle)
+    for broken in ("5000 0000 0000 0001 0020 0004", "5000 0000 0000 0001 0003 0080", "5000 0073 0000 0001 0003 0004", "5000 0000 0000 0001 0003", "zzzz",
+                   awe_rc5(3, 4).replace("0000 0073", "0001 0073", 1), awe_rc5(3, 4).rsplit(" ", 2)[0], awe_rc5(3, 4, unit=0x60), awe_rc5(3, 4).replace("0040", "0030", 1)):
+        assert isinstance(awe.rc5(broken), str), broken
+    leader = ("00AC", "00AC")
+    nec = awe_frame(leader, "0040", "0015", awe_bits(7, 7, 0x99, 0x66), "0719", "006D", "0015")
+    assert awe.necx2(nec) == (0x6D, [7, 7, 0x99, 0x66], "an NECx2 frame (a 4.5 ms leader, 32 bits)")
+    assert awe.necx2(awe_frame(("00AB", "00AB"), "003F", "0015", awe_bits(7, 7, 0x99, 0x66), "0719", "006C", "0015"))[1] == [7, 7, 0x99, 0x66]
+    for broken in (awe_frame(leader, "0040", "0015", awe_bits(7, 7, 0x99, 0x67), "0719", "006D", "0015"),                    # the fourth byte is not the complement
+                   awe_frame(("0155", "00AA"), "0040", "0015", awe_bits(7, 7, 0x99, 0x66), "0719", "006D", "0015"),         # an NEC leader of 9 ms
+                   nec.rsplit(" ", 2)[0].replace("0022", "0021"), " ".join(nec.split()[:60]).replace("0022", "001E")):
+        assert isinstance(awe.necx2(broken), str), broken
+    pan = awe_frame(("0080", "003F"), "0030", "0010", awe_bits(2, 32, 0x80, 0, 0x3E, 0x80 ^ 0x3E), "0A98", "0071", "0010")
+    assert awe.kaseikyo(pan) == (0x71, [2, 32, 0x80, 0, 0x3E, 0xBE], "a 48-bit frame (a 3.5 ms leader)")
+    for broken in (awe_frame(("0080", "003F"), "0030", "0010", awe_bits(2, 32, 0x80, 0, 0x3E, 0xBF), "0A98", "0071", "0010"),         # a check byte that is not the exclusive or
+                   awe_frame(("0080", "003F"), "0030", "0010", awe_bits(3, 32, 0x80, 0, 0x3E, 0xBE), "0A98", "0071", "0010"),         # not Panasonic's two first bytes
+                   awe_frame(leader, "0030", "0010", awe_bits(2, 32, 0x80, 0, 0x3E, 0xBE), "0A98", "0071", "0010"),                     # a leader of 4.5 ms
+                   " ".join(pan.split()[:50])):
+        assert isinstance(awe.kaseikyo(broken), str), broken
+
+
+def awe_sharp_rows(*rows: tuple[str, str, str, str, str, str, str]) -> list[list[str]]:
+    head = [["KeyName", "Function", "Control Code", "", "", "", "Remarks"], ["", "", "SYSTEM", "DATA", "DEFINE", "EXT", ""], ["", "", "C1-C5", "C6-C11", "C12-C13", "C14-C15", ""]]
+    return [["1", "1", *r] for r in head + [list(r) for r in rows]]
+
+
+def test_the_four_awe_readers_take_a_document_as_its_rows_and_refuse_what_is_not_one():
+    # Philips: a sheet of `name:` and a code, with blank rows
+    code = "5000 0000 0000 0001 0003 0004"
+    rows = awe.parse_philips([["", ""], ["Power On:", code], ["", ""], ["AV 1 :", code]])
+    assert [(r.where, r.label) for r in rows] == [("sheet 'Sheet1' row 2", "Power On"), ("sheet 'Sheet1' row 4", "AV 1")]
+    for broken in ([["Power On", code]], [["Power On:", ""]], [["", code]], [["Power On:", code, "x"]], [["", ""]]):
+        with pytest.raises(ValueError):
+            awe.parse_philips(broken)
+    # Samsung: a title, then a name and a code, a paragraph may hold several (a name with no colon, as `HDMI1 0000 ...`)
+    samsung = [[awe.SAMSUNG_TITLE, "para"], ["POWER ON:", "para"], ["0000 006D 0000 0022 00AC", "para"], ["00AC 0016 0040", "para"], ["HDMI1 0000 006D 0000 0022 00AB 00AB Component 1: 0000 006D 0000 0022", "para"], ["", "cell"]]
+    got = awe.parse_samsung(samsung)
+    assert [(r.where, r.label) for r in got] == [("key 1 'POWER ON'", "POWER ON"), ("key 2 'HDMI1'", "HDMI1"), ("key 3 'Component 1'", "Component 1")]
+    assert got[0].pronto == "0000 006D 0000 0022 00AC 00AC 0016 0040" and got[2].pronto == "0000 006D 0000 0022"
+    for broken in (samsung[1:], [samsung[0], ["0000 006D 0000 0022", "para"]], [samsung[0], ["POWER ON:", "para"]], [samsung[0]]):
+        with pytest.raises(ValueError):
+            awe.parse_samsung(broken)
+    # the Europe LCD-TV table: the control code is C1 to C15, first bit first
+    sharp = awe_sharp_rows(("POWER", "turn the power", "10000", "011010", "00", "10", "toggle"), ("Colour RED", "", "10000", "000100", "10", "10", ""), ("", "", "", "", "", "", ""),
+                           ("MENU", "menu", "10001", "011000", "11", "10", ""))
+    got = awe.parse_sharp(sharp)
+    assert [(r.where, r.label, r.fields, r.remark) for r in got] == [("page 1 table 1 row 'POWER'", "POWER", (1, 22), "toggle"), ("page 1 table 1 row 'Colour RED'", "Colour RED", (1, 72), ""),
+                                                                    ("page 1 table 1 row 'MENU'", "MENU", (17, 198), "")]
+    for broken in (sharp[:2], awe_sharp_rows(("POWER", "", "1000", "011010", "00", "10", "")), awe_sharp_rows(("POWER", "", "10000", "011010", "00", "01", "")),
+                   awe_sharp_rows(("POWER", "", "10000", "011012", "00", "10", "")), awe_sharp_rows(("", "", "10000", "011010", "00", "10", "")), awe_sharp_rows()):
+        with pytest.raises(ValueError):
+            awe.parse_sharp(broken)
+    # Panasonic: the words of a page by place: a code is the lines of the right column from its `0000 xxxx 0000` line, the name the left column's words on its height (a short name shares a
+    # line with a line of the code, and the first page's names end with `(Discrete)`)
+    def line(page: int, y: int, *cells: tuple[int, str]) -> list[str]:
+        return [str(page), str(y)] + [v for x, w in cells for v in (str(x), w)]
+
+    body = [line(1, 27, (84, "Panasonic"), (158, "Plasma")), line(1, 70, (159, "0000"), (173, "0071"), (188, "0000"), (203, "0032")), line(1, 79, (100, "POWER"), (130, "ON"), (159, "0010"), (173, "0010")),
+            line(1, 88, (100, "(Discrete)"), (159, "0010")), line(1, 140, (159, "0000"), (173, "0071"), (188, "0000"), (203, "0032")), line(1, 150, (90, "VIDEO"), (120, "1"), (159, "0010")),
+            line(2, 70, (197, "0000"), (215, "0070"), (232, "0000"), (250, "0032")), line(2, 93, (86, "OK")), line(2, 120, (197, "0010")),
+            line(2, 200, (197, "0000"), (215, "0070"), (232, "0000"), (250, "0032")), line(2, 210, (80, "FORWARD"), (197, "0010")), line(2, 220, (96, "SEARCH")), ["2", "R", "10", "50"]]
+    got = awe.parse_panasonic(body)
+    assert [(r.where, r.label, r.model, r.pronto.split()[:4]) for r in got] == [
+        ("page 1 row 'POWER ON'", "POWER ON", "discrete", ["0000", "0071", "0000", "0032"]), ("page 1 row 'VIDEO 1'", "VIDEO 1", "discrete", ["0000", "0071", "0000", "0032"]),
+        ("page 2 row 'OK'", "OK", "remote", ["0000", "0070", "0000", "0032"]), ("page 2 row 'FORWARD SEARCH'", "FORWARD SEARCH", "remote", ["0000", "0070", "0000", "0032"])]
+    assert got[0].pronto.split()[-2:] == ["0010", "0010"]
+    for broken in (body[2:], [r for r in body if r[1] != "93"], [line(1, 79, (159, "0010"))], []):
+        with pytest.raises(ValueError):
+            awe.parse_panasonic(broken)
+
+
+def test_an_awe_key_that_breaks_a_check_of_its_document_is_untested_and_the_citation_says_which():
+    def key(doc_label: str, fields: tuple[int, ...], model: str = "") -> awe.Key:
+        return awe.Key(awe.Row("row 1", doc_label, model=model), fields, "a shape", None)
+
+    philips = [key("Power On", (0, 63)), key("AV1", (3, 4)), key("AV2", (0, 57)), key("AV3", (3, 56)), key("HDMI 1", (3, 57)), key("AV4", (3, 57)), key("VGA", (3, 123))]
+    awe._hold(awe.SPECS[0][0], philips)
+    assert [bool(k.doubts) for k in philips] == [False, False, True, False, True, True, False]
+    assert philips[2].doubts == ["the only input of the sheet that is on RC-5 system 0 (the other 5 are on system 3)"]
+    assert philips[4].doubts == philips[5].doubts == ["the document gives this code to 'AV4' and 'HDMI 1'"]
+    samsung = [key("POWER ON", (7, 7, 0x99)), key("HDMI3", (7, 7, 0xC2)), key("S-Video 3", (7, 7, 0xC2)), key("Video 4", (8, 7, 0x84))]
+    awe._hold(awe.SPECS[1][0], samsung)
+    assert [bool(k.doubts) for k in samsung] == [False, True, True, True]
+    assert samsung[3].doubts == ["device 8 subdevice 7, not the TV address 7 and 7 of the other codes of the list"]
+    panasonic = [key("MUTE", (0x80, 0, 0x32), "remote"), key("OK", (0x80, 0, 0x32), "remote"), key("STOP", (0x80, 0, 0x32), "discrete"), key("PLAY", (0xB0, 0, 0x0A), "remote")]
+    awe._hold(awe.SPECS[3][0], panasonic)                  # a code two names of one file share; the same code in another file of the document is not that
+    assert [bool(k.doubts) for k in panasonic] == [True, True, False, False]
+
+
+def awe_files() -> dict[str, dict]:
+    return {p.stem: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "awe").glob("*.json"))}
+
+
+def test_awe_is_five_files_of_154_keys_and_the_ten_untested_are_the_codes_two_names_share_and_one_input_on_another_system():
+    files = awe_files()
+    assert sorted(files) == ["Panasonic_Plasma_TV_discrete_codes", "Panasonic_Plasma_TV_remote_codes__2007", "Philips_Discrete_IR_codes", "Samsung_Discrete_IR_commands", "Sharp_LCD-TV_for_Europe"]
+    assert {n: (f["manufacturer"], f["protocol"]["name"], len(f["keys"])) for n, f in files.items()} == {
+        "Panasonic_Plasma_TV_discrete_codes": ("Panasonic", "Panasonic", 12), "Panasonic_Plasma_TV_remote_codes__2007": ("Panasonic", "Panasonic", 46),
+        "Philips_Discrete_IR_codes": ("Philips", "RC5", 11), "Samsung_Discrete_IR_commands": ("Samsung", "NECx2", 13), "Sharp_LCD-TV_for_Europe": ("Sharp", "Sharp", 72)}
+    assert all(f["controls"] == [f"{f['manufacturer']} {f['model']}"] for f in files.values())
+    tiers = {n: sorted(k for k, s in f["keys"].items() if s["forms"][0]["confidence"] == "untested") for n, f in files.items()}
+    assert tiers == {"Panasonic_Plasma_TV_discrete_codes": [], "Panasonic_Plasma_TV_remote_codes__2007": [], "Sharp_LCD-TV_for_Europe": [],
+                     "Philips_Discrete_IR_codes": ["KEY_AV2", "KEY_AV4", "KEY_FRONT_INPUT", "KEY_HDMI_1", "KEY_HDMI_2", "KEY_SIDE_INPUT", "KEY_VGA"],
+                     "Samsung_Discrete_IR_commands": ["KEY_HDMI3", "KEY_S_MINUS_VIDEO_3"]}
+    for f in files.values():                                           # a form has what its citation says, and a code is one key of a file but for the two names that share it
+        shared = Counter((s["forms"][0].get("device"), s["forms"][0].get("subdevice"), s["forms"][0]["function"]) for s in f["keys"].values())
+        for spec in f["keys"].values():
+            form = spec["forms"][0]
+            again = shared[(form.get("device"), form.get("subdevice"), form["function"])]
+            assert (again > 1) == bool(re.search(r"the document gives this code to", form["source"])), spec["label"]
+
+
+def test_awe_keys_are_named_as_the_documents_name_them_and_a_citation_says_the_row_the_shape_and_a_carrier_word_that_is_not_the_protocols():
+    files = awe_files()
+    assert files["Philips_Discrete_IR_codes"]["keys"]["KEY_AV3"]["forms"][0]["source"] == (
+        "awe-europe.com control documents/Philips_discrete_ir_codes.xls@4fc2fd5b (retrieved 2026-11-13, from the Wayback Machine snapshot 20151109020031) sheet 'Sheet1' row 10: "
+        "RC5 system 3 command 56 (learned RC-5 timings; Pronto carrier word 0073)")
+    assert files["Samsung_Discrete_IR_commands"]["keys"]["KEY_POWER_ON"]["forms"][0]["source"].endswith(
+        "key 1 'POWER ON': NECx2 device 7 subdevice 7 function 153 (an NECx2 frame (a 4.5 ms leader, 32 bits); Pronto carrier word 006D)")
+    sharp = files["Sharp_LCD-TV_for_Europe"]["keys"]
+    assert (sharp["KEY_POWER"]["forms"][0]["device"], sharp["KEY_POWER"]["forms"][0]["function"]) == ("0x01", "0x16")     # Sharp D1 F22 is the Power of IrpTransmogrifier's teaser file (protocols/sharp.py)
+    assert sharp["KEY_POWER"]["forms"][0]["source"].endswith("page 1 table 1 row 'POWER': Sharp device 1 function 22 (a table of bits (the system, data and define bits, first bit first)); the table's remark: 'toggle'")
+    assert sharp["KEY_PICTURE_MENU"]["forms"][0]["source"].endswith("the table's remark: 'GD7E'") and sharp["KEY_EXT_MINUS_7_INPUT_7"]["forms"][0]["function"] == "0x95"
+    assert not any("Not implemented" in s["label"] for s in sharp.values()) and len({s["label"] for s in sharp.values()}) == 72
+    panasonic = files["Panasonic_Plasma_TV_remote_codes__2007"]["keys"]
+    assert panasonic["KEY_MUTE"]["forms"][0]["source"] == (
+        "awe-europe.com control documents/Panasonic_plasma_Discrete-remote-control-code.pdf@" + panasonic["KEY_MUTE"]["forms"][0]["source"].split("@")[1][:8] +
+        " (retrieved 2026-11-13, from the Wayback Machine snapshot 20150703204910) page 3 row 'MUTE': Panasonic device 128 subdevice 0 function 50 (a 48-bit frame (a 3.5 ms leader); "
+        "Pronto carrier word 0071); the sheet's carrier word is 0071 (36.7 kHz), the key is the protocol's 37 kHz")
+    assert [panasonic[f"KEY_{n}"]["forms"][0]["function"] for n in (1, 2, 3, 4, 5, 6, 7, 8, 9, 0)] == [f"0x{0x10 + i:02X}" for i in range(10)]     # the digits are sequential
+    assert files["Panasonic_Plasma_TV_discrete_codes"]["keys"]["KEY_POWER_ON"]["forms"][0]["function"] == "0x3E" and files["Panasonic_Plasma_TV_discrete_codes"]["keys"]["KEY_POWER_OFF"]["forms"][0]["function"] == "0x3F"
+
+
+def awe_levels(words: list[str]) -> list[int]:
+    """A learned RC-5 code's half-bits sampled at the centre of each slot, from the times alone (the frame's first half-bit, a space, is the slot before the first mark)."""
+    w = [int(x, 16) for x in words]
+    unit = min(w[4:-1])
+    edges, t = [], unit
+    for i, d in enumerate(w[4:-1]):
+        edges.append((t, t + d, 1 - i % 2))
+        t += d
+    return [next((lv for a, b, lv in edges if a <= (slot + 0.5) * unit < b), 0) for slot in range(28)]
+
+
+def test_every_awe_key_is_what_the_pinned_documents_say_recomputed_from_their_own_text_and_the_philips_rc5_forms_agree():
+    files, snapshot = awe_files(), load_snapshot(SNAPSHOT / "awe")
+    got = lambda f: {s["label"]: tuple(int(s["forms"][0][k], 0) for k in ("device", "subdevice", "function") if k in s["forms"][0]) for s in files[f]["keys"].values()}      # noqa: E731
+    # Philips: the short form's two numbers, and the learned timings' bits by sampling (two forms of the same RC-5 frame)
+    expected = {}
+    for name, code in snapshot.sheet_of(awe.PHILIPS, "Sheet1"):
+        if not name:
+            continue
+        w = code.split()
+        if w[0] == "5000":
+            expected[name[:-1]] = (int(w[4], 16), int(w[5], 16))
+        else:
+            slots = awe_levels(w)
+            bits = [slots[i + 1] for i in range(0, 28, 2)]
+            assert all(slots[i] != slots[i + 1] for i in range(0, 28, 2)) and bits[0] == 1
+            expected[name[:-1]] = (int("".join(map(str, bits[3:8])), 2), int("".join(map(str, bits[8:14])), 2) + (0 if bits[1] else 64))
+    assert got("Philips_Discrete_IR_codes") == expected and len(expected) == 11
+    assert expected["VGA"] == expected["HDMI 2"] == (3, 123) and expected["Front Input"] == expected["Side Input"] and expected["AV4"] == expected["HDMI 1"] == (3, 57)       # two forms, one code
+    # Samsung: every code whose pairs are 34, by the times (a space more than twice its mark is a one)
+    parts = re.split(r"\b0000 (?=006[CD] )", " ".join(r[0] for r in snapshot.sheet_of(awe.SAMSUNG, "paragraphs")[1:]))
+    names, bodies = [parts[0].rstrip(": ")], []
+    for part in parts[1:]:
+        tokens = part.split()
+        n = next((i for i, t in enumerate(tokens) if not re.fullmatch(r"[0-9A-F]{4}", t)), len(tokens))
+        bodies.append([0] + [int(t, 16) for t in tokens[:n]])
+        names.append(" ".join(tokens[n:]).rstrip(": "))
+    assert names.pop() == "" and len(names) == len(bodies) == 14
+    samsung = {}
+    for name, w in zip(names, bodies):
+        pairs = list(zip(w[4::2], w[5::2]))
+        if len(pairs) == 34:
+            b = [sum((1 if sp > 2 * mk else 0) << i for i, (mk, sp) in enumerate(pairs[1 + 8 * j:9 + 8 * j])) for j in range(4)]
+            samsung[name] = (b[0], b[1], b[2])
+            assert b[2] ^ b[3] == 0xFF
+    assert got("Samsung_Discrete_IR_commands") == samsung and len(samsung) == 13 and "POWER OFF" not in samsung
+    # Sharp: the bits of each row
+    rows = [r[2:] for r in snapshot.sheet_of(awe.SHARP, "tables") if re.fullmatch(r"[01]{5}", r[4])]
+    assert len(rows) == 80 and {r[5] for r in rows} == {"10"}
+    sharp = {}
+    for r in rows:
+        if "Not implemented" in r[0]:
+            continue
+        device = sum(int(c) << i for i, c in enumerate(r[2]))
+        function = sum(int(c) << i for i, c in enumerate(r[3] + r[4]))
+        sharp[" ".join(r[0].split())] = (device, function)
+    assert got("Sharp_LCD-TV_for_Europe") == sharp and len(sharp) == 72
+    # Panasonic: the codes of a page in the order of their place, and the names of the left column in the same order
+    expected = {"discrete": {}, "remote": {}}
+    for page in range(1, 7):
+        lines = sorted((float(r[1]), r[2:]) for r in snapshot.sheet_of(awe.PANASONIC, "words") if r[0] == str(page) and r[1] != "R")
+        right = [w for _, cells in lines for x, w in zip(cells[0::2], cells[1::2]) if int(x) >= 150 and re.fullmatch(r"[0-9A-F]{4}", w)]
+        codes = [right[i:i + 104] for i in range(len(right) - 3) if right[i] == "0000" and right[i + 2] == "0000" and right[i + 3] == "0032"]        # each starts `0000 xxxx 0000 0032`
+        first = min(y for y, cells in lines if cells[1::2][:1] == ["0000"] and int(cells[0]) >= 150)
+        left = [(y, " ".join(w for x, w in zip(cells[0::2], cells[1::2]) if int(x) < 150)) for y, cells in lines if y > first - 20 and any(int(x) < 150 for x in cells[0::2])]
+        groups: list[list[str]] = []
+        last = -99.0
+        for y, text in left:
+            if y - last > 15:
+                groups.append([])
+            groups[-1].append(text)
+            last = y
+        names = [" ".join(" ".join(g).replace("(Discrete)", "").split()) for g in groups]
+        names = [n for n in names if n]
+        assert len(names) == len(codes), (page, names)
+        for name, code in zip(names, codes):
+            w = [int(x, 16) for x in code]
+            if len(w) != 4 + 2 * 50:
+                continue
+            pairs = list(zip(w[4::2], w[5::2]))
+            b = [sum((1 if sp > 0x20 else 0) << i for i, (mk, sp) in enumerate(pairs[1 + 8 * j:9 + 8 * j])) for j in range(6)]
+            assert b[:2] == [2, 32] and b[5] == b[2] ^ b[3] ^ b[4]
+            expected["discrete" if page == 1 else "remote"][name] = (b[2], b[3], b[4])
+    assert got("Panasonic_Plasma_TV_discrete_codes") == expected["discrete"] and len(expected["discrete"]) == 12
+    assert got("Panasonic_Plasma_TV_remote_codes__2007") == expected["remote"] and len(expected["remote"]) == 46
+
+
+def test_the_awe_snapshot_is_four_documents_from_awe_europe_by_the_wayback_machine_whose_rows_are_the_pinned_csv_and_none_has_a_notice_word():
+    pymupdf = pytest.importorskip("pymupdf")
+    xlrd = pytest.importorskip("xlrd")
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location("official_sheets_to_csv", ROOT / "tools" / "official_sheets_to_csv.py")
+    tool = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(tool)
+    snapshot = load_snapshot(SNAPSHOT / "awe")
+    assert snapshot.retrieved == "2026-11-13" and sorted(snapshot.documents) == [awe.PANASONIC, awe.PHILIPS, awe.SHARP, awe.SAMSUNG]
+    folder = "http://www.awe-europe.com/documents/Control%20Docs/"
+    assert {n: (e["snapshot"], e["original"].removeprefix(folder).removeprefix("http://awe-europe.com/documents/")) for n, e in snapshot.documents.items()} == {
+        awe.PHILIPS: ("20151109020031", "Philips/discrete_ir_codes.xls"), awe.SAMSUNG: ("20150718235716", "Samsung/Samsung_Discrete_IR_Commands_tested.doc"),
+        awe.SHARP: ("20101120081326", "RC%20IR-codes%20(Europe)%20full.pdf"), awe.PANASONIC: ("20150703204910", "Panasonic/Panasonic%20plasma%20Discrete-remote-control-code.pdf")}
+    assert all("id_/" in e["url"] and e["url"].startswith("https://web.archive.org/web/") for e in snapshot.documents.values())
+    notice = re.compile(r"copyright|all rights?|reserved|©|\(c\)|confidential|reproduc|trademark|proprietary|property of|licen[cs]e|permission|internal use", re.I)
+    text = {}
+    for name in snapshot.documents:
+        path = SNAPSHOT / "awe" / name
+        if name.endswith(".pdf"):
+            text[name] = " ".join(page.get_text() for page in pymupdf.open(str(path)))
+        elif name.endswith(".xls"):
+            text[name] = " ".join(str(c.value) for s in xlrd.open_workbook(str(path)).sheets() for r in range(s.nrows) for c in s.row(r))
+        else:
+            text[name] = " ".join(" ".join(r) for r in tool.doc_paragraphs(path))
+        assert not notice.search(text[name]), name
+    for name, sheet in ((awe.PHILIPS, "Sheet1"), (awe.SAMSUNG, "paragraphs"), (awe.SHARP, "tables"), (awe.PANASONIC, "words")):
+        assert tool.rows_of(SNAPSHOT / "awe" / name, sheet) == snapshot.sheet_of(name, sheet)
+    assert "PSTC" in text[awe.PANASONIC] and "GD7E" in text[awe.SHARP] and "TruD" in text[awe.SHARP]

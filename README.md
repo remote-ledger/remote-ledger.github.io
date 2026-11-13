@@ -44,9 +44,9 @@ files and 6,772 keys under `remotes/hifi-remote/`, which are a table of
 reference codes and so carry no licence (DESIGN.md §27); and the JP1 device
 upgrades of hifi-remote.com's forum, 2,938 files and 116,042 keys under
 `remotes/jp1/`, likewise (DESIGN.md §28); and the manufacturers' own IR code
-tables, Marantz's, Anthem's, Oppo's, KEF's, JVC's, BenQ's, Peerless-AV's, Arcam's, Cambridge Audio's, Hegel's, Cary Audio's, InFocus's, Lyngdorf's, Emotiva's, Denon's, Hitachi America's, Classé's, Cyrus Audio's, Yamaha's, JBL Synthesis's and Lexicon's, NAD's, Simaudio's and Rotel's, 940 files and 88,794 keys under
-`remotes/official/`, likewise (DESIGN.md §29, §31, §58, §60, §62, §63, §64, §65, §66, §68, §69, §71, §72, §73, §74, §75, §76, §77, §78, §79, §80, §81, §82, §83, §84, §85, §86, §87, §88, §89, §90, §91, §92, §93, §94, §95; Linn's, §67, is in the private repository, §70); and Flipper-IRDB's files from after its CC0 licence of 2025-08-07, 102 files and 2,009 keys under
-`remotes/flipper-irdb/`, republished under CC0-1.0 (DESIGN.md §96; the files from before the licence are not here). That makes 17,420 remote files with
+tables, Marantz's, Anthem's, Oppo's, KEF's, JVC's, BenQ's, Peerless-AV's, Arcam's, Cambridge Audio's, Hegel's, Cary Audio's, InFocus's, Lyngdorf's, Emotiva's, Denon's, Hitachi America's, Classé's, Cyrus Audio's, Yamaha's, JBL Synthesis's and Lexicon's, NAD's, Simaudio's, Rotel's, Optoma's, Dune HD's, Hisense's, Shinybow's, Yamaha's BD players', Binary's matrix switchers', AWE Europe's Philips, Samsung, Sharp and Panasonic TV sheets', Denon's AVR-X4000 list and DVD-1800BD sheet' and BenQ's HT5550 code list', 1,170 files and 120,782 keys under
+`remotes/official/`, likewise (DESIGN.md §29, §31, §58, §60, §62, §63, §64, §65, §66, §68, §69, §71, §72, §73, §74, §75, §76, §77, §78, §79, §80, §81, §82, §83, §84, §85, §86, §87, §88, §89, §90, §91, §92, §93, §94, §95, §98, §99, §100, §101, §102, §103, §104, §105, §106, §107, §108, §109; Linn's, §67, is in the private repository, §70); and Flipper-IRDB's files from after its CC0 licence of 2025-08-07, 102 files and 2,009 keys under
+`remotes/flipper-irdb/`, republished under CC0-1.0 (DESIGN.md §96; the files from before the licence are not here). That makes 17,650 remote files with
 the five authored ones. Data whose licence is unclear is not here: it is kept in
 a private repository in the same layout, which the tools read through
 `--extra-root` (DESIGN.md §30). The IR Blaster database stores each code as a hexcode, and for
@@ -110,12 +110,12 @@ remote, or a person's own rearrangement) is described separately from the
 code, using CSS's own `grid-template-areas` syntax rather than a bespoke
 coordinate system.
 
-A layout may also carry a **picture** of the remote's face (R29): a small SVG,
+A layout may also carry a **picture** of the remote's face (R30): a small SVG,
 checked against a fixed profile, in which each key is a `<g data-key>` group,
 so the picture doubles as the map from a place on the face to a key. It is
 optional: a layout without one is a grid, and a remote without layouts works
 as before. `rl art check REMOTE.json PICTURE.svg` checks a drawing against the
-remote it is for. The ledger holds no photograph of any remote (DESIGN §97).
+remote it is for. The ledger holds no photograph of any remote (DESIGN §110).
 
 What a key *means* is kept apart from how a source spells it. A versioned
 **canonical key vocabulary** (about 150 keys in a dozen groups, each with a
@@ -162,6 +162,17 @@ way, and never folds two fragments that both can be tried; the remote files do
 not change, and `remote_refs` still maps every ref of the ledger to the remote
 that carries its keys (357 of the 1,320 fragments of split devices in the full
 bundle; DESIGN.md §26).
+
+**A fuller remote for a device that has only a stub.** A device is offered the
+remotes that name it, and one whose only remote has a handful of keys (the
+ledger's own Samsung UN50NU6900F had eight) is offered that. The exporter
+completes a remote of fewer than 30 keys from the remotes that speak its
+address: those that play alike, share three quarters of its signals and name
+them alike, and then only the keys that two fifths of them have, named as most
+of them name them, untested, and never ahead of the key a person is asked to
+try. 923 of the 4,545 thin remotes are completed, with 8,711 keys; the others
+have no such family in the ledger. The remote files do not change
+(`remote_completions` says where the added keys start, `completion_evidence` which remotes each came from, and `rl bundle family-explain REF` prints them with each key's code; DESIGN.md §97).
 
 ## Try it
 

@@ -93,7 +93,7 @@ def cmd_validate(args: argparse.Namespace) -> int:
 
 
 def cmd_art_check(args: argparse.Namespace) -> int:
-    """R29: check a picture against the remote it is drawn for, before a layout names it.
+    """R30: check a picture against the remote it is drawn for, before a layout names it.
 
     Read-only. The checks are the ones ``validate`` runs on a layout's ``svg``; this runs them on a file
     that no layout names yet, and says which of the remote's keys the picture does not draw (which is
@@ -494,6 +494,10 @@ def cmd_bundle(args: argparse.Namespace) -> int:
         return _matching_vectors(args, suggest=True)
     if sub == "search-eval":
         return _search_eval(root, args)
+    if sub == "family-eval":
+        return _family_eval(root, args)
+    if sub == "family-explain":
+        return _family_explain(root, args)
 
     if args.verify:
         from .bundle.verify import verify_directory
@@ -535,6 +539,10 @@ def cmd_bundle(args: argparse.Namespace) -> int:
     print(
         f"fragments: {stats['foldedFragments']:,} protocol fragments with no test key are folded into "
         f"{stats['mergedRemotes']:,} remotes; remote_refs: {stats['remoteRefs']:,} refs"
+    )
+    print(
+        f"completion: {stats['completedRemotes']:,} thin remotes are completed with "
+        f"{stats['completionKeys']:,} untested keys of the remotes that share their address"
     )
     print(
         f"brand aliases: {stats['brandAliases']:,} of the {stats['aliasesListed']:,} listed; not in "
@@ -607,6 +615,50 @@ def _search_eval(root: Path, args: argparse.Namespace) -> int:
     sys.stdout.write(text)
     if args.out:
         Path(args.out).write_text(text, encoding="utf-8", newline="\n")
+    return EXIT_OK
+
+
+def _family_eval(root: Path, args: argparse.Namespace) -> int:
+    """``rl bundle family-eval``: the completion of D357 on remotes cut down to stubs (D358)."""
+    from .bundle import catalog, corpus
+    from .bundle.family_eval import evaluate, report
+    from .keys import load_vocabulary
+
+    records, problems = corpus.read_corpus(root)
+    if problems:
+        for message in problems[:20]:
+            print(f"ERROR {message}", file=sys.stderr)
+        return EXIT_ERROR
+    folded = catalog.collect(records).folded
+    order = {key.id: n for n, key in enumerate(load_vocabulary().keys)}
+    text = report(evaluate(records, folded, order, sample=args.sample, seed=args.seed))
+    sys.stdout.write(text)
+    if args.out:
+        Path(args.out).write_text(text, encoding="utf-8", newline="\n")
+    return EXIT_OK
+
+
+def _family_explain(root: Path, args: argparse.Namespace) -> int:
+    """``rl bundle family-explain REF``: a remote's keys and codes, and the evidence for the keys it is
+    completed with (D360)."""
+    from .bundle import catalog, corpus
+    from .bundle.family_explain import explain
+    from .keys import load_vocabulary
+
+    records, problems = corpus.read_corpus(root)
+    if problems:
+        for message in problems[:20]:
+            print(f"ERROR {message}", file=sys.stderr)
+        return EXIT_ERROR
+    folded = catalog.collect(records).folded
+    order = {key.id: n for n, key in enumerate(load_vocabulary().keys)}
+    try:
+        text = explain(root, records, folded, order, args.ref, supporters=0 if args.all else args.supporters,
+                       pronto=args.pronto)
+    except KeyError as exc:
+        print(f"ERROR {exc.args[0]}", file=sys.stderr)
+        return EXIT_ERROR
+    sys.stdout.write(text)
     return EXIT_OK
 
 
@@ -962,14 +1014,30 @@ def build_parser() -> argparse.ArgumentParser:
     be.add_argument("--out", metavar="FILE", help="also write the report here")
     be.add_argument("--timing", action="store_true", help="add the time each query took")
     be.set_defaults(func=cmd_bundle)
+    bf = bu_sub.add_parser(
+        "family-eval", parents=[common],
+        help="complete remotes cut down to stubs and score what was added (D358)")
+    bf.add_argument("--sample", type=int, default=400, metavar="N", help="remotes to cut down")
+    bf.add_argument("--seed", type=int, default=7, help="seed of the sample")
+    bf.add_argument("--out", metavar="FILE", help="also write the report here")
+    bf.set_defaults(func=cmd_bundle)
+    bx = bu_sub.add_parser(
+        "family-explain", parents=[common],
+        help="a remote's keys with their codes and the evidence for the keys it is completed with (D360)")
+    bx.add_argument("ref", metavar="REF", help="a ref of the ledger, such as samsung/BN59-01199F")
+    bx.add_argument("--supporters", type=int, default=5, metavar="N",
+                    help="remotes listed under each added key (default 5)")
+    bx.add_argument("--all", action="store_true", help="list every remote that holds each added key")
+    bx.add_argument("--pronto", action="store_true", help="add the Pronto Hex of each key")
+    bx.set_defaults(func=cmd_bundle)
 
     ar = sub.add_parser(
-        "art", help="a layout's picture (R29)", parents=[common]
+        "art", help="a layout's picture (R30)", parents=[common]
     )
     ar_sub = ar.add_subparsers(dest="art_command", required=True)
     ac = ar_sub.add_parser(
         "check", parents=[common],
-        help="check an SVG against the keys of the remote it is drawn for (D358)",
+        help="check an SVG against the keys of the remote it is drawn for (D399)",
     )
     ac.add_argument("remote", help="the remote's JSON file")
     ac.add_argument("svg", help="the picture")

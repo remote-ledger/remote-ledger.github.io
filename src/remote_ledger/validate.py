@@ -265,7 +265,7 @@ def layout_problems(doc: Any, where: str, base: Path | None = None) -> Iterator[
     The parser enforces CSS grid's own constraints -- uniform row width and
     one rectangle per name -- which is matching CSS rather than inventing
     rules. What is ledger-specific is only that every name resolves to a real
-    key, and that the sibling maps do not orphan. A layout's picture (R29) is read from beside the
+    key, and that the sibling maps do not orphan. A layout's picture (R30) is read from beside the
     file, which is what ``base`` is.
     """
     from .layout import layouts_problems

@@ -1,0 +1,548 @@
+{
+  "manufacturer": "Denon",
+  "model": "S-81",
+  "aliases": [],
+  "controls": [
+    "Denon S-81"
+  ],
+  "protocol": {
+    "name": "Denon",
+    "carrierHz": 38000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_OPEN_SLASH_CLOSE": {
+      "label": "OPEN/CLOSE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/s-81-ircodes_v01.pdf@9bf3e67b (retrieved 2026-11-12) page 1 table row 'KEY 1' ('EJECT | OPEN/CLOSE | CD PLAYER', genre CD, system address 00010, extension bits 10, data 000010, the table's columns C13,C12 01, C11-C6 010000 and C5-C1 01000): Denon device 8 function 80, each field first bit first, the extension bits above the data"
+        }
+      ]
+    },
+    "KEY_POWER_ON_SLASH_OFF": {
+      "label": "POWER ON/OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0x50",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/s-81-ircodes_v01.pdf@9bf3e67b (retrieved 2026-11-12) page 1 table row 'KEY 2' ('ON/STANDBY | POWER ON/OFF | RECEIVER', genre RCVR, system address 00110, extension bits 10, data 000010, the table's columns C13,C12 01, C11-C6 010000 and C5-C1 01100): Denon device 12 function 80, each field first bit first, the extension bits above the data"
+        }
+      ]
+    },
+    "KEY_SDB_ON_SLASH_OFF": {
+      "label": "SDB ON/OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "function": "0xEA",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/s-81-ircodes_v01.pdf@9bf3e67b (retrieved 2026-11-12) page 1 table row 'KEY 3' ('SDB/TONE | SDB ON/OFF | CD RECORDER', system address 00010, extension bits 11, data 010101, the table's columns C13,C12 11, C11-C6 101010 and C5-C1 01000): Denon device 8 function 234, each field first bit first, the extension bits above the data"
+        }
+      ]
+    },
+    "KEY_DIMMER": {
+      "label": "DIMMER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xDF",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/s-81-ircodes_v01.pdf@9bf3e67b (retrieved 2026-11-12) page 1 table row 'KEY 4' ('DIMMER | DIMMER | TUNER', system address 00110, extension bits 11, data 111110, the table's columns C13,C12 11, C11-C6 011111 and C5-C1 01100): Denon device 12 function 223, each field first bit first, the extension bits above the data"
+        }
+      ]
+    },
+    "KEY_SLEEP": {
+      "label": "SLEEP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0x72",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/s-81-ircodes_v01.pdf@9bf3e67b (retrieved 2026-11-12) page 1 table row 'KEY 5' ('SLEEP | SLEEP | RECEIVER', genre RCVR, system address 00110, extension bits 10, data 010011, the table's columns C13,C12 01, C11-C6 110010 and C5-C1 01100): Denon device 12 function 114, each field first bit first, the extension bits above the data"
+        }
+      ]
+    },
+    "KEY_CD": {
+      "label": "CD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0x5A",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/s-81-ircodes_v01.pdf@9bf3e67b (retrieved 2026-11-12) page 1 table row 'KEY 6' ('CD | CD | RECEIVER', genre RCVR, system address 00110, extension bits 10, data 010110, the table's columns C13,C12 01, C11-C6 011010 and C5-C1 01100): Denon device 12 function 90, each field first bit first, the extension bits above the data"
+        }
+      ]
+    },
+    "KEY_TUNER": {
+      "label": "TUNER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0x59",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/s-81-ircodes_v01.pdf@9bf3e67b (retrieved 2026-11-12) page 1 table row 'KEY 7' ('TUNER | TUNER | RECEIVER', genre RCVR, system address 00110, extension bits 10, data 100110, the table's columns C13,C12 01, C11-C6 011001 and C5-C1 01100): Denon device 12 function 89, each field first bit first, the extension bits above the data"
+        }
+      ]
+    },
+    "KEY_AUX": {
+      "label": "AUX",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0x5B",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/s-81-ircodes_v01.pdf@9bf3e67b (retrieved 2026-11-12) page 1 table row 'KEY 8' ('AUX | AUX | RECEIVER', genre RCVR, system address 00110, extension bits 10, data 110110, the table's columns C13,C12 01, C11-C6 011011 and C5-C1 01100): Denon device 12 function 91, each field first bit first, the extension bits above the data"
+        }
+      ]
+    },
+    "KEY_CD_PLAY": {
+      "label": "CD PLAY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "function": "0x5C",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/s-81-ircodes_v01.pdf@9bf3e67b (retrieved 2026-11-12) page 1 table row 'KEY 9' ('PLAY | CD PLAY | CD PLAYER', genre CD, system address 00010, extension bits 10, data 001110, the table's columns C13,C12 01, C11-C6 011100 and C5-C1 01000): Denon device 8 function 92, each field first bit first, the extension bits above the data"
+        }
+      ]
+    },
+    "KEY_CD_PAUSE": {
+      "label": "CD PAUSE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "function": "0x5D",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/s-81-ircodes_v01.pdf@9bf3e67b (retrieved 2026-11-12) page 1 table row 'KEY 10' ('PAUSE | CD PAUSE | CD PLAYER', genre CD, system address 00010, extension bits 10, data 101110, the table's columns C13,C12 01, C11-C6 011101 and C5-C1 01000): Denon device 8 function 93, each field first bit first, the extension bits above the data"
+        }
+      ]
+    },
+    "KEY_CD_STOP": {
+      "label": "CD STOP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "function": "0x5E",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/s-81-ircodes_v01.pdf@9bf3e67b (retrieved 2026-11-12) page 1 table row 'KEY 11' ('STOP/BAND | CD STOP | CD PLAYER', genre CD, system address 00010, extension bits 10, data 011110, the table's columns C13,C12 01, C11-C6 011110 and C5-C1 01000): Denon device 8 function 94, each field first bit first, the extension bits above the data"
+        }
+      ]
+    },
+    "KEY_CD_2": {
+      "label": "CD <<|",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "function": "0x59",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/s-81-ircodes_v01.pdf@9bf3e67b (retrieved 2026-11-12) page 1 table row 'KEY 12' ('TUNING-/|<< | CD <<| | CD PLAYER', genre CD, system address 00010, extension bits 10, data 100110, the table's columns C13,C12 01, C11-C6 011001 and C5-C1 01000): Denon device 8 function 89, each field first bit first, the extension bits above the data"
+        }
+      ]
+    },
+    "KEY_CD_3": {
+      "label": "CD >>|",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "function": "0x58",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/s-81-ircodes_v01.pdf@9bf3e67b (retrieved 2026-11-12) page 1 table row 'KEY 13' ('TUNING+/>>| | CD >>| | CD PLAYER', genre CD, system address 00010, extension bits 10, data 000110, the table's columns C13,C12 01, C11-C6 011000 and C5-C1 01000): Denon device 8 function 88, each field first bit first, the extension bits above the data"
+        }
+      ]
+    },
+    "KEY_CD_4": {
+      "label": "CD <<",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "function": "0x5B",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/s-81-ircodes_v01.pdf@9bf3e67b (retrieved 2026-11-12) page 1 table row 'KEY 14' ('<< | CD << | CD PLAYER', genre CD, system address 00010, extension bits 10, data 110110, the table's columns C13,C12 01, C11-C6 011011 and C5-C1 01000): Denon device 8 function 91, each field first bit first, the extension bits above the data"
+        }
+      ]
+    },
+    "KEY_CD_5": {
+      "label": "CD >>",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "function": "0x5A",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/s-81-ircodes_v01.pdf@9bf3e67b (retrieved 2026-11-12) page 1 table row 'KEY 15' ('>> | CD >> | CD PLAYER', genre CD, system address 00010, extension bits 10, data 010110, the table's columns C13,C12 01, C11-C6 011010 and C5-C1 01000): Denon device 8 function 90, each field first bit first, the extension bits above the data"
+        }
+      ]
+    },
+    "KEY_VOLUME_UP": {
+      "label": "VOLUME UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0x4D",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/s-81-ircodes_v01.pdf@9bf3e67b (retrieved 2026-11-12) page 1 table row 'KEY 16' ('VOLUME+ | VOLUME UP | RECEIVER', genre RCVR, system address 00110, extension bits 10, data 101100, the table's columns C13,C12 01, C11-C6 001101 and C5-C1 01100): Denon device 12 function 77, each field first bit first, the extension bits above the data"
+        }
+      ]
+    },
+    "KEY_VOLUME_DOWN": {
+      "label": "VOLUME DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0x4C",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/s-81-ircodes_v01.pdf@9bf3e67b (retrieved 2026-11-12) page 1 table row 'KEY 19' ('VOLUME- | VOLUME DOWN | RECEIVER', genre RCVR, system address 00110, extension bits 10, data 001100, the table's columns C13,C12 01, C11-C6 001100 and C5-C1 01100): Denon device 12 function 76, each field first bit first, the extension bits above the data"
+        }
+      ]
+    },
+    "KEY_DISC": {
+      "label": "DISC",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "function": "0x7B",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/s-81-ircodes_v01.pdf@9bf3e67b (retrieved 2026-11-12) page 1 table row 'KEY 20' ('FOLDER MODE | DISC | CD PLAYER', genre CD, system address 00010, extension bits 10, data 110111, the table's columns C13,C12 01, C11-C6 111011 and C5-C1 01000): Denon device 8 function 123, each field first bit first, the extension bits above the data"
+        }
+      ]
+    },
+    "KEY_MENU_START": {
+      "label": "MENU START",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "function": "0x91",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/s-81-ircodes_v01.pdf@9bf3e67b (retrieved 2026-11-12) page 1 table row 'KEY 22' ('MENU/SET | MENU START | VCD', genre VIDEO CD, system address 00010, extension bits 01, data 100010, the table's columns C13,C12 10, C11-C6 010001 and C5-C1 01000): Denon device 8 function 145, each field first bit first, the extension bits above the data"
+        }
+      ]
+    },
+    "KEY_PRESET_MEMORY": {
+      "label": "PRESET MEMORY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xD1",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/s-81-ircodes_v01.pdf@9bf3e67b (retrieved 2026-11-12) page 1 table row 'KEY 24' ('ENTER/MEMO | PRESET MEMORY | TUNER', system address 00110, extension bits 11, data 100010, the table's columns C13,C12 11, C11-C6 010001 and C5-C1 01100): Denon device 12 function 209, each field first bit first, the extension bits above the data; the document gives the same name to the same code again in the row 'KEY 46'"
+        }
+      ]
+    },
+    "KEY_DISPLAY": {
+      "label": "DISPLAY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xCF",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/s-81-ircodes_v01.pdf@9bf3e67b (retrieved 2026-11-12) page 1 table row 'KEY 26' ('TIME/DISP | DISPLAY | TUNER', system address 00110, extension bits 11, data 111100, the table's columns C13,C12 11, C11-C6 001111 and C5-C1 01100): Denon device 12 function 207, each field first bit first, the extension bits above the data; the document gives the same name to the same code again in the row 'KEY 49'"
+        }
+      ]
+    },
+    "KEY_D_SLASH_T": {
+      "label": "D/T",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xD3",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/s-81-ircodes_v01.pdf@9bf3e67b (retrieved 2026-11-12) page 1 table row 'KEY 28' ('CLOCK | D/T | TUNER', system address 00110, extension bits 11, data 110010, the table's columns C13,C12 11, C11-C6 010011 and C5-C1 01100): Denon device 12 function 211, each field first bit first, the extension bits above the data"
+        }
+      ]
+    },
+    "KEY_MUTING": {
+      "label": "MUTING",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0x4B",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/s-81-ircodes_v01.pdf@9bf3e67b (retrieved 2026-11-12) page 1 table row 'KEY 29' ('MUTE | MUTING | RECEIVER', genre RCVR, system address 00110, extension bits 10, data 110100, the table's columns C13,C12 01, C11-C6 001011 and C5-C1 01100): Denon device 12 function 75, each field first bit first, the extension bits above the data"
+        }
+      ]
+    },
+    "KEY_10KEY_1": {
+      "label": "(10KEY) 1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "function": "0x42",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/s-81-ircodes_v01.pdf@9bf3e67b (retrieved 2026-11-12) page 1 table row 'KEY 30' ('1 | (10KEY) 1 | CD PLAYER', genre CD, system address 00010, extension bits 10, data 010000, the table's columns C13,C12 01, C11-C6 000010 and C5-C1 01000): Denon device 8 function 66, each field first bit first, the extension bits above the data"
+        }
+      ]
+    },
+    "KEY_10KEY_2": {
+      "label": "(10KEY) 2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "function": "0x43",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/s-81-ircodes_v01.pdf@9bf3e67b (retrieved 2026-11-12) page 1 table row 'KEY 31' ('2 | (10KEY) 2 | CD PLAYER', genre CD, system address 00010, extension bits 10, data 110000, the table's columns C13,C12 01, C11-C6 000011 and C5-C1 01000): Denon device 8 function 67, each field first bit first, the extension bits above the data"
+        }
+      ]
+    },
+    "KEY_10KEY_3": {
+      "label": "(10KEY) 3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "function": "0x44",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/s-81-ircodes_v01.pdf@9bf3e67b (retrieved 2026-11-12) page 1 table row 'KEY 32' ('3 | (10KEY) 3 | CD PLAYER', genre CD, system address 00010, extension bits 10, data 001000, the table's columns C13,C12 01, C11-C6 000100 and C5-C1 01000): Denon device 8 function 68, each field first bit first, the extension bits above the data"
+        }
+      ]
+    },
+    "KEY_PROGRAM": {
+      "label": "PROGRAM",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "function": "0x4D",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/s-81-ircodes_v01.pdf@9bf3e67b (retrieved 2026-11-12) page 1 table row 'KEY 33' ('PROG/DIR. | PROGRAM | CD PLAYER', genre CD, system address 00010, extension bits 10, data 101100, the table's columns C13,C12 01, C11-C6 001101 and C5-C1 01000): Denon device 8 function 77, each field first bit first, the extension bits above the data"
+        }
+      ]
+    },
+    "KEY_10KEY_4": {
+      "label": "(10KEY) 4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "function": "0x45",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/s-81-ircodes_v01.pdf@9bf3e67b (retrieved 2026-11-12) page 1 table row 'KEY 34' ('4 | (10KEY) 4 | CD PLAYER', genre CD, system address 00010, extension bits 10, data 101000, the table's columns C13,C12 01, C11-C6 000101 and C5-C1 01000): Denon device 8 function 69, each field first bit first, the extension bits above the data"
+        }
+      ]
+    },
+    "KEY_10KEY_5": {
+      "label": "(10KEY) 5",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "function": "0x46",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/s-81-ircodes_v01.pdf@9bf3e67b (retrieved 2026-11-12) page 1 table row 'KEY 35' ('5 | (10KEY) 5 | CD PLAYER', genre CD, system address 00010, extension bits 10, data 011000, the table's columns C13,C12 01, C11-C6 000110 and C5-C1 01000): Denon device 8 function 70, each field first bit first, the extension bits above the data"
+        }
+      ]
+    },
+    "KEY_10KEY_6": {
+      "label": "(10KEY) 6",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "function": "0x47",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/s-81-ircodes_v01.pdf@9bf3e67b (retrieved 2026-11-12) page 1 table row 'KEY 36' ('6 | (10KEY) 6 | CD PLAYER', genre CD, system address 00010, extension bits 10, data 111000, the table's columns C13,C12 01, C11-C6 000111 and C5-C1 01000): Denon device 8 function 71, each field first bit first, the extension bits above the data"
+        }
+      ]
+    },
+    "KEY_RANDOM": {
+      "label": "RANDOM",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "function": "0x6A",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/s-81-ircodes_v01.pdf@9bf3e67b (retrieved 2026-11-12) page 1 table row 'KEY 37' ('RANDOM | RANDOM | CD PLAYER', genre CD, system address 00010, extension bits 10, data 010101, the table's columns C13,C12 01, C11-C6 101010 and C5-C1 01000): Denon device 8 function 106, each field first bit first, the extension bits above the data"
+        }
+      ]
+    },
+    "KEY_10KEY_7": {
+      "label": "(10KEY) 7",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "function": "0x48",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/s-81-ircodes_v01.pdf@9bf3e67b (retrieved 2026-11-12) page 1 table row 'KEY 38' ('7 | (10KEY) 7 | CD PLAYER', genre CD, system address 00010, extension bits 10, data 000100, the table's columns C13,C12 01, C11-C6 001000 and C5-C1 01000): Denon device 8 function 72, each field first bit first, the extension bits above the data"
+        }
+      ]
+    },
+    "KEY_10KEY_8": {
+      "label": "(10KEY) 8",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "function": "0x49",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/s-81-ircodes_v01.pdf@9bf3e67b (retrieved 2026-11-12) page 1 table row 'KEY 39' ('8 | (10KEY) 8 | CD PLAYER', genre CD, system address 00010, extension bits 10, data 100100, the table's columns C13,C12 01, C11-C6 001001 and C5-C1 01000): Denon device 8 function 73, each field first bit first, the extension bits above the data"
+        }
+      ]
+    },
+    "KEY_10KEY_9": {
+      "label": "(10KEY) 9",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "function": "0x4A",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/s-81-ircodes_v01.pdf@9bf3e67b (retrieved 2026-11-12) page 1 table row 'KEY 40' ('9 | (10KEY) 9 | CD PLAYER', genre CD, system address 00010, extension bits 10, data 010100, the table's columns C13,C12 01, C11-C6 001010 and C5-C1 01000): Denon device 8 function 74, each field first bit first, the extension bits above the data"
+        }
+      ]
+    },
+    "KEY_REPEAT": {
+      "label": "REPEAT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "function": "0x54",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/s-81-ircodes_v01.pdf@9bf3e67b (retrieved 2026-11-12) page 1 table row 'KEY 41' ('REP 1/ALL | REPEAT | CD PLAYER', genre CD, system address 00010, extension bits 10, data 001010, the table's columns C13,C12 01, C11-C6 010100 and C5-C1 01000): Denon device 8 function 84, each field first bit first, the extension bits above the data"
+        }
+      ]
+    },
+    "KEY_10KEY_10": {
+      "label": "(10KEY) 10",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "function": "0x4B",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/s-81-ircodes_v01.pdf@9bf3e67b (retrieved 2026-11-12) page 1 table row 'KEY 42' ('0/10 | (10KEY) 10 | CD PLAYER', genre CD, system address 00010, extension bits 10, data 110100, the table's columns C13,C12 01, C11-C6 001011 and C5-C1 01000): Denon device 8 function 75, each field first bit first, the extension bits above the data"
+        }
+      ]
+    },
+    "KEY_PLUS_10": {
+      "label": "+10",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "function": "0x4C",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/s-81-ircodes_v01.pdf@9bf3e67b (retrieved 2026-11-12) page 1 table row 'KEY 43' ('+10 | +10 | CD PLAYER', genre CD, system address 00010, extension bits 10, data 001100, the table's columns C13,C12 01, C11-C6 001100 and C5-C1 01000): Denon device 8 function 76, each field first bit first, the extension bits above the data"
+        }
+      ]
+    },
+    "KEY_CALL": {
+      "label": "CALL",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "function": "0x52",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/s-81-ircodes_v01.pdf@9bf3e67b (retrieved 2026-11-12) page 1 table row 'KEY 44' ('CALL | CALL | CD PLAYER', genre CD, system address 00010, extension bits 10, data 010010, the table's columns C13,C12 01, C11-C6 010010 and C5-C1 01000): Denon device 8 function 82, each field first bit first, the extension bits above the data"
+        }
+      ]
+    },
+    "KEY_CLEAR": {
+      "label": "CLEAR",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x08",
+          "function": "0x51",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/s-81-ircodes_v01.pdf@9bf3e67b (retrieved 2026-11-12) page 1 table row 'KEY 45' ('CLEAR | CLEAR | CD PLAYER', genre CD, system address 00010, extension bits 10, data 100010, the table's columns C13,C12 01, C11-C6 010001 and C5-C1 01000): Denon device 8 function 81, each field first bit first, the extension bits above the data"
+        }
+      ]
+    },
+    "KEY_RDS": {
+      "label": "RDS",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xD2",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/s-81-ircodes_v01.pdf@9bf3e67b (retrieved 2026-11-12) page 1 table row 'KEY 47' ('XM/RDS | RDS | TUNER', system address 00110, extension bits 11, data 010010, the table's columns C13,C12 11, C11-C6 010010 and C5-C1 01100): Denon device 12 function 210, each field first bit first, the extension bits above the data"
+        }
+      ]
+    },
+    "KEY_PTY": {
+      "label": "PTY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x0C",
+          "function": "0xD4",
+          "confidence": "plausible",
+          "source": "assets.denon.com IR code documents/s-81-ircodes_v01.pdf@9bf3e67b (retrieved 2026-11-12) page 1 table row 'KEY 48' ('PTY | PTY | TUNER', system address 00110, extension bits 11, data 001010, the table's columns C13,C12 11, C11-C6 010100 and C5-C1 01100): Denon device 12 function 212, each field first bit first, the extension bits above the data"
+        }
+      ]
+    }
+  }
+}

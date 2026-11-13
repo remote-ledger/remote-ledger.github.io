@@ -384,7 +384,7 @@ confidence tier, or a citation.
   of the format itself, not something the validator separately enforces.
   The validator's only remaining job is confirming every area name refers
   to a real key in `keys`.
-- **R29 — A layout may carry a picture of the remote's face: an SVG whose
+- **R30 — A layout may carry a picture of the remote's face: an SVG whose
   key groups are the keys.** `svg` names a file, a plain relative path
   beside the file that holds the layout. It is optional in every direction:
   a layout without `svg` is a grid (R9), a layout may have both, and a remote
@@ -406,7 +406,7 @@ confidence tier, or a citation.
   of the remote, spelled as a CSS identifier (R10), and a key is drawn at
   most once. What a file states about *where* a button is cannot be checked
   by a machine and is the author's claim and a reviewer's to confirm. The
-  profile, its limits and the reasons are DESIGN D357-D359.
+  profile, its limits and the reasons are DESIGN D398-D400.
 - **R22 — What a key means is a vocabulary kept beside the ledger, not a
   field of a remote.** A source spells a key as it likes (`KEY_VOLUMEUP`,
   `VOL+`, `Vol +`), and the ledger keeps the spelling and never rewrites it.
@@ -518,6 +518,28 @@ confidence tier, or a citation.
   reads the model lists of the brands with the most models once and keeps them
   outside the cache that other brands' traffic empties, and changes no answer
   (DESIGN §25, D106, D107).
+
+- **R29 — A thin remote is completed from the remotes that share its address,
+  and every key added says it is a candidate.** A device is linked to the
+  remotes that name it, so a device whose only remote is a stub is offered the
+  stub though the ledger holds full tables for the address the stub speaks. The
+  bundle exporter completes a remote of fewer than 30 keys from the remotes
+  that **corroborate** it: the same carrier and play rule, three quarters of
+  its signals, and the same canonical key for the signals they share. It adds,
+  up to 60 keys, the signals that two fifths of those remotes (and at least
+  two) hold, each as the canonical key most of its holders call it; a signal
+  nobody agrees a name for is not added. The added keys are **untested**
+  (SPEC section 5's "a reasoned candidate"), follow the remote's own, and
+  **never come before the test key or the alternative key the remote has**, so
+  the key a service asks a person to try, and its tier, are what they were. The
+  remote files are not changed: the completion exists only in the bundle, the
+  remote's tier is the weakest of its files' keys, and two tables, `remote_completions`
+  and `completion_evidence`, say where the added keys start, which remotes
+  corroborated them and which of those hold each added key, so that a key can be
+  checked against its files (`rl bundle family-explain` prints them with each
+  key's code). Every
+  number is a constant of one file and the rule's measurement on the real
+  ledger is DESIGN §97 (D357 to D359).
 
 **Known limit, named rather than glossed over:** CSS requires a named
 area's cells to form one rectangle, so a single key can't have an L-shaped

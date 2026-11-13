@@ -7,7 +7,7 @@ size, SHA-256, the retrieval date (today: do not pass --date) and the server's `
 (and, for a copy from the Wayback Machine, the address and snapshot it was archived from). Run it, then
 ``tools/official_sheets_to_csv.py <maker>`` for the spreadsheets, review the diff, and import.
 
-    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc|benq|peerless|arcam|infocus|lyngdorf|emotiva|denon|hitachi|classe|cyrus|yamaha|harman|cambridge|hegel|cary|nad|simaudio|rotel
+    python3 tools/fetch_official.py marantz|anthem|oppo|kef|jvc|benq|peerless|arcam|infocus|lyngdorf|emotiva|denon|hitachi|classe|cyrus|yamaha|harman|cambridge|hegel|cary|nad|simaudio|rotel|optoma|dune|hisense|shinybow|binary|awe
 """
 
 from __future__ import annotations
@@ -25,7 +25,7 @@ import zipfile
 from datetime import date
 from pathlib import Path
 
-WAYBACK = re.compile(r"^https://web\.archive\.org/web/(?P<snapshot>\d{14})id_/(?P<original>https?://.+)$")
+WAYBACK = re.compile(r"^https://web\.archive\.org/web/(?P<snapshot>\d{14})(?:id_|if_)/(?P<original>https?://.+)$")      # ``if_``: a capture the archive answers 404 to as ``id_`` (D386)
 USER_AGENT = "remote-ledger snapshot (+https://github.com/remote-ledger)"
 WB = "https://web.archive.org/web/"
 NAD = "https://cdn.shopify.com/s/files/1/0784/9751/3722/files/"
@@ -86,9 +86,28 @@ DOCUMENTS = {
     "peerless": [
         ("Remote_Control_Codes_2025_Final.pdf", "https://cdn.shopify.com/s/files/1/0508/3732/3934/files/Remote_Control_Codes_2025_Final.pdf", None),
     ],
+    # Binary's (SnapAV's own brand) IR codes of its matrix switchers (DESIGN section 106): the protocols-and-drivers folder of the media distribution products on SnapAV's site, the Wayback Machine's copies, each
+    # the snapshot named in its URL. The B-500's sheet is an Office Open XML workbook named `.xls`, and the archive answers `id_` for it with 404, so its address is the `if_` form (the raw file, as the manifest shows)
+    "binary": [
+        ("B-200-AVMATRIX-6x4-IR_CCF_Hex_Codes.xls", WB + "20250825064658id_/https://www.snapav.com/wcsstore/ExtendedSitesCatalogAssetStore/attachments/documents/MediaDistribution/ProtocolsAndDrivers/B-200-AVMATRIX-6x4-IR%20CCF%20Hex%20Codes.xls", None),
+        ("B-500-MTRX-230_IR-Protocol.xlsx", WB + "20230320001301if_/https://www.snapav.com/wcsstore/ExtendedSitesCatalogAssetStore/attachments/documents/MediaDistribution/ProtocolsAndDrivers/B-500-MTRX-230_IR-Protocol.xls", None),
+        ("B-660-MTRX-4x2_Pronto_IR_HEX_Codes.pdf", WB + "20230205211537id_/https://www.snapav.com/wcsstore/ExtendedSitesCatalogAssetStore/attachments/documents/MediaDistribution/ProtocolsAndDrivers/B-660-MTRX-4x2_Pronto_IR_HEX_Codes.pdf", None),
+        ("B-660-MTRX-4x4_Pronto_IR_HEX_Codes.pdf", WB + "20230207121624id_/https://www.snapav.com/wcsstore/ExtendedSitesCatalogAssetStore/attachments/documents/MediaDistribution/ProtocolsAndDrivers/B-660-MTRX-4x4_Pronto_IR_HEX_Codes.pdf", None),
+    ],
+    # AWE Europe's control documents of display makers (DESIGN section 107): AWE, a British distributor, kept the makers' discrete IR code sheets in its `documents/` folder (the folder section 100
+    # and 105 read Yamaha's from), the Wayback Machine's copies, each the snapshot named in its URL. The Philips sheet is also at `documents/discrete_ir_codes.xls` (snapshot 20101120073504, the same bytes)
+    "awe": [
+        ("Philips_discrete_ir_codes.xls", WB + "20151109020031id_/http://www.awe-europe.com/documents/Control%20Docs/Philips/discrete_ir_codes.xls", None),
+        ("Samsung_Discrete_IR_Commands_tested.doc", WB + "20150718235716id_/http://www.awe-europe.com/documents/Control%20Docs/Samsung/Samsung_Discrete_IR_Commands_tested.doc", None),
+        ("RC_IR-codes_Europe_full.pdf", WB + "20101120081326id_/http://awe-europe.com/documents/RC%20IR-codes%20(Europe)%20full.pdf", None),
+        ("Panasonic_plasma_Discrete-remote-control-code.pdf", WB + "20150703204910id_/http://www.awe-europe.com/documents/Control%20Docs/Panasonic/Panasonic%20plasma%20Discrete-remote-control-code.pdf", None),
+    ],
     # BenQ's LK952 code list (DESIGN section 91): the IR, RS-232 and DDC codes of the projector, on the same folder of SnapAV's site; the Wayback Machine's copy
     "benq": [
         ("BenQ_LK952_IR_Codes.pdf", WB + "20230207112239id_/https://www.snapav.com/wcsstore/ExtendedSitesCatalogAssetStore/attachments/documents/ProjectionScreens/ProtocolsAndDrivers/BenQ_LK952_IR_Codes.pdf", None),
+        # the HT5550's code list (DESIGN section 109): the same appendix as a PDF of six pages of pictures, **a live file of the same site** (9,459,527 bytes; the Wayback Machine's
+        # copy of 22 February 2024 is cut at 1,048,576 bytes and has no page tree; its second capture, 18 July 2024, is the whole file)
+        ("HT5550_IR_Codes.pdf", "https://www.snapav.com/wcsstore/ExtendedSitesCatalogAssetStore/attachments/documents/ProjectionScreens/SupportDocuments/HT5550_IR_Codes.pdf", None),
     ],
     # Arcam's custom installation notes: for each product family a PDF of the serial control commands and the RC-5
     # remote codes (a table of system and command codes in decimal and hex). They are on Arcam's own host, arcam.co.uk.
@@ -214,6 +233,23 @@ DOCUMENTS = {
         ("WXA-50_WXC-50_Extended_IR_Codes_1.pdf", WB + "20240223031354id_/https://www.snapav.com/wcsstore/ExtendedSitesCatalogAssetStore/attachments/documents/Amplifiers/SupportDocuments/WXA-50_WXC-50_Extended_IR_Codes_1.pdf", None),
         ("WXA-50_WXC-50_Standard_IR_Codes_1.pdf", WB + "20240222115523id_/https://www.snapav.com/wcsstore/ExtendedSitesCatalogAssetStore/attachments/documents/Amplifiers/SupportDocuments/WXA-50_WXC-50_Standard_IR_Codes_1.pdf", None),
         ("XDA-QS5400_XDA-AMP5400_IR_Commands.pdf", WB + "20201023055732id_/https://www.snapav.com/wcsstore/ExtendedSitesCatalogAssetStore/attachments/documents/Amplifiers/SupportDocuments/XDA-QS5400_XDA-AMP5400_IR_Commands.pdf", None),
+        # DESIGN section 100: the control documents of AWE Europe (awe-europe.com, a British distributor of Yamaha's), the Wayback Machine's copies of the
+        # zips of its Yamaha folder, each the snapshot named in its URL: the receivers of 2010 to 2014 (RX-V667 to RX-V3077, RX-A710 to RX-A3040, RX-V375 to RX-V775).
+        # The zips also hold the RS-232 and network (YNC, YNCA) specifications, which are not read; the YNC and YNCA folders of a zip hold the same IR file twice.
+        ("IR_RX-V671-3071_rev1.0_Full.xls", WB + "20160103045550id_/http://www.awe-europe.com/documents/Control%20Docs/Yamaha/Archive/Yamaha%20YNC_YNCA_Spec_UK_Ireland_Docs%202012.zip", "Spec_UK_Ireland/YNCA/ircode/IR_RX-V671-3071_rev1.0_Full.xls"),
+        ("IR_Vx75.xls", WB + "20151207014814id_/http://www.awe-europe.com/documents/Control%20Docs/Yamaha/Spec_UK_Ireland_DEC2013_All.zip", "Spec_UK_Ireland/YNCA/ircode/IR_Vx75.xls"),
+        ("IR_Vx77.xls", WB + "20151207014926id_/http://www.awe-europe.com/documents/Control%20Docs/Yamaha/YNCA_YNC%20Documents%20for%20RX-Vx77_Ax40.zip", "Spec_Europe/YNCA/ircode/IR_Vx77.xls"),
+        ("IR_RX-Ax30_A730_830_STD.pdf", WB + "20151207014814id_/http://www.awe-europe.com/documents/Control%20Docs/Yamaha/Spec_UK_Ireland_DEC2013_All.zip", "IR_RX-Ax30_A730_830_STD.pdf"),
+        ("IR_RX-Ax30_A730_830_EXD.pdf", WB + "20151207014814id_/http://www.awe-europe.com/documents/Control%20Docs/Yamaha/Spec_UK_Ireland_DEC2013_All.zip", "IR_RX-Ax30_A730_830_EXD.pdf"),
+        ("IR_RX-Vx75_375-775_STD.pdf", WB + "20160103050405id_/http://www.awe-europe.com/documents/Control%20Docs/Yamaha/IR_RX-Vx75_375-775.zip", "IR_RX-Vx75_375-775_STD.pdf"),
+        ("IR_RX-Vx75_375-775_EXD.pdf", WB + "20160103050405id_/http://www.awe-europe.com/documents/Control%20Docs/Yamaha/IR_RX-Vx75_375-775.zip", "IR_RX-Vx75_375-775_EXD.pdf"),
+        ("STD_IR_RXV667-3067.pdf", WB + "20160103045540id_/http://www.awe-europe.com/documents/Control%20Docs/Yamaha/Archive/RXV667-3067_FullIR.zip", "STD_IR_RXV667-3067.pdf"),
+        ("EXD_IR_RXV667-3067.pdf", WB + "20160103045540id_/http://www.awe-europe.com/documents/Control%20Docs/Yamaha/Archive/RXV667-3067_FullIR.zip", "EXD_IR_RXV667-3067.pdf"),
+        # DESIGN section 105: the zip of the BD-S477 and BD-S677 Blu-ray players (three one-page PDFs of IR codes; the zip also holds the Ethernet and RS-232 specifications and
+        # their command lists, which are not read), the Wayback Machine's copy of the snapshot named in the URL.
+        ("BD-S477_IR_code_list.pdf", WB + "20151207014858id_/http://www.awe-europe.com/documents/Control%20Docs/Yamaha/BD-S677_S477_YNC_Spec.zip", "BD-S677_S477_YNC_Spec/BD-S477_IR_code_list.pdf"),
+        ("BD-S677_IR_code_list.pdf", WB + "20151207014858id_/http://www.awe-europe.com/documents/Control%20Docs/Yamaha/BD-S677_S477_YNC_Spec.zip", "BD-S677_S477_YNC_Spec/BD-S677_IR_code_list.pdf"),
+        ("BD-S477_S677_RC_code_list.pdf", WB + "20151207014858id_/http://www.awe-europe.com/documents/Control%20Docs/Yamaha/BD-S677_S477_YNC_Spec.zip", "BD-S677_S477_YNC_Spec/BD-S477_S677_RC_code_list.pdf"),
     ],
     # The custom installation notes of Harman's JBL Synthesis AV receivers (the SDR-35, SDR-38, SDP-55 and SDP-58: issue E, whose RC-5 rows are the same as issue D's of 2020 for the two models D names, which is not pinned) and Lexicon's MC-10, RV-9 and RV-6
     # (DESIGN section 88): serial control and **the RC-5 code set** (Arcam's platform: the tables are Arcam's layout). The JBL ones are the Wayback Machine's copies of
@@ -262,6 +298,18 @@ DOCUMENTS = {
         # redirects its mixed-case path to the lower-case one, which is the address pinned)
         ("avrx1000_e300_ir_code_v01.doc", "https://assets.denon.com/documentmaster/uk/avrx1000_e300_ir_code_v01.doc", None),
         ("avr-x2500h_s940h_ir_code_v01-02072018.doc", "https://assets.denon.com/documentmaster/us/avr-x2500h_s940h_ir_code_v01-02072018.doc", None),
+        # the AVR-X4000's list of 2013 (DESIGN section 108): a live file of the same host (`uk/`); AWE Europe's copy (Wayback snapshot 20160304171014, `Control Docs/denon/`, 1,588,224 bytes: the file
+        # of its `avrx4000all.zip`) has the same 13,983 paragraphs and is not pinned twice
+        ("avrx4000_ir_code_v01.doc", "https://assets.denon.com/documentmaster/uk/avrx4000_ir_code_v01.doc", None),
+        # the DVD-1800BD, DBP-1610 and DBP-2010 / 2010CI sheet of 2009: not on Denon's host any more, so AWE Europe's copy of the Wayback Machine (the folder of section 100 and 105)
+        ("DVD1800BD_DBP1610I_DBP2010_2010CI_IR_CODE_V01.pdf", WB + "20101120132649id_/http://awe-europe.com/documents/DVD1800BD_DBP1610I_DBP2010_2010CI_IR_CODE_V01.pdf", None),
+        # the one-page and short sheets of the same host that carry no notice (section 98): the zone 2 and zone 3 sheets of eleven receivers of 2007 and 2008, the CD changers
+        # DCM-390/290/27, the Blu-ray and DVD players DVD-3800BDCI and DVD-2500BTCI, the three S-series systems of 2008 and the PMA/DCD pair's remote RC-1179 of 2012
+        *[(name, "https://assets.denon.com/documentmaster/" + folder + "/" + name, None)
+          for folder, name in (("uk", "dcd1650re_2020ae_pma2000re_2020ae_ir_code_v01.pdf"), ("us", "dcm-390_290_27-ircodes.pdf"), ("us", "dvd-3800bdci_dvd-2500btci_ircodes.pdf"),
+                               ("us", "s-32-ircodes_v01.pdf"), ("us", "s-52-ircodes_v01.pdf"), ("us", "s-81-ircodes_v01.pdf"),
+                               *[("us", f"avr-{m}_zone2-ircodes.pdf") for m in ("588", "688", "788", "888", "988", "1508", "1708", "1908", "2308ci", "2808ci")],
+                               ("us", "avr-2808ci_zone3-ircodes.pdf"))],
     ],
     # Hitachi America's remote IR code documents for its televisions (DESIGN section 82): its site no longer serves them, so the Wayback Machine's copies
     # (the two RS-232 specifications and the Roll-and-Click page, which has names and no codes, are not IR code tables and are not pinned).
@@ -328,6 +376,32 @@ DOCUMENTS = {
     ],
     # Simaudio's "Table of IR codes" (Technical Notice, Rev. 1.1, December 2002): the RC-5 and RC-6 codes of its Moon preamplifiers,
     # integrated amplifiers, CD and DVD players, three pages with no copyright or rights text, on its own host.
+    # Optoma's discrete IR code tables for projectors (DESIGN section 101): ten PDFs on the Optoma folder of audiogeneral.com (an American distributor's site, which serves each as `<model>_ir.pdf`;
+    # `w501_ir.pdf` is byte for byte the EH501's) and the ThemeScene HD82's on optoma.co.uk. Live files. Not pinned: the TX665UTi, TX785/TW775 and EN-76 sheets the survey
+    # held (no host of Optoma's or a distributor's serves them: archive.org's copy of a manualsonline file, and a distributor's 404), and Optoma's other pages.
+    "optoma": [
+        *[(f"{m}_ir.pdf", f"https://www.audiogeneral.com/Optoma/{m}_ir.pdf", None) for m in ("eh501", "w501", "x501", "gt750e", "hd33", "th7500nl", "tw1692", "tw536", "tx615", "tx762")],
+        ("HD82-IRE-en-GB.pdf", "https://www.optoma.co.uk/uploads/IRRemote/HD82-IRE-en-GB.pdf", None),
+    ],
+    # Dune HD's two pages of IR codes (DESIGN section 102): its support page on the IR codes of its media players and remotes (the codes of the non-ATV players in a `<pre>`
+    # block) and the page of the Google IR codes of its Google-certified remotes (a table with a Pronto code for each key). Live pages of dune-hd.com.
+    "dune": [
+        ("ir.html", "https://dune-hd.com/support/ir/", None),
+        ("dunehd_google_ir_codes.html", "https://dune-hd.com/support/ir/dunehd_google_ir_codes.html", None),
+    ],
+    # Hisense USA's "RS-232/IR Protocol for Hisense Prosumer TV", version 3.6 of 17 April 2017 (DESIGN section 103): 18 pages, the discrete IR codes of five models on pages 4 to 9 (NEC, custom
+    # code 04 FB, with a Pronto code for each key) and the serial protocol after them (not read). The live file of assets.hisense-usa.com.
+    "hisense": [
+        ("Hisense-RS-232-and-IR-Protocol-English_2.pdf", "https://assets.hisense-usa.com/assets/ProductDownloads/18/5342defe83/Hisense-RS-232-and-IR-Protocol-English_2.pdf", None),
+    ],
+    # Shinybow's IR code files for its matrix switchers and scalers (DESIGN section 104): a text file of Pronto codes for each model on `shinybowusa.com/IRCODES/HexCodes/` (the site has no index
+    # of the folder: the models are the ones that answered, of a list of the model numbers its Wayback captures and its Control4 drivers name, each tried with the suffixes the family uses)
+    # and the PDF of the same model on `IRCODES/PDFformat/` (custom and data codes as text), kept where its text layer holds the model's codes (the others are images). Live files.
+    # Not pinned: the PDFs of the three models that have no text file (3693, 5616, 5669CK), the PDFs that are images, and the Control4 drivers (`IRCODES/control4codes/`).
+    "shinybow": [
+        *[(f"SB-{m}.txt", f"https://www.shinybowusa.com/IRCODES/HexCodes/SB-{m}.txt", None) for m in ("3691", "3879", "4106", "4140", "4140LCM", "4144", "4148", "4148LCM", "4184", "4184LCM", "5430", "5440BNC", "5440RCA", "5440RL", "5440SV", "5450", "5470", "5470M", "5526", "5544BNC", "5544LCM", "5548BNC", "5548LCM", "5560", "5564LCM", "5582", "5588LCM", "5604", "5642LCM", "5644", "5645LCM", "5648K", "5648LCM", "5654", "5658", "5658K", "5669K", "5684K", "5684LCM", "5688CAK", "5688CK", "5688K", "5688Kp", "5688LCM", "8180LCM", "8188LCM", "8802LCM", "8804LCM")],
+        *[(f"IR-{m}.pdf", f"https://www.shinybowusa.com/IRCODES/PDFformat/IR-{m}.pdf", None) for m in ("3691", "3879", "4106", "4140", "4140LCM", "4148", "4148LCM", "4184", "4184LCM", "5440BNC", "5440RL", "5440SV", "5450", "5470M", "5544BNC", "5544LCM", "5548BNC", "5548LCM", "5560", "5564LCM", "5582", "5588LCM", "5604", "5642LCM", "5645LCM", "5648LCM", "5654", "5658K", "5669K", "5684K", "5684LCM", "5688CAK", "5688CK", "5688K", "5688Kp", "5688LCM", "8180LCM", "8188LCM", "8802LCM", "8804LCM")],
+    ],
     "simaudio": [
         ("Simaudio-RC-5-IR-codes-rev1.1.pdf", "https://simaudio.com/wp-content/uploads/2019/11/Simaudio-RC-5-IR-codes-rev1.1.pdf", None),
     ],
@@ -335,6 +409,13 @@ DOCUMENTS = {
     # of 38 keys with two system codes, no copyright or rights text, on its own host.
     "cary": [
         ("DMS-IR-Remote-Codes.pdf", "https://www.caryaudio.com/wp-content/uploads/2018/11/DMS-IR-Remote-Codes.pdf", None),
+        # ten more one-sheet tables of the same site (section 99), "All codes - to Philips RC-5 standard", dated 2004 to 2007: the CD303, CD303/200, CD303/300, CD306 and CD306/200 CD
+        # players, the DVD 6 and DVD 7, the CPA 1 / CPA 2 / SLP-03 preamplifiers, the Cinema 11a's main zone and second zone handsets (two pages) and the DAC-200ts (2015 folder)
+        *[(name, "https://caryaudio.com/wp-content/uploads/" + folder + "/" + name, None)
+          for folder, name in (("2013/06", "CD303_IR.pdf"), ("2013/06", "CD303200_IR.pdf"), ("2013/06", "CD303.300_IRCodes.pdf"), ("2013/06", "CD306_IR.pdf"),
+                               ("2013/06", "CD306200_IR.pdf"), ("2013/06", "DVD6_IRCodes.pdf"), ("2013/06", "DVD7_IRCodes.pdf"),
+                               ("2013/06", "CPA-1-CPA-2-SLP-03-IR-Remote-Codes2.pdf"), ("2013/06", "Cinema-11a-Zone-1-2-IR-Remote-Codes-2.pdf"),
+                               ("2015/03", "DAC-200ts-IR-Remote-Codes.pdf"))],
     ],
     # NAD's "IR Commands by Model" pages for its T-series receivers and processors, 3 pages each, no copyright or rights text: the members
     # of two zips of control documents on its site (the zips also hold RS-232 command lists and a test program, which are not read). The
@@ -525,10 +606,14 @@ def main(argv: list[str] | None = None) -> int:
             data = zipfile.ZipFile(__import__("io").BytesIO(data)).read(member)
         if name.endswith((".xls", ".doc")) and not data.startswith(b"\xd0\xcf\x11\xe0"):
             raise SystemExit(f"{name}: {url} did not answer with a spreadsheet or a Word document ({data[:40]!r}); nothing was pinned")
+        if name.endswith(".xlsx") and not data.startswith(b"PK\x03\x04"):
+            raise SystemExit(f"{name}: {url} did not answer with a workbook ({data[:40]!r}); nothing was pinned")
         if name.endswith(".html") and b"<html" not in data[:2000].lower() and b"<!doctype" not in data[:200].lower():
             raise SystemExit(f"{name}: {url} did not answer with a web page ({data[:40]!r}); nothing was pinned")
         if name.endswith(".ir") and not data.startswith(b"\x04\xf0IR"):
             raise SystemExit(f"{name}: {url} did not answer with a Crestron IR file ({data[:40]!r}); nothing was pinned")
+        if name.endswith(".txt") and (data.lstrip()[:1] == b"<" or not data.isascii()):
+            raise SystemExit(f"{name}: {url} did not answer with a plain text file ({data[:40]!r}); nothing was pinned")
         if name.endswith(".pdf") and not data.startswith(b"%PDF"):
             raise SystemExit(f"{name}: {url} did not answer with a PDF ({data[:40]!r}); nothing was pinned")
         (target / name).write_bytes(data)

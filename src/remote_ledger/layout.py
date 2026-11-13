@@ -114,15 +114,15 @@ def _check_rectangle(grid: Grid, name: str, where: str) -> None:
 
 
 def layout_problems(name: str, layout: dict, keys: set[str], where: str, base: Path | None = None):
-    """Every ledger-specific check for one layout (D14, R8, R10, R29).
+    """Every ledger-specific check for one layout (D14, R8, R10, R30).
 
-    A layout is a grid (``areas``, R9), a picture (``svg``, R29), or both: the grid is what a client
+    A layout is a grid (``areas``, R9), a picture (``svg``, R30), or both: the grid is what a client
     without a renderer for pictures can still draw. ``base`` is the folder of the file that holds the
     layout, which an ``svg`` path is relative to; without it a picture cannot be found and is reported.
     """
     at = f"{where}:{name}"
     if "areas" not in layout and "svg" not in layout:
-        yield f"{at}: a layout has `areas` (a grid), `svg` (a picture) or both; this has neither (R29)"
+        yield f"{at}: a layout has `areas` (a grid), `svg` (a picture) or both; this has neither (R30)"
     if "areas" in layout:
         try:
             grid = parse(layout.get("areas") or [], where=at)
@@ -145,11 +145,11 @@ def layout_problems(name: str, layout: dict, keys: set[str], where: str, base: P
 
 
 def _picture_problems(at: str, layout: dict, keys: set[str], base: Path | None):
-    """R29: the picture a layout names, and the citation that must come with it."""
+    """R30: the picture a layout names, and the citation that must come with it."""
     from . import svgart
 
     if not layout.get("source"):
-        yield (f"{at}: a picture needs a `source`: what it was drawn from (R29). A claim that a key is "
+        yield (f"{at}: a picture needs a `source`: what it was drawn from (R30). A claim that a key is "
                "here is a transcribable fact, and R8 asks a citation of it")
     if base is None:
         yield f"{at}: `svg` cannot be checked without the folder of the file that holds it"

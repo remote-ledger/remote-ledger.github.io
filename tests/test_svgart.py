@@ -1,4 +1,4 @@
-"""A layout's picture: the SVG profile and where a layout finds its file (R29, D357-D359)."""
+"""A layout's picture: the SVG profile and where a layout finds its file (R30, D398-D400)."""
 
 import json
 from pathlib import Path
@@ -237,7 +237,7 @@ def test_a_fill_is_inherited_from_the_group():
     has(svg('<g data-key="KEY_UP" fill="none"><rect width="9" height="9"/></g>'), "hits nothing")
 
 
-# --- inert buttons are grey (D358) -------------------------------------------------------------
+# --- inert buttons are grey (D399) -------------------------------------------------------------
 
 @pytest.mark.parametrize("fill", ["#888", "#8a8a8a", "#999999", "gray", "silver", "rgb(120,125,130)", "none"])
 def test_an_inert_button_may_be_grey(fill):

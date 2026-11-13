@@ -1,0 +1,43 @@
+{
+  "manufacturer": "Shinybow",
+  "model": "SB-5654",
+  "aliases": [],
+  "controls": [
+    "Shinybow SB-5654"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER_ON": {
+      "label": "POWER ON",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0xFA",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/SB-5654.txt@663af69c (retrieved 2026-11-12) line 4 'POWER ON': NEC1 device 5 subdevice 250 function 16 (bytes 05 FA 10 EF); held against the maker's PDF IR-5654.pdf@6aafb8a3 (retrieved 2026-11-12)"
+        }
+      ]
+    },
+    "KEY_POWER_OFF": {
+      "label": "POWER OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0xFA",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/SB-5654.txt@663af69c (retrieved 2026-11-12) line 6 'POWER OFF': NEC1 device 5 subdevice 250 function 15 (bytes 05 FA 0F F0); held against the maker's PDF IR-5654.pdf@6aafb8a3 (retrieved 2026-11-12)"
+        }
+      ]
+    }
+  }
+}
