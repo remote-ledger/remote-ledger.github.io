@@ -13,7 +13,7 @@ the page, the table's number on it and the cells of one table row, so a table's 
 text and how it ended, ``cell`` (the mark that ends a table's cell, and a table's row: an empty ``cell`` is an empty cell or a row's end) or
 ``para``, in the document's order.
 
-    python3 tools/official_sheets_to_csv.py marantz|anthem|oppo|kef|jvc|benq|peerless|arcam|cambridge|hegel|cary|nad|simaudio|rotel|optoma
+    python3 tools/official_sheets_to_csv.py marantz|anthem|oppo|kef|jvc|benq|peerless|arcam|cambridge|hegel|cary|nad|simaudio|rotel|optoma|dune|hisense|shinybow
 """
 
 from __future__ import annotations
@@ -115,6 +115,9 @@ SHEETS = {
                                               "HD82-IRE-en-GB.pdf")},
     "dune": {"ir.html": ["pre"], "dunehd_google_ir_codes.html": ["tables"]},
     "hisense": {"Hisense-RS-232-and-IR-Protocol-English_2.pdf": ["pages 1-1", "tables 4-9"]},
+    # Shinybow (D380): the text files of Pronto codes, one row a line, and the PDFs whose text layer holds the model's custom and data codes, one row a line of a page (the lists are fetch_official.py's)
+    "shinybow": {**{f"SB-{m}.txt": ["text"] for m in ("3691", "3879", "4106", "4140", "4140LCM", "4144", "4148", "4148LCM", "4184", "4184LCM", "5430", "5440BNC", "5440RCA", "5440RL", "5440SV", "5450", "5470", "5470M", "5526", "5544BNC", "5544LCM", "5548BNC", "5548LCM", "5560", "5564LCM", "5582", "5588LCM", "5604", "5642LCM", "5644", "5645LCM", "5648K", "5648LCM", "5654", "5658", "5658K", "5669K", "5684K", "5684LCM", "5688CAK", "5688CK", "5688K", "5688Kp", "5688LCM", "8180LCM", "8188LCM", "8802LCM", "8804LCM")},
+                 **{f"IR-{m}.pdf": ["pages"] for m in ("3691", "3879", "4106", "4140", "4140LCM", "4148", "4148LCM", "4184", "4184LCM", "5440BNC", "5440RL", "5440SV", "5450", "5470M", "5544BNC", "5544LCM", "5548BNC", "5548LCM", "5560", "5564LCM", "5582", "5588LCM", "5604", "5642LCM", "5645LCM", "5648LCM", "5654", "5658K", "5669K", "5684K", "5684LCM", "5688CAK", "5688CK", "5688K", "5688Kp", "5688LCM", "8180LCM", "8188LCM", "8802LCM", "8804LCM")}},
     "classe": {name: ["cells"] for name in (
         "CAP-2100_IR_codes.pdf", "CDP-100_IR_codes_v1-20.pdf", "CDP-102_202_300_500_and_CDT-300_IR_codes_v1-19.pdf", "CP-500_IR_codes.pdf", "CP-700_IR_codes.pdf",
         "SSP-300_600_IR_codes_v1-20.pdf", "CLASSE_Delta_1_2_Amplifier_IR_Commands.pdf", "CLASSE_SSP-800_IR_codes_v1-24.pdf")} |
@@ -353,6 +356,8 @@ def rows_of(path: Path, sheet: str) -> list[list[str]]:
         return doc_paragraphs(path)
     if path.suffix.lower() == ".ir":
         return ir_records(path.read_bytes())
+    if path.suffix.lower() == ".txt":     # a plain text file (Shinybow's lists of Pronto codes, D380): a row is a line that is not empty, as written
+        return [[line.rstrip()] for line in path.read_text(encoding="ascii").splitlines() if line.strip()]
     if path.suffix.lower() == ".html" and sheet == "pre":       # the lines of the ``<pre>`` blocks of a page (Dune HD's table of codes, D374): a row is one line, as written
         import html as _html
         return [[line.rstrip()] for block in re.findall(r"<pre[^>]*>(.*?)</pre>", path.read_text(encoding="utf-8", errors="replace"), flags=re.S)

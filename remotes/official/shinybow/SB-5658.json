@@ -1,0 +1,43 @@
+{
+  "manufacturer": "Shinybow",
+  "model": "SB-5658",
+  "aliases": [],
+  "controls": [
+    "Shinybow SB-5658"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER_ON": {
+      "label": "POWER ON",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0xFA",
+          "function": "0x10",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/SB-5658.txt@e3aae299 (retrieved 2026-11-12) line 4 'POWER ON': NEC1 device 5 subdevice 250 function 16 (bytes 05 FA 10 EF)"
+        }
+      ]
+    },
+    "KEY_POWER_OFF": {
+      "label": "POWER OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x05",
+          "subdevice": "0xFA",
+          "function": "0x0F",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/SB-5658.txt@e3aae299 (retrieved 2026-11-12) line 6 'POWER OFF': NEC1 device 5 subdevice 250 function 15 (bytes 05 FA 0F F0)"
+        }
+      ]
+    }
+  }
+}
