@@ -1,0 +1,561 @@
+{
+  "manufacturer": "Shinybow",
+  "model": "SB-3693",
+  "aliases": [],
+  "controls": [
+    "Shinybow SB-3693"
+  ],
+  "protocol": {
+    "name": "NEC1",
+    "carrierHz": 38000,
+    "minSends": 1
+  },
+  "keys": {
+    "KEY_POWER_ON": {
+      "label": "POWER ON",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5E",
+          "subdevice": "0xA1",
+          "function": "0xA1",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/IR-3693.pdf@18d9deca (retrieved 2026-11-15) page 1 line 6 'POWER ON': NEC1 device 94 subdevice 161 function 161 (bytes 5E A1 A1 5E); the PDF writes the custom code 5EA1 and the data code A15E (\"NEC Standard\")"
+        }
+      ]
+    },
+    "KEY_AUDIO": {
+      "label": "AUDIO",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5E",
+          "subdevice": "0xA1",
+          "function": "0xBA",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/IR-3693.pdf@18d9deca (retrieved 2026-11-15) page 1 line 9 'AUDIO': NEC1 device 94 subdevice 161 function 186 (bytes 5E A1 BA 45); the PDF writes the custom code 5EA1 and the data code BA45 (\"NEC Standard\")"
+        }
+      ]
+    },
+    "KEY_POWER_OFF": {
+      "label": "POWER OFF",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5E",
+          "subdevice": "0xA1",
+          "function": "0xA2",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/IR-3693.pdf@18d9deca (retrieved 2026-11-15) page 1 line 12 'POWER OFF': NEC1 device 94 subdevice 161 function 162 (bytes 5E A1 A2 5D); the PDF writes the custom code 5EA1 and the data code A25D (\"NEC Standard\")"
+        }
+      ]
+    },
+    "KEY_1_MINUS_VOLUME_PLUS": {
+      "label": "1-VOLUME+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5E",
+          "subdevice": "0xA1",
+          "function": "0x8D",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/IR-3693.pdf@18d9deca (retrieved 2026-11-15) page 1 line 15 '1-VOLUME+': NEC1 device 94 subdevice 161 function 141 (bytes 5E A1 8D 72); the PDF writes the custom code 5EA1 and the data code 8D72 (\"NEC Standard\")"
+        }
+      ]
+    },
+    "KEY_MUTE": {
+      "label": "MUTE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5E",
+          "subdevice": "0xA1",
+          "function": "0x9E",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/IR-3693.pdf@18d9deca (retrieved 2026-11-15) page 1 line 18 'MUTE': NEC1 device 94 subdevice 161 function 158 (bytes 5E A1 9E 61); the PDF writes the custom code 5EA1 and the data code 9E61 (\"NEC Standard\")"
+        }
+      ]
+    },
+    "KEY_2_MINUS_VOLUME_PLUS": {
+      "label": "2-VOLUME+",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5E",
+          "subdevice": "0xA1",
+          "function": "0xBD",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/IR-3693.pdf@18d9deca (retrieved 2026-11-15) page 1 line 21 '2-VOLUME+': NEC1 device 94 subdevice 161 function 189 (bytes 5E A1 BD 42); the PDF writes the custom code 5EA1 and the data code BD42 (\"NEC Standard\")"
+        }
+      ]
+    },
+    "KEY_ZOOM": {
+      "label": "ZOOM",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5E",
+          "subdevice": "0xA1",
+          "function": "0xAF",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/IR-3693.pdf@18d9deca (retrieved 2026-11-15) page 1 line 24 'ZOOM': NEC1 device 94 subdevice 161 function 175 (bytes 5E A1 AF 50); the PDF writes the custom code 5EA1 and the data code AF50 (\"NEC Standard\")"
+        }
+      ]
+    },
+    "KEY_SWITCH": {
+      "label": "SWITCH",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5E",
+          "subdevice": "0xA1",
+          "function": "0x9C",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/IR-3693.pdf@18d9deca (retrieved 2026-11-15) page 1 line 27 'SWITCH': NEC1 device 94 subdevice 161 function 156 (bytes 5E A1 9C 63); the PDF writes the custom code 5EA1 and the data code 9C63 (\"NEC Standard\")"
+        }
+      ]
+    },
+    "KEY_BALANCE": {
+      "label": "BALANCE",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5E",
+          "subdevice": "0xA1",
+          "function": "0x9D",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/IR-3693.pdf@18d9deca (retrieved 2026-11-15) page 1 line 30 'BALANCE': NEC1 device 94 subdevice 161 function 157 (bytes 5E A1 9D 62); the PDF writes the custom code 5EA1 and the data code 9D62 (\"NEC Standard\")"
+        }
+      ]
+    },
+    "KEY_QUAD": {
+      "label": "QUAD",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5E",
+          "subdevice": "0xA1",
+          "function": "0xEB",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/IR-3693.pdf@18d9deca (retrieved 2026-11-15) page 1 line 33 'QUAD': NEC1 device 94 subdevice 161 function 235 (bytes 5E A1 EB 14); the PDF writes the custom code 5EA1 and the data code EB14 (\"NEC Standard\")"
+        }
+      ]
+    },
+    "KEY_1_MINUS_VOLUME_MINUS": {
+      "label": "1-VOLUME-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5E",
+          "subdevice": "0xA1",
+          "function": "0x8E",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/IR-3693.pdf@18d9deca (retrieved 2026-11-15) page 1 line 36 '1-VOLUME-': NEC1 device 94 subdevice 161 function 142 (bytes 5E A1 8E 71); the PDF writes the custom code 5EA1 and the data code 8E71 (\"NEC Standard\")"
+        }
+      ]
+    },
+    "KEY_PIP": {
+      "label": "PIP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5E",
+          "subdevice": "0xA1",
+          "function": "0xEE",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/IR-3693.pdf@18d9deca (retrieved 2026-11-15) page 1 line 39 'PIP': NEC1 device 94 subdevice 161 function 238 (bytes 5E A1 EE 11); the PDF writes the custom code 5EA1 and the data code EE11 (\"NEC Standard\")"
+        }
+      ]
+    },
+    "KEY_2_MINUS_VOLUME_MINUS": {
+      "label": "2-VOLUME-",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5E",
+          "subdevice": "0xA1",
+          "function": "0xBE",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/IR-3693.pdf@18d9deca (retrieved 2026-11-15) page 1 line 42 '2-VOLUME-': NEC1 device 94 subdevice 161 function 190 (bytes 5E A1 BE 41); the PDF writes the custom code 5EA1 and the data code BE41 (\"NEC Standard\")"
+        }
+      ]
+    },
+    "KEY_POP": {
+      "label": "POP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5E",
+          "subdevice": "0xA1",
+          "function": "0xEF",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/IR-3693.pdf@18d9deca (retrieved 2026-11-15) page 1 line 45 'POP': NEC1 device 94 subdevice 161 function 239 (bytes 5E A1 EF 10); the PDF writes the custom code 5EA1 and the data code EF10 (\"NEC Standard\")"
+        }
+      ]
+    },
+    "KEY_SWAP": {
+      "label": "SWAP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5E",
+          "subdevice": "0xA1",
+          "function": "0xE0",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/IR-3693.pdf@18d9deca (retrieved 2026-11-15) page 1 line 48 'SWAP': NEC1 device 94 subdevice 161 function 224 (bytes 5E A1 E0 1F); the PDF writes the custom code 5EA1 and the data code E01F (\"NEC Standard\")"
+        }
+      ]
+    },
+    "KEY_RESOLUTION": {
+      "label": "RESOLUTION",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5E",
+          "subdevice": "0xA1",
+          "function": "0xEA",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/IR-3693.pdf@18d9deca (retrieved 2026-11-15) page 1 line 51 'RESOLUTION': NEC1 device 94 subdevice 161 function 234 (bytes 5E A1 EA 15); the PDF writes the custom code 5EA1 and the data code EA15 (\"NEC Standard\")"
+        }
+      ]
+    },
+    "KEY_AUX": {
+      "label": "AUX",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5E",
+          "subdevice": "0xA1",
+          "function": "0x99",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/IR-3693.pdf@18d9deca (retrieved 2026-11-15) page 1 line 54 'AUX': NEC1 device 94 subdevice 161 function 153 (bytes 5E A1 99 66); the PDF writes the custom code 5EA1 and the data code 9966 (\"NEC Standard\")"
+        }
+      ]
+    },
+    "KEY_OUTPUT_MINUS_1": {
+      "label": "OUTPUT-1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5E",
+          "subdevice": "0xA1",
+          "function": "0xE8",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/IR-3693.pdf@18d9deca (retrieved 2026-11-15) page 1 line 60 'OUTPUT-1': NEC1 device 94 subdevice 161 function 232 (bytes 5E A1 E8 17); the PDF writes the custom code 5EA1 and the data code E817 (\"NEC Standard\")"
+        }
+      ]
+    },
+    "KEY_RECALL": {
+      "label": "RECALL",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5E",
+          "subdevice": "0xA1",
+          "function": "0xB2",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/IR-3693.pdf@18d9deca (retrieved 2026-11-15) page 1 line 63 'RECALL': NEC1 device 94 subdevice 161 function 178 (bytes 5E A1 B2 4D); the PDF writes the custom code 5EA1 and the data code B24D (\"NEC Standard\")"
+        }
+      ]
+    },
+    "KEY_OUTPUT_MINUS_2": {
+      "label": "OUTPUT-2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5E",
+          "subdevice": "0xA1",
+          "function": "0xE9",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/IR-3693.pdf@18d9deca (retrieved 2026-11-15) page 1 line 66 'OUTPUT-2': NEC1 device 94 subdevice 161 function 233 (bytes 5E A1 E9 16); the PDF writes the custom code 5EA1 and the data code E916 (\"NEC Standard\")"
+        }
+      ]
+    },
+    "KEY_MEMORY": {
+      "label": "MEMORY",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5E",
+          "subdevice": "0xA1",
+          "function": "0x89",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/IR-3693.pdf@18d9deca (retrieved 2026-11-15) page 1 line 69 'MEMORY': NEC1 device 94 subdevice 161 function 137 (bytes 5E A1 89 76); the PDF writes the custom code 5EA1 and the data code 8976 (\"NEC Standard\")"
+        }
+      ]
+    },
+    "KEY_MIC": {
+      "label": "MIC",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5E",
+          "subdevice": "0xA1",
+          "function": "0xA3",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/IR-3693.pdf@18d9deca (retrieved 2026-11-15) page 1 line 72 'MIC': NEC1 device 94 subdevice 161 function 163 (bytes 5E A1 A3 5C); the PDF writes the custom code 5EA1 and the data code A35C (\"NEC Standard\")"
+        }
+      ]
+    },
+    "KEY_MENU": {
+      "label": "MENU",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5E",
+          "subdevice": "0xA1",
+          "function": "0xA5",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/IR-3693.pdf@18d9deca (retrieved 2026-11-15) page 1 line 75 'MENU': NEC1 device 94 subdevice 161 function 165 (bytes 5E A1 A5 5A); the PDF writes the custom code 5EA1 and the data code A55A (\"NEC Standard\")"
+        }
+      ]
+    },
+    "KEY_VGA_MINUS_1": {
+      "label": "VGA-1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5E",
+          "subdevice": "0xA1",
+          "function": "0x01",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/IR-3693.pdf@18d9deca (retrieved 2026-11-15) page 1 line 78 'VGA-1': NEC1 device 94 subdevice 161 function 1 (bytes 5E A1 01 FE); the PDF writes the custom code 5EA1 and the data code 01FE (\"NEC Standard\")"
+        }
+      ]
+    },
+    "KEY_EXIT": {
+      "label": "EXIT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5E",
+          "subdevice": "0xA1",
+          "function": "0xA6",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/IR-3693.pdf@18d9deca (retrieved 2026-11-15) page 1 line 81 'EXIT': NEC1 device 94 subdevice 161 function 166 (bytes 5E A1 A6 59); the PDF writes the custom code 5EA1 and the data code A659 (\"NEC Standard\")"
+        }
+      ]
+    },
+    "KEY_VGA_MINUS_2": {
+      "label": "VGA-2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5E",
+          "subdevice": "0xA1",
+          "function": "0x02",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/IR-3693.pdf@18d9deca (retrieved 2026-11-15) page 1 line 84 'VGA-2': NEC1 device 94 subdevice 161 function 2 (bytes 5E A1 02 FD); the PDF writes the custom code 5EA1 and the data code 02FD (\"NEC Standard\")"
+        }
+      ]
+    },
+    "KEY_RESET": {
+      "label": "RESET",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5E",
+          "subdevice": "0xA1",
+          "function": "0x9B",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/IR-3693.pdf@18d9deca (retrieved 2026-11-15) page 1 line 87 'RESET': NEC1 device 94 subdevice 161 function 155 (bytes 5E A1 9B 64); the PDF writes the custom code 5EA1 and the data code 9B64 (\"NEC Standard\")"
+        }
+      ]
+    },
+    "KEY_VGA_MINUS_3": {
+      "label": "VGA-3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5E",
+          "subdevice": "0xA1",
+          "function": "0x03",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/IR-3693.pdf@18d9deca (retrieved 2026-11-15) page 1 line 90 'VGA-3': NEC1 device 94 subdevice 161 function 3 (bytes 5E A1 03 FC); the PDF writes the custom code 5EA1 and the data code 03FC (\"NEC Standard\")"
+        }
+      ]
+    },
+    "KEY_LOCK": {
+      "label": "LOCK",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5E",
+          "subdevice": "0xA1",
+          "function": "0xB5",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/IR-3693.pdf@18d9deca (retrieved 2026-11-15) page 1 line 93 'LOCK': NEC1 device 94 subdevice 161 function 181 (bytes 5E A1 B5 4A); the PDF writes the custom code 5EA1 and the data code B54A (\"NEC Standard\")"
+        }
+      ]
+    },
+    "KEY_VGA_MINUS_4": {
+      "label": "VGA-4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5E",
+          "subdevice": "0xA1",
+          "function": "0x04",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/IR-3693.pdf@18d9deca (retrieved 2026-11-15) page 1 line 96 'VGA-4': NEC1 device 94 subdevice 161 function 4 (bytes 5E A1 04 FB); the PDF writes the custom code 5EA1 and the data code 04FB (\"NEC Standard\")"
+        }
+      ]
+    },
+    "KEY_ENTER": {
+      "label": "ENTER",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5E",
+          "subdevice": "0xA1",
+          "function": "0xAB",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/IR-3693.pdf@18d9deca (retrieved 2026-11-15) page 1 line 99 'ENTER': NEC1 device 94 subdevice 161 function 171 (bytes 5E A1 AB 54); the PDF writes the custom code 5EA1 and the data code AB54 (\"NEC Standard\")"
+        }
+      ]
+    },
+    "KEY_HDMI_MINUS_1": {
+      "label": "HDMI-1",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5E",
+          "subdevice": "0xA1",
+          "function": "0x05",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/IR-3693.pdf@18d9deca (retrieved 2026-11-15) page 1 line 102 'HDMI-1': NEC1 device 94 subdevice 161 function 5 (bytes 5E A1 05 FA); the PDF writes the custom code 5EA1 and the data code 05FA (\"NEC Standard\")"
+        }
+      ]
+    },
+    "KEY_UP": {
+      "label": "UP",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5E",
+          "subdevice": "0xA1",
+          "function": "0xA7",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/IR-3693.pdf@18d9deca (retrieved 2026-11-15) page 1 line 105 'UP': NEC1 device 94 subdevice 161 function 167 (bytes 5E A1 A7 58); the PDF writes the custom code 5EA1 and the data code A758 (\"NEC Standard\")"
+        }
+      ]
+    },
+    "KEY_HDMI_MINUS_2": {
+      "label": "HDMI-2",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5E",
+          "subdevice": "0xA1",
+          "function": "0x06",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/IR-3693.pdf@18d9deca (retrieved 2026-11-15) page 1 line 108 'HDMI-2': NEC1 device 94 subdevice 161 function 6 (bytes 5E A1 06 F9); the PDF writes the custom code 5EA1 and the data code 06F9 (\"NEC Standard\")"
+        }
+      ]
+    },
+    "KEY_DOWN": {
+      "label": "DOWN",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5E",
+          "subdevice": "0xA1",
+          "function": "0xA8",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/IR-3693.pdf@18d9deca (retrieved 2026-11-15) page 1 line 111 'DOWN': NEC1 device 94 subdevice 161 function 168 (bytes 5E A1 A8 57); the PDF writes the custom code 5EA1 and the data code A857 (\"NEC Standard\")"
+        }
+      ]
+    },
+    "KEY_HDMI_MINUS_3": {
+      "label": "HDMI-3",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5E",
+          "subdevice": "0xA1",
+          "function": "0x07",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/IR-3693.pdf@18d9deca (retrieved 2026-11-15) page 1 line 114 'HDMI-3': NEC1 device 94 subdevice 161 function 7 (bytes 5E A1 07 F8); the PDF writes the custom code 5EA1 and the data code 07F8 (\"NEC Standard\")"
+        }
+      ]
+    },
+    "KEY_RIGHT": {
+      "label": "RIGHT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5E",
+          "subdevice": "0xA1",
+          "function": "0xAA",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/IR-3693.pdf@18d9deca (retrieved 2026-11-15) page 1 line 117 'RIGHT': NEC1 device 94 subdevice 161 function 170 (bytes 5E A1 AA 55); the PDF writes the custom code 5EA1 and the data code AA55 (\"NEC Standard\")"
+        }
+      ]
+    },
+    "KEY_HDMI_MINUS_4": {
+      "label": "HDMI-4",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5E",
+          "subdevice": "0xA1",
+          "function": "0x08",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/IR-3693.pdf@18d9deca (retrieved 2026-11-15) page 1 line 120 'HDMI-4': NEC1 device 94 subdevice 161 function 8 (bytes 5E A1 08 F7); the PDF writes the custom code 5EA1 and the data code 08F7 (\"NEC Standard\")"
+        }
+      ]
+    },
+    "KEY_LEFT": {
+      "label": "LEFT",
+      "forms": [
+        {
+          "id": "primary.irp",
+          "type": "irp",
+          "device": "0x5E",
+          "subdevice": "0xA1",
+          "function": "0xA9",
+          "confidence": "plausible",
+          "source": "shinybowusa.com IR code files/IR-3693.pdf@18d9deca (retrieved 2026-11-15) page 1 line 123 'LEFT': NEC1 device 94 subdevice 161 function 169 (bytes 5E A1 A9 56); the PDF writes the custom code 5EA1 and the data code A956 (\"NEC Standard\")"
+        }
+      ]
+    }
+  }
+}
