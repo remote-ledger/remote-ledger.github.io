@@ -472,7 +472,7 @@ def test_the_committed_official_import_keeps_r19():
             hashes[name], dates[name], snapshots[name] = entry["sha256"], entry.get("retrieved", manifest["retrieved"]), entry.get("snapshot")
     shape = re.compile(r"^(?:marantz\.com archive-downloads|anthemav\.com \(storage\.googleapis\.com/sandbox1-anthemav/an\)"
                        r"|download\.oppodigital\.com/\w+|kef\.com IR code sheets|jvc\.com D-ILA remote emulation guide|arcam\.co\.uk custom installation notes|cambridgeaudio\.com IR code documents|support\.hegel\.com RC-5 code tables|caryaudio\.com DMS IR Remote Codes|caryaudio\.com IR Remote Codes|infocus\.com IR code PDFs|lyngdorf\.com IR code PDF|emotiva\.com IR code PDFs|denon\.co\.uk RC code list|denon\.com Master IR Hex|snapav\.com Denon IR code documents|assets\.denon\.com IR code documents|hitachi-america\.us IR code documents|classeaudio\.com IR code documents|cyrusaudio\.com remote code tables|snapav\.com Yamaha IR code PDFs|awe-europe\.com Yamaha control documents|audiogeneral\.com Optoma IR code PDFs|dune-hd\.com IR code pages|assets\.hisense-usa\.com RS-232 and IR protocol PDF|shinybowusa\.com IR code files|snapav\.com Binary IR code documents|awe-europe\.com control documents|optoma\.co\.uk IR code PDFs|snapav\.com Marantz IR code workbook|jblsynthesis\.com custom installation notes|snapav\.com JVC LX projector code sheets|snapav\.com JVC remote control code tables|snapav\.com BenQ IR code sheet|cdn\.shopify\.com Peerless-AV Neptune IR code sheet|lexicon\.com custom installation notes|nadelectronics\.com IR command tables|nadelectronics\.com Crestron IR files|simaudio\.com Table of IR codes|rotel\.com IR hex codes)/([^@]+)@([0-9a-f]{8}) \(retrieved (\d{4}-\d{2}-\d{2})"
-                       r"(?:, from the Wayback Machine snapshot (\d{14}))?\) (?:sheet '[^']+' row \d+|page \d+ row \d+|sheet (?:Standard|Extended) line \d+ row '|(?:line|row) \d+ '|page \d+ '|page \d+ table \d+ row '|page \d+ row '|key \d+ '|row 'RC(?:SHP|KSK)\w+' \(|page \d+ table row ')")
+                       r"(?:, from the Wayback Machine snapshot (\d{14}))?\) (?:sheet '[^']+' row \d+|page \d+ row \d+|sheet (?:Standard|Extended) line \d+ row '|(?:line|row) \d+ '|page \d+ '|page \d+ table \d+ row '|page \d+ row '|page \d+ line \d+ '|key \d+ '|row 'RC(?:SHP|KSK)\w+' \(|page \d+ table row ')")
     files = sorted((ROOT / oi.IMPORT_ROOT).rglob("*.json"))
     assert len(files) > 180
     bad = []
@@ -5325,20 +5325,84 @@ def test_the_pdf_text_gives_its_four_digit_words_an_o_for_a_zero_and_not_a_word_
     assert shinybow.pdf_tokens(rows) == {"05FA", "10EF", "0FF0", "4DB2", "A15E", "ADD1", "0AF5"}
 
 
+def sb_pdf(*lines: str) -> list[list[str]]:
+    return [["1", line] for line in lines]
+
+
+def test_a_shinybow_pdf_is_a_custom_code_and_each_name_with_a_colon_followed_by_one_or_two_code_words_and_a_repeat_is_one_key():
+    rows = sb_pdf("24", "IR DATA CODE LIST", "HOW TO SETUP IR CODES :", "CUSTOM CODE : 5EA1", "POWER ON:", "5EA1", "A15E", "AUDIO:", "5EA1", "BA45", "SOURCE #1:", "01FE",
+                  "POWER OFF: 5EA1   A25D", "SOURCE #10 : 5EA1 08F7", "Example 1:", "Select Input VGA-1", "The IR Data Code: 5EA1 01FE", "5EA1", "01FE",
+                  "SOURCE #1:", "5EA1", "01FE", "Quad -> select right A,B,C,D", "Press Destination# > Source# The IR Data Code list :", "5EA1", "EB14")
+    entries, notes = shinybow.parse_pdf(rows, "IR-9999.pdf")
+    assert [(e.where, e.label, e.header, e.bytes_) for e in entries] == [
+        ("page 1 line 5", "POWER ON", "", (0x5E, 0xA1, 0xA1, 0x5E)), ("page 1 line 8", "AUDIO", "", (0x5E, 0xA1, 0xBA, 0x45)),
+        ("page 1 line 11", "SOURCE #1", "", (0x5E, 0xA1, 0x01, 0xFE)), ("page 1 line 13", "POWER OFF", "", (0x5E, 0xA1, 0xA2, 0x5D)),
+        ("page 1 line 14", "SOURCE #10", "", (0x5E, 0xA1, 0x08, 0xF7))]        # a data code alone takes the page's custom code; the name `SOURCE #1:` again, with the same codes, is the same key
+    assert notes == [("keys written again with the same codes", 1, "IR-9999.pdf"), ("code lines of the examples' sequences, which are not keys", 4, "IR-9999.pdf")]
+    rows = sb_pdf("CUSTOM CODE: 42BD", "IR-01 DATA CODE:", "SOURCE #1 :", "42BD 00FF", "SOURCE #2 : 42BD 01FE", "IR-02 DATA CODE:", "SOURCE #1 :", "42BD 10EF")
+    entries, notes = shinybow.parse_pdf(rows, "IR-9999.pdf")
+    assert [(e.label, e.header, e.bytes_[2]) for e in entries] == [("SOURCE #1", "IR-01", 0x00), ("SOURCE #2", "IR-01", 0x01), ("SOURCE #1", "IR-02", 0x10)] and notes == []   # a group's name is not a key's
+    two = shinybow.parse_pdf(sb_pdf("CUSTOM CODE : 3CC3", "A:", "01FE", "B:", "3CC3", "02FD")[:3] + [["2", "CUSTOM CODE : 5BA4"], ["2", "C:"], ["2", "5BA4"], ["2", "03FC"]], "IR-9999.pdf")[0]
+    assert [(e.where, e.bytes_[:2]) for e in two] == [("page 1 line 2", (0x3C, 0xC3)), ("page 2 line 2", (0x5B, 0xA4))]       # the custom code of the page above is the one in force; a page's lines count from 1
+
+
+def test_a_shinybow_pdf_with_no_custom_code_a_foreign_one_three_code_words_or_two_codes_for_one_name_is_refused():
+    head = ["CUSTOM CODE : 5EA1"]
+    for lines, why in ((["POWER ON:", "5EA1", "A15E"], "under no custom code"),
+                       (head + ["POWER ON:", "5EA2", "A15E"], "has the custom code 5EA2, and the page's is 5EA1"),
+                       (head + ["POWER ON:", "5EA1", "A15E", "01FE"], "has the code words"),
+                       (head + ["POWER ON:", "5EA1", "A15E", "POWER ON:", "5EA1", "A25D"], "is (94, 161, 161, 94) above and [94, 161, 162, 93] here"),
+                       (head + ["Example 1:"], "no key read"),
+                       (["HOW TO SETUP IR CODES :"], "no key read")):
+        with pytest.raises(ValueError, match=re.escape(why)):
+            shinybow.parse_pdf(sb_pdf(*lines), "IR-9999.pdf")
+
+
+def test_the_three_shinybow_models_with_only_a_pdf_are_read_from_its_text_and_every_key_is_plausible():
+    files = shinybow_files()
+    assert {m: (len(files[m]["keys"]), files[m]["protocol"]["name"]) for m in ("SB-3693", "SB-5616", "SB-5669CK")} == {"SB-3693": (39, "NEC1"), "SB-5616": (18, "NEC1"), "SB-5669CK": (297, "NEC1")}
+    assert all(s["forms"][0]["confidence"] == "plausible" for m in ("SB-3693", "SB-5616", "SB-5669CK") for s in files[m]["keys"].values())
+    def frames(model):
+        return Counter((int(s["forms"][0]["device"], 0), int(s["forms"][0]["subdevice"], 0)) for s in files[model]["keys"].values())
+    assert frames("SB-3693") == {(0x5E, 0xA1): 39} and frames("SB-5616") == {(0x3C, 0xC3): 18} and frames("SB-5669CK") == {(0x5B, 0xA4): 41, (0x42, 0xBD): 256}
+    k = files["SB-3693"]["keys"]
+    assert "KEY_EDID" not in k and k["KEY_POWER_ON"]["forms"][0]["function"] == "0xA1"      # the PDF prints EDID `B758`, no complement of `B7`; fourteen files of the maker's say `B748`
+    assert files["SB-3693"]["keys"]["KEY_QUAD"]["forms"][0]["function"] == "0xEB" and files["SB-5616"]["keys"]["KEY_SOURCE_HASH_14"]["forms"][0]["function"] == "0x00"
+    assert "page 1 line 6 'POWER ON': NEC1 device 94 subdevice 161 function 161 (bytes 5E A1 A1 5E); the PDF writes the custom code 5EA1 and the data code A15E (\"NEC Standard\")" in k["KEY_POWER_ON"]["forms"][0]["source"]
+    assert k["KEY_POWER_ON"]["forms"][0]["source"].startswith("shinybowusa.com IR code files/IR-3693.pdf@18d9deca (retrieved 2026-11-15) ")
+
+
+def test_shinybows_5669ck_has_sixteen_room_remotes_of_sixteen_sources_whose_data_byte_counts_up_and_a_name_repeats_with_its_group():
+    keys = shinybow_files()["SB-5669CK"]["keys"]
+    labels = {s["label"]: s["forms"][0] for s in keys.values()}
+    for room in range(1, 17):
+        for source in range(1, 17):
+            form = labels[f"SOURCE #{source} (IR-{room:02d})"]
+            want = (room - 1) * 16 + source - 1
+            assert (int(form["device"], 0), int(form["subdevice"], 0), int(form["function"], 0)) == (0x42, 0xBD, want)
+            assert f"(bytes 42 BD {want:02X} {0xFF - want:02X})" in form["source"] and f"under 'IR-{room:02d}'" in form["source"]
+    page_one = {l: f for l, f in labels.items() if "(IR-" not in l}
+    assert len(page_one) == 41 and page_one["POWER ON"]["function"] == "0xA1" and page_one["DESTINATION #1"]["function"] == "0x10" and page_one["SOURCE #16"]["function"] == "0x2F"
+    text = (ROOT / oi.IMPORT_ROOT / "IMPORT.md").read_text(encoding="utf-8")
+    for line in ("`IR-3693.pdf` | `not read: page 1 line 57 'EDID': `5EA1 B758` has a fourth byte that is not the complement of the third, and the PDF, which is the whole document, is the only statement of it`",
+                 "`IR-5616.pdf` | `16 keys written again with the same codes`", "`IR-5669CK.pdf` | `1044 code lines of the examples' sequences, which are not keys`"):
+        assert line in text, line
+
+
 def shinybow_files() -> dict[str, dict]:
     return {load(p)["model"]: load(p) for p in sorted((ROOT / oi.IMPORT_ROOT / "shinybow").glob("*.json"))}
 
 
-def test_shinybow_is_48_files_of_1007_keys_with_12_files_in_nec1_f16_and_33_keys_untested():
+def test_shinybow_is_51_files_of_1361_keys_with_12_files_in_nec1_f16_and_33_keys_untested():
     files = shinybow_files()
-    assert len(files) == 48 and sum(len(f["keys"]) for f in files.values()) == 1007
+    assert len(files) == 51 and sum(len(f["keys"]) for f in files.values()) == 1361
     assert all(f["manufacturer"] == "Shinybow" and f["controls"] == [f"Shinybow {m}"] for m, f in files.items())
-    assert Counter(f["protocol"]["name"] for f in files.values()) == {"NEC1": 36, "NEC1-f16": 12}
+    assert Counter(f["protocol"]["name"] for f in files.values()) == {"NEC1": 39, "NEC1-f16": 12}
     assert sorted(m for m, f in files.items() if f["protocol"]["name"] == "NEC1-f16") == [
         "SB-3879", "SB-4140", "SB-4148LCM", "SB-5440BNC", "SB-5544LCM", "SB-5560", "SB-5582", "SB-5604", "SB-5648LCM", "SB-5684K", "SB-5684LCM", "SB-8804LCM"]
-    assert Counter(s["forms"][0]["confidence"] for f in files.values() for s in f["keys"].values()) == {"plausible": 974, "untested": 33}
-    assert {m: len(f["keys"]) for m, f in files.items() if m in ("SB-5688CK", "SB-5688CAK", "SB-5669K", "SB-5440RL", "SB-5654", "SB-5645LCM", "SB-4184LCM")} == {
-        "SB-5688CK": 89, "SB-5688CAK": 91, "SB-5669K": 41, "SB-5440RL": 5, "SB-5654": 2, "SB-5645LCM": 14, "SB-4184LCM": 18}
+    assert Counter(s["forms"][0]["confidence"] for f in files.values() for s in f["keys"].values()) == {"plausible": 1328, "untested": 33}
+    assert {m: len(f["keys"]) for m, f in files.items() if m in ("SB-5688CK", "SB-5688CAK", "SB-5669K", "SB-5440RL", "SB-5654", "SB-5645LCM", "SB-4184LCM", "SB-3693", "SB-5616", "SB-5669CK")} == {
+        "SB-5688CK": 89, "SB-5688CAK": 91, "SB-5669K": 41, "SB-5440RL": 5, "SB-5654": 2, "SB-5645LCM": 14, "SB-4184LCM": 18, "SB-3693": 39, "SB-5616": 18, "SB-5669CK": 297}
     for model, f in files.items():                                  # a form is what its citation says: NEC1's data byte, or NEC1-f16's two bytes
         for spec in f["keys"].values():
             form = spec["forms"][0]
@@ -5384,7 +5448,7 @@ def test_shinybows_captured_frames_are_read_as_nec_frames_and_the_two_it_cannot_
     assert k["KEY_DESTINATION_4"]["forms"][0]["source"].count("captured") == 0                                                  # this one is a Pronto code of the usual form
 
 
-def test_the_shinybow_snapshot_is_88_documents_whose_text_mode_rows_are_the_pinned_csv_and_none_has_a_notice_word():
+def test_the_shinybow_snapshot_is_91_documents_whose_text_mode_rows_are_the_pinned_csv_and_none_has_a_notice_word():
     import importlib.util
 
     spec = importlib.util.spec_from_file_location("official_sheets_to_csv", ROOT / "tools" / "official_sheets_to_csv.py")
@@ -5393,7 +5457,8 @@ def test_the_shinybow_snapshot_is_88_documents_whose_text_mode_rows_are_the_pinn
     snapshot = load_snapshot(SNAPSHOT / "shinybow")
     texts = sorted(n for n in snapshot.documents if n.endswith(".txt"))
     pdfs = sorted(n for n in snapshot.documents if n.endswith(".pdf"))
-    assert snapshot.retrieved == "2026-11-12" and len(texts) == 48 and len(pdfs) == 40
+    assert snapshot.retrieved == "2026-11-12" and len(texts) == 48 and len(pdfs) == 43
+    assert {n for n in pdfs if snapshot.documents[n].get("retrieved") == "2026-11-15"} == {"IR-3693.pdf", "IR-5616.pdf", "IR-5669CK.pdf"}      # the three PDFs of the models with no text file (section 111)
     assert all(snapshot.documents[n]["url"] == f"https://www.shinybowusa.com/IRCODES/HexCodes/{n}" for n in texts)
     assert all(snapshot.documents[n]["url"] == f"https://www.shinybowusa.com/IRCODES/PDFformat/{n}" for n in pdfs)
     notice = re.compile(r"copyright|all rights|reserved|©|\(c\)|confidential|reproduc|trademark|proprietary|property of|licen[sc]e|permission", re.I)

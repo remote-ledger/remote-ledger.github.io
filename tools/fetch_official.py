@@ -397,10 +397,12 @@ DOCUMENTS = {
     # Shinybow's IR code files for its matrix switchers and scalers (DESIGN section 104): a text file of Pronto codes for each model on `shinybowusa.com/IRCODES/HexCodes/` (the site has no index
     # of the folder: the models are the ones that answered, of a list of the model numbers its Wayback captures and its Control4 drivers name, each tried with the suffixes the family uses)
     # and the PDF of the same model on `IRCODES/PDFformat/` (custom and data codes as text), kept where its text layer holds the model's codes (the others are images). Live files.
-    # Not pinned: the PDFs of the three models that have no text file (3693, 5616, 5669CK), the PDFs that are images, and the Control4 drivers (`IRCODES/control4codes/`).
+    # The PDFs of the three models that have no text file (3693, 5616, 5669CK) are pinned too, from DESIGN section 111 (their text layers hold the codes and the key names). Not pinned: the PDFs that
+    # are images, and the Control4 drivers (`IRCODES/control4codes/`).
     "shinybow": [
         *[(f"SB-{m}.txt", f"https://www.shinybowusa.com/IRCODES/HexCodes/SB-{m}.txt", None) for m in ("3691", "3879", "4106", "4140", "4140LCM", "4144", "4148", "4148LCM", "4184", "4184LCM", "5430", "5440BNC", "5440RCA", "5440RL", "5440SV", "5450", "5470", "5470M", "5526", "5544BNC", "5544LCM", "5548BNC", "5548LCM", "5560", "5564LCM", "5582", "5588LCM", "5604", "5642LCM", "5644", "5645LCM", "5648K", "5648LCM", "5654", "5658", "5658K", "5669K", "5684K", "5684LCM", "5688CAK", "5688CK", "5688K", "5688Kp", "5688LCM", "8180LCM", "8188LCM", "8802LCM", "8804LCM")],
         *[(f"IR-{m}.pdf", f"https://www.shinybowusa.com/IRCODES/PDFformat/IR-{m}.pdf", None) for m in ("3691", "3879", "4106", "4140", "4140LCM", "4148", "4148LCM", "4184", "4184LCM", "5440BNC", "5440RL", "5440SV", "5450", "5470M", "5544BNC", "5544LCM", "5548BNC", "5548LCM", "5560", "5564LCM", "5582", "5588LCM", "5604", "5642LCM", "5645LCM", "5648LCM", "5654", "5658K", "5669K", "5684K", "5684LCM", "5688CAK", "5688CK", "5688K", "5688Kp", "5688LCM", "8180LCM", "8188LCM", "8802LCM", "8804LCM")],
+        *[(f"IR-{m}.pdf", f"https://www.shinybowusa.com/IRCODES/PDFformat/IR-{m}.pdf", None) for m in ("3693", "5616", "5669CK")],
     ],
     "simaudio": [
         ("Simaudio-RC-5-IR-codes-rev1.1.pdf", "https://simaudio.com/wp-content/uploads/2019/11/Simaudio-RC-5-IR-codes-rev1.1.pdf", None),

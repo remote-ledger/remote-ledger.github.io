@@ -11,6 +11,12 @@ has one toggle code are not: that is a toggle). **A data byte that is not the co
 then the file is ``NEC1-f16`` (the fourth byte a field of its own, as Yamaha's, D332); otherwise it is not read.
 
 One file for each model, named by the file's name on the site (``SB-5688CK``).
+
+**Three models have a PDF and no text file** (``SB-3693``, ``SB-5616``, ``SB-5669CK``, DESIGN section 111): the PDF is the whole document, and its text layer is read. A name that ends in a colon
+(``POWER ON:``, ``SOURCE #10 :``) is a key, and its code words follow it, on the line or on the lines after it: **the custom code and the data code (``5EA1`` ``A15E``), or the data code alone
+under the page's ``CUSTOM CODE : 3CC3`` line**. A custom code that is not the page's, a data code that is not four hexadecimal digits and a name with three code words are refused. **A key
+the PDF writes twice** (SB-5616's examples repeat its source keys with the custom code) **is one key, and two different codes for one name are refused**; the examples of a key sequence (``Destination #1,
+Source #2``) are not keys. ``IR-01 DATA CODE:`` is a heading, as the text files' (SB-5669CK's sixteen room remotes). **A data code whose fourth byte is not the complement of the third is not read here** (the PDF is the only statement of it; SB-3693's EDID is printed ``B758`` and fourteen files of the maker's write ``B748``).
 """
 
 from __future__ import annotations
@@ -42,6 +48,7 @@ class Entry:
     label: str
     header: str                                   # the heading line (a name with no code after it) the key is under, or ""
     pronto: str
+    bytes_: tuple[int, ...] = ()                  # a key of a PDF that is the whole document: its four bytes (there is no Pronto code)
 
 
 @dataclass
@@ -124,6 +131,77 @@ def pdf_tokens(rows: list[list[str]]) -> set[str]:
     return {t.upper().replace("O", "0") for t in _TOKEN.findall(text) if re.search(r"[0-9]", t)}
 
 
+_CUSTOM = re.compile(r"^CUSTOM CODE\s*:\s*([0-9A-F]{4})$")
+_GROUP = re.compile(r"^(IR-\d+) DATA CODE\s*:$")
+_KEYLINE = re.compile(r"^(?P<name>.*?\S)\s*:\s*(?P<codes>(?:[0-9A-F]{4}(?:\s+|$))*)$")
+_WORDS = re.compile(r"^[0-9A-F]{4}(?:\s+[0-9A-F]{4})*$")
+_COMMENTARY = re.compile(r"^(HOW TO SETUP IR CODES|The IR Data Code|Press |Example|For Example)", re.I)
+
+
+def parse_pdf(rows: list[list[str]], document: str) -> tuple[list[Entry], list[tuple[str, int, str]]]:
+    """The keys of a PDF that is a model's whole document (see the module's text), as entries with their four bytes (the custom code's two as sent, the data code's two), and the notes: ``(what, count, where)``.
+
+    ``rows`` are the ``pages`` sheet's: the page and a line of its text. A key is a name line (``POWER ON:``) and the code words that follow it: one (the data code, the custom code is the page's last
+    ``CUSTOM CODE : 3CC3``) or two (the custom code, which is that one, and the data code); a name with none is a comment (``Example 1:``). **A key the document writes again with the same codes is
+    one key** (SB-5616's examples), and one written with another code is refused."""
+    entries: dict[tuple[str, str], Entry] = {}
+    seen_again = orphans = 0
+    custom = group = ""
+    last_page = None
+    n = 0
+    i = 0
+    pending: list[tuple[str, list[int]]] = []
+    lines: list[tuple[str, int, str]] = []
+    for page, text in rows:
+        n = 1 if page != last_page else n + 1
+        last_page = page
+        lines.append((page, n, text.strip()))
+    while i < len(lines):
+        page, n, line = lines[i]
+        i += 1
+        if m := _CUSTOM.match(line):
+            custom = m[1]
+            continue
+        if m := _GROUP.match(line):
+            group = m[1]
+            continue
+        m = _KEYLINE.match(line)
+        if not m or _COMMENTARY.match(line):
+            orphans += bool(_WORDS.match(line))                                  # a code line no name goes with: a line of an example's sequence
+            continue
+        name, words = m["name"].strip(), m["codes"].split()
+        while i < len(lines) and _WORDS.match(lines[i][2]):
+            words += lines[i][2].split()
+            i += 1
+        if not words:
+            continue
+        if len(words) > 2 or not custom:
+            raise ValueError(f"{document} page {page} line {n}: `{name}` has the code words {words} under {'no custom code' if not custom else 'the custom code ' + custom}")
+        if len(words) == 2 and words[0] != custom:
+            raise ValueError(f"{document} page {page} line {n}: `{name}` has the custom code {words[0]}, and the page's is {custom}")
+        data = words[-1]
+        if not re.fullmatch(r"[0-9A-F]{4}", data):
+            raise ValueError(f"{document} page {page} line {n}: `{name}` has the data code `{data}`")
+        got = [int(custom[:2], 16), int(custom[2:], 16), int(data[:2], 16), int(data[2:], 16)]
+        key = (group, name)
+        again = entries.get(key)
+        if again is not None:
+            if again.bytes_ == tuple(got):
+                seen_again += 1
+            else:
+                raise ValueError(f"{document} page {page} line {n}: `{name}` is {again.bytes_} above and {got} here")
+            continue
+        entries[key] = Entry(f"page {page} line {n}", name, group, "", tuple(got))
+    if not entries:
+        raise ValueError(f"{document}: no key read")
+    notes = []
+    if seen_again:
+        notes.append(("keys written again with the same codes", seen_again, document))
+    if orphans:
+        notes.append(("code lines of the examples' sequences, which are not keys", orphans, document))
+    return list(entries.values()), notes
+
+
 def build(snapshot: Snapshot, authored: dict[tuple[str, str], str], report: Report) -> list[tuple[str, dict[str, Any]]]:
     gate: dict[tuple[str, int, int, int], str | None] = {}
     out: list[tuple[str, dict[str, Any]]] = []
@@ -144,73 +222,94 @@ def build(snapshot: Snapshot, authored: dict[tuple[str, str], str], report: Repo
         report.count(MAKER, "Pronto codes", len(entries))
         # the PDF holds the model's codes as text when it has one of the custom codes of the file
         checked = tokens is not None and any(f"{k.bytes_[0]:02X}{k.bytes_[1]:02X}" in tokens for k in keys)
-        by_frame: dict[tuple[int, ...], list[Key]] = {}
-        for k in keys:
-            by_frame.setdefault(tuple(k.bytes_), []).append(k)
-        for group in by_frame.values():
-            names = {k.entry.label for k in group}
-            if len(names) > 1 and names != TOGGLE:
-                for k in group:
-                    k.shared = True
-                    k.doubts.append("the file gives this code to " + " and ".join(repr(n) for n in sorted(names)))
-        kept: list[Key] = []
-        f16 = False
-        for k in keys:
-            c, d = f"{k.bytes_[0]:02X}{k.bytes_[1]:02X}", f"{k.bytes_[2]:02X}{k.bytes_[3]:02X}"
-            if checked:
-                assert tokens is not None
-                missing = [x for x in (c, d) if x not in tokens]
-                if missing:
-                    k.doubts.append(f"the PDF {pdf_name} does not have {' or '.join(f'`{x}`' for x in missing)}")
-            if k.bytes_[2] ^ k.bytes_[3] != 0xFF:
-                if not (checked and d in (tokens or set())):
-                    report.notes.append((MAKER, document, f"not read: {k.entry.where} '{k.entry.label}': `{c} {d}` has a fourth byte that is not the complement of the third, "
-                                                         f"and no PDF of the maker's lists it"))
-                    continue
-                f16 = True
-            kept.append(k)
-        protocol = NEC1_F16 if f16 else NEC1
-        counts = Counter(k.entry.label for k in kept)
-        entry, sha = snapshot.documents[document], snapshot.sha(document)
-        pdf_cite = ""
-        if pdf_name in snapshot.documents and checked:
-            pdf_cite = f"; held against the maker's PDF {pdf_name}@{snapshot.sha(pdf_name)} (retrieved {snapshot.documents[pdf_name].get('retrieved', snapshot.retrieved)})"
-        built: list[tuple[str, dict[str, Any]]] = []
-        for k in kept:
-            e = k.entry
-            device, subdevice = k.bytes_[0], k.bytes_[1]
-            function = k.bytes_[2] if not f16 else k.bytes_[2] << 8 | k.bytes_[3]
-            gkey = (protocol["name"], device, subdevice, function)
-            if gkey not in gate:
-                gate[gkey] = form_compiles(IMPORT_ROOT, protocol, "K", {"id": "primary.irp", "type": "irp", "device": device, "subdevice": subdevice, "function": function,
-                                                                       "confidence": TIER, "source": "probe"})
-            if gate[gkey]:
-                report.unrepresented[(MAKER, document, f"does not compile: {gate[gkey]}")] += 1
-                continue
-            label = e.label if counts[e.label] == 1 or not e.header else f"{e.label} ({e.header})"
-            cite = (f"{HOST}/{document}@{sha} (retrieved {entry.get('retrieved', snapshot.retrieved)}) {e.where} '{e.label}'"
-                    + (f" under '{e.header}'" if e.header else "")
-                    + (f" (the file's title line reads `{title}`)" if title != model else "")
-                    + f": {protocol['name']} device {device} subdevice {subdevice} function {function} (bytes {' '.join(f'{b:02X}' for b in k.bytes_)})"
-                    + pdf_cite + (f"; {k.note}" if k.note else "") + "".join(f"; {x}" for x in k.doubts))
-            built.append((label, {"id": "primary.irp", "type": "irp", "device": device, "subdevice": subdevice, "function": function,
-                                  "confidence": DOUBTFUL_TIER if k.doubts else TIER, "source": cite}))
-        if not built:
-            report.notes.append((MAKER, document, "no key kept"))
+        out += _emit(snapshot, authored, report, gate, model=model, document=document, title=title, keys=keys, tokens=tokens, checked=checked, pdf_name=pdf_name, own_codes=False)
+    # a model with a PDF and no text file: the PDF is the document (DESIGN section 111)
+    for document in sorted(snapshot.documents):
+        if not (document.startswith("IR-") and document.endswith(".pdf")):
             continue
-        final = model
-        while (BRAND.casefold(), final.casefold()) in authored:
-            renamed = f"{final} (Shinybow table)"
-            report.notes.append((MAKER, final, f"kept as '{renamed}': the ledger's {authored[(BRAND.casefold(), final.casefold())]} has the name (R15)"))
-            final = renamed
-        seen: Counter = Counter()
-        body: dict[str, Any] = {}
-        for label, form in built:
-            base = "KEY_" + (fold_label(label) or "COMMAND")
-            seen[base] += 1
-            body[base if seen[base] == 1 else f"{base}_{seen[base]}"] = {"label": label, "forms": [form]}
-        report.count(MAKER, "files")
-        report.count(MAKER, "keys", len(body))
-        out.append((f"{IMPORT_ROOT}/{MAKER}/{slug(final)}.json",
-                    {"manufacturer": BRAND, "model": final, "aliases": [], "controls": [f"{BRAND} {model}"], "protocol": dict(protocol), "keys": body}))
+        model = "SB-" + document.removeprefix("IR-").removesuffix(".pdf")
+        if f"{model}.txt" in snapshot.documents:
+            continue
+        entries, notes = parse_pdf(snapshot.sheet_of(document, "pages"), document)
+        for what, count, where in notes:
+            report.notes.append((MAKER, where, f"{count} {what}"))
+        report.count(MAKER, "PDF keys", len(entries))
+        keys = [Key(e, list(e.bytes_), f'the PDF writes the custom code {e.bytes_[0]:02X}{e.bytes_[1]:02X} and the data code {e.bytes_[2]:02X}{e.bytes_[3]:02X} ("NEC Standard")') for e in entries]
+        out += _emit(snapshot, authored, report, gate, model=model, document=document, title=model, keys=keys, tokens=None, checked=False, pdf_name="", own_codes=True)
     return out
+
+
+def _emit(snapshot: Snapshot, authored: dict[tuple[str, str], str], report: Report, gate: dict[tuple[str, int, int, int], str | None], *, model: str, document: str, title: str,
+          keys: list[Key], tokens: set[str] | None, checked: bool, pdf_name: str, own_codes: bool) -> list[tuple[str, dict[str, Any]]]:
+    """The file of a model's keys: the doubts (a code two names share, a code the PDF does not have), the protocol, one form for each key that compiles, the names and the citations.
+    ``own_codes`` is true when the document is the PDF itself: a data code whose fourth byte is not the complement then has no second statement to hold it against, so it is not read (the PDF of
+    the SB-3693 writes its EDID ``B758``, where fourteen files of the maker's say ``B748``)."""
+    by_frame: dict[tuple[int, ...], list[Key]] = {}
+    for k in keys:
+        by_frame.setdefault(tuple(k.bytes_), []).append(k)
+    for group in by_frame.values():
+        names = {k.entry.label for k in group}
+        if len(names) > 1 and names != TOGGLE:
+            for k in group:
+                k.shared = True
+                k.doubts.append("the file gives this code to " + " and ".join(repr(n) for n in sorted(names)))
+    kept: list[Key] = []
+    f16 = False
+    for k in keys:
+        c, d = f"{k.bytes_[0]:02X}{k.bytes_[1]:02X}", f"{k.bytes_[2]:02X}{k.bytes_[3]:02X}"
+        if checked:
+            assert tokens is not None
+            missing = [x for x in (c, d) if x not in tokens]
+            if missing:
+                k.doubts.append(f"the PDF {pdf_name} does not have {' or '.join(f'`{x}`' for x in missing)}")
+        if k.bytes_[2] ^ k.bytes_[3] != 0xFF:
+            if own_codes or not (checked and d in (tokens or set())):
+                report.notes.append((MAKER, document, f"not read: {k.entry.where} '{k.entry.label}': `{c} {d}` has a fourth byte that is not the complement of the third, "
+                                                     + ("and the PDF, which is the whole document, is the only statement of it" if own_codes else "and no PDF of the maker's lists it")))
+                continue
+            f16 = True
+        kept.append(k)
+    protocol = NEC1_F16 if f16 else NEC1
+    counts = Counter(k.entry.label for k in kept)
+    entry, sha = snapshot.documents[document], snapshot.sha(document)
+    pdf_cite = ""
+    if pdf_name in snapshot.documents and checked:
+        pdf_cite = f"; held against the maker's PDF {pdf_name}@{snapshot.sha(pdf_name)} (retrieved {snapshot.documents[pdf_name].get('retrieved', snapshot.retrieved)})"
+    built: list[tuple[str, dict[str, Any]]] = []
+    for k in kept:
+        e = k.entry
+        device, subdevice = k.bytes_[0], k.bytes_[1]
+        function = k.bytes_[2] if not f16 else k.bytes_[2] << 8 | k.bytes_[3]
+        gkey = (protocol["name"], device, subdevice, function)
+        if gkey not in gate:
+            gate[gkey] = form_compiles(IMPORT_ROOT, protocol, "K", {"id": "primary.irp", "type": "irp", "device": device, "subdevice": subdevice, "function": function,
+                                                                   "confidence": TIER, "source": "probe"})
+        if gate[gkey]:
+            report.unrepresented[(MAKER, document, f"does not compile: {gate[gkey]}")] += 1
+            continue
+        label = e.label if counts[e.label] == 1 or not e.header else f"{e.label} ({e.header})"
+        cite = (f"{HOST}/{document}@{sha} (retrieved {entry.get('retrieved', snapshot.retrieved)}) {e.where} '{e.label}'"
+                + (f" under '{e.header}'" if e.header else "")
+                + (f" (the file's title line reads `{title}`)" if title != model else "")
+                + f": {protocol['name']} device {device} subdevice {subdevice} function {function} (bytes {' '.join(f'{b:02X}' for b in k.bytes_)})"
+                + pdf_cite + (f"; {k.note}" if k.note else "") + "".join(f"; {x}" for x in k.doubts))
+        built.append((label, {"id": "primary.irp", "type": "irp", "device": device, "subdevice": subdevice, "function": function,
+                              "confidence": DOUBTFUL_TIER if k.doubts else TIER, "source": cite}))
+    if not built:
+        report.notes.append((MAKER, document, "no key kept"))
+        return []
+    final = model
+    while (BRAND.casefold(), final.casefold()) in authored:
+        renamed = f"{final} (Shinybow table)"
+        report.notes.append((MAKER, final, f"kept as '{renamed}': the ledger's {authored[(BRAND.casefold(), final.casefold())]} has the name (R15)"))
+        final = renamed
+    seen: Counter = Counter()
+    body: dict[str, Any] = {}
+    for label, form in built:
+        base = "KEY_" + (fold_label(label) or "COMMAND")
+        seen[base] += 1
+        body[base if seen[base] == 1 else f"{base}_{seen[base]}"] = {"label": label, "forms": [form]}
+    report.count(MAKER, "files")
+    report.count(MAKER, "keys", len(body))
+    return [(f"{IMPORT_ROOT}/{MAKER}/{slug(final)}.json",
+             {"manufacturer": BRAND, "model": final, "aliases": [], "controls": [f"{BRAND} {model}"], "protocol": dict(protocol), "keys": body})]
